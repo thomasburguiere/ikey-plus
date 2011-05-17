@@ -100,6 +100,11 @@ public class SDDSaxParserTest {
 		}
 	}
 
+	/**
+	 * display all the children of character
+	 * @param tabulations, the string tabulation
+	 * @param character, the parent character
+	 */
 	private void displayRecursiveChildren(String tabulations, ICharacter character) {
 		System.out.println(tabulations + "character->" + character.getName());
 		for (State state : character.getInapplicableStates()) {

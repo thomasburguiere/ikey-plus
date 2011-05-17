@@ -14,7 +14,7 @@ public class PolytomousKeyTree {
 	 * constructor
 	 */
 	public PolytomousKeyTree() {
-		super();
+		this(null);
 	}
 
 	/**
@@ -80,6 +80,15 @@ public class PolytomousKeyTree {
 	 * @return File, the sdd file
 	 */
 	public File toSdd() {
+		return null;
+	}
+	
+	/**
+	 * get a wiki file containing the key
+	 * 
+	 * @return File, the Wikitext file
+	 */
+	public File toWikiText() {
 		return null;
 	}
 }

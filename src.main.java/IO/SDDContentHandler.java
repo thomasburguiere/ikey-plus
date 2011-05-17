@@ -116,8 +116,6 @@ public class SDDContentHandler implements ContentHandler {
 			// <Dataset>
 			if (localName.equals("Dataset")) {
 				inDataset = true;
-				System.out.println("DataSet=" + inDataset + ", Line="
-						+ locator.getLineNumber());
 			}
 
 			// <Representation> in <Dataset>
@@ -324,13 +322,6 @@ public class SDDContentHandler implements ContentHandler {
 		}
 	}
 
-	/**
-	 * Event catched at anytime a closing markup is countered by SAX analyser.
-	 * 
-	 * @throws OurException
-	 * @see org.xml.sax.ContentHandler#endElement(java.lang.String,
-	 *      java.lang.String, java.lang.String)
-	 */
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -345,8 +336,6 @@ public class SDDContentHandler implements ContentHandler {
 			if (localName.equals("Dataset")) {
 				inDataset = false;
 				isFirstDataset = false;
-				System.out.println("DataSet=" + inDataset + ", Line="
-						+ locator.getLineNumber());
 			}
 
 			// <Representation> in <Dataset>
@@ -653,10 +642,19 @@ public class SDDContentHandler implements ContentHandler {
 
 	}
 
+	
+	/**
+	 * get the current dataset
+	 * @return DataSet, the current dataset
+	 */
 	public DataSet getDataset() {
 		return dataset;
 	}
 
+	/**
+	 * set the current dataset
+	 * @param DataSet, the current dataset
+	 */
 	public void setDataset(DataSet dataset) {
 		this.dataset = dataset;
 	}

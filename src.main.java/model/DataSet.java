@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * this class represent a knowledge base
  * @author Florian Causse
  * @created 06-avr.-2011
  */
@@ -181,6 +182,27 @@ public class DataSet {
 			}
 		}
 		return null;
+	}
+	
+	
+	/**
+	 * determine if a character is applicable for a taxon
+	 * @param taxon
+	 * @param character
+	 * @return boolean, true if the character is is applicable for the current taxon
+	 */
+	public boolean isApplicable(Taxon taxon, ICharacter character){
+		if (character.getParentCharacter() != null) {
+			List<State> inapplicableStates = character.getInapplicableStates();
+			List<State> states = (List<State>) this.getCodedDescription(taxon).getCharacterDescription(character.getParentCharacter());
+			for (int i = 0; i < states.size(); i++) {
+				State state = states.get(i);
+				if (inapplicableStates.contains(state)) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 	
 	

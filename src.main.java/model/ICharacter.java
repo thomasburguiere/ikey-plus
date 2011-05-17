@@ -73,4 +73,9 @@ public interface ICharacter {
 	 * @param List<ICharacter>, the list of child characters
 	 */
 	public void setChildCharacters(List<ICharacter> childCharacters);
+
+	/**
+	 * @param List<ICharacter>, the list of all child characters
+	 */
+	public List<ICharacter> getAllChildren();
 }

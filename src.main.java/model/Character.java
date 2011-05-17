@@ -13,7 +13,7 @@ public class Character implements ICharacter {
 	private String id = null;
 	private ICharacter parentCharacter = null;
 	private List<State> inapplicableStates = null;
-	public List<ICharacter> childCharacters = null;
+	private List<ICharacter> childCharacters = null;
 	
 	/**
 	 * constructor by default
@@ -131,6 +131,26 @@ public class Character implements ICharacter {
 	public void setChildCharacters(List<ICharacter> childCharacters) {
 		this.childCharacters = childCharacters;
 	}
+
+	/* (non-Javadoc)
+	 * @see model.ICharacter#getAllChildren()
+	 */
+	@Override
+	public List<ICharacter> getAllChildren() {
+		List<ICharacter> allChildrenCharacter = new ArrayList<ICharacter>();
+		addChildrenToList(allChildrenCharacter, this);
+		return allChildrenCharacter;
+	}
 	
-	
+	/**
+	 * add to the list all child characters
+	 * @param allChildrenCharacter, the list of character
+	 * @param character, the current character
+	 */
+	private void addChildrenToList(List<ICharacter> allChildrenCharacter, ICharacter character){
+		for(ICharacter childCharacter: character.getChildCharacters()){
+			allChildrenCharacter.add(childCharacter);
+			addChildrenToList(allChildrenCharacter, childCharacter);
+		}
+	}
 }

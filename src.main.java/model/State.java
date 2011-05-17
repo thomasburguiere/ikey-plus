@@ -13,7 +13,7 @@ public class State {
 	 * constructor
 	 */
 	public State() {
-
+		this(null);
 	}
 
 	/**

@@ -143,5 +143,38 @@ public class QuantitativeMeasure {
 		return "Min=" + min + "  Max=" + max + "  Mean=" + mean + "  SD=" + sd
 				+ "  UMethLower=" + uMethLower + "  UMethUpper=" + uMethUpper;
 	}
+	
+	
+	/**
+	 * calculate the minimum value
+	 * @return Double, the minimum value
+	 */
+	public Double getCalculateMinimum() {
+		if (min != null) {
+			return min;
+		} else if (uMethLower != null) {
+			return uMethLower;
+		} else if (sd != null && mean != null) {
+			return new Double(mean.doubleValue() - 2 * sd.doubleValue());
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * calculate the maximum value
+	 * @return Double, the maximum value
+	 */
+	public Double getCalculateMaximum() {
+		if (max != null) {
+			return new Double(max.doubleValue());
+		} else if (uMethUpper != null) {
+			return new Double(uMethUpper.doubleValue());
+		} else if (sd != null && mean != null) {
+			return new Double(mean.doubleValue() + 2 * sd.doubleValue());
+		} else {
+			return null;
+		}
+	}
 
 }

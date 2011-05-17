@@ -12,6 +12,9 @@ public class CodedDescription {
 	private String id = null;
 	private Map<ICharacter, Object> description = null;
 
+	/**
+	 * the constructor by default
+	 */
 	public CodedDescription() {
 		this.description = new HashMap<ICharacter, Object>();
 	}

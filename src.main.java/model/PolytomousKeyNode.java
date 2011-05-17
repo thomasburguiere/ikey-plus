@@ -10,14 +10,16 @@ import java.util.List;
 public class PolytomousKeyNode {
 
 	private ICharacter character = null;
+	private ICharacter parentCharacter = null;
 	private Object state = null;
-	private List<PolytomousKeyNode> children = new ArrayList<PolytomousKeyNode>();
+	private List<PolytomousKeyNode> children = null;
+	private List<Taxon> remainingTaxa = null;
 
 	/**
 	 * constructor
 	 */
 	public PolytomousKeyNode() {
-		super();
+		this(null, null);
 	}
 
 	/**
@@ -31,6 +33,8 @@ public class PolytomousKeyNode {
 		super();
 		this.character = character;
 		this.state = state;
+		this.children = new ArrayList<PolytomousKeyNode>();
+		this.remainingTaxa = new ArrayList<Taxon>();
 	}
 
 	/**
@@ -86,7 +90,7 @@ public class PolytomousKeyNode {
 	 * @param List
 	 *            <PolytomousKeyNode>, all child nodes
 	 */
-	public void setChildrens(List<PolytomousKeyNode> children) {
+	public void setChildren(List<PolytomousKeyNode> children) {
 		this.children = children;
 	}
 
@@ -100,4 +104,34 @@ public class PolytomousKeyNode {
 		this.children.add(polytomousKeyNode);
 	}
 
+	/** get the parent character
+	 * @return ICharacter
+	 */
+	public ICharacter getParentCharacter() {
+		return parentCharacter;
+	}
+
+	/**
+	 * set the parent character
+	 * @param parentCharacter
+	 */
+	public void setParentCharacter(ICharacter parentCharacter) {
+		this.parentCharacter = parentCharacter;
+	}
+
+	/**
+	 * get the remaining taxa
+	 * @return List<Taxon>
+	 */
+	public List<Taxon> getRemainingTaxa() {
+		return remainingTaxa;
+	}
+
+	/**
+	 * set the remaining taxa
+	 * @param remainingTaxa
+	 */
+	public void setRemainingTaxa(List<Taxon> remainingTaxa) {
+		this.remainingTaxa = remainingTaxa;
+	}
 }

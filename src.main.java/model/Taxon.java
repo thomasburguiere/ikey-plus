@@ -12,6 +12,7 @@ public class Taxon {
 	 * constructor
 	 */
 	public Taxon() {
+		this(null);
 	}
 
 	/**
