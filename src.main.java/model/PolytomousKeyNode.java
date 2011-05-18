@@ -104,7 +104,9 @@ public class PolytomousKeyNode {
 		this.children.add(polytomousKeyNode);
 	}
 
-	/** get the parent character
+	/**
+	 * get the parent character
+	 * 
 	 * @return ICharacter
 	 */
 	public ICharacter getParentCharacter() {
@@ -113,6 +115,7 @@ public class PolytomousKeyNode {
 
 	/**
 	 * set the parent character
+	 * 
 	 * @param parentCharacter
 	 */
 	public void setParentCharacter(ICharacter parentCharacter) {
@@ -121,6 +124,7 @@ public class PolytomousKeyNode {
 
 	/**
 	 * get the remaining taxa
+	 * 
 	 * @return List<Taxon>
 	 */
 	public List<Taxon> getRemainingTaxa() {
@@ -129,6 +133,7 @@ public class PolytomousKeyNode {
 
 	/**
 	 * set the remaining taxa
+	 * 
 	 * @param remainingTaxa
 	 */
 	public void setRemainingTaxa(List<Taxon> remainingTaxa) {

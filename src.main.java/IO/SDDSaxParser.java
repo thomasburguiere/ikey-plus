@@ -18,10 +18,9 @@ import org.xml.sax.helpers.XMLReaderFactory;
  */
 public class SDDSaxParser {
 
-	
 	// kwnoledge base (call dataset)
 	private DataSet dataset = null;
-	
+
 	/**
 	 * constructor executing the parse method
 	 */
@@ -42,6 +41,7 @@ public class SDDSaxParser {
 
 	/**
 	 * get the current dataset
+	 * 
 	 * @return DataSet, the current dataset
 	 */
 	public DataSet getDataset() {
@@ -50,11 +50,12 @@ public class SDDSaxParser {
 
 	/**
 	 * set the current dataset
-	 * @param DataSet, the current dataset
+	 * 
+	 * @param DataSet
+	 *            , the current dataset
 	 */
 	public void setDataset(DataSet dataset) {
 		this.dataset = dataset;
 	}
-	
-	
+
 }

@@ -2,10 +2,8 @@ package services;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import model.CategoricalCharacter;
 import model.CodedDescription;
@@ -56,10 +54,12 @@ public class IdentificationKeyGenerator {
 		Map<ICharacter, Float> charactersScore = charactersScores(dataset
 				.getCharacters(), dataset.getCodedDescriptions());
 		for (ICharacter character : charactersScore.keySet()) {
-			System.out.println(character.getName() + ": " + charactersScore.get(character));
+			System.out.println(character.getName() + ": "
+					+ charactersScore.get(character));
 		}
-		System.out.println("\nbestCharacter: " + bestCharacter(charactersScore).getName());
-		
+		System.out.println("\nbestCharacter: "
+				+ bestCharacter(charactersScore).getName());
+
 	}
 
 	/**
@@ -79,26 +79,28 @@ public class IdentificationKeyGenerator {
 				scoreMap.put(character, categoricalCharacterScore(
 						(CategoricalCharacter) character, codedDescriptions));
 			} else {
-				scoreMap.put(character, quantitativeCharacterScore((QuantitativeCharacter) character, codedDescriptions));
+				scoreMap.put(character, quantitativeCharacterScore(
+						(QuantitativeCharacter) character, codedDescriptions));
 			}
 		}
-		
+
 		considerChildCharacterScore(scoreMap);
 		return scoreMap;
 	}
 
 	/**
 	 * consider children in the calculate score
+	 * 
 	 * @param scoreMap
 	 */
 	private void considerChildCharacterScore(HashMap<ICharacter, Float> scoreMap) {
-		for(ICharacter character: scoreMap.keySet()){
-			if(character.getChildCharacters().size() > 0){
+		for (ICharacter character : scoreMap.keySet()) {
+			if (character.getChildCharacters().size() > 0) {
 				float max = getMaxChildScore(scoreMap, character);
-				if(scoreMap.get(character) < max){
+				if (scoreMap.get(character) < max) {
 					scoreMap.put(character, max);
 				}
-				
+
 			}
 		}
 	}
@@ -108,29 +110,29 @@ public class IdentificationKeyGenerator {
 	 * @param character
 	 * @return float, the max score of all character child
 	 */
-	private float getMaxChildScore(HashMap<ICharacter, Float> scoreMap, ICharacter character) {
+	private float getMaxChildScore(HashMap<ICharacter, Float> scoreMap,
+			ICharacter character) {
 		List<ICharacter> characters = character.getAllChildren();
 		float max = 0;
-		for(ICharacter childCharacter: characters){
-			if(scoreMap.get(childCharacter) > max){
+		for (ICharacter childCharacter : characters) {
+			if (scoreMap.get(childCharacter) > max) {
 				max = scoreMap.get(childCharacter);
 			}
 		}
 		return max;
 	}
-	
-	
+
 	/**
 	 * @param charactersScore
 	 * @return ICharacter, the best character
 	 */
-	private ICharacter bestCharacter(Map<ICharacter, Float> charactersScore){
-		
+	private ICharacter bestCharacter(Map<ICharacter, Float> charactersScore) {
+
 		float bestScore = 0;
 		ICharacter bestCharacter = null;
-		
-		for(ICharacter character: charactersScore.keySet()){
-			if(charactersScore.get(character) > bestScore){
+
+		for (ICharacter character : charactersScore.keySet()) {
+			if (charactersScore.get(character) > bestScore) {
 				bestScore = charactersScore.get(character);
 				bestCharacter = character;
 			}
@@ -150,27 +152,32 @@ public class IdentificationKeyGenerator {
 		int cpt = 0;
 		float score = 0;
 		List<Taxon> taxonKeys = new ArrayList(codedDescriptions.keySet());
-		for (int i=0; i < taxonKeys.size()-1; i++) {
-			for (int j=i+1; j < taxonKeys.size(); j++) {
-				if(codedDescriptions.get(taxonKeys.get(i)) != null && codedDescriptions.get(taxonKeys.get(j)) != null){
+		for (int i = 0; i < taxonKeys.size() - 1; i++) {
+			for (int j = i + 1; j < taxonKeys.size(); j++) {
+				if (codedDescriptions.get(taxonKeys.get(i)) != null
+						&& codedDescriptions.get(taxonKeys.get(j)) != null) {
 					// if the character is applicable for both of these taxa
-					if (dataset.isApplicable(taxonKeys.get(i), character) && dataset.isApplicable(taxonKeys.get(j), character)){
+					if (dataset.isApplicable(taxonKeys.get(i), character)
+							&& dataset
+									.isApplicable(taxonKeys.get(j), character)) {
 						// nb of common states which are absent
-						float commonAbsent = 0; 
+						float commonAbsent = 0;
 						// nb of common states which are present
 						float commonPresent = 0;
 						float other = 0;
-						
-						List<State> statesList1 = (List<State>) codedDescriptions.get(
-								taxonKeys.get(i)).getCharacterDescription(character);
-						List<State> statesList2 = (List<State>) codedDescriptions.get(
-								taxonKeys.get(j)).getCharacterDescription(character);
-						
-						if (statesList1 != null && statesList2 != null){
+
+						List<State> statesList1 = (List<State>) codedDescriptions
+								.get(taxonKeys.get(i)).getCharacterDescription(
+										character);
+						List<State> statesList2 = (List<State>) codedDescriptions
+								.get(taxonKeys.get(j)).getCharacterDescription(
+										character);
+
+						if (statesList1 != null && statesList2 != null) {
 							// search common state
 							for (int k = 0; k < character.getStates().size(); k++) {
 								State state = character.getStates().get(k);
-	
+
 								if (statesList1.contains(state)) {
 									if (statesList2.contains(state)) {
 										commonPresent++;
@@ -188,9 +195,9 @@ public class IdentificationKeyGenerator {
 							// yes or no method (Xper)
 							if ((commonPresent == 0) && (other > 0)) {
 								score++;
-							} 
+							}
 						}
-					}else{
+					} else {
 						// if the character is applicable for one of these taxa
 						cpt--;
 					}
@@ -200,9 +207,9 @@ public class IdentificationKeyGenerator {
 		}
 		score = score / cpt;
 		// round to 10^-2
-		/*score *= 100;
-		score = (int)(score+.5);
-		score /= 100;*/
+		/*
+		 * score *= 100; score = (int)(score+.5); score /= 100;
+		 */
 		return score;
 	}
 
@@ -218,38 +225,55 @@ public class IdentificationKeyGenerator {
 		int cpt = 0;
 		float score = 0;
 		List<Taxon> taxonKeys = new ArrayList(codedDescriptions.keySet());
-		for (int i=0; i < taxonKeys.size()-1; i++) {
-			for (int j=i+1; j < taxonKeys.size(); j++) {
-				if(codedDescriptions.get(taxonKeys.get(i)) != null && codedDescriptions.get(taxonKeys.get(j)) != null){
-					if (dataset.isApplicable(taxonKeys.get(i), character) && dataset.isApplicable(taxonKeys.get(j), character)){
+		for (int i = 0; i < taxonKeys.size() - 1; i++) {
+			for (int j = i + 1; j < taxonKeys.size(); j++) {
+				if (codedDescriptions.get(taxonKeys.get(i)) != null
+						&& codedDescriptions.get(taxonKeys.get(j)) != null) {
+					if (dataset.isApplicable(taxonKeys.get(i), character)
+							&& dataset
+									.isApplicable(taxonKeys.get(j), character)) {
 						// percentage of common values which are shared
-						float commonPercentage = 0; 
-						
-						QuantitativeMeasure quantitativeMeasure1 = (QuantitativeMeasure) codedDescriptions.get(
-								taxonKeys.get(i)).getCharacterDescription(character);
-						QuantitativeMeasure quantitativeMeasure2 = (QuantitativeMeasure) codedDescriptions.get(
-								taxonKeys.get(j)).getCharacterDescription(character);
-						
+						float commonPercentage = 0;
+
+						QuantitativeMeasure quantitativeMeasure1 = (QuantitativeMeasure) codedDescriptions
+								.get(taxonKeys.get(i)).getCharacterDescription(
+										character);
+						QuantitativeMeasure quantitativeMeasure2 = (QuantitativeMeasure) codedDescriptions
+								.get(taxonKeys.get(j)).getCharacterDescription(
+										character);
+
 						// search common shared values
-						if (quantitativeMeasure1 != null && quantitativeMeasure2 != null){
-	
+						if (quantitativeMeasure1 != null
+								&& quantitativeMeasure2 != null) {
+
 							if (quantitativeMeasure1.getCalculateMinimum() != null
-									&& quantitativeMeasure1.getCalculateMaximum() != null
-									&& quantitativeMeasure2.getCalculateMinimum() != null
-									&& quantitativeMeasure2.getCalculateMaximum() != null) {
-		
-								commonPercentage = calculCommonPercentage(quantitativeMeasure1
-										.getCalculateMinimum().doubleValue(), quantitativeMeasure1
-										.getCalculateMaximum().doubleValue(), quantitativeMeasure2
-										.getCalculateMinimum().doubleValue(), quantitativeMeasure2
-										.getCalculateMaximum().doubleValue());
-								
+									&& quantitativeMeasure1
+											.getCalculateMaximum() != null
+									&& quantitativeMeasure2
+											.getCalculateMinimum() != null
+									&& quantitativeMeasure2
+											.getCalculateMaximum() != null) {
+
+								commonPercentage = calculCommonPercentage(
+										quantitativeMeasure1
+												.getCalculateMinimum()
+												.doubleValue(),
+										quantitativeMeasure1
+												.getCalculateMaximum()
+												.doubleValue(),
+										quantitativeMeasure2
+												.getCalculateMinimum()
+												.doubleValue(),
+										quantitativeMeasure2
+												.getCalculateMaximum()
+												.doubleValue());
+
 								if (commonPercentage <= 0) {
 									score++;
 								}
 							}
 						}
-					}else{
+					} else {
 						// if the character is applicable for one of these taxa
 						cpt--;
 					}
@@ -259,14 +283,15 @@ public class IdentificationKeyGenerator {
 		}
 		score = score / cpt;
 		// round to 10^-2
-		/*score *= 100;
-		score = (int)(score+.5);
-		score /= 100;*/
+		/*
+		 * score *= 100; score = (int)(score+.5); score /= 100;
+		 */
 		return score;
 	}
-	
+
 	/**
 	 * Calculate the common percentage between two interval
+	 * 
 	 * @param min1
 	 * @param max1
 	 * @param min2

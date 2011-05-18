@@ -11,7 +11,7 @@ import java.util.List;
  */
 /**
  * @author Utilisateur
- *
+ * 
  */
 public class CategoricalCharacter extends Character {
 
@@ -23,11 +23,11 @@ public class CategoricalCharacter extends Character {
 	public CategoricalCharacter() {
 		this(null);
 	}
-	
+
 	/**
 	 * constructor with name parameter
 	 */
-	public CategoricalCharacter(String name){
+	public CategoricalCharacter(String name) {
 		super();
 		this.setName(name);
 		this.states = new ArrayList<State>();
@@ -51,8 +51,10 @@ public class CategoricalCharacter extends Character {
 	public void setStates(List<State> states) {
 		this.states = states;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.Character#isSupportsCategoricalData()
 	 */
 	@Override

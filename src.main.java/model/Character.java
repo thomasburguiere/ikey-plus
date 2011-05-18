@@ -14,24 +14,24 @@ public class Character implements ICharacter {
 	private ICharacter parentCharacter = null;
 	private List<State> inapplicableStates = null;
 	private List<ICharacter> childCharacters = null;
-	
+
 	/**
 	 * constructor by default
 	 */
-	public Character(){
+	public Character() {
 		this(null);
 	}
-	
+
 	/**
 	 * constructor with name parameter
 	 */
-	public Character(String name){
+	public Character(String name) {
 		super();
 		this.name = name;
 		this.inapplicableStates = new ArrayList<State>();
 		this.childCharacters = new ArrayList<ICharacter>();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -82,8 +82,9 @@ public class Character implements ICharacter {
 		this.name = name;
 	}
 
-	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.ICharacter#getInapplicableStates()
 	 */
 	@Override
@@ -91,7 +92,9 @@ public class Character implements ICharacter {
 		return inapplicableStates;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.ICharacter#setInapplicableStates(java.util.List)
 	 */
 	@Override
@@ -99,7 +102,9 @@ public class Character implements ICharacter {
 		this.inapplicableStates = inapplicableStates;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.ICharacter#getParentCharacter()
 	 */
 	@Override
@@ -107,7 +112,9 @@ public class Character implements ICharacter {
 		return parentCharacter;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.ICharacter#setParentCharacter(model.ICharacter)
 	 */
 	@Override
@@ -116,7 +123,9 @@ public class Character implements ICharacter {
 		this.parentCharacter.getChildCharacters().add(this);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.ICharacter#getChildCharacters()
 	 */
 	@Override
@@ -124,7 +133,9 @@ public class Character implements ICharacter {
 		return this.childCharacters;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.ICharacter#setChildCharacters(java.util.List)
 	 */
 	@Override
@@ -132,7 +143,9 @@ public class Character implements ICharacter {
 		this.childCharacters = childCharacters;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.ICharacter#getAllChildren()
 	 */
 	@Override
@@ -141,14 +154,18 @@ public class Character implements ICharacter {
 		addChildrenToList(allChildrenCharacter, this);
 		return allChildrenCharacter;
 	}
-	
+
 	/**
 	 * add to the list all child characters
-	 * @param allChildrenCharacter, the list of character
-	 * @param character, the current character
+	 * 
+	 * @param allChildrenCharacter
+	 *            , the list of character
+	 * @param character
+	 *            , the current character
 	 */
-	private void addChildrenToList(List<ICharacter> allChildrenCharacter, ICharacter character){
-		for(ICharacter childCharacter: character.getChildCharacters()){
+	private void addChildrenToList(List<ICharacter> allChildrenCharacter,
+			ICharacter character) {
+		for (ICharacter childCharacter : character.getChildCharacters()) {
 			allChildrenCharacter.add(childCharacter);
 			addChildrenToList(allChildrenCharacter, childCharacter);
 		}

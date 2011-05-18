@@ -23,22 +23,25 @@ public class SDDSaxParserTest {
 		logger.info("testSDDSaxParser");
 		SDDSaxParser sddSaxParser = null;
 		try {
-			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml");
-			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/testSDD.xml");
-			sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml");
+			// sddSaxParser = new
+			// SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml");
+			// sddSaxParser = new
+			// SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/testSDD.xml");
+			sddSaxParser = new SDDSaxParser(
+					"http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml");
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
-		
+
 		DataSet dataset = sddSaxParser.getDataset();
-		if(dataset != null){
+		if (dataset != null) {
 			// DISPLAY THE DATASET
 			System.out.println("dataSetLabel : " + dataset.getLabel());
 			// CHARACTERS
-			System.out.println("characters ("
-					+ dataset.getCharacters().size() + ") : ");
+			System.out.println("characters (" + dataset.getCharacters().size()
+					+ ") : ");
 			for (ICharacter character : dataset.getCharacters()) {
-	
+
 				if (character instanceof CategoricalCharacter) {
 					System.out.println("\t" + character.getName());
 					for (State state : ((CategoricalCharacter) character)
@@ -50,13 +53,12 @@ public class SDDSaxParserTest {
 				}
 			}
 			// TAXA AND DESCRIPTION
-			System.out.println("taxa (" + dataset.getTaxa().size()
-					+ ") : ");
+			System.out.println("taxa (" + dataset.getTaxa().size() + ") : ");
 			for (Taxon taxon : dataset.getTaxa()) {
 				System.out.println("\t" + taxon.getName());
 				CodedDescription codedDescription = dataset
 						.getCodedDescription(taxon);
-	
+
 				for (ICharacter character : dataset.getCharacters()) {
 					Object characterDescription = codedDescription
 							.getCharacterDescription(character);
@@ -69,8 +71,7 @@ public class SDDSaxParserTest {
 													.toString());
 						} else if (characterDescription instanceof ArrayList<?>) {
 							for (State state : (List<State>) characterDescription) {
-								System.out.println("\t\t\t"
-										+ state.getName());
+								System.out.println("\t\t\t" + state.getName());
 							}
 						}
 					}
@@ -79,9 +80,10 @@ public class SDDSaxParserTest {
 			// CHARACTER TREE BY PARENTS
 			System.out.println("characterTree by parent : ");
 			for (ICharacter character : dataset.getCharacters()) {
-				if(character.getParentCharacter() != null){
+				if (character.getParentCharacter() != null) {
 					System.out.println("\tcharacter->" + character.getName());
-					System.out.println("\tparent->" + character.getParentCharacter().getName());
+					System.out.println("\tparent->"
+							+ character.getParentCharacter().getName());
 					for (State state : character.getInapplicableStates()) {
 						System.out.println("\t\t" + state.getName());
 					}
@@ -90,22 +92,26 @@ public class SDDSaxParserTest {
 			// CHARACTER TREE BY CHILDREN
 			System.out.println("characterTree by children : ");
 			for (ICharacter character : dataset.getCharacters()) {
-				if(character.getParentCharacter() == null){
+				if (character.getParentCharacter() == null) {
 					// display all child characters with its inapplicable states
 					displayRecursiveChildren("\t", character);
 				}
 			}
-		}else{
+		} else {
 			System.out.println("dataset is null !");
 		}
 	}
 
 	/**
 	 * display all the children of character
-	 * @param tabulations, the string tabulation
-	 * @param character, the parent character
+	 * 
+	 * @param tabulations
+	 *            , the string tabulation
+	 * @param character
+	 *            , the parent character
 	 */
-	private void displayRecursiveChildren(String tabulations, ICharacter character) {
+	private void displayRecursiveChildren(String tabulations,
+			ICharacter character) {
 		System.out.println(tabulations + "character->" + character.getName());
 		for (State state : character.getInapplicableStates()) {
 			System.out.println(tabulations + "\tInappState:" + state.getName());

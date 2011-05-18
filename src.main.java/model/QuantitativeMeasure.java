@@ -143,10 +143,10 @@ public class QuantitativeMeasure {
 		return "Min=" + min + "  Max=" + max + "  Mean=" + mean + "  SD=" + sd
 				+ "  UMethLower=" + uMethLower + "  UMethUpper=" + uMethUpper;
 	}
-	
-	
+
 	/**
 	 * calculate the minimum value
+	 * 
 	 * @return Double, the minimum value
 	 */
 	public Double getCalculateMinimum() {
@@ -163,6 +163,7 @@ public class QuantitativeMeasure {
 
 	/**
 	 * calculate the maximum value
+	 * 
 	 * @return Double, the maximum value
 	 */
 	public Double getCalculateMaximum() {

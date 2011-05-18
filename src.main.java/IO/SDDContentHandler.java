@@ -216,21 +216,28 @@ public class SDDContentHandler implements ContentHandler {
 
 			}
 
-			// <State> in <InapplicableIf> in <CharacterTree> && isFirstCharacterTree
-			else if (localName.equals("State") && inInapplicableIf && inCharacterTree && isFirstCharacterTree) {
+			// <State> in <InapplicableIf> in <CharacterTree> &&
+			// isFirstCharacterTree
+			else if (localName.equals("State") && inInapplicableIf
+					&& inCharacterTree && isFirstCharacterTree) {
 				State state = dataset.getStateById(attributs.getValue("ref"));
 				currentInapplicableState.add(state);
 			}
 
-			// <State> in <OnlyApplicableIf> in <CharacterTree> && isFirstCharacterTree
-			else if (localName.equals("State") && inOnlyApplicableIf && inCharacterTree && isFirstCharacterTree) {
+			// <State> in <OnlyApplicableIf> in <CharacterTree> &&
+			// isFirstCharacterTree
+			else if (localName.equals("State") && inOnlyApplicableIf
+					&& inCharacterTree && isFirstCharacterTree) {
 				State state = dataset.getStateById(attributs.getValue("ref"));
 				currentOnlyApplicableState.add(state);
 			}
-			
-			// <Character> in <CharNode> in <CharacterTree> && isFirstCharacterTree
-			else if (localName.equals("Character") && inCharNode && inCharacterTree && isFirstCharacterTree) {
-				currentCharacterNode = dataset.getCharacterById(attributs.getValue("ref"));
+
+			// <Character> in <CharNode> in <CharacterTree> &&
+			// isFirstCharacterTree
+			else if (localName.equals("Character") && inCharNode
+					&& inCharacterTree && isFirstCharacterTree) {
+				currentCharacterNode = dataset.getCharacterById(attributs
+						.getValue("ref"));
 			}
 
 			// <CodedDescriptions>
@@ -428,16 +435,24 @@ public class SDDContentHandler implements ContentHandler {
 			// <CharNode> in <Nodes>
 			else if (localName.equals("CharNode") && inNodes) {
 				inCharNode = false;
-				if(currentInapplicableState.size() > 0){
-					currentCharacterNode.setParentCharacter(dataset.getCharacterByState(currentInapplicableState.get(0)));
-					currentCharacterNode.getInapplicableStates().addAll(currentInapplicableState);
-				}else if(currentOnlyApplicableState.size() > 0){
-					ICharacter character = dataset.getCharacterByState(currentOnlyApplicableState.get(0));
-					if(character != null && character instanceof CategoricalCharacter){
+				if (currentInapplicableState.size() > 0) {
+					currentCharacterNode.setParentCharacter(dataset
+							.getCharacterByState(currentInapplicableState
+									.get(0)));
+					currentCharacterNode.getInapplicableStates().addAll(
+							currentInapplicableState);
+				} else if (currentOnlyApplicableState.size() > 0) {
+					ICharacter character = dataset
+							.getCharacterByState(currentOnlyApplicableState
+									.get(0));
+					if (character != null
+							&& character instanceof CategoricalCharacter) {
 						currentCharacterNode.setParentCharacter(character);
-						List<State> tempList = new ArrayList<State>(((CategoricalCharacter)character).getStates());
+						List<State> tempList = new ArrayList<State>(
+								((CategoricalCharacter) character).getStates());
 						tempList.removeAll(currentOnlyApplicableState);
-						currentCharacterNode.getInapplicableStates().addAll(tempList);
+						currentCharacterNode.getInapplicableStates().addAll(
+								tempList);
 					}
 				}
 				currentInapplicableState = null;
@@ -461,19 +476,25 @@ public class SDDContentHandler implements ContentHandler {
 
 			}
 
-			// <State> in <InapplicableIf> in <CharacterTree> && isFirstCharacterTree
-			else if (localName.equals("State") && inInapplicableIf && inCharacterTree && isFirstCharacterTree) {
-			
+			// <State> in <InapplicableIf> in <CharacterTree> &&
+			// isFirstCharacterTree
+			else if (localName.equals("State") && inInapplicableIf
+					&& inCharacterTree && isFirstCharacterTree) {
+
 			}
 
-			// <State> in <OnlyApplicableIf> in <CharacterTree> && isFirstCharacterTree
-			else if (localName.equals("State") && inOnlyApplicableIf && inCharacterTree && isFirstCharacterTree) {
-				
+			// <State> in <OnlyApplicableIf> in <CharacterTree> &&
+			// isFirstCharacterTree
+			else if (localName.equals("State") && inOnlyApplicableIf
+					&& inCharacterTree && isFirstCharacterTree) {
+
 			}
-			
-			// <Character> in <CharNode> in <CharacterTree> && isFirstCharacterTree
-			else if (localName.equals("Character") && inCharNode && inCharacterTree && isFirstCharacterTree) {
-				
+
+			// <Character> in <CharNode> in <CharacterTree> &&
+			// isFirstCharacterTree
+			else if (localName.equals("Character") && inCharNode
+					&& inCharacterTree && isFirstCharacterTree) {
+
 			}
 
 			// <CodedDescriptions>
@@ -642,9 +663,9 @@ public class SDDContentHandler implements ContentHandler {
 
 	}
 
-	
 	/**
 	 * get the current dataset
+	 * 
 	 * @return DataSet, the current dataset
 	 */
 	public DataSet getDataset() {
@@ -653,7 +674,9 @@ public class SDDContentHandler implements ContentHandler {
 
 	/**
 	 * set the current dataset
-	 * @param DataSet, the current dataset
+	 * 
+	 * @param DataSet
+	 *            , the current dataset
 	 */
 	public void setDataset(DataSet dataset) {
 		this.dataset = dataset;

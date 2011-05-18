@@ -63,19 +63,21 @@ public interface ICharacter {
 	 *            , the parent character
 	 */
 	public void setParentCharacter(ICharacter parentCharacter);
-	
+
 	/**
 	 * @return List<ICharacter>, the list of child characters
 	 */
 	public List<ICharacter> getChildCharacters();
 
 	/**
-	 * @param List<ICharacter>, the list of child characters
+	 * @param List
+	 *            <ICharacter>, the list of child characters
 	 */
 	public void setChildCharacters(List<ICharacter> childCharacters);
 
 	/**
-	 * @param List<ICharacter>, the list of all child characters
+	 * @param List
+	 *            <ICharacter>, the list of all child characters
 	 */
 	public List<ICharacter> getAllChildren();
 }

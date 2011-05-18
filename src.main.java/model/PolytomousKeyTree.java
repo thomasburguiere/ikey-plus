@@ -82,7 +82,7 @@ public class PolytomousKeyTree {
 	public File toSdd() {
 		return null;
 	}
-	
+
 	/**
 	 * get a wiki file containing the key
 	 * 
