@@ -1,12 +1,10 @@
 package services;
 
 import java.util.logging.Logger;
-
 import model.PolytomousKeyTree;
+import IO.SDDSaxParser;
 
 import org.junit.Test;
-
-import IO.SDDSaxParser;
 
 public class IdentificationKeyGeneratorTest {
 
@@ -19,12 +17,9 @@ public class IdentificationKeyGeneratorTest {
 
 		SDDSaxParser sddSaxParser = null;
 		try {
-			// sddSaxParser = new
-			// SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml");
-			// sddSaxParser = new
-			// SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/testSDD.xml");
-			sddSaxParser = new SDDSaxParser(
-					"http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml");
+			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml");
+			sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/testSDD.xml");
+			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml");
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}

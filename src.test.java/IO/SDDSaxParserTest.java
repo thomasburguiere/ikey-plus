@@ -21,17 +21,19 @@ public class SDDSaxParserTest {
 	@Test
 	public void testSDDSaxParser() {
 		logger.info("testSDDSaxParser");
+		long beforeTime = System.currentTimeMillis();
+		
 		SDDSaxParser sddSaxParser = null;
+		
 		try {
-			// sddSaxParser = new
-			// SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml");
-			// sddSaxParser = new
-			// SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/testSDD.xml");
-			sddSaxParser = new SDDSaxParser(
-					"http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml");
+			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml");
+			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/testSDD.xml");
+			sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml");
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
+		
+		double parseDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
 
 		DataSet dataset = sddSaxParser.getDataset();
 		if (dataset != null) {
@@ -100,6 +102,8 @@ public class SDDSaxParserTest {
 		} else {
 			System.out.println("dataset is null !");
 		}
+		
+		System.out.println("\nparseDuration= " + parseDuration + "s");
 	}
 
 	/**
