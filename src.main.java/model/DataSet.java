@@ -194,10 +194,18 @@ public class DataSet {
 	 *         taxon
 	 */
 	public boolean isApplicable(Taxon taxon, ICharacter character) {
-		if (character.getParentCharacter() != null) {
+		if (character.getParentCharacter() != null && isApplicable(taxon, character.getParentCharacter())) {
 			List<State> inapplicableStates = character.getInapplicableStates();
 			List<State> states = (List<State>) this.getCodedDescription(taxon)
 					.getCharacterDescription(character.getParentCharacter());
+			// if one checked state is applicable
+			for (int i = 0; i < states.size(); i++) {
+				State state = states.get(i);
+				if (!inapplicableStates.contains(state)) {
+					return true;
+				}
+			}
+			// if one checked state is inapplicable
 			for (int i = 0; i < states.size(); i++) {
 				State state = states.get(i);
 				if (inapplicableStates.contains(state)) {

@@ -1,15 +1,17 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import model.CategoricalCharacter;
-import model.CodedDescription;
 import model.DataSet;
 import model.ICharacter;
-import model.PolytomousKeyTree;
+import model.SingleAccessKeyNode;
+import model.SingleAccessKeyTree;
 import model.QuantitativeCharacter;
 import model.QuantitativeMeasure;
 import model.State;
@@ -22,7 +24,7 @@ import model.Taxon;
 public class IdentificationKeyGenerator {
 
 	// the Identification Key
-	private PolytomousKeyTree polytomousKeyTree = null;
+	private SingleAccessKeyTree singleAccessKeyTree = null;
 	// the knowledge base
 	private DataSet dataset = null;
 
@@ -36,30 +38,295 @@ public class IdentificationKeyGenerator {
 	/**
 	 * Constructor
 	 * 
-	 * @param polytomousKeyTree
+	 * @param singleAccessKeyTree
 	 * @param dataSet
 	 */
-	public IdentificationKeyGenerator(PolytomousKeyTree polytomousKeyTree,
+	public IdentificationKeyGenerator(SingleAccessKeyTree singleAccessKeyTree,
 			DataSet dataset) {
 		super();
-		this.polytomousKeyTree = polytomousKeyTree;
+		this.singleAccessKeyTree = singleAccessKeyTree;
 		this.dataset = dataset;
 	}
 
 	/**
-	 * create the identification key tree
+	 * Create the identification key tree
 	 */
 	public void createIdentificationKey() {
-		// display score for each character
-		Map<ICharacter, Float> charactersScore = charactersScores(dataset
-				.getCharacters(), dataset.getCodedDescriptions());
-		for (ICharacter character : charactersScore.keySet()) {
-			System.out.println(character.getName() + ": "
-					+ charactersScore.get(character));
-		}
-		System.out.println("\nbestCharacter: "
-				+ bestCharacter(charactersScore).getName());
 
+		this.singleAccessKeyTree = new SingleAccessKeyTree();
+
+		// init root node
+		SingleAccessKeyNode rootNode = new SingleAccessKeyNode();
+		rootNode.setRemainingTaxa(dataset.getTaxa());
+		this.singleAccessKeyTree.setRoot(rootNode);
+
+		// calculate next node
+		calculateSingleAccessKeyNodeChild(rootNode, dataset.getCharacters(),
+				new ArrayList<Taxon>(dataset.getTaxa()));
+
+		// delete useless nodes
+		optimizeSingleAccessKeyTree(null, this.singleAccessKeyTree.getRoot());
+	}
+
+	/**
+	 * Create child Nodes for the SingleAccessKeyTree
+	 * 
+	 * @param parentNode
+	 * @param remaningCharacters
+	 * @param remaningTaxa
+	 */
+	private void calculateSingleAccessKeyNodeChild(SingleAccessKeyNode parentNode,
+			List<ICharacter> remaningCharacters, List<Taxon> remaningTaxa) {
+
+		if (remaningCharacters.size() > 0 && remaningTaxa.size() > 1) {
+
+			// calculate characters score
+			Map<ICharacter, Float> charactersScore = charactersScores(
+					remaningCharacters, remaningTaxa);
+			ICharacter selectedCharacter = bestCharacter(charactersScore);
+
+			/*// display score for each character
+			for (ICharacter character : charactersScore.keySet()) {
+				System.out.println(character.getName() + ": "
+						+ charactersScore.get(character));
+			}
+			System.out.println("\nbestCharacter: "
+					+ selectedCharacter.getName() + "\n");*/
+
+			// if the character is categorical
+			if (selectedCharacter.isSupportsCategoricalData()) {
+				for (State state : ((CategoricalCharacter) selectedCharacter)
+						.getStates()) {
+					List<Taxon> newRemaningTaxa = getRemainingTaxa(
+							remaningTaxa,
+							((CategoricalCharacter) selectedCharacter), state);
+					if (newRemaningTaxa.size() > 0 && ((newRemaningTaxa.size() == remaningTaxa.size() && selectedCharacter.getChildCharacters().size() > 0) || newRemaningTaxa.size() < remaningTaxa.size())) {
+
+						// init new node
+						SingleAccessKeyNode node = new SingleAccessKeyNode();
+						node.setCharacter(selectedCharacter);
+						node.setRemainingTaxa(newRemaningTaxa);
+						node.setCharacterState(state);
+
+						// put new node as child of parentNode
+						parentNode.addChild(node);
+
+						// remove last best character
+						List<ICharacter> newRemainingCharacters = new ArrayList<ICharacter>(
+								remaningCharacters);
+						newRemainingCharacters.remove(selectedCharacter);
+
+						// calculate next node
+						calculateSingleAccessKeyNodeChild(node,
+								newRemainingCharacters, newRemaningTaxa);
+					}
+				}
+				// if the character is numerical
+			} else {
+				List<QuantitativeMeasure> quantitativeMeasures = splitQuantitativeCharacter(selectedCharacter, remaningTaxa);
+				
+				for (QuantitativeMeasure quantitativeMeasure : quantitativeMeasures) {
+					List<Taxon> newRemaningTaxa = getRemainingTaxa(
+							remaningTaxa,
+							((QuantitativeCharacter) selectedCharacter),
+							quantitativeMeasure);
+					if (newRemaningTaxa.size() > 0 && ((newRemaningTaxa.size() == remaningTaxa.size() && selectedCharacter.getChildCharacters().size() > 0) || newRemaningTaxa.size() < remaningTaxa.size())) {
+
+						// init new node
+						SingleAccessKeyNode node = new SingleAccessKeyNode();
+						node.setCharacter(selectedCharacter);
+						node.setRemainingTaxa(newRemaningTaxa);
+						node.setCharacterState(quantitativeMeasure);
+
+						// put new node as child of parentNode
+						parentNode.addChild(node);
+
+						// remove last best character
+						List<ICharacter> newRemainingCharacters = new ArrayList<ICharacter>(
+								remaningCharacters);
+						newRemainingCharacters.remove(selectedCharacter);
+
+						// calculate next node
+						calculateSingleAccessKeyNodeChild(node,
+								newRemainingCharacters, newRemaningTaxa);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Delete useless nodes (parentNode and ChildNode have the same nb of taxa)
+	 * 
+	 * @param parentNode
+	 * @param node
+	 */
+	public void optimizeSingleAccessKeyTree(SingleAccessKeyNode parentNode,
+			SingleAccessKeyNode node) {
+
+		if (node != null) {
+			if (parentNode != null) {
+				if (parentNode.getChildren().size() == 1
+						&& parentNode.getRemainingTaxa().size() == node
+								.getRemainingTaxa().size()) {
+					parentNode.getChildren().addAll(node.getChildren());
+					parentNode.getChildren().remove(node);
+				}
+			}
+			for (int i = 0; i < node.getChildren().size(); i++) {
+				optimizeSingleAccessKeyTree(node, node.getChildren().get(i));
+			}
+		}
+	}
+
+	/**
+	 * @param remaningTaxa
+	 * @param character
+	 * @param state
+	 * @return List<Taxon>, the list of remaining taxa
+	 */
+	private List<Taxon> getRemainingTaxa(List<Taxon> remainingTaxa,
+			CategoricalCharacter character, State state) {
+
+		List<Taxon> newRemainingTaxa = new ArrayList<Taxon>();
+
+		// init new remaining taxa list with taxa description matching the
+		// current state
+		for (Taxon taxon : remainingTaxa) {
+			if (dataset.getCodedDescription(taxon).getCharacterDescription(
+					character) == null
+					|| ((List<State>) dataset.getCodedDescription(taxon)
+							.getCharacterDescription(character))
+							.contains(state)) {
+				newRemainingTaxa.add(taxon);
+			}
+		}
+		return newRemainingTaxa;
+	}
+
+	/**
+	 * @param remaningTaxa
+	 * @param character
+	 * @param quantitativeMeasure
+	 * @return List<Taxon>, the list of remaining taxa
+	 */
+	private List<Taxon> getRemainingTaxa(List<Taxon> remainingTaxa,
+			QuantitativeCharacter character,
+			QuantitativeMeasure quantitativeMeasure) {
+
+		List<Taxon> newRemainingTaxa = new ArrayList<Taxon>();
+
+		// init new remaining taxa list with taxa description matching the
+		// current state
+		for (Taxon taxon : remainingTaxa) {
+			if (quantitativeMeasure.isInclude(((QuantitativeMeasure) dataset
+					.getCodedDescription(taxon).getCharacterDescription(
+							character)))) {
+				newRemainingTaxa.add(taxon);
+			}
+		}
+		return newRemainingTaxa;
+	}
+
+	/**
+	 * calculate the 2 best intervals for quantitative character node
+	 * 
+	 * @param character
+	 * @return List<QuantitativeMeasure>, the two QuantitativeMeasure for the
+	 *         key
+	 */
+	private List<QuantitativeMeasure> splitQuantitativeCharacter(
+			ICharacter character, List<Taxon> remainingTaxa) {
+
+		List<QuantitativeMeasure> quantitativeMeasures = new ArrayList<QuantitativeMeasure>();
+		QuantitativeMeasure quantitativeMeasure1 = new QuantitativeMeasure();
+		QuantitativeMeasure quantitativeMeasure2 = new QuantitativeMeasure();
+
+		// get the Min and Max values of all remaining taxa
+		List<Double> allValues = getAllNumericalValues(character, remainingTaxa);
+		Collections.sort(allValues, new Comparator<Double>() {
+			public int compare(Double val1, Double val2) {
+				final int result;
+				if (val1 > val2) {
+					result = 1;
+				} else if (val1 < val2) {
+					result = -1;
+				} else {
+					result = 0;
+				}
+				return result;
+			}
+		});
+		// determine the best threshold to cut the interval in 2 part
+		Double threshold = null;
+		Double bestThreshold = null;
+		int difference = allValues.size();
+		int differenceMin = difference;
+		int taxaBefore = 0;
+		int taxaAfter = 0;
+		for (int i = 0; i < allValues.size() / 2; i++) {
+			threshold = allValues.get(i * 2 + 1);
+			taxaBefore = 0;
+			taxaAfter = 0;
+			for (int j = 0; j < allValues.size() / 2; j++) {
+				if (allValues.get(j * 2 + 1) <= threshold)
+					taxaBefore++;
+				if (allValues.get(j * 2) >= threshold)
+					taxaAfter++;
+			}
+			difference = Math.abs(taxaBefore - taxaAfter);
+			if (difference < differenceMin) {
+				differenceMin = difference;
+				bestThreshold = threshold;
+			}
+		}
+
+		// split the interval in 2 part
+		if (allValues.size() > 2 && bestThreshold != null) {
+			quantitativeMeasure1.setMin(allValues.get(0));
+			quantitativeMeasure1.setMax(new Double(bestThreshold));
+			quantitativeMeasure1.setMaxInclude(false);
+			quantitativeMeasure2.setMin(new Double(bestThreshold));
+			quantitativeMeasure2.setMax(allValues.get(allValues.size() - 1));
+		}
+
+		// add the 2 new interval to the list
+		quantitativeMeasures.add(quantitativeMeasure1);
+		quantitativeMeasures.add(quantitativeMeasure2);
+
+		return quantitativeMeasures;
+	}
+
+	/**
+	 * @param character
+	 * @param remainingTaxa
+	 * @return List<Double>, the list of Min and Max values of all remaining
+	 *         taxa
+	 */
+	private List<Double> getAllNumericalValues(ICharacter character,
+			List<Taxon> remainingTaxa) {
+
+		List<Double> allValues = new ArrayList<Double>();
+
+		for (Taxon taxon : remainingTaxa) {
+			if (dataset.getCodedDescription(taxon).getCharacterDescription(
+					character) != null
+					&& dataset.getCodedDescription(taxon)
+							.getCharacterDescription(character) instanceof QuantitativeMeasure) {
+
+				Double minTmp = ((QuantitativeMeasure) dataset
+						.getCodedDescription(taxon).getCharacterDescription(
+								character)).getCalculateMinimum();
+				Double maxTmp = ((QuantitativeMeasure) dataset
+						.getCodedDescription(taxon).getCharacterDescription(
+								character)).getCalculateMaximum();
+				if (minTmp != null)
+					allValues.add(minTmp);
+				if (maxTmp != null)
+					allValues.add(maxTmp);
+			}
+		}
+		return allValues;
 	}
 
 	/**
@@ -71,20 +338,20 @@ public class IdentificationKeyGenerator {
 	 *         all taxa
 	 */
 	private Map<ICharacter, Float> charactersScores(
-			List<ICharacter> characters,
-			Map<Taxon, CodedDescription> codedDescriptions) {
+			List<ICharacter> characters, List<Taxon> remaningTaxa) {
 		HashMap<ICharacter, Float> scoreMap = new HashMap<ICharacter, Float>();
 		for (ICharacter character : characters) {
 			if (character.isSupportsCategoricalData()) {
 				scoreMap.put(character, categoricalCharacterScore(
-						(CategoricalCharacter) character, codedDescriptions));
+						(CategoricalCharacter) character, remaningTaxa));
 			} else {
 				scoreMap.put(character, quantitativeCharacterScore(
-						(QuantitativeCharacter) character, codedDescriptions));
+						(QuantitativeCharacter) character, remaningTaxa));
 			}
 		}
-
+		// take in consideration the score of child character
 		considerChildCharacterScore(scoreMap);
+
 		return scoreMap;
 	}
 
@@ -95,7 +362,8 @@ public class IdentificationKeyGenerator {
 	 */
 	private void considerChildCharacterScore(HashMap<ICharacter, Float> scoreMap) {
 		for (ICharacter character : scoreMap.keySet()) {
-			if (character.getChildCharacters().size() > 0) {
+			if (character.isSupportsCategoricalData()
+					&& character.getChildCharacters().size() > 0) {
 				float max = getMaxChildScore(scoreMap, character);
 				if (scoreMap.get(character) < max) {
 					scoreMap.put(character, max);
@@ -115,8 +383,10 @@ public class IdentificationKeyGenerator {
 		List<ICharacter> characters = character.getAllChildren();
 		float max = 0;
 		for (ICharacter childCharacter : characters) {
-			if (scoreMap.get(childCharacter) > max) {
-				max = scoreMap.get(childCharacter);
+			if (scoreMap.get(childCharacter) >= max) {
+				// init max score with child score + 0.001 (to be sure parent
+				// score will be better)
+				max = (float) (scoreMap.get(childCharacter) + 0.001);
 			}
 		}
 		return max;
@@ -132,7 +402,7 @@ public class IdentificationKeyGenerator {
 		ICharacter bestCharacter = null;
 
 		for (ICharacter character : charactersScore.keySet()) {
-			if (charactersScore.get(character) > bestScore) {
+			if (charactersScore.get(character) >= bestScore) {
 				bestScore = charactersScore.get(character);
 				bestCharacter = character;
 			}
@@ -148,31 +418,29 @@ public class IdentificationKeyGenerator {
 	 * @return float, the discriminant power of the categorical character
 	 */
 	private float categoricalCharacterScore(CategoricalCharacter character,
-			Map<Taxon, CodedDescription> codedDescriptions) {
+			List<Taxon> remaningTaxa) {
 		int cpt = 0;
 		float score = 0;
-		List<Taxon> taxonKeys = new ArrayList(codedDescriptions.keySet());
-		for (int i = 0; i < taxonKeys.size() - 1; i++) {
-			for (int j = i + 1; j < taxonKeys.size(); j++) {
-				if (codedDescriptions.get(taxonKeys.get(i)) != null
-						&& codedDescriptions.get(taxonKeys.get(j)) != null) {
+
+		for (int i = 0; i < remaningTaxa.size() - 1; i++) {
+			for (int j = i + 1; j < remaningTaxa.size(); j++) {
+				if (dataset.getCodedDescription(remaningTaxa.get(i)) != null
+						&& dataset.getCodedDescription(remaningTaxa.get(j)) != null) {
 					// if the character is applicable for both of these taxa
-					if (dataset.isApplicable(taxonKeys.get(i), character)
-							&& dataset
-									.isApplicable(taxonKeys.get(j), character)) {
+					if (dataset.isApplicable(remaningTaxa.get(i), character)
+							&& dataset.isApplicable(remaningTaxa.get(j),
+									character)) {
 						// nb of common states which are absent
 						float commonAbsent = 0;
 						// nb of common states which are present
 						float commonPresent = 0;
 						float other = 0;
-
-						List<State> statesList1 = (List<State>) codedDescriptions
-								.get(taxonKeys.get(i)).getCharacterDescription(
-										character);
-						List<State> statesList2 = (List<State>) codedDescriptions
-								.get(taxonKeys.get(j)).getCharacterDescription(
-										character);
-
+						List<State> statesList1 = (List<State>) dataset
+								.getCodedDescription(remaningTaxa.get(i))
+								.getCharacterDescription(character);
+						List<State> statesList2 = (List<State>) dataset
+								.getCodedDescription(remaningTaxa.get(j))
+								.getCharacterDescription(character);
 						if (statesList1 != null && statesList2 != null) {
 							// search common state
 							for (int k = 0; k < character.getStates().size(); k++) {
@@ -184,7 +452,8 @@ public class IdentificationKeyGenerator {
 									} else {
 										other++;
 									}
-								} else { // !(statesList2.contains(state))
+									// !(statesList2.contains(state))
+								} else {
 									if (statesList2.contains(state)) {
 										other++;
 									} else {
@@ -197,15 +466,14 @@ public class IdentificationKeyGenerator {
 								score++;
 							}
 						}
-					} else {
-						// if the character is applicable for one of these taxa
-						cpt--;
+						cpt++;
 					}
 				}
-				cpt++;
 			}
 		}
-		score = score / cpt;
+		if (cpt >= 1) {
+			score = score / cpt;
+		}
 		// round to 10^-2
 		/*
 		 * score *= 100; score = (int)(score+.5); score /= 100;
@@ -221,26 +489,26 @@ public class IdentificationKeyGenerator {
 	 * @return float, the discriminant power of the quantitative character
 	 */
 	private float quantitativeCharacterScore(QuantitativeCharacter character,
-			Map<Taxon, CodedDescription> codedDescriptions) {
+			List<Taxon> remaningTaxa) {
 		int cpt = 0;
 		float score = 0;
-		List<Taxon> taxonKeys = new ArrayList(codedDescriptions.keySet());
-		for (int i = 0; i < taxonKeys.size() - 1; i++) {
-			for (int j = i + 1; j < taxonKeys.size(); j++) {
-				if (codedDescriptions.get(taxonKeys.get(i)) != null
-						&& codedDescriptions.get(taxonKeys.get(j)) != null) {
-					if (dataset.isApplicable(taxonKeys.get(i), character)
-							&& dataset
-									.isApplicable(taxonKeys.get(j), character)) {
+		for (int i = 0; i < remaningTaxa.size() - 1; i++) {
+			for (int j = i + 1; j < remaningTaxa.size(); j++) {
+				if (dataset.getCodedDescription(remaningTaxa.get(i)) != null
+						&& dataset.getCodedDescription(remaningTaxa.get(j)) != null) {
+					if (dataset.isApplicable(remaningTaxa.get(i), character)
+							&& dataset.isApplicable(remaningTaxa.get(j),
+									character)) {
+
+						QuantitativeMeasure quantitativeMeasure1 = (QuantitativeMeasure) dataset
+								.getCodedDescription(remaningTaxa.get(i))
+								.getCharacterDescription(character);
+						QuantitativeMeasure quantitativeMeasure2 = (QuantitativeMeasure) dataset
+								.getCodedDescription(remaningTaxa.get(j))
+								.getCharacterDescription(character);
+
 						// percentage of common values which are shared
 						float commonPercentage = 0;
-
-						QuantitativeMeasure quantitativeMeasure1 = (QuantitativeMeasure) codedDescriptions
-								.get(taxonKeys.get(i)).getCharacterDescription(
-										character);
-						QuantitativeMeasure quantitativeMeasure2 = (QuantitativeMeasure) codedDescriptions
-								.get(taxonKeys.get(j)).getCharacterDescription(
-										character);
 
 						// search common shared values
 						if (quantitativeMeasure1 != null
@@ -268,20 +536,19 @@ public class IdentificationKeyGenerator {
 												.getCalculateMaximum()
 												.doubleValue());
 
-								if (commonPercentage <= 0) {
+								if (commonPercentage == 0) {
 									score++;
 								}
 							}
 						}
-					} else {
-						// if the character is applicable for one of these taxa
-						cpt--;
-					}
+						cpt++;
+					} 
 				}
-				cpt++;
 			}
 		}
-		score = score / cpt;
+		if (cpt >= 1) {
+			score = score / cpt;
+		}
 		// round to 10^-2
 		/*
 		 * score *= 100; score = (int)(score+.5); score /= 100;
@@ -332,17 +599,17 @@ public class IdentificationKeyGenerator {
 	}
 
 	/**
-	 * @return PolytomousKeyTree
+	 * @return SingleAccessKeyTree
 	 */
-	public PolytomousKeyTree getPolytomousKeyTree() {
-		return polytomousKeyTree;
+	public SingleAccessKeyTree getSingleAccessKeyTree() {
+		return singleAccessKeyTree;
 	}
 
 	/**
-	 * @param polytomousKeyTree
+	 * @param singleAccessKeyTree
 	 */
-	public void setPolytomousKeyTree(PolytomousKeyTree polytomousKeyTree) {
-		this.polytomousKeyTree = polytomousKeyTree;
+	public void setSingleAccessKeyTree(SingleAccessKeyTree singleAccessKeyTree) {
+		this.singleAccessKeyTree = singleAccessKeyTree;
 	}
 
 	/**

@@ -12,6 +12,10 @@ public class QuantitativeMeasure {
 	private Double sd = null;
 	private Double uMethLower = null;
 	private Double uMethUpper = null;
+	
+	private boolean minInclude = true;
+	private boolean maxInclude = true;
+	
 
 	/**
 	 * constructor
@@ -133,6 +137,34 @@ public class QuantitativeMeasure {
 	public void setUMethUpper(Double uMethUpper) {
 		this.uMethUpper = uMethUpper;
 	}
+	
+	/**
+	 * @return boolean, true if Min value is include in the interval
+	 */
+	public boolean isMinInclude() {
+		return minInclude;
+	}
+
+	/**
+	 * @param minInclud
+	 */
+	public void setMinInclude(boolean minInclude) {
+		this.minInclude = minInclude;
+	}
+
+	/**
+	 * @return boolean, true if Max value is include in the interval
+	 */
+	public boolean isMaxInclude() {
+		return maxInclude;
+	}
+
+	/**
+	 * @param maxInclud
+	 */
+	public void setMaxInclude(boolean maxInclude) {
+		this.maxInclude = maxInclude;
+	}
 
 	/**
 	 * get the string representation
@@ -142,6 +174,29 @@ public class QuantitativeMeasure {
 	public String toString() {
 		return "Min=" + min + "  Max=" + max + "  Mean=" + mean + "  SD=" + sd
 				+ "  UMethLower=" + uMethLower + "  UMethUpper=" + uMethUpper;
+	}
+	
+	/**
+	 * get the string representation as interval
+	 * 
+	 * @return String, the string representation
+	 */
+	public String toStringInterval() {
+		String start = null;
+		String end = null;
+		
+		if(isMinInclude()){
+			start = "[";
+		}else{
+			start = "]";
+		}
+		
+		if(isMaxInclude()){
+			end = "]";
+		}else{
+			end = "[";
+		}
+		return start + this.getCalculateMinimum() + ", " + this.getCalculateMaximum() + end;
 	}
 
 	/**
@@ -176,6 +231,29 @@ public class QuantitativeMeasure {
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * @param quantitativeMeasure
+	 * @return boolean, true if quantitativeMeasure is include in the current quantitativeMeasure
+	 */
+	public boolean isInclude(QuantitativeMeasure quantitativeMeasure) {
+		if (quantitativeMeasure == null
+				|| quantitativeMeasure.getCalculateMinimum() == null
+				|| quantitativeMeasure.getCalculateMaximum() == null
+				|| this.getCalculateMinimum() == null
+				|| this.getCalculateMaximum() == null
+				|| (quantitativeMeasure.getCalculateMinimum().doubleValue() >= this
+						.getCalculateMinimum().doubleValue() && quantitativeMeasure
+						.getCalculateMinimum().doubleValue() <= this
+						.getCalculateMaximum().doubleValue())
+				|| (quantitativeMeasure.getCalculateMaximum().doubleValue() >= this
+								.getCalculateMinimum().doubleValue() && quantitativeMeasure
+								.getCalculateMaximum().doubleValue() <= this
+								.getCalculateMaximum().doubleValue())) {
+			return true;
+		}
+		return false;
 	}
 
 }

@@ -7,18 +7,17 @@ import java.util.List;
  * @author Florian Causse
  * @created 18-avr.-2011
  */
-public class PolytomousKeyNode {
+public class SingleAccessKeyNode {
 
 	private ICharacter character = null;
-	private ICharacter parentCharacter = null;
-	private Object state = null;
-	private List<PolytomousKeyNode> children = null;
+	private Object characterState = null;
+	private List<SingleAccessKeyNode> children = null;
 	private List<Taxon> remainingTaxa = null;
 
 	/**
 	 * constructor
 	 */
-	public PolytomousKeyNode() {
+	public SingleAccessKeyNode() {
 		this(null, null);
 	}
 
@@ -29,11 +28,11 @@ public class PolytomousKeyNode {
 	 *            , the description concerning the current character ->
 	 *            List<State> or QuantitativeMeasure
 	 */
-	public PolytomousKeyNode(ICharacter character, Object state) {
+	public SingleAccessKeyNode(ICharacter character, Object characterState) {
 		super();
 		this.character = character;
-		this.state = state;
-		this.children = new ArrayList<PolytomousKeyNode>();
+		this.characterState = characterState;
+		this.children = new ArrayList<SingleAccessKeyNode>();
 		this.remainingTaxa = new ArrayList<Taxon>();
 	}
 
@@ -61,8 +60,8 @@ public class PolytomousKeyNode {
 	 * 
 	 * @return Object, the description concerning the node
 	 */
-	public Object getState() {
-		return state;
+	public Object getCharacterState() {
+		return characterState;
 	}
 
 	/**
@@ -71,16 +70,16 @@ public class PolytomousKeyNode {
 	 * @param Object
 	 *            , the description concerning the node
 	 */
-	public void setState(Object state) {
-		this.state = state;
+	public void setCharacterState(Object characterState) {
+		this.characterState = characterState;
 	}
 
 	/**
 	 * get all children
 	 * 
-	 * @return List<PolytomousKeyNode>, all child nodes
+	 * @return List<SingleAccessKeyNode>, all child nodes
 	 */
-	public List<PolytomousKeyNode> getChildren() {
+	public List<SingleAccessKeyNode> getChildren() {
 		return children;
 	}
 
@@ -88,38 +87,20 @@ public class PolytomousKeyNode {
 	 * set all children
 	 * 
 	 * @param List
-	 *            <PolytomousKeyNode>, all child nodes
+	 *            <SingleAccessKeyNode>, all child nodes
 	 */
-	public void setChildren(List<PolytomousKeyNode> children) {
+	public void setChildren(List<SingleAccessKeyNode> children) {
 		this.children = children;
 	}
 
 	/**
 	 * add one child
 	 * 
-	 * @param PolytomousKeyNode
+	 * @param SingleAccessKeyNode
 	 *            , a node
 	 */
-	public void addChild(PolytomousKeyNode polytomousKeyNode) {
-		this.children.add(polytomousKeyNode);
-	}
-
-	/**
-	 * get the parent character
-	 * 
-	 * @return ICharacter
-	 */
-	public ICharacter getParentCharacter() {
-		return parentCharacter;
-	}
-
-	/**
-	 * set the parent character
-	 * 
-	 * @param parentCharacter
-	 */
-	public void setParentCharacter(ICharacter parentCharacter) {
-		this.parentCharacter = parentCharacter;
+	public void addChild(SingleAccessKeyNode singleAccessKeyNode) {
+		this.children.add(singleAccessKeyNode);
 	}
 
 	/**

@@ -1,7 +1,7 @@
 package services;
 
 import java.util.logging.Logger;
-import model.PolytomousKeyTree;
+import model.SingleAccessKeyTree;
 import IO.SDDSaxParser;
 
 import org.junit.Test;
@@ -18,8 +18,9 @@ public class IdentificationKeyGeneratorTest {
 		SDDSaxParser sddSaxParser = null;
 		try {
 			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml");
-			sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/testSDD.xml");
+			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/testSDD.xml");
 			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml");
+			sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml");
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
@@ -27,8 +28,10 @@ public class IdentificationKeyGeneratorTest {
 		beforeTime = System.currentTimeMillis();
 
 		IdentificationKeyGenerator identificationKeyGenerator = new IdentificationKeyGenerator(
-				new PolytomousKeyTree(), sddSaxParser.getDataset());
+				new SingleAccessKeyTree(), sddSaxParser.getDataset());
 		identificationKeyGenerator.createIdentificationKey();
+		
+		System.out.println(identificationKeyGenerator.getSingleAccessKeyTree().toString());
 
 		double keyDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
 		System.out.println("\nparseDuration= " + parseDuration + "s");
