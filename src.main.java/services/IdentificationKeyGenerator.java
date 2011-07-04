@@ -72,17 +72,17 @@ public class IdentificationKeyGenerator {
 	 * Create child Nodes for the SingleAccessKeyTree
 	 * 
 	 * @param parentNode
-	 * @param remaningCharacters
-	 * @param remaningTaxa
+	 * @param remainingCharacters
+	 * @param remainingTaxa
 	 */
 	private void calculateSingleAccessKeyNodeChild(SingleAccessKeyNode parentNode,
-			List<ICharacter> remaningCharacters, List<Taxon> remaningTaxa) {
+			List<ICharacter> remainingCharacters, List<Taxon> remainingTaxa) {
 
-		if (remaningCharacters.size() > 0 && remaningTaxa.size() > 1) {
+		if (remainingCharacters.size() > 0 && remainingTaxa.size() > 1) {
 
 			// calculate characters score
 			Map<ICharacter, Float> charactersScore = charactersScores(
-					remaningCharacters, remaningTaxa);
+					remainingCharacters, remainingTaxa);
 			ICharacter selectedCharacter = bestCharacter(charactersScore);
 
 			/*// display score for each character
@@ -98,9 +98,9 @@ public class IdentificationKeyGenerator {
 				for (State state : ((CategoricalCharacter) selectedCharacter)
 						.getStates()) {
 					List<Taxon> newRemainingTaxa = getRemainingTaxa(
-							remaningTaxa,
+							remainingTaxa,
 							((CategoricalCharacter) selectedCharacter), state);
-					if (newRemainingTaxa.size() > 0 && ((newRemainingTaxa.size() == remaningTaxa.size() && selectedCharacter.getChildCharacters().size() > 0) || newRemainingTaxa.size() < remaningTaxa.size())) {
+					if (newRemainingTaxa.size() > 0 && ((newRemainingTaxa.size() == remainingTaxa.size() && selectedCharacter.getChildCharacters().size() > 0) || newRemainingTaxa.size() < remainingTaxa.size())) {
 
 						// init new node
 						SingleAccessKeyNode node = new SingleAccessKeyNode();
@@ -113,7 +113,7 @@ public class IdentificationKeyGenerator {
 
 						// remove last best character
 						List<ICharacter> newRemainingCharacters = new ArrayList<ICharacter>(
-								remaningCharacters);
+								remainingCharacters);
 						newRemainingCharacters.remove(selectedCharacter);
 
 						// calculate next node
@@ -123,14 +123,14 @@ public class IdentificationKeyGenerator {
 				}
 				// if the character is numerical
 			} else {
-				List<QuantitativeMeasure> quantitativeMeasures = splitQuantitativeCharacter(selectedCharacter, remaningTaxa);
+				List<QuantitativeMeasure> quantitativeMeasures = splitQuantitativeCharacter(selectedCharacter, remainingTaxa);
 				
 				for (QuantitativeMeasure quantitativeMeasure : quantitativeMeasures) {
 					List<Taxon> newRemaningTaxa = getRemainingTaxa(
-							remaningTaxa,
+							remainingTaxa,
 							((QuantitativeCharacter) selectedCharacter),
 							quantitativeMeasure);
-					if (newRemaningTaxa.size() > 0 && ((newRemaningTaxa.size() == remaningTaxa.size() && selectedCharacter.getChildCharacters().size() > 0) || newRemaningTaxa.size() < remaningTaxa.size())) {
+					if (newRemaningTaxa.size() > 0 && ((newRemaningTaxa.size() == remainingTaxa.size() && selectedCharacter.getChildCharacters().size() > 0) || newRemaningTaxa.size() < remainingTaxa.size())) {
 
 						// init new node
 						SingleAccessKeyNode node = new SingleAccessKeyNode();
@@ -143,7 +143,7 @@ public class IdentificationKeyGenerator {
 
 						// remove last best character
 						List<ICharacter> newRemainingCharacters = new ArrayList<ICharacter>(
-								remaningCharacters);
+								remainingCharacters);
 						newRemainingCharacters.remove(selectedCharacter);
 
 						// calculate next node
