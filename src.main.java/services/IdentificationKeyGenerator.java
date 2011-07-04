@@ -97,15 +97,15 @@ public class IdentificationKeyGenerator {
 			if (selectedCharacter.isSupportsCategoricalData()) {
 				for (State state : ((CategoricalCharacter) selectedCharacter)
 						.getStates()) {
-					List<Taxon> newRemaningTaxa = getRemainingTaxa(
+					List<Taxon> newRemainingTaxa = getRemainingTaxa(
 							remaningTaxa,
 							((CategoricalCharacter) selectedCharacter), state);
-					if (newRemaningTaxa.size() > 0 && ((newRemaningTaxa.size() == remaningTaxa.size() && selectedCharacter.getChildCharacters().size() > 0) || newRemaningTaxa.size() < remaningTaxa.size())) {
+					if (newRemainingTaxa.size() > 0 && ((newRemainingTaxa.size() == remaningTaxa.size() && selectedCharacter.getChildCharacters().size() > 0) || newRemainingTaxa.size() < remaningTaxa.size())) {
 
 						// init new node
 						SingleAccessKeyNode node = new SingleAccessKeyNode();
 						node.setCharacter(selectedCharacter);
-						node.setRemainingTaxa(newRemaningTaxa);
+						node.setRemainingTaxa(newRemainingTaxa);
 						node.setCharacterState(state);
 
 						// put new node as child of parentNode
@@ -118,7 +118,7 @@ public class IdentificationKeyGenerator {
 
 						// calculate next node
 						calculateSingleAccessKeyNodeChild(node,
-								newRemainingCharacters, newRemaningTaxa);
+								newRemainingCharacters, newRemainingTaxa);
 					}
 				}
 				// if the character is numerical
