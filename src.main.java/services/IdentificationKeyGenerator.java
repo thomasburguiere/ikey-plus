@@ -90,8 +90,8 @@ public class IdentificationKeyGenerator {
 				System.out.println(character.getName() + ": "
 						+ charactersScore.get(character));
 			}
-			System.out.println("\nbestCharacter: "
-					+ selectedCharacter.getName() + "\n");*/
+			System.out.println(System.getProperty("line.separator")+"bestCharacter: "
+					+ selectedCharacter.getName() + System.getProperty("line.separator"));*/
 
 			// if the character is categorical
 			if (selectedCharacter.isSupportsCategoricalData()) {

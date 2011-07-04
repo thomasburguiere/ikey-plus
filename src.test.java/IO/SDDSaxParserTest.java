@@ -104,7 +104,7 @@ public class SDDSaxParserTest {
 			System.out.println("dataset is null !");
 		}
 		
-		System.out.println("\nparseDuration= " + parseDuration + "s");
+		System.out.println(System.getProperty("line.separator")+"parseDuration= " + parseDuration + "s");
 	}
 
 	/**

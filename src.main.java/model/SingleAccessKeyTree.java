@@ -68,7 +68,7 @@ public class SingleAccessKeyTree {
 			}else{
 				output.append(tabulations + "taxa=" + node.getRemainingTaxa().size());
 			}
-			output.append("\n");
+			output.append(System.getProperty("line.separator"));
 			tabulations = tabulations + "\t";
 		}
 		for(SingleAccessKeyNode childNode: node.getChildren()){
@@ -83,7 +83,7 @@ public class SingleAccessKeyTree {
 	 */
 	public String toString() {
 		StringBuffer output = new StringBuffer();
-		recursivetoString(root, output, "\n");
+		recursivetoString(root, output, System.getProperty("line.separator"));
 		return output.toString();
 	}
 	
