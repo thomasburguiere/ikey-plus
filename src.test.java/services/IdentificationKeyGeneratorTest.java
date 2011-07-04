@@ -34,7 +34,7 @@ public class IdentificationKeyGeneratorTest {
 		System.out.println(identificationKeyGenerator.getSingleAccessKeyTree().toString());
 
 		double keyDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
-		System.out.println("\nparseDuration= " + parseDuration + "s");
+		System.out.println(System.getProperty("line.separator")+"parseDuration= " + parseDuration + "s");
 		System.out.println("keyDuration= " + keyDuration + "s");
 	}
 }
