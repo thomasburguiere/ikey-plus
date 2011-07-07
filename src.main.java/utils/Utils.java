@@ -30,12 +30,4 @@ public class Utils {
 			errorMessage = msg;
 		}
 	}
-
-	/**
-	 * Add a message in errorMessage attribute
-	 * @param message
-	 */
-	public static void addErrorMessage(String message) {
-		errorMessage = errorMessage + System.getProperty("line.separator") + message;
-	}
 }
