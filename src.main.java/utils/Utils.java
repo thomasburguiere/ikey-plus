@@ -2,6 +2,8 @@ package utils;
 
 public class Utils {
 
+	static String errorMessage = null;
+	
 	/**
 	 * Convert a String value to a Double value
 	 * 
@@ -16,6 +18,16 @@ public class Utils {
 			return doubleValue;
 		} catch (Exception e) {
 			return null;
+		}
+	}
+
+	/**
+	 * Init the errorMessage attribute
+	 * @param msg
+	 */
+	public static void setErrorMessage(String msg) {
+		if(errorMessage == null){
+			errorMessage = msg;
 		}
 	}
 }

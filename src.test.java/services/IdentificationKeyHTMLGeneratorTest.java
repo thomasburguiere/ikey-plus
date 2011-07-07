@@ -6,6 +6,8 @@ import IO.SDDSaxParser;
 
 import org.junit.Test;
 
+import utils.IdentificationKeyErrorMessage;
+
 public class IdentificationKeyHTMLGeneratorTest {
 
 	public Logger logger = Logger.getAnonymousLogger();
@@ -19,9 +21,10 @@ public class IdentificationKeyHTMLGeneratorTest {
 		try {
 			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml");
 			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/testSDD.xml");
-//			sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml");
+			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml");
 			sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml");
 		} catch (Throwable t) {
+			new IdentificationKeyErrorMessage("SDD parsing error", t);
 			t.printStackTrace();
 		}
 		double parseDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
