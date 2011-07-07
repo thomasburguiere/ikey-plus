@@ -19,8 +19,8 @@ public class IdentificationKeyHTMLGeneratorTest {
 		try {
 			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml");
 			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/testSDD.xml");
-			sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml");
-			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml");
+//			sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml");
+			sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml");
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
@@ -31,7 +31,7 @@ public class IdentificationKeyHTMLGeneratorTest {
 				new SingleAccessKeyTree(), sddSaxParser.getDataset());
 		identificationKeyGenerator.createIdentificationKey();
 		
-		System.out.println(identificationKeyGenerator.getSingleAccessKeyTree().toHtml());
+		System.out.println(identificationKeyGenerator.getSingleAccessKeyTree().toHtmlString());
 
 		double keyDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
 		System.out.println(System.getProperty("line.separator")+"parseDuration= " + parseDuration + "s");
