@@ -381,12 +381,14 @@ public class IdentificationKeyGenerator {
 	private float getMaxChildScore(HashMap<ICharacter, Float> scoreMap,
 			ICharacter character) {
 		List<ICharacter> characters = character.getAllChildren();
-		float max = 0;
+		float max = -1;
 		for (ICharacter childCharacter : characters) {
-			if (scoreMap.get(childCharacter) >= max) {
-				// init max score with child score + 0.001 (to be sure parent
+			if(max == -1)
+					max = scoreMap.get(childCharacter);
+			if (scoreMap.get(childCharacter) > max) {
+				// init max score with child score + 0.0001 (to be sure parent
 				// score will be better)
-				max = (float) (scoreMap.get(childCharacter) + 0.001);
+				max = (float) (scoreMap.get(childCharacter) + 0.0001);
 			}
 		}
 		return max;
