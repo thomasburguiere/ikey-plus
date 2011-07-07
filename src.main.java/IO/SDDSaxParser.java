@@ -10,8 +10,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-import utils.SaxErrorHandler;
-
 /**
  * This class allow to launch the parsing of SDD file
  * 
@@ -29,13 +27,6 @@ public class SDDSaxParser {
 	public SDDSaxParser(String uri) throws SAXException, IOException {
 		XMLReader saxReader = XMLReaderFactory
 				.createXMLReader("org.apache.xerces.parsers.SAXParser");
-
-		// set to true the validation of XML using XSD
-		saxReader.setFeature("http://xml.org/sax/features/validation", true);
-		saxReader.setFeature("http://apache.org/xml/features/validation/schema", true);
-		saxReader.setProperty("http://apache.org/xml/properties/schema/external-noNamespaceSchemaLocation", "http://rs.tdwg.org/UBIF/2006/Schema/1.1/SDD.xsd");
-		// init the ErrorHandler
-		saxReader.setErrorHandler(new SaxErrorHandler());
 
 		SDDContentHandler handler = new SDDContentHandler();
 		saxReader.setContentHandler(handler);

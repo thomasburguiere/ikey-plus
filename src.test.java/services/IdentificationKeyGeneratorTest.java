@@ -7,6 +7,7 @@ import IO.SDDSaxParser;
 import org.junit.Test;
 
 import utils.IdentificationKeyErrorMessage;
+import utils.Utils;
 
 public class IdentificationKeyGeneratorTest {
 
@@ -21,8 +22,8 @@ public class IdentificationKeyGeneratorTest {
 		try {
 			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml");
 			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/testSDD.xml");
-			sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml");
-			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml");
+			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml");
+			sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml");
 		} catch (Throwable t) {
 			new IdentificationKeyErrorMessage("SDD parsing error", t);
 			t.printStackTrace();
@@ -34,6 +35,8 @@ public class IdentificationKeyGeneratorTest {
 				new SingleAccessKeyTree(), sddSaxParser.getDataset());
 		identificationKeyGenerator.createIdentificationKey();
 		
+		if(Utils.errorMessage != null)
+			System.out.println("ErrorMessage= " + Utils.errorMessage);
 		System.out.println(identificationKeyGenerator.getSingleAccessKeyTree().toString());
 
 		double keyDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;

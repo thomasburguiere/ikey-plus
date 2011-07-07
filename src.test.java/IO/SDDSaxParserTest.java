@@ -28,11 +28,11 @@ public class SDDSaxParserTest {
 		SDDSaxParser sddSaxParser = null;
 		
 		try {
-			sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/wrongSDD.xml");
+			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/wrongSDD.xml");
 			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml");
 			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/testSDD.xml");
 			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml");
-			//sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml");
+			sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml");
 		} catch (Throwable t) {
 			new IdentificationKeyErrorMessage("SDD parsing error", t);
 			t.printStackTrace();

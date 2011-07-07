@@ -2,7 +2,7 @@ package utils;
 
 public class Utils {
 
-	static String errorMessage = null;
+	public static String errorMessage = null;
 	
 	/**
 	 * Convert a String value to a Double value
@@ -29,5 +29,13 @@ public class Utils {
 		if(errorMessage == null){
 			errorMessage = msg;
 		}
+	}
+
+	/**
+	 * Add a message in errorMessage attribute
+	 * @param message
+	 */
+	public static void addErrorMessage(String message) {
+		errorMessage = errorMessage + System.getProperty("line.separator") + message;
 	}
 }
