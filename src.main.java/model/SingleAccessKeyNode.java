@@ -121,6 +121,9 @@ public class SingleAccessKeyNode {
 		this.remainingTaxa = remainingTaxa;
 	}
 	
+	/**
+	 * @return true if this SingleAccessKeyNode's child list size is greater than 0
+	 */
 	public boolean hasChild(){
 		return children.size()>0;
 	}
