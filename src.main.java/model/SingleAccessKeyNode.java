@@ -120,4 +120,8 @@ public class SingleAccessKeyNode {
 	public void setRemainingTaxa(List<Taxon> remainingTaxa) {
 		this.remainingTaxa = remainingTaxa;
 	}
+	
+	public boolean hasChild(){
+		return children.size()>0;
+	}
 }
