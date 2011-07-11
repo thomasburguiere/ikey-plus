@@ -7,6 +7,7 @@ import IO.SDDSaxParser;
 import org.junit.Test;
 
 import utils.IdentificationKeyErrorMessage;
+import utils.Utils;
 
 public class IdentificationKeyHTMLGeneratorTest {
 
@@ -18,15 +19,16 @@ public class IdentificationKeyHTMLGeneratorTest {
 		long beforeTime = System.currentTimeMillis();
 
 		SDDSaxParser sddSaxParser = null;
-		try{
+		try {
 			// sddSaxParser = new
 			// SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml");
 			// sddSaxParser = new
 			// SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/testSDD.xml");
 			// sddSaxParser = new
 			// SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml");
-			sddSaxParser = new SDDSaxParser("http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml");
-		}catch(Throwable t){
+			sddSaxParser = new SDDSaxParser(
+					"http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml");
+		} catch (Throwable t) {
 			new IdentificationKeyErrorMessage("SDD parsing error", t);
 			t.printStackTrace();
 		}
@@ -34,19 +36,23 @@ public class IdentificationKeyHTMLGeneratorTest {
 		beforeTime = System.currentTimeMillis();
 
 		IdentificationKeyGenerator identificationKeyGenerator = null;
-		try{
+		try {
 			identificationKeyGenerator = new IdentificationKeyGenerator(
 					new SingleAccessKeyTree(), sddSaxParser.getDataset());
 			identificationKeyGenerator.createIdentificationKey();
-		}catch(Throwable t){
+		} catch (Throwable t) {
 			new IdentificationKeyErrorMessage("Creating key error", t);
 			t.printStackTrace();
 		}
 
-		System.out.println(identificationKeyGenerator.getSingleAccessKeyTree().toHtml());
+		if (Utils.errorMessage != null)
+			System.out.println("ErrorMessage= " + Utils.errorMessage);
+		System.out.println(identificationKeyGenerator.getSingleAccessKeyTree()
+				.toHtml());
 
 		double keyDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
-		System.out.println(System.getProperty("line.separator") + "parseDuration= " + parseDuration + "s");
+		System.out.println(System.getProperty("line.separator")
+				+ "parseDuration= " + parseDuration + "s");
 		System.out.println("keyDuration= " + keyDuration + "s");
 	}
 }
