@@ -44,7 +44,7 @@ public class IdentificationKeyHTMLGeneratorTest {
 		}
 
 		System.out.println(identificationKeyGenerator.getSingleAccessKeyTree()
-				.toString());
+				.toHtml());
 
 		double keyDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
 		System.out.println(System.getProperty("line.separator")
