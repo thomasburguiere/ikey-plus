@@ -3,7 +3,7 @@ package utils;
 public class Utils {
 
 	public static String errorMessage = null;
-	
+
 	/**
 	 * Convert a String value to a Double value
 	 * 
@@ -23,10 +23,11 @@ public class Utils {
 
 	/**
 	 * Init the errorMessage attribute
+	 * 
 	 * @param msg
 	 */
 	public static void setErrorMessage(String msg) {
-		if(errorMessage == null){
+		if (errorMessage == null) {
 			errorMessage = msg;
 		}
 	}

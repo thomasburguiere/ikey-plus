@@ -12,10 +12,9 @@ public class QuantitativeMeasure {
 	private Double sd = null;
 	private Double uMethLower = null;
 	private Double uMethUpper = null;
-	
+
 	private boolean minInclude = true;
 	private boolean maxInclude = true;
-	
 
 	/**
 	 * constructor
@@ -137,7 +136,7 @@ public class QuantitativeMeasure {
 	public void setUMethUpper(Double uMethUpper) {
 		this.uMethUpper = uMethUpper;
 	}
-	
+
 	/**
 	 * @return boolean, true if Min value is include in the interval
 	 */
@@ -175,7 +174,7 @@ public class QuantitativeMeasure {
 		return "Min=" + min + "  Max=" + max + "  Mean=" + mean + "  SD=" + sd
 				+ "  UMethLower=" + uMethLower + "  UMethUpper=" + uMethUpper;
 	}
-	
+
 	/**
 	 * get the string representation as interval
 	 * 
@@ -184,19 +183,20 @@ public class QuantitativeMeasure {
 	public String toStringInterval() {
 		String start = null;
 		String end = null;
-		
-		if(isMinInclude()){
+
+		if (isMinInclude()) {
 			start = "[";
-		}else{
+		} else {
 			start = "]";
 		}
-		
-		if(isMaxInclude()){
+
+		if (isMaxInclude()) {
 			end = "]";
-		}else{
+		} else {
 			end = "[";
 		}
-		return start + this.getCalculateMinimum() + ", " + this.getCalculateMaximum() + end;
+		return start + this.getCalculateMinimum() + ", "
+				+ this.getCalculateMaximum() + end;
 	}
 
 	/**
@@ -235,7 +235,8 @@ public class QuantitativeMeasure {
 
 	/**
 	 * @param quantitativeMeasure
-	 * @return boolean, true if quantitativeMeasure is include in the current quantitativeMeasure
+	 * @return boolean, true if quantitativeMeasure is include in the current
+	 *         quantitativeMeasure
 	 */
 	public boolean isInclude(QuantitativeMeasure quantitativeMeasure) {
 		if (quantitativeMeasure == null
@@ -248,9 +249,9 @@ public class QuantitativeMeasure {
 						.getCalculateMinimum().doubleValue() <= this
 						.getCalculateMaximum().doubleValue())
 				|| (quantitativeMeasure.getCalculateMaximum().doubleValue() >= this
-								.getCalculateMinimum().doubleValue() && quantitativeMeasure
-								.getCalculateMaximum().doubleValue() <= this
-								.getCalculateMaximum().doubleValue())) {
+						.getCalculateMinimum().doubleValue() && quantitativeMeasure
+						.getCalculateMaximum().doubleValue() <= this
+						.getCalculateMaximum().doubleValue())) {
 			return true;
 		}
 		return false;

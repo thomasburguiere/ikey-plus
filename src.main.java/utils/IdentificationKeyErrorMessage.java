@@ -8,11 +8,11 @@ package utils;
  * 
  */
 public class IdentificationKeyErrorMessage {
-	
+
 	public IdentificationKeyErrorMessage(String msg) {
 		Utils.setErrorMessage(msg);
 	}
-	
+
 	public IdentificationKeyErrorMessage(String msg, Throwable t) {
 		Utils.setErrorMessage(msg + ": " + t.getMessage());
 	}

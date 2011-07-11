@@ -1,11 +1,14 @@
 package services;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.xml.sax.SAXException;
 
 import model.CategoricalCharacter;
 import model.DataSet;
@@ -51,7 +54,7 @@ public class IdentificationKeyGenerator {
 	/**
 	 * Create the identification key tree
 	 */
-	public void createIdentificationKey() {
+	public void createIdentificationKey() throws Exception {
 
 		this.singleAccessKeyTree = new SingleAccessKeyTree();
 
@@ -75,8 +78,10 @@ public class IdentificationKeyGenerator {
 	 * @param remainingCharacters
 	 * @param remainingTaxa
 	 */
-	private void calculateSingleAccessKeyNodeChild(SingleAccessKeyNode parentNode,
-			List<ICharacter> remainingCharacters, List<Taxon> remainingTaxa) {
+	private void calculateSingleAccessKeyNodeChild(
+			SingleAccessKeyNode parentNode,
+			List<ICharacter> remainingCharacters, List<Taxon> remainingTaxa)
+			throws Exception {
 
 		if (remainingCharacters.size() > 0 && remainingTaxa.size() > 1) {
 
@@ -85,13 +90,16 @@ public class IdentificationKeyGenerator {
 					remainingCharacters, remainingTaxa);
 			ICharacter selectedCharacter = bestCharacter(charactersScore);
 
-			/*// display score for each character
-			for (ICharacter character : charactersScore.keySet()) {
-				System.out.println(character.getName() + ": "
-						+ charactersScore.get(character));
-			}
-			System.out.println(System.getProperty("line.separator")+"bestCharacter: "
-					+ selectedCharacter.getName() + System.getProperty("line.separator"));*/
+			/*
+			 * // display score for each character for (ICharacter character :
+			 * charactersScore.keySet()) {
+			 * System.out.println(character.getName() + ": " +
+			 * charactersScore.get(character)); }
+			 * System.out.println(System.getProperty
+			 * ("line.separator")+"bestCharacter: " +
+			 * selectedCharacter.getName() +
+			 * System.getProperty("line.separator"));
+			 */
 
 			// if the character is categorical
 			if (selectedCharacter.isSupportsCategoricalData()) {
@@ -100,7 +108,11 @@ public class IdentificationKeyGenerator {
 					List<Taxon> newRemainingTaxa = getRemainingTaxa(
 							remainingTaxa,
 							((CategoricalCharacter) selectedCharacter), state);
-					if (newRemainingTaxa.size() > 0 && ((newRemainingTaxa.size() == remainingTaxa.size() && selectedCharacter.getChildCharacters().size() > 0) || newRemainingTaxa.size() < remainingTaxa.size())) {
+					if (newRemainingTaxa.size() > 0
+							&& ((newRemainingTaxa.size() == remainingTaxa
+									.size() && selectedCharacter
+									.getChildCharacters().size() > 0) || newRemainingTaxa
+									.size() < remainingTaxa.size())) {
 
 						// init new node
 						SingleAccessKeyNode node = new SingleAccessKeyNode();
@@ -123,14 +135,18 @@ public class IdentificationKeyGenerator {
 				}
 				// if the character is numerical
 			} else {
-				List<QuantitativeMeasure> quantitativeMeasures = splitQuantitativeCharacter(selectedCharacter, remainingTaxa);
-				
+				List<QuantitativeMeasure> quantitativeMeasures = splitQuantitativeCharacter(
+						selectedCharacter, remainingTaxa);
+
 				for (QuantitativeMeasure quantitativeMeasure : quantitativeMeasures) {
 					List<Taxon> newRemaningTaxa = getRemainingTaxa(
 							remainingTaxa,
 							((QuantitativeCharacter) selectedCharacter),
 							quantitativeMeasure);
-					if (newRemaningTaxa.size() > 0 && ((newRemaningTaxa.size() == remainingTaxa.size() && selectedCharacter.getChildCharacters().size() > 0) || newRemaningTaxa.size() < remainingTaxa.size())) {
+					if (newRemaningTaxa.size() > 0
+							&& ((newRemaningTaxa.size() == remainingTaxa.size() && selectedCharacter
+									.getChildCharacters().size() > 0) || newRemaningTaxa
+									.size() < remainingTaxa.size())) {
 
 						// init new node
 						SingleAccessKeyNode node = new SingleAccessKeyNode();
@@ -162,7 +178,7 @@ public class IdentificationKeyGenerator {
 	 * @param node
 	 */
 	public void optimizeSingleAccessKeyTree(SingleAccessKeyNode parentNode,
-			SingleAccessKeyNode node) {
+			SingleAccessKeyNode node) throws Exception {
 
 		if (node != null) {
 			if (parentNode != null) {
@@ -186,7 +202,7 @@ public class IdentificationKeyGenerator {
 	 * @return List<Taxon>, the list of remaining taxa
 	 */
 	private List<Taxon> getRemainingTaxa(List<Taxon> remainingTaxa,
-			CategoricalCharacter character, State state) {
+			CategoricalCharacter character, State state) throws Exception {
 
 		List<Taxon> newRemainingTaxa = new ArrayList<Taxon>();
 
@@ -212,7 +228,7 @@ public class IdentificationKeyGenerator {
 	 */
 	private List<Taxon> getRemainingTaxa(List<Taxon> remainingTaxa,
 			QuantitativeCharacter character,
-			QuantitativeMeasure quantitativeMeasure) {
+			QuantitativeMeasure quantitativeMeasure) throws Exception {
 
 		List<Taxon> newRemainingTaxa = new ArrayList<Taxon>();
 
@@ -236,7 +252,7 @@ public class IdentificationKeyGenerator {
 	 *         key
 	 */
 	private List<QuantitativeMeasure> splitQuantitativeCharacter(
-			ICharacter character, List<Taxon> remainingTaxa) {
+			ICharacter character, List<Taxon> remainingTaxa) throws Exception {
 
 		List<QuantitativeMeasure> quantitativeMeasures = new ArrayList<QuantitativeMeasure>();
 		QuantitativeMeasure quantitativeMeasure1 = new QuantitativeMeasure();
@@ -304,7 +320,7 @@ public class IdentificationKeyGenerator {
 	 *         taxa
 	 */
 	private List<Double> getAllNumericalValues(ICharacter character,
-			List<Taxon> remainingTaxa) {
+			List<Taxon> remainingTaxa) throws Exception {
 
 		List<Double> allValues = new ArrayList<Double>();
 
@@ -338,15 +354,20 @@ public class IdentificationKeyGenerator {
 	 *         all taxa
 	 */
 	private Map<ICharacter, Float> charactersScores(
-			List<ICharacter> characters, List<Taxon> remaningTaxa) {
+			List<ICharacter> characters, List<Taxon> remaningTaxa)
+			throws Exception {
 		HashMap<ICharacter, Float> scoreMap = new HashMap<ICharacter, Float>();
 		for (ICharacter character : characters) {
 			if (character.isSupportsCategoricalData()) {
-				scoreMap.put(character, categoricalCharacterScore(
-						(CategoricalCharacter) character, remaningTaxa));
+				scoreMap.put(
+						character,
+						categoricalCharacterScore(
+								(CategoricalCharacter) character, remaningTaxa));
 			} else {
-				scoreMap.put(character, quantitativeCharacterScore(
-						(QuantitativeCharacter) character, remaningTaxa));
+				scoreMap.put(
+						character,
+						quantitativeCharacterScore(
+								(QuantitativeCharacter) character, remaningTaxa));
 			}
 		}
 		// take in consideration the score of child character
@@ -360,7 +381,8 @@ public class IdentificationKeyGenerator {
 	 * 
 	 * @param scoreMap
 	 */
-	private void considerChildCharacterScore(HashMap<ICharacter, Float> scoreMap) {
+	private void considerChildCharacterScore(HashMap<ICharacter, Float> scoreMap)
+			throws Exception {
 		for (ICharacter character : scoreMap.keySet()) {
 			if (character.isSupportsCategoricalData()
 					&& character.getChildCharacters().size() > 0) {
@@ -379,15 +401,16 @@ public class IdentificationKeyGenerator {
 	 * @return float, the max score of all character child
 	 */
 	private float getMaxChildScore(HashMap<ICharacter, Float> scoreMap,
-			ICharacter character) {
+			ICharacter character) throws Exception {
 		List<ICharacter> characters = character.getAllChildren();
 		float max = -1;
 		for (ICharacter childCharacter : characters) {
-			if(scoreMap.get(childCharacter) != null){
-				if(max == -1)
-						max = scoreMap.get(childCharacter);
+			if (scoreMap.get(childCharacter) != null) {
+				if (max == -1)
+					max = scoreMap.get(childCharacter);
 				if (scoreMap.get(childCharacter) > max) {
-					// init max score with child score + 0.0001 (to be sure parent
+					// init max score with child score + 0.0001 (to be sure
+					// parent
 					// score will be better)
 					max = (float) (scoreMap.get(childCharacter) + 0.0001);
 				}
@@ -400,7 +423,8 @@ public class IdentificationKeyGenerator {
 	 * @param charactersScore
 	 * @return ICharacter, the best character
 	 */
-	private ICharacter bestCharacter(Map<ICharacter, Float> charactersScore) {
+	private ICharacter bestCharacter(Map<ICharacter, Float> charactersScore)
+			throws Exception {
 
 		float bestScore = 0;
 		ICharacter bestCharacter = null;
@@ -422,7 +446,7 @@ public class IdentificationKeyGenerator {
 	 * @return float, the discriminant power of the categorical character
 	 */
 	private float categoricalCharacterScore(CategoricalCharacter character,
-			List<Taxon> remaningTaxa) {
+			List<Taxon> remaningTaxa) throws Exception {
 		int cpt = 0;
 		float score = 0;
 
@@ -493,7 +517,7 @@ public class IdentificationKeyGenerator {
 	 * @return float, the discriminant power of the quantitative character
 	 */
 	private float quantitativeCharacterScore(QuantitativeCharacter character,
-			List<Taxon> remaningTaxa) {
+			List<Taxon> remaningTaxa) throws Exception {
 		int cpt = 0;
 		float score = 0;
 		for (int i = 0; i < remaningTaxa.size() - 1; i++) {
@@ -546,7 +570,7 @@ public class IdentificationKeyGenerator {
 							}
 						}
 						cpt++;
-					} 
+					}
 				}
 			}
 		}
@@ -570,7 +594,7 @@ public class IdentificationKeyGenerator {
 	 * @return float, the common percentage
 	 */
 	public static float calculCommonPercentage(double min1, double max1,
-			double min2, double max2) {
+			double min2, double max2) throws Exception {
 		double minLowerTmp = 0;
 		double maxUpperTmp = 0;
 		double minUpperTmp = 0;

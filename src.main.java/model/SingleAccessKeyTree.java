@@ -46,32 +46,40 @@ public class SingleAccessKeyTree {
 	public void setRoot(SingleAccessKeyNode root) {
 		this.root = root;
 	}
-	
+
 	/**
 	 * @param parentNode
 	 * @param output
 	 */
-	public void recursivetoString(SingleAccessKeyNode node, StringBuffer output, String tabulations) {
-		
-		if(node != null && node.getCharacter() != null && node.getCharacterState() != null){
-			if(node.getCharacterState() instanceof QuantitativeMeasure){
-				output.append(tabulations + node.getCharacter().getName()+": " + ((QuantitativeMeasure)node.getCharacterState()).toStringInterval());
-			}else{
-				output.append(tabulations + node.getCharacter().getName()+": " + ((State)node.getCharacterState()).getName());
+	public void recursivetoString(SingleAccessKeyNode node,
+			StringBuffer output, String tabulations) {
+
+		if (node != null && node.getCharacter() != null
+				&& node.getCharacterState() != null) {
+			if (node.getCharacterState() instanceof QuantitativeMeasure) {
+				output.append(tabulations
+						+ node.getCharacter().getName()
+						+ ": "
+						+ ((QuantitativeMeasure) node.getCharacterState())
+								.toStringInterval());
+			} else {
+				output.append(tabulations + node.getCharacter().getName()
+						+ ": " + ((State) node.getCharacterState()).getName());
 			}
-			if(node.getChildren().size() == 0){
+			if (node.getChildren().size() == 0) {
 				output.append(tabulations);
 				output.append("taxa=");
-				for(Taxon taxon: node.getRemainingTaxa()){
+				for (Taxon taxon : node.getRemainingTaxa()) {
 					output.append(taxon.getName() + ",");
 				}
-			}else{
-				output.append(tabulations + "taxa=" + node.getRemainingTaxa().size());
+			} else {
+				output.append(tabulations + "taxa="
+						+ node.getRemainingTaxa().size());
 			}
 			output.append(System.getProperty("line.separator"));
 			tabulations = tabulations + "\t";
 		}
-		for(SingleAccessKeyNode childNode: node.getChildren()){
+		for (SingleAccessKeyNode childNode : node.getChildren()) {
 			recursivetoString(childNode, output, tabulations);
 		}
 	}
@@ -86,7 +94,6 @@ public class SingleAccessKeyTree {
 		recursivetoString(root, output, System.getProperty("line.separator"));
 		return output.toString();
 	}
-	
 
 	/**
 	 * get a HTML file containing the key
