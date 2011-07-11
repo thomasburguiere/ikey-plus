@@ -33,9 +33,10 @@ public class IdentificationKeyHTMLGeneratorTest {
 		double parseDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
 		beforeTime = System.currentTimeMillis();
 
-		IdentificationKeyGenerator identificationKeyGenerator = new IdentificationKeyGenerator(
-				new SingleAccessKeyTree(), sddSaxParser.getDataset());
+		IdentificationKeyGenerator identificationKeyGenerator = null;
 		try{
+			identificationKeyGenerator = new IdentificationKeyGenerator(
+					new SingleAccessKeyTree(), sddSaxParser.getDataset());
 			identificationKeyGenerator.createIdentificationKey();
 		}catch(Throwable t){
 			new IdentificationKeyErrorMessage("Creating key error", t);

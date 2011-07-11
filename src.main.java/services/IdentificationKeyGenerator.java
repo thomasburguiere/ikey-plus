@@ -34,7 +34,7 @@ public class IdentificationKeyGenerator {
 	/**
 	 * Constructor
 	 */
-	public IdentificationKeyGenerator() {
+	public IdentificationKeyGenerator() throws Exception {
 		this(null, null);
 	}
 
@@ -45,7 +45,7 @@ public class IdentificationKeyGenerator {
 	 * @param dataSet
 	 */
 	public IdentificationKeyGenerator(SingleAccessKeyTree singleAccessKeyTree,
-			DataSet dataset) {
+			DataSet dataset) throws Exception {
 		super();
 		this.singleAccessKeyTree = singleAccessKeyTree;
 		this.dataset = dataset;
