@@ -4,7 +4,7 @@ package utils;
  * This class allow to manage error messages
  * 
  * @author Florian Causse
- * @created 07-jul.-2011
+ * @created 07-07-2011
  * 
  */
 public class IdentificationKeyErrorMessage {

@@ -1,8 +1,10 @@
 package model;
 
 /**
+ * This class represents a state of categorical character
+ * 
  * @author Florian Causse
- * @created 06-avr.-2011
+ * @created 06-04-2011
  */
 public class State {
 

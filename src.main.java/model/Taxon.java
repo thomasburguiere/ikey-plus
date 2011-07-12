@@ -1,8 +1,10 @@
 package model;
 
 /**
+ * This class represents a taxon
+ * 
  * @author Florian Causse
- * @created 06-avr.-2011
+ * @created 06-04-2011
  */
 public class Taxon {
 

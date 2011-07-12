@@ -14,7 +14,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
  * This class allow to launch the parsing of SDD file
  * 
  * @author Florian Causse
- * @created 18-avr.-2011
+ * @created 18-04-2011
  */
 public class SDDSaxParser {
 
@@ -25,8 +25,7 @@ public class SDDSaxParser {
 	 * constructor executing the parse method
 	 */
 	public SDDSaxParser(String uri) throws SAXException, IOException {
-		XMLReader saxReader = XMLReaderFactory
-				.createXMLReader("org.apache.xerces.parsers.SAXParser");
+		XMLReader saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
 
 		SDDContentHandler handler = new SDDContentHandler();
 		saxReader.setContentHandler(handler);

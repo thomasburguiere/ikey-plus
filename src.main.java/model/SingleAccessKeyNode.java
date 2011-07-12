@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This class represents a node of single access key
+ * 
  * @author Florian Causse
- * @created 18-avr.-2011
+ * @created 18-04-2011
  */
 public class SingleAccessKeyNode {
 
@@ -25,8 +27,7 @@ public class SingleAccessKeyNode {
 	 * @param ICharacter
 	 *            , a character
 	 * @param Object
-	 *            , the description concerning the current character ->
-	 *            List<State> or QuantitativeMeasure
+	 *            , the description concerning the current character -> List<State> or QuantitativeMeasure
 	 */
 	public SingleAccessKeyNode(ICharacter character, Object characterState) {
 		super();
@@ -122,8 +123,7 @@ public class SingleAccessKeyNode {
 	}
 
 	/**
-	 * @return true if this SingleAccessKeyNode's child list size is greater
-	 *         than 0
+	 * @return true if this SingleAccessKeyNode's child list size is greater than 0
 	 */
 	public boolean hasChild() {
 		return children.size() > 0;

@@ -20,11 +20,10 @@ import org.xml.sax.SAXException;
 import utils.Utils;
 
 /**
- * This class extend ContentHandler to be able to treat each SDD tag and extract
- * data
+ * This class extend ContentHandler to be able to treat each SDD tag and extract data
  * 
  * @author Florian Causse
- * @created 18-avr.-2011
+ * @created 18-04-2011
  * 
  */
 public class SDDContentHandler implements ContentHandler {
@@ -96,20 +95,17 @@ public class SDDContentHandler implements ContentHandler {
 		this.dataset = new DataSet();
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
-	 * java.lang.String, java.lang.String, org.xml.sax.Attributes)
-	 */
-	public void startElement(String nameSpaceURI, String localName,
-			String rawName, Attributes attributs) throws SAXException {
+	 * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String, java.lang.String,
+	 * org.xml.sax.Attributes) */
+	public void startElement(String nameSpaceURI, String localName, String rawName, Attributes attributs)
+			throws SAXException {
 
 		if (isFirstDataset) {
 
 			// if the label is not the dataSet Label
-			if (inDataset && !localName.equals("Representation")
-					&& !localName.equals("Label")) {
+			if (inDataset && !localName.equals("Representation") && !localName.equals("Label")) {
 				isDataSetLabel = false;
 			}
 
@@ -218,26 +214,23 @@ public class SDDContentHandler implements ContentHandler {
 
 			// <State> in <InapplicableIf> in <CharacterTree> &&
 			// isFirstCharacterTree
-			else if (localName.equals("State") && inInapplicableIf
-					&& inCharacterTree && isFirstCharacterTree) {
+			else if (localName.equals("State") && inInapplicableIf && inCharacterTree && isFirstCharacterTree) {
 				State state = dataset.getStateById(attributs.getValue("ref"));
 				currentInapplicableState.add(state);
 			}
 
 			// <State> in <OnlyApplicableIf> in <CharacterTree> &&
 			// isFirstCharacterTree
-			else if (localName.equals("State") && inOnlyApplicableIf
-					&& inCharacterTree && isFirstCharacterTree) {
+			else if (localName.equals("State") && inOnlyApplicableIf && inCharacterTree
+					&& isFirstCharacterTree) {
 				State state = dataset.getStateById(attributs.getValue("ref"));
 				currentOnlyApplicableState.add(state);
 			}
 
 			// <Character> in <CharNode> in <CharacterTree> &&
 			// isFirstCharacterTree
-			else if (localName.equals("Character") && inCharNode
-					&& inCharacterTree && isFirstCharacterTree) {
-				currentCharacterNode = dataset.getCharacterById(attributs
-						.getValue("ref"));
+			else if (localName.equals("Character") && inCharNode && inCharacterTree && isFirstCharacterTree) {
+				currentCharacterNode = dataset.getCharacterById(attributs.getValue("ref"));
 			}
 
 			// <CodedDescriptions>
@@ -246,8 +239,7 @@ public class SDDContentHandler implements ContentHandler {
 			}
 
 			// <CodedDescription> in <CodedDescriptions>
-			else if (localName.equals("CodedDescription")
-					&& inCodedDescriptions) {
+			else if (localName.equals("CodedDescription") && inCodedDescriptions) {
 				inCodedDescription = true;
 				currentCodedDescription = new CodedDescription();
 				currentCodedDescription.setId(attributs.getValue("id"));
@@ -271,22 +263,19 @@ public class SDDContentHandler implements ContentHandler {
 			// <Categorical> in <SummaryData>
 			else if (localName.equals("Categorical") && inSummaryData) {
 				inCategorical = true;
-				currentCodedDescriptionCharacter = this.dataset
-						.getCharacterById(attributs.getValue("ref"));
+				currentCodedDescriptionCharacter = this.dataset.getCharacterById(attributs.getValue("ref"));
 				currentStatesList = new ArrayList<State>();
 			}
 
 			// <State> in <Categorical>
 			else if (localName.equals("State") && inCategorical) {
-				currentStatesList.add(this.dataset.getStateById(attributs
-						.getValue("ref")));
+				currentStatesList.add(this.dataset.getStateById(attributs.getValue("ref")));
 			}
 
 			// <Quantitative> in <SummaryData>
 			else if (localName.equals("Quantitative") && inSummaryData) {
 				inQuantitative = true;
-				currentCodedDescriptionCharacter = this.dataset
-						.getCharacterById(attributs.getValue("ref"));
+				currentCodedDescriptionCharacter = this.dataset.getCharacterById(attributs.getValue("ref"));
 				currentQuantitativeMeasure = new QuantitativeMeasure();
 			}
 
@@ -295,30 +284,22 @@ public class SDDContentHandler implements ContentHandler {
 
 				if (attributs.getValue("type").equals("Min")) {
 					currentQuantitativeMeasure
-							.setMin(Utils.convertStringToDouble(attributs
-									.getValue("value")));
+							.setMin(Utils.convertStringToDouble(attributs.getValue("value")));
 				} else if (attributs.getValue("type").equals("Max")) {
 					currentQuantitativeMeasure
-							.setMax(Utils.convertStringToDouble(attributs
-									.getValue("value")));
+							.setMax(Utils.convertStringToDouble(attributs.getValue("value")));
 				} else if (attributs.getValue("type").equals("Mean")) {
-					currentQuantitativeMeasure
-							.setMean(Utils.convertStringToDouble(attributs
-									.getValue("value")));
+					currentQuantitativeMeasure.setMean(Utils.convertStringToDouble(attributs
+							.getValue("value")));
 				} else if (attributs.getValue("type").equals("SD")) {
 					currentQuantitativeMeasure
-							.setSD(Utils.convertStringToDouble(attributs
-									.getValue("value")));
+							.setSD(Utils.convertStringToDouble(attributs.getValue("value")));
 				} else if (attributs.getValue("type").equals("UMethLower")) {
-					currentQuantitativeMeasure
-							.setUMethLower(Utils
-									.convertStringToDouble(attributs
-											.getValue("value")));
+					currentQuantitativeMeasure.setUMethLower(Utils.convertStringToDouble(attributs
+							.getValue("value")));
 				} else if (attributs.getValue("type").equals("UMethUpper")) {
-					currentQuantitativeMeasure
-							.setUMethUpper(Utils
-									.convertStringToDouble(attributs
-											.getValue("value")));
+					currentQuantitativeMeasure.setUMethUpper(Utils.convertStringToDouble(attributs
+							.getValue("value")));
 				}
 			}
 
@@ -329,14 +310,10 @@ public class SDDContentHandler implements ContentHandler {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see org.xml.sax.ContentHandler#endElement(java.lang.String,
-	 * java.lang.String, java.lang.String)
-	 */
-	public void endElement(String nameSpaceURI, String localName, String rawName)
-			throws SAXException {
+	 * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String, java.lang.String) */
+	public void endElement(String nameSpaceURI, String localName, String rawName) throws SAXException {
 
 		if (isFirstDataset) {
 			// <Dataset>
@@ -437,22 +414,16 @@ public class SDDContentHandler implements ContentHandler {
 				inCharNode = false;
 				if (currentInapplicableState.size() > 0) {
 					currentCharacterNode.setParentCharacter(dataset
-							.getCharacterByState(currentInapplicableState
-									.get(0)));
-					currentCharacterNode.getInapplicableStates().addAll(
-							currentInapplicableState);
+							.getCharacterByState(currentInapplicableState.get(0)));
+					currentCharacterNode.getInapplicableStates().addAll(currentInapplicableState);
 				} else if (currentOnlyApplicableState.size() > 0) {
-					ICharacter character = dataset
-							.getCharacterByState(currentOnlyApplicableState
-									.get(0));
-					if (character != null
-							&& character instanceof CategoricalCharacter) {
+					ICharacter character = dataset.getCharacterByState(currentOnlyApplicableState.get(0));
+					if (character != null && character instanceof CategoricalCharacter) {
 						currentCharacterNode.setParentCharacter(character);
 						List<State> tempList = new ArrayList<State>(
 								((CategoricalCharacter) character).getStates());
 						tempList.removeAll(currentOnlyApplicableState);
-						currentCharacterNode.getInapplicableStates().addAll(
-								tempList);
+						currentCharacterNode.getInapplicableStates().addAll(tempList);
 					}
 				}
 				currentInapplicableState = null;
@@ -478,22 +449,20 @@ public class SDDContentHandler implements ContentHandler {
 
 			// <State> in <InapplicableIf> in <CharacterTree> &&
 			// isFirstCharacterTree
-			else if (localName.equals("State") && inInapplicableIf
-					&& inCharacterTree && isFirstCharacterTree) {
+			else if (localName.equals("State") && inInapplicableIf && inCharacterTree && isFirstCharacterTree) {
 
 			}
 
 			// <State> in <OnlyApplicableIf> in <CharacterTree> &&
 			// isFirstCharacterTree
-			else if (localName.equals("State") && inOnlyApplicableIf
-					&& inCharacterTree && isFirstCharacterTree) {
+			else if (localName.equals("State") && inOnlyApplicableIf && inCharacterTree
+					&& isFirstCharacterTree) {
 
 			}
 
 			// <Character> in <CharNode> in <CharacterTree> &&
 			// isFirstCharacterTree
-			else if (localName.equals("Character") && inCharNode
-					&& inCharacterTree && isFirstCharacterTree) {
+			else if (localName.equals("Character") && inCharNode && inCharacterTree && isFirstCharacterTree) {
 
 			}
 
@@ -503,11 +472,9 @@ public class SDDContentHandler implements ContentHandler {
 			}
 
 			// <CodedDescription> in <CodedDescriptions>
-			else if (localName.equals("CodedDescription")
-					&& inCodedDescriptions) {
+			else if (localName.equals("CodedDescription") && inCodedDescriptions) {
 				inCodedDescription = false;
-				this.dataset.addCodedDescription(currentTaxon,
-						currentCodedDescription);
+				this.dataset.addCodedDescription(currentTaxon, currentCodedDescription);
 			}
 
 			// <Scope>
@@ -528,8 +495,8 @@ public class SDDContentHandler implements ContentHandler {
 			// <Categorical> in <SummaryData>
 			else if (localName.equals("Categorical") && inSummaryData) {
 				inCategorical = false;
-				currentCodedDescription.addCharacterDescription(
-						currentCodedDescriptionCharacter, currentStatesList);
+				currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
+						currentStatesList);
 				currentCodedDescriptionCharacter = null;
 				currentStatesList = null;
 			}
@@ -537,8 +504,7 @@ public class SDDContentHandler implements ContentHandler {
 			// <Quantitative> in <SummaryData>
 			else if (localName.equals("Quantitative") && inSummaryData) {
 				inQuantitative = false;
-				currentCodedDescription.addCharacterDescription(
-						currentCodedDescriptionCharacter,
+				currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
 						currentQuantitativeMeasure);
 				currentCodedDescriptionCharacter = null;
 				currentQuantitativeMeasure = null;
@@ -557,67 +523,52 @@ public class SDDContentHandler implements ContentHandler {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see org.xml.sax.ContentHandler#endDocument()
-	 */
+	 * @see org.xml.sax.ContentHandler#endDocument() */
 	@Override
 	public void endDocument() throws SAXException {
 
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see org.xml.sax.ContentHandler#endPrefixMapping(java.lang.String)
-	 */
+	 * @see org.xml.sax.ContentHandler#endPrefixMapping(java.lang.String) */
 	@Override
 	public void endPrefixMapping(String prefix) throws SAXException {
 
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see org.xml.sax.ContentHandler#setDocumentLocator(org.xml.sax.Locator)
-	 */
+	 * @see org.xml.sax.ContentHandler#setDocumentLocator(org.xml.sax.Locator) */
 	@Override
 	public void setDocumentLocator(Locator locator) {
 		this.locator = locator;
 
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see org.xml.sax.ContentHandler#startDocument()
-	 */
+	 * @see org.xml.sax.ContentHandler#startDocument() */
 	@Override
 	public void startDocument() throws SAXException {
 
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see org.xml.sax.ContentHandler#startPrefixMapping(java.lang.String,
-	 * java.lang.String)
-	 */
+	 * @see org.xml.sax.ContentHandler#startPrefixMapping(java.lang.String, java.lang.String) */
 	@Override
-	public void startPrefixMapping(String prefix, String uri)
-			throws SAXException {
+	public void startPrefixMapping(String prefix, String uri) throws SAXException {
 
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see org.xml.sax.ContentHandler#characters(char[], int, int)
-	 */
+	 * @see org.xml.sax.ContentHandler#characters(char[], int, int) */
 	@Override
-	public void characters(char[] ch, int start, int length)
-			throws SAXException {
+	public void characters(char[] ch, int start, int length) throws SAXException {
 		String data = new String(ch, start, length);
 
 		data = data.replaceAll("\t", " "); // replace all the \t character by
@@ -630,34 +581,25 @@ public class SDDContentHandler implements ContentHandler {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see org.xml.sax.ContentHandler#ignorableWhitespace(char[], int, int)
-	 */
+	 * @see org.xml.sax.ContentHandler#ignorableWhitespace(char[], int, int) */
 	@Override
-	public void ignorableWhitespace(char[] ch, int start, int length)
-			throws SAXException {
+	public void ignorableWhitespace(char[] ch, int start, int length) throws SAXException {
 
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see org.xml.sax.ContentHandler#processingInstruction(java.lang.String,
-	 * java.lang.String)
-	 */
+	 * @see org.xml.sax.ContentHandler#processingInstruction(java.lang.String, java.lang.String) */
 	@Override
-	public void processingInstruction(String target, String data)
-			throws SAXException {
+	public void processingInstruction(String target, String data) throws SAXException {
 
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see org.xml.sax.ContentHandler#skippedEntity(java.lang.String)
-	 */
+	 * @see org.xml.sax.ContentHandler#skippedEntity(java.lang.String) */
 	@Override
 	public void skippedEntity(String name) throws SAXException {
 

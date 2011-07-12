@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This class represents a Character
+ * 
  * @author Florian Causse
- * @created 11-may.-2011
+ * @created 11-05-2011
  */
 public class Character implements ICharacter {
 
@@ -32,122 +34,98 @@ public class Character implements ICharacter {
 		this.childCharacters = new ArrayList<ICharacter>();
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see model.ICharacter#isSupportsCategoricalData()
-	 */
+	 * @see model.ICharacter#isSupportsCategoricalData() */
 	@Override
 	public boolean isSupportsCategoricalData() {
 		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see model.ICharacter#getId()
-	 */
+	 * @see model.ICharacter#getId() */
 	@Override
 	public String getId() {
 		return id;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see model.ICharacter#setId(java.lang.String)
-	 */
+	 * @see model.ICharacter#setId(java.lang.String) */
 	@Override
 	public void setId(String id) {
 		this.id = id;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see model.ICharacter#getName()
-	 */
+	 * @see model.ICharacter#getName() */
 	@Override
 	public String getName() {
 		return name;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see model.ICharacter#setName(java.lang.String)
-	 */
+	 * @see model.ICharacter#setName(java.lang.String) */
 	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see model.ICharacter#getInapplicableStates()
-	 */
+	 * @see model.ICharacter#getInapplicableStates() */
 	@Override
 	public List<State> getInapplicableStates() {
 		return inapplicableStates;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see model.ICharacter#setInapplicableStates(java.util.List)
-	 */
+	 * @see model.ICharacter#setInapplicableStates(java.util.List) */
 	@Override
 	public void setInapplicableStates(List<State> inapplicableStates) {
 		this.inapplicableStates = inapplicableStates;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see model.ICharacter#getParentCharacter()
-	 */
+	 * @see model.ICharacter#getParentCharacter() */
 	@Override
 	public ICharacter getParentCharacter() {
 		return parentCharacter;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see model.ICharacter#setParentCharacter(model.ICharacter)
-	 */
+	 * @see model.ICharacter#setParentCharacter(model.ICharacter) */
 	@Override
 	public void setParentCharacter(ICharacter parentCharacter) {
 		this.parentCharacter = parentCharacter;
 		this.parentCharacter.getChildCharacters().add(this);
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see model.ICharacter#getChildCharacters()
-	 */
+	 * @see model.ICharacter#getChildCharacters() */
 	@Override
 	public List<ICharacter> getChildCharacters() {
 		return this.childCharacters;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see model.ICharacter#setChildCharacters(java.util.List)
-	 */
+	 * @see model.ICharacter#setChildCharacters(java.util.List) */
 	@Override
 	public void setChildCharacters(List<ICharacter> childCharacters) {
 		this.childCharacters = childCharacters;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see model.ICharacter#getAllChildren()
-	 */
+	 * @see model.ICharacter#getAllChildren() */
 	@Override
 	public List<ICharacter> getAllChildren() {
 		List<ICharacter> allChildrenCharacter = new ArrayList<ICharacter>();
@@ -163,8 +141,7 @@ public class Character implements ICharacter {
 	 * @param character
 	 *            , the current character
 	 */
-	private void addChildrenToList(List<ICharacter> allChildrenCharacter,
-			ICharacter character) {
+	private void addChildrenToList(List<ICharacter> allChildrenCharacter, ICharacter character) {
 		for (ICharacter childCharacter : character.getChildCharacters()) {
 			allChildrenCharacter.add(childCharacter);
 			addChildrenToList(allChildrenCharacter, childCharacter);

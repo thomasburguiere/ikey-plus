@@ -1,8 +1,10 @@
 package model;
 
 /**
+ * This class represents a quantitative measure
+ * 
  * @author Florian Causse
- * @created 06-avr.-2011
+ * @created 06-04-2011
  */
 public class QuantitativeMeasure {
 
@@ -171,8 +173,8 @@ public class QuantitativeMeasure {
 	 * @return String, the string representation
 	 */
 	public String toString() {
-		return "Min=" + min + "  Max=" + max + "  Mean=" + mean + "  SD=" + sd
-				+ "  UMethLower=" + uMethLower + "  UMethUpper=" + uMethUpper;
+		return "Min=" + min + "  Max=" + max + "  Mean=" + mean + "  SD=" + sd + "  UMethLower=" + uMethLower
+				+ "  UMethUpper=" + uMethUpper;
 	}
 
 	/**
@@ -195,8 +197,7 @@ public class QuantitativeMeasure {
 		} else {
 			end = "[";
 		}
-		return start + this.getCalculateMinimum() + ", "
-				+ this.getCalculateMaximum() + end;
+		return start + this.getCalculateMinimum() + ", " + this.getCalculateMaximum() + end;
 	}
 
 	/**
@@ -235,8 +236,7 @@ public class QuantitativeMeasure {
 
 	/**
 	 * @param quantitativeMeasure
-	 * @return boolean, true if quantitativeMeasure is include in the current
-	 *         quantitativeMeasure
+	 * @return boolean, true if quantitativeMeasure is include in the current quantitativeMeasure
 	 */
 	public boolean isInclude(QuantitativeMeasure quantitativeMeasure) {
 		if (quantitativeMeasure == null
@@ -244,13 +244,11 @@ public class QuantitativeMeasure {
 				|| quantitativeMeasure.getCalculateMaximum() == null
 				|| this.getCalculateMinimum() == null
 				|| this.getCalculateMaximum() == null
-				|| (quantitativeMeasure.getCalculateMinimum().doubleValue() >= this
-						.getCalculateMinimum().doubleValue() && quantitativeMeasure
-						.getCalculateMinimum().doubleValue() <= this
+				|| (quantitativeMeasure.getCalculateMinimum().doubleValue() >= this.getCalculateMinimum()
+						.doubleValue() && quantitativeMeasure.getCalculateMinimum().doubleValue() <= this
 						.getCalculateMaximum().doubleValue())
-				|| (quantitativeMeasure.getCalculateMaximum().doubleValue() >= this
-						.getCalculateMinimum().doubleValue() && quantitativeMeasure
-						.getCalculateMaximum().doubleValue() <= this
+				|| (quantitativeMeasure.getCalculateMaximum().doubleValue() >= this.getCalculateMinimum()
+						.doubleValue() && quantitativeMeasure.getCalculateMaximum().doubleValue() <= this
 						.getCalculateMaximum().doubleValue())) {
 			return true;
 		}

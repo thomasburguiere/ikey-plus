@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * this class represent a knowledge base
+ * This class represent a knowledge base
  * 
  * @author Florian Causse
- * @created 06-avr.-2011
+ * @created 06-04-2011
  */
 public class DataSet {
 
@@ -59,8 +59,7 @@ public class DataSet {
 	 * @param Map
 	 *            <Taxon, CodedDescription>, all description for all taxa
 	 */
-	public void setCodedDescriptions(
-			Map<Taxon, CodedDescription> codedDescriptions) {
+	public void setCodedDescriptions(Map<Taxon, CodedDescription> codedDescriptions) {
 		this.codedDescriptions = codedDescriptions;
 	}
 
@@ -84,8 +83,7 @@ public class DataSet {
 	 * @param CodedDescription
 	 *            , the description
 	 */
-	public void addCodedDescription(Taxon taxon,
-			CodedDescription codedDescription) {
+	public void addCodedDescription(Taxon taxon, CodedDescription codedDescription) {
 		codedDescriptions.put(taxon, codedDescription);
 	}
 
@@ -153,8 +151,7 @@ public class DataSet {
 	public State getStateById(String id) {
 		for (ICharacter character : characters) {
 			if (character instanceof CategoricalCharacter) {
-				for (State state : ((CategoricalCharacter) character)
-						.getStates()) {
+				for (State state : ((CategoricalCharacter) character).getStates()) {
 					if (state.getId().equals(id)) {
 						return state;
 					}
@@ -174,8 +171,7 @@ public class DataSet {
 	public ICharacter getCharacterByState(State state) {
 		for (ICharacter character : characters) {
 			if (character instanceof CategoricalCharacter) {
-				for (State stateBis : ((CategoricalCharacter) character)
-						.getStates()) {
+				for (State stateBis : ((CategoricalCharacter) character).getStates()) {
 					if (stateBis == state) {
 						return character;
 					}
@@ -190,15 +186,13 @@ public class DataSet {
 	 * 
 	 * @param taxon
 	 * @param character
-	 * @return boolean, true if the character is is applicable for the current
-	 *         taxon
+	 * @return boolean, true if the character is is applicable for the current taxon
 	 */
 	public boolean isApplicable(Taxon taxon, ICharacter character) {
-		if (character.getParentCharacter() != null
-				&& isApplicable(taxon, character.getParentCharacter())) {
+		if (character.getParentCharacter() != null && isApplicable(taxon, character.getParentCharacter())) {
 			List<State> inapplicableStates = character.getInapplicableStates();
-			List<State> states = (List<State>) this.getCodedDescription(taxon)
-					.getCharacterDescription(character.getParentCharacter());
+			List<State> states = (List<State>) this.getCodedDescription(taxon).getCharacterDescription(
+					character.getParentCharacter());
 			// if one checked state is applicable
 			for (int i = 0; i < states.size(); i++) {
 				State state = states.get(i);

@@ -7,11 +7,7 @@ import java.util.List;
  * This class represents a Character of type categorical
  * 
  * @author Florian Causse
- * @created 06-avr.-2011
- */
-/**
- * @author Utilisateur
- * 
+ * @created 06-04-2011
  */
 public class CategoricalCharacter extends Character {
 
@@ -52,11 +48,9 @@ public class CategoricalCharacter extends Character {
 		this.states = states;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see model.Character#isSupportsCategoricalData()
-	 */
+	 * @see model.Character#isSupportsCategoricalData() */
 	@Override
 	public boolean isSupportsCategoricalData() {
 		return true;

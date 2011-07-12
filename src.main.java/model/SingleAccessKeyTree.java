@@ -3,8 +3,10 @@ package model;
 import java.io.File;
 
 /**
+ * This class represents a single access key tree
+ * 
  * @author Florian Causse
- * @created 18-avr.-2011
+ * @created 18-04-2011
  */
 public class SingleAccessKeyTree {
 
@@ -51,20 +53,15 @@ public class SingleAccessKeyTree {
 	 * @param parentNode
 	 * @param output
 	 */
-	public void recursivetoString(SingleAccessKeyNode node,
-			StringBuffer output, String tabulations) {
+	public void recursivetoString(SingleAccessKeyNode node, StringBuffer output, String tabulations) {
 
-		if (node != null && node.getCharacter() != null
-				&& node.getCharacterState() != null) {
+		if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
 			if (node.getCharacterState() instanceof QuantitativeMeasure) {
-				output.append(tabulations
-						+ node.getCharacter().getName()
-						+ ": "
-						+ ((QuantitativeMeasure) node.getCharacterState())
-								.toStringInterval());
+				output.append(tabulations + node.getCharacter().getName() + ": "
+						+ ((QuantitativeMeasure) node.getCharacterState()).toStringInterval());
 			} else {
-				output.append(tabulations + node.getCharacter().getName()
-						+ ": " + ((State) node.getCharacterState()).getName());
+				output.append(tabulations + node.getCharacter().getName() + ": "
+						+ ((State) node.getCharacterState()).getName());
 			}
 			if (node.getChildren().size() == 0) {
 				output.append(tabulations);
@@ -73,8 +70,7 @@ public class SingleAccessKeyTree {
 					output.append(taxon.getName() + ",");
 				}
 			} else {
-				output.append(tabulations + "taxa="
-						+ node.getRemainingTaxa().size());
+				output.append(tabulations + "taxa=" + node.getRemainingTaxa().size());
 			}
 			output.append(System.getProperty("line.separator"));
 			tabulations = tabulations + "\t";
@@ -84,11 +80,9 @@ public class SingleAccessKeyTree {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see java.lang.Object#toString()
-	 */
+	 * @see java.lang.Object#toString() */
 	public String toString() {
 		StringBuffer output = new StringBuffer();
 		recursivetoString(root, output, System.getProperty("line.separator"));

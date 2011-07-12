@@ -1,8 +1,10 @@
 package model;
 
 /**
+ * This class represents a Character of type quantitative
+ * 
  * @author Florian Causse
- * @created 06-avr.-2011
+ * @created 06-04-2011
  */
 public class QuantitativeCharacter extends Character {
 
@@ -21,11 +23,9 @@ public class QuantitativeCharacter extends Character {
 		this.setName(name);
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see model.Character#isSupportsCategoricalData()
-	 */
+	 * @see model.Character#isSupportsCategoricalData() */
 	@Override
 	public boolean isSupportsCategoricalData() {
 		return false;

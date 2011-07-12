@@ -1,5 +1,12 @@
 package utils;
 
+/**
+ * This class allow to manage error messages
+ * 
+ * @author Florian Causse
+ * @created 07-04-2011
+ * 
+ */
 public class Utils {
 
 	public static String errorMessage = null;

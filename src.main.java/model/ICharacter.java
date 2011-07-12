@@ -3,8 +3,10 @@ package model;
 import java.util.List;
 
 /**
+ * Interface of Character
+ * 
  * @author Florian Causse
- * @created 06-avr.-2011
+ * @created 06-04-2011
  */
 public interface ICharacter {
 

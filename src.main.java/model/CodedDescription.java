@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * This class represents the description of a taxon
+ * 
  * @author Florian Causse
- * @created 06-avr.-2011
+ * @created 06-04-2011
  */
 public class CodedDescription {
 
@@ -57,8 +59,7 @@ public class CodedDescription {
 	 * @param Object
 	 *            , the description concerning the character
 	 */
-	public void addCharacterDescription(ICharacter character,
-			Object characterDescription) {
+	public void addCharacterDescription(ICharacter character, Object characterDescription) {
 		description.put(character, characterDescription);
 	}
 
