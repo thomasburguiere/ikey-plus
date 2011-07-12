@@ -128,4 +128,11 @@ public class SingleAccessKeyNode {
 	public boolean hasChild() {
 		return children.size() > 0;
 	}
+
+	/**
+	 * @return true if this SingleAccessKeynode's character or characterState is null
+	 */
+	public boolean isEmpty() {
+		return character == null || characterState == null;
+	}
 }
