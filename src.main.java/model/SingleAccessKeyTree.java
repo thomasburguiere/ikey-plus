@@ -139,19 +139,19 @@ public class SingleAccessKeyTree {
 		StringBuffer slk = new StringBuffer();
 		slk.append("<html>" + lineSep);
 		slk.append("<head>" + lineSep);
-		slk.append("<link rel='STYLESHEET' type='text/css' href='/Users/thomas/Desktop/dhtmlxTree/dhtmlxTree/codebase/dhtmlxtree.css'/>"
+		slk.append("<link rel='STYLESHEET' type='text/css' href='http://queen.snv.jussieu.fr/vibrant/resources/js/dhtmlxTree/dhtmlxTree/codebase/dhtmlxtree.css'/>"
 				+ lineSep
-				+ "<script type='text/javascript'  src='/Users/thomas/Desktop/dhtmlxTree/dhtmlxTree/codebase/dhtmlxcommon.js'></script>"
+				+ "<script type='text/javascript'  src='http://queen.snv.jussieu.fr/vibrant/resources/js/dhtmlxTree/dhtmlxTree/codebase/dhtmlxcommon.js'></script>"
 				+ lineSep
-				+ "<script type='text/javascript'  src='/Users/thomas/Desktop/dhtmlxTree/dhtmlxTree/codebase/dhtmlxtree.js'></script>"
+				+ "<script type='text/javascript'  src='http://queen.snv.jussieu.fr/vibrant/resources/js/dhtmlxTree/dhtmlxTree/codebase/dhtmlxtree.js'></script>"
 				+ lineSep
-				+ "<script type='text/javascript'  src='/Users/thomas/Desktop/dhtmlxTree/dhtmlxTree/codebase/ext/dhtmlxtree_start.js'></script>"
+				+ "<script type='text/javascript'  src='http://queen.snv.jussieu.fr/vibrant/resources/js/dhtmlxTree/dhtmlxTree/codebase/ext/dhtmlxtree_start.js'></script>"
 				+ lineSep);
 
 		slk.append("</head>" + lineSep);
 
 		slk.append("<body>" + lineSep);
-		slk.append("<div class='dhtmlxTree' id='treeboxbox_tree' setImagePath='/Users/thomas/Desktop/dhtmlxTree/dhtmlxTree/codebase/imgs/' >"
+		slk.append("<div class='dhtmlxTree' id='treeboxbox_tree' setImagePath='http://queen.snv.jussieu.fr/vibrant/resources/js/dhtmlxTree/dhtmlxTree/codebase/imgs/' >"
 				+ lineSep);
 
 		slk.append("<ul>" + lineSep);
