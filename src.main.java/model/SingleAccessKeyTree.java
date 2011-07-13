@@ -55,27 +55,27 @@ public class SingleAccessKeyTree {
 	 */
 	public void recursivetoString(SingleAccessKeyNode node, StringBuffer output, String tabulations) {
 
-		if(node != null && node.getCharacter() != null && node.getCharacterState() != null){
-			if(node.getCharacterState() instanceof QuantitativeMeasure){
+		if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
+			if (node.getCharacterState() instanceof QuantitativeMeasure) {
 				output.append(tabulations + node.getCharacter().getName() + ": "
 						+ ((QuantitativeMeasure) node.getCharacterState()).toStringInterval());
-			}else{
+			} else {
 				output.append(tabulations + node.getCharacter().getName() + ": "
 						+ ((State) node.getCharacterState()).getName());
 			}
-			if(node.getChildren().size() == 0){
+			if (node.getChildren().size() == 0) {
 				output.append(tabulations);
 				output.append("taxa=");
-				for(Taxon taxon : node.getRemainingTaxa()){
+				for (Taxon taxon : node.getRemainingTaxa()) {
 					output.append(taxon.getName() + ",");
 				}
-			}else{
+			} else {
 				output.append(tabulations + "taxa=" + node.getRemainingTaxa().size());
 			}
 			output.append(System.getProperty("line.separator"));
 			tabulations = tabulations + "\t";
 		}
-		for(SingleAccessKeyNode childNode : node.getChildren()){
+		for (SingleAccessKeyNode childNode : node.getChildren()) {
 			recursivetoString(childNode, output, tabulations);
 		}
 	}
@@ -93,11 +93,11 @@ public class SingleAccessKeyTree {
 	public void recursiveToHTMLString(SingleAccessKeyNode node, StringBuffer output, String tabulations) {
 		String characterName = null;
 		String state = null;
-		if(node != null && node.getCharacter() != null && node.getCharacterState() != null){
+		if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
 			characterName = node.getCharacter().getName().replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;");
 			characterName = "<span class='character'>" + characterName + "</span>";
 
-			if(node.getCharacterState() instanceof QuantitativeMeasure)
+			if (node.getCharacterState() instanceof QuantitativeMeasure)
 				state = ((QuantitativeMeasure) node.getCharacterState()).toStringInterval();
 			else
 				state = ((State) node.getCharacterState()).getName();
@@ -106,26 +106,26 @@ public class SingleAccessKeyTree {
 
 			output.append(tabulations + "\t<li>" + characterName);
 
-			if(node.hasChild()){
+			if (node.hasChild()) {
 				output.append(" | " + state + " (taxa=" + node.getRemainingTaxa().size() + ")");
-			}else{
+			} else {
 				output.append(" | " + state + " <span class='taxa'>-> taxa=");
-				for(Taxon taxon : node.getRemainingTaxa()){
+				for (Taxon taxon : node.getRemainingTaxa()) {
 					output.append(taxon.getName() + ",");
 				}
 				output.append("</span>");
 			}
-			if(node.hasChild())
+			if (node.hasChild())
 				output.append("<ul>");
 			output.append(System.getProperty("line.separator"));
 			tabulations = tabulations + "\t";
 		}
-		for(SingleAccessKeyNode childNode : node.getChildren()){
+		for (SingleAccessKeyNode childNode : node.getChildren()) {
 			recursiveToHTMLString(childNode, output, tabulations);
 		}
-		if(node != null && node.getCharacter() != null && node.getCharacterState() != null){
+		if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
 
-			if(node.hasChild())
+			if (node.hasChild())
 				output.append(tabulations + "</li></ul>\n");
 			else
 				output.append(tabulations + "</li>\n");
@@ -133,11 +133,9 @@ public class SingleAccessKeyTree {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * 
-	 * @see java.lang.Object#toString()
-	 */
+	 * @see java.lang.Object#toString() */
 	public String toString() {
 		StringBuffer output = new StringBuffer();
 		recursivetoString(root, output, System.getProperty("line.separator"));
