@@ -55,31 +55,41 @@ public class SingleAccessKeyTree {
 	 */
 	public void recursivetoString(SingleAccessKeyNode node, StringBuffer output, String tabulations) {
 
-		if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
-			if (node.getCharacterState() instanceof QuantitativeMeasure) {
+		if(node != null && node.getCharacter() != null && node.getCharacterState() != null){
+			if(node.getCharacterState() instanceof QuantitativeMeasure){
 				output.append(tabulations + node.getCharacter().getName() + ": "
 						+ ((QuantitativeMeasure) node.getCharacterState()).toStringInterval());
-			} else {
+			}else{
 				output.append(tabulations + node.getCharacter().getName() + ": "
 						+ ((State) node.getCharacterState()).getName());
 			}
-			if (node.getChildren().size() == 0) {
+			if(node.getChildren().size() == 0){
 				output.append(tabulations);
 				output.append("taxa=");
-				for (Taxon taxon : node.getRemainingTaxa()) {
+				for(Taxon taxon : node.getRemainingTaxa()){
 					output.append(taxon.getName() + ",");
 				}
-			} else {
+			}else{
 				output.append(tabulations + "taxa=" + node.getRemainingTaxa().size());
 			}
 			output.append(System.getProperty("line.separator"));
 			tabulations = tabulations + "\t";
 		}
-		for (SingleAccessKeyNode childNode : node.getChildren()) {
+		for(SingleAccessKeyNode childNode : node.getChildren()){
 			recursivetoString(childNode, output, tabulations);
 		}
 	}
-	
+
+	/**
+	 * recursively traverses (depth-first) the SingleAccessKeyTree, and returns an HTML representation of this
+	 * SingleAccessKeyTree in an unordered list (&lt;ul&gt;)
+	 * 
+	 * @param node
+	 *            a SingleAccessKeyNode object, which will be traversed
+	 * @param output
+	 *            a StringBuffer that contains the final output
+	 * @param tabulations
+	 */
 	public void recursiveToHTMLString(SingleAccessKeyNode node, StringBuffer output, String tabulations) {
 		String characterName = null;
 		String state = null;
@@ -110,29 +120,30 @@ public class SingleAccessKeyTree {
 			recursiveToHTMLString(childNode, output, tabulations);
 		}
 		if(node != null && node.getCharacter() != null && node.getCharacterState() != null){
-			
+
 			if(node.hasChild())
-				output.append(tabulations+ "</li></ul>\n");
+				output.append(tabulations + "</li></ul>\n");
 			else
-				output.append(tabulations+ "</li>\n");
-			
+				output.append(tabulations + "</li>\n");
+
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @see java.lang.Object#toString() */
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString() {
 		StringBuffer output = new StringBuffer();
 		recursivetoString(root, output, System.getProperty("line.separator"));
 		return output.toString();
 	}
-	
+
 	/**
-	 * get a HTML file containing the key
+	 * generates an HTML string that contains the identification key
 	 * 
-	 * @return File, the html file
-	 * @throws ParserConfigurationException
+	 * @return String the HTML String
 	 */
 	public String toHtmlString() {
 		String lineSep = System.getProperty("line.separator");
@@ -171,14 +182,13 @@ public class SingleAccessKeyTree {
 		return slk.toString();
 
 	}
-	
 
 	/**
 	 * get a HTML file containing the key
 	 * 
 	 * @return File, the html file
 	 */
-	public File toHtml() {
+	public File toHtmlFile() {
 		return null;
 	}
 
@@ -187,7 +197,7 @@ public class SingleAccessKeyTree {
 	 * 
 	 * @return File, the pdf file
 	 */
-	public File toPdf() {
+	public File toPdfFile() {
 		return null;
 	}
 
@@ -196,7 +206,7 @@ public class SingleAccessKeyTree {
 	 * 
 	 * @return File, the sdd file
 	 */
-	public File toSdd() {
+	public File toSddFile() {
 		return null;
 	}
 
@@ -205,7 +215,7 @@ public class SingleAccessKeyTree {
 	 * 
 	 * @return File, the Wikitext file
 	 */
-	public File toWikiText() {
+	public File toWikiFile() {
 		return null;
 	}
 }
