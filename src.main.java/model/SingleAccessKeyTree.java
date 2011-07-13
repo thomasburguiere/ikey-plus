@@ -95,24 +95,25 @@ public class SingleAccessKeyTree {
 		String state = null;
 		if(node != null && node.getCharacter() != null && node.getCharacterState() != null){
 			characterName = node.getCharacter().getName().replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;");
+			characterName = "<span class='character'>" + characterName + "</span>";
 
-			
-			
 			if(node.getCharacterState() instanceof QuantitativeMeasure)
 				state = ((QuantitativeMeasure) node.getCharacterState()).toStringInterval();
 			else
 				state = ((State) node.getCharacterState()).getName();
-			state = state.replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;");
+			state = "<span class='state'>" + state.replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;")
+					+ "</span>";
 
 			output.append(tabulations + "\t<li>" + characterName);
 
 			if(node.hasChild()){
-				output.append(" | " + state + " (taxa=" + node.getRemainingTaxa().size()+")");
+				output.append(" | " + state + " (taxa=" + node.getRemainingTaxa().size() + ")");
 			}else{
-				output.append(" | " + state + " -> taxa=");
+				output.append(" | " + state + " <span class='taxa'>-> taxa=");
 				for(Taxon taxon : node.getRemainingTaxa()){
 					output.append(taxon.getName() + ",");
 				}
+				output.append("</span>");
 			}
 			if(node.hasChild())
 				output.append("<ul>");
@@ -162,6 +163,20 @@ public class SingleAccessKeyTree {
 				+ "<script type='text/javascript'  src='http://queen.snv.jussieu.fr/vibrant/resources/js/dhtmlxTree/dhtmlxTree/codebase/ext/dhtmlxtree_start.js'></script>"
 				+ lineSep);
 
+		slk.append("<style type='text/css'>");
+		slk.append(".character{");
+		slk.append("   color:#333;");
+		slk.append("}");
+
+		slk.append(".state{");
+		slk.append("   color:#fe8a22;");
+		slk.append("}");
+
+		slk.append(".taxa{");
+		slk.append("   color:#67bb1b;");
+		slk.append("}");
+		slk.append("</style>");
+
 		slk.append("</head>" + lineSep);
 
 		slk.append("<body>" + lineSep);
@@ -173,8 +188,6 @@ public class SingleAccessKeyTree {
 		StringBuffer output = new StringBuffer();
 
 		recursiveToHTMLString(root, output, "");
-		
-		
 
 		slk.append(output.toString());
 
