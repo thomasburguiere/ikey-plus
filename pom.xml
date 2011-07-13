@@ -5,7 +5,7 @@
 	<artifactId>identificationKeyAPI</artifactId>
 	<version>1.0</version>
 
-	<!--  Permet de spécifier les dépendances --> 
+	<!-- Permet de spécifier les dépendances -->
 	<dependencies>
 		<dependency>
 			<groupId>xerces</groupId>

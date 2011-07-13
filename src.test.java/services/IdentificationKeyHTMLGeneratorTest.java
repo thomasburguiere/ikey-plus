@@ -76,7 +76,7 @@ public class IdentificationKeyHTMLGeneratorTest {
 		if (Utils.errorMessage != null)
 			System.out.println("ErrorMessage= " + Utils.errorMessage);
 		// display key
-		System.out.println(identificationKeyGenerator.getSingleAccessKeyTree().toHtml());
+		System.out.println(identificationKeyGenerator.getSingleAccessKeyTree().toHtmlString());
 
 		double keyDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
 		System.out.println(System.getProperty("line.separator") + "parseDuration= " + parseDuration + "s");
