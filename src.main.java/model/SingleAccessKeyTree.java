@@ -1,6 +1,10 @@
 package model;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ResourceBundle;
 
 /**
  * This class represents a single access key tree
@@ -221,9 +225,18 @@ public class SingleAccessKeyTree {
 	 * get a HTML file containing the key
 	 * 
 	 * @return File, the html file
+	 * @throws IOException
 	 */
-	public File toHtmlFile() {
-		return null;
+	public File toHtmlFile(ResourceBundle bundle) throws IOException {
+
+		String path = bundle.getString("generatedKeyFiles.folder");
+
+		File htmlFile = File.createTempFile("key_", ".html", new File(path));
+		BufferedWriter htmlFileWriter = new BufferedWriter(new FileWriter(htmlFile));
+		htmlFileWriter.append(toHtmlString());
+		htmlFileWriter.close();
+
+		return htmlFile;
 	}
 
 	/**
