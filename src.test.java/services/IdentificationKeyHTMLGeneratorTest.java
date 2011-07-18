@@ -80,8 +80,7 @@ public class IdentificationKeyHTMLGeneratorTest {
 		// display key
 		
 		ResourceBundle bundle = ResourceBundle.getBundle("confTest");
-		
-		
+
 		try {
 			System.out.println(identificationKeyGenerator.getSingleAccessKeyTree().toHtmlFile(bundle));
 		} catch (IOException e) {
