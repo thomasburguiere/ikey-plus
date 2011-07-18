@@ -97,9 +97,9 @@ public class IdentificationKeyGenerator {
 				for (State state : ((CategoricalCharacter) selectedCharacter).getStates()) {
 					List<Taxon> newRemainingTaxa = getRemainingTaxa(remainingTaxa,
 							((CategoricalCharacter) selectedCharacter), state);
-					
+
 					// test if we have to stop the branch or continue
-					if (newRemainingTaxa.size() > 0 && selectedScore > 0){
+					if (newRemainingTaxa.size() > 0 && selectedScore > 0) {
 
 						// init new node
 						SingleAccessKeyNode node = new SingleAccessKeyNode();
@@ -127,9 +127,9 @@ public class IdentificationKeyGenerator {
 				for (QuantitativeMeasure quantitativeMeasure : quantitativeMeasures) {
 					List<Taxon> newRemainingTaxa = getRemainingTaxa(remainingTaxa,
 							((QuantitativeCharacter) selectedCharacter), quantitativeMeasure);
-					
+
 					// test if we have to stop the branch or continue
-					if (newRemainingTaxa.size() > 0 && selectedScore > 0){
+					if (newRemainingTaxa.size() > 0 && selectedScore > 0) {
 
 						// init new node
 						SingleAccessKeyNode node = new SingleAccessKeyNode();
@@ -399,7 +399,6 @@ public class IdentificationKeyGenerator {
 		}
 		return bestCharacter;
 	}
-
 
 	/**
 	 * Calculate the discriminant power for categorical character

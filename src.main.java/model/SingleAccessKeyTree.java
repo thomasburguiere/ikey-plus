@@ -165,7 +165,7 @@ public class SingleAccessKeyTree {
 		slk.append("body{");
 		slk.append("   color:#333;");
 		slk.append("}");
-		
+
 		slk.append(".character{");
 		slk.append("   color:#333;");
 		slk.append("}");
