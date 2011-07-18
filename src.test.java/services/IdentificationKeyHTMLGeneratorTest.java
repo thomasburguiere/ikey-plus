@@ -77,8 +77,8 @@ public class IdentificationKeyHTMLGeneratorTest {
 		// display error message
 		if (Utils.errorMessage != null)
 			System.out.println("ErrorMessage= " + Utils.errorMessage);
-		// display key
 
+		// display key
 		ResourceBundle bundle = ResourceBundle.getBundle("confTest");
 
 		try {

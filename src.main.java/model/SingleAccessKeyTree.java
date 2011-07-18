@@ -56,18 +56,22 @@ public class SingleAccessKeyTree {
 	}
 
 	/**
+	 * recursively method to be abbe to display String representation of this SingleAccessKeyTree
+	 * 
 	 * @param parentNode
 	 * @param output
 	 */
-	public void recursivetoString(SingleAccessKeyNode node, StringBuffer output, String tabulations) {
+	public void recursiveToString(SingleAccessKeyNode node, StringBuffer output, String tabulations,
+			int firstNumbering, int secondNumbering) {
 
 		if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
 			if (node.getCharacterState() instanceof QuantitativeMeasure) {
-				output.append(tabulations + node.getCharacter().getName() + ": "
+				output.append(tabulations + firstNumbering + "." + secondNumbering + ") "
+						+ node.getCharacter().getName() + ": "
 						+ ((QuantitativeMeasure) node.getCharacterState()).toStringInterval());
 			} else {
-				output.append(tabulations + node.getCharacter().getName() + ": "
-						+ ((State) node.getCharacterState()).getName());
+				output.append(tabulations + firstNumbering + "." + secondNumbering + ") "
+						+ node.getCharacter().getName() + ": " + ((State) node.getCharacterState()).getName());
 			}
 			if (node.getChildren().size() == 0) {
 				output.append(tabulations);
@@ -81,8 +85,11 @@ public class SingleAccessKeyTree {
 			output.append(System.getProperty("line.separator"));
 			tabulations = tabulations + "\t";
 		}
+		firstNumbering++;
+		secondNumbering = 0;
 		for (SingleAccessKeyNode childNode : node.getChildren()) {
-			recursivetoString(childNode, output, tabulations);
+			secondNumbering++;
+			recursiveToString(childNode, output, tabulations, firstNumbering, secondNumbering);
 		}
 	}
 
@@ -158,7 +165,7 @@ public class SingleAccessKeyTree {
 	 * @see java.lang.Object#toString() */
 	public String toString() {
 		StringBuffer output = new StringBuffer();
-		recursivetoString(root, output, System.getProperty("line.separator"));
+		recursiveToString(root, output, System.getProperty("line.separator"), 0, 0);
 		return output.toString();
 	}
 

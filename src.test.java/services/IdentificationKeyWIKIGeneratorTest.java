@@ -76,6 +76,7 @@ public class IdentificationKeyWIKIGeneratorTest {
 		// display error message
 		if (Utils.errorMessage != null)
 			System.out.println("ErrorMessage= " + Utils.errorMessage);
+
 		// display key
 		ResourceBundle bundle = ResourceBundle.getBundle("confTest");
 
