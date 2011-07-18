@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.ResourceBundle;
+
 /**
  * This class allow to manage error messages
  * 
@@ -10,6 +12,7 @@ package utils;
 public class Utils {
 
 	public static String errorMessage = null;
+	public static ResourceBundle bundle = ResourceBundle.getBundle("conf");
 
 	/**
 	 * Convert a String value to a Double value
@@ -38,4 +41,32 @@ public class Utils {
 			errorMessage = msg;
 		}
 	}
+
+	/**
+	 * getter for configuration elements
+	 * 
+	 * @return String the element corresponding to the key
+	 */
+	public static String getBundleElement(String key) {
+		return Utils.bundle.getString(key);
+	}
+
+	/**
+	 * getter for ResourceBundle configuration
+	 * 
+	 * @return ResourceBundle
+	 */
+	public ResourceBundle getBundle() {
+		return bundle;
+	}
+
+	/**
+	 * setter for ResourceBundle configuration
+	 * 
+	 * @param bundle
+	 */
+	public void setBundle(ResourceBundle bundle) {
+		Utils.bundle = bundle;
+	}
+
 }

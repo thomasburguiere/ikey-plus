@@ -6,6 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
+import utils.Utils;
+
 /**
  * This class represents a single access key tree
  * 
@@ -170,14 +172,14 @@ public class SingleAccessKeyTree {
 		StringBuffer slk = new StringBuffer();
 		slk.append("<html>" + lineSep);
 		slk.append("<head>" + lineSep);
-		slk.append("<link rel='STYLESHEET' type='text/css' href='http://queen.snv.jussieu.fr/vibrant/resources/js/dhtmlxTree/dhtmlxTree/codebase/dhtmlxtree.css'/>"
-				+ lineSep
-				+ "<script type='text/javascript'  src='http://queen.snv.jussieu.fr/vibrant/resources/js/dhtmlxTree/dhtmlxTree/codebase/dhtmlxcommon.js'></script>"
-				+ lineSep
-				+ "<script type='text/javascript'  src='http://queen.snv.jussieu.fr/vibrant/resources/js/dhtmlxTree/dhtmlxTree/codebase/dhtmlxtree.js'></script>"
-				+ lineSep
-				+ "<script type='text/javascript'  src='http://queen.snv.jussieu.fr/vibrant/resources/js/dhtmlxTree/dhtmlxTree/codebase/ext/dhtmlxtree_start.js'></script>"
-				+ lineSep);
+		slk.append("<link rel='STYLESHEET' type='text/css' href='" + Utils.getBundleElement("resources.path")
+				+ "js/dhtmlxTree/dhtmlxTree/codebase/dhtmlxtree.css'/>" + lineSep
+				+ "<script type='text/javascript'  src='" + Utils.getBundleElement("resources.path")
+				+ "js/dhtmlxTree/dhtmlxTree/codebase/dhtmlxcommon.js'></script>" + lineSep
+				+ "<script type='text/javascript'  src='" + Utils.getBundleElement("resources.path")
+				+ "js/dhtmlxTree/dhtmlxTree/codebase/dhtmlxtree.js'></script>" + lineSep
+				+ "<script type='text/javascript'  src='" + Utils.getBundleElement("resources.path")
+				+ "js/dhtmlxTree/dhtmlxTree/codebase/ext/dhtmlxtree_start.js'></script>" + lineSep);
 
 		slk.append("<style type='text/css'>");
 		slk.append("body{");
@@ -200,8 +202,9 @@ public class SingleAccessKeyTree {
 		slk.append("</head>" + lineSep);
 
 		slk.append("<body>" + lineSep);
-		slk.append("<div class='dhtmlxTree' id='treeboxbox_tree' setImagePath='http://queen.snv.jussieu.fr/vibrant/resources/js/dhtmlxTree/dhtmlxTree/codebase/imgs/' >"
-				+ lineSep);
+		slk.append("<div class='dhtmlxTree' id='treeboxbox_tree' setImagePath='"
+				+ Utils.getBundleElement("resources.path")
+				+ "/js/dhtmlxTree/dhtmlxTree/codebase/imgs/csh_dhx_skyblue/' >" + lineSep);
 
 		slk.append("<ul>" + lineSep);
 
