@@ -265,4 +265,15 @@ public class SingleAccessKeyTree {
 	public File toWikiFile() {
 		return null;
 	}
+
+	public File toTextFile(ResourceBundle bundle) throws IOException {
+		String path = bundle.getString("generatedKeyFiles.folder");
+
+		File txtFile = File.createTempFile("key_", ".txt", new File(path));
+		BufferedWriter txtFileWriter = new BufferedWriter(new FileWriter(txtFile));
+		txtFileWriter.append(toString());
+		txtFileWriter.close();
+
+		return txtFile;
+	}
 }
