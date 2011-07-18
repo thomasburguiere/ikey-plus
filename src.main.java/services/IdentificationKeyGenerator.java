@@ -85,6 +85,7 @@ public class IdentificationKeyGenerator {
 			// calculate characters score
 			Map<ICharacter, Float> charactersScore = charactersScores(remainingCharacters, remainingTaxa);
 			ICharacter selectedCharacter = bestCharacter(charactersScore);
+			float selectedScore = charactersScore.get(selectedCharacter);
 
 			/* // display score for each character for (ICharacter character : charactersScore.keySet()) {
 			 * System.out.println(character.getName() + ": " + charactersScore.get(character)); }
@@ -96,10 +97,9 @@ public class IdentificationKeyGenerator {
 				for (State state : ((CategoricalCharacter) selectedCharacter).getStates()) {
 					List<Taxon> newRemainingTaxa = getRemainingTaxa(remainingTaxa,
 							((CategoricalCharacter) selectedCharacter), state);
-					if (newRemainingTaxa.size() > 0
-							&& ((newRemainingTaxa.size() == remainingTaxa.size() && selectedCharacter
-									.getChildCharacters().size() > 0) || newRemainingTaxa.size() < remainingTaxa
-									.size())) {
+					
+					// test if we have to stop the branch or continue
+					if (newRemainingTaxa.size() > 0 && selectedScore > 0){
 
 						// init new node
 						SingleAccessKeyNode node = new SingleAccessKeyNode();
@@ -125,17 +125,16 @@ public class IdentificationKeyGenerator {
 						selectedCharacter, remainingTaxa);
 
 				for (QuantitativeMeasure quantitativeMeasure : quantitativeMeasures) {
-					List<Taxon> newRemaningTaxa = getRemainingTaxa(remainingTaxa,
+					List<Taxon> newRemainingTaxa = getRemainingTaxa(remainingTaxa,
 							((QuantitativeCharacter) selectedCharacter), quantitativeMeasure);
-					if (newRemaningTaxa.size() > 0
-							&& ((newRemaningTaxa.size() == remainingTaxa.size() && selectedCharacter
-									.getChildCharacters().size() > 0) || newRemaningTaxa.size() < remainingTaxa
-									.size())) {
+					
+					// test if we have to stop the branch or continue
+					if (newRemainingTaxa.size() > 0 && selectedScore > 0){
 
 						// init new node
 						SingleAccessKeyNode node = new SingleAccessKeyNode();
 						node.setCharacter(selectedCharacter);
-						node.setRemainingTaxa(newRemaningTaxa);
+						node.setRemainingTaxa(newRemainingTaxa);
 						node.setCharacterState(quantitativeMeasure);
 
 						// put new node as child of parentNode
@@ -147,7 +146,7 @@ public class IdentificationKeyGenerator {
 						newRemainingCharacters.remove(selectedCharacter);
 
 						// calculate next node
-						calculateSingleAccessKeyNodeChild(node, newRemainingCharacters, newRemaningTaxa);
+						calculateSingleAccessKeyNodeChild(node, newRemainingCharacters, newRemainingTaxa);
 					}
 				}
 			}
@@ -400,6 +399,7 @@ public class IdentificationKeyGenerator {
 		}
 		return bestCharacter;
 	}
+
 
 	/**
 	 * Calculate the discriminant power for categorical character

@@ -162,6 +162,10 @@ public class SingleAccessKeyTree {
 				+ lineSep);
 
 		slk.append("<style type='text/css'>");
+		slk.append("body{");
+		slk.append("   color:#333;");
+		slk.append("}");
+		
 		slk.append(".character{");
 		slk.append("   color:#333;");
 		slk.append("}");
