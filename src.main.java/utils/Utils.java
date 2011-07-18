@@ -3,7 +3,7 @@ package utils;
 import java.util.ResourceBundle;
 
 /**
- * This class allow to manage all external fonctionality : error massage, properties...
+ * This class allow to manage all external functionalities : error massage, properties...
  * 
  * @author Florian Causse
  * @created 07-04-2011
