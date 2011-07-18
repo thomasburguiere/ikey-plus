@@ -51,22 +51,4 @@ public class Utils {
 		return Utils.bundle.getString(key);
 	}
 
-	/**
-	 * getter for ResourceBundle configuration
-	 * 
-	 * @return ResourceBundle
-	 */
-	public ResourceBundle getBundle() {
-		return bundle;
-	}
-
-	/**
-	 * setter for ResourceBundle configuration
-	 * 
-	 * @param bundle
-	 */
-	public void setBundle(ResourceBundle bundle) {
-		Utils.bundle = bundle;
-	}
-
 }
