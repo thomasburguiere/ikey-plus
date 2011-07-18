@@ -89,13 +89,21 @@ public class SingleAccessKeyTree {
 	 * @param output
 	 *            a StringBuffer that contains the final output
 	 * @param tabulations
+	 * @param displayCharacterName
+	 *            a boolean to know if characterName need to be displayed
 	 */
-	public void recursiveToHTMLString(SingleAccessKeyNode node, StringBuffer output, String tabulations) {
+	public void recursiveToHTMLString(SingleAccessKeyNode node, StringBuffer output, String tabulations,
+			boolean displayCharacterName) {
 		String characterName = null;
 		String state = null;
 		if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
-			characterName = node.getCharacter().getName().replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;");
-			characterName = "<span class='character'>" + characterName + "</span>";
+
+			if (displayCharacterName) {
+				characterName = node.getCharacter().getName().replaceAll("\\<", "&lt;")
+						.replaceAll("\\>", "&gt;");
+				characterName = "<span class='character'>" + "<b>[" + characterName + "]</b>" + "</span>";
+				output.append(tabulations + "\t<li>" + characterName + "</li>");
+			}
 
 			if (node.getCharacterState() instanceof QuantitativeMeasure)
 				state = ((QuantitativeMeasure) node.getCharacterState()).toStringInterval();
@@ -104,12 +112,12 @@ public class SingleAccessKeyTree {
 			state = "<span class='state'>" + state.replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;")
 					+ "</span>";
 
-			output.append(tabulations + "\t<li>" + characterName);
+			output.append("\n" + tabulations + "\t<li>");
 
 			if (node.hasChild()) {
-				output.append(" | " + state + " (taxa=" + node.getRemainingTaxa().size() + ")");
+				output.append(state + " (taxa=" + node.getRemainingTaxa().size() + ")");
 			} else {
-				output.append(" | " + state + " <span class='taxa'>-> taxa=");
+				output.append(state + " <span class='taxa'>-> taxa=");
 				for (Taxon taxon : node.getRemainingTaxa()) {
 					output.append(taxon.getName() + ",");
 				}
@@ -120,8 +128,14 @@ public class SingleAccessKeyTree {
 			output.append(System.getProperty("line.separator"));
 			tabulations = tabulations + "\t";
 		}
+		boolean firstLoop = true;
 		for (SingleAccessKeyNode childNode : node.getChildren()) {
-			recursiveToHTMLString(childNode, output, tabulations);
+			if (firstLoop) {
+				recursiveToHTMLString(childNode, output, tabulations, firstLoop);
+			} else {
+				recursiveToHTMLString(childNode, output, tabulations, firstLoop);
+			}
+			firstLoop = false;
 		}
 		if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
 
@@ -189,7 +203,7 @@ public class SingleAccessKeyTree {
 
 		StringBuffer output = new StringBuffer();
 
-		recursiveToHTMLString(root, output, "");
+		recursiveToHTMLString(root, output, "", true);
 
 		slk.append(output.toString());
 
