@@ -1,8 +1,10 @@
 package services;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 import model.SingleAccessKeyTree;
@@ -19,7 +21,7 @@ import IO.SDDSaxParser;
  * @author Florian Causse
  * @created 18-04-2011
  */
-public class IdentificationKeyGeneratorTest {
+public class IdentificationKeyTXTGeneratorTest {
 
 	public Logger logger = Logger.getAnonymousLogger();
 
@@ -75,8 +77,13 @@ public class IdentificationKeyGeneratorTest {
 		if (Utils.errorMessage != null)
 			System.out.println("ErrorMessage= " + Utils.errorMessage);
 		// display key
-		System.out.println(identificationKeyGenerator.getSingleAccessKeyTree().toString());
+		ResourceBundle bundle = ResourceBundle.getBundle("confTest");
 
+		try {
+			System.out.println(identificationKeyGenerator.getSingleAccessKeyTree().toTextFile((bundle)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		double keyDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
 		System.out.println(System.getProperty("line.separator") + "parseDuration= " + parseDuration + "s");
 		System.out.println("keyDuration= " + keyDuration + "s");
