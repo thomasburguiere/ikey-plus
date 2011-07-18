@@ -1,8 +1,10 @@
 package services;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 import model.SingleAccessKeyTree;
@@ -30,10 +32,10 @@ public class IdentificationKeyHTMLGeneratorTest {
 
 		SDDSaxParser sddSaxParser = null;
 		try {
-			String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
+//			String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
 			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml";
 			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/testSDD.xml";
-			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml";
+			 String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml";
 			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/smallSDD.xml";
 			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/wrongSDD.xml";
 
@@ -76,7 +78,15 @@ public class IdentificationKeyHTMLGeneratorTest {
 		if (Utils.errorMessage != null)
 			System.out.println("ErrorMessage= " + Utils.errorMessage);
 		// display key
-		System.out.println(identificationKeyGenerator.getSingleAccessKeyTree().toHtmlString());
+		
+		ResourceBundle bundle = ResourceBundle.getBundle("confTest");
+		
+		
+		try {
+			System.out.println(identificationKeyGenerator.getSingleAccessKeyTree().toHtmlFile(bundle));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		double keyDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
 		System.out.println(System.getProperty("line.separator") + "parseDuration= " + parseDuration + "s");
