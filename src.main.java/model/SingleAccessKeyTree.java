@@ -224,6 +224,8 @@ public class SingleAccessKeyTree {
 	/**
 	 * get a HTML file containing the key
 	 * 
+	 * @param bundle
+	 *            A ResourceBundle used to retrieve the path of the folder in which the file must be generated
 	 * @return File, the html file
 	 * @throws IOException
 	 */
@@ -260,12 +262,34 @@ public class SingleAccessKeyTree {
 	/**
 	 * get a wiki file containing the key
 	 * 
+	 * @param bundle
+	 *            A ResourceBundle used to retrieve the path of the folder in which the file must be generated
 	 * @return File, the Wikitext file
 	 */
-	public File toWikiFile() {
-		return null;
+	public File toWikiFile(ResourceBundle bundle) throws IOException {
+		String path = bundle.getString("generatedKeyFiles.folder");
+
+		File wikiFile = File.createTempFile("key_", ".wiki", new File(path));
+		BufferedWriter wikiFileWriter = new BufferedWriter(new FileWriter(wikiFile));
+
+		wikiFileWriter.append("== Info ==");
+		wikiFileWriter.newLine();
+		wikiFileWriter.append("== Identification Key==");
+		wikiFileWriter.newLine();
+		wikiFileWriter.append(" <nowiki>");
+
+		wikiFileWriter.append(toString());
+
+		wikiFileWriter.append("</nowiki>");
+		return wikiFile;
 	}
 
+	/**
+	 * @param bundle
+	 *            A ResourceBundle used to retrieve the path of the folder in which the file must be generated
+	 * @return File the wikitext File
+	 * @throws IOException
+	 */
 	public File toTextFile(ResourceBundle bundle) throws IOException {
 		String path = bundle.getString("generatedKeyFiles.folder");
 
