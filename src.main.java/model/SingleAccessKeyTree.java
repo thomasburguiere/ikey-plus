@@ -134,9 +134,9 @@ public class SingleAccessKeyTree {
 			output.append("\n" + tabulations + "\t<li>");
 
 			if (node.hasChild()) {
-				output.append(state + " (taxa=" + node.getRemainingTaxa().size() + ")");
+				output.append("&nbsp;" + state + " (taxa=" + node.getRemainingTaxa().size() + ")");
 			} else {
-				output.append(state + " <span class='taxa'>-> taxa=");
+				output.append("&nbsp;" + state + " <span class='taxa'>-> taxa=");
 				for (Taxon taxon : node.getRemainingTaxa()) {
 					output.append(taxon.getName() + ",");
 				}
@@ -185,41 +185,48 @@ public class SingleAccessKeyTree {
 		StringBuffer slk = new StringBuffer();
 		slk.append("<html>" + lineSep);
 		slk.append("<head>" + lineSep);
-		slk.append("<link rel='STYLESHEET' type='text/css' href='" + Utils.getBundleElement("resources.path")
-				+ "js/dhtmlxTree/dhtmlxTree/codebase/dhtmlxtree.css'/>" + lineSep
-				+ "<script type='text/javascript'  src='" + Utils.getBundleElement("resources.path")
-				+ "js/dhtmlxTree/dhtmlxTree/codebase/dhtmlxcommon.js'></script>" + lineSep
-				+ "<script type='text/javascript'  src='" + Utils.getBundleElement("resources.path")
-				+ "js/dhtmlxTree/dhtmlxTree/codebase/dhtmlxtree.js'></script>" + lineSep
-				+ "<script type='text/javascript'  src='" + Utils.getBundleElement("resources.path")
-				+ "js/dhtmlxTree/dhtmlxTree/codebase/ext/dhtmlxtree_start.js'></script>" + lineSep);
+		slk.append("<script src='" + Utils.getBundleElement("resources.jqueryPath") + "'></script>" + lineSep
+				+ "<script type='text/javascript' src='" + Utils.getBundleElement("resources.treeviewJsPath")
+				+ "'></script>" + lineSep + "<link rel='stylesheet' href='"
+				+ Utils.getBundleElement("resources.treeviewCssPath") + "' type='text/css' />" + lineSep);
 
-		slk.append("<style type='text/css'>");
-		slk.append("body{");
-		slk.append("   color:#333;");
-		slk.append("}");
+		slk.append("<style type='text/css'>" + lineSep);
+		slk.append("body{" + lineSep);
+		slk.append("   color:#333;" + lineSep);
+		slk.append("   font-family: Verdana, helvetica, arial, sans-serif;" + lineSep);
+		slk.append("   font-size: 78%;" + lineSep);
+		slk.append("   background: #fff;" + lineSep);
+		slk.append("}" + lineSep + lineSep);
 
-		slk.append(".character{");
-		slk.append("   color:#333;");
-		slk.append("}");
+		slk.append(".character{" + lineSep);
+		slk.append("   color:#333;" + lineSep);
+		slk.append("}" + lineSep + lineSep);
 
-		slk.append(".state{");
-		slk.append("   color:#fe8a22;");
-		slk.append("}");
+		slk.append(".state{" + lineSep);
+		slk.append("   color:#fe8a22;" + lineSep);
+		slk.append("}" + lineSep + lineSep);
 
-		slk.append(".taxa{");
-		slk.append("   color:#67bb1b;");
-		slk.append("}");
-		slk.append("</style>");
+		slk.append(".taxa{" + lineSep);
+		slk.append("   color:#67bb1b;" + lineSep);
+		slk.append("}" + lineSep + lineSep);
+		slk.append("</style>" + lineSep);
+
+		slk.append("<script>" + lineSep);
+		slk.append("  $(document).ready(function(){" + lineSep);
+		slk.append("      $('#tree').treeview({" + lineSep);
+		slk.append("		collapsed: true," + lineSep);
+		slk.append("		unique: true," + lineSep);
+		slk.append("		persist: 'location'" + lineSep);
+		slk.append("	});" + lineSep);
+		slk.append(" });" + lineSep);
+		slk.append("  </script>" + lineSep);
 
 		slk.append("</head>" + lineSep);
 
 		slk.append("<body>" + lineSep);
-		slk.append("<div class='dhtmlxTree' id='treeboxbox_tree' setImagePath='"
-				+ Utils.getBundleElement("resources.path")
-				+ "/js/dhtmlxTree/dhtmlxTree/codebase/imgs/csh_dhx_skyblue/' >" + lineSep);
+		slk.append("<div style='margin-left:30px;margin-top:70px;'>" + lineSep);
 
-		slk.append("<ul>" + lineSep);
+		slk.append("<ul id='tree'>" + lineSep);
 
 		StringBuffer output = new StringBuffer();
 
