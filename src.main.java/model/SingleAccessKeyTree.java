@@ -2,15 +2,18 @@ package model;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.ResourceBundle;
 
-import org.pdfbox.pdmodel.PDDocument;
-import org.pdfbox.pdmodel.PDPage;
-import org.pdfbox.pdmodel.edit.PDPageContentStream;
-import org.pdfbox.pdmodel.font.PDFont;
-import org.pdfbox.pdmodel.font.PDType1Font;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.html.simpleparser.HTMLWorker;
+import com.itextpdf.text.html.simpleparser.StyleSheet;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import utils.Utils;
 
@@ -174,7 +177,7 @@ public class SingleAccessKeyTree {
 		recursiveToString(root, output, System.getProperty("line.separator"), 0, 0);
 		return output.toString();
 	}
-
+	
 	/**
 	 * generates an HTML string that contains the identification key
 	 * 
@@ -269,25 +272,45 @@ public class SingleAccessKeyTree {
 	 * 
 	 * @return File, the pdf file
 	 * @throws IOException
+	 * @throws COSVisitorException
+	 * @throws DocumentException
 	 */
-	public File toPdfFile() throws IOException {
+	public File toPdfFile(ResourceBundle bundle) throws IOException, DocumentException {
 
-		PDDocument document = new PDDocument();
-		PDFont baseFont = PDType1Font.COURIER;
-		PDPage page = new PDPage();
-		document.addPage(page);
-		PDPageContentStream contentStream = new PDPageContentStream(document, page);
+		String path = bundle.getString("generatedKeyFiles.folder");
+		File pdfFile = File.createTempFile("key_", ".pdf", new File(path));
 
-		contentStream.beginText();
-		contentStream.setFont(baseFont, 12);
-		contentStream.moveTextPositionByAmount(50, 50);
-		contentStream.drawString("Hello World");
-		contentStream.endText();
+		Document pdfDocument = new Document(PageSize.A3, 50, 50, 50, 50);
+		PdfWriter.getInstance(pdfDocument, new FileOutputStream(pdfFile));
+		
+		pdfDocument.open();
 
-		contentStream.close();
+		StyleSheet styles = new StyleSheet();
+		styles.loadTagStyle("ul", "indent", "15");
+		styles.loadTagStyle("li", "leading", "15");
+		
+		styles.loadStyle("character", "color","#333");
+		styles.loadStyle("state", "color","#fe8a22");
+		styles.loadStyle("taxa", "color","#67bb1b");
+		
+		
+		
+		HTMLWorker htmlWorker = new HTMLWorker(pdfDocument); 
+		htmlWorker.setStyleSheet(styles);
+		
+		StringBuffer output = new StringBuffer();
+		output.append("<html><head></head><boyd>");
+		recursiveToHTMLString(root, output, "", true);
+		output.append("</body></html>");
+		
+		htmlWorker.parse(new StringReader(output.toString()));
+		
+		
+		
+		pdfDocument.close();
+		htmlWorker.close();
 
-		return null;
-
+		return pdfFile;
 	}
 
 	/**
