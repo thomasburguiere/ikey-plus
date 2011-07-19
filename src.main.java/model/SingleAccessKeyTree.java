@@ -6,7 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
-import org.pdfbox.PDFDebugger;
 import org.pdfbox.pdmodel.PDDocument;
 import org.pdfbox.pdmodel.PDPage;
 import org.pdfbox.pdmodel.edit.PDPageContentStream;
@@ -262,28 +261,26 @@ public class SingleAccessKeyTree {
 	 * get a PDF file containing the key
 	 * 
 	 * @return File, the pdf file
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public File toPdfFile() throws IOException {
-		
+
 		PDDocument document = new PDDocument();
 		PDFont baseFont = PDType1Font.COURIER;
 		PDPage page = new PDPage();
 		document.addPage(page);
 		PDPageContentStream contentStream = new PDPageContentStream(document, page);
-		
+
 		contentStream.beginText();
-		contentStream.setFont( baseFont, 12 );
-		contentStream.moveTextPositionByAmount( 50, 50 );
-		contentStream.drawString( "Hello World" );
+		contentStream.setFont(baseFont, 12);
+		contentStream.moveTextPositionByAmount(50, 50);
+		contentStream.drawString("Hello World");
 		contentStream.endText();
-		
-		
-		
+
 		contentStream.close();
-		
+
 		return null;
-		
+
 	}
 
 	/**
