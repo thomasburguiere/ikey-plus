@@ -43,7 +43,7 @@ public class Utils {
 	}
 
 	/**
-	 * getter for configuration elements
+	 * Getter for configuration elements or messages
 	 * 
 	 * @return String the element corresponding to the key
 	 */

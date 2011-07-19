@@ -18,6 +18,7 @@ import model.Taxon;
 import org.junit.Test;
 
 import utils.IdentificationKeyErrorMessage;
+import utils.Utils;
 
 /**
  * This class allow to test the SDDSaxParser
@@ -54,15 +55,15 @@ public class SDDSaxParserTest {
 				// Open data stream
 				httpStream = urlConnection.getInputStream();
 			} catch (java.net.MalformedURLException e) {
-				new IdentificationKeyErrorMessage("URL to SDD file not correct", e);
+				new IdentificationKeyErrorMessage(Utils.getBundleElement("message.urlError"), e);
 				e.printStackTrace();
 			} catch (java.io.IOException e) {
-				new IdentificationKeyErrorMessage("URL to SDD file not correct", e);
+				new IdentificationKeyErrorMessage(Utils.getBundleElement("message.urlError"), e);
 				e.printStackTrace();
 			}
 			sddSaxParser = new SDDSaxParser(stringUrl);
 		} catch (Throwable t) {
-			new IdentificationKeyErrorMessage("SDD parsing error", t);
+			new IdentificationKeyErrorMessage(Utils.getBundleElement("message.parsingError"), t);
 			t.printStackTrace();
 		}
 

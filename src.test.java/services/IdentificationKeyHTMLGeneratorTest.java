@@ -49,16 +49,16 @@ public class IdentificationKeyHTMLGeneratorTest {
 				// Open data stream
 				httpStream = urlConnection.getInputStream();
 			} catch (java.net.MalformedURLException e) {
-				new IdentificationKeyErrorMessage("URL to SDD file not correct", e);
+				new IdentificationKeyErrorMessage(Utils.getBundleElement("message.urlError"), e);
 				e.printStackTrace();
 			} catch (java.io.IOException e) {
-				new IdentificationKeyErrorMessage("URL to SDD file not correct", e);
+				new IdentificationKeyErrorMessage(Utils.getBundleElement("message.urlError"), e);
 				e.printStackTrace();
 			}
 			sddSaxParser = new SDDSaxParser(stringUrl);
 
 		} catch (Throwable t) {
-			new IdentificationKeyErrorMessage("SDD parsing error", t);
+			new IdentificationKeyErrorMessage(Utils.getBundleElement("message.parsingError"), t);
 			t.printStackTrace();
 		}
 		double parseDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
@@ -70,7 +70,7 @@ public class IdentificationKeyHTMLGeneratorTest {
 					sddSaxParser.getDataset());
 			identificationKeyGenerator.createIdentificationKey();
 		} catch (Throwable t) {
-			new IdentificationKeyErrorMessage("Creating key error", t);
+			new IdentificationKeyErrorMessage(Utils.getBundleElement("message.creatingKeyError"), t);
 			t.printStackTrace();
 		}
 

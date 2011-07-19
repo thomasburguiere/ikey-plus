@@ -16,10 +16,10 @@ import utils.Utils;
 import IO.SDDSaxParser;
 
 /**
- * This class allow to test the TEXT output of IdentificationKeyGenerator service
+ * This class allow to test the WIKI output of IdentificationKeyGenerator service
  * 
- * @author Florian Causse
- * @created 18-04-2011
+ * @author Thomas Burguiere
+ * @created 18-07-2011
  */
 public class IdentificationKeyWIKIGeneratorTest {
 
@@ -49,15 +49,15 @@ public class IdentificationKeyWIKIGeneratorTest {
 				// Open data stream
 				httpStream = urlConnection.getInputStream();
 			} catch (java.net.MalformedURLException e) {
-				new IdentificationKeyErrorMessage("URL to SDD file not correct", e);
+				new IdentificationKeyErrorMessage(Utils.getBundleElement("message.urlError"), e);
 				e.printStackTrace();
 			} catch (java.io.IOException e) {
-				new IdentificationKeyErrorMessage("URL to SDD file not correct", e);
+				new IdentificationKeyErrorMessage(Utils.getBundleElement("message.urlError"), e);
 				e.printStackTrace();
 			}
 			sddSaxParser = new SDDSaxParser(stringUrl);
 		} catch (Throwable t) {
-			new IdentificationKeyErrorMessage("SDD parsing error", t);
+			new IdentificationKeyErrorMessage(Utils.getBundleElement("message.parsingError"), t);
 			t.printStackTrace();
 		}
 		double parseDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
@@ -69,7 +69,7 @@ public class IdentificationKeyWIKIGeneratorTest {
 					sddSaxParser.getDataset());
 			identificationKeyGenerator.createIdentificationKey();
 		} catch (Throwable t) {
-			new IdentificationKeyErrorMessage("Creating key error", t);
+			new IdentificationKeyErrorMessage(Utils.getBundleElement("message.creatingKeyError"), t);
 			t.printStackTrace();
 		}
 
