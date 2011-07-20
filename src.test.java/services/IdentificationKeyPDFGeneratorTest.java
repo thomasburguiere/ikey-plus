@@ -18,7 +18,7 @@ import utils.Utils;
 import IO.SDDSaxParser;
 
 /**
- * This class allow to test the WIKI output of IdentificationKeyGenerator service
+ * This class allow to test the PDF output of IdentificationKeyGenerator service
  * 
  * @author Thomas Burguiere
  * @created 18-07-2011
@@ -85,11 +85,12 @@ public class IdentificationKeyPDFGeneratorTest {
 		try {
 			System.out.println(identificationKeyGenerator.getSingleAccessKeyTree().toPdfFile(bundle));
 		} catch (IOException e) {
+			new IdentificationKeyErrorMessage(Utils.getBundleElement("message.creatingPdfError"), e);
 			e.printStackTrace();
 		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
+			new IdentificationKeyErrorMessage(Utils.getBundleElement("message.creatingPdfError"), e);
 			e.printStackTrace();
-		} 
+		}
 		double keyDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
 		System.out.println(System.getProperty("line.separator") + "parseDuration= " + parseDuration + "s");
 		System.out.println("keyDuration= " + keyDuration + "s");

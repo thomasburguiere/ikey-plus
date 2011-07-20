@@ -165,7 +165,6 @@ public class SingleAccessKeyTree {
 				output.append(tabulations + "</li></ul>\n");
 			else
 				output.append(tabulations + "</li>\n");
-
 		}
 	}
 
@@ -177,7 +176,7 @@ public class SingleAccessKeyTree {
 		recursiveToString(root, output, System.getProperty("line.separator"), 0, 0);
 		return output.toString();
 	}
-	
+
 	/**
 	 * generates an HTML string that contains the identification key
 	 * 
@@ -282,31 +281,27 @@ public class SingleAccessKeyTree {
 
 		Document pdfDocument = new Document(PageSize.A3, 50, 50, 50, 50);
 		PdfWriter.getInstance(pdfDocument, new FileOutputStream(pdfFile));
-		
+
 		pdfDocument.open();
 
 		StyleSheet styles = new StyleSheet();
 		styles.loadTagStyle("ul", "indent", "15");
 		styles.loadTagStyle("li", "leading", "15");
-		
-		styles.loadStyle("character", "color","#333");
-		styles.loadStyle("state", "color","#fe8a22");
-		styles.loadStyle("taxa", "color","#67bb1b");
-		
-		
-		
-		HTMLWorker htmlWorker = new HTMLWorker(pdfDocument); 
+
+		styles.loadStyle("character", "color", "#333");
+		styles.loadStyle("state", "color", "#fe8a22");
+		styles.loadStyle("taxa", "color", "#67bb1b");
+
+		HTMLWorker htmlWorker = new HTMLWorker(pdfDocument);
 		htmlWorker.setStyleSheet(styles);
-		
+
 		StringBuffer output = new StringBuffer();
 		output.append("<html><head></head><boyd>");
 		recursiveToHTMLString(root, output, "", true);
 		output.append("</body></html>");
-		
+
 		htmlWorker.parse(new StringReader(output.toString()));
-		
-		
-		
+
 		pdfDocument.close();
 		htmlWorker.close();
 

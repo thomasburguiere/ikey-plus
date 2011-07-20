@@ -83,6 +83,7 @@ public class IdentificationKeyTXTGeneratorTest {
 		try {
 			System.out.println(identificationKeyGenerator.getSingleAccessKeyTree().toTextFile((bundle)));
 		} catch (IOException e) {
+			new IdentificationKeyErrorMessage(Utils.getBundleElement("message.creatingTxtError"), e);
 			e.printStackTrace();
 		}
 		double keyDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;

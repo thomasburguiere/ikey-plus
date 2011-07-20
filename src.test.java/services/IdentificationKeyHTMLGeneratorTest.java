@@ -84,6 +84,7 @@ public class IdentificationKeyHTMLGeneratorTest {
 		try {
 			System.out.println(identificationKeyGenerator.getSingleAccessKeyTree().toHtmlFile(bundle));
 		} catch (IOException e) {
+			new IdentificationKeyErrorMessage(Utils.getBundleElement("message.creatingHtmlError"), e);
 			e.printStackTrace();
 		}
 

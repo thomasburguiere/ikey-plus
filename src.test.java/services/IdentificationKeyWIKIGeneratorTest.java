@@ -83,6 +83,7 @@ public class IdentificationKeyWIKIGeneratorTest {
 		try {
 			System.out.println(identificationKeyGenerator.getSingleAccessKeyTree().toWikiFile(bundle));
 		} catch (IOException e) {
+			new IdentificationKeyErrorMessage(Utils.getBundleElement("message.creatingWikiError"), e);
 			e.printStackTrace();
 		}
 		double keyDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
