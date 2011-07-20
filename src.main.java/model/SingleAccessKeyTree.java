@@ -76,22 +76,26 @@ public class SingleAccessKeyTree {
 		if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
 			if (node.getCharacterState() instanceof QuantitativeMeasure) {
 				output.append(tabulations + firstNumbering + "." + secondNumbering + ") "
-						+ node.getCharacter().getName() + ": "
+						+ node.getCharacter().getName() + " | "
 						+ ((QuantitativeMeasure) node.getCharacterState()).toStringInterval());
 			} else {
 				output.append(tabulations + firstNumbering + "." + secondNumbering + ") "
-						+ node.getCharacter().getName() + ": " + ((State) node.getCharacterState()).getName());
+						+ node.getCharacter().getName() + " | "
+						+ ((State) node.getCharacterState()).getName());
 			}
 			if (node.getChildren().size() == 0) {
-				output.append(tabulations);
-				output.append("taxa=");
+				output.append(" -> taxa= ");
+				boolean firstLoop = true;
 				for (Taxon taxon : node.getRemainingTaxa()) {
-					output.append(taxon.getName() + ",");
+					if (!firstLoop) {
+						output.append(", ");
+					}
+					output.append(taxon.getName());
+					firstLoop = false;
 				}
 			} else {
-				output.append(tabulations + "taxa=" + node.getRemainingTaxa().size());
+				output.append(" (taxa=" + node.getRemainingTaxa().size() + ")");
 			}
-			output.append(System.getProperty("line.separator"));
 			tabulations = tabulations + "\t";
 		}
 		firstNumbering++;
@@ -123,7 +127,7 @@ public class SingleAccessKeyTree {
 			if (displayCharacterName) {
 				characterName = node.getCharacter().getName().replaceAll("\\<", "&lt;")
 						.replaceAll("\\>", "&gt;");
-				characterName = "<span class='character'>" + "<b>[" + characterName + "]</b>" + "</span>";
+				characterName = "<span class='character'>" + "<b>" + characterName + "</b>" + "</span>";
 				output.append(tabulations + "\t<li>" + characterName + "</li>");
 			}
 
@@ -139,9 +143,14 @@ public class SingleAccessKeyTree {
 			if (node.hasChild()) {
 				output.append("&nbsp;" + state + " (taxa=" + node.getRemainingTaxa().size() + ")");
 			} else {
-				output.append("&nbsp;" + state + " <span class='taxa'>-> taxa=");
+				output.append("&nbsp;" + state + "<span class='taxa'> -> taxa= ");
+				boolean firstLoop = true;
 				for (Taxon taxon : node.getRemainingTaxa()) {
-					output.append(taxon.getName() + ",");
+					if (!firstLoop) {
+						output.append(", ");
+					}
+					output.append(taxon.getName());
+					firstLoop = false;
 				}
 				output.append("</span>");
 			}
@@ -153,9 +162,9 @@ public class SingleAccessKeyTree {
 		boolean firstLoop = true;
 		for (SingleAccessKeyNode childNode : node.getChildren()) {
 			if (firstLoop) {
-				recursiveToHTMLString(childNode, output, tabulations, firstLoop);
+				recursiveToHTMLString(childNode, output, tabulations, true);
 			} else {
-				recursiveToHTMLString(childNode, output, tabulations, firstLoop);
+				recursiveToHTMLString(childNode, output, tabulations, false);
 			}
 			firstLoop = false;
 		}
@@ -165,6 +174,70 @@ public class SingleAccessKeyTree {
 				output.append(tabulations + "</li></ul>\n");
 			else
 				output.append(tabulations + "</li>\n");
+		}
+	}
+
+	/**
+	 * recursively traverses (depth-first) the SingleAccessKeyTree, and returns an HTML representation of this
+	 * SingleAccessKeyTree for PDF file creation
+	 * 
+	 * @param node
+	 *            a SingleAccessKeyNode object, which will be traversed
+	 * @param output
+	 *            a StringBuffer that contains the final output
+	 * @param tabulations
+	 * @param displayCharacterName
+	 *            a boolean to know if characterName need to be displayed
+	 */
+	public void recursiveToHTMLStringForPdf(SingleAccessKeyNode node, StringBuffer output,
+			String tabulations, int firstNumbering, int secondNumbering) {
+		String characterName = null;
+		String state = null;
+		if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
+
+			characterName = node.getCharacter().getName().replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;");
+			characterName = firstNumbering + "." + secondNumbering + ") " + "<span class='character'>"
+					+ "<b>" + characterName + "</b>" + "</span>";
+			output.append(tabulations + "\t<li>&nbsp;<span class='line'>" + characterName);
+
+			if (node.getCharacterState() instanceof QuantitativeMeasure)
+				state = ((QuantitativeMeasure) node.getCharacterState()).toStringInterval();
+			else
+				state = ((State) node.getCharacterState()).getName();
+			state = "<span class='state'>" + state.replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;")
+					+ "</span>";
+
+			if (node.hasChild()) {
+				output.append(" | " + state + " (taxa=" + node.getRemainingTaxa().size() + ")");
+			} else {
+				output.append(" | " + state + "<span class='taxa'> -> taxa= ");
+				boolean firstLoop = true;
+				for (Taxon taxon : node.getRemainingTaxa()) {
+					if (!firstLoop) {
+						output.append(", ");
+					}
+					output.append(taxon.getName());
+					firstLoop = false;
+				}
+				output.append("</span>");
+			}
+			if (node.hasChild())
+				output.append("</span><ul>");
+			output.append(System.getProperty("line.separator"));
+			tabulations = tabulations + "\t";
+		}
+		firstNumbering++;
+		secondNumbering = 0;
+		for (SingleAccessKeyNode childNode : node.getChildren()) {
+			secondNumbering++;
+			recursiveToHTMLStringForPdf(childNode, output, tabulations, firstNumbering, secondNumbering);
+		}
+		if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
+
+			if (node.hasChild())
+				output.append(tabulations + "</span></li></ul>\n");
+			else
+				output.append(tabulations + "</span></li>\n");
 		}
 	}
 
@@ -247,6 +320,23 @@ public class SingleAccessKeyTree {
 	}
 
 	/**
+	 * @param bundle
+	 *            A ResourceBundle used to retrieve the path of the folder in which the file must be generated
+	 * @return File the wikitext File
+	 * @throws IOException
+	 */
+	public File toTextFile(ResourceBundle bundle) throws IOException {
+		String path = bundle.getString("generatedKeyFiles.folder");
+
+		File txtFile = File.createTempFile("key_", ".txt", new File(path));
+		BufferedWriter txtFileWriter = new BufferedWriter(new FileWriter(txtFile));
+		txtFileWriter.append(toString());
+		txtFileWriter.close();
+
+		return txtFile;
+	}
+
+	/**
 	 * get a HTML file containing the key
 	 * 
 	 * @param bundle
@@ -285,20 +375,25 @@ public class SingleAccessKeyTree {
 		pdfDocument.open();
 
 		StyleSheet styles = new StyleSheet();
+		styles.loadTagStyle("body", "color", "#333");
+		styles.loadTagStyle("body", "background", "#fff");
+		styles.loadTagStyle("body", "margin-left", "-10px");
 		styles.loadTagStyle("ul", "indent", "15");
 		styles.loadTagStyle("li", "leading", "15");
+		styles.loadTagStyle("li", "color", "#fff");
 
 		styles.loadStyle("character", "color", "#333");
 		styles.loadStyle("state", "color", "#fe8a22");
 		styles.loadStyle("taxa", "color", "#67bb1b");
+		styles.loadStyle("line", "color", "#333");
 
 		HTMLWorker htmlWorker = new HTMLWorker(pdfDocument);
 		htmlWorker.setStyleSheet(styles);
 
 		StringBuffer output = new StringBuffer();
-		output.append("<html><head></head><boyd>");
-		recursiveToHTMLString(root, output, "", true);
-		output.append("</body></html>");
+		output.append("<html><head></head><body><ul>");
+		recursiveToHTMLStringForPdf(root, output, "", 0, 0);
+		output.append("</ul></body></html>");
 
 		htmlWorker.parse(new StringReader(output.toString()));
 
@@ -339,23 +434,8 @@ public class SingleAccessKeyTree {
 		wikiFileWriter.append(toString());
 
 		wikiFileWriter.append("</nowiki>");
+		wikiFileWriter.close();
+
 		return wikiFile;
-	}
-
-	/**
-	 * @param bundle
-	 *            A ResourceBundle used to retrieve the path of the folder in which the file must be generated
-	 * @return File the wikitext File
-	 * @throws IOException
-	 */
-	public File toTextFile(ResourceBundle bundle) throws IOException {
-		String path = bundle.getString("generatedKeyFiles.folder");
-
-		File txtFile = File.createTempFile("key_", ".txt", new File(path));
-		BufferedWriter txtFileWriter = new BufferedWriter(new FileWriter(txtFile));
-		txtFileWriter.append(toString());
-		txtFileWriter.close();
-
-		return txtFile;
 	}
 }
