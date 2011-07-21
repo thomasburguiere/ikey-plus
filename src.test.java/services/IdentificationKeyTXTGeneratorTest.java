@@ -27,7 +27,10 @@ public class IdentificationKeyTXTGeneratorTest {
 	@Test
 	public void testIdentificationKeyGenerator() {
 
-		// String containing UTL to result file
+		// set the confTest ResourceBundle
+		Utils.setBundle(ResourceBundle.getBundle("confTest"));
+
+		// String containing the URL to result file
 		String resultURL = "";
 		try {
 			// define logger
@@ -51,13 +54,12 @@ public class IdentificationKeyTXTGeneratorTest {
 
 				// test if the URL is valid
 				URLConnection urlConnection;
-				InputStream httpStream;
 				try {
 					URL fileURL = new URL(stringUrl);
 					// open URL (HTTP query)
 					urlConnection = fileURL.openConnection();
 					// Open data stream
-					httpStream = urlConnection.getInputStream();
+					urlConnection.getInputStream();
 				} catch (java.net.MalformedURLException e) {
 					resultURL = Utils.setErrorMessage(Utils.getBundleElement("message.urlError"), e);
 					e.printStackTrace();
@@ -66,6 +68,8 @@ public class IdentificationKeyTXTGeneratorTest {
 					e.printStackTrace();
 				}
 				sddSaxParser = new SDDSaxParser(stringUrl);
+				// construct header
+				header.append(System.getProperty("line.separator") + "file=" + stringUrl);
 
 			} catch (Throwable t) {
 				resultURL = Utils.setErrorMessage(Utils.getBundleElement("message.parsingError"), t);
@@ -96,13 +100,12 @@ public class IdentificationKeyTXTGeneratorTest {
 					+ System.getProperty("line.separator"));
 
 			// create key file
-			ResourceBundle bundle = ResourceBundle.getBundle("confTest");
 			try {
 				header.append(Utils.getBundleElement("message.title") + ": "
 						+ sddSaxParser.getDataset().getLabel() + System.getProperty("line.separator")
 						+ System.getProperty("line.separator") + System.getProperty("line.separator"));
-				resultURL = identificationKeyGenerator.getSingleAccessKeyTree()
-						.toTxtFile(bundle, header.toString()).getName();
+				resultURL = identificationKeyGenerator.getSingleAccessKeyTree().toTxtFile(header.toString())
+						.getName();
 			} catch (IOException e) {
 				resultURL = Utils.setErrorMessage(Utils.getBundleElement("message.creatingFileError"), e);
 				e.printStackTrace();

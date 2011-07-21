@@ -320,14 +320,15 @@ public class SingleAccessKeyTree {
 	}
 
 	/**
-	 * @param bundle
-	 *            A ResourceBundle used to retrieve the path of the folder in which the file must be generated
-	 * @return File the wikitext File
-	 * @return String, header information
+	 * get a TXT file containing the key
+	 * 
+	 * @param String
+	 *            , header information
+	 * @return File the text File
 	 * @throws IOException
 	 */
-	public File toTxtFile(ResourceBundle bundle, String header) throws IOException {
-		String path = bundle.getString("generatedKeyFiles.folder");
+	public File toTxtFile(String header) throws IOException {
+		String path = Utils.getBundleElement("generatedKeyFiles.folder");
 
 		File txtFile = File.createTempFile("key_", "." + Utils.TXT, new File(path));
 		BufferedWriter txtFileWriter = new BufferedWriter(new FileWriter(txtFile));
@@ -341,15 +342,14 @@ public class SingleAccessKeyTree {
 	/**
 	 * get a HTML file containing the key
 	 * 
-	 * @param bundle
-	 *            A ResourceBundle used to retrieve the path of the folder in which the file must be generated
+	 * @param String
+	 *            , header information
 	 * @return File, the html file
-	 * @return String, header information
 	 * @throws IOException
 	 */
-	public File toHtmlFile(ResourceBundle bundle, String header) throws IOException {
+	public File toHtmlFile(String header) throws IOException {
 
-		String path = bundle.getString("generatedKeyFiles.folder");
+		String path = Utils.getBundleElement("generatedKeyFiles.folder");
 
 		File htmlFile = File.createTempFile("key_", "." + Utils.HTML, new File(path));
 		BufferedWriter htmlFileWriter = new BufferedWriter(new FileWriter(htmlFile));
@@ -362,15 +362,16 @@ public class SingleAccessKeyTree {
 	/**
 	 * get a PDF file containing the key
 	 * 
+	 * @param String
+	 *            , header information
 	 * @return File, the pdf file
-	 * @return String, header information
 	 * @throws IOException
 	 * @throws COSVisitorException
 	 * @throws DocumentException
 	 */
-	public File toPdfFile(ResourceBundle bundle, String header) throws IOException, DocumentException {
+	public File toPdfFile(String header) throws IOException, DocumentException {
 
-		String path = bundle.getString("generatedKeyFiles.folder");
+		String path = Utils.getBundleElement("generatedKeyFiles.folder");
 		File pdfFile = File.createTempFile("key_", "." + Utils.PDF, new File(path));
 
 		Document pdfDocument = new Document(PageSize.A3, 50, 50, 50, 50);
@@ -412,22 +413,23 @@ public class SingleAccessKeyTree {
 	/**
 	 * get a SDD file containing the key
 	 * 
+	 * @param String
+	 *            , header information
 	 * @return File, the sdd file
 	 */
-	public File toSddFile() {
+	public File toSddFile(String header) {
 		return null;
 	}
 
 	/**
 	 * get a wiki file containing the key
 	 * 
-	 * @param bundle
-	 *            A ResourceBundle used to retrieve the path of the folder in which the file must be generated
+	 * @param String
+	 *            , header information
 	 * @return File, the Wikitext file
-	 * @return String, header information
 	 */
-	public File toWikiFile(ResourceBundle bundle, String header) throws IOException {
-		String path = bundle.getString("generatedKeyFiles.folder");
+	public File toWikiFile(String header) throws IOException {
+		String path = Utils.getBundleElement("generatedKeyFiles.folder");
 
 		File wikiFile = File.createTempFile("key_", "." + Utils.WIKI, new File(path));
 		BufferedWriter wikiFileWriter = new BufferedWriter(new FileWriter(wikiFile));

@@ -97,4 +97,13 @@ public class Utils {
 		return erroFile.getName();
 	}
 
+	/**
+	 * setter for ResourceBundle
+	 * 
+	 * @param bundle
+	 */
+	public static void setBundle(ResourceBundle bundle) {
+		Utils.bundle = bundle;
+	}
+
 }
