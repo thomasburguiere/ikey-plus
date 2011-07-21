@@ -17,7 +17,6 @@ import model.Taxon;
 
 import org.junit.Test;
 
-import utils.IdentificationKeyErrorMessage;
 import utils.Utils;
 
 /**
@@ -55,15 +54,15 @@ public class SDDSaxParserTest {
 				// Open data stream
 				httpStream = urlConnection.getInputStream();
 			} catch (java.net.MalformedURLException e) {
-				new IdentificationKeyErrorMessage(Utils.getBundleElement("message.urlError"), e);
+				Utils.setErrorMessage(Utils.getBundleElement("message.urlError"), e);
 				e.printStackTrace();
 			} catch (java.io.IOException e) {
-				new IdentificationKeyErrorMessage(Utils.getBundleElement("message.urlError"), e);
+				Utils.setErrorMessage(Utils.getBundleElement("message.urlError"), e);
 				e.printStackTrace();
 			}
 			sddSaxParser = new SDDSaxParser(stringUrl);
 		} catch (Throwable t) {
-			new IdentificationKeyErrorMessage(Utils.getBundleElement("message.parsingError"), t);
+			Utils.setErrorMessage(Utils.getBundleElement("message.parsingError"), t);
 			t.printStackTrace();
 		}
 

@@ -1,5 +1,9 @@
 package utils;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ResourceBundle;
 
 /**
@@ -12,7 +16,14 @@ import java.util.ResourceBundle;
 public class Utils {
 
 	public static String errorMessage = null;
+	public static String errorMessageFile = null;
 	public static ResourceBundle bundle = ResourceBundle.getBundle("conf");
+	public static String TXT = "txt";
+	public static String HTML = "html";
+	public static String PDF = "pdf";
+	public static String SDD = "sdd";
+	public static String WIKI = "wiki";
+	public static String ERROR = "error";
 
 	/**
 	 * Convert a String value to a Double value
@@ -32,23 +43,58 @@ public class Utils {
 	}
 
 	/**
-	 * Init the errorMessage attribute
-	 * 
-	 * @param msg
-	 */
-	public static void setErrorMessage(String msg) {
-		if (errorMessage == null) {
-			errorMessage = msg;
-		}
-	}
-
-	/**
 	 * Getter for configuration elements or messages
 	 * 
 	 * @return String the element corresponding to the key
 	 */
 	public static String getBundleElement(String key) {
 		return Utils.bundle.getString(key);
+	}
+
+	/**
+	 * @param msg
+	 * @return String, the error file name
+	 */
+	public static String setErrorMessage(String msg) {
+		if (Utils.errorMessage == null) {
+			Utils.errorMessage = msg;
+			Utils.errorMessageFile = createErrorFile();
+		}
+		return Utils.errorMessageFile;
+	}
+
+	/**
+	 * @param msg
+	 *            , the readable message
+	 * @param t
+	 *            , the exception
+	 * @return String, the error file name
+	 */
+	public static String setErrorMessage(String msg, Throwable t) {
+		if (Utils.errorMessage == null) {
+			Utils.errorMessage = msg + ": " + t.getMessage();
+			Utils.errorMessageFile = createErrorFile();
+		}
+		return Utils.errorMessageFile;
+	}
+
+	/**
+	 * @return String, the url to the error file
+	 */
+	public static String createErrorFile() {
+		String path = Utils.getBundleElement("generatedKeyFiles.folder");
+
+		File erroFile = null;
+		try {
+			erroFile = File.createTempFile("key_", "." + Utils.ERROR, new File(path));
+			BufferedWriter txtFileWriter;
+			txtFileWriter = new BufferedWriter(new FileWriter(erroFile));
+			txtFileWriter.append(Utils.errorMessage);
+			txtFileWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return erroFile.getName();
 	}
 
 }

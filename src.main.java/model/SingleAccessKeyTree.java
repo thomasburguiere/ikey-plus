@@ -8,14 +8,14 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ResourceBundle;
 
+import utils.Utils;
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.html.simpleparser.HTMLWorker;
 import com.itextpdf.text.html.simpleparser.StyleSheet;
 import com.itextpdf.text.pdf.PdfWriter;
-
-import utils.Utils;
 
 /**
  * This class represents a single access key tree
@@ -255,7 +255,7 @@ public class SingleAccessKeyTree {
 	 * 
 	 * @return String the HTML String
 	 */
-	public String toHtmlString() {
+	public String toHtmlString(String header) {
 		String lineSep = System.getProperty("line.separator");
 		StringBuffer slk = new StringBuffer();
 		slk.append("<html>" + lineSep);
@@ -299,8 +299,8 @@ public class SingleAccessKeyTree {
 		slk.append("</head>" + lineSep);
 
 		slk.append("<body>" + lineSep);
-		slk.append("<div style='margin-left:30px;margin-top:70px;'>" + lineSep);
-
+		slk.append("<div style='margin-left:30px;margin-top:20px;'>" + lineSep);
+		slk.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
 		slk.append("<ul id='tree'>" + lineSep);
 
 		StringBuffer output = new StringBuffer();
@@ -323,13 +323,15 @@ public class SingleAccessKeyTree {
 	 * @param bundle
 	 *            A ResourceBundle used to retrieve the path of the folder in which the file must be generated
 	 * @return File the wikitext File
+	 * @return String, header information
 	 * @throws IOException
 	 */
-	public File toTextFile(ResourceBundle bundle) throws IOException {
+	public File toTxtFile(ResourceBundle bundle, String header) throws IOException {
 		String path = bundle.getString("generatedKeyFiles.folder");
 
-		File txtFile = File.createTempFile("key_", ".txt", new File(path));
+		File txtFile = File.createTempFile("key_", "." + Utils.TXT, new File(path));
 		BufferedWriter txtFileWriter = new BufferedWriter(new FileWriter(txtFile));
+		txtFileWriter.append(header);
 		txtFileWriter.append(toString());
 		txtFileWriter.close();
 
@@ -342,15 +344,16 @@ public class SingleAccessKeyTree {
 	 * @param bundle
 	 *            A ResourceBundle used to retrieve the path of the folder in which the file must be generated
 	 * @return File, the html file
+	 * @return String, header information
 	 * @throws IOException
 	 */
-	public File toHtmlFile(ResourceBundle bundle) throws IOException {
+	public File toHtmlFile(ResourceBundle bundle, String header) throws IOException {
 
 		String path = bundle.getString("generatedKeyFiles.folder");
 
-		File htmlFile = File.createTempFile("key_", ".html", new File(path));
+		File htmlFile = File.createTempFile("key_", "." + Utils.HTML, new File(path));
 		BufferedWriter htmlFileWriter = new BufferedWriter(new FileWriter(htmlFile));
-		htmlFileWriter.append(toHtmlString());
+		htmlFileWriter.append(toHtmlString(header));
 		htmlFileWriter.close();
 
 		return htmlFile;
@@ -360,14 +363,15 @@ public class SingleAccessKeyTree {
 	 * get a PDF file containing the key
 	 * 
 	 * @return File, the pdf file
+	 * @return String, header information
 	 * @throws IOException
 	 * @throws COSVisitorException
 	 * @throws DocumentException
 	 */
-	public File toPdfFile(ResourceBundle bundle) throws IOException, DocumentException {
+	public File toPdfFile(ResourceBundle bundle, String header) throws IOException, DocumentException {
 
 		String path = bundle.getString("generatedKeyFiles.folder");
-		File pdfFile = File.createTempFile("key_", ".pdf", new File(path));
+		File pdfFile = File.createTempFile("key_", "." + Utils.PDF, new File(path));
 
 		Document pdfDocument = new Document(PageSize.A3, 50, 50, 50, 50);
 		PdfWriter.getInstance(pdfDocument, new FileOutputStream(pdfFile));
@@ -391,7 +395,9 @@ public class SingleAccessKeyTree {
 		htmlWorker.setStyleSheet(styles);
 
 		StringBuffer output = new StringBuffer();
-		output.append("<html><head></head><body><ul>");
+		output.append("<html><head></head><body>");
+		output.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
+		output.append("<ul>");
 		recursiveToHTMLStringForPdf(root, output, "", 0, 0);
 		output.append("</ul></body></html>");
 
@@ -418,14 +424,17 @@ public class SingleAccessKeyTree {
 	 * @param bundle
 	 *            A ResourceBundle used to retrieve the path of the folder in which the file must be generated
 	 * @return File, the Wikitext file
+	 * @return String, header information
 	 */
-	public File toWikiFile(ResourceBundle bundle) throws IOException {
+	public File toWikiFile(ResourceBundle bundle, String header) throws IOException {
 		String path = bundle.getString("generatedKeyFiles.folder");
 
-		File wikiFile = File.createTempFile("key_", ".wiki", new File(path));
+		File wikiFile = File.createTempFile("key_", "." + Utils.WIKI, new File(path));
 		BufferedWriter wikiFileWriter = new BufferedWriter(new FileWriter(wikiFile));
 
 		wikiFileWriter.append("== Info ==");
+		wikiFileWriter.newLine();
+		wikiFileWriter.append(header.replaceAll(System.getProperty("line.separator"), "<br>"));
 		wikiFileWriter.newLine();
 		wikiFileWriter.append("== Identification Key==");
 		wikiFileWriter.newLine();
