@@ -237,6 +237,7 @@ public class IdentificationKeyGenerator {
 		// get the Min and Max values of all remaining taxa
 		List<Double> allValues = getAllNumericalValues(character, remainingTaxa);
 		Collections.sort(allValues, new Comparator<Double>() {
+			@Override
 			public int compare(Double val1, Double val2) {
 				final int result;
 				if (val1 > val2) {

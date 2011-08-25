@@ -82,7 +82,8 @@ public class Utils {
 	 * @return String, the url to the error file
 	 */
 	public static String createErrorFile() {
-		String path = Utils.getBundleElement("generatedKeyFiles.folder");
+		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleElement("generatedKeyFiles.folder");
 
 		File erroFile = null;
 		try {

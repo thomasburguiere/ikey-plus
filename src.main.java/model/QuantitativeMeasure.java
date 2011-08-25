@@ -172,6 +172,7 @@ public class QuantitativeMeasure {
 	 * 
 	 * @return String, the string representation
 	 */
+	@Override
 	public String toString() {
 		return "Min=" + min + "  Max=" + max + "  Mean=" + mean + "  SD=" + sd + "  UMethLower=" + uMethLower
 				+ "  UMethUpper=" + uMethUpper;

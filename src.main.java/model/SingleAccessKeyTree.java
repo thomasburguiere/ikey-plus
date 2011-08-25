@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.ResourceBundle;
 
 import utils.Utils;
 
@@ -244,6 +243,7 @@ public class SingleAccessKeyTree {
 	/* (non-Javadoc)
 	 * 
 	 * @see java.lang.Object#toString() */
+	@Override
 	public String toString() {
 		StringBuffer output = new StringBuffer();
 		recursiveToString(root, output, System.getProperty("line.separator"), 0, 0);
@@ -328,7 +328,8 @@ public class SingleAccessKeyTree {
 	 * @throws IOException
 	 */
 	public File toTxtFile(String header) throws IOException {
-		String path = Utils.getBundleElement("generatedKeyFiles.folder");
+		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleElement("generatedKeyFiles.folder");
 
 		File txtFile = File.createTempFile("key_", "." + Utils.TXT, new File(path));
 		BufferedWriter txtFileWriter = new BufferedWriter(new FileWriter(txtFile));
@@ -349,7 +350,8 @@ public class SingleAccessKeyTree {
 	 */
 	public File toHtmlFile(String header) throws IOException {
 
-		String path = Utils.getBundleElement("generatedKeyFiles.folder");
+		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleElement("generatedKeyFiles.folder");
 
 		File htmlFile = File.createTempFile("key_", "." + Utils.HTML, new File(path));
 		BufferedWriter htmlFileWriter = new BufferedWriter(new FileWriter(htmlFile));
@@ -371,7 +373,8 @@ public class SingleAccessKeyTree {
 	 */
 	public File toPdfFile(String header) throws IOException, DocumentException {
 
-		String path = Utils.getBundleElement("generatedKeyFiles.folder");
+		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleElement("generatedKeyFiles.folder");
 		File pdfFile = File.createTempFile("key_", "." + Utils.PDF, new File(path));
 
 		Document pdfDocument = new Document(PageSize.A3, 50, 50, 50, 50);
@@ -429,7 +432,8 @@ public class SingleAccessKeyTree {
 	 * @return File, the Wikitext file
 	 */
 	public File toWikiFile(String header) throws IOException {
-		String path = Utils.getBundleElement("generatedKeyFiles.folder");
+		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleElement("generatedKeyFiles.folder");
 
 		File wikiFile = File.createTempFile("key_", "." + Utils.WIKI, new File(path));
 		BufferedWriter wikiFileWriter = new BufferedWriter(new FileWriter(wikiFile));
