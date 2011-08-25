@@ -1,7 +1,7 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +22,7 @@ public class DataSet {
 	 */
 	public DataSet() {
 		characters = new ArrayList<ICharacter>();
-		codedDescriptions = new HashMap<Taxon, CodedDescription>();
+		codedDescriptions = new LinkedHashMap<Taxon, CodedDescription>();
 	}
 
 	/**

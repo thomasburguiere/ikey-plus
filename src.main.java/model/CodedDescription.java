@@ -1,6 +1,6 @@
 package model;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -18,7 +18,7 @@ public class CodedDescription {
 	 * the constructor by default
 	 */
 	public CodedDescription() {
-		this.description = new HashMap<ICharacter, Object>();
+		this.description = new LinkedHashMap<ICharacter, Object>();
 	}
 
 	/**
