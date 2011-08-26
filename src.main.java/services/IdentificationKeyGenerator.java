@@ -465,15 +465,15 @@ public class IdentificationKeyGenerator {
 		if (cpt >= 1) {
 			score = score / cpt;
 		}
-		
+
 		// managing of twoStatesCharacterFirst option
-		if(Utils.twoStatesCharacterFirst){
-			if(character.getStates().size() == 2 && score > 0){
+		if (Utils.twoStatesCharacterFirst) {
+			if (character.getStates().size() == 2 && score > 0) {
 				// artificially increasing score of character with 2 states
 				score = (float) (score + 1);
 			}
 		}
-		
+
 		// round to 10^-2
 		/* score *= 100; score = (int)(score+.5); score /= 100; */
 		return score;

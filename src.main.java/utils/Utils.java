@@ -24,12 +24,11 @@ public class Utils {
 	public static String SDD = "sdd";
 	public static String WIKI = "wiki";
 	public static String ERROR = "error";
-	//options
+	// options
 	public static boolean twoStatesCharacterFirst = false;
 	public static boolean mergeCharacterStatesIfSameDiscimination = false;
 	public static boolean reduceSameConclusionPath = false;
 	public static boolean pruning = false;
-	
 
 	/**
 	 * Convert a String value to a Double value
