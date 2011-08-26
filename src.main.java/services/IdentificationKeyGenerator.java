@@ -8,6 +8,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import utils.Utils;
+
 import model.CategoricalCharacter;
 import model.DataSet;
 import model.ICharacter;
@@ -373,7 +375,7 @@ public class IdentificationKeyGenerator {
 			if (scoreMap.get(childCharacter) != null) {
 				if (max == -1)
 					max = scoreMap.get(childCharacter);
-				if (scoreMap.get(childCharacter) > max) {
+				if (scoreMap.get(childCharacter) >= max) {
 					// init max score with child score + 0.0001 (to be sure
 					// parent
 					// score will be better)
@@ -463,6 +465,15 @@ public class IdentificationKeyGenerator {
 		if (cpt >= 1) {
 			score = score / cpt;
 		}
+		
+		// managing of twoStatesCharacterFirst option
+		if(Utils.twoStatesCharacterFirst){
+			if(character.getStates().size() == 2 && score > 0){
+				// artificially increasing score of character with 2 states
+				score = (float) (score + 1);
+			}
+		}
+		
 		// round to 10^-2
 		/* score *= 100; score = (int)(score+.5); score /= 100; */
 		return score;
