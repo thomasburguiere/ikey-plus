@@ -32,6 +32,8 @@ public class IdentificationKeyGenerator {
 	private SingleAccessKeyTree singleAccessKeyTree = null;
 	// the knowledge base
 	private DataSet dataset = null;
+	// the maximum number of states per character
+	private int maxNbStatesPerCharacter;
 
 	/**
 	 * Constructor
@@ -59,6 +61,9 @@ public class IdentificationKeyGenerator {
 	public void createIdentificationKey() throws Exception {
 
 		this.singleAccessKeyTree = new SingleAccessKeyTree();
+		
+		// init maxNumStatesPerCharacter
+		this.maxNbStatesPerCharacter = calculateMaxNbStatesPerCharacter();
 
 		// init root node
 		SingleAccessKeyNode rootNode = new SingleAccessKeyNode();
@@ -468,15 +473,31 @@ public class IdentificationKeyGenerator {
 
 		// managing of twoStatesCharacterFirst option
 		if (Utils.twoStatesCharacterFirst) {
-			if (character.getStates().size() == 2 && score > 0) {
+//			if (character.getStates().size() == 2 && score > 0) {
 				// artificially increasing score of character with 2 states
-				score = (float) (score + 1);
-			}
+//				score = (float) (score + coeff);
+//			}
+			float coeff = 1-(2/maxNbStatesPerCharacter);
+			score = (float) 1 - (character.getStates().size() / maxNbStatesPerCharacter);
 		}
 
 		// round to 10^-2
 		/* score *= 100; score = (int)(score+.5); score /= 100; */
 		return score;
+	}
+
+	/**
+	 * This method calculates the maximum number of character per state for the entire dataset
+	 * 
+	 * @return
+	 */
+	private int calculateMaxNbStatesPerCharacter() {
+		int max = 2;
+		for (ICharacter ic : dataset.getCharacters()) {
+			if (ic instanceof CategoricalCharacter && max < ((CategoricalCharacter) ic).getStates().size())
+				max = ((CategoricalCharacter) ic).getStates().size();
+		}
+		return max;
 	}
 
 	/**
@@ -604,6 +625,14 @@ public class IdentificationKeyGenerator {
 	 */
 	public void setDataSet(DataSet dataSet) {
 		this.dataset = dataSet;
+	}
+
+	public int getMaxNumStatesPerCharacter() {
+		return maxNbStatesPerCharacter;
+	}
+
+	public void setMaxNumStatesPerCharacter(int maxNumStatesPerCharacter) {
+		this.maxNbStatesPerCharacter = maxNumStatesPerCharacter;
 	}
 
 }
