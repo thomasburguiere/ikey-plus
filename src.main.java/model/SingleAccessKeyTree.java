@@ -6,6 +6,9 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import utils.Utils;
 
@@ -102,6 +105,100 @@ public class SingleAccessKeyTree {
 		for (SingleAccessKeyNode childNode : node.getChildren()) {
 			secondNumbering++;
 			recursiveToString(childNode, output, tabulations, firstNumbering, secondNumbering);
+		}
+	}
+
+	/**
+	 * Iteratively traverses (breadth-first) the SingleAccessKeyTree, and returns a plain-text representation
+	 * of its content
+	 * 
+	 * @param rootNode
+	 * @param output
+	 * @param firstNumbering
+	 * @param secondNumbering
+	 */
+	public void iterativeBreadthFirstToString(SingleAccessKeyNode rootNode, StringBuffer output,
+			String lineSeparator, int firstNumbering, int secondNumbering) {
+		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
+		queue.add(rootNode);
+
+		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
+
+		// node output
+		if (rootNode != null && rootNode.getCharacter() != null && rootNode.getCharacterState() != null) {
+			if (rootNode.getCharacterState() instanceof QuantitativeMeasure) {
+				output.append(firstNumbering + "." + secondNumbering + ") "
+						+ rootNode.getCharacter().getName() + " | "
+						+ ((QuantitativeMeasure) rootNode.getCharacterState()).toStringInterval());
+			} else {
+				output.append(firstNumbering + "." + secondNumbering + ") "
+						+ rootNode.getCharacter().getName() + " | "
+						+ ((State) rootNode.getCharacterState()).getName());
+			}
+			if (rootNode.getChildren().size() == 0) {
+				output.append(" -> taxa= ");
+				boolean firstLoop = true;
+				for (Taxon taxon : rootNode.getRemainingTaxa()) {
+					if (!firstLoop) {
+						output.append(", ");
+					}
+					output.append(taxon.getName());
+					firstLoop = false;
+				}
+			} else {
+				output.append(" (taxa=" + rootNode.getRemainingTaxa().size() + ")");
+			}
+			output.append(lineSeparator);
+			visitedNodes.add(rootNode);
+		}
+
+		String characterNameBuffer = "";
+
+		while (!queue.isEmpty()) {
+			SingleAccessKeyNode node = queue.remove();
+			SingleAccessKeyNode child = null;
+
+			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+							.get(0)) != null) {
+
+				visitedNodes.add(child);
+
+				// numbering iteration TODO un peu crado qd meme
+				if (!characterNameBuffer.equals(child.getCharacter().getName())) {
+					characterNameBuffer = child.getCharacter().getName();
+					firstNumbering++;
+					secondNumbering = 0;
+				}
+				secondNumbering++;
+
+				// node output
+				if (child.getCharacterState() instanceof QuantitativeMeasure) {
+					output.append(firstNumbering + "." + secondNumbering + ") "
+							+ child.getCharacter().getName() + " | "
+							+ ((QuantitativeMeasure) child.getCharacterState()).toStringInterval());
+				} else {
+					output.append(firstNumbering + "." + secondNumbering + ") "
+							+ child.getCharacter().getName() + " | "
+							+ ((State) child.getCharacterState()).getName());
+				}
+				if (child.getChildren().size() == 0) {
+					output.append(" -> taxa= ");
+					boolean firstLoop = true;
+					for (Taxon taxon : child.getRemainingTaxa()) {
+						if (!firstLoop) {
+							output.append(", ");
+						}
+						output.append(taxon.getName());
+						firstLoop = false;
+					}
+				} else {
+					output.append(" (taxa=" + child.getRemainingTaxa().size() + ")");
+				}
+				output.append(lineSeparator);
+
+				queue.add(child);
+			}
 		}
 	}
 
@@ -335,6 +432,25 @@ public class SingleAccessKeyTree {
 		BufferedWriter txtFileWriter = new BufferedWriter(new FileWriter(txtFile));
 		txtFileWriter.append(header);
 		txtFileWriter.append(toString());
+		txtFileWriter.close();
+
+		return txtFile;
+	}
+
+	public String toFlatString() {
+		StringBuffer output = new StringBuffer();
+		iterativeBreadthFirstToString(root, output, System.getProperty("line.separator"), 0, 0);
+		return output.toString();
+	}
+
+	public File toFlatStringFile(String header) throws IOException {
+		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleElement("generatedKeyFiles.folder");
+
+		File txtFile = File.createTempFile("keyFlat_", "." + Utils.TXT, new File(path));
+		BufferedWriter txtFileWriter = new BufferedWriter(new FileWriter(txtFile));
+		txtFileWriter.append(header);
+		txtFileWriter.append(toFlatString());
 		txtFileWriter.close();
 
 		return txtFile;
