@@ -270,7 +270,15 @@ public class SDDContentHandler implements ContentHandler {
 
 			// <State> in <Categorical>
 			else if (localName.equals("State") && inCategorical) {
-				currentStatesList.add(this.dataset.getStateById(attributs.getValue("ref")));
+				if(currentStatesList != null)
+					currentStatesList.add(this.dataset.getStateById(attributs.getValue("ref")));
+			}
+			
+			// <Status> in <Categorical>
+			else if (localName.equals("Status") && inCategorical) {
+				if(attributs.getValue("code") != null && attributs.getValue("code").equals("DataUnavailable")){
+					currentStatesList = null;
+				}
 			}
 
 			// <Quantitative> in <SummaryData>
@@ -282,25 +290,33 @@ public class SDDContentHandler implements ContentHandler {
 
 			// <Measure> in <Quantitative>
 			else if (localName.equals("Measure") && inQuantitative) {
-
-				if (attributs.getValue("type").equals("Min")) {
-					currentQuantitativeMeasure
-							.setMin(Utils.convertStringToDouble(attributs.getValue("value")));
-				} else if (attributs.getValue("type").equals("Max")) {
-					currentQuantitativeMeasure
-							.setMax(Utils.convertStringToDouble(attributs.getValue("value")));
-				} else if (attributs.getValue("type").equals("Mean")) {
-					currentQuantitativeMeasure.setMean(Utils.convertStringToDouble(attributs
-							.getValue("value")));
-				} else if (attributs.getValue("type").equals("SD")) {
-					currentQuantitativeMeasure
-							.setSD(Utils.convertStringToDouble(attributs.getValue("value")));
-				} else if (attributs.getValue("type").equals("UMethLower")) {
-					currentQuantitativeMeasure.setUMethLower(Utils.convertStringToDouble(attributs
-							.getValue("value")));
-				} else if (attributs.getValue("type").equals("UMethUpper")) {
-					currentQuantitativeMeasure.setUMethUpper(Utils.convertStringToDouble(attributs
-							.getValue("value")));
+				if(currentQuantitativeMeasure != null){
+					if (attributs.getValue("type").equals("Min")) {
+						currentQuantitativeMeasure
+								.setMin(Utils.convertStringToDouble(attributs.getValue("value")));
+					} else if (attributs.getValue("type").equals("Max")) {
+						currentQuantitativeMeasure
+								.setMax(Utils.convertStringToDouble(attributs.getValue("value")));
+					} else if (attributs.getValue("type").equals("Mean")) {
+						currentQuantitativeMeasure.setMean(Utils.convertStringToDouble(attributs
+								.getValue("value")));
+					} else if (attributs.getValue("type").equals("SD")) {
+						currentQuantitativeMeasure
+								.setSD(Utils.convertStringToDouble(attributs.getValue("value")));
+					} else if (attributs.getValue("type").equals("UMethLower")) {
+						currentQuantitativeMeasure.setUMethLower(Utils.convertStringToDouble(attributs
+								.getValue("value")));
+					} else if (attributs.getValue("type").equals("UMethUpper")) {
+						currentQuantitativeMeasure.setUMethUpper(Utils.convertStringToDouble(attributs
+								.getValue("value")));
+					}
+				}
+			}
+			
+			// <Status> in <Quantitative>
+			else if (localName.equals("Status") && inCategorical) {
+				if(attributs.getValue("code") != null && attributs.getValue("code").equals("DataUnavailable")){
+					currentQuantitativeMeasure = null;
 				}
 			}
 

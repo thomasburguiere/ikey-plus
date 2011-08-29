@@ -44,7 +44,7 @@ public class IdentificationKeyHTMLGeneratorTest {
 			SDDSaxParser sddSaxParser = null;
 			try {
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
-				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
+				 String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/testSDD.xml";
@@ -53,7 +53,7 @@ public class IdentificationKeyHTMLGeneratorTest {
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/wrongSDD.xml";
 
 				// options
-				// Utils.twoStatesCharacterFirst = true;
+				Utils.twoStatesCharacterFirst = true;
 
 				// test if the URL is valid
 				URLConnection urlConnection;
