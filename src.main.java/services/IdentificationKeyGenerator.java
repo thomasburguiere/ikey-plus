@@ -427,7 +427,7 @@ public class IdentificationKeyGenerator {
 			throws Exception {
 		int cpt = 0;
 		float score = 0;
-		boolean isAlwaysDiscribed = true;
+		boolean isAlwaysDescribed = true;
 
 		for (int i = 0; i < remaningTaxa.size() - 1; i++) {
 			for (int j = i + 1; j < remaningTaxa.size(); j++) {
@@ -449,7 +449,7 @@ public class IdentificationKeyGenerator {
 						// if at least one description is empty for the current character
 						if ((statesList1 != null && statesList1.size() == 0)
 								|| (statesList2 != null && statesList2.size() == 0)) {
-							isAlwaysDiscribed = false;
+							isAlwaysDescribed = false;
 						}
 
 						// if one description is unknown and the other have 0 state checked
@@ -492,7 +492,7 @@ public class IdentificationKeyGenerator {
 		}
 
 		// increasing artificially the score of character containing only described taxa
-		if (isAlwaysDiscribed && score > 0) {
+		if (isAlwaysDescribed && score > 0) {
 			score = (float) ((float) score + (float) 2.0);
 		}
 
@@ -535,7 +535,7 @@ public class IdentificationKeyGenerator {
 			throws Exception {
 		int cpt = 0;
 		float score = 0;
-		boolean isAlwaysDiscribed = true;
+		boolean isAlwaysDescribed = true;
 
 		for (int i = 0; i < remaningTaxa.size() - 1; i++) {
 			for (int j = i + 1; j < remaningTaxa.size(); j++) {
@@ -555,7 +555,7 @@ public class IdentificationKeyGenerator {
 						// if at least one description is empty for the current character
 						if ((quantitativeMeasure1 != null && quantitativeMeasure1.isUnknown())
 								|| (quantitativeMeasure2 != null && quantitativeMeasure2.isUnknown())) {
-							isAlwaysDiscribed = false;
+							isAlwaysDescribed = false;
 						}
 
 						// if one description is unknown and the other have no measure
@@ -589,7 +589,7 @@ public class IdentificationKeyGenerator {
 		}
 
 		// increasing artificially the score of character containing only described taxa
-		if (isAlwaysDiscribed && score > 0) {
+		if (isAlwaysDescribed && score > 0) {
 			score = (float) ((float) score + (float) 2.0);
 		}
 
