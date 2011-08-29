@@ -61,7 +61,7 @@ public class IdentificationKeyGenerator {
 	public void createIdentificationKey() throws Exception {
 
 		this.singleAccessKeyTree = new SingleAccessKeyTree();
-		
+
 		// init maxNumStatesPerCharacter
 		this.maxNbStatesPerCharacter = calculateMaxNbStatesPerCharacter();
 
@@ -94,6 +94,13 @@ public class IdentificationKeyGenerator {
 			Map<ICharacter, Float> charactersScore = charactersScores(remainingCharacters, remainingTaxa);
 			ICharacter selectedCharacter = bestCharacter(charactersScore);
 			float selectedScore = charactersScore.get(selectedCharacter);
+
+			// delete characters if score = 0
+			for (ICharacter character : charactersScore.keySet()) {
+				if (charactersScore.get(character) <= 0) {
+					remainingCharacters.remove(character);
+				}
+			}
 
 			/* // display score for each character for (ICharacter character : charactersScore.keySet()) {
 			 * System.out.println(character.getName() + ": " + charactersScore.get(character)); }
@@ -344,6 +351,7 @@ public class IdentificationKeyGenerator {
 						quantitativeCharacterScore((QuantitativeCharacter) character, remaningTaxa));
 			}
 		}
+
 		// take in consideration the score of child character
 		considerChildCharacterScore(scoreMap);
 
@@ -362,7 +370,6 @@ public class IdentificationKeyGenerator {
 				if (scoreMap.get(character) < max) {
 					scoreMap.put(character, max);
 				}
-
 			}
 		}
 	}
@@ -397,7 +404,7 @@ public class IdentificationKeyGenerator {
 	 */
 	private ICharacter bestCharacter(Map<ICharacter, Float> charactersScore) throws Exception {
 
-		float bestScore = 0;
+		float bestScore = -1;
 		ICharacter bestCharacter = null;
 
 		for (ICharacter character : charactersScore.keySet()) {
@@ -420,6 +427,7 @@ public class IdentificationKeyGenerator {
 			throws Exception {
 		int cpt = 0;
 		float score = 0;
+		boolean isAlwaysDiscribed = true;
 
 		for (int i = 0; i < remaningTaxa.size() - 1; i++) {
 			for (int j = i + 1; j < remaningTaxa.size(); j++) {
@@ -437,7 +445,19 @@ public class IdentificationKeyGenerator {
 								remaningTaxa.get(i)).getCharacterDescription(character);
 						List<State> statesList2 = (List<State>) dataset.getCodedDescription(
 								remaningTaxa.get(j)).getCharacterDescription(character);
-						if (statesList1 != null && statesList2 != null) {
+
+						// if at least one description is empty for the current character
+						if ((statesList1 != null && statesList1.size() == 0)
+								|| (statesList2 != null && statesList2.size() == 0)) {
+							isAlwaysDiscribed = false;
+						}
+
+						// if one description is unknown and the other have 0 state checked
+						if ((statesList1 == null && statesList2 != null && statesList2.size() == 0)
+								|| (statesList2 == null && statesList1 != null && statesList1.size() == 0)) {
+							score++;
+						} else if (statesList1 != null && statesList2 != null) {
+
 							// search common state
 							for (int k = 0; k < character.getStates().size(); k++) {
 								State state = character.getStates().get(k);
@@ -471,11 +491,17 @@ public class IdentificationKeyGenerator {
 			score = score / cpt;
 		}
 
+		// increasing artificially the score of character containing only described taxa
+		if (isAlwaysDiscribed && score > 0) {
+			score = (float) ((float) score + (float) 2.0);
+		}
+
 		// managing of twoStatesCharacterFirst option
-		if (Utils.twoStatesCharacterFirst) {
-			// artificially increasing score of character with 2 states
-			float coeff = (float) 1 - (character.getStates().size() / maxNbStatesPerCharacter);
-			score = (float) (score+coeff);
+		if (Utils.twoStatesCharacterFirst && score > 0 && character.getStates().size() >= 2) {
+			// increasing artificially score of character with few states
+			float coeff = (float) 1
+					- ((float) character.getStates().size() / (float) maxNbStatesPerCharacter);
+			score = (float) (score + coeff);
 		}
 
 		// round to 10^-2
@@ -491,7 +517,8 @@ public class IdentificationKeyGenerator {
 	private int calculateMaxNbStatesPerCharacter() {
 		int max = 2;
 		for (ICharacter ic : dataset.getCharacters()) {
-			if (ic instanceof CategoricalCharacter && max < ((CategoricalCharacter) ic).getStates().size())
+			if (ic instanceof CategoricalCharacter && ((CategoricalCharacter) ic).getStates() != null
+					&& max < ((CategoricalCharacter) ic).getStates().size())
 				max = ((CategoricalCharacter) ic).getStates().size();
 		}
 		return max;
@@ -508,6 +535,8 @@ public class IdentificationKeyGenerator {
 			throws Exception {
 		int cpt = 0;
 		float score = 0;
+		boolean isAlwaysDiscribed = true;
+
 		for (int i = 0; i < remaningTaxa.size() - 1; i++) {
 			for (int j = i + 1; j < remaningTaxa.size(); j++) {
 				if (dataset.getCodedDescription(remaningTaxa.get(i)) != null
@@ -523,13 +552,21 @@ public class IdentificationKeyGenerator {
 						// percentage of common values which are shared
 						float commonPercentage = 0;
 
-						// search common shared values
-						if (quantitativeMeasure1 != null && quantitativeMeasure2 != null) {
+						// if at least one description is empty for the current character
+						if ((quantitativeMeasure1 != null && quantitativeMeasure1.isUnknown())
+								|| (quantitativeMeasure2 != null && quantitativeMeasure2.isUnknown())) {
+							isAlwaysDiscribed = false;
+						}
 
-							if (quantitativeMeasure1.getCalculateMinimum() != null
-									&& quantitativeMeasure1.getCalculateMaximum() != null
-									&& quantitativeMeasure2.getCalculateMinimum() != null
-									&& quantitativeMeasure2.getCalculateMaximum() != null) {
+						// if one description is unknown and the other have no measure
+						if ((quantitativeMeasure1 == null && quantitativeMeasure2 != null && quantitativeMeasure2
+								.isUnknown())
+								|| (quantitativeMeasure2 == null && quantitativeMeasure1 != null && quantitativeMeasure1
+										.isUnknown())) {
+							score++;
+							// search common shared values
+						} else if (quantitativeMeasure1 != null && quantitativeMeasure2 != null) {
+							if (!quantitativeMeasure1.isUnknown() && !quantitativeMeasure2.isUnknown()) {
 
 								commonPercentage = calculCommonPercentage(quantitativeMeasure1
 										.getCalculateMinimum().doubleValue(), quantitativeMeasure1
@@ -550,14 +587,19 @@ public class IdentificationKeyGenerator {
 		if (cpt >= 1) {
 			score = score / cpt;
 		}
-		
-		// managing of twoStatesCharacterFirst option
-		if (Utils.twoStatesCharacterFirst) {
-			// artificially increasing score of character with 2 states
-			float coeff = (float) 1 - (2 / maxNbStatesPerCharacter);
-			score = (float) (score+coeff);
+
+		// increasing artificially the score of character containing only described taxa
+		if (isAlwaysDiscribed && score > 0) {
+			score = (float) ((float) score + (float) 2.0);
 		}
-		
+
+		// managing of twoStatesCharacterFirst option
+		if (Utils.twoStatesCharacterFirst && score > 0) {
+			// increasing artificially the score of character with few states
+			float coeff = (float) 1 - ((float) 2 / (float) maxNbStatesPerCharacter);
+			score = (float) (score + coeff);
+		}
+
 		// round to 10^-2
 		/* score *= 100; score = (int)(score+.5); score /= 100; */
 		return score;

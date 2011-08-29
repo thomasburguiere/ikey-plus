@@ -53,6 +53,7 @@ public class SDDContentHandler implements ContentHandler {
 	private boolean inQuantitativeCharacter = false;
 	private boolean inCharacterTree = false;
 	private boolean inCharacters = false;
+	private boolean dataUnavailableFlag = false;
 
 	// to test if the Label is the DataSet Label
 	private boolean isDataSetLabel = true;
@@ -270,14 +271,15 @@ public class SDDContentHandler implements ContentHandler {
 
 			// <State> in <Categorical>
 			else if (localName.equals("State") && inCategorical) {
-				if(currentStatesList != null)
+				if (currentStatesList != null)
 					currentStatesList.add(this.dataset.getStateById(attributs.getValue("ref")));
 			}
-			
+
 			// <Status> in <Categorical>
 			else if (localName.equals("Status") && inCategorical) {
-				if(attributs.getValue("code") != null && attributs.getValue("code").equals("DataUnavailable")){
-					currentStatesList = null;
+				if (attributs.getValue("code") != null
+						&& attributs.getValue("code").equals("DataUnavailable")) {
+					dataUnavailableFlag = true;
 				}
 			}
 
@@ -290,19 +292,19 @@ public class SDDContentHandler implements ContentHandler {
 
 			// <Measure> in <Quantitative>
 			else if (localName.equals("Measure") && inQuantitative) {
-				if(currentQuantitativeMeasure != null){
+				if (currentQuantitativeMeasure != null) {
 					if (attributs.getValue("type").equals("Min")) {
-						currentQuantitativeMeasure
-								.setMin(Utils.convertStringToDouble(attributs.getValue("value")));
+						currentQuantitativeMeasure.setMin(Utils.convertStringToDouble(attributs
+								.getValue("value")));
 					} else if (attributs.getValue("type").equals("Max")) {
-						currentQuantitativeMeasure
-								.setMax(Utils.convertStringToDouble(attributs.getValue("value")));
+						currentQuantitativeMeasure.setMax(Utils.convertStringToDouble(attributs
+								.getValue("value")));
 					} else if (attributs.getValue("type").equals("Mean")) {
 						currentQuantitativeMeasure.setMean(Utils.convertStringToDouble(attributs
 								.getValue("value")));
 					} else if (attributs.getValue("type").equals("SD")) {
-						currentQuantitativeMeasure
-								.setSD(Utils.convertStringToDouble(attributs.getValue("value")));
+						currentQuantitativeMeasure.setSD(Utils.convertStringToDouble(attributs
+								.getValue("value")));
 					} else if (attributs.getValue("type").equals("UMethLower")) {
 						currentQuantitativeMeasure.setUMethLower(Utils.convertStringToDouble(attributs
 								.getValue("value")));
@@ -312,11 +314,12 @@ public class SDDContentHandler implements ContentHandler {
 					}
 				}
 			}
-			
+
 			// <Status> in <Quantitative>
 			else if (localName.equals("Status") && inCategorical) {
-				if(attributs.getValue("code") != null && attributs.getValue("code").equals("DataUnavailable")){
-					currentQuantitativeMeasure = null;
+				if (attributs.getValue("code") != null
+						&& attributs.getValue("code").equals("DataUnavailable")) {
+					dataUnavailableFlag = true;
 				}
 			}
 
@@ -338,6 +341,28 @@ public class SDDContentHandler implements ContentHandler {
 			if (localName.equals("Dataset")) {
 				inDataset = false;
 				isFirstDataset = false;
+
+				// put to null Unknown data
+				for (Taxon taxon : this.dataset.getCodedDescriptions().keySet()) {
+					for (ICharacter character : this.dataset.getCharacters()) {
+						if (this.dataset.getCodedDescriptions().get(taxon).getCharacterDescription(character) == null) {
+							if (character.isSupportsCategoricalData()) {
+								this.dataset.getCodedDescriptions().get(taxon)
+										.addCharacterDescription(character, new ArrayList<State>());
+							} else {
+								this.dataset.getCodedDescriptions().get(taxon)
+										.addCharacterDescription(character, new QuantitativeMeasure());
+							}
+						} else if (this.dataset.getCodedDescriptions().get(taxon)
+								.getCharacterDescription(character) instanceof String
+								&& ((String) this.dataset.getCodedDescriptions().get(taxon)
+										.getCharacterDescription(character)).equals(Utils.UNKNOWNDATA)) {
+							this.dataset.getCodedDescriptions().get(taxon)
+									.addCharacterDescription(character, null);
+						}
+					}
+				}
+
 			}
 
 			// <Representation> in <Dataset>
@@ -513,19 +538,31 @@ public class SDDContentHandler implements ContentHandler {
 			// <Categorical> in <SummaryData>
 			else if (localName.equals("Categorical") && inSummaryData) {
 				inCategorical = false;
-				currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
-						currentStatesList);
+				if (dataUnavailableFlag) {
+					currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
+							Utils.UNKNOWNDATA);
+				} else {
+					currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
+							currentStatesList);
+				}
 				currentCodedDescriptionCharacter = null;
 				currentStatesList = null;
+				dataUnavailableFlag = false;
 			}
 
 			// <Quantitative> in <SummaryData>
 			else if (localName.equals("Quantitative") && inSummaryData) {
 				inQuantitative = false;
-				currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
-						currentQuantitativeMeasure);
+				if (dataUnavailableFlag) {
+					currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
+							Utils.UNKNOWNDATA);
+				} else {
+					currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
+							currentQuantitativeMeasure);
+				}
 				currentCodedDescriptionCharacter = null;
 				currentQuantitativeMeasure = null;
+				dataUnavailableFlag = false;
 			}
 
 			// <Measure> in <Quantitative>

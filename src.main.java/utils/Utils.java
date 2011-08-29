@@ -28,6 +28,8 @@ public class Utils {
 	public static String SDD = "sdd";
 	public static String WIKI = "wiki";
 	public static String ERROR = "error";
+	public static String UNKNOWNDATA = "unknownData";
+
 	// options
 	public static boolean twoStatesCharacterFirst = false;
 	public static boolean mergeCharacterStatesIfSameDiscimination = false;

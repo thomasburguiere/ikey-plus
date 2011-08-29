@@ -256,4 +256,17 @@ public class QuantitativeMeasure {
 		return false;
 	}
 
+	/**
+	 * test if the mesure is unknown
+	 * 
+	 * @return boolean, true if quantitativeMeasure is unknown
+	 */
+	public boolean isUnknown() {
+		if (this.getCalculateMinimum() == null || this.getCalculateMaximum() == null) {
+			return true;
+		}
+		return false;
+
+	}
+
 }
