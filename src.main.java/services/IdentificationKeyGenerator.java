@@ -477,8 +477,9 @@ public class IdentificationKeyGenerator {
 				// artificially increasing score of character with 2 states
 //				score = (float) (score + coeff);
 //			}
-			float coeff = 1-(2/maxNbStatesPerCharacter);
-			score = (float) 1 - (character.getStates().size() / maxNbStatesPerCharacter);
+//			float coeff = 1-(2/maxNbStatesPerCharacter);
+			float coeff = (float) 1 - (character.getStates().size() / maxNbStatesPerCharacter);
+			score = (float) (score+coeff);
 		}
 
 		// round to 10^-2
