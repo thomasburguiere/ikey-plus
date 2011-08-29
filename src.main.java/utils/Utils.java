@@ -4,7 +4,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 /**
  * This class allow to manage all external functionalities : error massage, properties...
@@ -110,6 +114,55 @@ public class Utils {
 	 */
 	public static void setBundle(ResourceBundle bundle) {
 		Utils.bundle = bundle;
+	}
+
+	/**
+	 * This method returns the intersection of two Lists
+	 * 
+	 * @param list1
+	 * @param list2
+	 * @return
+	 */
+	public static List<?> intersection(List<?> list1, List<?> list2) {
+		List<Object> list = new ArrayList<Object>();
+		for (Object o : list1) {
+			if (list2.contains(o))
+				list.add(o);
+		}
+		return list;
+	}
+
+	/**
+	 * This method returns a list containing the elements of a primary list that do not appear in a list of
+	 * excluded elements
+	 * 
+	 * @param primaryList
+	 *            the list which elements are to be retained
+	 * @param excludedList
+	 *            the list which elements shall not remain in the final list
+	 * @return
+	 */
+	public static List<?> exclusion(List<?> primaryList, List<?> excludedList) {
+		List<Object> list = new ArrayList<Object>();
+		for (Object o : primaryList) {
+			if (!excludedList.contains(o))
+				list.add(o);
+		}
+		return list;
+	}
+
+	/**
+	 * This method returns the union of two Lists
+	 * 
+	 * @param list1
+	 * @param list2
+	 * @return
+	 */
+	public static List<?> union(List<?> list1, List<?> list2) {
+		Set<Object> set = new HashSet<Object>();
+		set.addAll(list1);
+		set.addAll(list2);
+		return new ArrayList<Object>(set);
 	}
 
 }
