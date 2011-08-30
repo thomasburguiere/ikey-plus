@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -109,81 +110,115 @@ public class SingleAccessKeyTree {
 	}
 
 	/**
-	 * Iteratively traverses (breadth-first) the SingleAccessKeyTree, and returns a plain-text representation
-	 * of its content
+	 * This methods outputs the SingleAccesKeyTree as a flat key. In order to do this, the singleAccessKeyTree
+	 * is traversed 3 times.
 	 * 
 	 * @param rootNode
 	 * @param output
-	 * @param firstNumbering
-	 * @param secondNumbering
+	 * @param lineSeparator
 	 */
-	public void iterativeBreadthFirstToString(SingleAccessKeyNode rootNode, StringBuffer output,
-			String lineSeparator, int firstNumbering, int secondNumbering) {
-		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
-		queue.add(rootNode);
+	public void multipleTraversalToString(SingleAccessKeyNode rootNode, StringBuffer output,
+			String lineSeparator) {
 
+		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
 		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
 
-		// node output
-		if (rootNode != null && rootNode.getCharacter() != null && rootNode.getCharacterState() != null) {
-			if (rootNode.getCharacterState() instanceof QuantitativeMeasure) {
-				output.append(firstNumbering + "." + secondNumbering + ") "
-						+ rootNode.getCharacter().getName() + " | "
-						+ ((QuantitativeMeasure) rootNode.getCharacterState()).toStringInterval());
-			} else {
-				output.append(firstNumbering + "." + secondNumbering + ") "
-						+ rootNode.getCharacter().getName() + " | "
-						+ ((State) rootNode.getCharacterState()).getName());
+		// // first traversal, breadth-first ////
+		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
+
+		int counter = 0;
+		queue.add(rootNode);
+
+		// root node treatment
+		nodeBreadthFirstIterationMap.put(rootNode, new Integer(counter));
+		counter++;
+		// end root node treatment
+
+		visitedNodes.add(rootNode);
+
+		while (!queue.isEmpty()) {
+			SingleAccessKeyNode node = queue.remove();
+			SingleAccessKeyNode child = null;
+
+			// exclusion(node.getChildren(), visitedNodes) is the list of unvisited children nodes of the
+			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes).get(0)) != null) {
+				visitedNodes.add(child);
+
+				/// child node treatment
+				nodeBreadthFirstIterationMap.put(child, new Integer(counter));
+				counter++;
+
+				/// end child node treatment
+
+				queue.add(child);
 			}
-			if (rootNode.getChildren().size() == 0) {
-				output.append(" -> taxa= ");
-				boolean firstLoop = true;
-				for (Taxon taxon : rootNode.getRemainingTaxa()) {
-					if (!firstLoop) {
-						output.append(", ");
-					}
-					output.append(taxon.getName());
-					firstLoop = false;
-				}
-			} else {
-				output.append(" (taxa=" + rootNode.getRemainingTaxa().size() + ")");
-			}
-			output.append(lineSeparator);
-			visitedNodes.add(rootNode);
 		}
 
-		String characterNameBuffer = "";
+		// // end first traversal, breadth-first ////
+
+		// // second traversal, depth-first ////
+		HashMap<Integer, Integer> nodeChildParentNumberingMap = new HashMap<Integer, Integer>();
+		recursiveDepthFirst(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
+		// // end second traversal, depth-first ////
+
+		// // third traversal, breadth-first ////
+		queue.clear();
+		visitedNodes.clear();
+
+		counter = 0;
+		int currentParentNumber = -1;
+		queue.add(rootNode);
+
+		// root node treatment
+
+		counter++;
+		// end root node treatment
+		visitedNodes.add(rootNode);
 
 		while (!queue.isEmpty()) {
 			SingleAccessKeyNode node = queue.remove();
 			SingleAccessKeyNode child = null;
 
 			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
-							.get(0)) != null) {
-
+					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes).get(0)) != null
+			// && child.getCharacter() != null && child.getCharacterState() != null
+			) {
 				visitedNodes.add(child);
 
-				// numbering iteration TODO un peu crado qd meme
-				if (!characterNameBuffer.equals(child.getCharacter().getName())) {
-					characterNameBuffer = child.getCharacter().getName();
-					firstNumbering++;
-					secondNumbering = 0;
-				}
-				secondNumbering++;
+				// / child node treatment
 
-				// node output
-				if (child.getCharacterState() instanceof QuantitativeMeasure) {
-					output.append(firstNumbering + "." + secondNumbering + ") "
-							+ child.getCharacter().getName() + " | "
-							+ ((QuantitativeMeasure) child.getCharacterState()).toStringInterval());
+				// displaying the parent node number and the child node character name only once
+				if (nodeChildParentNumberingMap.get(new Integer(counter)) != currentParentNumber) {
+					currentParentNumber = nodeChildParentNumberingMap.get(new Integer(counter));
+					output.append(lineSeparator);
+					if (currentParentNumber < 10)
+						output.append("   " + currentParentNumber);
+					else if (currentParentNumber < 100)
+						output.append("  " + currentParentNumber);
+					else if (currentParentNumber < 1000)
+						output.append(" " + currentParentNumber);
+					else
+						output.append(currentParentNumber);
+					output.append("  " + child.getCharacter().getName() + " = ");
 				} else {
-					output.append(firstNumbering + "." + secondNumbering + ") "
-							+ child.getCharacter().getName() + " | "
-							+ ((State) child.getCharacterState()).getName());
+					output.append("    ");
+					String blankCharacterName = "";
+					for (int i = 0; i < child.getCharacter().getName().length(); i++)
+						blankCharacterName += " ";
+					output.append("  " + blankCharacterName + " = ");
 				}
+
+				// displaying the child node character state
+				if (child.getCharacterState() instanceof QuantitativeMeasure) {
+					output.append(((QuantitativeMeasure) child.getCharacterState()).toStringInterval());
+				} else {
+					output.append(((State) child.getCharacterState()).getName());
+				}
+
+				// displaying the child node number if it has children nodes, displaying the taxa otherwise
 				if (child.getChildren().size() == 0) {
-					output.append(" -> taxa= ");
+					output.append(" -> taxa = ");
 					boolean firstLoop = true;
 					for (Taxon taxon : child.getRemainingTaxa()) {
 						if (!firstLoop) {
@@ -193,12 +228,32 @@ public class SingleAccessKeyTree {
 						firstLoop = false;
 					}
 				} else {
-					output.append(" (taxa=" + child.getRemainingTaxa().size() + ")");
+					output.append(" -> " + counter);
 				}
+
 				output.append(lineSeparator);
 
 				queue.add(child);
+
+				counter++;
+				// / end child node treatment
+
 			}
+		}
+
+		// // end third traversal, breadth-first ////
+
+	}
+
+	private void recursiveDepthFirst(SingleAccessKeyNode node,
+			HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap,
+			HashMap<Integer, Integer> nodeChildParentNumberingMap) {
+
+		Integer parentNumber = nodeBreadthFirstIterationMap.get(node);
+		for (SingleAccessKeyNode childNode : node.getChildren()) {
+			Integer childNumber = nodeBreadthFirstIterationMap.get(childNode);
+			nodeChildParentNumberingMap.put(childNumber, parentNumber);
+			recursiveDepthFirst(childNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
 		}
 	}
 
@@ -439,11 +494,11 @@ public class SingleAccessKeyTree {
 
 	public String toFlatString() {
 		StringBuffer output = new StringBuffer();
-		iterativeBreadthFirstToString(root, output, System.getProperty("line.separator"), 0, 0);
+		multipleTraversalToString(root, output, System.getProperty("line.separator"));
 		return output.toString();
 	}
 
-	public File toFlatStringFile(String header) throws IOException {
+	public File toFlatTxtFile(String header) throws IOException {
 		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleElement("generatedKeyFiles.folder");
 
