@@ -44,6 +44,8 @@ public class IdentificationKeyTXTGeneratorTest {
 			SDDSaxParser sddSaxParser = null;
 			try {
 				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
+				// String stringUrl =
+				// "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-unknownData-fullSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml";
@@ -53,7 +55,7 @@ public class IdentificationKeyTXTGeneratorTest {
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/wrongSDD.xml";
 
 				// options
-				// Utils.twoStatesCharacterFirst = true;
+				Utils.twoStatesCharacterFirst = false;
 
 				// test if the URL is valid
 				URLConnection urlConnection;

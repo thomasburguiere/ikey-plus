@@ -142,14 +142,15 @@ public class SingleAccessKeyTree {
 
 			// exclusion(node.getChildren(), visitedNodes) is the list of unvisited children nodes of the
 			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes).get(0)) != null) {
+					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+							.get(0)) != null) {
 				visitedNodes.add(child);
 
-				/// child node treatment
+				// / child node treatment
 				nodeBreadthFirstIterationMap.put(child, new Integer(counter));
 				counter++;
 
-				/// end child node treatment
+				// / end child node treatment
 
 				queue.add(child);
 			}
@@ -181,7 +182,8 @@ public class SingleAccessKeyTree {
 			SingleAccessKeyNode child = null;
 
 			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes).get(0)) != null
+					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+							.get(0)) != null
 			// && child.getCharacter() != null && child.getCharacterState() != null
 			) {
 				visitedNodes.add(child);
@@ -502,7 +504,7 @@ public class SingleAccessKeyTree {
 		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleElement("generatedKeyFiles.folder");
 
-		File txtFile = File.createTempFile("keyFlat_", "." + Utils.TXT, new File(path));
+		File txtFile = File.createTempFile("key_", "." + Utils.TXT, new File(path));
 		BufferedWriter txtFileWriter = new BufferedWriter(new FileWriter(txtFile));
 		txtFileWriter.append(header);
 		txtFileWriter.append(toFlatString());

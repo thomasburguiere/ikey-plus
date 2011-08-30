@@ -116,10 +116,16 @@ public class IdentificationKeyGenerator {
 				remainingTaxa.removeAll(notDescribedTaxa);
 			}
 
-			/* // display score for each character for (ICharacter character : charactersScore.keySet()) {
-			 * System.out.println(character.getName() + ": " + charactersScore.get(character)); }
-			 * System.out.println(System.getProperty ("line.separator")+"bestCharacter: " +
-			 * selectedCharacter.getName() + System.getProperty("line.separator")); */
+			// display score for each character
+			// for (ICharacter character : charactersScore.keySet()) {
+			// if (character.isSupportsCategoricalData()) {
+			// System.out.println("CC " + character.getName() + ": " + charactersScore.get(character));
+			// } else {
+			// System.out.println("NN " + character.getName() + ": " + charactersScore.get(character));
+			// }
+			// }
+			// System.out.println(System.getProperty("line.separator") + "bestCharacter: "
+			// + selectedCharacter.getName() + System.getProperty("line.separator"));
 
 			// if the character is categorical
 			if (selectedCharacter.isSupportsCategoricalData()) {
@@ -493,28 +499,28 @@ public class IdentificationKeyGenerator {
 	 * @param codedDescriptions
 	 * @return float, the discriminant power of the categorical character
 	 */
-	private float categoricalCharacterScore(CategoricalCharacter character, List<Taxon> remaningTaxa)
+	private float categoricalCharacterScore(CategoricalCharacter character, List<Taxon> remainingTaxa)
 			throws Exception {
 		int cpt = 0;
 		float score = 0;
 		boolean isAlwaysDescribed = true;
 
-		for (int i = 0; i < remaningTaxa.size() - 1; i++) {
-			for (int j = i + 1; j < remaningTaxa.size(); j++) {
-				if (dataset.getCodedDescription(remaningTaxa.get(i)) != null
-						&& dataset.getCodedDescription(remaningTaxa.get(j)) != null) {
+		for (int i = 0; i < remainingTaxa.size() - 1; i++) {
+			for (int j = i + 1; j < remainingTaxa.size(); j++) {
+				if (dataset.getCodedDescription(remainingTaxa.get(i)) != null
+						&& dataset.getCodedDescription(remainingTaxa.get(j)) != null) {
 					// if the character is applicable for both of these taxa
-					if (dataset.isApplicable(remaningTaxa.get(i), character)
-							&& dataset.isApplicable(remaningTaxa.get(j), character)) {
+					if (dataset.isApplicable(remainingTaxa.get(i), character)
+							&& dataset.isApplicable(remainingTaxa.get(j), character)) {
 						// nb of common states which are absent
 						float commonAbsent = 0;
 						// nb of common states which are present
 						float commonPresent = 0;
 						float other = 0;
 						List<State> statesList1 = (List<State>) dataset.getCodedDescription(
-								remaningTaxa.get(i)).getCharacterDescription(character);
+								remainingTaxa.get(i)).getCharacterDescription(character);
 						List<State> statesList2 = (List<State>) dataset.getCodedDescription(
-								remaningTaxa.get(j)).getCharacterDescription(character);
+								remainingTaxa.get(j)).getCharacterDescription(character);
 
 						// if at least one description is empty for the current character
 						if ((statesList1 != null && statesList1.size() == 0)
@@ -580,47 +586,36 @@ public class IdentificationKeyGenerator {
 	}
 
 	/**
-	 * This method calculates the maximum number of character per state for the entire dataset
-	 * 
-	 * @return
-	 */
-	private int calculateMaxNbStatesPerCharacter() {
-		int max = 2;
-		for (ICharacter ic : dataset.getCharacters()) {
-			if (ic instanceof CategoricalCharacter && ((CategoricalCharacter) ic).getStates() != null
-					&& max < ((CategoricalCharacter) ic).getStates().size())
-				max = ((CategoricalCharacter) ic).getStates().size();
-		}
-		return max;
-	}
-
-	/**
 	 * Calculate the discriminant power for quantitative character
 	 * 
 	 * @param character
 	 * @param codedDescriptions
 	 * @return float, the discriminant power of the quantitative character
 	 */
-	private float quantitativeCharacterScore(QuantitativeCharacter character, List<Taxon> remaningTaxa)
+	private float quantitativeCharacterScore(QuantitativeCharacter character, List<Taxon> remainingTaxa)
 			throws Exception {
 		int cpt = 0;
 		float score = 0;
 		boolean isAlwaysDescribed = true;
 
-		for (int i = 0; i < remaningTaxa.size() - 1; i++) {
-			for (int j = i + 1; j < remaningTaxa.size(); j++) {
-				if (dataset.getCodedDescription(remaningTaxa.get(i)) != null
-						&& dataset.getCodedDescription(remaningTaxa.get(j)) != null) {
-					if (dataset.isApplicable(remaningTaxa.get(i), character)
-							&& dataset.isApplicable(remaningTaxa.get(j), character)) {
+		List<QuantitativeMeasure> QuantitativeIntervals = splitQuantitativeCharacter(character, remainingTaxa);
 
+		for (int i = 0; i < remainingTaxa.size() - 1; i++) {
+			for (int j = i + 1; j < remainingTaxa.size(); j++) {
+				if (dataset.getCodedDescription(remainingTaxa.get(i)) != null
+						&& dataset.getCodedDescription(remainingTaxa.get(j)) != null) {
+					// if the character is applicable for both of these taxa
+					if (dataset.isApplicable(remainingTaxa.get(i), character)
+							&& dataset.isApplicable(remainingTaxa.get(j), character)) {
+						// nb of common states which are absent
+						float commonAbsent = 0;
+						// nb of common states which are present
+						float commonPresent = 0;
+						float other = 0;
 						QuantitativeMeasure quantitativeMeasure1 = (QuantitativeMeasure) dataset
-								.getCodedDescription(remaningTaxa.get(i)).getCharacterDescription(character);
+								.getCodedDescription(remainingTaxa.get(i)).getCharacterDescription(character);
 						QuantitativeMeasure quantitativeMeasure2 = (QuantitativeMeasure) dataset
-								.getCodedDescription(remaningTaxa.get(j)).getCharacterDescription(character);
-
-						// percentage of common values which are shared
-						float commonPercentage = 0;
+								.getCodedDescription(remainingTaxa.get(j)).getCharacterDescription(character);
 
 						// if at least one description is empty for the current character
 						if ((quantitativeMeasure1 != null && quantitativeMeasure1.isNotSpecified())
@@ -636,18 +631,34 @@ public class IdentificationKeyGenerator {
 							score++;
 							// search common shared values
 						} else if (quantitativeMeasure1 != null && quantitativeMeasure2 != null) {
-							if (!quantitativeMeasure1.isNotSpecified()
-									&& !quantitativeMeasure2.isNotSpecified()) {
 
-								commonPercentage = calculCommonPercentage(quantitativeMeasure1
-										.getCalculateMinimum().doubleValue(), quantitativeMeasure1
-										.getCalculateMaximum().doubleValue(), quantitativeMeasure2
-										.getCalculateMinimum().doubleValue(), quantitativeMeasure2
-										.getCalculateMaximum().doubleValue());
-
-								if (commonPercentage == 0) {
-									score++;
+							// if a taxon is described and the other not, it means that this taxa can be
+							// discriminated
+							if ((quantitativeMeasure1.isNotSpecified() && !quantitativeMeasure2
+									.isNotSpecified())
+									|| (quantitativeMeasure2.isNotSpecified() && !quantitativeMeasure1
+											.isNotSpecified())) {
+								score++;
+							} else
+								// search common state
+								for (QuantitativeMeasure quantitativeMeasure : QuantitativeIntervals) {
+									if (quantitativeMeasure.isInclude(quantitativeMeasure1)) {
+										if (quantitativeMeasure.isInclude(quantitativeMeasure2)) {
+											commonPresent++;
+										} else {
+											other++;
+										}
+									} else {
+										if (quantitativeMeasure.isInclude(quantitativeMeasure2)) {
+											other++;
+										} else {
+											commonAbsent++;
+										}
+									}
 								}
+							// yes or no method (Xper)
+							if ((commonPresent == 0) && (other > 0)) {
+								score++;
 							}
 						}
 						cpt++;
@@ -655,6 +666,7 @@ public class IdentificationKeyGenerator {
 				}
 			}
 		}
+
 		if (cpt >= 1) {
 			score = score / cpt;
 		}
@@ -676,15 +688,17 @@ public class IdentificationKeyGenerator {
 		return score;
 	}
 
-	/**
-	 * Calculate the common percentage between two interval
+	/* /** Calculate the common percentage between two interval
 	 * 
 	 * @param min1
+	 * 
 	 * @param max1
+	 * 
 	 * @param min2
+	 * 
 	 * @param max2
-	 * @return float, the common percentage
-	 */
+	 * 
+	 * @return float, the common percentage */
 	public static float calculCommonPercentage(double min1, double max1, double min2, double max2)
 			throws Exception {
 		double minLowerTmp = 0;
@@ -715,6 +729,21 @@ public class IdentificationKeyGenerator {
 			res = 0;
 		}
 		return res;
+	}
+
+	/**
+	 * This method calculates the maximum number of character per state for the entire dataset
+	 * 
+	 * @return
+	 */
+	private int calculateMaxNbStatesPerCharacter() {
+		int max = 2;
+		for (ICharacter ic : dataset.getCharacters()) {
+			if (ic instanceof CategoricalCharacter && ((CategoricalCharacter) ic).getStates() != null
+					&& max < ((CategoricalCharacter) ic).getStates().size())
+				max = ((CategoricalCharacter) ic).getStates().size();
+		}
+		return max;
 	}
 
 	/**

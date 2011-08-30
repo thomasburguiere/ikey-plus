@@ -240,18 +240,33 @@ public class QuantitativeMeasure {
 	 * @return boolean, true if quantitativeMeasure is include in the current quantitativeMeasure
 	 */
 	public boolean isInclude(QuantitativeMeasure quantitativeMeasure) {
-		if (quantitativeMeasure == null
-				|| quantitativeMeasure.getCalculateMinimum() == null
-				|| quantitativeMeasure.getCalculateMaximum() == null
-				|| this.getCalculateMinimum() == null
-				|| this.getCalculateMaximum() == null
-				|| (quantitativeMeasure.getCalculateMinimum().doubleValue() >= this.getCalculateMinimum()
+
+		if (quantitativeMeasure == null) {
+			return true;
+			// if both taxa are described
+		} else if (!this.isNotSpecified() && !quantitativeMeasure.isNotSpecified()) {
+			// if the max value of the current interval is include
+			if (this.maxInclude) {
+				if ((quantitativeMeasure.getCalculateMinimum().doubleValue() >= this.getCalculateMinimum()
 						.doubleValue() && quantitativeMeasure.getCalculateMinimum().doubleValue() <= this
 						.getCalculateMaximum().doubleValue())
-				|| (quantitativeMeasure.getCalculateMaximum().doubleValue() >= this.getCalculateMinimum()
-						.doubleValue() && quantitativeMeasure.getCalculateMaximum().doubleValue() <= this
-						.getCalculateMaximum().doubleValue())) {
-			return true;
+						|| (quantitativeMeasure.getCalculateMaximum().doubleValue() >= this
+								.getCalculateMinimum().doubleValue() && quantitativeMeasure
+								.getCalculateMaximum().doubleValue() <= this.getCalculateMaximum()
+								.doubleValue())) {
+					return true;
+				}
+			} else {
+				if ((quantitativeMeasure.getCalculateMinimum().doubleValue() >= this.getCalculateMinimum()
+						.doubleValue() && quantitativeMeasure.getCalculateMinimum().doubleValue() < this
+						.getCalculateMaximum().doubleValue())
+						|| (quantitativeMeasure.getCalculateMaximum().doubleValue() >= this
+								.getCalculateMinimum().doubleValue() && quantitativeMeasure
+								.getCalculateMaximum().doubleValue() < this.getCalculateMaximum()
+								.doubleValue())) {
+					return true;
+				}
+			}
 		}
 		return false;
 	}
