@@ -110,8 +110,12 @@ public class SingleAccessKeyTree {
 	}
 
 	/**
-	 * This methods outputs the SingleAccesKeyTree as a flat key. In order to do this, the singleAccessKeyTree
-	 * is traversed 3 times.
+	 * This methods outputs the {@link #SingleAccesKeyTree} as a flat key. In order to do this, the <tt>SingleAccesKeyTree</tt>
+	 * is traversed 3 times. The first traversal is a breadth-first traversal, in order to generate an HashMap
+	 * (<tt>nodeBreadthFirstIterationMap</tt>) that associates each node with an arbitrary Integer. The second
+	 * traversal is a depth-first traversal, in order to associate (in another HashMap :
+	 * <tt>nodeChildParentNumberingMap</tt>), for each node, the node number and the number of its parent node.
+	 * Finally, the last traversal is another breadh-first traversal that generates the flat key String
 	 * 
 	 * @param rootNode
 	 * @param output
@@ -494,12 +498,26 @@ public class SingleAccessKeyTree {
 		return txtFile;
 	}
 
+	/**
+	 * generates a flat representation of a key, in a String object, by calling the {@link #multipleTraversalToString}
+	 * helper method
+	 * 
+	 * @return
+	 */
 	public String toFlatString() {
 		StringBuffer output = new StringBuffer();
 		multipleTraversalToString(root, output, System.getProperty("line.separator"));
 		return output.toString();
 	}
 
+	/**
+	 * generates a txt file containing the key, in a flat representation
+	 * 
+	 * @param header
+	 *            a String that contains the header
+	 * @return a txt File
+	 * @throws IOException
+	 */
 	public File toFlatTxtFile(String header) throws IOException {
 		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleElement("generatedKeyFiles.folder");
