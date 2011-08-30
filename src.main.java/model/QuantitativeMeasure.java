@@ -257,11 +257,11 @@ public class QuantitativeMeasure {
 	}
 
 	/**
-	 * test if the mesure is unknown
+	 * test if the measure is not specified
 	 * 
-	 * @return boolean, true if quantitativeMeasure is unknown
+	 * @return boolean, true if quantitativeMeasure is not specified
 	 */
-	public boolean isUnknown() {
+	public boolean isNotSpecified() {
 		if (this.getCalculateMinimum() == null || this.getCalculateMaximum() == null) {
 			return true;
 		}

@@ -102,6 +102,20 @@ public class IdentificationKeyGenerator {
 				}
 			}
 
+			// get not described taxa
+			List<Taxon> notDescribedTaxa = null;
+			if (selectedCharacter.isSupportsCategoricalData()) {
+				notDescribedTaxa = getNotDescribedTaxa(remainingTaxa,
+						((CategoricalCharacter) selectedCharacter));
+				// delete not described taxa from the remaining taxa list
+				remainingTaxa.removeAll(notDescribedTaxa);
+			} else {
+				notDescribedTaxa = getNotDescribedTaxa(remainingTaxa,
+						((QuantitativeCharacter) selectedCharacter));
+				// delete not described taxa from the remaining taxa list
+				remainingTaxa.removeAll(notDescribedTaxa);
+			}
+
 			/* // display score for each character for (ICharacter character : charactersScore.keySet()) {
 			 * System.out.println(character.getName() + ": " + charactersScore.get(character)); }
 			 * System.out.println(System.getProperty ("line.separator")+"bestCharacter: " +
@@ -134,6 +148,7 @@ public class IdentificationKeyGenerator {
 						calculateSingleAccessKeyNodeChild(node, newRemainingCharacters, newRemainingTaxa);
 					}
 				}
+
 				// if the character is numerical
 			} else {
 				List<QuantitativeMeasure> quantitativeMeasures = splitQuantitativeCharacter(
@@ -165,6 +180,19 @@ public class IdentificationKeyGenerator {
 					}
 				}
 			}
+
+			// if taxa are not described create a node "Other (not described)"
+			if (notDescribedTaxa != null && notDescribedTaxa.size() > 0) {
+				// init new node
+				SingleAccessKeyNode notDescribedNode = new SingleAccessKeyNode();
+				notDescribedNode.setCharacter(selectedCharacter);
+				notDescribedNode.setRemainingTaxa(notDescribedTaxa);
+				notDescribedNode.setCharacterState(new State("Other (not described)"));
+
+				// put new node as child of parentNode
+				parentNode.addChild(notDescribedNode);
+			}
+
 		}
 	}
 
@@ -234,6 +262,48 @@ public class IdentificationKeyGenerator {
 			}
 		}
 		return newRemainingTaxa;
+	}
+
+	/**
+	 * @param remaningTaxa
+	 * @param character
+	 * @return List<Taxon>, the list of not described taxa for categorical character
+	 */
+	private List<Taxon> getNotDescribedTaxa(List<Taxon> remainingTaxa, CategoricalCharacter character)
+			throws Exception {
+
+		List<Taxon> notDescribedTaxa = new ArrayList<Taxon>();
+
+		// init not described taxa list with taxa without description
+		for (Taxon taxon : remainingTaxa) {
+			if (dataset.getCodedDescription(taxon).getCharacterDescription(character) != null
+					&& ((List<State>) dataset.getCodedDescription(taxon).getCharacterDescription(character))
+							.size() == 0) {
+				notDescribedTaxa.add(taxon);
+			}
+		}
+		return notDescribedTaxa;
+	}
+
+	/**
+	 * @param remaningTaxa
+	 * @param character
+	 * @return List<Taxon>, the list of not described taxa for quantitative character
+	 */
+	private List<Taxon> getNotDescribedTaxa(List<Taxon> remainingTaxa, QuantitativeCharacter character)
+			throws Exception {
+
+		List<Taxon> notDescribedTaxa = new ArrayList<Taxon>();
+
+		// init not described taxa list with taxa without description
+		for (Taxon taxon : remainingTaxa) {
+			if (dataset.getCodedDescription(taxon).getCharacterDescription(character) != null
+					&& ((QuantitativeMeasure) dataset.getCodedDescription(taxon).getCharacterDescription(
+							character)).isNotSpecified()) {
+				notDescribedTaxa.add(taxon);
+			}
+		}
+		return notDescribedTaxa;
 	}
 
 	/**
@@ -553,20 +623,21 @@ public class IdentificationKeyGenerator {
 						float commonPercentage = 0;
 
 						// if at least one description is empty for the current character
-						if ((quantitativeMeasure1 != null && quantitativeMeasure1.isUnknown())
-								|| (quantitativeMeasure2 != null && quantitativeMeasure2.isUnknown())) {
+						if ((quantitativeMeasure1 != null && quantitativeMeasure1.isNotSpecified())
+								|| (quantitativeMeasure2 != null && quantitativeMeasure2.isNotSpecified())) {
 							isAlwaysDescribed = false;
 						}
 
 						// if one description is unknown and the other have no measure
 						if ((quantitativeMeasure1 == null && quantitativeMeasure2 != null && quantitativeMeasure2
-								.isUnknown())
+								.isNotSpecified())
 								|| (quantitativeMeasure2 == null && quantitativeMeasure1 != null && quantitativeMeasure1
-										.isUnknown())) {
+										.isNotSpecified())) {
 							score++;
 							// search common shared values
 						} else if (quantitativeMeasure1 != null && quantitativeMeasure2 != null) {
-							if (!quantitativeMeasure1.isUnknown() && !quantitativeMeasure2.isUnknown()) {
+							if (!quantitativeMeasure1.isNotSpecified()
+									&& !quantitativeMeasure2.isNotSpecified()) {
 
 								commonPercentage = calculCommonPercentage(quantitativeMeasure1
 										.getCalculateMinimum().doubleValue(), quantitativeMeasure1
