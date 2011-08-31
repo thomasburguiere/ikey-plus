@@ -114,8 +114,7 @@ public class IdentificationKeyWIKIGeneratorTest {
 			header.append(System.getProperty("line.separator") + "parseDuration= " + parseDuration + "s");
 			header.append(System.getProperty("line.separator") + "keyCreationDuration= "
 					+ keyCreationDuration + "s");
-			header.append(System.getProperty("line.separator") + System.getProperty("line.separator")
-					+ System.getProperty("line.separator"));
+			header.append(System.getProperty("line.separator") + System.getProperty("line.separator"));
 
 			// create key file
 			try {

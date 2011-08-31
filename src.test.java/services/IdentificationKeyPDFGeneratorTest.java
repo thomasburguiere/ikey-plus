@@ -44,7 +44,7 @@ public class IdentificationKeyPDFGeneratorTest {
 
 			SDDSaxParser sddSaxParser = null;
 			try {
-				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
+				 String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-unknownData-fullSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
@@ -56,7 +56,7 @@ public class IdentificationKeyPDFGeneratorTest {
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/wrongSDD.xml";
 
 				// options
-				Utils.twoStatesCharacterFirst = false;
+				Utils.twoStatesCharacterFirst = true;
 
 				// test if the URL is valid
 				URLConnection urlConnection;
@@ -114,8 +114,7 @@ public class IdentificationKeyPDFGeneratorTest {
 			header.append(System.getProperty("line.separator") + "parseDuration= " + parseDuration + "s");
 			header.append(System.getProperty("line.separator") + "keyCreationDuration= "
 					+ keyCreationDuration + "s");
-			header.append(System.getProperty("line.separator") + System.getProperty("line.separator")
-					+ System.getProperty("line.separator"));
+			header.append(System.getProperty("line.separator") + System.getProperty("line.separator"));
 
 			// create key file
 			try {
