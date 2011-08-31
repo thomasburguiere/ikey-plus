@@ -29,8 +29,8 @@ public class IdentificationKeyDOTGeneratorTest {
 		// set the confTest ResourceBundle
 		Utils.setBundle(ResourceBundle.getBundle("confTest"));
 
-		// String containing the URL to result file
-		String resultURL = "";
+		// String containing the name of the result file
+		String resultFileName = "";
 		try {
 			// define logger
 			logger.info("testIdentificationKeyGenerator");
@@ -39,7 +39,8 @@ public class IdentificationKeyDOTGeneratorTest {
 
 			// define header string
 			StringBuffer header = new StringBuffer();
-			header.append("// " + Utils.getBundleElement("message.createdBy"));
+			header.append(System.getProperty("line.separator") + Utils.getBundleElement("message.createdBy")
+					+ System.getProperty("line.separator"));
 
 			SDDSaxParser sddSaxParser = null;
 			try {
@@ -66,20 +67,31 @@ public class IdentificationKeyDOTGeneratorTest {
 					// Open data stream
 					urlConnection.getInputStream();
 				} catch (java.net.MalformedURLException e) {
-					resultURL = Utils.setErrorMessage(Utils.getBundleElement("message.urlError"), e);
+					resultFileName = Utils.setErrorMessage(Utils.getBundleElement("message.urlError"), e);
 					e.printStackTrace();
 				} catch (java.io.IOException e) {
-					resultURL = Utils.setErrorMessage(Utils.getBundleElement("message.urlError"), e);
+					resultFileName = Utils.setErrorMessage(Utils.getBundleElement("message.urlError"), e);
 					e.printStackTrace();
 				}
 				sddSaxParser = new SDDSaxParser(stringUrl);
 				// construct header
-				header.append(System.getProperty("line.separator") + "// file=" + stringUrl);
+				header.append(System.getProperty("line.separator") + "Options:");
+				header.append(System.getProperty("line.separator") + "sddURL=" + stringUrl);
+				header.append(System.getProperty("line.separator") + "twoStatesCharacterFirst="
+						+ Utils.twoStatesCharacterFirst);
+				header.append(System.getProperty("line.separator")
+						+ "mergeCharacterStatesIfSameDiscimination="
+						+ Utils.mergeCharacterStatesIfSameDiscimination);
+				header.append(System.getProperty("line.separator") + "reduceSameConclusionPath="
+						+ Utils.reduceSameConclusionPath);
+				header.append(System.getProperty("line.separator") + "pruning=" + Utils.pruning
+						+ System.getProperty("line.separator"));
 
 			} catch (Throwable t) {
-				resultURL = Utils.setErrorMessage(Utils.getBundleElement("message.parsingError"), t);
+				resultFileName = Utils.setErrorMessage(Utils.getBundleElement("message.parsingError"), t);
 				t.printStackTrace();
 			}
+
 			// define parse duration
 			double parseDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
 			// define time before processing key
@@ -91,36 +103,39 @@ public class IdentificationKeyDOTGeneratorTest {
 						sddSaxParser.getDataset());
 				identificationKeyGenerator.createIdentificationKey();
 			} catch (Throwable t) {
-				resultURL = Utils.setErrorMessage(Utils.getBundleElement("message.creatingKeyError"), t);
+				resultFileName = Utils.setErrorMessage(Utils.getBundleElement("message.creatingKeyError"), t);
 				t.printStackTrace();
 			}
 
 			// define creating key duration
-			double keyDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
+			double keyCreationDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
 
 			// construct header
-			header.append(System.getProperty("line.separator") + "// parseDuration= " + parseDuration + "s");
-			header.append(System.getProperty("line.separator") + "// keyDuration= " + keyDuration + "s");
-			header.append(System.getProperty("line.separator") + "// " + System.getProperty("line.separator")
+			header.append(System.getProperty("line.separator") + "parseDuration= " + parseDuration + "s");
+			header.append(System.getProperty("line.separator") + "keyCreationDuration= "
+					+ keyCreationDuration + "s");
+			header.append(System.getProperty("line.separator") + System.getProperty("line.separator")
 					+ System.getProperty("line.separator"));
 
 			// create key file
 			try {
-				header.append("// " + Utils.getBundleElement("message.title") + ": "
+				// construct header
+				header.append(Utils.getBundleElement("message.title") + ": "
 						+ sddSaxParser.getDataset().getLabel() + System.getProperty("line.separator")
 						+ System.getProperty("line.separator") + System.getProperty("line.separator"));
-				resultURL = identificationKeyGenerator.getSingleAccessKeyTree().toDotFile(header.toString())
-						.getName();
+				resultFileName = identificationKeyGenerator.getSingleAccessKeyTree()
+						.toDotFile(header.toString()).getName();
 			} catch (IOException e) {
-				resultURL = Utils.setErrorMessage(Utils.getBundleElement("message.creatingFileError"), e);
+				resultFileName = Utils
+						.setErrorMessage(Utils.getBundleElement("message.creatingFileError"), e);
 				e.printStackTrace();
 			}
 		} catch (Throwable t) {
-			resultURL = Utils.setErrorMessage(Utils.getBundleElement("message.error"), t);
+			resultFileName = Utils.setErrorMessage(Utils.getBundleElement("message.error"), t);
 			t.printStackTrace();
 		}
 
 		// display the URL of file result
-		System.out.println(resultURL);
+		System.out.println(resultFileName);
 	}
 }

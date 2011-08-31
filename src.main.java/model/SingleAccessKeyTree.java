@@ -804,6 +804,9 @@ public class SingleAccessKeyTree {
 		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleElement("generatedKeyFiles.folder");
 
+		header = header.replace(System.getProperty("line.separator"), System.getProperty("line.separator")
+				+ "//");
+		header = header + System.getProperty("line.separator");
 		File dotFile = File.createTempFile("key_", "." + Utils.DOT, new File(path));
 		BufferedWriter dotFileWriter = new BufferedWriter(new FileWriter(dotFile));
 		dotFileWriter.append(header);

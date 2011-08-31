@@ -39,7 +39,8 @@ public class IdentificationKeyPDFGeneratorTest {
 
 			// define header string
 			StringBuffer header = new StringBuffer();
-			header.append(Utils.getBundleElement("message.createdBy"));
+			header.append(System.getProperty("line.separator") + Utils.getBundleElement("message.createdBy")
+					+ System.getProperty("line.separator"));
 
 			SDDSaxParser sddSaxParser = null;
 			try {
@@ -74,12 +75,23 @@ public class IdentificationKeyPDFGeneratorTest {
 				}
 				sddSaxParser = new SDDSaxParser(stringUrl);
 				// construct header
-				header.append(System.getProperty("line.separator") + "file=" + stringUrl);
+				header.append(System.getProperty("line.separator") + "Options:");
+				header.append(System.getProperty("line.separator") + "sddURL=" + stringUrl);
+				header.append(System.getProperty("line.separator") + "twoStatesCharacterFirst="
+						+ Utils.twoStatesCharacterFirst);
+				header.append(System.getProperty("line.separator")
+						+ "mergeCharacterStatesIfSameDiscimination="
+						+ Utils.mergeCharacterStatesIfSameDiscimination);
+				header.append(System.getProperty("line.separator") + "reduceSameConclusionPath="
+						+ Utils.reduceSameConclusionPath);
+				header.append(System.getProperty("line.separator") + "pruning=" + Utils.pruning
+						+ System.getProperty("line.separator"));
 
 			} catch (Throwable t) {
 				resultFileName = Utils.setErrorMessage(Utils.getBundleElement("message.parsingError"), t);
 				t.printStackTrace();
 			}
+
 			// define parse duration
 			double parseDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
 			// define time before processing key
@@ -96,16 +108,18 @@ public class IdentificationKeyPDFGeneratorTest {
 			}
 
 			// define creating key duration
-			double keyDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
+			double keyCreationDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
 
 			// construct header
 			header.append(System.getProperty("line.separator") + "parseDuration= " + parseDuration + "s");
-			header.append(System.getProperty("line.separator") + "keyDuration= " + keyDuration + "s");
+			header.append(System.getProperty("line.separator") + "keyCreationDuration= "
+					+ keyCreationDuration + "s");
 			header.append(System.getProperty("line.separator") + System.getProperty("line.separator")
 					+ System.getProperty("line.separator"));
 
 			// create key file
 			try {
+				// construct header
 				header.append(Utils.getBundleElement("message.title") + ": "
 						+ sddSaxParser.getDataset().getLabel() + System.getProperty("line.separator")
 						+ System.getProperty("line.separator") + System.getProperty("line.separator"));

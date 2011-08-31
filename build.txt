@@ -1,8 +1,8 @@
--identificationKeyApi -> run as -> maven assembly
+-identificationKeyAPI -> run as -> maven assembly or maven package
 --> generates a single .jar file named identificationKeyAPI-1.x.jar
 
 -copy the jar file into the Webcontent/WEB-INF/lib folders of the webservice project (IK_WS_REST or IK_WS_SOAP)
 -copy the sigar libraries into the Webcontent/WEB-INF/lib folders of the webservice project (IK_WS_REST or IK_WS_SOAP)
 
--IK_WS_SOAP/IK_WS_REST -> run as -> maven assembly ou maven package
+-IK_WS_SOAP or IK_WS_REST -> run as -> maven assembly or maven package
 --> generates a .war file (named IK_WS_SOAP-1.x.war or IK_WS_SOAP-1.x.war) for the selected web wervice project

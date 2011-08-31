@@ -8,8 +8,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import utils.Utils;
-
 import model.CategoricalCharacter;
 import model.DataSet;
 import model.ICharacter;
@@ -19,6 +17,7 @@ import model.SingleAccessKeyNode;
 import model.SingleAccessKeyTree;
 import model.State;
 import model.Taxon;
+import utils.Utils;
 
 /**
  * This class is the service generating identification keys
