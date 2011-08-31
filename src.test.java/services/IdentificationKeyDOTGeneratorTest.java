@@ -19,7 +19,7 @@ import IO.SDDSaxParser;
  * @author Florian Causse
  * @created 18-04-2011
  */
-public class IdentificationKeyFlatDOTGeneratorTest {
+public class IdentificationKeyDOTGeneratorTest {
 
 	public Logger logger = Logger.getAnonymousLogger();
 
