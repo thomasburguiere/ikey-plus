@@ -20,15 +20,27 @@ import java.util.Set;
 public class Utils {
 
 	public static String errorMessage = null;
-	public static String errorMessageFile = null;
+	public static File errorMessageFile = null;
+	public static String UNKNOWNDATA = "unknownData";
+
+	// properties file
 	public static ResourceBundle bundle = ResourceBundle.getBundle("conf");
+
+	// file prefix
+	public static String KEY = "key_";
+	public static String ERROR = "error_";
+
+	// file extension
 	public static String TXT = "txt";
 	public static String HTML = "html";
 	public static String PDF = "pdf";
 	public static String SDD = "sdd";
 	public static String WIKI = "wiki";
-	public static String ERROR = "error";
-	public static String UNKNOWNDATA = "unknownData";
+	public static String DOT = "gv";
+
+	// representation type
+	public static String TREE = "tree";
+	public static String FLAT = "flat";
 
 	// options
 	public static boolean twoStatesCharacterFirst = false;
@@ -71,7 +83,7 @@ public class Utils {
 			Utils.errorMessage = msg;
 			Utils.errorMessageFile = createErrorFile();
 		}
-		return Utils.errorMessageFile;
+		return Utils.errorMessageFile.getName();
 	}
 
 	/**
@@ -86,19 +98,19 @@ public class Utils {
 			Utils.errorMessage = msg + ": " + t.getMessage();
 			Utils.errorMessageFile = createErrorFile();
 		}
-		return Utils.errorMessageFile;
+		return Utils.errorMessageFile.getName();
 	}
 
 	/**
 	 * @return String, the url to the error file
 	 */
-	public static String createErrorFile() {
+	public static File createErrorFile() {
 		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleElement("generatedKeyFiles.folder");
 
 		File erroFile = null;
 		try {
-			erroFile = File.createTempFile("key_", "." + Utils.ERROR, new File(path));
+			erroFile = File.createTempFile(Utils.ERROR, "." + Utils.TXT, new File(path));
 			BufferedWriter txtFileWriter;
 			txtFileWriter = new BufferedWriter(new FileWriter(erroFile));
 			txtFileWriter.append(Utils.errorMessage);
@@ -106,7 +118,7 @@ public class Utils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return erroFile.getName();
+		return erroFile;
 	}
 
 	/**

@@ -117,7 +117,7 @@ public class IdentificationKeyGenerator {
 			}
 
 			// display score for each character
-			// for (ICharacter character : charactersScore.keySet()) {
+			// for (ICharacter character : remainingCharacters) {
 			// if (character.isSupportsCategoricalData()) {
 			// System.out.println("CC " + character.getName() + ": " + charactersScore.get(character));
 			// } else {
@@ -145,9 +145,10 @@ public class IdentificationKeyGenerator {
 						// put new node as child of parentNode
 						parentNode.addChild(node);
 
-						// remove last best character
+						// create new remaining characters list
 						List<ICharacter> newRemainingCharacters = new ArrayList<ICharacter>(
 								remainingCharacters);
+						// remove last best character
 						newRemainingCharacters.remove(selectedCharacter);
 
 						// calculate next node
@@ -176,10 +177,9 @@ public class IdentificationKeyGenerator {
 						// put new node as child of parentNode
 						parentNode.addChild(node);
 
-						// remove last best character
+						// create new remaining characters list, we don't remove the last best character
 						List<ICharacter> newRemainingCharacters = new ArrayList<ICharacter>(
 								remainingCharacters);
-						newRemainingCharacters.remove(selectedCharacter);
 
 						// calculate next node
 						calculateSingleAccessKeyNodeChild(node, newRemainingCharacters, newRemainingTaxa);

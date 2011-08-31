@@ -640,7 +640,7 @@ public class SingleAccessKeyTree {
 		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleElement("generatedKeyFiles.folder");
 
-		File txtFile = File.createTempFile("key_", "." + Utils.TXT, new File(path));
+		File txtFile = File.createTempFile(Utils.KEY, "." + Utils.TXT, new File(path));
 		BufferedWriter txtFileWriter = new BufferedWriter(new FileWriter(txtFile));
 		txtFileWriter.append(header);
 		txtFileWriter.append(toString());
@@ -663,7 +663,7 @@ public class SingleAccessKeyTree {
 		File dotFile = File.createTempFile("key_", "." + Utils.DOT, new File(path));
 		BufferedWriter dotFileWriter = new BufferedWriter(new FileWriter(dotFile));
 		dotFileWriter.append(header);
-		dotFileWriter.append("digraph " + dotFile.getName() + " {");
+		dotFileWriter.append("digraph " + dotFile.getName().split("\\.")[0] + " {");
 		dotFileWriter.append(toDotString());
 		dotFileWriter.append(System.getProperty("line.separator") + "}");
 		dotFileWriter.close();
@@ -695,7 +695,7 @@ public class SingleAccessKeyTree {
 		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleElement("generatedKeyFiles.folder");
 
-		File txtFile = File.createTempFile("key_", "." + Utils.TXT, new File(path));
+		File txtFile = File.createTempFile(Utils.KEY, "." + Utils.TXT, new File(path));
 		BufferedWriter txtFileWriter = new BufferedWriter(new FileWriter(txtFile));
 		txtFileWriter.append(header);
 		txtFileWriter.append(toFlatString());
@@ -728,7 +728,7 @@ public class SingleAccessKeyTree {
 		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleElement("generatedKeyFiles.folder");
 
-		File htmlFile = File.createTempFile("key_", "." + Utils.HTML, new File(path));
+		File htmlFile = File.createTempFile(Utils.KEY, "." + Utils.HTML, new File(path));
 		BufferedWriter htmlFileWriter = new BufferedWriter(new FileWriter(htmlFile));
 		htmlFileWriter.append(toHtmlString(header));
 		htmlFileWriter.close();
@@ -750,7 +750,7 @@ public class SingleAccessKeyTree {
 
 		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleElement("generatedKeyFiles.folder");
-		File pdfFile = File.createTempFile("key_", "." + Utils.PDF, new File(path));
+		File pdfFile = File.createTempFile(Utils.KEY, "." + Utils.PDF, new File(path));
 
 		Document pdfDocument = new Document(PageSize.A3, 50, 50, 50, 50);
 		PdfWriter.getInstance(pdfDocument, new FileOutputStream(pdfFile));
@@ -810,7 +810,7 @@ public class SingleAccessKeyTree {
 		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleElement("generatedKeyFiles.folder");
 
-		File wikiFile = File.createTempFile("key_", "." + Utils.WIKI, new File(path));
+		File wikiFile = File.createTempFile(Utils.KEY, "." + Utils.WIKI, new File(path));
 		BufferedWriter wikiFileWriter = new BufferedWriter(new FileWriter(wikiFile));
 
 		wikiFileWriter.append("== Info ==");

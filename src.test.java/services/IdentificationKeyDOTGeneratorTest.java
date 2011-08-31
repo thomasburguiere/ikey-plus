@@ -39,15 +39,15 @@ public class IdentificationKeyDOTGeneratorTest {
 
 			// define header string
 			StringBuffer header = new StringBuffer();
-			header.append("// "+Utils.getBundleElement("message.createdBy"));
+			header.append("// " + Utils.getBundleElement("message.createdBy"));
 
 			SDDSaxParser sddSaxParser = null;
 			try {
-//				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
+				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/testSDD.xml";
-				 String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml";
+				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/smallSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/wrongSDD.xml";
 
@@ -98,16 +98,16 @@ public class IdentificationKeyDOTGeneratorTest {
 			// construct header
 			header.append(System.getProperty("line.separator") + "// parseDuration= " + parseDuration + "s");
 			header.append(System.getProperty("line.separator") + "// keyDuration= " + keyDuration + "s");
-			header.append(System.getProperty("line.separator") + "// "+System.getProperty("line.separator")
+			header.append(System.getProperty("line.separator") + "// " + System.getProperty("line.separator")
 					+ System.getProperty("line.separator"));
 
 			// create key file
 			try {
-				header.append("// "+Utils.getBundleElement("message.title") + ": "
+				header.append("// " + Utils.getBundleElement("message.title") + ": "
 						+ sddSaxParser.getDataset().getLabel() + System.getProperty("line.separator")
 						+ System.getProperty("line.separator") + System.getProperty("line.separator"));
-				resultURL = identificationKeyGenerator.getSingleAccessKeyTree()
-						.toDotFile(header.toString()).getName();
+				resultURL = identificationKeyGenerator.getSingleAccessKeyTree().toDotFile(header.toString())
+						.getName();
 			} catch (IOException e) {
 				resultURL = Utils.setErrorMessage(Utils.getBundleElement("message.creatingFileError"), e);
 				e.printStackTrace();

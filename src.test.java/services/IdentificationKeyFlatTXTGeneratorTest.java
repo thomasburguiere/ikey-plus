@@ -29,8 +29,8 @@ public class IdentificationKeyFlatTXTGeneratorTest {
 		// set the confTest ResourceBundle
 		Utils.setBundle(ResourceBundle.getBundle("confTest"));
 
-		// String containing the URL to result file
-		String resultURL = "";
+		// String containing the name of the result file
+		String resultFileName = "";
 		try {
 			// define logger
 			logger.info("testIdentificationKeyGenerator");
@@ -66,10 +66,10 @@ public class IdentificationKeyFlatTXTGeneratorTest {
 					// Open data stream
 					urlConnection.getInputStream();
 				} catch (java.net.MalformedURLException e) {
-					resultURL = Utils.setErrorMessage(Utils.getBundleElement("message.urlError"), e);
+					resultFileName = Utils.setErrorMessage(Utils.getBundleElement("message.urlError"), e);
 					e.printStackTrace();
 				} catch (java.io.IOException e) {
-					resultURL = Utils.setErrorMessage(Utils.getBundleElement("message.urlError"), e);
+					resultFileName = Utils.setErrorMessage(Utils.getBundleElement("message.urlError"), e);
 					e.printStackTrace();
 				}
 				sddSaxParser = new SDDSaxParser(stringUrl);
@@ -77,7 +77,7 @@ public class IdentificationKeyFlatTXTGeneratorTest {
 				header.append(System.getProperty("line.separator") + "file=" + stringUrl);
 
 			} catch (Throwable t) {
-				resultURL = Utils.setErrorMessage(Utils.getBundleElement("message.parsingError"), t);
+				resultFileName = Utils.setErrorMessage(Utils.getBundleElement("message.parsingError"), t);
 				t.printStackTrace();
 			}
 			// define parse duration
@@ -91,7 +91,7 @@ public class IdentificationKeyFlatTXTGeneratorTest {
 						sddSaxParser.getDataset());
 				identificationKeyGenerator.createIdentificationKey();
 			} catch (Throwable t) {
-				resultURL = Utils.setErrorMessage(Utils.getBundleElement("message.creatingKeyError"), t);
+				resultFileName = Utils.setErrorMessage(Utils.getBundleElement("message.creatingKeyError"), t);
 				t.printStackTrace();
 			}
 
@@ -109,18 +109,19 @@ public class IdentificationKeyFlatTXTGeneratorTest {
 				header.append(Utils.getBundleElement("message.title") + ": "
 						+ sddSaxParser.getDataset().getLabel() + System.getProperty("line.separator")
 						+ System.getProperty("line.separator") + System.getProperty("line.separator"));
-				resultURL = identificationKeyGenerator.getSingleAccessKeyTree()
+				resultFileName = identificationKeyGenerator.getSingleAccessKeyTree()
 						.toFlatTxtFile(header.toString()).getName();
 			} catch (IOException e) {
-				resultURL = Utils.setErrorMessage(Utils.getBundleElement("message.creatingFileError"), e);
+				resultFileName = Utils
+						.setErrorMessage(Utils.getBundleElement("message.creatingFileError"), e);
 				e.printStackTrace();
 			}
 		} catch (Throwable t) {
-			resultURL = Utils.setErrorMessage(Utils.getBundleElement("message.error"), t);
+			resultFileName = Utils.setErrorMessage(Utils.getBundleElement("message.error"), t);
 			t.printStackTrace();
 		}
 
 		// display the URL of file result
-		System.out.println(resultURL);
+		System.out.println(resultFileName);
 	}
 }
