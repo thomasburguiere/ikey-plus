@@ -16,8 +16,8 @@ import IO.SDDSaxParser;
 /**
  * This class allow to test the TEXT output of IdentificationKeyGenerator service
  * 
- * @author Florian Causse
- * @created 18-04-2011
+ * @author Thomas Burguiere
+ * @created 31-08-2011
  */
 public class IdentificationKeyDOTGeneratorTest {
 
