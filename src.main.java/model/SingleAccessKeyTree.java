@@ -110,12 +110,13 @@ public class SingleAccessKeyTree {
 	}
 
 	/**
-	 * This methods outputs the {@link #SingleAccesKeyTree} as a flat key. In order to do this, the <tt>SingleAccesKeyTree</tt>
-	 * is traversed 3 times. The first traversal is a breadth-first traversal, in order to generate an HashMap
-	 * (<tt>nodeBreadthFirstIterationMap</tt>) that associates each node with an arbitrary Integer. The second
-	 * traversal is a depth-first traversal, in order to associate (in another HashMap :
-	 * <tt>nodeChildParentNumberingMap</tt>), for each node, the node number and the number of its parent node.
-	 * Finally, the last traversal is another breadh-first traversal that generates the flat key String
+	 * This methods outputs the {@link #SingleAccesKeyTree} as a flat key. In order to do this, the
+	 * <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first traversal is a breadth-first traversal, in
+	 * order to generate an HashMap (<tt>nodeBreadthFirstIterationMap</tt>) that associates each node with an
+	 * arbitrary Integer. The second traversal is a depth-first traversal, in order to associate (in another
+	 * HashMap : <tt>nodeChildParentNumberingMap</tt>), for each node, the node number and the number of its
+	 * parent node. Finally, the last traversal is another breadh-first traversal that generates the flat key
+	 * String
 	 * 
 	 * @param rootNode
 	 * @param output
@@ -251,6 +252,156 @@ public class SingleAccessKeyTree {
 
 	}
 
+	/**
+	 * This methods outputs the {@link #SingleAccesKeyTree} as a DOT-formatted String. In order to do this,
+	 * the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first traversal is a breadth-first traversal,
+	 * in order to generate an HashMap (<tt>nodeBreadthFirstIterationMap</tt>) that associates each node with
+	 * an arbitrary Integer. The second traversal is a depth-first traversal, in order to associate (in
+	 * another HashMap : <tt>nodeChildParentNumberingMap</tt>), for each node, the node number and the number
+	 * of its parent node. Finally, the last traversal is another breadh-first traversal that generates the
+	 * flat key String
+	 * 
+	 * @param rootNode
+	 * @param output
+	 * @param lineSeparator
+	 */
+	public void multipleTraversalToDotString(SingleAccessKeyNode rootNode, StringBuffer output,
+			String lineSeparator) {
+
+		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
+		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
+
+		// // first traversal, breadth-first ////
+		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
+
+		int counter = 0;
+		queue.add(rootNode);
+
+		// root node treatment
+		nodeBreadthFirstIterationMap.put(rootNode, new Integer(counter));
+		counter++;
+		// end root node treatment
+
+		visitedNodes.add(rootNode);
+
+		while (!queue.isEmpty()) {
+			SingleAccessKeyNode node = queue.remove();
+			SingleAccessKeyNode child = null;
+
+			// exclusion(node.getChildren(), visitedNodes) is the list of unvisited children nodes of the
+			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+							.get(0)) != null) {
+				visitedNodes.add(child);
+
+				// / child node treatment
+				nodeBreadthFirstIterationMap.put(child, new Integer(counter));
+				counter++;
+
+				// / end child node treatment
+
+				queue.add(child);
+			}
+		}
+
+		// // end first traversal, breadth-first ////
+
+		// // second traversal, depth-first ////
+		HashMap<Integer, Integer> nodeChildParentNumberingMap = new HashMap<Integer, Integer>();
+		recursiveDepthFirst(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
+		// // end second traversal, depth-first ////
+
+		// // third traversal, breadth-first ////
+		queue.clear();
+		visitedNodes.clear();
+
+		counter = 0;
+		int currentParentNumber = -1;
+		queue.add(rootNode);
+
+		// root node treatment
+
+		counter++;
+		// end root node treatment
+		visitedNodes.add(rootNode);
+
+		while (!queue.isEmpty()) {
+			SingleAccessKeyNode node = queue.remove();
+			SingleAccessKeyNode child = null;
+
+			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+							.get(0)) != null
+			// && child.getCharacter() != null && child.getCharacterState() != null
+			) {
+				visitedNodes.add(child);
+
+				// / child node treatment
+
+				// displaying the parent node number
+				if (nodeChildParentNumberingMap.get(new Integer(counter)) != currentParentNumber) {
+					currentParentNumber = nodeChildParentNumberingMap.get(new Integer(counter));
+				}
+				output.append(lineSeparator);
+				output.append(currentParentNumber + " -> ");
+
+				// displaying the child node number
+				output.append(counter);
+
+				// displaying the child node character state as a vertex label
+				if (child.getCharacterState() instanceof QuantitativeMeasure) {
+					output.append(" [label=\""
+							+ ((QuantitativeMeasure) child.getCharacterState()).toStringInterval() + "\"]");
+				} else {
+					output.append(" [label=\"" + ((State) child.getCharacterState()).getName() + "\"]");
+				}
+				output.append(";" + lineSeparator);
+
+				if (child.getChildren().size() == 0) {
+					// if the child node has no children nodes, displaying the parent node character and the
+					// child node remaining taxa
+					output.append(currentParentNumber + " [label=\"" + child.getCharacter().getName()
+							+ "\"];");
+					output.append(lineSeparator);
+
+					output.append(counter + " [label=\"");
+					boolean firstLoop = true;
+					for (Taxon taxon : child.getRemainingTaxa()) {
+						if (!firstLoop) {
+							output.append(", ");
+						}
+						output.append(taxon.getName());
+						firstLoop = false;
+					}
+					output.append("\",shape=box]");
+					output.append(";");
+				} else {
+					output.append(currentParentNumber + " [label=\"");
+					output.append(child.getCharacter().getName() + "\"];");
+				}
+
+				output.append(lineSeparator);
+
+				queue.add(child);
+
+				counter++;
+				// / end child node treatment
+
+			}
+		}
+
+		// // end third traversal, breadth-first ////
+
+	}
+
+	/**
+	 * Helper method that traverses the SingleAccessKeyTree depth-first. It is used in multipleTraversal
+	 * methods in order to generate the nodeChildParentNumberingMap HashMap
+	 * 
+	 * @param node
+	 * @param nodeBreadthFirstIterationMap
+	 * @param nodeChildParentNumberingMap
+	 */
 	private void recursiveDepthFirst(SingleAccessKeyNode node,
 			HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap,
 			HashMap<Integer, Integer> nodeChildParentNumberingMap) {
@@ -499,8 +650,30 @@ public class SingleAccessKeyTree {
 	}
 
 	/**
-	 * generates a flat representation of a key, in a String object, by calling the {@link #multipleTraversalToString}
-	 * helper method
+	 * get a DOT file containing the key
+	 * 
+	 * @param header
+	 * @return
+	 * @throws IOException
+	 */
+	public File toDotFile(String header) throws IOException {
+		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleElement("generatedKeyFiles.folder");
+
+		File dotFile = File.createTempFile("key_", "." + Utils.DOT, new File(path));
+		BufferedWriter dotFileWriter = new BufferedWriter(new FileWriter(dotFile));
+		dotFileWriter.append(header);
+		dotFileWriter.append("digraph " + dotFile.getName() + " {");
+		dotFileWriter.append(toDotString());
+		dotFileWriter.append(System.getProperty("line.separator") + "}");
+		dotFileWriter.close();
+
+		return dotFile;
+	}
+
+	/**
+	 * generates a flat representation of a key, in a String object, by calling the
+	 * {@link #multipleTraversalToString} helper method
 	 * 
 	 * @return
 	 */
@@ -529,6 +702,17 @@ public class SingleAccessKeyTree {
 		txtFileWriter.close();
 
 		return txtFile;
+	}
+
+	/**
+	 * generates a DOT formatted representation of the key
+	 * 
+	 * @return
+	 */
+	public String toDotString() {
+		StringBuffer output = new StringBuffer();
+		multipleTraversalToDotString(root, output, System.getProperty("line.separator"));
+		return output.toString();
 	}
 
 	/**
