@@ -361,15 +361,18 @@ public class SingleAccessKeyTree {
 				}
 
 				// displaying the child node character state
+				output.append("<span style=\"color:#fe8a22;\">");// state coloring
 				if (child.getCharacterState() instanceof QuantitativeMeasure) {
 					output.append(((QuantitativeMeasure) child.getCharacterState()).toStringInterval());
 				} else {
 					output.append(((State) child.getCharacterState()).getName());
 				}
+				output.append("</span>");
 
 				// displaying the child node number if it has children nodes, displaying the taxa otherwise
 				if (child.getChildren().size() == 0) {
-					output.append(" &#8658; ");
+					output.append(" &#8658; "); // arrow
+					output.append("<span style=\"color:#67bb1b;\">"); // taxa coloring
 					boolean firstLoop = true;
 					for (Taxon taxon : child.getRemainingTaxa()) {
 						if (!firstLoop) {
@@ -378,6 +381,7 @@ public class SingleAccessKeyTree {
 						output.append("''" + taxon.getName() + "''");
 						firstLoop = false;
 					}
+					output.append("</span>");
 				} else {
 					output.append(" &#8658; [[#anchor" + counter + "|" + counter + "]]");
 				}
