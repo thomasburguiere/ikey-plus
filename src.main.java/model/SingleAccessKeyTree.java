@@ -495,7 +495,8 @@ public class SingleAccessKeyTree {
 					output.append("<a name=\"anchor" + currentParentNumber + "\"></a>" + "<strong>"
 							+ currentParentNumber + "</strong>");
 
-					output.append("  <span class=\"character\">" + child.getCharacter().getName()
+					output.append("  <span class=\"character\">"
+							+ child.getCharacter().getName().replace(">", "&gt;").replace("<", "&lt;")
 							+ " :</span><br/>");
 
 				} else {
@@ -513,8 +514,9 @@ public class SingleAccessKeyTree {
 							+ ((QuantitativeMeasure) child.getCharacterState()).toStringInterval()
 							+ "</span>");
 				} else {
-					output.append("<span class=\"state\">" + ((State) child.getCharacterState()).getName()
-							+ "</span>");
+					output.append("<span class=\"state\">"
+							+ ((State) child.getCharacterState()).getName().replace(">", "&gt;")
+									.replace("<", "&lt;") + "</span>");
 				}
 
 				// displaying the child node number if it has children nodes, displaying the taxa otherwise
