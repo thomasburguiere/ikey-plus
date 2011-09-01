@@ -87,7 +87,7 @@ public class SingleAccessKeyTree {
 						+ ((State) node.getCharacterState()).getName());
 			}
 			if (node.getChildren().size() == 0) {
-				output.append(" -> taxa= ");
+				output.append(" -> ");
 				boolean firstLoop = true;
 				for (Taxon taxon : node.getRemainingTaxa()) {
 					if (!firstLoop) {
@@ -225,7 +225,7 @@ public class SingleAccessKeyTree {
 
 				// displaying the child node number if it has children nodes, displaying the taxa otherwise
 				if (child.getChildren().size() == 0) {
-					output.append(" -> taxa = ");
+					output.append(" -> ");
 					boolean firstLoop = true;
 					for (Taxon taxon : child.getRemainingTaxa()) {
 						if (!firstLoop) {
@@ -369,7 +369,7 @@ public class SingleAccessKeyTree {
 
 				// displaying the child node number if it has children nodes, displaying the taxa otherwise
 				if (child.getChildren().size() == 0) {
-					output.append(" -> taxa = ");
+					output.append(" -> ");
 					boolean firstLoop = true;
 					for (Taxon taxon : child.getRemainingTaxa()) {
 						if (!firstLoop) {
@@ -521,7 +521,7 @@ public class SingleAccessKeyTree {
 
 				// displaying the child node number if it has children nodes, displaying the taxa otherwise
 				if (child.getChildren().size() == 0) {
-					output.append(" &#8594; taxa = <span class=\"taxa\">");
+					output.append(" &#8594; <span class=\"taxa\">");
 					boolean firstLoop = true;
 					for (Taxon taxon : child.getRemainingTaxa()) {
 						if (!firstLoop) {
@@ -748,7 +748,7 @@ public class SingleAccessKeyTree {
 			if (node.hasChild()) {
 				output.append("&nbsp;" + state + " (taxa=" + node.getRemainingTaxa().size() + ")");
 			} else {
-				output.append("&nbsp;" + state + "<span class='taxa'> -> taxa= ");
+				output.append("&nbsp;" + state + "<span class='taxa'> -> ");
 				boolean firstLoop = true;
 				for (Taxon taxon : node.getRemainingTaxa()) {
 					if (!firstLoop) {
@@ -815,13 +815,13 @@ public class SingleAccessKeyTree {
 			if (node.hasChild()) {
 				output.append(" | " + state + " (taxa=" + node.getRemainingTaxa().size() + ")");
 			} else {
-				output.append(" | " + state + "<span class='taxa'> -> taxa= ");
+				output.append(" | " + state + "<span class='taxa'> -> ");
 				boolean firstLoop = true;
 				for (Taxon taxon : node.getRemainingTaxa()) {
 					if (!firstLoop) {
 						output.append(", ");
 					}
-					output.append(taxon.getName());
+					output.append("<i>" + taxon.getName() + "</i>");
 					firstLoop = false;
 				}
 				output.append("</span>");
