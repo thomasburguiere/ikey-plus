@@ -375,7 +375,7 @@ public class SingleAccessKeyTree {
 						if (!firstLoop) {
 							output.append(", ");
 						}
-						output.append("''"+taxon.getName()+"''");
+						output.append("''" + taxon.getName() + "''");
 						firstLoop = false;
 					}
 				} else {
@@ -383,6 +383,157 @@ public class SingleAccessKeyTree {
 				}
 
 				output.append(lineSeparator);
+
+				queue.add(child);
+
+				counter++;
+				// / end child node treatment
+
+			}
+		}
+
+		// // end third traversal, breadth-first ////
+
+	}
+
+	/**
+	 * This methods outputs the {@link #SingleAccesKeyTree} as a flat HTML-formatted String, with mediawiki
+	 * hyperlinks. In order to do this, the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first
+	 * traversal is a breadth-first traversal, in order to generate an HashMap (
+	 * <tt>nodeBreadthFirstIterationMap</tt>) that associates each node with an arbitrary Integer. The second
+	 * traversal is a depth-first traversal, in order to associate (in another HashMap :
+	 * <tt>nodeChildParentNumberingMap</tt>), for each node, the node number and the number of its parent
+	 * node. Finally, the last traversal is another breadh-first traversal that generates the flat key String
+	 * 
+	 * @param rootNode
+	 * @param output
+	 * @param lineSeparator
+	 */
+	public void multipleTraversalToHTMLString(SingleAccessKeyNode rootNode, StringBuffer output,
+			String lineSeparator) {
+
+		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
+		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
+
+		// // first traversal, breadth-first ////
+		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
+
+		int counter = 0;
+		queue.add(rootNode);
+
+		// root node treatment
+		nodeBreadthFirstIterationMap.put(rootNode, new Integer(counter));
+		counter++;
+		// end root node treatment
+
+		visitedNodes.add(rootNode);
+
+		while (!queue.isEmpty()) {
+			SingleAccessKeyNode node = queue.remove();
+			SingleAccessKeyNode child = null;
+
+			// exclusion(node.getChildren(), visitedNodes) is the list of unvisited children nodes of the
+			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+							.get(0)) != null) {
+				visitedNodes.add(child);
+
+				// / child node treatment
+				nodeBreadthFirstIterationMap.put(child, new Integer(counter));
+				counter++;
+
+				// / end child node treatment
+
+				queue.add(child);
+			}
+		}
+
+		// // end first traversal, breadth-first ////
+
+		// // second traversal, depth-first ////
+		HashMap<Integer, Integer> nodeChildParentNumberingMap = new HashMap<Integer, Integer>();
+		recursiveDepthFirst(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
+		// // end second traversal, depth-first ////
+
+		// // third traversal, breadth-first ////
+		queue.clear();
+		visitedNodes.clear();
+
+		counter = 0;
+		int currentParentNumber = -1;
+		queue.add(rootNode);
+
+		// root node treatment
+
+		counter++;
+		// end root node treatment
+		visitedNodes.add(rootNode);
+
+		while (!queue.isEmpty()) {
+			SingleAccessKeyNode node = queue.remove();
+			SingleAccessKeyNode child = null;
+
+			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+							.get(0)) != null
+			// && child.getCharacter() != null && child.getCharacterState() != null
+			) {
+				visitedNodes.add(child);
+
+				// / child node treatment
+
+				// displaying the parent node number and the child node character name only once
+				if (nodeChildParentNumberingMap.get(new Integer(counter)) != currentParentNumber) {
+					currentParentNumber = nodeChildParentNumberingMap.get(new Integer(counter));
+					output.append("<br/>" + lineSeparator);
+					if (currentParentNumber < 10)
+						output.append("   ");
+					else if (currentParentNumber < 100)
+						output.append("  ");
+					else if (currentParentNumber < 1000)
+						output.append(" ");
+					output.append("<a name=\"anchor" + currentParentNumber + "\"></a>" + "<strong>"
+							+ currentParentNumber + "</strong>");
+
+					output.append("  <span class=\"character\">" + child.getCharacter().getName()
+							+ " :</span><br/>");
+
+				} else {
+					output.append("    ");
+					String blankCharacterName = "";
+					for (int i = 0; i < child.getCharacter().getName().length(); i++)
+						blankCharacterName += " ";
+					output.append("  " + blankCharacterName);
+				}
+				output.append("<span class=\"statesAndTaxa\"> ");
+
+				// displaying the child node character state
+				if (child.getCharacterState() instanceof QuantitativeMeasure) {
+					output.append("<span class=\"state\">"
+							+ ((QuantitativeMeasure) child.getCharacterState()).toStringInterval()
+							+ "</span>");
+				} else {
+					output.append("<span class=\"state\">" + ((State) child.getCharacterState()).getName()
+							+ "</span>");
+				}
+
+				// displaying the child node number if it has children nodes, displaying the taxa otherwise
+				if (child.getChildren().size() == 0) {
+					output.append(" &#8594; taxa = <span class=\"taxa\">");
+					boolean firstLoop = true;
+					for (Taxon taxon : child.getRemainingTaxa()) {
+						if (!firstLoop) {
+							output.append(", ");
+						}
+						output.append(taxon.getName());
+						firstLoop = false;
+					}
+					output.append("</span>");
+				} else {
+					output.append(" &#8594; <a href=\"#anchor" + counter + "\">" + counter + "</a>");
+				}
+				output.append("</span>"); // closes the opening <span class="statesAndTaxa">
+				output.append("<br/>" + lineSeparator);
 
 				queue.add(child);
 
@@ -736,6 +887,7 @@ public class SingleAccessKeyTree {
 
 		slk.append(".taxa{" + lineSep);
 		slk.append("   color:#67bb1b;" + lineSep);
+		slk.append("   font-style: italic;" + lineSep);
 		slk.append("}" + lineSep + lineSep);
 		slk.append("</style>" + lineSep);
 
@@ -1017,7 +1169,7 @@ public class SingleAccessKeyTree {
 		multipleTraversalToWikiString(root, output, System.getProperty("line.separator"));
 		return output.toString();
 	}
-	
+
 	/**
 	 * get a HTML file containing the key, in a flat representation
 	 * 
@@ -1038,8 +1190,16 @@ public class SingleAccessKeyTree {
 
 		return htmlFile;
 	}
-	
-	public String toFlatHtmlString(String header){
+
+	/**
+	 * 
+	 * generates a flat, HTML-formatted, String representation of a key, in a String object, by calling the
+	 * {@link #multipleTraversalToHTMLString} helper method
+	 * 
+	 * @param header
+	 * @return
+	 */
+	public String toFlatHtmlString(String header) {
 		StringBuffer output = new StringBuffer();
 		String lineSep = System.getProperty("line.separator");
 		StringBuffer slk = new StringBuffer();
@@ -1068,6 +1228,11 @@ public class SingleAccessKeyTree {
 
 		slk.append(".taxa{" + lineSep);
 		slk.append("   color:#67bb1b;" + lineSep);
+		slk.append("   font-style: italic;" + lineSep);
+		slk.append("}" + lineSep + lineSep);
+
+		slk.append(".statesAndTaxa{" + lineSep);
+		slk.append("   margin-left: 200px;" + lineSep);
 		slk.append("}" + lineSep + lineSep);
 		slk.append("</style>" + lineSep);
 
@@ -1086,14 +1251,11 @@ public class SingleAccessKeyTree {
 		slk.append("<body>" + lineSep);
 		slk.append("<div style='margin-left:30px;margin-top:20px;'>" + lineSep);
 		slk.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
-		slk.append("<ul id='tree'>" + lineSep);
 
-		recursiveToHTMLString(root, output, "", true);
-		multipleTraversalToWikiString(root, output, System.getProperty("line.separator"));
+		multipleTraversalToHTMLString(root, output, System.getProperty("line.separator"));
 
 		slk.append(output.toString());
 
-		slk.append("</ul>" + lineSep);
 		slk.append("</div>" + lineSep);
 
 		slk.append("</body>");
@@ -1101,6 +1263,5 @@ public class SingleAccessKeyTree {
 
 		return slk.toString();
 	}
-	
-	
+
 }
