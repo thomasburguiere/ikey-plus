@@ -375,7 +375,7 @@ public class SingleAccessKeyTree {
 						if (!firstLoop) {
 							output.append(", ");
 						}
-						output.append(taxon.getName());
+						output.append("''"+taxon.getName()+"''");
 						firstLoop = false;
 					}
 				} else {
@@ -1017,4 +1017,90 @@ public class SingleAccessKeyTree {
 		multipleTraversalToWikiString(root, output, System.getProperty("line.separator"));
 		return output.toString();
 	}
+	
+	/**
+	 * get a HTML file containing the key, in a flat representation
+	 * 
+	 * @param String
+	 *            , header information
+	 * @return File, the html file
+	 * @throws IOException
+	 */
+	public File toFlatHtmlFile(String header) throws IOException {
+
+		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleElement("generatedKeyFiles.folder");
+
+		File htmlFile = File.createTempFile(Utils.KEY, "." + Utils.HTML, new File(path));
+		BufferedWriter htmlFileWriter = new BufferedWriter(new FileWriter(htmlFile));
+		htmlFileWriter.append(toFlatHtmlString(header));
+		htmlFileWriter.close();
+
+		return htmlFile;
+	}
+	
+	public String toFlatHtmlString(String header){
+		StringBuffer output = new StringBuffer();
+		String lineSep = System.getProperty("line.separator");
+		StringBuffer slk = new StringBuffer();
+		slk.append("<html>" + lineSep);
+		slk.append("<head>" + lineSep);
+		slk.append("<script src='" + Utils.getBundleElement("resources.jqueryPath") + "'></script>" + lineSep
+				+ "<script type='text/javascript' src='" + Utils.getBundleElement("resources.treeviewJsPath")
+				+ "'></script>" + lineSep + "<link rel='stylesheet' href='"
+				+ Utils.getBundleElement("resources.treeviewCssPath") + "' type='text/css' />" + lineSep);
+
+		slk.append("<style type='text/css'>" + lineSep);
+		slk.append("body{" + lineSep);
+		slk.append("   color:#333;" + lineSep);
+		slk.append("   font-family: Verdana, helvetica, arial, sans-serif;" + lineSep);
+		slk.append("   font-size: 78%;" + lineSep);
+		slk.append("   background: #fff;" + lineSep);
+		slk.append("}" + lineSep + lineSep);
+
+		slk.append(".character{" + lineSep);
+		slk.append("   color:#333;" + lineSep);
+		slk.append("}" + lineSep + lineSep);
+
+		slk.append(".state{" + lineSep);
+		slk.append("   color:#fe8a22;" + lineSep);
+		slk.append("}" + lineSep + lineSep);
+
+		slk.append(".taxa{" + lineSep);
+		slk.append("   color:#67bb1b;" + lineSep);
+		slk.append("}" + lineSep + lineSep);
+		slk.append("</style>" + lineSep);
+
+		slk.append("<script>" + lineSep);
+		slk.append("  $(document).ready(function(){" + lineSep);
+		slk.append("      $('#tree').treeview({" + lineSep);
+		slk.append("		collapsed: true," + lineSep);
+		slk.append("		unique: true," + lineSep);
+		slk.append("		persist: 'location'" + lineSep);
+		slk.append("	});" + lineSep);
+		slk.append(" });" + lineSep);
+		slk.append("  </script>" + lineSep);
+
+		slk.append("</head>" + lineSep);
+
+		slk.append("<body>" + lineSep);
+		slk.append("<div style='margin-left:30px;margin-top:20px;'>" + lineSep);
+		slk.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
+		slk.append("<ul id='tree'>" + lineSep);
+
+		recursiveToHTMLString(root, output, "", true);
+		multipleTraversalToWikiString(root, output, System.getProperty("line.separator"));
+
+		slk.append(output.toString());
+
+		slk.append("</ul>" + lineSep);
+		slk.append("</div>" + lineSep);
+
+		slk.append("</body>");
+		slk.append("</html>");
+
+		return slk.toString();
+	}
+	
+	
 }
