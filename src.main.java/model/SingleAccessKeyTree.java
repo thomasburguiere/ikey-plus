@@ -1232,7 +1232,7 @@ public class SingleAccessKeyTree {
 		slk.append("}" + lineSep + lineSep);
 
 		slk.append(".statesAndTaxa{" + lineSep);
-		slk.append("   margin-left: 200px;" + lineSep);
+		slk.append("   margin-left: 100px;" + lineSep);
 		slk.append("}" + lineSep + lineSep);
 		slk.append("</style>" + lineSep);
 
