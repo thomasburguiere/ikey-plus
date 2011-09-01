@@ -369,7 +369,7 @@ public class SingleAccessKeyTree {
 
 				// displaying the child node number if it has children nodes, displaying the taxa otherwise
 				if (child.getChildren().size() == 0) {
-					output.append(" -> ");
+					output.append(" &#8658; ");
 					boolean firstLoop = true;
 					for (Taxon taxon : child.getRemainingTaxa()) {
 						if (!firstLoop) {
@@ -379,7 +379,7 @@ public class SingleAccessKeyTree {
 						firstLoop = false;
 					}
 				} else {
-					output.append(" -> [[#anchor" + counter + "|" + counter + "]]");
+					output.append(" &#8658; [[#anchor" + counter + "|" + counter + "]]");
 				}
 
 				output.append(lineSeparator);
