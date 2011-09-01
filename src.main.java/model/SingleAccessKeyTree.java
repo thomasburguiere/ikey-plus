@@ -870,10 +870,10 @@ public class SingleAccessKeyTree {
 		StringBuffer slk = new StringBuffer();
 		slk.append("<html>" + lineSep);
 		slk.append("<head>" + lineSep);
-		slk.append("<script src='" + Utils.getBundleElement("resources.jqueryPath") + "'></script>" + lineSep
-				+ "<script type='text/javascript' src='" + Utils.getBundleElement("resources.treeviewJsPath")
+		slk.append("<script src='" + Utils.getBundleConfElement("resources.jqueryPath") + "'></script>" + lineSep
+				+ "<script type='text/javascript' src='" + Utils.getBundleConfElement("resources.treeviewJsPath")
 				+ "'></script>" + lineSep + "<link rel='stylesheet' href='"
-				+ Utils.getBundleElement("resources.treeviewCssPath") + "' type='text/css' />" + lineSep);
+				+ Utils.getBundleConfElement("resources.treeviewCssPath") + "' type='text/css' />" + lineSep);
 
 		slk.append("<style type='text/css'>" + lineSep);
 		slk.append("body{" + lineSep);
@@ -939,8 +939,8 @@ public class SingleAccessKeyTree {
 	 * @throws IOException
 	 */
 	public File toTxtFile(String header) throws IOException {
-		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleElement("generatedKeyFiles.folder");
+		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File txtFile = File.createTempFile(Utils.KEY, "." + Utils.TXT, new File(path));
 		BufferedWriter txtFileWriter = new BufferedWriter(new FileWriter(txtFile));
@@ -959,8 +959,8 @@ public class SingleAccessKeyTree {
 	 * @throws IOException
 	 */
 	public File toDotFile(String header) throws IOException {
-		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleElement("generatedKeyFiles.folder");
+		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		header = header.replace(System.getProperty("line.separator"), System.getProperty("line.separator")
 				+ "//");
@@ -997,8 +997,8 @@ public class SingleAccessKeyTree {
 	 * @throws IOException
 	 */
 	public File toFlatTxtFile(String header) throws IOException {
-		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleElement("generatedKeyFiles.folder");
+		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File txtFile = File.createTempFile(Utils.KEY, "." + Utils.TXT, new File(path));
 		BufferedWriter txtFileWriter = new BufferedWriter(new FileWriter(txtFile));
@@ -1030,8 +1030,8 @@ public class SingleAccessKeyTree {
 	 */
 	public File toHtmlFile(String header) throws IOException {
 
-		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleElement("generatedKeyFiles.folder");
+		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File htmlFile = File.createTempFile(Utils.KEY, "." + Utils.HTML, new File(path));
 		BufferedWriter htmlFileWriter = new BufferedWriter(new FileWriter(htmlFile));
@@ -1053,8 +1053,8 @@ public class SingleAccessKeyTree {
 	 */
 	public File toPdfFile(String header) throws IOException, DocumentException {
 
-		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleElement("generatedKeyFiles.folder");
+		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 		File pdfFile = File.createTempFile(Utils.KEY, "." + Utils.PDF, new File(path));
 
 		Document pdfDocument = new Document(PageSize.A3, 50, 50, 50, 50);
@@ -1112,8 +1112,8 @@ public class SingleAccessKeyTree {
 	 * @return File, the Wikitext file
 	 */
 	public File toWikiFile(String header) throws IOException {
-		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleElement("generatedKeyFiles.folder");
+		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File wikiFile = File.createTempFile(Utils.KEY, "." + Utils.WIKI, new File(path));
 		BufferedWriter wikiFileWriter = new BufferedWriter(new FileWriter(wikiFile));
@@ -1142,8 +1142,8 @@ public class SingleAccessKeyTree {
 	 * @throws IOException
 	 */
 	public File toFlatWikiFile(String header) throws IOException {
-		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleElement("generatedKeyFiles.folder");
+		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File wikiFile = File.createTempFile(Utils.KEY, "." + Utils.WIKI, new File(path));
 		BufferedWriter wikiFlatFileWriter = new BufferedWriter(new FileWriter(wikiFile));
@@ -1186,8 +1186,8 @@ public class SingleAccessKeyTree {
 	 */
 	public File toFlatHtmlFile(String header) throws IOException {
 
-		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleElement("generatedKeyFiles.folder");
+		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File htmlFile = File.createTempFile(Utils.KEY, "." + Utils.HTML, new File(path));
 		BufferedWriter htmlFileWriter = new BufferedWriter(new FileWriter(htmlFile));
@@ -1211,10 +1211,10 @@ public class SingleAccessKeyTree {
 		StringBuffer slk = new StringBuffer();
 		slk.append("<html>" + lineSep);
 		slk.append("<head>" + lineSep);
-		slk.append("<script src='" + Utils.getBundleElement("resources.jqueryPath") + "'></script>" + lineSep
-				+ "<script type='text/javascript' src='" + Utils.getBundleElement("resources.treeviewJsPath")
+		slk.append("<script src='" + Utils.getBundleConfElement("resources.jqueryPath") + "'></script>" + lineSep
+				+ "<script type='text/javascript' src='" + Utils.getBundleConfElement("resources.treeviewJsPath")
 				+ "'></script>" + lineSep + "<link rel='stylesheet' href='"
-				+ Utils.getBundleElement("resources.treeviewCssPath") + "' type='text/css' />" + lineSep);
+				+ Utils.getBundleConfElement("resources.treeviewCssPath") + "' type='text/css' />" + lineSep);
 
 		slk.append("<style type='text/css'>" + lineSep);
 		slk.append("body{" + lineSep);

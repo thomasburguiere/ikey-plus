@@ -24,7 +24,8 @@ public class Utils {
 	public static String UNKNOWNDATA = "unknownData";
 
 	// properties file
-	public static ResourceBundle bundle = ResourceBundle.getBundle("conf");
+	public static ResourceBundle bundleConf = ResourceBundle.getBundle("conf");
+	public static ResourceBundle bundleConfOverridable = ResourceBundle.getBundle("confOverridable");
 
 	// file prefix
 	public static String KEY = "key_";
@@ -70,8 +71,35 @@ public class Utils {
 	 * 
 	 * @return String the element corresponding to the key
 	 */
-	public static String getBundleElement(String key) {
-		return Utils.bundle.getString(key);
+	public static String getBundleConfElement(String key) {
+		return Utils.bundleConf.getString(key);
+	}
+	
+	/**
+	 * Getter for overridable configuration elements or messages
+	 * 
+	 * @return String the element corresponding to the key
+	 */
+	public static String getBundleConfOverridableElement(String key) {
+		return Utils.bundleConfOverridable.getString(key);
+	}
+	
+	/**
+	 * setter for configuration ResourceBundle
+	 * 
+	 * @param bundle
+	 */
+	public static void setBundleConf(ResourceBundle bundleConf) {
+		Utils.bundleConf = bundleConf;
+	}
+	
+	/**
+	 * setter for overridable configuration ResourceBundle
+	 * 
+	 * @param bundle
+	 */
+	public static void setBundleConfOverridable(ResourceBundle bundleConfOverridable) {
+		Utils.bundleConfOverridable = bundleConfOverridable;
 	}
 
 	/**
@@ -105,8 +133,8 @@ public class Utils {
 	 * @return String, the url to the error file
 	 */
 	public static File createErrorFile() {
-		String path = Utils.getBundleElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleElement("generatedKeyFiles.folder");
+		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File erroFile = null;
 		try {
@@ -119,15 +147,6 @@ public class Utils {
 			e.printStackTrace();
 		}
 		return erroFile;
-	}
-
-	/**
-	 * setter for ResourceBundle
-	 * 
-	 * @param bundle
-	 */
-	public static void setBundle(ResourceBundle bundle) {
-		Utils.bundle = bundle;
 	}
 
 	/**

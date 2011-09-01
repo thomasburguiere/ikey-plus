@@ -27,7 +27,7 @@ public class IdentificationKeyDOTGeneratorTest {
 	public void testIdentificationKeyGenerator() {
 
 		// set the confTest ResourceBundle
-		Utils.setBundle(ResourceBundle.getBundle("confTest"));
+		Utils.setBundleConfOverridable(ResourceBundle.getBundle("confOverridableTest"));
 
 		// String containing the name of the result file
 		String resultFileName = "";
@@ -65,16 +65,16 @@ public class IdentificationKeyDOTGeneratorTest {
 					// Open data stream
 					urlConnection.getInputStream();
 				} catch (java.net.MalformedURLException e) {
-					resultFileName = Utils.setErrorMessage(Utils.getBundleElement("message.urlError"), e);
+					resultFileName = Utils.setErrorMessage(Utils.getBundleConfElement("message.urlError"), e);
 					e.printStackTrace();
 				} catch (java.io.IOException e) {
-					resultFileName = Utils.setErrorMessage(Utils.getBundleElement("message.urlError"), e);
+					resultFileName = Utils.setErrorMessage(Utils.getBundleConfElement("message.urlError"), e);
 					e.printStackTrace();
 				}
 				sddSaxParser = new SDDSaxParser(stringUrl);
 				// construct header
 				header.append(System.getProperty("line.separator") + sddSaxParser.getDataset().getLabel()
-						+ ", " + Utils.getBundleElement("message.createdBy")
+						+ ", " + Utils.getBundleConfElement("message.createdBy")
 						+ System.getProperty("line.separator"));
 				header.append(System.getProperty("line.separator") + "Options:");
 				header.append(System.getProperty("line.separator") + "sddURL=" + stringUrl);
@@ -89,7 +89,7 @@ public class IdentificationKeyDOTGeneratorTest {
 						+ System.getProperty("line.separator"));
 
 			} catch (Throwable t) {
-				resultFileName = Utils.setErrorMessage(Utils.getBundleElement("message.parsingError"), t);
+				resultFileName = Utils.setErrorMessage(Utils.getBundleConfElement("message.parsingError"), t);
 				t.printStackTrace();
 			}
 
@@ -104,7 +104,7 @@ public class IdentificationKeyDOTGeneratorTest {
 						sddSaxParser.getDataset());
 				identificationKeyGenerator.createIdentificationKey();
 			} catch (Throwable t) {
-				resultFileName = Utils.setErrorMessage(Utils.getBundleElement("message.creatingKeyError"), t);
+				resultFileName = Utils.setErrorMessage(Utils.getBundleConfElement("message.creatingKeyError"), t);
 				t.printStackTrace();
 			}
 
@@ -123,11 +123,11 @@ public class IdentificationKeyDOTGeneratorTest {
 						.toDotFile(header.toString()).getName();
 			} catch (IOException e) {
 				resultFileName = Utils
-						.setErrorMessage(Utils.getBundleElement("message.creatingFileError"), e);
+						.setErrorMessage(Utils.getBundleConfElement("message.creatingFileError"), e);
 				e.printStackTrace();
 			}
 		} catch (Throwable t) {
-			resultFileName = Utils.setErrorMessage(Utils.getBundleElement("message.error"), t);
+			resultFileName = Utils.setErrorMessage(Utils.getBundleConfElement("message.error"), t);
 			t.printStackTrace();
 		}
 
