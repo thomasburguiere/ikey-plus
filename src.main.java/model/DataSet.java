@@ -211,4 +211,27 @@ public class DataSet {
 		return true;
 	}
 
+	/**
+	 * determine the list of characters inapplicable for the current state
+	 * 
+	 * @param List
+	 *            <ICharacter>
+	 * @param character
+	 * @return List<ICharacter>, the list of inapplicable character and all its sons
+	 */
+	public List<ICharacter> getInapplicableCharacters(List<ICharacter> newRemainingCharacters,
+			ICharacter selectedCharacter, State state) {
+
+		List<ICharacter> inapplicableCharacter = new ArrayList<ICharacter>();
+
+		for (ICharacter character : newRemainingCharacters) {
+			if (character.getInapplicableStates().contains(state)) {
+				inapplicableCharacter.add(character);
+				inapplicableCharacter.addAll(character.getAllChildren());
+			}
+
+		}
+		return inapplicableCharacter;
+	}
+
 }

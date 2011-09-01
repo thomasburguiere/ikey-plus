@@ -39,8 +39,6 @@ public class IdentificationKeyDOTGeneratorTest {
 
 			// define header string
 			StringBuffer header = new StringBuffer();
-			header.append(System.getProperty("line.separator") + Utils.getBundleElement("message.createdBy")
-					+ System.getProperty("line.separator"));
 
 			SDDSaxParser sddSaxParser = null;
 			try {
@@ -75,6 +73,9 @@ public class IdentificationKeyDOTGeneratorTest {
 				}
 				sddSaxParser = new SDDSaxParser(stringUrl);
 				// construct header
+				header.append(System.getProperty("line.separator") + sddSaxParser.getDataset().getLabel()
+						+ ", " + Utils.getBundleElement("message.createdBy")
+						+ System.getProperty("line.separator"));
 				header.append(System.getProperty("line.separator") + "Options:");
 				header.append(System.getProperty("line.separator") + "sddURL=" + stringUrl);
 				header.append(System.getProperty("line.separator") + "twoStatesCharacterFirst="
@@ -118,10 +119,6 @@ public class IdentificationKeyDOTGeneratorTest {
 
 			// create key file
 			try {
-				// construct header
-				header.append(Utils.getBundleElement("message.title") + ": "
-						+ sddSaxParser.getDataset().getLabel() + System.getProperty("line.separator")
-						+ System.getProperty("line.separator") + System.getProperty("line.separator"));
 				resultFileName = identificationKeyGenerator.getSingleAccessKeyTree()
 						.toDotFile(header.toString()).getName();
 			} catch (IOException e) {

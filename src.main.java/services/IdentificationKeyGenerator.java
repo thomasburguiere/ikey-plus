@@ -147,8 +147,14 @@ public class IdentificationKeyGenerator {
 						// create new remaining characters list
 						List<ICharacter> newRemainingCharacters = new ArrayList<ICharacter>(
 								remainingCharacters);
-						// remove last best character
+						// remove last best character from the remaining characters list
 						newRemainingCharacters.remove(selectedCharacter);
+
+						// get inapplicable characters
+						List<ICharacter> inapplicableCharacters = dataset.getInapplicableCharacters(
+								newRemainingCharacters, selectedCharacter, state);
+						// remove inapplicable character and its sons from the remaining characters list
+						newRemainingCharacters.removeAll(inapplicableCharacters);
 
 						// calculate next node
 						calculateSingleAccessKeyNodeChild(node, newRemainingCharacters, newRemainingTaxa);
@@ -197,7 +203,6 @@ public class IdentificationKeyGenerator {
 				// put new node as child of parentNode
 				parentNode.addChild(notDescribedNode);
 			}
-
 		}
 	}
 
@@ -381,6 +386,8 @@ public class IdentificationKeyGenerator {
 	}
 
 	/**
+	 * get all Min and Max for all remaining taxa concerning one quantitative character
+	 * 
 	 * @param character
 	 * @param remainingTaxa
 	 * @return List<Double>, the list of Min and Max values of all remaining taxa
@@ -687,17 +694,15 @@ public class IdentificationKeyGenerator {
 		return score;
 	}
 
-	/* /** Calculate the common percentage between two interval
+	/**
+	 * Calculate the common percentage between two interval
 	 * 
 	 * @param min1
-	 * 
 	 * @param max1
-	 * 
 	 * @param min2
-	 * 
 	 * @param max2
-	 * 
-	 * @return float, the common percentage */
+	 * @return float, the common percentage
+	 **/
 	public static float calculCommonPercentage(double min1, double max1, double min2, double max2)
 			throws Exception {
 		double minLowerTmp = 0;
