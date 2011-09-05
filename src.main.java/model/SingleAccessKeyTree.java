@@ -400,6 +400,286 @@ public class SingleAccessKeyTree {
 	}
 
 	/**
+	 * This methods outputs the {@link #SingleAccesKeyTree} as a flat wiki-formatted String that complies with
+	 * the wiki format used on <a href="http://species-id.net">species-id.net</a>, with mediawiki hyperlinks.
+	 * In order to do this, the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first traversal is a
+	 * breadth-first traversal, in order to generate an HashMap ( <tt>nodeBreadthFirstIterationMap</tt>) that
+	 * associates each node with an arbitrary Integer. The second traversal is a depth-first traversal, in
+	 * order to associate (in another HashMap : <tt>nodeChildParentNumberingMap</tt>), for each node, the node
+	 * number and the number of its parent node. Finally, the last traversal is another breadh-first traversal
+	 * that generates the flat key String
+	 * 
+	 * @param rootNode
+	 * @param output
+	 * @param lineSeparator
+	 */
+	public void multipleTraversalToSpeciesIDQuestionAnswerWikiString(SingleAccessKeyNode rootNode,
+			StringBuffer output, String lineSeparator) {
+
+		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
+		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
+
+		// // first traversal, breadth-first ////
+		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
+
+		int counter = 0;
+		queue.add(rootNode);
+
+		// root node treatment
+		nodeBreadthFirstIterationMap.put(rootNode, new Integer(counter));
+		counter++;
+		// end root node treatment
+
+		visitedNodes.add(rootNode);
+
+		while (!queue.isEmpty()) {
+			SingleAccessKeyNode node = queue.remove();
+			SingleAccessKeyNode child = null;
+
+			// exclusion(node.getChildren(), visitedNodes) is the list of unvisited children nodes of the
+			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+							.get(0)) != null) {
+				visitedNodes.add(child);
+
+				// / child node treatment
+				nodeBreadthFirstIterationMap.put(child, new Integer(counter));
+				counter++;
+
+				// / end child node treatment
+
+				queue.add(child);
+			}
+		}
+
+		// // end first traversal, breadth-first ////
+
+		// // second traversal, depth-first ////
+		HashMap<Integer, Integer> nodeChildParentNumberingMap = new HashMap<Integer, Integer>();
+		recursiveDepthFirst(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
+		// // end second traversal, depth-first ////
+
+		// // third traversal, breadth-first ////
+		queue.clear();
+		visitedNodes.clear();
+
+		counter = 0;
+		int currentParentNumber = -1;
+		queue.add(rootNode);
+
+		// root node treatment
+
+		counter++;
+		// end root node treatment
+		visitedNodes.add(rootNode);
+
+		String[] alphabet = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
+				"q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
+		int alphabetIndex = 0;
+
+		output.append("{{Key Start|id=dummID|title=Dummy Title}}" + lineSeparator);
+
+		while (!queue.isEmpty()) {
+			SingleAccessKeyNode node = queue.remove();
+			SingleAccessKeyNode child = null;
+
+			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+							.get(0)) != null) {
+				visitedNodes.add(child);
+
+				// / child node treatment
+
+				// displaying the parent node number and the child node character name only once
+				if (nodeChildParentNumberingMap.get(new Integer(counter)) != currentParentNumber) {
+					currentParentNumber = nodeChildParentNumberingMap.get(new Integer(counter));
+					output.append(lineSeparator);
+
+					output.append("{{Lead Question |" + currentParentNumber + " | "
+							+ child.getCharacter().getName().replace(">", "&gt;").replace("<", "&lt;")
+							+ " }}");
+					output.append(lineSeparator);
+					alphabetIndex = 0;
+
+				}
+
+				// displaying the child node character state
+				output.append("{{Lead|" + alphabet[alphabetIndex] + "|");
+				alphabetIndex++;
+				if (child.getCharacterState() instanceof QuantitativeMeasure) {
+					output.append(((QuantitativeMeasure) child.getCharacterState()).toStringInterval());
+				} else {
+					output.append(((State) child.getCharacterState()).getName().replace(">", "&gt;")
+							.replace("<", "&lt;"));
+				}
+				output.append("|");
+
+				// displaying the child node number if it has children nodes, displaying the taxa otherwise
+				if (child.getChildren().size() == 0) {
+					output.append("result=\"");
+					boolean firstLoop = true;
+					for (Taxon taxon : child.getRemainingTaxa()) {
+						if (!firstLoop) {
+							output.append(", ");
+						}
+						output.append(taxon.getName().replace(">", "&gt;").replace("<", "&lt;"));
+						firstLoop = false;
+					}
+					output.append("\"");
+				} else {
+					output.append(counter);
+				}
+				output.append("}}"); // closing Lead
+
+				output.append(lineSeparator);
+
+				queue.add(child);
+
+				counter++;
+				// / end child node treatment
+
+			}
+		}
+
+		// // end third traversal, breadth-first ////
+
+	}
+
+	/**
+	 * This methods outputs the {@link #SingleAccesKeyTree} as a flat wiki-formatted String that complies with
+	 * the wiki format used on <a href="http://species-id.net">species-id.net</a>, with mediawiki hyperlinks.
+	 * In order to do this, the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first traversal is a
+	 * breadth-first traversal, in order to generate an HashMap ( <tt>nodeBreadthFirstIterationMap</tt>) that
+	 * associates each node with an arbitrary Integer. The second traversal is a depth-first traversal, in
+	 * order to associate (in another HashMap : <tt>nodeChildParentNumberingMap</tt>), for each node, the node
+	 * number and the number of its parent node. Finally, the last traversal is another breadh-first traversal
+	 * that generates the flat key String
+	 * 
+	 * @param rootNode
+	 * @param output
+	 * @param lineSeparator
+	 */
+	public void multipleTraversalToSpeciesIDStatementWikiString(SingleAccessKeyNode rootNode,
+			StringBuffer output, String lineSeparator) {
+
+		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
+		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
+
+		// // first traversal, breadth-first ////
+		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
+
+		int counter = 0;
+		queue.add(rootNode);
+
+		// root node treatment
+		nodeBreadthFirstIterationMap.put(rootNode, new Integer(counter));
+		counter++;
+		// end root node treatment
+
+		visitedNodes.add(rootNode);
+
+		while (!queue.isEmpty()) {
+			SingleAccessKeyNode node = queue.remove();
+			SingleAccessKeyNode child = null;
+
+			// exclusion(node.getChildren(), visitedNodes) is the list of unvisited children nodes of the
+			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+							.get(0)) != null) {
+				visitedNodes.add(child);
+
+				// / child node treatment
+				nodeBreadthFirstIterationMap.put(child, new Integer(counter));
+				counter++;
+
+				// / end child node treatment
+
+				queue.add(child);
+			}
+		}
+
+		// // end first traversal, breadth-first ////
+
+		// // second traversal, depth-first ////
+		HashMap<Integer, Integer> nodeChildParentNumberingMap = new HashMap<Integer, Integer>();
+		recursiveDepthFirst(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
+		// // end second traversal, depth-first ////
+
+		// // third traversal, breadth-first ////
+		queue.clear();
+		visitedNodes.clear();
+
+		counter = 0;
+		int currentParentNumber = -1;
+		queue.add(rootNode);
+
+		// root node treatment
+
+		counter++;
+		// end root node treatment
+		visitedNodes.add(rootNode);
+
+		output.append("{{Key Start|id=dummID|title=Dummy Title}}" + lineSeparator);
+
+		while (!queue.isEmpty()) {
+			SingleAccessKeyNode node = queue.remove();
+			SingleAccessKeyNode child = null;
+
+			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+							.get(0)) != null) {
+				visitedNodes.add(child);
+
+				// / child node treatment
+
+				if (nodeChildParentNumberingMap.get(new Integer(counter)) != currentParentNumber)
+					currentParentNumber = nodeChildParentNumberingMap.get(new Integer(counter));
+
+				// displaying the child node character
+				output.append("{{Lead|" + currentParentNumber + "|");
+				output.append(child.getCharacter().getName() + "  :  ");
+
+				// displaying the child node character state
+				if (child.getCharacterState() instanceof QuantitativeMeasure) {
+					output.append(((QuantitativeMeasure) child.getCharacterState()).toStringInterval());
+				} else {
+					output.append(((State) child.getCharacterState()).getName().replace(">", "&gt;")
+							.replace("<", "&lt;"));
+				}
+				output.append("|");
+
+				// displaying the child node number if it has children nodes, displaying the taxa otherwise
+				if (child.getChildren().size() == 0) {
+					output.append("result=\"");
+					boolean firstLoop = true;
+					for (Taxon taxon : child.getRemainingTaxa()) {
+						if (!firstLoop) {
+							output.append(", ");
+						}
+						output.append(taxon.getName().replace(">", "&gt;").replace("<", "&lt;"));
+						firstLoop = false;
+					}
+					output.append("\"");
+				} else {
+					output.append(counter);
+				}
+				output.append("}}"); // closing Lead
+
+				output.append(lineSeparator);
+
+				queue.add(child);
+
+				counter++;
+				// / end child node treatment
+
+			}
+		}
+
+		// // end third traversal, breadth-first ////
+
+	}
+
+	/**
 	 * This methods outputs the {@link #SingleAccesKeyTree} as a flat HTML-formatted String, with mediawiki
 	 * hyperlinks. In order to do this, the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first
 	 * traversal is a breadth-first traversal, in order to generate an HashMap (
@@ -1165,13 +1445,101 @@ public class SingleAccessKeyTree {
 
 	/**
 	 * generates a flat, wiki-formatted, String representation of a key, in a String object, by calling the
-	 * {@link #multipleTraversalToString} helper method
+	 * {@link #multipleTraversalToWikiString} helper method
 	 * 
 	 * @return
 	 */
 	public String toFlatWikiString() {
 		StringBuffer output = new StringBuffer();
 		multipleTraversalToWikiString(root, output, System.getProperty("line.separator"));
+		return output.toString();
+	}
+
+	/**
+	 * Generates a File containing a flat wiki-formatted representation of the SingleAccessKeytree, this wiki
+	 * representation complies with the wiki format used on species-id.net
+	 * 
+	 * @param header
+	 * @return
+	 * @throws IOException
+	 */
+	public File toFlatSpeciesIDQuestionAnswerWikiFile(String header) throws IOException {
+		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
+
+		File wikiFile = File.createTempFile(Utils.KEY, "." + Utils.WIKI, new File(path));
+		BufferedWriter wikiFlatFileWriter = new BufferedWriter(new FileWriter(wikiFile));
+
+		wikiFlatFileWriter.append("== Info ==");
+		wikiFlatFileWriter.newLine();
+		wikiFlatFileWriter.append(header.replaceAll(System.getProperty("line.separator"), "<br>"));
+		wikiFlatFileWriter.newLine();
+		wikiFlatFileWriter.append("== Identification Key==");
+		wikiFlatFileWriter.newLine();
+
+		wikiFlatFileWriter.append(toFlatSpeciesIDQuestionAnswerWikiString());
+
+		wikiFlatFileWriter.close();
+
+		return wikiFile;
+	}
+
+	/**
+	 * Generates a File containing a flat wiki-formatted representation of the SingleAccessKeytree, this wiki
+	 * representation complies with the wiki format used on species-id.net
+	 * 
+	 * @param header
+	 * @return
+	 * @throws IOException
+	 */
+	public File toFlatSpeciesIDStatementWikiFile(String header) throws IOException {
+		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
+
+		File wikiFile = File.createTempFile(Utils.KEY, "." + Utils.WIKI, new File(path));
+		BufferedWriter wikiFlatFileWriter = new BufferedWriter(new FileWriter(wikiFile));
+
+		wikiFlatFileWriter.append("== Info ==");
+		wikiFlatFileWriter.newLine();
+		wikiFlatFileWriter.append(header.replaceAll(System.getProperty("line.separator"), "<br>"));
+		wikiFlatFileWriter.newLine();
+		wikiFlatFileWriter.append("== Identification Key==");
+		wikiFlatFileWriter.newLine();
+
+		wikiFlatFileWriter.append(toFlatSpeciesIDStatementWikiString());
+
+		wikiFlatFileWriter.close();
+
+		return wikiFile;
+	}
+
+	/**
+	 * generates a flat, wiki-formatted, String representation of a key that complies with the wiki format
+	 * used on <a href="http://species-id.net">species-id.net</a>, in a String object, by calling the
+	 * {@link #multipleTraversalToString} helper method
+	 * 
+	 * @return
+	 */
+	public String toFlatSpeciesIDQuestionAnswerWikiString() {
+
+		StringBuffer output = new StringBuffer();
+		multipleTraversalToSpeciesIDQuestionAnswerWikiString(root, output,
+				System.getProperty("line.separator"));
+		return output.toString();
+	}
+
+	/**
+	 * generates a flat, wiki-formatted, String representation of a key that complies with the wiki format
+	 * used on <a href="http://species-id.net">species-id.net</a>, in a String object, by calling the
+	 * {@link #multipleTraversalToString} helper method
+	 * 
+	 * @return
+	 */
+	public String toFlatSpeciesIDStatementWikiString() {
+
+		StringBuffer output = new StringBuffer();
+		multipleTraversalToSpeciesIDStatementWikiString(root, output,
+				System.getProperty("line.separator"));
 		return output.toString();
 	}
 
