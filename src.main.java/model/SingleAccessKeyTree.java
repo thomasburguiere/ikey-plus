@@ -693,8 +693,9 @@ public class SingleAccessKeyTree {
 	 * @param lineSeparator
 	 */
 	public void multipleTraversalToHTMLString(SingleAccessKeyNode rootNode, StringBuffer output,
-			String lineSeparator) {
+			String lineSeparator, boolean activeLink) {
 
+		String marging = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
 		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
 
@@ -775,8 +776,13 @@ public class SingleAccessKeyTree {
 						output.append("  ");
 					else if (currentParentNumber < 1000)
 						output.append(" ");
-					output.append("<a name=\"anchor" + currentParentNumber + "\"></a>" + "<strong>"
-							+ currentParentNumber + "</strong>");
+
+					if (activeLink) {
+						output.append("<a name=\"anchor" + currentParentNumber + "\"></a>" + "<strong>"
+								+ currentParentNumber + "</strong>");
+					} else {
+						output.append("<strong>" + currentParentNumber + "</strong>");
+					}
 
 					output.append("  <span class=\"character\">"
 							+ child.getCharacter().getName().replace(">", "&gt;").replace("<", "&lt;")
@@ -789,21 +795,21 @@ public class SingleAccessKeyTree {
 						blankCharacterName += " ";
 					output.append("  " + blankCharacterName);
 				}
-				output.append("<span class=\"statesAndTaxa\"> ");
+				output.append("<span class=\"statesAndTaxa\">");
 
 				// displaying the child node character state
 				if (child.getCharacterState() instanceof QuantitativeMeasure) {
-					output.append("<span class=\"state\">"
+					output.append("<span class=\"state\">" + marging
 							+ ((QuantitativeMeasure) child.getCharacterState()).toStringInterval()
 							+ "</span>");
 				} else {
-					output.append("<span class=\"state\">"
+					output.append("<span class=\"state\">" + marging
 							+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;") + "</span>");
 				}
 
 				// displaying the child node number if it has children nodes, displaying the taxa otherwise
 				if (child.getChildren().size() == 0) {
-					output.append(" &#8594; <span class=\"taxa\">");
+					output.append(" => <span class=\"taxa\">");
 					boolean firstLoop = true;
 					for (Taxon taxon : child.getRemainingTaxa()) {
 						if (!firstLoop) {
@@ -814,7 +820,12 @@ public class SingleAccessKeyTree {
 					}
 					output.append("</span>");
 				} else {
-					output.append(" &#8594; <a href=\"#anchor" + counter + "\">" + counter + "</a>");
+					if (activeLink) {
+						output.append(" => <a href=\"#anchor" + counter + "\">" + counter + "</a>");
+					} else {
+						output.append(" => " + counter);
+					}
+
 				}
 				output.append("</span>"); // closes the opening <span class="statesAndTaxa">
 				output.append("<br/>" + lineSeparator);
@@ -1344,7 +1355,6 @@ public class SingleAccessKeyTree {
 		StyleSheet styles = new StyleSheet();
 		styles.loadTagStyle("body", "color", "#333");
 		styles.loadTagStyle("body", "background", "#fff");
-		styles.loadTagStyle("body", "margin-left", "-10px");
 		styles.loadTagStyle("ul", "indent", "15");
 		styles.loadTagStyle("li", "leading", "15");
 		styles.loadTagStyle("li", "color", "#fff");
@@ -1396,10 +1406,6 @@ public class SingleAccessKeyTree {
 		StyleSheet styles = new StyleSheet();
 		styles.loadTagStyle("body", "color", "#333");
 		styles.loadTagStyle("body", "background", "#fff");
-		styles.loadTagStyle("body", "margin-left", "-10px");
-		styles.loadTagStyle("ul", "indent", "15");
-		styles.loadTagStyle("li", "leading", "15");
-		styles.loadTagStyle("li", "color", "#fff");
 
 		styles.loadStyle("character", "color", "#333");
 		styles.loadStyle("state", "color", "#fe8a22");
@@ -1412,12 +1418,10 @@ public class SingleAccessKeyTree {
 		StringBuffer output = new StringBuffer();
 		output.append("<html><head></head><body>");
 		output.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
-		output.append("<ul>");
 
-		multipleTraversalToHTMLString(root, output, System.getProperty("line.separator"));
+		multipleTraversalToHTMLString(root, output, System.getProperty("line.separator"), false);
 
-		output.append("</ul></body></html>");
-		System.out.println(output);
+		output.append("</body></html>");
 
 		htmlWorker.parse(new StringReader(output.toString()));
 
@@ -1681,7 +1685,7 @@ public class SingleAccessKeyTree {
 		slk.append("<div style='margin-left:30px;margin-top:20px;'>" + lineSep);
 		slk.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
 
-		multipleTraversalToHTMLString(root, output, System.getProperty("line.separator"));
+		multipleTraversalToHTMLString(root, output, System.getProperty("line.separator"), true);
 
 		slk.append(output.toString());
 
