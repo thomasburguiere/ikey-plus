@@ -128,6 +128,10 @@ public class IdentificationKeyGenerator {
 
 			// if the character is categorical
 			if (selectedCharacter.isSupportsCategoricalData()) {
+
+				// create a child nodes list for mergeCharacterStatesIfSameDiscrimination option
+				List<SingleAccessKeyNode> futureChildNodes = new ArrayList<SingleAccessKeyNode>();
+
 				for (State state : ((CategoricalCharacter) selectedCharacter).getStates()) {
 					List<Taxon> newRemainingTaxa = getRemainingTaxa(remainingTaxa,
 							((CategoricalCharacter) selectedCharacter), state);
@@ -140,6 +144,16 @@ public class IdentificationKeyGenerator {
 						node.setCharacter(selectedCharacter);
 						node.setRemainingTaxa(newRemainingTaxa);
 						node.setCharacterState(state);
+
+						// mergeCharacterStatesIfSameDiscrimination option handling
+						if (Utils.mergeCharacterStatesIfSameDiscimination) {
+							if (mergeNodesIfSameDiscrimination(futureChildNodes, node)) {
+								continue;
+							}
+						}
+
+						// add the current node to the current child nodes list
+						futureChildNodes.add(node);
 
 						// put new node as child of parentNode
 						parentNode.addChild(node);
@@ -204,6 +218,27 @@ public class IdentificationKeyGenerator {
 				parentNode.addChild(notDescribedNode);
 			}
 		}
+	}
+
+	/**
+	 * merge character state if remaining taxa are similar between 2 nodes
+	 * 
+	 * @param futureChildNodes
+	 * @param node
+	 * @return true if the current node has been merge with one of future child nodes
+	 */
+	private boolean mergeNodesIfSameDiscrimination(List<SingleAccessKeyNode> futureChildNodes,
+			SingleAccessKeyNode node) {
+
+		for (SingleAccessKeyNode futureChildNode : futureChildNodes) {
+			if (futureChildNode.getRemainingTaxa().containsAll(node.getRemainingTaxa())
+					&& node.getRemainingTaxa().containsAll(futureChildNode.getRemainingTaxa())) {
+				futureChildNode.addOtherCharacterStates(node.getCharacterState());
+				return true;
+			}
+
+		}
+		return false;
 	}
 
 	/**
@@ -578,7 +613,7 @@ public class IdentificationKeyGenerator {
 			score = (float) ((float) score + (float) 2.0);
 		}
 
-		// managing of twoStatesCharacterFirst option
+		// twoStatesCharacterFirst option handling
 		if (Utils.twoStatesCharacterFirst && score > 0 && character.getStates().size() >= 2) {
 			// increasing artificially score of character with few states
 			float coeff = (float) 1
@@ -682,7 +717,7 @@ public class IdentificationKeyGenerator {
 			score = (float) ((float) score + (float) 2.0);
 		}
 
-		// managing of twoStatesCharacterFirst option
+		// twoStatesCharacterFirst option handling
 		if (Utils.twoStatesCharacterFirst && score > 0) {
 			// increasing artificially the score of character with few states
 			float coeff = (float) 1 - ((float) 2 / (float) maxNbStatesPerCharacter);

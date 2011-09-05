@@ -74,7 +74,7 @@ public class Utils {
 	public static String getBundleConfElement(String key) {
 		return Utils.bundleConf.getString(key);
 	}
-	
+
 	/**
 	 * Getter for overridable configuration elements or messages
 	 * 
@@ -83,7 +83,7 @@ public class Utils {
 	public static String getBundleConfOverridableElement(String key) {
 		return Utils.bundleConfOverridable.getString(key);
 	}
-	
+
 	/**
 	 * setter for configuration ResourceBundle
 	 * 
@@ -92,7 +92,7 @@ public class Utils {
 	public static void setBundleConf(ResourceBundle bundleConf) {
 		Utils.bundleConf = bundleConf;
 	}
-	
+
 	/**
 	 * setter for overridable configuration ResourceBundle
 	 * 

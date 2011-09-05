@@ -13,6 +13,7 @@ public class SingleAccessKeyNode {
 
 	private ICharacter character = null;
 	private Object characterState = null;
+	private List<Object> otherCharacterStates = null;
 	private List<SingleAccessKeyNode> children = null;
 	private List<Taxon> remainingTaxa = null;
 
@@ -33,6 +34,7 @@ public class SingleAccessKeyNode {
 		super();
 		this.character = character;
 		this.characterState = characterState;
+		this.otherCharacterStates = new ArrayList<Object>();
 		this.children = new ArrayList<SingleAccessKeyNode>();
 		this.remainingTaxa = new ArrayList<Taxon>();
 	}
@@ -73,6 +75,63 @@ public class SingleAccessKeyNode {
 	 */
 	public void setCharacterState(Object characterState) {
 		this.characterState = characterState;
+	}
+
+	/**
+	 * get the other states of the node
+	 * 
+	 * @return Object, the description concerning the node
+	 */
+	public List<Object> getOtherCharacterStates() {
+		return otherCharacterStates;
+	}
+
+	/**
+	 * set the other states of the node
+	 * 
+	 * @param Object
+	 *            , the description concerning the node
+	 */
+	public void setOtherCharacterStates(List<Object> otherCharacterStates) {
+		this.otherCharacterStates = otherCharacterStates;
+	}
+
+	/**
+	 * add other state to the node
+	 * 
+	 * @param Object
+	 *            , the description concerning the node
+	 */
+	public void addOtherCharacterStates(Object otherCharacterState) {
+		this.otherCharacterStates.add(otherCharacterState);
+	}
+
+	/**
+	 * get states as String using default separator
+	 * 
+	 * @return String, the list of states
+	 */
+	public String getStringStates() {
+		return getStatesToString(" OR ");
+	}
+
+	/**
+	 * get states as String using new separator
+	 * 
+	 * @return String, the list of states
+	 */
+	public String getStatesToString(String separator) {
+
+		String result = "";
+		if (this.getCharacterState() instanceof State) {
+			result = ((State) this.getCharacterState()).getName();
+			for (Object state : this.getOtherCharacterStates()) {
+				if (state instanceof State) {
+					result = result + separator + ((State) state).getName();
+				}
+			}
+		}
+		return result;
 	}
 
 	/**

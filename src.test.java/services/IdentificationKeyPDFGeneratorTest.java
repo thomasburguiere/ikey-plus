@@ -55,6 +55,7 @@ public class IdentificationKeyPDFGeneratorTest {
 
 				// options
 				Utils.twoStatesCharacterFirst = false;
+				Utils.mergeCharacterStatesIfSameDiscimination = false;
 
 				// test if the URL is valid
 				URLConnection urlConnection;
@@ -104,7 +105,8 @@ public class IdentificationKeyPDFGeneratorTest {
 						sddSaxParser.getDataset());
 				identificationKeyGenerator.createIdentificationKey();
 			} catch (Throwable t) {
-				resultFileName = Utils.setErrorMessage(Utils.getBundleConfElement("message.creatingKeyError"), t);
+				resultFileName = Utils.setErrorMessage(
+						Utils.getBundleConfElement("message.creatingKeyError"), t);
 				t.printStackTrace();
 			}
 
@@ -122,8 +124,8 @@ public class IdentificationKeyPDFGeneratorTest {
 				resultFileName = identificationKeyGenerator.getSingleAccessKeyTree()
 						.toPdfFile(header.toString()).getName();
 			} catch (IOException e) {
-				resultFileName = Utils
-						.setErrorMessage(Utils.getBundleConfElement("message.creatingFileError"), e);
+				resultFileName = Utils.setErrorMessage(
+						Utils.getBundleConfElement("message.creatingFileError"), e);
 				e.printStackTrace();
 			}
 		} catch (Throwable t) {

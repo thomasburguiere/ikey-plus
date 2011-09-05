@@ -83,8 +83,7 @@ public class SingleAccessKeyTree {
 						+ ((QuantitativeMeasure) node.getCharacterState()).toStringInterval());
 			} else {
 				output.append(tabulations + firstNumbering + "." + secondNumbering + ") "
-						+ node.getCharacter().getName() + " | "
-						+ ((State) node.getCharacterState()).getName());
+						+ node.getCharacter().getName() + " | " + node.getStringStates());
 			}
 			if (node.getChildren().size() == 0) {
 				output.append(" -> ");
@@ -220,7 +219,7 @@ public class SingleAccessKeyTree {
 				if (child.getCharacterState() instanceof QuantitativeMeasure) {
 					output.append(((QuantitativeMeasure) child.getCharacterState()).toStringInterval());
 				} else {
-					output.append(((State) child.getCharacterState()).getName());
+					output.append(child.getStringStates());
 				}
 
 				// displaying the child node number if it has children nodes, displaying the taxa otherwise
@@ -365,7 +364,7 @@ public class SingleAccessKeyTree {
 				if (child.getCharacterState() instanceof QuantitativeMeasure) {
 					output.append(((QuantitativeMeasure) child.getCharacterState()).toStringInterval());
 				} else {
-					output.append(((State) child.getCharacterState()).getName());
+					output.append(child.getStringStates());
 				}
 				output.append("</span>");
 
@@ -519,8 +518,7 @@ public class SingleAccessKeyTree {
 							+ "</span>");
 				} else {
 					output.append("<span class=\"state\">"
-							+ ((State) child.getCharacterState()).getName().replace(">", "&gt;")
-									.replace("<", "&lt;") + "</span>");
+							+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;") + "</span>");
 				}
 
 				// displaying the child node number if it has children nodes, displaying the taxa otherwise
@@ -654,7 +652,7 @@ public class SingleAccessKeyTree {
 					output.append(" [label=\""
 							+ ((QuantitativeMeasure) child.getCharacterState()).toStringInterval() + "\"]");
 				} else {
-					output.append(" [label=\"" + ((State) child.getCharacterState()).getName() + "\"]");
+					output.append(" [label=\"" + child.getStringStates() + "\"]");
 				}
 				output.append(";" + lineSeparator);
 
@@ -743,7 +741,7 @@ public class SingleAccessKeyTree {
 			if (node.getCharacterState() instanceof QuantitativeMeasure)
 				state = ((QuantitativeMeasure) node.getCharacterState()).toStringInterval();
 			else
-				state = ((State) node.getCharacterState()).getName();
+				state = node.getStringStates();
 			state = "<span class='state'>" + state.replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;")
 					+ "</span>";
 
@@ -812,7 +810,7 @@ public class SingleAccessKeyTree {
 			if (node.getCharacterState() instanceof QuantitativeMeasure)
 				state = ((QuantitativeMeasure) node.getCharacterState()).toStringInterval();
 			else
-				state = ((State) node.getCharacterState()).getName();
+				state = node.getStringStates();
 			state = "<span class='state'>" + state.replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;")
 					+ "</span>";
 
@@ -870,10 +868,11 @@ public class SingleAccessKeyTree {
 		StringBuffer slk = new StringBuffer();
 		slk.append("<html>" + lineSep);
 		slk.append("<head>" + lineSep);
-		slk.append("<script src='" + Utils.getBundleConfElement("resources.jqueryPath") + "'></script>" + lineSep
-				+ "<script type='text/javascript' src='" + Utils.getBundleConfElement("resources.treeviewJsPath")
-				+ "'></script>" + lineSep + "<link rel='stylesheet' href='"
-				+ Utils.getBundleConfElement("resources.treeviewCssPath") + "' type='text/css' />" + lineSep);
+		slk.append("<script src='" + Utils.getBundleConfElement("resources.jqueryPath") + "'></script>"
+				+ lineSep + "<script type='text/javascript' src='"
+				+ Utils.getBundleConfElement("resources.treeviewJsPath") + "'></script>" + lineSep
+				+ "<link rel='stylesheet' href='" + Utils.getBundleConfElement("resources.treeviewCssPath")
+				+ "' type='text/css' />" + lineSep);
 
 		slk.append("<style type='text/css'>" + lineSep);
 		slk.append("body{" + lineSep);
@@ -1211,10 +1210,11 @@ public class SingleAccessKeyTree {
 		StringBuffer slk = new StringBuffer();
 		slk.append("<html>" + lineSep);
 		slk.append("<head>" + lineSep);
-		slk.append("<script src='" + Utils.getBundleConfElement("resources.jqueryPath") + "'></script>" + lineSep
-				+ "<script type='text/javascript' src='" + Utils.getBundleConfElement("resources.treeviewJsPath")
-				+ "'></script>" + lineSep + "<link rel='stylesheet' href='"
-				+ Utils.getBundleConfElement("resources.treeviewCssPath") + "' type='text/css' />" + lineSep);
+		slk.append("<script src='" + Utils.getBundleConfElement("resources.jqueryPath") + "'></script>"
+				+ lineSep + "<script type='text/javascript' src='"
+				+ Utils.getBundleConfElement("resources.treeviewJsPath") + "'></script>" + lineSep
+				+ "<link rel='stylesheet' href='" + Utils.getBundleConfElement("resources.treeviewCssPath")
+				+ "' type='text/css' />" + lineSep);
 
 		slk.append("<style type='text/css'>" + lineSep);
 		slk.append("body{" + lineSep);
