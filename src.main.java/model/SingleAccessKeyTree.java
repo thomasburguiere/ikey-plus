@@ -1373,6 +1373,61 @@ public class SingleAccessKeyTree {
 	}
 
 	/**
+	 * get a PDF file containing the key, in a flat representation
+	 * 
+	 * @param String
+	 *            , header information
+	 * @return File, the pdf file
+	 * @throws IOException
+	 * @throws COSVisitorException
+	 * @throws DocumentException
+	 */
+	public File toFlatPdfFile(String header) throws IOException, DocumentException {
+
+		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
+		File pdfFile = File.createTempFile(Utils.KEY, "." + Utils.PDF, new File(path));
+
+		Document pdfDocument = new Document(PageSize.A3, 50, 50, 50, 50);
+		PdfWriter.getInstance(pdfDocument, new FileOutputStream(pdfFile));
+
+		pdfDocument.open();
+
+		StyleSheet styles = new StyleSheet();
+		styles.loadTagStyle("body", "color", "#333");
+		styles.loadTagStyle("body", "background", "#fff");
+		styles.loadTagStyle("body", "margin-left", "-10px");
+		styles.loadTagStyle("ul", "indent", "15");
+		styles.loadTagStyle("li", "leading", "15");
+		styles.loadTagStyle("li", "color", "#fff");
+
+		styles.loadStyle("character", "color", "#333");
+		styles.loadStyle("state", "color", "#fe8a22");
+		styles.loadStyle("taxa", "color", "#67bb1b");
+		styles.loadStyle("line", "color", "#333");
+
+		HTMLWorker htmlWorker = new HTMLWorker(pdfDocument);
+		htmlWorker.setStyleSheet(styles);
+
+		StringBuffer output = new StringBuffer();
+		output.append("<html><head></head><body>");
+		output.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
+		output.append("<ul>");
+
+		multipleTraversalToHTMLString(root, output, System.getProperty("line.separator"));
+
+		output.append("</ul></body></html>");
+		System.out.println(output);
+
+		htmlWorker.parse(new StringReader(output.toString()));
+
+		pdfDocument.close();
+		htmlWorker.close();
+
+		return pdfFile;
+	}
+
+	/**
 	 * get a SDD file containing the key
 	 * 
 	 * @param String
@@ -1414,7 +1469,8 @@ public class SingleAccessKeyTree {
 	}
 
 	/**
-	 * Generates a File containing a flat wiki-formatted representation of the SingleAccessKeytree
+	 * Generates a File containing a flat wiki-formatted representation of the SingleAccessKeytree, in a flat
+	 * representation
 	 * 
 	 * @param header
 	 * @return
@@ -1538,8 +1594,7 @@ public class SingleAccessKeyTree {
 	public String toFlatSpeciesIDStatementWikiString() {
 
 		StringBuffer output = new StringBuffer();
-		multipleTraversalToSpeciesIDStatementWikiString(root, output,
-				System.getProperty("line.separator"));
+		multipleTraversalToSpeciesIDStatementWikiString(root, output, System.getProperty("line.separator"));
 		return output.toString();
 	}
 
