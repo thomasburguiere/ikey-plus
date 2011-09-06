@@ -171,7 +171,7 @@ public class SingleAccessKeyTree {
 		queue.clear();
 		visitedNodes.clear();
 
-		counter = 0;
+		counter = 1;
 		int currentParentNumber = -1;
 		queue.add(rootNode);
 
@@ -314,7 +314,7 @@ public class SingleAccessKeyTree {
 		queue.clear();
 		visitedNodes.clear();
 
-		counter = 0;
+		counter = 1;
 		int currentParentNumber = -1;
 		queue.add(rootNode);
 
@@ -463,7 +463,7 @@ public class SingleAccessKeyTree {
 		queue.clear();
 		visitedNodes.clear();
 
-		counter = 0;
+		counter = 1;
 		int currentParentNumber = -1;
 		queue.add(rootNode);
 
@@ -609,7 +609,7 @@ public class SingleAccessKeyTree {
 		queue.clear();
 		visitedNodes.clear();
 
-		counter = 0;
+		counter = 1;
 		int currentParentNumber = -1;
 		queue.add(rootNode);
 
@@ -745,7 +745,7 @@ public class SingleAccessKeyTree {
 		queue.clear();
 		visitedNodes.clear();
 
-		counter = 0;
+		counter = 1;
 		int currentParentNumber = -1;
 		queue.add(rootNode);
 
@@ -907,7 +907,7 @@ public class SingleAccessKeyTree {
 		queue.clear();
 		visitedNodes.clear();
 
-		counter = 0;
+		counter = 1;
 		int currentParentNumber = -1;
 		queue.add(rootNode);
 
