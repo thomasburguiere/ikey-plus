@@ -42,14 +42,14 @@ public class IdentificationKeyFlatWIKISpeciesIDQuestionAnswerGeneratorTest {
 
 			SDDSaxParser sddSaxParser = null;
 			try {
-//				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
+				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-unknownData-fullSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/testSDD.xml";
-				 String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml";
+				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/smallSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/wrongSDD.xml";
 
@@ -104,7 +104,8 @@ public class IdentificationKeyFlatWIKISpeciesIDQuestionAnswerGeneratorTest {
 						sddSaxParser.getDataset());
 				identificationKeyGenerator.createIdentificationKey();
 			} catch (Throwable t) {
-				resultFileName = Utils.setErrorMessage(Utils.getBundleConfElement("message.creatingKeyError"), t);
+				resultFileName = Utils.setErrorMessage(
+						Utils.getBundleConfElement("message.creatingKeyError"), t);
 				t.printStackTrace();
 			}
 
@@ -122,8 +123,8 @@ public class IdentificationKeyFlatWIKISpeciesIDQuestionAnswerGeneratorTest {
 				resultFileName = identificationKeyGenerator.getSingleAccessKeyTree()
 						.toFlatSpeciesIDQuestionAnswerWikiFile(header.toString()).getName();
 			} catch (IOException e) {
-				resultFileName = Utils
-						.setErrorMessage(Utils.getBundleConfElement("message.creatingFileError"), e);
+				resultFileName = Utils.setErrorMessage(
+						Utils.getBundleConfElement("message.creatingFileError"), e);
 				e.printStackTrace();
 			}
 		} catch (Throwable t) {

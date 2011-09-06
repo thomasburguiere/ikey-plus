@@ -29,6 +29,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 public class SingleAccessKeyTree {
 
 	private SingleAccessKeyNode root = null;
+	private String label = null;
 
 	/**
 	 * constructor
@@ -65,6 +66,25 @@ public class SingleAccessKeyTree {
 	 */
 	public void setRoot(SingleAccessKeyNode root) {
 		this.root = root;
+	}
+
+	/**
+	 * get the label of the key
+	 * 
+	 * @return String, the label
+	 */
+	public String getLabel() {
+		return label;
+	}
+
+	/**
+	 * set the label of the key
+	 * 
+	 * @param String
+	 *            , the label
+	 */
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 	/**
@@ -477,7 +497,7 @@ public class SingleAccessKeyTree {
 				"q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
 		int alphabetIndex = 0;
 
-		output.append("{{Key Start|id=dummID|title=Dummy Title}}" + lineSeparator);
+		output.append("{{Key Start|title=" + this.getLabel() + "}}" + lineSeparator);
 
 		while (!queue.isEmpty()) {
 			SingleAccessKeyNode node = queue.remove();
@@ -619,7 +639,7 @@ public class SingleAccessKeyTree {
 		// end root node treatment
 		visitedNodes.add(rootNode);
 
-		output.append("{{Key Start|id=dummID|title=Dummy Title}}" + lineSeparator);
+		output.append("{{Key Start|title=" + this.getLabel() + "}}" + lineSeparator);
 
 		while (!queue.isEmpty()) {
 			SingleAccessKeyNode node = queue.remove();
