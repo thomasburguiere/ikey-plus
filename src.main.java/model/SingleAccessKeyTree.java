@@ -121,7 +121,7 @@ public class SingleAccessKeyTree {
 	 * @param output
 	 * @param lineSeparator
 	 */
-	public void multipleTraversalToString(SingleAccessKeyNode rootNode, StringBuffer output,
+	private void multipleTraversalToString(SingleAccessKeyNode rootNode, StringBuffer output,
 			String lineSeparator) {
 
 		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
@@ -130,7 +130,7 @@ public class SingleAccessKeyTree {
 		// // first traversal, breadth-first ////
 		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
 
-		int counter = 0;
+		int counter = 1;
 		queue.add(rootNode);
 
 		// root node treatment
@@ -264,7 +264,7 @@ public class SingleAccessKeyTree {
 	 * @param output
 	 * @param lineSeparator
 	 */
-	public void multipleTraversalToWikiString(SingleAccessKeyNode rootNode, StringBuffer output,
+	private void multipleTraversalToWikiString(SingleAccessKeyNode rootNode, StringBuffer output,
 			String lineSeparator) {
 
 		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
@@ -273,7 +273,7 @@ public class SingleAccessKeyTree {
 		// // first traversal, breadth-first ////
 		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
 
-		int counter = 0;
+		int counter = 1;
 		queue.add(rootNode);
 
 		// root node treatment
@@ -413,7 +413,7 @@ public class SingleAccessKeyTree {
 	 * @param output
 	 * @param lineSeparator
 	 */
-	public void multipleTraversalToSpeciesIDQuestionAnswerWikiString(SingleAccessKeyNode rootNode,
+	private void multipleTraversalToSpeciesIDQuestionAnswerWikiString(SingleAccessKeyNode rootNode,
 			StringBuffer output, String lineSeparator) {
 
 		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
@@ -422,7 +422,7 @@ public class SingleAccessKeyTree {
 		// // first traversal, breadth-first ////
 		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
 
-		int counter = 0;
+		int counter = 1;
 		queue.add(rootNode);
 
 		// root node treatment
@@ -540,7 +540,7 @@ public class SingleAccessKeyTree {
 
 			}
 		}
-
+		output.append("{{Key End}}");
 		// // end third traversal, breadth-first ////
 
 	}
@@ -559,7 +559,7 @@ public class SingleAccessKeyTree {
 	 * @param output
 	 * @param lineSeparator
 	 */
-	public void multipleTraversalToSpeciesIDStatementWikiString(SingleAccessKeyNode rootNode,
+	private void multipleTraversalToSpeciesIDStatementWikiString(SingleAccessKeyNode rootNode,
 			StringBuffer output, String lineSeparator) {
 
 		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
@@ -568,7 +568,7 @@ public class SingleAccessKeyTree {
 		// // first traversal, breadth-first ////
 		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
 
-		int counter = 0;
+		int counter = 1;
 		queue.add(rootNode);
 
 		// root node treatment
@@ -632,11 +632,12 @@ public class SingleAccessKeyTree {
 
 				// / child node treatment
 
-				if (nodeChildParentNumberingMap.get(new Integer(counter)) != currentParentNumber)
+				if (nodeChildParentNumberingMap.get(new Integer(counter)) != currentParentNumber) {
 					currentParentNumber = nodeChildParentNumberingMap.get(new Integer(counter));
-
+					output.append("{{Lead|" + currentParentNumber + "|");
+				} else
+					output.append("{{Lead|" + currentParentNumber + "-|");
 				// displaying the child node character
-				output.append("{{Lead|" + currentParentNumber + "|");
 				output.append(child.getCharacter().getName() + "  :  ");
 
 				// displaying the child node character state
@@ -674,6 +675,7 @@ public class SingleAccessKeyTree {
 
 			}
 		}
+		output.append("{{Key End}}");
 
 		// // end third traversal, breadth-first ////
 
@@ -692,7 +694,7 @@ public class SingleAccessKeyTree {
 	 * @param output
 	 * @param lineSeparator
 	 */
-	public void multipleTraversalToHTMLString(SingleAccessKeyNode rootNode, StringBuffer output,
+	private void multipleTraversalToHTMLString(SingleAccessKeyNode rootNode, StringBuffer output,
 			String lineSeparator, boolean activeLink) {
 
 		String marging = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -702,7 +704,7 @@ public class SingleAccessKeyTree {
 		// // first traversal, breadth-first ////
 		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
 
-		int counter = 0;
+		int counter = 1;
 		queue.add(rootNode);
 
 		// root node treatment
@@ -855,7 +857,7 @@ public class SingleAccessKeyTree {
 	 * @param output
 	 * @param lineSeparator
 	 */
-	public void multipleTraversalToDotString(SingleAccessKeyNode rootNode, StringBuffer output,
+	private void multipleTraversalToDotString(SingleAccessKeyNode rootNode, StringBuffer output,
 			String lineSeparator) {
 
 		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
@@ -864,7 +866,7 @@ public class SingleAccessKeyTree {
 		// // first traversal, breadth-first ////
 		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
 
-		int counter = 0;
+		int counter = 1;
 		queue.add(rootNode);
 
 		// root node treatment
