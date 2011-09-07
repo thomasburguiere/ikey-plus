@@ -173,8 +173,8 @@ public class IdentificationKeyGenerator {
 
 						// pruning option handling
 						if (!Utils.pruning
-								&& !(remainingTaxa.contains(newRemainingTaxa) && newRemainingTaxa
-										.contains(remainingTaxa))) {
+								&& !(remainingTaxa.containsAll(newRemainingTaxa) && newRemainingTaxa
+										.containsAll(remainingTaxa))) {
 							// calculate next node
 							calculateSingleAccessKeyNodeChild(node, newRemainingCharacters, newRemainingTaxa);
 						} else {
@@ -210,8 +210,8 @@ public class IdentificationKeyGenerator {
 
 						// pruning option handling
 						if (!Utils.pruning
-								&& !(remainingTaxa.contains(newRemainingTaxa) && newRemainingTaxa
-										.contains(remainingTaxa))) {
+								&& !(remainingTaxa.containsAll(newRemainingTaxa) && newRemainingTaxa
+										.containsAll(remainingTaxa))) {
 							// calculate next node
 							calculateSingleAccessKeyNodeChild(node, newRemainingCharacters, newRemainingTaxa);
 						} else {

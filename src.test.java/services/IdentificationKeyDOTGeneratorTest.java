@@ -56,6 +56,8 @@ public class IdentificationKeyDOTGeneratorTest {
 				// options
 				Utils.twoStatesCharacterFirst = false;
 				Utils.mergeCharacterStatesIfSameDiscimination = false;
+				Utils.reduceSameConclusionPath = false;
+				Utils.pruning = false;
 
 				// test if the URL is valid
 				URLConnection urlConnection;

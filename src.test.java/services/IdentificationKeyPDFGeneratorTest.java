@@ -56,6 +56,8 @@ public class IdentificationKeyPDFGeneratorTest {
 				// options
 				Utils.twoStatesCharacterFirst = false;
 				Utils.mergeCharacterStatesIfSameDiscimination = false;
+				Utils.reduceSameConclusionPath = false;
+				Utils.pruning = true;
 
 				// test if the URL is valid
 				URLConnection urlConnection;
