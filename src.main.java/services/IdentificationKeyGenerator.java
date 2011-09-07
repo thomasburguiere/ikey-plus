@@ -172,8 +172,8 @@ public class IdentificationKeyGenerator {
 						newRemainingCharacters.removeAll(inapplicableCharacters);
 
 						// pruning option handling
-						if (Utils.pruning && remainingTaxa.containsAll(newRemainingTaxa) && newRemainingTaxa
-										.containsAll(remainingTaxa)) {
+						if (Utils.pruning && remainingTaxa.containsAll(newRemainingTaxa)
+								&& newRemainingTaxa.containsAll(remainingTaxa)) {
 							node.setNodeDescription(Utils.getBundleConfElement("message.warning.pruning"));
 						} else {
 							// calculate next node
@@ -208,8 +208,8 @@ public class IdentificationKeyGenerator {
 								remainingCharacters);
 
 						// pruning option handling
-						if (Utils.pruning && remainingTaxa.containsAll(newRemainingTaxa) && newRemainingTaxa
-										.containsAll(remainingTaxa)) {
+						if (Utils.pruning && remainingTaxa.containsAll(newRemainingTaxa)
+								&& newRemainingTaxa.containsAll(remainingTaxa)) {
 							node.setNodeDescription(Utils.getBundleConfElement("message.warning.pruning"));
 						} else {
 							// calculate next node
