@@ -105,6 +105,7 @@ public class SingleAccessKeyTree {
 				output.append(tabulations + firstNumbering + "." + secondNumbering + ") "
 						+ node.getCharacter().getName() + " | " + node.getStringStates());
 			}
+			output.append(nodeDescriptionAnalysis(node));
 			if (node.getChildren().size() == 0) {
 				output.append(" -> ");
 				boolean firstLoop = true;
@@ -241,6 +242,7 @@ public class SingleAccessKeyTree {
 				} else {
 					output.append(child.getStringStates());
 				}
+				output.append(nodeDescriptionAnalysis(child));
 
 				// displaying the child node number if it has children nodes, displaying the taxa otherwise
 				if (child.getChildren().size() == 0) {
@@ -387,6 +389,7 @@ public class SingleAccessKeyTree {
 					output.append(child.getStringStates());
 				}
 				output.append("</span>");
+				output.append("<span style=\"color: black;\">" + nodeDescriptionAnalysis(child) + "</span>");
 
 				// displaying the child node number if it has children nodes, displaying the taxa otherwise
 				if (child.getChildren().size() == 0) {
@@ -841,6 +844,7 @@ public class SingleAccessKeyTree {
 					output.append("<span class=\"state\">" + marging
 							+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;") + "</span>");
 				}
+				output.append("<span class=\"warning\">" + nodeDescriptionAnalysis(child) + "</span>");
 
 				// displaying the child node number if it has children nodes, displaying the taxa otherwise
 				if (child.getChildren().size() == 0) {
@@ -1070,6 +1074,7 @@ public class SingleAccessKeyTree {
 				state = node.getStringStates();
 			state = "<span class='state'>" + state.replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;")
 					+ "</span>";
+			state += "<span class=\"warning\">" + nodeDescriptionAnalysis(node) + "</span>";
 
 			output.append("\n" + tabulations + "\t<li>");
 
@@ -1139,6 +1144,7 @@ public class SingleAccessKeyTree {
 				state = node.getStringStates();
 			state = "<span class='state'>" + state.replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;")
 					+ "</span>";
+			state += "<span class=\"warning\">" + nodeDescriptionAnalysis(node) + "</span>";
 
 			if (node.hasChild()) {
 				output.append(" | " + state + " (taxa=" + node.getRemainingTaxa().size() + ")");
@@ -1732,4 +1738,20 @@ public class SingleAccessKeyTree {
 		return slk.toString();
 	}
 
+	/**
+	 * Analyses the node description and returns it if it isnot an empty string, and if the verbose level
+	 * requires it to be displayed. Returns an empty String otherwise.
+	 * 
+	 * @param node
+	 * @return
+	 */
+	public String nodeDescriptionAnalysis(SingleAccessKeyNode node) {
+		boolean verbose = true;
+		if (node.getNodeDescription() != null && node.getNodeDescription().trim().length() > 0 && verbose) {
+			return "(" + node.getNodeDescription() + ")";
+		}
+		return "";
+	}
+
 }
+
