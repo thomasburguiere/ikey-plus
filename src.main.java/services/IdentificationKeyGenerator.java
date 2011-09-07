@@ -100,11 +100,11 @@ public class IdentificationKeyGenerator {
 			float selectedScore = charactersScore.get(selectedCharacter);
 
 			// delete characters if score = 0
-			for (ICharacter character : charactersScore.keySet()) {
-				if (charactersScore.get(character) <= 0) {
-					remainingCharacters.remove(character);
-				}
-			}
+			// for (ICharacter character : charactersScore.keySet()) {
+			// if (charactersScore.get(character) <= 0) {
+			// remainingCharacters.remove(character);
+			// }
+			// }
 
 			// get not described taxa
 			List<Taxon> notDescribedTaxa = null;
@@ -142,7 +142,7 @@ public class IdentificationKeyGenerator {
 							((CategoricalCharacter) selectedCharacter), state);
 
 					// test if we have to stop the branch or continue
-					if (newRemainingTaxa.size() > 0 && selectedScore > 0) {
+					if (newRemainingTaxa.size() > 0) {
 
 						// init new node
 						SingleAccessKeyNode node = new SingleAccessKeyNode();
@@ -197,7 +197,7 @@ public class IdentificationKeyGenerator {
 							((QuantitativeCharacter) selectedCharacter), quantitativeMeasure);
 
 					// test if we have to stop the branch or continue
-					if (newRemainingTaxa.size() > 0 && selectedScore > 0) {
+					if (newRemainingTaxa.size() > 0) {
 
 						// init new node
 						SingleAccessKeyNode node = new SingleAccessKeyNode();
