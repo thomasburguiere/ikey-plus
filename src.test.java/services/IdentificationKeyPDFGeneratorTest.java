@@ -42,10 +42,11 @@ public class IdentificationKeyPDFGeneratorTest {
 
 			SDDSaxParser sddSaxParser = null;
 			try {
-				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
+				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-unknownData-fullSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
+				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/pruningSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/testSDD.xml";
@@ -57,7 +58,7 @@ public class IdentificationKeyPDFGeneratorTest {
 				Utils.twoStatesCharacterFirst = false;
 				Utils.mergeCharacterStatesIfSameDiscimination = false;
 				Utils.reduceSameConclusionPath = false;
-				Utils.pruning = true;
+				Utils.pruning = false;
 
 				// test if the URL is valid
 				URLConnection urlConnection;

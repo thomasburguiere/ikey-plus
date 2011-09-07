@@ -90,8 +90,12 @@ public class IdentificationKeyGenerator {
 
 		if (remainingCharacters.size() > 0 && remainingTaxa.size() > 1) {
 
+			// get the list of characters which discriminant power depends on the child character
+			List<ICharacter> childDependantCharacters = new ArrayList<ICharacter>();
+
 			// calculate characters score
-			Map<ICharacter, Float> charactersScore = charactersScores(remainingCharacters, remainingTaxa);
+			Map<ICharacter, Float> charactersScore = charactersScores(remainingCharacters, remainingTaxa,
+					childDependantCharacters);
 			ICharacter selectedCharacter = bestCharacter(charactersScore);
 			float selectedScore = charactersScore.get(selectedCharacter);
 
@@ -173,7 +177,8 @@ public class IdentificationKeyGenerator {
 
 						// pruning option handling
 						if (Utils.pruning && remainingTaxa.containsAll(newRemainingTaxa)
-								&& newRemainingTaxa.containsAll(remainingTaxa)) {
+								&& newRemainingTaxa.containsAll(remainingTaxa)
+								&& !childDependantCharacters.contains(selectedCharacter)) {
 							node.setNodeDescription(Utils.getBundleConfElement("message.warning.pruning"));
 						} else {
 							// calculate next node
@@ -209,7 +214,8 @@ public class IdentificationKeyGenerator {
 
 						// pruning option handling
 						if (Utils.pruning && remainingTaxa.containsAll(newRemainingTaxa)
-								&& newRemainingTaxa.containsAll(remainingTaxa)) {
+								&& newRemainingTaxa.containsAll(remainingTaxa)
+								&& !childDependantCharacters.contains(selectedCharacter)) {
 							node.setNodeDescription(Utils.getBundleConfElement("message.warning.pruning"));
 						} else {
 							// calculate next node
@@ -471,8 +477,8 @@ public class IdentificationKeyGenerator {
 	 * @param codedDescriptions
 	 * @return Map<ICharacter,Float>, a MAP contening all discriminant power of all taxa
 	 */
-	private Map<ICharacter, Float> charactersScores(List<ICharacter> characters, List<Taxon> remaningTaxa)
-			throws Exception {
+	private Map<ICharacter, Float> charactersScores(List<ICharacter> characters, List<Taxon> remaningTaxa,
+			List<ICharacter> childDependantCharacters) throws Exception {
 		LinkedHashMap<ICharacter, Float> scoreMap = new LinkedHashMap<ICharacter, Float>();
 		for (ICharacter character : characters) {
 			if (character.isSupportsCategoricalData()) {
@@ -485,7 +491,7 @@ public class IdentificationKeyGenerator {
 		}
 
 		// take in consideration the score of child character
-		considerChildCharacterScore(scoreMap);
+		considerChildCharacterScore(scoreMap, childDependantCharacters);
 
 		return scoreMap;
 	}
@@ -495,12 +501,14 @@ public class IdentificationKeyGenerator {
 	 * 
 	 * @param scoreMap
 	 */
-	private void considerChildCharacterScore(HashMap<ICharacter, Float> scoreMap) throws Exception {
+	private void considerChildCharacterScore(HashMap<ICharacter, Float> scoreMap,
+			List<ICharacter> childDependantCharacters) throws Exception {
 		for (ICharacter character : scoreMap.keySet()) {
 			if (character.isSupportsCategoricalData() && character.getChildCharacters().size() > 0) {
 				float max = getMaxChildScore(scoreMap, character);
 				if (scoreMap.get(character) < max) {
 					scoreMap.put(character, max);
+					childDependantCharacters.add(character);
 				}
 			}
 		}
