@@ -171,8 +171,15 @@ public class IdentificationKeyGenerator {
 						// remove inapplicable character and its sons from the remaining characters list
 						newRemainingCharacters.removeAll(inapplicableCharacters);
 
-						// calculate next node
-						calculateSingleAccessKeyNodeChild(node, newRemainingCharacters, newRemainingTaxa);
+						// pruning option handling
+						if (!Utils.pruning
+								&& !(remainingTaxa.contains(newRemainingTaxa) && newRemainingTaxa
+										.contains(remainingTaxa))) {
+							// calculate next node
+							calculateSingleAccessKeyNodeChild(node, newRemainingCharacters, newRemainingTaxa);
+						} else {
+							node.setNodeDescription(Utils.getBundleConfElement("message.warning.pruning"));
+						}
 					}
 				}
 
@@ -201,8 +208,15 @@ public class IdentificationKeyGenerator {
 						List<ICharacter> newRemainingCharacters = new ArrayList<ICharacter>(
 								remainingCharacters);
 
-						// calculate next node
-						calculateSingleAccessKeyNodeChild(node, newRemainingCharacters, newRemainingTaxa);
+						// pruning option handling
+						if (!Utils.pruning
+								&& !(remainingTaxa.contains(newRemainingTaxa) && newRemainingTaxa
+										.contains(remainingTaxa))) {
+							// calculate next node
+							calculateSingleAccessKeyNodeChild(node, newRemainingCharacters, newRemainingTaxa);
+						} else {
+							node.setNodeDescription(Utils.getBundleConfElement("message.warning.pruning"));
+						}
 					}
 				}
 			}
@@ -232,8 +246,10 @@ public class IdentificationKeyGenerator {
 			SingleAccessKeyNode node) {
 
 		for (SingleAccessKeyNode futureChildNode : futureChildNodes) {
-			if (futureChildNode.getRemainingTaxa().containsAll(node.getRemainingTaxa())
-					&& node.getRemainingTaxa().containsAll(futureChildNode.getRemainingTaxa())) {
+			if (node.getRemainingTaxa().size() > 1
+					&& futureChildNode.getRemainingTaxa().containsAll(node.getRemainingTaxa())
+					|| (futureChildNode.getRemainingTaxa().size() > 1 && node.getRemainingTaxa().containsAll(
+							futureChildNode.getRemainingTaxa()))) {
 				futureChildNode.addOtherCharacterStates(node.getCharacterState());
 				return true;
 			}

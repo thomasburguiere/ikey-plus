@@ -15,6 +15,7 @@ public class SingleAccessKeyNode {
 	private Object characterState = null;
 	private List<Object> otherCharacterStates = null;
 	private List<SingleAccessKeyNode> children = null;
+	private String nodeDescription = null;
 	private List<Taxon> remainingTaxa = null;
 
 	/**
@@ -194,4 +195,19 @@ public class SingleAccessKeyNode {
 	public boolean isEmpty() {
 		return character == null || characterState == null;
 	}
+
+	/**
+	 * @return String, the message to display for this node
+	 */
+	public String getNodeDescription() {
+		return nodeDescription;
+	}
+
+	/**
+	 * @param nodeDescription
+	 */
+	public void setNodeDescription(String nodeDescription) {
+		this.nodeDescription = nodeDescription;
+	}
+
 }

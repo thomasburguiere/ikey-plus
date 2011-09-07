@@ -523,8 +523,23 @@ public class SingleAccessKeyTree {
 
 				}
 
+				// creation of state ID
+				String stateID = "";
+				try {
+					if (alphabetIndex + 1 > alphabet.length) {
+						int quotient = (alphabetIndex + 1) / alphabet.length;
+						int modulo = (alphabetIndex + 1) % alphabet.length;
+						stateID = alphabet[quotient - 1] + alphabet[modulo - 1];
+					} else {
+						stateID = alphabet[alphabetIndex];
+					}
+				} catch (Exception e) {
+					Utils.setErrorMessage(Utils.getBundleConfElement("message.stateNumberError"), e);
+					e.printStackTrace();
+				}
+
 				// displaying the child node character state
-				output.append("{{Lead|" + currentParentNumber + alphabet[alphabetIndex] + "|");
+				output.append("{{Lead|" + currentParentNumber + " " + stateID + "|");
 				alphabetIndex++;
 				if (child.getCharacterState() instanceof QuantitativeMeasure) {
 					output.append(((QuantitativeMeasure) child.getCharacterState()).toStringInterval());
