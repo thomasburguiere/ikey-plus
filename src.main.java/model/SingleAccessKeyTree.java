@@ -524,7 +524,7 @@ public class SingleAccessKeyTree {
 				}
 
 				// displaying the child node character state
-				output.append("{{Lead|" + alphabet[alphabetIndex] + "|");
+				output.append("{{Lead|" + currentParentNumber + alphabet[alphabetIndex] + "|");
 				alphabetIndex++;
 				if (child.getCharacterState() instanceof QuantitativeMeasure) {
 					output.append(((QuantitativeMeasure) child.getCharacterState()).toStringInterval());
@@ -536,7 +536,7 @@ public class SingleAccessKeyTree {
 
 				// displaying the child node number if it has children nodes, displaying the taxa otherwise
 				if (child.getChildren().size() == 0) {
-					output.append("result=\"");
+					output.append("result=");
 					boolean firstLoop = true;
 					for (Taxon taxon : child.getRemainingTaxa()) {
 						if (!firstLoop) {
@@ -545,7 +545,6 @@ public class SingleAccessKeyTree {
 						output.append(taxon.getName().replace(">", "&gt;").replace("<", "&lt;"));
 						firstLoop = false;
 					}
-					output.append("\"");
 				} else {
 					output.append(counter);
 				}
@@ -658,7 +657,7 @@ public class SingleAccessKeyTree {
 				} else
 					output.append("{{Lead|" + currentParentNumber + "-|");
 				// displaying the child node character
-				output.append(child.getCharacter().getName() + "  :  ");
+				output.append(child.getCharacter().getName() + ":  ");
 
 				// displaying the child node character state
 				if (child.getCharacterState() instanceof QuantitativeMeasure) {
@@ -671,7 +670,7 @@ public class SingleAccessKeyTree {
 
 				// displaying the child node number if it has children nodes, displaying the taxa otherwise
 				if (child.getChildren().size() == 0) {
-					output.append("result=\"");
+					output.append("result=");
 					boolean firstLoop = true;
 					for (Taxon taxon : child.getRemainingTaxa()) {
 						if (!firstLoop) {
@@ -680,7 +679,6 @@ public class SingleAccessKeyTree {
 						output.append(taxon.getName().replace(">", "&gt;").replace("<", "&lt;"));
 						firstLoop = false;
 					}
-					output.append("\"");
 				} else {
 					output.append(counter);
 				}
@@ -808,7 +806,7 @@ public class SingleAccessKeyTree {
 
 					output.append("  <span class=\"character\">"
 							+ child.getCharacter().getName().replace(">", "&gt;").replace("<", "&lt;")
-							+ " :</span><br/>");
+							+ ": </span><br/>");
 
 				} else {
 					output.append("    ");
