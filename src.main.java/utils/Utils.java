@@ -43,11 +43,18 @@ public class Utils {
 	public static String TREE = "tree";
 	public static String FLAT = "flat";
 
+	// score method type
+	public static String XPER = "xper";
+	public static String JACCARD = "jaccard";
+	public static String SOKALANDMICHENER = "sokalAndMichener";
+
 	// options
 	public static boolean twoStatesCharacterFirst = false;
 	public static boolean mergeCharacterStatesIfSameDiscimination = false;
 	public static boolean reduceSameConclusionPath = false;
 	public static boolean pruning = false;
+	public static boolean verbose = false;
+	public static String scoreMethod = Utils.XPER;
 
 	/**
 	 * Convert a String value to a Double value
