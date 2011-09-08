@@ -23,6 +23,10 @@ public class Utils {
 	public static File errorMessageFile = null;
 	public static String UNKNOWNDATA = "unknownData";
 
+	// option activation
+	public static String YES = "yes";
+	public static String NO = "no";
+
 	// properties file
 	public static ResourceBundle bundleConf = ResourceBundle.getBundle("conf");
 	public static ResourceBundle bundleConfOverridable = ResourceBundle.getBundle("confOverridable");
@@ -31,13 +35,18 @@ public class Utils {
 	public static String KEY = "key_";
 	public static String ERROR = "error_";
 
-	// file extension
+	// file type
 	public static String TXT = "txt";
 	public static String HTML = "html";
 	public static String PDF = "pdf";
 	public static String SDD = "sdd";
 	public static String WIKI = "wiki";
-	public static String DOT = "gv";
+	public static String SPECIESIDWIKISTATEMENT = "speciesidwikistatement";
+	public static String SPECIESIDWIKIQUESTIONANSWER = "speciesidwikiquestionanswer";
+	public static String DOT = "dot";
+
+	// specific file extension
+	public static String GV = "gv";
 
 	// representation type
 	public static String TREE = "tree";
@@ -49,7 +58,7 @@ public class Utils {
 	public static String SOKALANDMICHENER = "sokalAndMichener";
 
 	// options
-	public static boolean twoStatesCharacterFirst = false;
+	public static boolean fewStatesCharacterFirst = false;
 	public static boolean mergeCharacterStatesIfSameDiscimination = false;
 	public static boolean reduceSameConclusionPath = false;
 	public static boolean pruning = false;

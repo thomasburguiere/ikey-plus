@@ -550,6 +550,7 @@ public class SingleAccessKeyTree {
 					output.append(((State) child.getCharacterState()).getName().replace(">", "&gt;")
 							.replace("<", "&lt;"));
 				}
+				output.append(nodeDescriptionAnalysis(child));
 				output.append("|");
 
 				// displaying the child node number if it has children nodes, displaying the taxa otherwise
@@ -684,6 +685,7 @@ public class SingleAccessKeyTree {
 					output.append(((State) child.getCharacterState()).getName().replace(">", "&gt;")
 							.replace("<", "&lt;"));
 				}
+				output.append(nodeDescriptionAnalysis(child));
 				output.append("|");
 
 				// displaying the child node number if it has children nodes, displaying the taxa otherwise
@@ -980,10 +982,12 @@ public class SingleAccessKeyTree {
 				// displaying the child node character state as a vertex label
 				if (child.getCharacterState() instanceof QuantitativeMeasure) {
 					output.append(" [label=\""
-							+ ((QuantitativeMeasure) child.getCharacterState()).toStringInterval() + "\"]");
+							+ ((QuantitativeMeasure) child.getCharacterState()).toStringInterval());
 				} else {
-					output.append(" [label=\"" + child.getStringStates() + "\"]");
+					output.append(" [label=\"" + child.getStringStates());
 				}
+				output.append(nodeDescriptionAnalysis(child));
+				output.append("\"]");
 				output.append(";" + lineSeparator);
 
 				if (child.getChildren().size() == 0) {
@@ -1296,7 +1300,7 @@ public class SingleAccessKeyTree {
 		header = header.replace(System.getProperty("line.separator"), System.getProperty("line.separator")
 				+ "//");
 		header = header + System.getProperty("line.separator");
-		File dotFile = File.createTempFile("key_", "." + Utils.DOT, new File(path));
+		File dotFile = File.createTempFile("key_", "." + Utils.GV, new File(path));
 		BufferedWriter dotFileWriter = new BufferedWriter(new FileWriter(dotFile));
 		dotFileWriter.append(header);
 		dotFileWriter.append("digraph " + dotFile.getName().split("\\.")[0] + " {");
@@ -1746,8 +1750,8 @@ public class SingleAccessKeyTree {
 	 * @return
 	 */
 	public String nodeDescriptionAnalysis(SingleAccessKeyNode node) {
-		boolean verbose = true;
-		if (node.getNodeDescription() != null && node.getNodeDescription().trim().length() > 0 && verbose) {
+		if (node.getNodeDescription() != null && node.getNodeDescription().trim().length() > 0
+				&& Utils.verbose) {
 			return " (" + node.getNodeDescription() + ")";
 		}
 		return "";

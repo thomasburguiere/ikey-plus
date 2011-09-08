@@ -636,8 +636,8 @@ public class IdentificationKeyGenerator {
 			score = (float) ((float) score + (float) 2.0);
 		}
 
-		// twoStatesCharacterFirst option handling
-		if (Utils.twoStatesCharacterFirst && score > 0 && character.getStates().size() >= 2) {
+		// fewStatesCharacterFirst option handling
+		if (Utils.fewStatesCharacterFirst && score > 0 && character.getStates().size() >= 2) {
 			// increasing artificially score of character with few states
 			float coeff = (float) 1
 					- ((float) character.getStates().size() / (float) maxNbStatesPerCharacter);
@@ -740,8 +740,8 @@ public class IdentificationKeyGenerator {
 			score = (float) ((float) score + (float) 2.0);
 		}
 
-		// twoStatesCharacterFirst option handling
-		if (Utils.twoStatesCharacterFirst && score > 0) {
+		// fewStatesCharacterFirst option handling
+		if (Utils.fewStatesCharacterFirst && score > 0) {
 			// increasing artificially the score of character with few states
 			float coeff = (float) 1 - ((float) 2 / (float) maxNbStatesPerCharacter);
 			score = (float) (score + coeff);
