@@ -120,16 +120,16 @@ public class IdentificationKeyGenerator {
 				remainingTaxa.removeAll(notDescribedTaxa);
 			}
 
-			// display score for each character
-			// for (ICharacter character : remainingCharacters) {
-			// if (character.isSupportsCategoricalData()) {
-			// System.out.println("CC " + character.getName() + ": " + charactersScore.get(character));
-			// } else {
-			// System.out.println("NN " + character.getName() + ": " + charactersScore.get(character));
-			// }
-			// }
-			// System.out.println(System.getProperty("line.separator") + "bestCharacter: "
-			// + selectedCharacter.getName() + System.getProperty("line.separator"));
+//			 display score for each character
+//			 for (ICharacter character : remainingCharacters) {
+//			 if (character.isSupportsCategoricalData()) {
+//			 System.out.println("CC " + character.getName() + ": " + charactersScore.get(character));
+//			 } else {
+//			 System.out.println("NN " + character.getName() + ": " + charactersScore.get(character));
+//			 }
+//			 }
+//			 System.out.println(System.getProperty("line.separator") + "bestCharacter: "
+//			 + selectedCharacter.getName() + System.getProperty("line.separator"));
 
 			// if the character is categorical
 			if (selectedCharacter.isSupportsCategoricalData()) {
@@ -482,11 +482,15 @@ public class IdentificationKeyGenerator {
 		LinkedHashMap<ICharacter, Float> scoreMap = new LinkedHashMap<ICharacter, Float>();
 		for (ICharacter character : characters) {
 			if (character.isSupportsCategoricalData()) {
-				scoreMap.put(character,
-						categoricalCharacterScore((CategoricalCharacter) character, remaningTaxa));
+				scoreMap.put(
+						character,
+						categoricalCharacterScore((CategoricalCharacter) character, remaningTaxa,
+								Utils.scoreMethod));
 			} else {
-				scoreMap.put(character,
-						quantitativeCharacterScore((QuantitativeCharacter) character, remaningTaxa));
+				scoreMap.put(
+						character,
+						quantitativeCharacterScore((QuantitativeCharacter) character, remaningTaxa,
+								Utils.scoreMethod));
 			}
 		}
 
@@ -560,11 +564,13 @@ public class IdentificationKeyGenerator {
 	 * Calculate the discriminant power for categorical character
 	 * 
 	 * @param character
+	 * @param scoreMethod
+	 *            TODO
 	 * @param codedDescriptions
 	 * @return float, the discriminant power of the categorical character
 	 */
-	private float categoricalCharacterScore(CategoricalCharacter character, List<Taxon> remainingTaxa)
-			throws Exception {
+	private float categoricalCharacterScore(CategoricalCharacter character, List<Taxon> remainingTaxa,
+			String scoreMethod) throws Exception {
 		int cpt = 0;
 		float score = 0;
 		boolean isAlwaysDescribed = true;
@@ -617,10 +623,31 @@ public class IdentificationKeyGenerator {
 									}
 								}
 							}
-							// yes or no method (Xper)
-							if ((commonPresent == 0) && (other > 0)) {
-								score++;
+							float out = 0;
+
+							// Sokal & Michener method
+							if (scoreMethod.trim().equalsIgnoreCase("sokalAndMichener")) {
+								out = 1 - ((commonPresent + commonAbsent) / (commonPresent + commonAbsent + other));
 							}
+							// Jaccard Method
+							else if (scoreMethod.trim().equalsIgnoreCase("jaccard")) {
+								try {
+									// case where description are empty
+									out = 1 - (commonPresent / (commonPresent + other));
+								} catch (ArithmeticException a) {
+									out = 0;
+								}
+							}
+							// yes or no method (Xper)
+							else {
+								if ((commonPresent == 0) && (other > 0)) {
+									out = 1;
+								} else {
+									out = 0;
+								}
+							}
+							out = Utils.roundFloat(out, 4);
+							score += out;
 						}
 						cpt++;
 					}
@@ -656,8 +683,8 @@ public class IdentificationKeyGenerator {
 	 * @param codedDescriptions
 	 * @return float, the discriminant power of the quantitative character
 	 */
-	private float quantitativeCharacterScore(QuantitativeCharacter character, List<Taxon> remainingTaxa)
-			throws Exception {
+	private float quantitativeCharacterScore(QuantitativeCharacter character, List<Taxon> remainingTaxa,
+			String scoreMethod) throws Exception {
 		int cpt = 0;
 		float score = 0;
 		boolean isAlwaysDescribed = true;
@@ -696,14 +723,14 @@ public class IdentificationKeyGenerator {
 							// search common shared values
 						} else if (quantitativeMeasure1 != null && quantitativeMeasure2 != null) {
 
-							// if a taxon is described and the other not, it means that this taxa can be
+							// if a taxon is described and the other is not, it means that this taxa can be
 							// discriminated
 							if ((quantitativeMeasure1.isNotSpecified() && !quantitativeMeasure2
 									.isNotSpecified())
 									|| (quantitativeMeasure2.isNotSpecified() && !quantitativeMeasure1
 											.isNotSpecified())) {
 								score++;
-							} else
+							} else {
 								// search common state
 								for (QuantitativeMeasure quantitativeMeasure : QuantitativeIntervals) {
 									if (quantitativeMeasure.isInclude(quantitativeMeasure1)) {
@@ -720,9 +747,31 @@ public class IdentificationKeyGenerator {
 										}
 									}
 								}
-							// yes or no method (Xper)
-							if ((commonPresent == 0) && (other > 0)) {
-								score++;
+
+								float out = 0;
+
+								// Sokal and Michener method
+								if (scoreMethod.trim().equalsIgnoreCase("sokalAndMichener")) {
+									out = 1 - (((commonPresent + commonAbsent) / commonPresent + commonAbsent + other));
+								}
+								// Jaccard Method
+								else if (scoreMethod.trim().equalsIgnoreCase("jaccard")) {
+									try {
+										// case where description are empty
+										out = 1 - (commonPresent / (commonPresent + other));
+									} catch (ArithmeticException a) {
+										out = 0;
+									}
+								}
+								// yes or no method (Xper)
+								else {
+									if ((commonPresent == 0) && (other > 0))
+										out = 1;
+									else
+										out = 0;
+								}
+								out = Utils.roundFloat(out, 4);
+								score += out;
 							}
 						}
 						cpt++;
@@ -845,3 +894,4 @@ public class IdentificationKeyGenerator {
 	}
 
 }
+
