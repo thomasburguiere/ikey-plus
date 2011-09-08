@@ -214,4 +214,23 @@ public class Utils {
 		return new ArrayList<Object>(set);
 	}
 
+	/**
+	 * @param floatToRound
+	 *            the float number that will be rounded
+	 * @param roundFactor
+	 *            the power of 10 used to round the float, e.g. if roundFactor = 3, the float number will be
+	 *            rounded with 10^3 as a multiplier
+	 * @return
+	 */
+	public static float roundFloat(float floatToRound, int roundFactor) {
+		double roundedFloat = 0;
+		double multiplier = Math.pow((double) 10, (double) roundFactor);
+
+		roundedFloat = multiplier * floatToRound;
+		roundedFloat = (int) (roundedFloat + .5);
+		roundedFloat /= multiplier;
+		return (float) roundedFloat;
+	}
+
 }
+
