@@ -120,16 +120,16 @@ public class IdentificationKeyGenerator {
 				remainingTaxa.removeAll(notDescribedTaxa);
 			}
 
-//			 display score for each character
-//			 for (ICharacter character : remainingCharacters) {
-//			 if (character.isSupportsCategoricalData()) {
-//			 System.out.println("CC " + character.getName() + ": " + charactersScore.get(character));
-//			 } else {
-//			 System.out.println("NN " + character.getName() + ": " + charactersScore.get(character));
-//			 }
-//			 }
-//			 System.out.println(System.getProperty("line.separator") + "bestCharacter: "
-//			 + selectedCharacter.getName() + System.getProperty("line.separator"));
+			// display score for each character
+			// for (ICharacter character : remainingCharacters) {
+			// if (character.isSupportsCategoricalData()) {
+			// System.out.println("CC " + character.getName() + ": " + charactersScore.get(character));
+			// } else {
+			// System.out.println("NN " + character.getName() + ": " + charactersScore.get(character));
+			// }
+			// }
+			// System.out.println(System.getProperty("line.separator") + "bestCharacter: "
+			// + selectedCharacter.getName() + System.getProperty("line.separator"));
 
 			// if the character is categorical
 			if (selectedCharacter.isSupportsCategoricalData()) {
@@ -894,4 +894,3 @@ public class IdentificationKeyGenerator {
 	}
 
 }
-
