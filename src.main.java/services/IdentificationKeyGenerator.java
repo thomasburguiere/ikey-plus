@@ -628,12 +628,16 @@ public class IdentificationKeyGenerator {
 							// Sokal & Michener method
 							if (scoreMethod.trim().equalsIgnoreCase("sokalAndMichener")) {
 								out = 1 - ((commonPresent + commonAbsent) / (commonPresent + commonAbsent + other));
+								// round to 10^-3
+								out = Utils.roundFloat(out, 3);
 							}
 							// Jaccard Method
 							else if (scoreMethod.trim().equalsIgnoreCase("jaccard")) {
 								try {
 									// case where description are empty
 									out = 1 - (commonPresent / (commonPresent + other));
+									// round to 10^-3
+									out = Utils.roundFloat(out, 3);
 								} catch (ArithmeticException a) {
 									out = 0;
 								}
@@ -646,7 +650,6 @@ public class IdentificationKeyGenerator {
 									out = 0;
 								}
 							}
-							out = Utils.roundFloat(out, 4);
 							score += out;
 						}
 						cpt++;
@@ -671,8 +674,6 @@ public class IdentificationKeyGenerator {
 			score = (float) (score + coeff);
 		}
 
-		// round to 10^-2
-		/* score *= 100; score = (int)(score+.5); score /= 100; */
 		return score;
 	}
 
@@ -753,12 +754,16 @@ public class IdentificationKeyGenerator {
 								// Sokal and Michener method
 								if (scoreMethod.trim().equalsIgnoreCase("sokalAndMichener")) {
 									out = 1 - (((commonPresent + commonAbsent) / commonPresent + commonAbsent + other));
+									// round to 10^-3
+									out = Utils.roundFloat(out, 3);
 								}
 								// Jaccard Method
 								else if (scoreMethod.trim().equalsIgnoreCase("jaccard")) {
 									try {
 										// case where description are empty
 										out = 1 - (commonPresent / (commonPresent + other));
+										// round to 10^-3
+										out = Utils.roundFloat(out, 3);
 									} catch (ArithmeticException a) {
 										out = 0;
 									}
@@ -770,7 +775,6 @@ public class IdentificationKeyGenerator {
 									else
 										out = 0;
 								}
-								out = Utils.roundFloat(out, 4);
 								score += out;
 							}
 						}
@@ -796,8 +800,6 @@ public class IdentificationKeyGenerator {
 			score = (float) (score + coeff);
 		}
 
-		// round to 10^-2
-		/* score *= 100; score = (int)(score+.5); score /= 100; */
 		return score;
 	}
 

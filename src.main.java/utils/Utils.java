@@ -220,7 +220,7 @@ public class Utils {
 	 * @param roundFactor
 	 *            the power of 10 used to round the float, e.g. if roundFactor = 3, the float number will be
 	 *            rounded with 10^3 as a multiplier
-	 * @return
+	 * @return float, the rounded value
 	 */
 	public static float roundFloat(float floatToRound, int roundFactor) {
 		double roundedFloat = 0;
@@ -230,6 +230,24 @@ public class Utils {
 		roundedFloat = (int) (roundedFloat + .5);
 		roundedFloat /= multiplier;
 		return (float) roundedFloat;
+	}
+
+	/**
+	 * @param score
+	 *            the double number that will be rounded
+	 * @param roundFactor
+	 *            the power of 10 used to round the float, e.g. if roundFactor = 3, the float number will be
+	 *            rounded with 10^3 as a multiplier
+	 * @return double, the rounded value
+	 */
+	public static double roundDouble(double score, int roundFactor) {
+		double roundedDouble = 0;
+		double multiplier = Math.pow((double) 10, (double) roundFactor);
+
+		roundedDouble = multiplier * score;
+		roundedDouble = (int) (roundedDouble + .5);
+		roundedDouble /= multiplier;
+		return (float) roundedDouble;
 	}
 
 }
