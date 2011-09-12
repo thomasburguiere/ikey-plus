@@ -89,7 +89,7 @@ public class IdentificationKeyGenerator {
 	 */
 	private void calculateSingleAccessKeyNodeChild(SingleAccessKeyNode parentNode,
 			List<ICharacter> remainingCharacters, List<Taxon> remainingTaxa,
-			List<ICharacter> alreadyUsedCharacters) throws Exception {
+			List<ICharacter> alreadyUsedCharacter) throws Exception {
 
 		if (remainingCharacters.size() > 0 && remainingTaxa.size() > 1) {
 
@@ -98,7 +98,7 @@ public class IdentificationKeyGenerator {
 
 			// calculate characters score
 			Map<ICharacter, Float> charactersScore = charactersScores(remainingCharacters, remainingTaxa,
-					childDependantCharacters, alreadyUsedCharacters);
+					childDependantCharacters, alreadyUsedCharacter);
 			ICharacter selectedCharacter = bestCharacter(charactersScore);
 
 			// delete characters if score method is not Xper and score = 0
@@ -188,16 +188,16 @@ public class IdentificationKeyGenerator {
 						} else {
 							// calculate next node
 							calculateSingleAccessKeyNodeChild(node, newRemainingCharacters, newRemainingTaxa,
-									new ArrayList<ICharacter>(alreadyUsedCharacters));
+									new ArrayList<ICharacter>(alreadyUsedCharacter));
 						}
 					}
 				}
 
 				// if the character is numerical
 			} else {
-				// add the selected character to the already used character list
-				alreadyUsedCharacters.add(selectedCharacter);
 
+				// add the selected character to the already used characters list
+				alreadyUsedCharacter.add(selectedCharacter);
 				List<QuantitativeMeasure> quantitativeMeasures = splitQuantitativeCharacter(
 						selectedCharacter, remainingTaxa);
 
@@ -227,9 +227,18 @@ public class IdentificationKeyGenerator {
 								&& !childDependantCharacters.contains(selectedCharacter)) {
 							node.setNodeDescription(Utils.getBundleConfElement("message.warning.pruning"));
 						} else {
-							// calculate next node
-							calculateSingleAccessKeyNodeChild(node, newRemainingCharacters, newRemainingTaxa,
-									new ArrayList<ICharacter>(alreadyUsedCharacters));
+							// if current remaining taxa are similar to parent node remaining taxa
+							if (parentNode.getRemainingTaxa().size() == newRemainingTaxa.size()) {
+								// remove last best character from the remaining characters list
+								newRemainingCharacters.remove(selectedCharacter);
+								// calculate next node without selected character
+								calculateSingleAccessKeyNodeChild(node, newRemainingCharacters,
+										newRemainingTaxa, new ArrayList<ICharacter>(alreadyUsedCharacter));
+							} else {
+								// calculate next node
+								calculateSingleAccessKeyNodeChild(node, newRemainingCharacters,
+										newRemainingTaxa, new ArrayList<ICharacter>(alreadyUsedCharacter));
+							}
 						}
 					}
 				}
@@ -488,7 +497,7 @@ public class IdentificationKeyGenerator {
 	 * @return Map<ICharacter,Float>, a MAP contening all discriminant power of all taxa
 	 */
 	private Map<ICharacter, Float> charactersScores(List<ICharacter> characters, List<Taxon> remaningTaxa,
-			List<ICharacter> childDependantCharacters, List<ICharacter> alreadyUsedCharacters)
+			List<ICharacter> childDependantCharacters, List<ICharacter> alreadyUsedCharacter)
 			throws Exception {
 		LinkedHashMap<ICharacter, Float> scoreMap = new LinkedHashMap<ICharacter, Float>();
 		for (ICharacter character : characters) {
@@ -499,7 +508,7 @@ public class IdentificationKeyGenerator {
 				scoreMap.put(
 						character,
 						quantitativeCharacterScore((QuantitativeCharacter) character, remaningTaxa,
-								alreadyUsedCharacters));
+								alreadyUsedCharacter));
 			}
 		}
 
@@ -676,7 +685,7 @@ public class IdentificationKeyGenerator {
 	 * @throws Exception
 	 */
 	private float quantitativeCharacterScore(QuantitativeCharacter character, List<Taxon> remainingTaxa,
-			List<ICharacter> alreadyUsedCharacters) throws Exception {
+			List<ICharacter> alreadyUsedCharacter) throws Exception {
 		int cpt = 0;
 		float score = 0;
 		boolean isAlwaysDescribed = true;
@@ -754,7 +763,7 @@ public class IdentificationKeyGenerator {
 		}
 
 		// increasing artificially the score of character containing only described taxa
-		if (!alreadyUsedCharacters.contains(character) && isAlwaysDescribed && score > 0) {
+		if (!alreadyUsedCharacter.contains(character) && isAlwaysDescribed && score > 0) {
 			score = (float) ((float) score + (float) 2.0);
 		}
 
@@ -764,7 +773,6 @@ public class IdentificationKeyGenerator {
 			float coeff = (float) 1 - ((float) 2 / (float) maxNbStatesPerCharacter);
 			score = (float) (score + coeff);
 		}
-
 		return score;
 	}
 

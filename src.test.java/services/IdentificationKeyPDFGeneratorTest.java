@@ -60,7 +60,7 @@ public class IdentificationKeyPDFGeneratorTest {
 				Utils.reduceSameConclusionPath = false;
 				Utils.pruning = false;
 				Utils.verbose = false;
-				Utils.scoreMethod = Utils.JACCARD;
+				Utils.scoreMethod = Utils.XPER;
 
 				// test if the URL is valid
 				URLConnection urlConnection;
