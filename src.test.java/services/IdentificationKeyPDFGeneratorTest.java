@@ -59,8 +59,8 @@ public class IdentificationKeyPDFGeneratorTest {
 				Utils.mergeCharacterStatesIfSameDiscimination = false;
 				Utils.reduceSameConclusionPath = false;
 				Utils.pruning = false;
-				Utils.verbose = false;
-				Utils.scoreMethod = Utils.XPER;
+				Utils.verbosity = "how";
+				Utils.scoreMethod = Utils.SOKALANDMICHENER;
 
 				// test if the URL is valid
 				URLConnection urlConnection;
@@ -92,7 +92,7 @@ public class IdentificationKeyPDFGeneratorTest {
 				header.append(System.getProperty("line.separator") + "reduceSameConclusionPath="
 						+ Utils.reduceSameConclusionPath);
 				header.append(System.getProperty("line.separator") + "pruning=" + Utils.pruning);
-				header.append(System.getProperty("line.separator") + "verbose=" + Utils.verbose);
+				header.append(System.getProperty("line.separator") + "verbosity=" + Utils.verbosity);
 				header.append(System.getProperty("line.separator") + "scoreMethod=" + Utils.scoreMethod
 						+ System.getProperty("line.separator"));
 
@@ -128,6 +128,9 @@ public class IdentificationKeyPDFGeneratorTest {
 
 			// create key file
 			try {
+				if(!Utils.verbosity.contains(Utils.HEADERTAG)){
+					header.setLength(0); 
+				}
 				resultFileName = identificationKeyGenerator.getSingleAccessKeyTree()
 						.toPdfFile(header.toString()).getName();
 			} catch (IOException e) {

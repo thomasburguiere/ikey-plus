@@ -244,13 +244,13 @@ public class IdentificationKeyGenerator {
 				}
 			}
 
-			// if taxa are not described create a node "Other (not described)"
-			if (notDescribedTaxa != null && notDescribedTaxa.size() > 0) {
+			// if taxa are not described and if verbosity string contains correct tag, create a node "Other (not described)"
+			if (Utils.verbosity.contains(Utils.OTHERTAG) && notDescribedTaxa != null && notDescribedTaxa.size() > 0) {
 				// init new node
 				SingleAccessKeyNode notDescribedNode = new SingleAccessKeyNode();
 				notDescribedNode.setCharacter(selectedCharacter);
 				notDescribedNode.setRemainingTaxa(notDescribedTaxa);
-				notDescribedNode.setCharacterState(new State("Other (not described)"));
+				notDescribedNode.setCharacterState(new State(Utils.getBundleConfElement("message.notDescribed")));
 
 				// put new node as child of parentNode
 				parentNode.addChild(notDescribedNode);

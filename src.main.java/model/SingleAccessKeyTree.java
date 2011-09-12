@@ -1751,7 +1751,7 @@ public class SingleAccessKeyTree {
 	 */
 	public String nodeDescriptionAnalysis(SingleAccessKeyNode node) {
 		if (node.getNodeDescription() != null && node.getNodeDescription().trim().length() > 0
-				&& Utils.verbose) {
+				&& Utils.verbosity.contains(Utils.WARNINGTAG)) {
 			return " (" + node.getNodeDescription() + ")";
 		}
 		return "";

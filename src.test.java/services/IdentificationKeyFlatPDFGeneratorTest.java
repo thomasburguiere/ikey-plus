@@ -59,7 +59,7 @@ public class IdentificationKeyFlatPDFGeneratorTest {
 				Utils.mergeCharacterStatesIfSameDiscimination = false;
 				Utils.reduceSameConclusionPath = false;
 				Utils.pruning = false;
-				Utils.verbose = false;
+				Utils.verbosity = "";
 				Utils.scoreMethod = Utils.XPER;
 
 				// test if the URL is valid
@@ -92,7 +92,7 @@ public class IdentificationKeyFlatPDFGeneratorTest {
 				header.append(System.getProperty("line.separator") + "reduceSameConclusionPath="
 						+ Utils.reduceSameConclusionPath);
 				header.append(System.getProperty("line.separator") + "pruning=" + Utils.pruning);
-				header.append(System.getProperty("line.separator") + "verbose=" + Utils.verbose);
+				header.append(System.getProperty("line.separator") + "verbosity=" + Utils.verbosity);
 				header.append(System.getProperty("line.separator") + "scoreMethod=" + Utils.scoreMethod
 						+ System.getProperty("line.separator"));
 
@@ -128,6 +128,9 @@ public class IdentificationKeyFlatPDFGeneratorTest {
 
 			// create key file
 			try {
+				if(!Utils.verbosity.contains(Utils.HEADERTAG)){
+					header.setLength(0); 
+				}
 				resultFileName = identificationKeyGenerator.getSingleAccessKeyTree()
 						.toFlatPdfFile(header.toString()).getName();
 			} catch (IOException e) {

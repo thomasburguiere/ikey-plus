@@ -21,48 +21,50 @@ public class Utils {
 
 	public static String errorMessage = null;
 	public static File errorMessageFile = null;
-	public static String UNKNOWNDATA = "unknownData";
-
-	// option activation
-	public static String YES = "yes";
-	public static String NO = "no";
+	
+	public static final String UNKNOWNDATA = "unknownData";
+	public static final String YES = "yes";
+	public static final String NO = "no";
+	public static final String HEADERTAG = "h";
+	public static final String OTHERTAG = "o";
+	public static final String WARNINGTAG = "w";
 
 	// properties file
 	public static ResourceBundle bundleConf = ResourceBundle.getBundle("conf");
 	public static ResourceBundle bundleConfOverridable = ResourceBundle.getBundle("confOverridable");
 
 	// file prefix
-	public static String KEY = "key_";
-	public static String ERROR = "error_";
+	public static final String KEY = "key_";
+	public static final String ERROR = "error_";
 
 	// file type
-	public static String TXT = "txt";
-	public static String HTML = "html";
-	public static String PDF = "pdf";
-	public static String SDD = "sdd";
-	public static String WIKI = "wiki";
-	public static String SPECIESIDWIKISTATEMENT = "speciesidwikistatement";
-	public static String SPECIESIDWIKIQUESTIONANSWER = "speciesidwikiquestionanswer";
-	public static String DOT = "dot";
+	public static final String TXT = "txt";
+	public static final String HTML = "html";
+	public static final String PDF = "pdf";
+	public static final String SDD = "sdd";
+	public static final String WIKI = "wiki";
+	public static final String SPECIESIDWIKISTATEMENT = "speciesidwikistatement";
+	public static final String SPECIESIDWIKIQUESTIONANSWER = "speciesidwikiquestionanswer";
+	public static final String DOT = "dot";
 
 	// specific file extension
-	public static String GV = "gv";
+	public static final String GV = "gv";
 
 	// representation type
-	public static String TREE = "tree";
-	public static String FLAT = "flat";
+	public static final String TREE = "tree";
+	public static final String FLAT = "flat";
 
 	// score method type
-	public static String XPER = "xper";
-	public static String JACCARD = "jaccard";
-	public static String SOKALANDMICHENER = "sokalAndMichener";
+	public static final String XPER = "xper";
+	public static final String JACCARD = "jaccard";
+	public static final String SOKALANDMICHENER = "sokalAndMichener";
 
 	// options
 	public static boolean fewStatesCharacterFirst = false;
 	public static boolean mergeCharacterStatesIfSameDiscimination = false;
 	public static boolean reduceSameConclusionPath = false;
 	public static boolean pruning = false;
-	public static boolean verbose = false;
+	public static String verbosity = "";
 	public static String scoreMethod = Utils.XPER;
 
 	/**
