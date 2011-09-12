@@ -60,7 +60,7 @@ public class IdentificationKeyPDFGeneratorTest {
 				Utils.reduceSameConclusionPath = false;
 				Utils.pruning = false;
 				Utils.verbose = false;
-				Utils.scoreMethod = Utils.XPER;
+				Utils.scoreMethod = Utils.JACCARD;
 
 				// test if the URL is valid
 				URLConnection urlConnection;
@@ -80,7 +80,7 @@ public class IdentificationKeyPDFGeneratorTest {
 				sddSaxParser = new SDDSaxParser(stringUrl);
 				// construct header
 				header.append(System.getProperty("line.separator") + sddSaxParser.getDataset().getLabel()
-						+ ", " + Utils.getBundleConfElement("message.createdBy")
+						+ ", " + Utils.getBundleConfOverridableElement("message.createdBy")
 						+ System.getProperty("line.separator"));
 				header.append(System.getProperty("line.separator") + "Options:");
 				header.append(System.getProperty("line.separator") + "sddURL=" + stringUrl);

@@ -72,7 +72,7 @@ public class IdentificationKeyGenerator {
 
 		// calculate next node
 		calculateSingleAccessKeyNodeChild(rootNode, dataset.getCharacters(),
-				new ArrayList<Taxon>(dataset.getTaxa()));
+				new ArrayList<Taxon>(dataset.getTaxa()), new ArrayList<ICharacter>());
 
 		// delete useless nodes
 		optimizeSingleAccessKeyTree(null, this.singleAccessKeyTree.getRoot());
@@ -84,9 +84,12 @@ public class IdentificationKeyGenerator {
 	 * @param parentNode
 	 * @param remainingCharacters
 	 * @param remainingTaxa
+	 * @param alreadyUsedCharacter
+	 *            , the list of numerical characters already used at least one time
 	 */
 	private void calculateSingleAccessKeyNodeChild(SingleAccessKeyNode parentNode,
-			List<ICharacter> remainingCharacters, List<Taxon> remainingTaxa) throws Exception {
+			List<ICharacter> remainingCharacters, List<Taxon> remainingTaxa,
+			List<ICharacter> alreadyUsedCharacters) throws Exception {
 
 		if (remainingCharacters.size() > 0 && remainingTaxa.size() > 1) {
 
@@ -95,16 +98,18 @@ public class IdentificationKeyGenerator {
 
 			// calculate characters score
 			Map<ICharacter, Float> charactersScore = charactersScores(remainingCharacters, remainingTaxa,
-					childDependantCharacters);
+					childDependantCharacters, alreadyUsedCharacters);
 			ICharacter selectedCharacter = bestCharacter(charactersScore);
-			float selectedScore = charactersScore.get(selectedCharacter);
 
-			// delete characters if score = 0
-			// for (ICharacter character : charactersScore.keySet()) {
-			// if (charactersScore.get(character) <= 0) {
-			// remainingCharacters.remove(character);
-			// }
-			// }
+			// delete characters if score method is not Xper and score = 0
+			if (!Utils.scoreMethod.equalsIgnoreCase(Utils.XPER)) {
+				for (ICharacter character : charactersScore.keySet()) {
+					if (charactersScore.get(character) <= 0) {
+						remainingCharacters.removeAll(character.getAllChildren());
+						remainingCharacters.remove(character);
+					}
+				}
+			}
 
 			// get not described taxa
 			List<Taxon> notDescribedTaxa = null;
@@ -182,13 +187,17 @@ public class IdentificationKeyGenerator {
 							node.setNodeDescription(Utils.getBundleConfElement("message.warning.pruning"));
 						} else {
 							// calculate next node
-							calculateSingleAccessKeyNodeChild(node, newRemainingCharacters, newRemainingTaxa);
+							calculateSingleAccessKeyNodeChild(node, newRemainingCharacters, newRemainingTaxa,
+									new ArrayList<ICharacter>(alreadyUsedCharacters));
 						}
 					}
 				}
 
 				// if the character is numerical
 			} else {
+				// add the selected character to the already used character list
+				alreadyUsedCharacters.add(selectedCharacter);
+
 				List<QuantitativeMeasure> quantitativeMeasures = splitQuantitativeCharacter(
 						selectedCharacter, remainingTaxa);
 
@@ -219,7 +228,8 @@ public class IdentificationKeyGenerator {
 							node.setNodeDescription(Utils.getBundleConfElement("message.warning.pruning"));
 						} else {
 							// calculate next node
-							calculateSingleAccessKeyNodeChild(node, newRemainingCharacters, newRemainingTaxa);
+							calculateSingleAccessKeyNodeChild(node, newRemainingCharacters, newRemainingTaxa,
+									new ArrayList<ICharacter>(alreadyUsedCharacters));
 						}
 					}
 				}
@@ -478,19 +488,18 @@ public class IdentificationKeyGenerator {
 	 * @return Map<ICharacter,Float>, a MAP contening all discriminant power of all taxa
 	 */
 	private Map<ICharacter, Float> charactersScores(List<ICharacter> characters, List<Taxon> remaningTaxa,
-			List<ICharacter> childDependantCharacters) throws Exception {
+			List<ICharacter> childDependantCharacters, List<ICharacter> alreadyUsedCharacters)
+			throws Exception {
 		LinkedHashMap<ICharacter, Float> scoreMap = new LinkedHashMap<ICharacter, Float>();
 		for (ICharacter character : characters) {
 			if (character.isSupportsCategoricalData()) {
-				scoreMap.put(
-						character,
-						categoricalCharacterScore((CategoricalCharacter) character, remaningTaxa,
-								Utils.scoreMethod));
+				scoreMap.put(character,
+						categoricalCharacterScore((CategoricalCharacter) character, remaningTaxa));
 			} else {
 				scoreMap.put(
 						character,
 						quantitativeCharacterScore((QuantitativeCharacter) character, remaningTaxa,
-								Utils.scoreMethod));
+								alreadyUsedCharacters));
 			}
 		}
 
@@ -569,8 +578,8 @@ public class IdentificationKeyGenerator {
 	 * @param codedDescriptions
 	 * @return float, the discriminant power of the categorical character
 	 */
-	private float categoricalCharacterScore(CategoricalCharacter character, List<Taxon> remainingTaxa,
-			String scoreMethod) throws Exception {
+	private float categoricalCharacterScore(CategoricalCharacter character, List<Taxon> remainingTaxa)
+			throws Exception {
 		int cpt = 0;
 		float score = 0;
 		boolean isAlwaysDescribed = true;
@@ -582,11 +591,7 @@ public class IdentificationKeyGenerator {
 					// if the character is applicable for both of these taxa
 					if (dataset.isApplicable(remainingTaxa.get(i), character)
 							&& dataset.isApplicable(remainingTaxa.get(j), character)) {
-						// nb of common states which are absent
-						float commonAbsent = 0;
-						// nb of common states which are present
-						float commonPresent = 0;
-						float other = 0;
+
 						List<State> statesList1 = (List<State>) dataset.getCodedDescription(
 								remainingTaxa.get(i)).getCharacterDescription(character);
 						List<State> statesList2 = (List<State>) dataset.getCodedDescription(
@@ -603,6 +608,12 @@ public class IdentificationKeyGenerator {
 								|| (statesList2 == null && statesList1 != null && statesList1.size() == 0)) {
 							score++;
 						} else if (statesList1 != null && statesList2 != null) {
+
+							// nb of common states which are absent
+							float commonAbsent = 0;
+							// nb of common states which are present
+							float commonPresent = 0;
+							float other = 0;
 
 							// search common state
 							for (int k = 0; k < character.getStates().size(); k++) {
@@ -623,40 +634,14 @@ public class IdentificationKeyGenerator {
 									}
 								}
 							}
-							float out = 0;
-
-							// Sokal & Michener method
-							if (scoreMethod.trim().equalsIgnoreCase("sokalAndMichener")) {
-								out = 1 - ((commonPresent + commonAbsent) / (commonPresent + commonAbsent + other));
-								// round to 10^-3
-								out = Utils.roundFloat(out, 3);
-							}
-							// Jaccard Method
-							else if (scoreMethod.trim().equalsIgnoreCase("jaccard")) {
-								try {
-									// case where description are empty
-									out = 1 - (commonPresent / (commonPresent + other));
-									// round to 10^-3
-									out = Utils.roundFloat(out, 3);
-								} catch (ArithmeticException a) {
-									out = 0;
-								}
-							}
-							// yes or no method (Xper)
-							else {
-								if ((commonPresent == 0) && (other > 0)) {
-									out = 1;
-								} else {
-									out = 0;
-								}
-							}
-							score += out;
+							score += applyScoreMethod(commonPresent, commonAbsent, other);
 						}
 						cpt++;
 					}
 				}
 			}
 		}
+
 		if (cpt >= 1) {
 			score = score / cpt;
 		}
@@ -684,8 +669,14 @@ public class IdentificationKeyGenerator {
 	 * @param codedDescriptions
 	 * @return float, the discriminant power of the quantitative character
 	 */
+	/**
+	 * @param character
+	 * @param remainingTaxa
+	 * @return
+	 * @throws Exception
+	 */
 	private float quantitativeCharacterScore(QuantitativeCharacter character, List<Taxon> remainingTaxa,
-			String scoreMethod) throws Exception {
+			List<ICharacter> alreadyUsedCharacters) throws Exception {
 		int cpt = 0;
 		float score = 0;
 		boolean isAlwaysDescribed = true;
@@ -732,6 +723,7 @@ public class IdentificationKeyGenerator {
 											.isNotSpecified())) {
 								score++;
 							} else {
+
 								// search common state
 								for (QuantitativeMeasure quantitativeMeasure : QuantitativeIntervals) {
 									if (quantitativeMeasure.isInclude(quantitativeMeasure1)) {
@@ -748,34 +740,7 @@ public class IdentificationKeyGenerator {
 										}
 									}
 								}
-
-								float out = 0;
-
-								// Sokal and Michener method
-								if (scoreMethod.trim().equalsIgnoreCase("sokalAndMichener")) {
-									out = 1 - (((commonPresent + commonAbsent) / commonPresent + commonAbsent + other));
-									// round to 10^-3
-									out = Utils.roundFloat(out, 3);
-								}
-								// Jaccard Method
-								else if (scoreMethod.trim().equalsIgnoreCase("jaccard")) {
-									try {
-										// case where description are empty
-										out = 1 - (commonPresent / (commonPresent + other));
-										// round to 10^-3
-										out = Utils.roundFloat(out, 3);
-									} catch (ArithmeticException a) {
-										out = 0;
-									}
-								}
-								// yes or no method (Xper)
-								else {
-									if ((commonPresent == 0) && (other > 0))
-										out = 1;
-									else
-										out = 0;
-								}
-								score += out;
+								score += applyScoreMethod(commonPresent, commonAbsent, other);
 							}
 						}
 						cpt++;
@@ -789,7 +754,7 @@ public class IdentificationKeyGenerator {
 		}
 
 		// increasing artificially the score of character containing only described taxa
-		if (isAlwaysDescribed && score > 0) {
+		if (!alreadyUsedCharacters.contains(character) && isAlwaysDescribed && score > 0) {
 			score = (float) ((float) score + (float) 2.0);
 		}
 
@@ -860,6 +825,44 @@ public class IdentificationKeyGenerator {
 	}
 
 	/**
+	 * @param commonPresent
+	 * @param commonAbsent
+	 * @param other
+	 * @return float, the score using the method requested
+	 */
+	private float applyScoreMethod(float commonPresent, float commonAbsent, float other) {
+
+		float out = 0;
+
+		// Sokal & Michener method
+		if (Utils.scoreMethod.trim().equalsIgnoreCase(Utils.SOKALANDMICHENER)) {
+			out = 1 - ((commonPresent + commonAbsent) / (commonPresent + commonAbsent + other));
+			// round to 10^-3
+			out = Utils.roundFloat(out, 3);
+		}
+		// Jaccard Method
+		else if (Utils.scoreMethod.trim().equalsIgnoreCase(Utils.JACCARD)) {
+			try {
+				// case where description are empty
+				out = 1 - (commonPresent / (commonPresent + other));
+				// round to 10^-3
+				out = Utils.roundFloat(out, 3);
+			} catch (ArithmeticException a) {
+				out = 0;
+			}
+		}
+		// yes or no method (Xper)
+		else {
+			if ((commonPresent == 0) && (other > 0)) {
+				out = 1;
+			} else {
+				out = 0;
+			}
+		}
+		return out;
+	}
+
+	/**
 	 * @return SingleAccessKeyTree
 	 */
 	public SingleAccessKeyTree getSingleAccessKeyTree() {
@@ -887,10 +890,16 @@ public class IdentificationKeyGenerator {
 		this.dataset = dataSet;
 	}
 
+	/**
+	 * @return int, the max number of states
+	 */
 	public int getMaxNumStatesPerCharacter() {
 		return maxNbStatesPerCharacter;
 	}
 
+	/**
+	 * @param maxNumStatesPerCharacter
+	 */
 	public void setMaxNumStatesPerCharacter(int maxNumStatesPerCharacter) {
 		this.maxNbStatesPerCharacter = maxNumStatesPerCharacter;
 	}

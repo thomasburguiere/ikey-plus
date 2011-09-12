@@ -80,7 +80,7 @@ public class IdentificationKeyHTMLGeneratorTest {
 				sddSaxParser = new SDDSaxParser(stringUrl);
 				// construct header
 				header.append(System.getProperty("line.separator") + sddSaxParser.getDataset().getLabel()
-						+ ", " + Utils.getBundleConfElement("message.createdBy")
+						+ ", " + Utils.getBundleConfOverridableElement("message.createdBy")
 						+ System.getProperty("line.separator"));
 				header.append(System.getProperty("line.separator") + "Options:");
 				header.append(System.getProperty("line.separator") + "sddURL=" + stringUrl);
