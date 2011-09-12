@@ -128,8 +128,8 @@ public class IdentificationKeyFlatTXTGeneratorTest {
 
 			// create key file
 			try {
-				if(!Utils.verbosity.contains(Utils.HEADERTAG)){
-					header.setLength(0); 
+				if (!Utils.verbosity.contains(Utils.HEADERTAG)) {
+					header.setLength(0);
 				}
 				resultFileName = identificationKeyGenerator.getSingleAccessKeyTree()
 						.toFlatTxtFile(header.toString()).getName();

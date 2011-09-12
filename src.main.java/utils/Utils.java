@@ -21,7 +21,7 @@ public class Utils {
 
 	public static String errorMessage = null;
 	public static File errorMessageFile = null;
-	
+
 	public static final String UNKNOWNDATA = "unknownData";
 	public static final String YES = "yes";
 	public static final String NO = "no";
