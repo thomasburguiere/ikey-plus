@@ -145,42 +145,10 @@ public class SingleAccessKeyTree {
 	private void multipleTraversalToString(SingleAccessKeyNode rootNode, StringBuffer output,
 			String lineSeparator) {
 
-		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
-		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
-
 		// // first traversal, breadth-first ////
 		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
-
 		int counter = 1;
-		queue.add(rootNode);
-
-		// root node treatment
-		nodeBreadthFirstIterationMap.put(rootNode, new Integer(counter));
-		counter++;
-		// end root node treatment
-
-		visitedNodes.add(rootNode);
-
-		while (!queue.isEmpty()) {
-			SingleAccessKeyNode node = queue.remove();
-			SingleAccessKeyNode child = null;
-
-			// exclusion(node.getChildren(), visitedNodes) is the list of unvisited children nodes of the
-			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
-							.get(0)) != null) {
-				visitedNodes.add(child);
-
-				// / child node treatment
-				nodeBreadthFirstIterationMap.put(child, new Integer(counter));
-				counter++;
-
-				// / end child node treatment
-
-				queue.add(child);
-			}
-		}
-
+		iterativeBreadthFirst(rootNode, nodeBreadthFirstIterationMap, counter);
 		// // end first traversal, breadth-first ////
 
 		// // second traversal, depth-first ////
@@ -189,6 +157,9 @@ public class SingleAccessKeyTree {
 		// // end second traversal, depth-first ////
 
 		// // third traversal, breadth-first ////
+		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
+		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
+
 		queue.clear();
 		visitedNodes.clear();
 
@@ -289,41 +260,11 @@ public class SingleAccessKeyTree {
 	private void multipleTraversalToWikiString(SingleAccessKeyNode rootNode, StringBuffer output,
 			String lineSeparator) {
 
-		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
-		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
-
 		// // first traversal, breadth-first ////
 		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
-
 		int counter = 1;
-		queue.add(rootNode);
 
-		// root node treatment
-		nodeBreadthFirstIterationMap.put(rootNode, new Integer(counter));
-		counter++;
-		// end root node treatment
-
-		visitedNodes.add(rootNode);
-
-		while (!queue.isEmpty()) {
-			SingleAccessKeyNode node = queue.remove();
-			SingleAccessKeyNode child = null;
-
-			// exclusion(node.getChildren(), visitedNodes) is the list of unvisited children nodes of the
-			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
-							.get(0)) != null) {
-				visitedNodes.add(child);
-
-				// / child node treatment
-				nodeBreadthFirstIterationMap.put(child, new Integer(counter));
-				counter++;
-
-				// / end child node treatment
-
-				queue.add(child);
-			}
-		}
+		iterativeBreadthFirst(rootNode, nodeBreadthFirstIterationMap, counter);
 
 		// // end first traversal, breadth-first ////
 
@@ -333,8 +274,8 @@ public class SingleAccessKeyTree {
 		// // end second traversal, depth-first ////
 
 		// // third traversal, breadth-first ////
-		queue.clear();
-		visitedNodes.clear();
+		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
+		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
 
 		counter = 1;
 		int currentParentNumber = -1;
@@ -439,41 +380,11 @@ public class SingleAccessKeyTree {
 	private void multipleTraversalToSpeciesIDQuestionAnswerWikiString(SingleAccessKeyNode rootNode,
 			StringBuffer output, String lineSeparator) {
 
-		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
-		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
-
 		// // first traversal, breadth-first ////
 		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
 
 		int counter = 1;
-		queue.add(rootNode);
-
-		// root node treatment
-		nodeBreadthFirstIterationMap.put(rootNode, new Integer(counter));
-		counter++;
-		// end root node treatment
-
-		visitedNodes.add(rootNode);
-
-		while (!queue.isEmpty()) {
-			SingleAccessKeyNode node = queue.remove();
-			SingleAccessKeyNode child = null;
-
-			// exclusion(node.getChildren(), visitedNodes) is the list of unvisited children nodes of the
-			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
-							.get(0)) != null) {
-				visitedNodes.add(child);
-
-				// / child node treatment
-				nodeBreadthFirstIterationMap.put(child, new Integer(counter));
-				counter++;
-
-				// / end child node treatment
-
-				queue.add(child);
-			}
-		}
+		iterativeBreadthFirst(rootNode, nodeBreadthFirstIterationMap, counter);
 
 		// // end first traversal, breadth-first ////
 
@@ -483,8 +394,8 @@ public class SingleAccessKeyTree {
 		// // end second traversal, depth-first ////
 
 		// // third traversal, breadth-first ////
-		queue.clear();
-		visitedNodes.clear();
+		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
+		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
 
 		counter = 1;
 		int currentParentNumber = -1;
@@ -736,41 +647,12 @@ public class SingleAccessKeyTree {
 			String lineSeparator, boolean activeLink) {
 
 		String marging = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
-		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
 
 		// // first traversal, breadth-first ////
 		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
 
 		int counter = 1;
-		queue.add(rootNode);
-
-		// root node treatment
-		nodeBreadthFirstIterationMap.put(rootNode, new Integer(counter));
-		counter++;
-		// end root node treatment
-
-		visitedNodes.add(rootNode);
-
-		while (!queue.isEmpty()) {
-			SingleAccessKeyNode node = queue.remove();
-			SingleAccessKeyNode child = null;
-
-			// exclusion(node.getChildren(), visitedNodes) is the list of unvisited children nodes of the
-			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
-							.get(0)) != null) {
-				visitedNodes.add(child);
-
-				// / child node treatment
-				nodeBreadthFirstIterationMap.put(child, new Integer(counter));
-				counter++;
-
-				// / end child node treatment
-
-				queue.add(child);
-			}
-		}
+		iterativeBreadthFirst(rootNode, nodeBreadthFirstIterationMap, counter);
 
 		// // end first traversal, breadth-first ////
 
@@ -780,8 +662,8 @@ public class SingleAccessKeyTree {
 		// // end second traversal, depth-first ////
 
 		// // third traversal, breadth-first ////
-		queue.clear();
-		visitedNodes.clear();
+		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
+		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
 
 		counter = 1;
 		int currentParentNumber = -1;
@@ -899,41 +781,11 @@ public class SingleAccessKeyTree {
 	private void multipleTraversalToDotString(SingleAccessKeyNode rootNode, StringBuffer output,
 			String lineSeparator) {
 
-		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
-		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
-
 		// // first traversal, breadth-first ////
 		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
 
 		int counter = 1;
-		queue.add(rootNode);
-
-		// root node treatment
-		nodeBreadthFirstIterationMap.put(rootNode, new Integer(counter));
-		counter++;
-		// end root node treatment
-
-		visitedNodes.add(rootNode);
-
-		while (!queue.isEmpty()) {
-			SingleAccessKeyNode node = queue.remove();
-			SingleAccessKeyNode child = null;
-
-			// exclusion(node.getChildren(), visitedNodes) is the list of unvisited children nodes of the
-			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
-							.get(0)) != null) {
-				visitedNodes.add(child);
-
-				// / child node treatment
-				nodeBreadthFirstIterationMap.put(child, new Integer(counter));
-				counter++;
-
-				// / end child node treatment
-
-				queue.add(child);
-			}
-		}
+		iterativeBreadthFirst(rootNode, nodeBreadthFirstIterationMap, counter);
 
 		// // end first traversal, breadth-first ////
 
@@ -943,8 +795,8 @@ public class SingleAccessKeyTree {
 		// // end second traversal, depth-first ////
 
 		// // third traversal, breadth-first ////
-		queue.clear();
-		visitedNodes.clear();
+		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
+		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
 
 		counter = 1;
 		int currentParentNumber = -1;
@@ -1029,7 +881,8 @@ public class SingleAccessKeyTree {
 
 	/**
 	 * Helper method that traverses the SingleAccessKeyTree depth-first. It is used in multipleTraversal
-	 * methods in order to generate the nodeChildParentNumberingMap HashMap
+	 * methods in order to generate the nodeChildParentNumberingMap HashMap, that associates a child node
+	 * number with the number of its parent node
 	 * 
 	 * @param node
 	 * @param nodeBreadthFirstIterationMap
@@ -1044,6 +897,50 @@ public class SingleAccessKeyTree {
 			Integer childNumber = nodeBreadthFirstIterationMap.get(childNode);
 			nodeChildParentNumberingMap.put(childNumber, parentNumber);
 			recursiveDepthFirst(childNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
+		}
+	}
+
+	/**
+	 * Helper method that traverses the SingleAccessKeyTree breadth-first. It is used in multiple traversal
+	 * methods in order to generate the nodeBreadthFirstIterationMap HashMap, that associates each node with a
+	 * breadth-first incremented number
+	 * 
+	 * @param rootNode
+	 * @param nodeBreadthFirstIterationMap
+	 * @param counter
+	 */
+	private void iterativeBreadthFirst(SingleAccessKeyNode rootNode,
+			HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap, int counter) {
+		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
+		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
+
+		queue.add(rootNode);
+
+		// root node treatment
+		nodeBreadthFirstIterationMap.put(rootNode, new Integer(counter));
+		counter++;
+		// end root node treatment
+
+		visitedNodes.add(rootNode);
+
+		while (!queue.isEmpty()) {
+			SingleAccessKeyNode node = queue.remove();
+			SingleAccessKeyNode child = null;
+
+			// exclusion(node.getChildren(), visitedNodes) is the list of unvisited children nodes of the
+			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+							.get(0)) != null) {
+				visitedNodes.add(child);
+
+				// / child node treatment
+				nodeBreadthFirstIterationMap.put(child, new Integer(counter));
+				counter++;
+
+				// / end child node treatment
+
+				queue.add(child);
+			}
 		}
 	}
 
@@ -1482,6 +1379,7 @@ public class SingleAccessKeyTree {
 	 * @param String
 	 *            , header information
 	 * @return File, the sdd file
+	 * @throws IOException
 	 */
 	public File toSddFile(String header) {
 		return null;
