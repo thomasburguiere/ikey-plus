@@ -1399,10 +1399,12 @@ public class SingleAccessKeyTree {
 		File wikiFile = File.createTempFile(Utils.KEY, "." + Utils.WIKI, new File(path));
 		BufferedWriter wikiFileWriter = new BufferedWriter(new FileWriter(wikiFile));
 
-		wikiFileWriter.append("== Info ==");
-		wikiFileWriter.newLine();
-		wikiFileWriter.append(header.replaceAll(System.getProperty("line.separator"), "<br>"));
-		wikiFileWriter.newLine();
+		if (header != null && !header.equals("")) {
+			wikiFileWriter.append("== Info ==");
+			wikiFileWriter.newLine();
+			wikiFileWriter.append(header.replaceAll(System.getProperty("line.separator"), "<br>"));
+			wikiFileWriter.newLine();
+		}
 		wikiFileWriter.append("== Identification Key==");
 		wikiFileWriter.newLine();
 		wikiFileWriter.append(" <nowiki>");
@@ -1430,10 +1432,12 @@ public class SingleAccessKeyTree {
 		File wikiFile = File.createTempFile(Utils.KEY, "." + Utils.WIKI, new File(path));
 		BufferedWriter wikiFlatFileWriter = new BufferedWriter(new FileWriter(wikiFile));
 
-		wikiFlatFileWriter.append("== Info ==");
-		wikiFlatFileWriter.newLine();
-		wikiFlatFileWriter.append(header.replaceAll(System.getProperty("line.separator"), "<br>"));
-		wikiFlatFileWriter.newLine();
+		if (header != null && !header.equals("")) {
+			wikiFlatFileWriter.append("== Info ==");
+			wikiFlatFileWriter.newLine();
+			wikiFlatFileWriter.append(header.replaceAll(System.getProperty("line.separator"), "<br>"));
+			wikiFlatFileWriter.newLine();
+		}
 		wikiFlatFileWriter.append("== Identification Key==");
 		wikiFlatFileWriter.newLine();
 		// wikiFlatFileWriter.append(" <nowiki>");
@@ -1473,10 +1477,12 @@ public class SingleAccessKeyTree {
 		File wikiFile = File.createTempFile(Utils.KEY, "." + Utils.WIKI, new File(path));
 		BufferedWriter wikiFlatFileWriter = new BufferedWriter(new FileWriter(wikiFile));
 
-		wikiFlatFileWriter.append("== Info ==");
-		wikiFlatFileWriter.newLine();
-		wikiFlatFileWriter.append(header.replaceAll(System.getProperty("line.separator"), "<br>"));
-		wikiFlatFileWriter.newLine();
+		if (header != null && !header.equals("")) {
+			wikiFlatFileWriter.append("== Info ==");
+			wikiFlatFileWriter.newLine();
+			wikiFlatFileWriter.append(header.replaceAll(System.getProperty("line.separator"), "<br>"));
+			wikiFlatFileWriter.newLine();
+		}
 		wikiFlatFileWriter.append("== Identification Key==");
 		wikiFlatFileWriter.newLine();
 
@@ -1502,10 +1508,12 @@ public class SingleAccessKeyTree {
 		File wikiFile = File.createTempFile(Utils.KEY, "." + Utils.WIKI, new File(path));
 		BufferedWriter wikiFlatFileWriter = new BufferedWriter(new FileWriter(wikiFile));
 
-		wikiFlatFileWriter.append("== Info ==");
-		wikiFlatFileWriter.newLine();
-		wikiFlatFileWriter.append(header.replaceAll(System.getProperty("line.separator"), "<br>"));
-		wikiFlatFileWriter.newLine();
+		if (header != null && !header.equals("")) {
+			wikiFlatFileWriter.append("== Info ==");
+			wikiFlatFileWriter.newLine();
+			wikiFlatFileWriter.append(header.replaceAll(System.getProperty("line.separator"), "<br>"));
+			wikiFlatFileWriter.newLine();
+		}
 		wikiFlatFileWriter.append("== Identification Key==");
 		wikiFlatFileWriter.newLine();
 
@@ -1641,7 +1649,7 @@ public class SingleAccessKeyTree {
 	}
 
 	/**
-	 * Analyses the node description and returns it if it isnot an empty string, and if the verbose level
+	 * Analyses the node description and returns it if it is not an empty string, and if the verbose level
 	 * requires it to be displayed. Returns an empty String otherwise.
 	 * 
 	 * @param node

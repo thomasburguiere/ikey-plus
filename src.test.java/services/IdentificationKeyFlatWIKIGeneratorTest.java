@@ -42,7 +42,7 @@ public class IdentificationKeyFlatWIKIGeneratorTest {
 
 			SDDSaxParser sddSaxParser = null;
 			try {
-				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
+				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-unknownData-fullSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
@@ -52,12 +52,11 @@ public class IdentificationKeyFlatWIKIGeneratorTest {
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/smallSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/wrongSDD.xml";
-				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/pruningSDD.xml";
+				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/pruningSDD.xml";
 
 				// options
 				Utils.fewStatesCharacterFirst = false;
 				Utils.mergeCharacterStatesIfSameDiscimination = false;
-				Utils.reduceSameConclusionPath = false;
 				Utils.pruning = false;
 				Utils.verbosity = "";
 				Utils.scoreMethod = Utils.XPER;
@@ -89,8 +88,6 @@ public class IdentificationKeyFlatWIKIGeneratorTest {
 				header.append(System.getProperty("line.separator")
 						+ "mergeCharacterStatesIfSameDiscimination="
 						+ Utils.mergeCharacterStatesIfSameDiscimination);
-				header.append(System.getProperty("line.separator") + "reduceSameConclusionPath="
-						+ Utils.reduceSameConclusionPath);
 				header.append(System.getProperty("line.separator") + "pruning=" + Utils.pruning);
 				header.append(System.getProperty("line.separator") + "verbosity=" + Utils.verbosity);
 				header.append(System.getProperty("line.separator") + "scoreMethod=" + Utils.scoreMethod

@@ -62,7 +62,6 @@ public class Utils {
 	// options
 	public static boolean fewStatesCharacterFirst = false;
 	public static boolean mergeCharacterStatesIfSameDiscimination = false;
-	public static boolean reduceSameConclusionPath = false;
 	public static boolean pruning = false;
 	public static String verbosity = "";
 	public static String scoreMethod = Utils.XPER;

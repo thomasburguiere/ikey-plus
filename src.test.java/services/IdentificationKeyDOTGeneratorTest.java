@@ -57,7 +57,6 @@ public class IdentificationKeyDOTGeneratorTest {
 				// options
 				Utils.fewStatesCharacterFirst = false;
 				Utils.mergeCharacterStatesIfSameDiscimination = false;
-				Utils.reduceSameConclusionPath = false;
 				Utils.pruning = false;
 				Utils.verbosity = "";
 				Utils.scoreMethod = Utils.XPER;
@@ -89,8 +88,6 @@ public class IdentificationKeyDOTGeneratorTest {
 				header.append(System.getProperty("line.separator")
 						+ "mergeCharacterStatesIfSameDiscimination="
 						+ Utils.mergeCharacterStatesIfSameDiscimination);
-				header.append(System.getProperty("line.separator") + "reduceSameConclusionPath="
-						+ Utils.reduceSameConclusionPath);
 				header.append(System.getProperty("line.separator") + "pruning=" + Utils.pruning);
 				header.append(System.getProperty("line.separator") + "verbosity=" + Utils.verbosity);
 				header.append(System.getProperty("line.separator") + "scoreMethod=" + Utils.scoreMethod

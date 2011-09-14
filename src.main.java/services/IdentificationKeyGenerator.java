@@ -99,7 +99,7 @@ public class IdentificationKeyGenerator {
 			// calculate characters score
 			Map<ICharacter, Float> charactersScore = charactersScores(remainingCharacters, remainingTaxa,
 					childDependantCharacters, alreadyUsedCharacter);
-			ICharacter selectedCharacter = bestCharacter(charactersScore);
+			ICharacter selectedCharacter = bestCharacter(charactersScore, remainingTaxa);
 
 			// delete characters if score method is not Xper and score = 0
 			if (!Utils.scoreMethod.equalsIgnoreCase(Utils.XPER)) {
@@ -564,21 +564,61 @@ public class IdentificationKeyGenerator {
 	}
 
 	/**
+	 * get the character with the best score
+	 * 
 	 * @param charactersScore
 	 * @return ICharacter, the best character
 	 */
-	private ICharacter bestCharacter(Map<ICharacter, Float> charactersScore) throws Exception {
+	private ICharacter bestCharacter(Map<ICharacter, Float> charactersScore, List<Taxon> remainingTaxa)
+			throws Exception {
 
 		float bestScore = -1;
 		ICharacter bestCharacter = null;
 
 		for (ICharacter character : charactersScore.keySet()) {
+			// if the score of the current character is better than the best score
 			if (charactersScore.get(character) >= bestScore) {
 				bestScore = charactersScore.get(character);
 				bestCharacter = character;
 			}
 		}
+
+		// if the set of scores contains at least one score similar to the best score
+		charactersScore.remove(bestCharacter);
+		if (charactersScore.containsValue(bestScore) && bestCharacter.isSupportsCategoricalData()) {
+			int taxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) bestCharacter, remainingTaxa);
+			for (ICharacter character : charactersScore.keySet()) {
+				if (charactersScore.get(character) == bestScore && character.isSupportsCategoricalData()) {
+					int currentTaxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) character,
+							remainingTaxa);
+					// if the taxa number of the current character is lower than the best score
+					if (currentTaxaNumber < taxaNumber) {
+						bestScore = charactersScore.get(character);
+						bestCharacter = character;
+						taxaNumber = currentTaxaNumber;
+					}
+				}
+			}
+		}
 		return bestCharacter;
+	}
+
+	/**
+	 * get the sum of taxa for each state
+	 * 
+	 * @param bestCharacter
+	 * @param remainingTaxa
+	 * @return int, the sum of all taxa
+	 */
+	private int getTaxaNumberForAllStates(CategoricalCharacter character, List<Taxon> remainingTaxa) {
+		int taxaNumber = 0;
+		for (Taxon taxon : remainingTaxa) {
+			if (dataset.getCodedDescription(taxon).getCharacterDescription(character) != null) {
+				taxaNumber += ((List<State>) dataset.getCodedDescription(taxon).getCharacterDescription(
+						character)).size();
+			}
+		}
+		return taxaNumber;
 	}
 
 	/**
