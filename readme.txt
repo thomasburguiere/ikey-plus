@@ -1,3 +1,4 @@
+Contact : thomas.burguiere@upmc.fr, florian.causse@upmc.fr
 
 BUILD
 1)identificationKeyAPI -> run as -> maven assembly or maven package
@@ -22,7 +23,8 @@ generatedKeyFiles.prefix = webapps/
 generatedKeyFiles.folder = generatedKeyFiles/
 // 2592000 is the number of second for 30 days.
 generatedKeyFiles.delete.period = 2592000
-host = http://yourServerHostName:8080/
+host = http://localhost:8080/
+message.createdBy = Created by www.identificationKey.fr
 
 3)Start the server
 

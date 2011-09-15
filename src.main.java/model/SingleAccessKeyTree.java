@@ -1100,6 +1100,7 @@ public class SingleAccessKeyTree {
 		String lineSep = System.getProperty("line.separator");
 		StringBuffer slk = new StringBuffer();
 		slk.append("<html>" + lineSep);
+		slk.append("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />" + lineSep);
 		slk.append("<head>" + lineSep);
 		slk.append("<script src='" + Utils.getBundleConfElement("resources.jqueryPath") + "'></script>"
 				+ lineSep + "<script type='text/javascript' src='"
@@ -1587,6 +1588,7 @@ public class SingleAccessKeyTree {
 		String lineSep = System.getProperty("line.separator");
 		StringBuffer slk = new StringBuffer();
 		slk.append("<html>" + lineSep);
+		slk.append("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />" + lineSep);
 		slk.append("<head>" + lineSep);
 		slk.append("<script src='" + Utils.getBundleConfElement("resources.jqueryPath") + "'></script>"
 				+ lineSep + "<script type='text/javascript' src='"
