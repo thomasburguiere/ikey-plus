@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -508,6 +509,125 @@ public class SingleAccessKeyTree {
 	 * @param output
 	 * @param lineSeparator
 	 */
+	private void multipleTraversalToSddString(SingleAccessKeyNode rootNode, StringBuffer output,
+			String lineSeparator) {
+
+		// // first traversal, breadth-first ////
+		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
+		int counter = 1;
+		iterativeBreadthFirst(rootNode, nodeBreadthFirstIterationMap, counter);
+		// // end first traversal, breadth-first ////
+
+		// // second traversal, depth-first ////
+		HashMap<Integer, Integer> nodeChildParentNumberingMap = new HashMap<Integer, Integer>();
+		HashMap<Integer, String> nodeChildNumberParentCharacterStatesMap = new HashMap<Integer, String>();
+		recursiveDepthFirst(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap,
+				nodeChildNumberParentCharacterStatesMap);
+		// // end second traversal, depth-first ////
+
+		// // third traversal, breadth-first ////
+		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
+		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
+		counter = 1;
+		int currentParentNumber = -1;
+		String currentParentCharacterState = "";
+		queue.add(rootNode);
+
+		// root node treatment
+
+		counter++;
+		// end root node treatment
+		visitedNodes.add(rootNode);
+
+		output.append("<IdentificationKey>" + lineSeparator);
+
+		while (!queue.isEmpty()) {
+			SingleAccessKeyNode node = queue.remove();
+			SingleAccessKeyNode child = null;
+
+			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+							.get(0)) != null) {
+				visitedNodes.add(child);
+
+				// / child node treatment
+
+				// displaying the parent node number and the child node character name only once
+				if (nodeChildParentNumberingMap.get(new Integer(counter)) != currentParentNumber) {
+					currentParentNumber = nodeChildParentNumberingMap.get(new Integer(counter));
+				}
+
+				if (counter == 2) {// first child node of the root node
+					output.append("<Question>" + lineSeparator);
+					output.append("<Label>" + escapeHTMLSpecialCharacters(child.getCharacter().getName())
+							+ "</Label>" + lineSeparator);
+					output.append("</Question>" + lineSeparator);
+					output.append("<Leads>" + lineSeparator);
+				}
+
+				if (nodeChildNumberParentCharacterStatesMap.keySet().contains(new Integer(counter)) == false) {
+					System.out.println(child);
+				} else {
+					currentParentCharacterState = escapeHTMLSpecialCharacters(nodeChildNumberParentCharacterStatesMap
+							.get(counter));
+					if (child.getChildren().size() > 0) {
+						output.append("<Lead id=\"lead" + counter + "\">" + lineSeparator);
+						output.append("  <Parent ref=\"" + currentParentNumber + "\"/>" + lineSeparator);
+						output.append("  <Statement>" + lineSeparator);
+						output.append("    <Label>" + currentParentCharacterState + "</Label>"
+								+ lineSeparator);
+						output.append("  </Statement>" + lineSeparator);
+						output.append("  <Question>" + lineSeparator);
+						output.append("    <Label>"
+								+ escapeHTMLSpecialCharacters(child.getCharacter().getName()) + "</Label>"
+								+ lineSeparator);
+						output.append("  </Question>" + lineSeparator);
+						output.append("</Lead>" + lineSeparator);
+					} else if (child.getChildren().size() == 0) {
+
+						output.append("<Result>" + lineSeparator);
+						output.append("  <Parent ref=\"" + currentParentNumber + "\"/>" + lineSeparator);
+						output.append("  <Statement>" + lineSeparator);
+						output.append("    <Label>" + currentParentCharacterState + "</Label>"
+								+ lineSeparator);
+						output.append("  </Statement>" + lineSeparator);
+						output.append("  <TaxonName ref=\"taxon" + counter + "\">" + lineSeparator);
+						output.append("    <Label>");
+						for (Taxon t : child.getRemainingTaxa()) {
+							output.append(escapeHTMLSpecialCharacters(t.getName()) + ", ");
+						}
+						output.append("</Label>" + lineSeparator);
+						output.append("  </TaxonName>" + lineSeparator);
+						output.append("</Result>" + lineSeparator);
+					}
+				}
+
+				queue.add(child);
+				counter++;
+				// / end child node treatment
+
+			}
+		}
+		output.append("</Leads>" + lineSeparator);
+		output.append("</IdentificationKey>" + lineSeparator);
+		// // end third traversal, breadth-first ////
+
+	}
+
+	/**
+	 * This methods outputs the {@link #SingleAccesKeyTree} as a flat wiki-formatted String that complies with
+	 * the wiki format used on <a href="http://species-id.net">species-id.net</a>, with mediawiki hyperlinks.
+	 * In order to do this, the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first traversal is a
+	 * breadth-first traversal, in order to generate an HashMap ( <tt>nodeBreadthFirstIterationMap</tt>) that
+	 * associates each node with an arbitrary Integer. The second traversal is a depth-first traversal, in
+	 * order to associate (in another HashMap : <tt>nodeChildParentNumberingMap</tt>), for each node, the node
+	 * number and the number of its parent node. Finally, the last traversal is another breadh-first traversal
+	 * that generates the flat key String
+	 * 
+	 * @param rootNode
+	 * @param output
+	 * @param lineSeparator
+	 */
 	private void multipleTraversalToSpeciesIDStatementWikiString(SingleAccessKeyNode rootNode,
 			StringBuffer output, String lineSeparator) {
 
@@ -901,6 +1021,36 @@ public class SingleAccessKeyTree {
 	}
 
 	/**
+	 * Helper method that traverses the SingleAccessKeyTree depth-first. It is used in multipleTraversal
+	 * methods in order to generate the nodeChildParentNumberingMap HashMap, that associates a child node
+	 * number with the number of its parent node, and to generate the nodeChildNumberParentCharacterStatesMap
+	 * HashMap, that associates a child node number with the character state of its parent node.
+	 * 
+	 * @param node
+	 * @param nodeBreadthFirstIterationMap
+	 * @param nodeChildParentNumberingMap
+	 * @param nodeChildNumberParentCharacterStatesMap
+	 */
+	private void recursiveDepthFirst(SingleAccessKeyNode node,
+			HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap,
+			HashMap<Integer, Integer> nodeChildParentNumberingMap,
+			HashMap<Integer, String> nodeChildNumberParentCharacterStatesMap) {
+
+		Integer parentNumber = nodeBreadthFirstIterationMap.get(node);
+		String parentCharacterStateString = null;
+		if (node.getCharacterState() != null)
+			parentCharacterStateString = node.getStringStates();
+		for (SingleAccessKeyNode childNode : node.getChildren()) {
+			Integer childNumber = nodeBreadthFirstIterationMap.get(childNode);
+			nodeChildParentNumberingMap.put(childNumber, parentNumber);
+			if (parentCharacterStateString != null)
+				nodeChildNumberParentCharacterStatesMap.put(childNumber, parentCharacterStateString);
+			recursiveDepthFirst(childNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap,
+					nodeChildNumberParentCharacterStatesMap);
+		}
+	}
+
+	/**
 	 * Helper method that traverses the SingleAccessKeyTree breadth-first. It is used in multiple traversal
 	 * methods in order to generate the nodeBreadthFirstIterationMap HashMap, that associates each node with a
 	 * breadth-first incremented number
@@ -1176,7 +1326,10 @@ public class SingleAccessKeyTree {
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File txtFile = File.createTempFile(Utils.KEY, "." + Utils.TXT, new File(path));
-		BufferedWriter txtFileWriter = new BufferedWriter(new FileWriter(txtFile));
+
+		BufferedWriter txtFileWriter = new BufferedWriter(new OutputStreamWriter(
+				new FileOutputStream(txtFile), "UTF-8"));
+
 		txtFileWriter.append(header);
 		txtFileWriter.append(toString());
 		txtFileWriter.close();
@@ -1199,7 +1352,8 @@ public class SingleAccessKeyTree {
 				+ "//");
 		header = header + System.getProperty("line.separator");
 		File dotFile = File.createTempFile("key_", "." + Utils.GV, new File(path));
-		BufferedWriter dotFileWriter = new BufferedWriter(new FileWriter(dotFile));
+		BufferedWriter dotFileWriter = new BufferedWriter(new OutputStreamWriter(
+				new FileOutputStream(dotFile), "UTF-8"));
 		dotFileWriter.append(header);
 		dotFileWriter.append("digraph " + dotFile.getName().split("\\.")[0] + " {");
 		dotFileWriter.append(toDotString());
@@ -1234,12 +1388,19 @@ public class SingleAccessKeyTree {
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File txtFile = File.createTempFile(Utils.KEY, "." + Utils.TXT, new File(path));
-		BufferedWriter txtFileWriter = new BufferedWriter(new FileWriter(txtFile));
+		BufferedWriter txtFileWriter = new BufferedWriter(new OutputStreamWriter(
+				new FileOutputStream(txtFile), "UTF-8"));
 		txtFileWriter.append(header);
 		txtFileWriter.append(toFlatString());
 		txtFileWriter.close();
 
 		return txtFile;
+	}
+
+	public String toSddString() {
+		StringBuffer output = new StringBuffer();
+		multipleTraversalToSddString(root, output, System.getProperty("line.separator"));
+		return output.toString();
 	}
 
 	/**
@@ -1267,7 +1428,8 @@ public class SingleAccessKeyTree {
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File htmlFile = File.createTempFile(Utils.KEY, "." + Utils.HTML, new File(path));
-		BufferedWriter htmlFileWriter = new BufferedWriter(new FileWriter(htmlFile));
+		BufferedWriter htmlFileWriter = new BufferedWriter(new OutputStreamWriter(
+				new FileOutputStream(htmlFile), "UTF-8"));
 		htmlFileWriter.append(toHtmlString(header));
 		htmlFileWriter.close();
 
@@ -1382,8 +1544,17 @@ public class SingleAccessKeyTree {
 	 * @return File, the sdd file
 	 * @throws IOException
 	 */
-	public File toSddFile(String header) {
-		return null;
+	public File toSddFile(String header) throws IOException {
+		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
+
+		File sddFile = File.createTempFile(Utils.KEY, "." + Utils.SDD, new File(path));
+		BufferedWriter sddFileWriter = new BufferedWriter(new OutputStreamWriter(
+				new FileOutputStream(sddFile), "UTF-8"));
+		sddFileWriter.append(toSddString());
+		sddFileWriter.close();
+
+		return sddFile;
 	}
 
 	/**
@@ -1398,7 +1569,8 @@ public class SingleAccessKeyTree {
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File wikiFile = File.createTempFile(Utils.KEY, "." + Utils.WIKI, new File(path));
-		BufferedWriter wikiFileWriter = new BufferedWriter(new FileWriter(wikiFile));
+		BufferedWriter wikiFileWriter = new BufferedWriter(new OutputStreamWriter(
+				new FileOutputStream(wikiFile), "UTF-8"));
 
 		if (header != null && !header.equals("")) {
 			wikiFileWriter.append("== Info ==");
@@ -1476,7 +1648,8 @@ public class SingleAccessKeyTree {
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File wikiFile = File.createTempFile(Utils.KEY, "." + Utils.WIKI, new File(path));
-		BufferedWriter wikiFlatFileWriter = new BufferedWriter(new FileWriter(wikiFile));
+		BufferedWriter wikiFlatFileWriter = new BufferedWriter(new OutputStreamWriter(
+				new FileOutputStream(wikiFile), "UTF-8"));
 
 		if (header != null && !header.equals("")) {
 			wikiFlatFileWriter.append("== Info ==");
@@ -1507,7 +1680,8 @@ public class SingleAccessKeyTree {
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File wikiFile = File.createTempFile(Utils.KEY, "." + Utils.WIKI, new File(path));
-		BufferedWriter wikiFlatFileWriter = new BufferedWriter(new FileWriter(wikiFile));
+		BufferedWriter wikiFlatFileWriter = new BufferedWriter(new OutputStreamWriter(
+				new FileOutputStream(wikiFile), "UTF-8"));
 
 		if (header != null && !header.equals("")) {
 			wikiFlatFileWriter.append("== Info ==");
@@ -1568,7 +1742,8 @@ public class SingleAccessKeyTree {
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File htmlFile = File.createTempFile(Utils.KEY, "." + Utils.HTML, new File(path));
-		BufferedWriter htmlFileWriter = new BufferedWriter(new FileWriter(htmlFile));
+		BufferedWriter htmlFileWriter = new BufferedWriter(new OutputStreamWriter(
+				new FileOutputStream(htmlFile), "UTF-8"));
 		htmlFileWriter.append(toFlatHtmlString(header));
 		htmlFileWriter.close();
 
@@ -1663,6 +1838,14 @@ public class SingleAccessKeyTree {
 			return " (" + node.getNodeDescription() + ")";
 		}
 		return "";
+	}
+
+	/**
+	 * @param htmlString
+	 * @return
+	 */
+	public String escapeHTMLSpecialCharacters(String htmlString) {
+		return htmlString.replace(">", "&gt;").replace("<", "&lt;");
 	}
 
 }
