@@ -542,15 +542,20 @@ public class IdentificationKeyGenerator {
 			throws Exception {
 		List<ICharacter> characters = character.getAllChildren();
 		float max = -1;
-		for (ICharacter childCharacter : characters) {
-			if (scoreMap.get(childCharacter) != null) {
-				if (max == -1)
-					max = scoreMap.get(childCharacter);
-				if (scoreMap.get(childCharacter) >= max) {
-					// init max score with child score + 0.0001 (to be sure
-					// parent
-					// score will be better)
-					max = (float) (scoreMap.get(childCharacter) + 0.0001);
+		if (character.getParentCharacter() != null
+				&& scoreMap.keySet().contains(character.getParentCharacter())) {
+			max = -1;
+		} else {
+			for (ICharacter childCharacter : characters) {
+				if (scoreMap.get(childCharacter) != null) {
+					if (max == -1)
+						max = scoreMap.get(childCharacter);
+					if (scoreMap.get(childCharacter) >= max) {
+						// init max score with child score + 0.0001 (to be sure
+						// parent
+						// score will be better)
+						max = (float) (scoreMap.get(childCharacter) + 0.0001);
+					}
 				}
 			}
 		}

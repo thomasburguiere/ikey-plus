@@ -41,16 +41,17 @@ public class SDDSaxParserTest {
 		SDDSaxParser sddSaxParser = null;
 
 		try {
-			String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
+			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
 			// String stringUrl =
 			// "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-unknownData-fullSDD.xml";
 			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
 			// String stringUrl =
 			// "http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml";
-			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/testSDD.xml";
+			String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/testSDD.xml";
 			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml";
 			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/smallSDD.xml";
 			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/wrongSDD.xml";
+			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/pruningSDD.xml";
 
 			// test if the URL is valid
 			URLConnection urlConnection;

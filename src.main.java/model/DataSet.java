@@ -194,20 +194,22 @@ public class DataSet {
 			List<State> states = (List<State>) this.getCodedDescription(taxon).getCharacterDescription(
 					character.getParentCharacter());
 
-			if (states != null) {
-				// if one checked state is applicable
-				for (int i = 0; i < states.size(); i++) {
-					State state = states.get(i);
-					if (inapplicableStates != null && !inapplicableStates.contains(state)) {
-						return true;
-					}
+			// if the parent character is not described return true
+			if (states == null) {
+				return true;
+			}
+			// if one checked state is applicable
+			for (int i = 0; i < states.size(); i++) {
+				State state = states.get(i);
+				if (!inapplicableStates.contains(state)) {
+					return true;
 				}
-				// if one checked state is inapplicable
-				for (int i = 0; i < states.size(); i++) {
-					State state = states.get(i);
-					if (inapplicableStates != null && inapplicableStates.contains(state)) {
-						return false;
-					}
+			}
+			// if one checked state is inapplicable
+			for (int i = 0; i < states.size(); i++) {
+				State state = states.get(i);
+				if (inapplicableStates.contains(state)) {
+					return false;
 				}
 			}
 		}
