@@ -31,15 +31,10 @@ public class IdentificationKeyGenerator {
 	private SingleAccessKeyTree singleAccessKeyTree = null;
 	// the knowledge base
 	private DataSet dataset = null;
+	// the utils object (containing options)
+	private Utils utils = null;
 	// the maximum number of states per character
 	private int maxNbStatesPerCharacter;
-
-	/**
-	 * Constructor
-	 */
-	public IdentificationKeyGenerator() throws Exception {
-		this(null, null);
-	}
 
 	/**
 	 * Constructor
@@ -47,11 +42,10 @@ public class IdentificationKeyGenerator {
 	 * @param singleAccessKeyTree
 	 * @param dataSet
 	 */
-	public IdentificationKeyGenerator(SingleAccessKeyTree singleAccessKeyTree, DataSet dataset)
-			throws Exception {
+	public IdentificationKeyGenerator(DataSet dataset, Utils utils) throws Exception {
 		super();
-		this.singleAccessKeyTree = singleAccessKeyTree;
 		this.dataset = dataset;
+		this.utils = utils;
 	}
 
 	/**
@@ -59,7 +53,7 @@ public class IdentificationKeyGenerator {
 	 */
 	public void createIdentificationKey() throws Exception {
 
-		this.singleAccessKeyTree = new SingleAccessKeyTree();
+		this.singleAccessKeyTree = new SingleAccessKeyTree(utils);
 		this.singleAccessKeyTree.setLabel(dataset.getLabel());
 
 		// init maxNumStatesPerCharacter
@@ -102,7 +96,7 @@ public class IdentificationKeyGenerator {
 			ICharacter selectedCharacter = bestCharacter(charactersScore, remainingTaxa);
 
 			// delete characters if score method is not Xper and score = 0
-			if (!Utils.scoreMethod.equalsIgnoreCase(Utils.XPER)) {
+			if (!utils.getScoreMethod().equalsIgnoreCase(Utils.XPER)) {
 				for (ICharacter character : charactersScore.keySet()) {
 					if (charactersScore.get(character) <= 0) {
 						remainingCharacters.removeAll(character.getAllChildren());
@@ -156,7 +150,7 @@ public class IdentificationKeyGenerator {
 						node.setCharacterState(state);
 
 						// mergeCharacterStatesIfSameDiscrimination option handling
-						if (Utils.mergeCharacterStatesIfSameDiscimination) {
+						if (utils.isMergeCharacterStatesIfSameDiscimination()) {
 							if (mergeNodesIfSameDiscrimination(futureChildNodes, node)) {
 								continue;
 							}
@@ -181,7 +175,7 @@ public class IdentificationKeyGenerator {
 						newRemainingCharacters.removeAll(inapplicableCharacters);
 
 						// pruning option handling
-						if (Utils.pruning && remainingTaxa.containsAll(newRemainingTaxa)
+						if (utils.isPruning() && remainingTaxa.containsAll(newRemainingTaxa)
 								&& newRemainingTaxa.containsAll(remainingTaxa)
 								&& !childDependantCharacters.contains(selectedCharacter)) {
 							node.setNodeDescription(Utils.getBundleConfElement("message.warning.pruning"));
@@ -222,7 +216,7 @@ public class IdentificationKeyGenerator {
 								remainingCharacters);
 
 						// pruning option handling
-						if (Utils.pruning && remainingTaxa.containsAll(newRemainingTaxa)
+						if (utils.isPruning() && remainingTaxa.containsAll(newRemainingTaxa)
 								&& newRemainingTaxa.containsAll(remainingTaxa)
 								&& !childDependantCharacters.contains(selectedCharacter)) {
 							node.setNodeDescription(Utils.getBundleConfElement("message.warning.pruning"));
@@ -246,7 +240,7 @@ public class IdentificationKeyGenerator {
 
 			// if taxa are not described and if verbosity string contains correct tag, create a node
 			// "Other (not described)"
-			if (Utils.verbosity.contains(Utils.OTHERTAG) && notDescribedTaxa != null
+			if (utils.getVerbosity().contains(Utils.OTHERTAG) && notDescribedTaxa != null
 					&& notDescribedTaxa.size() > 0) {
 				// init new node
 				SingleAccessKeyNode notDescribedNode = new SingleAccessKeyNode();
@@ -704,7 +698,7 @@ public class IdentificationKeyGenerator {
 		}
 
 		// fewStatesCharacterFirst option handling
-		if (Utils.fewStatesCharacterFirst && score > 0 && character.getStates().size() >= 2) {
+		if (utils.isFewStatesCharacterFirst() && score > 0 && character.getStates().size() >= 2) {
 			// increasing artificially score of character with few states
 			float coeff = (float) 1
 					- ((float) character.getStates().size() / (float) maxNbStatesPerCharacter);
@@ -811,7 +805,7 @@ public class IdentificationKeyGenerator {
 		}
 
 		// fewStatesCharacterFirst option handling
-		if (Utils.fewStatesCharacterFirst && score > 0) {
+		if (utils.isFewStatesCharacterFirst() && score > 0) {
 			// increasing artificially the score of character with few states
 			float coeff = (float) 1 - ((float) 2 / (float) maxNbStatesPerCharacter);
 			score = (float) (score + coeff);
@@ -886,13 +880,13 @@ public class IdentificationKeyGenerator {
 		float out = 0;
 
 		// Sokal & Michener method
-		if (Utils.scoreMethod.trim().equalsIgnoreCase(Utils.SOKALANDMICHENER)) {
+		if (utils.getScoreMethod().trim().equalsIgnoreCase(Utils.SOKALANDMICHENER)) {
 			out = 1 - ((commonPresent + commonAbsent) / (commonPresent + commonAbsent + other));
 			// round to 10^-3
 			out = Utils.roundFloat(out, 3);
 		}
 		// Jaccard Method
-		else if (Utils.scoreMethod.trim().equalsIgnoreCase(Utils.JACCARD)) {
+		else if (utils.getScoreMethod().trim().equalsIgnoreCase(Utils.JACCARD)) {
 			try {
 				// case where description are empty
 				out = 1 - (commonPresent / (commonPresent + other));

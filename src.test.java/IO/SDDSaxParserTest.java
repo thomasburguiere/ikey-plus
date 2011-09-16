@@ -31,8 +31,12 @@ public class SDDSaxParserTest {
 
 	@Test
 	public void testSDDSaxParser() {
+
 		logger.info("testSDDSaxParser");
 		long beforeTime = System.currentTimeMillis();
+
+		// creation of Utils object (containing options)
+		Utils utils = new Utils();
 
 		SDDSaxParser sddSaxParser = null;
 
@@ -58,15 +62,15 @@ public class SDDSaxParserTest {
 				// Open data stream
 				httpStream = urlConnection.getInputStream();
 			} catch (java.net.MalformedURLException e) {
-				Utils.setErrorMessage(Utils.getBundleConfElement("message.urlError"), e);
+				utils.setErrorMessage(Utils.getBundleConfElement("message.urlError"), e);
 				e.printStackTrace();
 			} catch (java.io.IOException e) {
-				Utils.setErrorMessage(Utils.getBundleConfElement("message.urlError"), e);
+				utils.setErrorMessage(Utils.getBundleConfElement("message.urlError"), e);
 				e.printStackTrace();
 			}
 			sddSaxParser = new SDDSaxParser(stringUrl);
 		} catch (Throwable t) {
-			Utils.setErrorMessage(Utils.getBundleConfElement("message.parsingError"), t);
+			utils.setErrorMessage(Utils.getBundleConfElement("message.parsingError"), t);
 			t.printStackTrace();
 		}
 

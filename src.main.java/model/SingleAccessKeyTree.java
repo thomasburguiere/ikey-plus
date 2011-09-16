@@ -31,12 +31,14 @@ public class SingleAccessKeyTree {
 
 	private SingleAccessKeyNode root = null;
 	private String label = null;
+	// the utils object (containing options)
+	private Utils utils = null;
 
 	/**
 	 * constructor
 	 */
-	public SingleAccessKeyTree() {
-		this(null);
+	public SingleAccessKeyTree(Utils utils) {
+		this(null, utils);
 	}
 
 	/**
@@ -45,9 +47,10 @@ public class SingleAccessKeyTree {
 	 * @param SingleAccessKeyNode
 	 *            , the root node
 	 */
-	public SingleAccessKeyTree(SingleAccessKeyNode root) {
+	public SingleAccessKeyTree(SingleAccessKeyNode root, Utils utils) {
 		super();
 		this.root = root;
+		this.utils = utils;
 	}
 
 	/**
@@ -449,7 +452,7 @@ public class SingleAccessKeyTree {
 						stateID = alphabet[alphabetIndex];
 					}
 				} catch (Exception e) {
-					Utils.setErrorMessage(Utils.getBundleConfElement("message.stateNumberError"), e);
+					utils.setErrorMessage(Utils.getBundleConfElement("message.stateNumberError"), e);
 					e.printStackTrace();
 				}
 
@@ -1428,8 +1431,8 @@ public class SingleAccessKeyTree {
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File htmlFile = File.createTempFile(Utils.KEY, "." + Utils.HTML, new File(path));
-		BufferedWriter htmlFileWriter = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(htmlFile), "UTF-8"));
+		BufferedWriter htmlFileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
+				htmlFile), "UTF-8"));
 		htmlFileWriter.append(toHtmlString(header));
 		htmlFileWriter.close();
 
@@ -1569,8 +1572,8 @@ public class SingleAccessKeyTree {
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File wikiFile = File.createTempFile(Utils.KEY, "." + Utils.WIKI, new File(path));
-		BufferedWriter wikiFileWriter = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(wikiFile), "UTF-8"));
+		BufferedWriter wikiFileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
+				wikiFile), "UTF-8"));
 
 		if (header != null && !header.equals("")) {
 			wikiFileWriter.append("== Info ==");
@@ -1648,8 +1651,8 @@ public class SingleAccessKeyTree {
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File wikiFile = File.createTempFile(Utils.KEY, "." + Utils.WIKI, new File(path));
-		BufferedWriter wikiFlatFileWriter = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(wikiFile), "UTF-8"));
+		BufferedWriter wikiFlatFileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
+				wikiFile), "UTF-8"));
 
 		if (header != null && !header.equals("")) {
 			wikiFlatFileWriter.append("== Info ==");
@@ -1680,8 +1683,8 @@ public class SingleAccessKeyTree {
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File wikiFile = File.createTempFile(Utils.KEY, "." + Utils.WIKI, new File(path));
-		BufferedWriter wikiFlatFileWriter = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(wikiFile), "UTF-8"));
+		BufferedWriter wikiFlatFileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
+				wikiFile), "UTF-8"));
 
 		if (header != null && !header.equals("")) {
 			wikiFlatFileWriter.append("== Info ==");
@@ -1742,8 +1745,8 @@ public class SingleAccessKeyTree {
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File htmlFile = File.createTempFile(Utils.KEY, "." + Utils.HTML, new File(path));
-		BufferedWriter htmlFileWriter = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(htmlFile), "UTF-8"));
+		BufferedWriter htmlFileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
+				htmlFile), "UTF-8"));
 		htmlFileWriter.append(toFlatHtmlString(header));
 		htmlFileWriter.close();
 
@@ -1834,7 +1837,7 @@ public class SingleAccessKeyTree {
 	 */
 	public String nodeDescriptionAnalysis(SingleAccessKeyNode node) {
 		if (node.getNodeDescription() != null && node.getNodeDescription().trim().length() > 0
-				&& Utils.verbosity.contains(Utils.WARNINGTAG)) {
+				&& utils.getVerbosity().contains(Utils.WARNINGTAG)) {
 			return " (" + node.getNodeDescription() + ")";
 		}
 		return "";

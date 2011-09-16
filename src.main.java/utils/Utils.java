@@ -19,8 +19,8 @@ import java.util.Set;
  */
 public class Utils {
 
-	public static String errorMessage = null;
-	public static File errorMessageFile = null;
+	private String errorMessage = null;
+	private File errorMessageFile = null;
 
 	public static final String UNKNOWNDATA = "unknownData";
 	public static final String YES = "yes";
@@ -60,11 +60,11 @@ public class Utils {
 	public static final String SOKALANDMICHENER = "sokalAndMichener";
 
 	// options
-	public static boolean fewStatesCharacterFirst = false;
-	public static boolean mergeCharacterStatesIfSameDiscimination = false;
-	public static boolean pruning = false;
-	public static String verbosity = "";
-	public static String scoreMethod = Utils.XPER;
+	private boolean fewStatesCharacterFirst = false;
+	private boolean mergeCharacterStatesIfSameDiscimination = false;
+	private boolean pruning = false;
+	private String verbosity = "";
+	private String scoreMethod = Utils.XPER;
 
 	/**
 	 * Convert a String value to a Double value
@@ -120,15 +120,20 @@ public class Utils {
 	}
 
 	/**
-	 * @param msg
 	 * @return String, the error file name
 	 */
-	public static String setErrorMessage(String msg) {
-		if (Utils.errorMessage == null) {
-			Utils.errorMessage = msg;
-			Utils.errorMessageFile = createErrorFile();
+	public String getErrorMessage() {
+		return this.errorMessage;
+	}
+
+	/**
+	 * @param msg
+	 */
+	public void setErrorMessage(String msg) {
+		if (getErrorMessage() == null) {
+			errorMessage = msg;
+			setErrorMessageFile(createErrorFile());
 		}
-		return Utils.errorMessageFile.getName();
 	}
 
 	/**
@@ -136,20 +141,33 @@ public class Utils {
 	 *            , the readable message
 	 * @param t
 	 *            , the exception
-	 * @return String, the error file name
 	 */
-	public static String setErrorMessage(String msg, Throwable t) {
-		if (Utils.errorMessage == null) {
-			Utils.errorMessage = msg + ": " + t.getMessage();
-			Utils.errorMessageFile = createErrorFile();
+	public void setErrorMessage(String msg, Throwable t) {
+		if (getErrorMessage() == null) {
+			errorMessage = msg + ": " + t.getMessage();
+			setErrorMessageFile(createErrorFile());
 		}
-		return Utils.errorMessageFile.getName();
 	}
 
 	/**
-	 * @return String, the url to the error file
+	 * @return File, the error file
 	 */
-	public static File createErrorFile() {
+	public File getErrorMessageFile() {
+		return this.errorMessageFile;
+	}
+
+	/**
+	 * @param errorMessageFile
+	 *            , the error file
+	 */
+	public void setErrorMessageFile(File errorMessageFile) {
+		this.errorMessageFile = errorMessageFile;
+	}
+
+	/**
+	 * @return String, the error file
+	 */
+	public File createErrorFile() {
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
@@ -158,12 +176,82 @@ public class Utils {
 			erroFile = File.createTempFile(Utils.ERROR, "." + Utils.TXT, new File(path));
 			BufferedWriter txtFileWriter;
 			txtFileWriter = new BufferedWriter(new FileWriter(erroFile));
-			txtFileWriter.append(Utils.errorMessage);
+			txtFileWriter.append(this.errorMessage);
 			txtFileWriter.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return erroFile;
+	}
+
+	/**
+	 * @return true if fewStatesCharacterFirst is selected
+	 */
+	public boolean isFewStatesCharacterFirst() {
+		return fewStatesCharacterFirst;
+	}
+
+	/**
+	 * @param fewStatesCharacterFirst
+	 */
+	public void setFewStatesCharacterFirst(boolean fewStatesCharacterFirst) {
+		this.fewStatesCharacterFirst = fewStatesCharacterFirst;
+	}
+
+	/**
+	 * @return true if mergeCharacterStatesIfSameDiscimination is selected
+	 */
+	public boolean isMergeCharacterStatesIfSameDiscimination() {
+		return mergeCharacterStatesIfSameDiscimination;
+	}
+
+	/**
+	 * @param mergeCharacterStatesIfSameDiscimination
+	 */
+	public void setMergeCharacterStatesIfSameDiscimination(boolean mergeCharacterStatesIfSameDiscimination) {
+		this.mergeCharacterStatesIfSameDiscimination = mergeCharacterStatesIfSameDiscimination;
+	}
+
+	/**
+	 * @return true if pruning is selected
+	 */
+	public boolean isPruning() {
+		return pruning;
+	}
+
+	/**
+	 * @param pruning
+	 */
+	public void setPruning(boolean pruning) {
+		this.pruning = pruning;
+	}
+
+	/**
+	 * @return String, the verbosity string
+	 */
+	public String getVerbosity() {
+		return verbosity;
+	}
+
+	/**
+	 * @param verbosity
+	 */
+	public void setVerbosity(String verbosity) {
+		this.verbosity = verbosity;
+	}
+
+	/**
+	 * @return String, the score method selected
+	 */
+	public String getScoreMethod() {
+		return scoreMethod;
+	}
+
+	/**
+	 * @param scoreMethod
+	 */
+	public void setScoreMethod(String scoreMethod) {
+		this.scoreMethod = scoreMethod;
 	}
 
 	/**
