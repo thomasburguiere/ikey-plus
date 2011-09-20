@@ -61,7 +61,7 @@ public class IdentificationKeyFlatTXTGeneratorTest {
 				utils.setFewStatesCharacterFirst(false);
 				utils.setMergeCharacterStatesIfSameDiscimination(false);
 				utils.setPruning(false);
-				utils.setVerbosity("");
+				utils.setVerbosity("how");
 				utils.setScoreMethod(Utils.XPER);
 
 				// test if the URL is valid

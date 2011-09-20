@@ -1330,8 +1330,9 @@ public class SingleAccessKeyTree {
 
 		File txtFile = File.createTempFile(Utils.KEY, "." + Utils.TXT, new File(path));
 
-		BufferedWriter txtFileWriter = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(txtFile), "UTF-8"));
+		FileOutputStream fileOutputStream = new FileOutputStream(txtFile);
+		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
+		BufferedWriter txtFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, "UTF-8"));
 
 		txtFileWriter.append(header);
 		txtFileWriter.append(toString());
@@ -1355,8 +1356,10 @@ public class SingleAccessKeyTree {
 				+ "//");
 		header = header + System.getProperty("line.separator");
 		File dotFile = File.createTempFile("key_", "." + Utils.GV, new File(path));
-		BufferedWriter dotFileWriter = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(dotFile), "UTF-8"));
+
+		FileOutputStream fileOutputStream = new FileOutputStream(dotFile);
+		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
+		BufferedWriter dotFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, "UTF-8"));
 		dotFileWriter.append(header);
 		dotFileWriter.append("digraph " + dotFile.getName().split("\\.")[0] + " {");
 		dotFileWriter.append(toDotString());
@@ -1391,8 +1394,10 @@ public class SingleAccessKeyTree {
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File txtFile = File.createTempFile(Utils.KEY, "." + Utils.TXT, new File(path));
-		BufferedWriter txtFileWriter = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(txtFile), "UTF-8"));
+
+		FileOutputStream fileOutputStream = new FileOutputStream(txtFile);
+		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
+		BufferedWriter txtFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, "UTF-8"));
 		txtFileWriter.append(header);
 		txtFileWriter.append(toFlatString());
 		txtFileWriter.close();
@@ -1431,8 +1436,10 @@ public class SingleAccessKeyTree {
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File htmlFile = File.createTempFile(Utils.KEY, "." + Utils.HTML, new File(path));
-		BufferedWriter htmlFileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-				htmlFile), "UTF-8"));
+
+		FileOutputStream fileOutputStream = new FileOutputStream(htmlFile);
+		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
+		BufferedWriter htmlFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, "UTF-8"));
 		htmlFileWriter.append(toHtmlString(header));
 		htmlFileWriter.close();
 
@@ -1552,8 +1559,10 @@ public class SingleAccessKeyTree {
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File sddFile = File.createTempFile(Utils.KEY, "." + Utils.SDD, new File(path));
-		BufferedWriter sddFileWriter = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(sddFile), "UTF-8"));
+
+		FileOutputStream fileOutputStream = new FileOutputStream(sddFile);
+		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
+		BufferedWriter sddFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, "UTF-8"));
 		sddFileWriter.append(toSddString());
 		sddFileWriter.close();
 
@@ -1572,8 +1581,10 @@ public class SingleAccessKeyTree {
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File wikiFile = File.createTempFile(Utils.KEY, "." + Utils.WIKI, new File(path));
-		BufferedWriter wikiFileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-				wikiFile), "UTF-8"));
+
+		FileOutputStream fileOutputStream = new FileOutputStream(wikiFile);
+		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
+		BufferedWriter wikiFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, "UTF-8"));
 
 		if (header != null && !header.equals("")) {
 			wikiFileWriter.append("== Info ==");
@@ -1651,8 +1662,11 @@ public class SingleAccessKeyTree {
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File wikiFile = File.createTempFile(Utils.KEY, "." + Utils.WIKI, new File(path));
-		BufferedWriter wikiFlatFileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-				wikiFile), "UTF-8"));
+
+		FileOutputStream fileOutputStream = new FileOutputStream(wikiFile);
+		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
+		BufferedWriter wikiFlatFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream,
+				"UTF-8"));
 
 		if (header != null && !header.equals("")) {
 			wikiFlatFileWriter.append("== Info ==");
@@ -1683,8 +1697,11 @@ public class SingleAccessKeyTree {
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File wikiFile = File.createTempFile(Utils.KEY, "." + Utils.WIKI, new File(path));
-		BufferedWriter wikiFlatFileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-				wikiFile), "UTF-8"));
+
+		FileOutputStream fileOutputStream = new FileOutputStream(wikiFile);
+		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
+		BufferedWriter wikiFlatFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream,
+				"UTF-8"));
 
 		if (header != null && !header.equals("")) {
 			wikiFlatFileWriter.append("== Info ==");
@@ -1745,8 +1762,10 @@ public class SingleAccessKeyTree {
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		File htmlFile = File.createTempFile(Utils.KEY, "." + Utils.HTML, new File(path));
-		BufferedWriter htmlFileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-				htmlFile), "UTF-8"));
+
+		FileOutputStream fileOutputStream = new FileOutputStream(htmlFile);
+		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
+		BufferedWriter htmlFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, "UTF-8"));
 		htmlFileWriter.append(toFlatHtmlString(header));
 		htmlFileWriter.close();
 

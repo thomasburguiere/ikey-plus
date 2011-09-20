@@ -2,8 +2,10 @@ package utils;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -174,8 +176,12 @@ public class Utils {
 		File erroFile = null;
 		try {
 			erroFile = File.createTempFile(Utils.ERROR, "." + Utils.TXT, new File(path));
-			BufferedWriter txtFileWriter;
-			txtFileWriter = new BufferedWriter(new FileWriter(erroFile));
+
+			FileOutputStream fileOutputStream = new FileOutputStream(erroFile);
+			fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
+			BufferedWriter txtFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream,
+					"UTF-8"));
+
 			txtFileWriter.append(this.errorMessage);
 			txtFileWriter.close();
 		} catch (IOException e) {
