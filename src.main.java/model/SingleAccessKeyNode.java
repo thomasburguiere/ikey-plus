@@ -210,4 +210,8 @@ public class SingleAccessKeyNode {
 		this.nodeDescription = nodeDescription;
 	}
 
+	public String toString() {
+		return character.toString() + " --> " + characterState.toString();
+	}
+
 }
