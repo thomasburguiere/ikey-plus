@@ -82,4 +82,6 @@ public interface ICharacter {
 	 *            <ICharacter>, the list of all child characters
 	 */
 	public List<ICharacter> getAllChildren();
+
+	public String toString();
 }
