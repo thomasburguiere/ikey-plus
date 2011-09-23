@@ -94,8 +94,11 @@ public class SingleAccessKeyTree {
 	/**
 	 * recursively method to be abbe to display String representation of this SingleAccessKeyTree
 	 * 
-	 * @param parentNode
+	 * @param node
 	 * @param output
+	 * @param tabulations
+	 * @param firstNumbering
+	 * @param secondNumbering
 	 */
 	public void recursiveToString(SingleAccessKeyNode node, StringBuffer output, String tabulations,
 			int firstNumbering, int secondNumbering) {
@@ -1108,9 +1111,11 @@ public class SingleAccessKeyTree {
 	 * @param tabulations
 	 * @param displayCharacterName
 	 *            a boolean to know if characterName need to be displayed
+	 * @param firstNumbering
+	 * @param secondNumbering
 	 */
 	public void recursiveToHTMLString(SingleAccessKeyNode node, StringBuffer output, String tabulations,
-			boolean displayCharacterName) {
+			boolean displayCharacterName, int firstNumbering, int secondNumbering) {
 		String characterName = null;
 		String state = null;
 		if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
@@ -1118,7 +1123,8 @@ public class SingleAccessKeyTree {
 			if (displayCharacterName) {
 				characterName = node.getCharacter().getName().replaceAll("\\<", "&lt;")
 						.replaceAll("\\>", "&gt;");
-				characterName = "<span class='character'>" + "<b>" + characterName + "</b>" + "</span>";
+				characterName = "<span class='character'>" + firstNumbering + ") " + "<b>" + characterName
+						+ "</b>" + "</span>";
 				output.append(tabulations + "\t<li>" + characterName + "</li>");
 			}
 
@@ -1126,8 +1132,8 @@ public class SingleAccessKeyTree {
 				state = ((QuantitativeMeasure) node.getCharacterState()).toStringInterval();
 			else
 				state = node.getStringStates();
-			state = "<span class='state'>" + state.replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;")
-					+ "</span>";
+			state = "<span class='state'>" + firstNumbering + "." + secondNumbering + ") "
+					+ state.replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;") + "</span>";
 			state += "<span class=\"warning\">" + nodeDescriptionAnalysis(node) + "</span>";
 
 			output.append("\n" + tabulations + "\t<li>");
@@ -1151,12 +1157,15 @@ public class SingleAccessKeyTree {
 			output.append(System.getProperty("line.separator"));
 			tabulations = tabulations + "\t";
 		}
+		firstNumbering++;
+		secondNumbering = 0;
 		boolean firstLoop = true;
 		for (SingleAccessKeyNode childNode : node.getChildren()) {
+			secondNumbering++;
 			if (firstLoop) {
-				recursiveToHTMLString(childNode, output, tabulations, true);
+				recursiveToHTMLString(childNode, output, tabulations, true, firstNumbering, secondNumbering);
 			} else {
-				recursiveToHTMLString(childNode, output, tabulations, false);
+				recursiveToHTMLString(childNode, output, tabulations, false, firstNumbering, secondNumbering);
 			}
 			firstLoop = false;
 		}
@@ -1269,6 +1278,15 @@ public class SingleAccessKeyTree {
 		slk.append("   background: #fff;" + lineSep);
 		slk.append("}" + lineSep + lineSep);
 
+		slk.append("#treecontrol  a{");
+		slk.append("	color:#333;");
+		slk.append("	font-size: 85%;");
+		slk.append("}");
+
+		slk.append("#treecontrol  a:hover{");
+		slk.append("	color:#777;");
+		slk.append("}");
+
 		slk.append(".character{" + lineSep);
 		slk.append("   color:#333;" + lineSep);
 		slk.append("}" + lineSep + lineSep);
@@ -1287,22 +1305,27 @@ public class SingleAccessKeyTree {
 		slk.append("  $(document).ready(function(){" + lineSep);
 		slk.append("      $('#tree').treeview({" + lineSep);
 		slk.append("		collapsed: true," + lineSep);
-		slk.append("		unique: true," + lineSep);
+		slk.append("		unique: false," + lineSep);
+		slk.append("		control: \"#treecontrol\"," + lineSep);
 		slk.append("		persist: 'location'" + lineSep);
 		slk.append("	});" + lineSep);
 		slk.append(" });" + lineSep);
-		slk.append("  </script>" + lineSep);
+		slk.append("</script>" + lineSep);
 
 		slk.append("</head>" + lineSep);
 
 		slk.append("<body>" + lineSep);
 		slk.append("<div style='margin-left:30px;margin-top:20px;'>" + lineSep);
 		slk.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
+
+		slk.append("<div id=\"treecontrol\"><a title=\"Collapse the entire tree below\" href=\"#\"> Collapse All</a> | <a title=\"Expand the entire tree below\" href=\"#\"> Expand All</a> | <a title=\"Toggle the tree below, opening closed branches, closing open branches\" href=\"#\">Toggle All</a></div>"
+				+ lineSep);
+
 		slk.append("<ul id='tree'>" + lineSep);
 
 		StringBuffer output = new StringBuffer();
 
-		recursiveToHTMLString(root, output, "", true);
+		recursiveToHTMLString(root, output, "", true, 0, 0);
 
 		slk.append(output.toString());
 
@@ -1818,16 +1841,6 @@ public class SingleAccessKeyTree {
 		slk.append("   margin-left: 100px;" + lineSep);
 		slk.append("}" + lineSep + lineSep);
 		slk.append("</style>" + lineSep);
-
-		slk.append("<script>" + lineSep);
-		slk.append("  $(document).ready(function(){" + lineSep);
-		slk.append("      $('#tree').treeview({" + lineSep);
-		slk.append("		collapsed: true," + lineSep);
-		slk.append("		unique: true," + lineSep);
-		slk.append("		persist: 'location'" + lineSep);
-		slk.append("	});" + lineSep);
-		slk.append(" });" + lineSep);
-		slk.append("  </script>" + lineSep);
 
 		slk.append("</head>" + lineSep);
 

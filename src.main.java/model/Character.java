@@ -166,8 +166,8 @@ public class Character implements ICharacter {
 		newCharacter.setParentCharacter(this.getParentCharacter());
 		return newCharacter;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return name;
 	}
 }

@@ -66,8 +66,8 @@ public class State {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return name;
 	}
 }
