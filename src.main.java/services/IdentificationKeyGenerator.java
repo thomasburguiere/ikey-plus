@@ -54,7 +54,7 @@ public class IdentificationKeyGenerator {
 	public void createIdentificationKey() throws Exception {
 
 		this.singleAccessKeyTree = new SingleAccessKeyTree(utils);
-		this.singleAccessKeyTree.setLabel(dataset.getLabel());
+		this.singleAccessKeyTree.setDataSet(dataset);
 
 		// init maxNumStatesPerCharacter
 		this.maxNbStatesPerCharacter = calculateMaxNbStatesPerCharacter();

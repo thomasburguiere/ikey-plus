@@ -30,7 +30,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 public class SingleAccessKeyTree {
 
 	private SingleAccessKeyNode root = null;
-	private String label = null;
+	private DataSet dataSet = null;
 	// the utils object (containing options)
 	private Utils utils = null;
 
@@ -78,17 +78,26 @@ public class SingleAccessKeyTree {
 	 * @return String, the label
 	 */
 	public String getLabel() {
-		return label;
+		return dataSet.getLabel();
 	}
 
 	/**
-	 * set the label of the key
+	 * get the dataset
+	 * 
+	 * @return DataSet , the dataSet
+	 */
+	public DataSet getDataSet(String label) {
+		return dataSet;
+	}
+
+	/**
+	 * set the dataset
 	 * 
 	 * @param String
 	 *            , the label
 	 */
-	public void setLabel(String label) {
-		this.label = label;
+	public void setDataSet(DataSet dataSet) {
+		this.dataSet = dataSet;
 	}
 
 	/**
@@ -864,7 +873,14 @@ public class SingleAccessKeyTree {
 						if (!firstLoop) {
 							output.append(", ");
 						}
-						output.append(taxon.getName());
+						// create image previous using the first image in the list
+						if (taxon.getFirstImage(dataSet) != null) {
+							output.append("<a href=\"" + taxon.getFirstImage(dataSet)
+									+ "\" class=\"screenshot\" rel=\"" + taxon.getFirstImage(dataSet)
+									+ "\" target=\"_blank\">" + taxon.getName() + "</a>");
+						} else {
+							output.append(taxon.getName());
+						}
 						firstLoop = false;
 					}
 					output.append("</span>");
@@ -1147,7 +1163,14 @@ public class SingleAccessKeyTree {
 					if (!firstLoop) {
 						output.append(", ");
 					}
-					output.append(taxon.getName());
+					// create image previous using the first image in the list
+					if (taxon.getFirstImage(dataSet) != null) {
+						output.append("<a href=\"" + taxon.getFirstImage(dataSet)
+								+ "\" class=\"screenshot\" rel=\"" + taxon.getFirstImage(dataSet)
+								+ "\" target=\"_blank\">" + taxon.getName() + "</a>");
+					} else {
+						output.append(taxon.getName());
+					}
 					firstLoop = false;
 				}
 				output.append("</span>");
@@ -1271,6 +1294,7 @@ public class SingleAccessKeyTree {
 				+ "' type='text/css' />" + lineSep);
 
 		slk.append("<style type='text/css'>" + lineSep);
+
 		slk.append("body{" + lineSep);
 		slk.append("   color:#333;" + lineSep);
 		slk.append("   font-family: Verdana, helvetica, arial, sans-serif;" + lineSep);
@@ -1299,16 +1323,57 @@ public class SingleAccessKeyTree {
 		slk.append("   color:#67bb1b;" + lineSep);
 		slk.append("   font-style: italic;" + lineSep);
 		slk.append("}" + lineSep + lineSep);
+
+		slk.append("a{" + lineSep);
+		slk.append("   color:#67bb1b;" + lineSep);
+		slk.append("   font-style: italic;" + lineSep);
+		slk.append("}" + lineSep + lineSep);
+
+		slk.append("#screenshot{" + lineSep);
+		slk.append("	position:absolute;" + lineSep);
+		slk.append("	border:1px solid #ccc;" + lineSep);
+		slk.append("	background:#333;" + lineSep);
+		slk.append("	padding:5px;" + lineSep);
+		slk.append("	display:none;" + lineSep);
+		slk.append("	color:#fff;" + lineSep);
+		slk.append("}" + lineSep);
+
 		slk.append("</style>" + lineSep);
 
 		slk.append("<script>" + lineSep);
+		slk.append("this.screenshotPreview = function(){" + lineSep);
+		slk.append("	xOffset = -10;" + lineSep);
+		slk.append("	yOffset = -50;" + lineSep);
+		slk.append("	$(\"a.screenshot\").hover(function(e){" + lineSep);
+		slk.append("		this.t = this.title;" + lineSep);
+		slk.append("		this.title = \"\";" + lineSep);
+		slk.append("		var c = (this.t != \"\") ? \"<br/>\" + this.t : \"\";" + lineSep);
+		slk.append("		$(\"body\").append(\"<p id='screenshot'><img src='\"+ this.rel +\"' alt='url preview' width='200px'/>\"+ c +\"</p>\");"
+				+ lineSep);
+		slk.append("		$(\"#screenshot\")" + lineSep);
+		slk.append("			.css(\"top\",(e.pageY - xOffset) + \"px\")" + lineSep);
+		slk.append("			.css(\"left\",(e.pageX + yOffset) + \"px\")" + lineSep);
+		slk.append("			.fadeIn(\"fast\");" + lineSep);
+		slk.append("    }," + lineSep);
+		slk.append("	function(){" + lineSep);
+		slk.append("		this.title = this.t;" + lineSep);
+		slk.append("		$(\"#screenshot\").remove();" + lineSep);
+		slk.append("    });" + lineSep);
+		slk.append("	$(\"a.screenshot\").mousemove(function(e){" + lineSep);
+		slk.append("		$(\"#screenshot\")" + lineSep);
+		slk.append("			.css(\"top\",(e.pageY - xOffset) + \"px\")" + lineSep);
+		slk.append("			.css(\"left\",(e.pageX + yOffset) + \"px\");" + lineSep);
+		slk.append("	});" + lineSep);
+		slk.append("};" + lineSep);
+
 		slk.append("  $(document).ready(function(){" + lineSep);
-		slk.append("      $('#tree').treeview({" + lineSep);
+		slk.append("    $('#tree').treeview({" + lineSep);
 		slk.append("		collapsed: true," + lineSep);
 		slk.append("		unique: false," + lineSep);
 		slk.append("		control: \"#treecontrol\"," + lineSep);
 		slk.append("		persist: 'location'" + lineSep);
 		slk.append("	});" + lineSep);
+		slk.append("	screenshotPreview();" + lineSep);
 		slk.append(" });" + lineSep);
 		slk.append("</script>" + lineSep);
 
@@ -1840,7 +1905,52 @@ public class SingleAccessKeyTree {
 		slk.append(".statesAndTaxa{" + lineSep);
 		slk.append("   margin-left: 100px;" + lineSep);
 		slk.append("}" + lineSep + lineSep);
+
+		slk.append("a{" + lineSep);
+		slk.append("   color:#67bb1b;" + lineSep);
+		slk.append("   font-style: italic;" + lineSep);
+		slk.append("}" + lineSep + lineSep);
+
+		slk.append("#screenshot{" + lineSep);
+		slk.append("	position:absolute;" + lineSep);
+		slk.append("	border:1px solid #ccc;" + lineSep);
+		slk.append("	background:#333;" + lineSep);
+		slk.append("	padding:5px;" + lineSep);
+		slk.append("	display:none;" + lineSep);
+		slk.append("	color:#fff;" + lineSep);
+		slk.append("}" + lineSep + lineSep);
 		slk.append("</style>" + lineSep);
+
+		slk.append("<script>" + lineSep);
+		slk.append("this.screenshotPreview = function(){" + lineSep);
+		slk.append("	xOffset = -10;" + lineSep);
+		slk.append("	yOffset = -50;" + lineSep);
+		slk.append("	$(\"a.screenshot\").hover(function(e){" + lineSep);
+		slk.append("		this.t = this.title;" + lineSep);
+		slk.append("		this.title = \"\";" + lineSep);
+		slk.append("		var c = (this.t != \"\") ? \"<br/>\" + this.t : \"\";" + lineSep);
+		slk.append("		$(\"body\").append(\"<p id='screenshot'><img src='\"+ this.rel +\"' alt='url preview' width='200px'/>\"+ c +\"</p>\");"
+				+ lineSep);
+		slk.append("		$(\"#screenshot\")" + lineSep);
+		slk.append("			.css(\"top\",(e.pageY - xOffset) + \"px\")" + lineSep);
+		slk.append("			.css(\"left\",(e.pageX + yOffset) + \"px\")" + lineSep);
+		slk.append("			.fadeIn(\"fast\");" + lineSep);
+		slk.append("    }," + lineSep);
+		slk.append("	function(){" + lineSep);
+		slk.append("		this.title = this.t;" + lineSep);
+		slk.append("		$(\"#screenshot\").remove();" + lineSep);
+		slk.append("    });" + lineSep);
+		slk.append("	$(\"a.screenshot\").mousemove(function(e){" + lineSep);
+		slk.append("		$(\"#screenshot\")" + lineSep);
+		slk.append("			.css(\"top\",(e.pageY - xOffset) + \"px\")" + lineSep);
+		slk.append("			.css(\"left\",(e.pageX + yOffset) + \"px\");" + lineSep);
+		slk.append("	});" + lineSep);
+		slk.append("};" + lineSep);
+
+		slk.append("  $(document).ready(function(){" + lineSep);
+		slk.append("	screenshotPreview();" + lineSep);
+		slk.append(" });" + lineSep);
+		slk.append("</script>" + lineSep);
 
 		slk.append("</head>" + lineSep);
 

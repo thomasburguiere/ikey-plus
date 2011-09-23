@@ -16,6 +16,7 @@ public class DataSet {
 	private List<ICharacter> characters = null;
 	private Map<Taxon, CodedDescription> codedDescriptions = null;
 	private String label = null;
+	private Map<String, String> mediaObjects = null;
 
 	/**
 	 * constructor
@@ -23,6 +24,7 @@ public class DataSet {
 	public DataSet() {
 		characters = new ArrayList<ICharacter>();
 		codedDescriptions = new LinkedHashMap<Taxon, CodedDescription>();
+		mediaObjects = new LinkedHashMap<String, String>();
 	}
 
 	/**
@@ -179,6 +181,34 @@ public class DataSet {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * get the list of images URL
+	 * 
+	 * @return Map<String, String>, the list of images URL
+	 */
+	public Map<String, String> getMediaObjects() {
+		return mediaObjects;
+	}
+
+	/**
+	 * set the list of Image URL
+	 * 
+	 * @param mediaObjects
+	 *            , the list of images URL
+	 */
+	public void setMediaObjects(Map<String, String> mediaObjects) {
+		this.mediaObjects = mediaObjects;
+	}
+
+	/**
+	 * get the image corresponding to the key
+	 * 
+	 * @return String, the images URL
+	 */
+	public String getMediaObject(String key) {
+		return mediaObjects.get(key);
 	}
 
 	/**

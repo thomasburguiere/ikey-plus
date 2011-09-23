@@ -41,14 +41,15 @@ public class SDDSaxParserTest {
 		SDDSaxParser sddSaxParser = null;
 
 		try {
-			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
+			String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
 			// String stringUrl =
 			// "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-unknownData-fullSDD.xml";
 			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
 			// String stringUrl =
 			// "http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml";
-			String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/testSDD.xml";
+			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/testSDD.xml";
 			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml";
+			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesImagesURL.xml";
 			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/smallSDD.xml";
 			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/wrongSDD.xml";
 			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/pruningSDD.xml";
@@ -98,6 +99,9 @@ public class SDDSaxParserTest {
 			System.out.println("taxa (" + dataset.getTaxa().size() + ") : ");
 			for (Taxon taxon : dataset.getTaxa()) {
 				System.out.println("\t" + taxon.getName());
+				for (String key : taxon.getMediaObjectKeys()) {
+					System.out.println("\t" + key);
+				}
 				CodedDescription codedDescription = dataset.getCodedDescription(taxon);
 
 				for (ICharacter character : dataset.getCharacters()) {
@@ -133,6 +137,14 @@ public class SDDSaxParserTest {
 					// display all child characters with its inapplicable states
 					displayRecursiveChildren("\t", character);
 				}
+			}
+
+			// MEDIAOBJECTS
+			System.out.println("media objects : ");
+			for (String key : dataset.getMediaObjects().keySet()) {
+				// display the media object URL
+				System.out.println(key + " : " + dataset.getMediaObjects().get(key));
+
 			}
 		} else {
 			System.out.println("dataset is null !");

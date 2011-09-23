@@ -35,7 +35,7 @@ public class SDDSaxParser {
 		is = new InputSource(url.openStream());
 
 		saxReader.parse(is);
-		this.setDataset(handler.getDataset());
+		this.setDataset(handler.getDataSet());
 	}
 
 	/**

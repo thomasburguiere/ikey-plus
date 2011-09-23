@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * This class represents a taxon
  * 
@@ -9,6 +12,7 @@ package model;
 public class Taxon {
 
 	private String name = null;
+	private List<String> mediaObjectKeys = null;
 
 	/**
 	 * constructor
@@ -26,6 +30,7 @@ public class Taxon {
 	public Taxon(String name) {
 		super();
 		this.name = name;
+		mediaObjectKeys = new ArrayList<String>();
 	}
 
 	/**
@@ -45,6 +50,39 @@ public class Taxon {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * get the key list of mediaObject
+	 * 
+	 * @return List<String>, the key list of mediaObject
+	 */
+	public List<String> getMediaObjectKeys() {
+		return mediaObjectKeys;
+	}
+
+	/**
+	 * set the key list of mediaObject
+	 * 
+	 * @param mediaObjectKeys
+	 *            , the key list of mediaObject
+	 */
+	public void setMediaObjectKeys(List<String> mediaObjectKeys) {
+		this.mediaObjectKeys = mediaObjectKeys;
+	}
+
+	/**
+	 * get the first image
+	 * 
+	 * @return String, the URL to the image
+	 */
+	public String getFirstImage(DataSet dataSet) {
+		if (dataSet != null && mediaObjectKeys != null && mediaObjectKeys.size() > 0) {
+			if (dataSet.getMediaObject(mediaObjectKeys.get(0)).startsWith("http")) {
+				return dataSet.getMediaObject(mediaObjectKeys.get(0));
+			}
+		}
+		return null;
 	}
 
 }
