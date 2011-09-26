@@ -351,12 +351,14 @@ public class SingleAccessKeyTree {
 				// displaying the child node number if it has children nodes, displaying the taxa otherwise
 				output.append(" &#8658; "); // arrow
 				if (child.getChildren().size() == 0) {
-					output.append("<span style=\"color:#67bb1b;\">"); // taxa coloring
+
 					boolean firstLoop = true;
 					for (Taxon taxon : child.getRemainingTaxa()) {
+
 						if (!firstLoop) {
 							output.append(", ");
 						}
+						output.append("<span style=\"color:#67bb1b;\">"); // taxa coloring
 						output.append("''" + taxon.getName() + "''");
 						output.append("</span>");
 						firstLoop = false;
