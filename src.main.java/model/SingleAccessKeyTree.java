@@ -349,8 +349,8 @@ public class SingleAccessKeyTree {
 				output.append("<span style=\"color: black;\">" + nodeDescriptionAnalysis(child) + "</span>");
 
 				// displaying the child node number if it has children nodes, displaying the taxa otherwise
+				output.append(" &#8658; "); // arrow
 				if (child.getChildren().size() == 0) {
-					output.append(" &#8658; "); // arrow
 					output.append("<span style=\"color:#67bb1b;\">"); // taxa coloring
 					boolean firstLoop = true;
 					for (Taxon taxon : child.getRemainingTaxa()) {
@@ -358,11 +358,13 @@ public class SingleAccessKeyTree {
 							output.append(", ");
 						}
 						output.append("''" + taxon.getName() + "''");
+						output.append("</span>");
 						firstLoop = false;
 					}
-					output.append("</span>");
+
 				} else {
-					output.append(" &#8658; [[#anchor" + counter + "|" + counter + "]]");
+					output.append("[[#anchor" + counter + "|<span style=\"color:#67bb1b;\"><u>" + counter
+							+ "</u></span>]]");
 				}
 
 				output.append(lineSeparator);
