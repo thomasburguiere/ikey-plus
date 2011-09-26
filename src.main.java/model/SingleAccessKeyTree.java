@@ -10,6 +10,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import utils.Utils;
@@ -531,27 +532,27 @@ public class SingleAccessKeyTree {
 	private void multipleTraversalToSddString(SingleAccessKeyNode rootNode, StringBuffer output,
 			String lineSeparator) {
 
-		// // first traversal, breadth-first ////
+		// // FIRST TRAVERSAL, breadth-first ////
 		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
 		int counter = 1;
 		iterativeBreadthFirst(rootNode, nodeBreadthFirstIterationMap, counter);
-		// // end first traversal, breadth-first ////
+		// // END FIRST TRAVERSAL, breadth-first ////
 
-		// // second traversal, depth-first ////
+		// // SECOND TRAVERSAL, depth-first ////
 		HashMap<Integer, Integer> nodeChildParentNumberingMap = new HashMap<Integer, Integer>();
-		HashMap<Integer, String> nodeChildNumberParentCharacterStatesMap = new HashMap<Integer, String>();
+		List<Integer> rootNodeChildrenIntegerList = new ArrayList<Integer>();
 		recursiveDepthFirst(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap,
-				nodeChildNumberParentCharacterStatesMap);
-		// // end second traversal, depth-first ////
+				rootNodeChildrenIntegerList);
+		// // END SECOND TRAVERSAL, depth-first ////
 
-		// // third traversal, breadth-first ////
+		// // THIRD TRAVERSAL, breadth-first ////
 		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
 		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
 		counter = 1;
 		int currentParentNumber = -1;
-		String currentParentCharacterState = "";
 		queue.add(rootNode);
 
+		int taxonCounter = 1;
 		// root node treatment
 
 		counter++;
@@ -571,7 +572,6 @@ public class SingleAccessKeyTree {
 
 				// / child node treatment
 
-				// displaying the parent node number and the child node character name only once
 				if (nodeChildParentNumberingMap.get(new Integer(counter)) != currentParentNumber) {
 					currentParentNumber = nodeChildParentNumberingMap.get(new Integer(counter));
 				}
@@ -583,40 +583,61 @@ public class SingleAccessKeyTree {
 					output.append("</Question>" + lineSeparator);
 					output.append("<Leads>" + lineSeparator);
 				}
-
-				if (nodeChildNumberParentCharacterStatesMap.keySet().contains(new Integer(counter)) == false) {
-					System.out.println(child);
-				} else {
-					currentParentCharacterState = escapeHTMLSpecialCharacters(nodeChildNumberParentCharacterStatesMap
-							.get(counter));
-					if (child.getChildren().size() > 0) {
-						output.append("<Lead id=\"lead" + counter + "\">" + lineSeparator);
-						output.append("  <Parent ref=\"" + currentParentNumber + "\"/>" + lineSeparator);
-						output.append("  <Statement>" + lineSeparator);
-						output.append("    <Label>" + currentParentCharacterState + "</Label>"
-								+ lineSeparator);
-						output.append("  </Statement>" + lineSeparator);
-						output.append("  <Question>" + lineSeparator);
-						output.append("    <Label>"
-								+ escapeHTMLSpecialCharacters(child.getCharacter().getName()) + "</Label>"
-								+ lineSeparator);
-						output.append("  </Question>" + lineSeparator);
+				// other child nodes of the root node
+				if (rootNodeChildrenIntegerList.contains(new Integer(counter))) {
+					if (child.hasChild()) {
+						output.append("<Lead id=\"lead" + (counter - 1) + "\">" + lineSeparator);
+						output.append("<Statement>" + lineSeparator);
+						output.append("<Label>" + child.getStringStates() + "</Label>" + lineSeparator);
+						output.append("</Statement>" + lineSeparator);
+						output.append("<Question>" + lineSeparator);
+						output.append("<Label>" + child.getChildren().get(0).getCharacter().getName()
+								+ "</Label>" + lineSeparator);
+						output.append("</Question>" + lineSeparator);
 						output.append("</Lead>" + lineSeparator);
-					} else if (child.getChildren().size() == 0) {
+					} else {
 
 						output.append("<Result>" + lineSeparator);
-						output.append("  <Parent ref=\"" + currentParentNumber + "\"/>" + lineSeparator);
-						output.append("  <Statement>" + lineSeparator);
-						output.append("    <Label>" + currentParentCharacterState + "</Label>"
+						output.append("<Statement>" + lineSeparator);
+						output.append("<Label>" + child.getStringStates() + "</Label>" + lineSeparator);
+						output.append("</Statement>" + lineSeparator);
+						output.append("<TaxonName ref=\"taxon" + taxonCounter + "\">" + lineSeparator);
+						taxonCounter++;
+
+						output.append("<Label>" + child.getChildren().get(0).getCharacter().getName()
+								+ "</Label>" + lineSeparator);
+						output.append("</TaxonName>" + lineSeparator);
+						output.append("</Result>" + lineSeparator);
+					}
+				} else {
+					if (child.hasChild()) {
+						output.append("<Lead id=\"lead" + (counter - 1) + "\">" + lineSeparator);
+						output.append("<Parent ref=\"lead" + (currentParentNumber - 1) + "\">"
 								+ lineSeparator);
-						output.append("  </Statement>" + lineSeparator);
-						output.append("  <TaxonName ref=\"taxon" + counter + "\">" + lineSeparator);
-						output.append("    <Label>");
-						for (Taxon t : child.getRemainingTaxa()) {
-							output.append(escapeHTMLSpecialCharacters(t.getName()) + ", ");
-						}
+						output.append("<Statement>" + lineSeparator);
+						output.append("<Label>" + child.getStringStates() + "</Label>" + lineSeparator);
+						output.append("</Statement>" + lineSeparator);
+						output.append("<Question>" + lineSeparator);
+						output.append("<Label>" + child.getChildren().get(0).getCharacter().getName()
+								+ "</Label>" + lineSeparator);
+						output.append("</Question>" + lineSeparator);
+						output.append("</Lead>" + lineSeparator);
+
+					} else {
+						output.append("<Result>" + lineSeparator);
+						output.append("<Parent ref=\"lead" + (currentParentNumber - 1) + "\">"
+								+ lineSeparator);
+						output.append("<Statement>" + lineSeparator);
+						output.append("<Label>" + child.getStringStates() + "</Label>" + lineSeparator);
+						output.append("</Statement>" + lineSeparator);
+						output.append("<TaxonName ref=\"taxon" + taxonCounter + "\">" + lineSeparator);
+						taxonCounter++;
+						output.append("<Label>");
+						for (Taxon t : child.getRemainingTaxa())
+							output.append(t.getName() + ", ");
 						output.append("</Label>" + lineSeparator);
-						output.append("  </TaxonName>" + lineSeparator);
+
+						output.append("</TaxonName>" + lineSeparator);
 						output.append("</Result>" + lineSeparator);
 					}
 				}
@@ -1049,30 +1070,27 @@ public class SingleAccessKeyTree {
 	/**
 	 * Helper method that traverses the SingleAccessKeyTree depth-first. It is used in multipleTraversal
 	 * methods in order to generate the nodeChildParentNumberingMap HashMap, that associates a child node
-	 * number with the number of its parent node, and to generate the nodeChildNumberParentCharacterStatesMap
-	 * HashMap, that associates a child node number with the character state of its parent node.
+	 * number with the number of its parent node, and to generate the rootNodeChildrenIntegerList List, that
+	 * contains the node numbers of the children of the root nodes.
 	 * 
 	 * @param node
 	 * @param nodeBreadthFirstIterationMap
 	 * @param nodeChildParentNumberingMap
-	 * @param nodeChildNumberParentCharacterStatesMap
+	 * @param rootNodeChildrenIntegerList
 	 */
 	private void recursiveDepthFirst(SingleAccessKeyNode node,
 			HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap,
-			HashMap<Integer, Integer> nodeChildParentNumberingMap,
-			HashMap<Integer, String> nodeChildNumberParentCharacterStatesMap) {
+			HashMap<Integer, Integer> nodeChildParentNumberingMap, List<Integer> rootNodeChildrenIntegerList) {
 
 		Integer parentNumber = nodeBreadthFirstIterationMap.get(node);
-		String parentCharacterStateString = null;
-		if (node.getCharacterState() != null)
-			parentCharacterStateString = node.getStringStates();
 		for (SingleAccessKeyNode childNode : node.getChildren()) {
 			Integer childNumber = nodeBreadthFirstIterationMap.get(childNode);
 			nodeChildParentNumberingMap.put(childNumber, parentNumber);
-			if (parentCharacterStateString != null)
-				nodeChildNumberParentCharacterStatesMap.put(childNumber, parentCharacterStateString);
+			if (parentNumber == 1)
+				rootNodeChildrenIntegerList.add(childNumber);
+
 			recursiveDepthFirst(childNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap,
-					nodeChildNumberParentCharacterStatesMap);
+					rootNodeChildrenIntegerList);
 		}
 	}
 
@@ -1497,6 +1515,11 @@ public class SingleAccessKeyTree {
 		return txtFile;
 	}
 
+	/**
+	 * generates a SDD-formated String representation of the key
+	 * 
+	 * @return
+	 */
 	public String toSddString() {
 		StringBuffer output = new StringBuffer();
 		multipleTraversalToSddString(root, output, System.getProperty("line.separator"));
@@ -1504,7 +1527,7 @@ public class SingleAccessKeyTree {
 	}
 
 	/**
-	 * generates a DOT formatted representation of the key
+	 * generates a DOT-formatted String representation of the key
 	 * 
 	 * @return
 	 */
@@ -1998,3 +2021,4 @@ public class SingleAccessKeyTree {
 	}
 
 }
+
