@@ -1551,8 +1551,8 @@ public class SingleAccessKeyTree {
 		output.append("<TechnicalMetadata created=\"" + generationDate + "\">" + lineSeparator);
 		output.append("<Generator name=\"Identification Key generation WebService\" ");
 		output.append("notes=\"This software is developed and distributed by LIS -"
-				+ " Laboratoire Informatique et SystŽmatique (LIS) -"
-				+ " UniversitŽ Pierre et Marie Curie - Paris VI - within the ViBRANT project\"/>"
+				+ " Laboratoire Informatique et SystÃ©matique (LIS) -"
+				+ " UniversitÃ© Pierre et Marie Curie - Paris VI - within the ViBRANT project\"/>"
 				+ lineSeparator);
 		output.append("</TechnicalMetadata>" + lineSeparator);
 		multipleTraversalToSddString(root, output, lineSeparator);
