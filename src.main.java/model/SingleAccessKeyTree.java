@@ -1543,7 +1543,7 @@ public class SingleAccessKeyTree {
 		String lineSeparator = System.getProperty("line.separator");
 
 		output.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + lineSeparator);
-		output.append("<Datasets xmlns=\"http://rs.tdwg.org/UBIF/2006/\"");
+		output.append("<Datasets xmlns=\"http://rs.tdwg.org/UBIF/2006/\" ");
 		output.append("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
 				+ "xsi:schemaLocation=\"http://rs.tdwg.org/UBIF/2006/ "
 				+ "http://rs.tdwg.org/UBIF/2006/Schema/1.1/SDD.xsd\" />" + lineSeparator);
