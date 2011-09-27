@@ -1549,7 +1549,7 @@ public class SingleAccessKeyTree {
 				+ "http://rs.tdwg.org/UBIF/2006/Schema/1.1/SDD.xsd\" />" + lineSeparator);
 		Date generationDate = new Date();
 		output.append("<TechnicalMetadata created=\"" + generationDate + "\">" + lineSeparator);
-		output.append("<Generator name=\"Identification Key generation WebService\"");
+		output.append("<Generator name=\"Identification Key generation WebService\" ");
 		output.append("notes=\"This software is developed and distributed by LIS -"
 				+ " Laboratoire Informatique et Systmatique (LIS) -"
 				+ " Universit Pierre et Marie Curie - Paris VI - within the ViBRANT project\"/>"
