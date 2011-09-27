@@ -601,15 +601,17 @@ public class SingleAccessKeyTree {
 						output.append("<Statement>" + lineSeparator);
 						output.append("<Label>" + child.getStringStates() + "</Label>" + lineSeparator);
 						output.append("</Statement>" + lineSeparator);
-						
-						output.append("<TaxonName ref=\"taxon" + taxonCounter + "\">" + lineSeparator);
-						taxonCounter++;
-						output.append("<Label>");
-						for (Taxon t : child.getRemainingTaxa())
-							output.append(t.getName() + ", ");
-						output.append("</Label>" + lineSeparator);
-						
-						output.append("</TaxonName>" + lineSeparator);
+						output.append("<TaxonNames>" + lineSeparator);
+						output.append("<TaxonNames>" + lineSeparator);
+						for (Taxon t : child.getRemainingTaxa()) {
+							output.append("<TaxonName id=\"taxon" + taxonCounter + "\">" + lineSeparator);
+							taxonCounter++;
+							output.append("<Label>");
+							output.append(t.getName());
+							output.append("</Label>" + lineSeparator);
+							output.append("</TaxonName>" + lineSeparator);
+						}
+						output.append("</TaxonNames>" + lineSeparator);
 						output.append("</Result>" + lineSeparator);
 					}
 				} else {
@@ -633,14 +635,16 @@ public class SingleAccessKeyTree {
 						output.append("<Statement>" + lineSeparator);
 						output.append("<Label>" + child.getStringStates() + "</Label>" + lineSeparator);
 						output.append("</Statement>" + lineSeparator);
-						output.append("<TaxonName ref=\"taxon" + taxonCounter + "\">" + lineSeparator);
-						taxonCounter++;
-						output.append("<Label>");
-						for (Taxon t : child.getRemainingTaxa())
-							output.append(t.getName() + ", ");
-						output.append("</Label>" + lineSeparator);
-
-						output.append("</TaxonName>" + lineSeparator);
+						output.append("<TaxonNames>" + lineSeparator);
+						for (Taxon t : child.getRemainingTaxa()) {
+							output.append("<TaxonName id=\"taxon" + taxonCounter + "\">" + lineSeparator);
+							taxonCounter++;
+							output.append("<Label>");
+							output.append(t.getName());
+							output.append("</Label>" + lineSeparator);
+							output.append("</TaxonName>" + lineSeparator);
+						}
+						output.append("</TaxonNames>" + lineSeparator);
 						output.append("</Result>" + lineSeparator);
 					}
 				}
