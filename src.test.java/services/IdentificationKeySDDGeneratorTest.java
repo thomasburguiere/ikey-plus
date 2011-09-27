@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import utils.Utils;
 import IO.SDDSaxParser;
+import IO.SingleAccessKeyTreeDumper;
 
 /**
  * This class allow to test the flat TEXT output of IdentificationKeyGenerator service
@@ -130,8 +131,11 @@ public class IdentificationKeySDDGeneratorTest {
 				if (!utils.getVerbosity().contains(Utils.HEADERTAG)) {
 					header.setLength(0);
 				}
-				resultFileName = identificationKeyGenerator.getSingleAccessKeyTree()
-						.toSddFile(header.toString()).getName();
+				SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+				// resultFileName = identificationKeyGenerator.getSingleAccessKeyTree()
+				// .toSddFile(header.toString()).getName();
+				resultFileName = SingleAccessKeyTreeDumper.dumpSDDFile(header.toString(), tree2dump)
+						.getName();
 			} catch (IOException e) {
 				utils.setErrorMessage(Utils.getBundleConfElement("message.creatingFileError"), e);
 				e.printStackTrace();

@@ -6,10 +6,13 @@ import java.net.URLConnection;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
+import model.SingleAccessKeyTree;
+
 import org.junit.Test;
 
 import utils.Utils;
 import IO.SDDSaxParser;
+import IO.SingleAccessKeyTreeDumper;
 
 /**
  * This class allow to test the TEXT output of IdentificationKeyGenerator service
@@ -128,8 +131,11 @@ public class IdentificationKeyTXTGeneratorTest {
 				if (!utils.getVerbosity().contains(Utils.HEADERTAG)) {
 					header.setLength(0);
 				}
-				resultFileName = identificationKeyGenerator.getSingleAccessKeyTree()
-						.toTxtFile(header.toString()).getName();
+//				resultFileName = identificationKeyGenerator.getSingleAccessKeyTree()
+//						.toTxtFile(header.toString()).getName();
+				SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+				resultFileName = SingleAccessKeyTreeDumper.dumpTxtFile(header.toString(), tree2dump)
+						.getName();
 			} catch (IOException e) {
 				utils.setErrorMessage(Utils.getBundleConfElement("message.creatingFileError"), e);
 				e.printStackTrace();
