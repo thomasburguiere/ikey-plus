@@ -88,7 +88,7 @@ public class SingleAccessKeyTree {
 	 * 
 	 * @return DataSet , the dataSet
 	 */
-	public DataSet getDataSet(String label) {
+	public DataSet getDataSet() {
 		return dataSet;
 	}
 
@@ -100,6 +100,14 @@ public class SingleAccessKeyTree {
 	 */
 	public void setDataSet(DataSet dataSet) {
 		this.dataSet = dataSet;
+	}
+
+	public Utils getUtils() {
+		return utils;
+	}
+
+	public void setUtils(Utils utils) {
+		this.utils = utils;
 	}
 
 	/**
