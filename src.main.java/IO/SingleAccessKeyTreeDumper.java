@@ -32,7 +32,7 @@ import model.Taxon;
 public abstract class SingleAccessKeyTreeDumper {
 
 	// SDD DUMP
-	public static File dumpSDDFile(String header, SingleAccessKeyTree tree2dump) throws IOException {
+	public static File dumpSddFile(String header, SingleAccessKeyTree tree2dump) throws IOException {
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
@@ -1238,7 +1238,9 @@ public abstract class SingleAccessKeyTreeDumper {
 		wikiFlatFileWriter.close();
 
 		return wikiFile;
-	}/**
+	}
+
+	/**
 	 * generates a flat, wiki-formatted, String representation of a key, in a String object, by calling the
 	 * {@link #multipleTraversalToWikiString} helper method
 	 * 
@@ -1781,6 +1783,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		return dotFile;
 	}
+
 	/**
 	 * generates a DOT-formatted String representation of the key
 	 * 
@@ -1788,10 +1791,11 @@ public abstract class SingleAccessKeyTreeDumper {
 	 */
 	private static String generateDotString(SingleAccessKeyTree tree2dump) {
 		StringBuffer output = new StringBuffer();
-		multipleTraversalToDotString(tree2dump.getRoot(), output, System.getProperty("line.separator"), tree2dump);
+		multipleTraversalToDotString(tree2dump.getRoot(), output, System.getProperty("line.separator"),
+				tree2dump);
 		return output.toString();
 	}
-	
+
 	/**
 	 * This methods outputs the {@link #SingleAccesKeyTree} as a DOT-formatted String. In order to do this,
 	 * the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first traversal is a breadth-first traversal,
@@ -1905,6 +1909,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		// // end third traversal, breadth-first ////
 
 	}
+
 	// END DOT DUMP
 
 	// ---------------------- HELPER METHODS ---------------------- //

@@ -131,8 +131,8 @@ public class IdentificationKeyTXTGeneratorTest {
 				if (!utils.getVerbosity().contains(Utils.HEADERTAG)) {
 					header.setLength(0);
 				}
-//				resultFileName = identificationKeyGenerator.getSingleAccessKeyTree()
-//						.toTxtFile(header.toString()).getName();
+				// resultFileName = identificationKeyGenerator.getSingleAccessKeyTree()
+				// .toTxtFile(header.toString()).getName();
 				SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 				resultFileName = SingleAccessKeyTreeDumper.dumpTxtFile(header.toString(), tree2dump)
 						.getName();
