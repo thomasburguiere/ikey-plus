@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -588,18 +589,23 @@ public class SingleAccessKeyTree {
 					if (child.hasChild()) {
 						output.append("<Lead id=\"lead" + (counter - 1) + "\">" + lineSeparator);
 						output.append("<Statement>" + lineSeparator);
-						output.append("<Label>" + child.getStringStates() + "</Label>" + lineSeparator);
+						output.append("<Label>"
+								+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
+								+ "</Label>" + lineSeparator);
 						output.append("</Statement>" + lineSeparator);
 						output.append("<Question>" + lineSeparator);
-						output.append("<Label>" + child.getChildren().get(0).getCharacter().getName()
-								+ "</Label>" + lineSeparator);
+						output.append("<Label>"
+								+ child.getChildren().get(0).getCharacter().getName().replace(">", "&gt;")
+										.replace("<", "&lt;") + "</Label>" + lineSeparator);
 						output.append("</Question>" + lineSeparator);
 						output.append("</Lead>" + lineSeparator);
 					} else {
 
 						output.append("<Result>" + lineSeparator);
 						output.append("<Statement>" + lineSeparator);
-						output.append("<Label>" + child.getStringStates() + "</Label>" + lineSeparator);
+						output.append("<Label>"
+								+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
+								+ "</Label>" + lineSeparator);
 						output.append("</Statement>" + lineSeparator);
 						output.append("<TaxonNames>" + lineSeparator);
 						output.append("<TaxonNames>" + lineSeparator);
@@ -607,7 +613,7 @@ public class SingleAccessKeyTree {
 							output.append("<TaxonName id=\"taxon" + taxonCounter + "\">" + lineSeparator);
 							taxonCounter++;
 							output.append("<Label>");
-							output.append(t.getName());
+							output.append(t.getName().replace(">", "&gt;").replace("<", "&lt;"));
 							output.append("</Label>" + lineSeparator);
 							output.append("</TaxonName>" + lineSeparator);
 						}
@@ -620,11 +626,14 @@ public class SingleAccessKeyTree {
 						output.append("<Parent ref=\"lead" + (currentParentNumber - 1) + "\">"
 								+ lineSeparator);
 						output.append("<Statement>" + lineSeparator);
-						output.append("<Label>" + child.getStringStates() + "</Label>" + lineSeparator);
+						output.append("<Label>"
+								+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
+								+ "</Label>" + lineSeparator);
 						output.append("</Statement>" + lineSeparator);
 						output.append("<Question>" + lineSeparator);
-						output.append("<Label>" + child.getChildren().get(0).getCharacter().getName()
-								+ "</Label>" + lineSeparator);
+						output.append("<Label>"
+								+ child.getChildren().get(0).getCharacter().getName().replace(">", "&gt;")
+										.replace("<", "&lt;") + "</Label>" + lineSeparator);
 						output.append("</Question>" + lineSeparator);
 						output.append("</Lead>" + lineSeparator);
 
@@ -633,14 +642,16 @@ public class SingleAccessKeyTree {
 						output.append("<Parent ref=\"lead" + (currentParentNumber - 1) + "\">"
 								+ lineSeparator);
 						output.append("<Statement>" + lineSeparator);
-						output.append("<Label>" + child.getStringStates() + "</Label>" + lineSeparator);
+						output.append("<Label>"
+								+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
+								+ "</Label>" + lineSeparator);
 						output.append("</Statement>" + lineSeparator);
 						output.append("<TaxonNames>" + lineSeparator);
 						for (Taxon t : child.getRemainingTaxa()) {
 							output.append("<TaxonName id=\"taxon" + taxonCounter + "\">" + lineSeparator);
 							taxonCounter++;
 							output.append("<Label>");
-							output.append(t.getName());
+							output.append(t.getName().replace(">", "&gt;").replace("<", "&lt;"));
 							output.append("</Label>" + lineSeparator);
 							output.append("</TaxonName>" + lineSeparator);
 						}
@@ -1529,7 +1540,22 @@ public class SingleAccessKeyTree {
 	 */
 	public String toSddString() {
 		StringBuffer output = new StringBuffer();
-		multipleTraversalToSddString(root, output, System.getProperty("line.separator"));
+		String lineSeparator = System.getProperty("line.separator");
+
+		output.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + lineSeparator);
+		output.append("<Datasets xmlns=\"http://rs.tdwg.org/UBIF/2006/\"");
+		output.append("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
+				+ "xsi:schemaLocation=\"http://rs.tdwg.org/UBIF/2006/ "
+				+ "http://rs.tdwg.org/UBIF/2006/Schema/1.1/SDD.xsd\" />" + lineSeparator);
+		Date generationDate = new Date();
+		output.append("<TechnicalMetadata created=\"" + generationDate + "\">" + lineSeparator);
+		output.append("<Generator name=\"Identification Key generation WebService\"");
+		output.append("notes=\"This software is developed and distributed by LIS -"
+				+ " Laboratoire Informatique et SystŽmatique (LIS) -"
+				+ " UniversitŽ Pierre et Marie Curie - Paris VI - within the ViBRANT project\"/>"
+				+ lineSeparator);
+		output.append("</TechnicalMetadata>" + lineSeparator);
+		multipleTraversalToSddString(root, output, lineSeparator);
 		return output.toString();
 	}
 
