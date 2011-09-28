@@ -24,6 +24,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import utils.Utils;
 
+import model.DataSet;
 import model.QuantitativeMeasure;
 import model.SingleAccessKeyNode;
 import model.SingleAccessKeyTree;
@@ -77,6 +78,26 @@ public abstract class SingleAccessKeyTreeDumper {
 		output.append("<Representation>" + lineSeparator);
 		output.append("<Label>Identification key</Label>" + lineSeparator);
 		output.append("</Representation>" + lineSeparator);
+
+		DataSet originalDataSet = tree2dump.getDataSet();
+
+		output.append("<TaxonNames>" + lineSeparator);
+		int taxonIDint = 1;
+		String taxonID;
+		for (Taxon t : originalDataSet.getTaxa()) {
+			taxonID = "t" + taxonIDint;
+			taxonIDint++;
+			t.setId(taxonID);
+			output.append("<TaxonName id=\"" + taxonID + "\">" + lineSeparator);
+			output.append("<Representation>" + lineSeparator);
+			output.append("<Label>"
+					+ t.getName().replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+					+ "</Label>" + lineSeparator);
+			output.append("</Representation>" + lineSeparator);
+			output.append("</TaxonName>" + lineSeparator);
+		}
+		output.append("</TaxonNames>" + lineSeparator);
+
 		output.append("<IdentificationKeys>" + lineSeparator);
 		multipleTraversalToSddString(tree2dump.getRoot(), output, lineSeparator, tree2dump);
 		output.append("</IdentificationKeys>" + lineSeparator);
@@ -128,7 +149,6 @@ public abstract class SingleAccessKeyTreeDumper {
 		counter++;
 		// end root node treatment
 		visitedNodes.add(rootNode);
-
 		output.append("<IdentificationKey>" + lineSeparator);
 		output.append("<Representation>" + lineSeparator);
 		output.append("<Label>" + tree2dump.getLabel() + "</Label>" + lineSeparator);
@@ -179,7 +199,7 @@ public abstract class SingleAccessKeyTreeDumper {
 										.replace("&", "&amp;") + lineSeparator);
 						output.append("</Statement>");
 						for (Taxon t : child.getRemainingTaxa()) {
-							output.append("<TaxonName ref=\"taxon" + taxonCounter + "\"/>" + lineSeparator);
+							output.append("<TaxonName ref=\"" + t.getId() + "\"/>" + lineSeparator);
 							break;
 							/* taxonCounter++; output.append("<Label>");
 							 * output.append(t.getName().replace(">", "&gt;").replace("<", "&lt;")
@@ -214,7 +234,7 @@ public abstract class SingleAccessKeyTreeDumper {
 										.replace("&", "&amp;"));
 						output.append("</Statement>" + lineSeparator);
 						for (Taxon t : child.getRemainingTaxa()) {
-							output.append("<TaxonName ref=\"taxon" + taxonCounter + "\"/>" + lineSeparator);
+							output.append("<TaxonName ref=\"" + t.getId() + "\"/>" + lineSeparator);
 							break;
 							/* taxonCounter++; output.append("<Label>");
 							 * output.append(t.getName().replace(">", "&gt;").replace("<", "&lt;")
