@@ -24,7 +24,6 @@ import utils.Utils;
  * 
  * @author Florian Causse
  * @created 18-04-2011
- * 
  */
 public class SDDContentHandler implements ContentHandler {
 

@@ -15,6 +15,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import model.DataSet;
+import model.QuantitativeMeasure;
+import model.SingleAccessKeyNode;
+import model.SingleAccessKeyTree;
+import model.State;
+import model.Taxon;
+import utils.Utils;
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;
@@ -22,15 +30,12 @@ import com.itextpdf.text.html.simpleparser.HTMLWorker;
 import com.itextpdf.text.html.simpleparser.StyleSheet;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import utils.Utils;
-
-import model.DataSet;
-import model.QuantitativeMeasure;
-import model.SingleAccessKeyNode;
-import model.SingleAccessKeyTree;
-import model.State;
-import model.Taxon;
-
+/**
+ * This class generate all outputs format of the key
+ * 
+ * @author Thomas Burguiere
+ * @created 28-09-2011
+ */
 public abstract class SingleAccessKeyTreeDumper {
 
 	// SDD DUMP
@@ -142,8 +147,6 @@ public abstract class SingleAccessKeyTreeDumper {
 		counter = 1;
 		int currentParentNumber = -1;
 		queue.add(rootNode);
-
-		
 
 		counter++;
 		// end root node treatment
