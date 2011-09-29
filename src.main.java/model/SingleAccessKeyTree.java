@@ -119,7 +119,7 @@ public class SingleAccessKeyTree {
 	 * @param firstNumbering
 	 * @param secondNumbering
 	 */
-	public void recursiveToString(SingleAccessKeyNode node, StringBuffer output, String tabulations,
+	private void recursiveToString(SingleAccessKeyNode node, StringBuffer output, String tabulations,
 			int firstNumbering, int secondNumbering) {
 
 		if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
@@ -1178,7 +1178,7 @@ public class SingleAccessKeyTree {
 	 * @param firstNumbering
 	 * @param secondNumbering
 	 */
-	public void recursiveToHTMLString(SingleAccessKeyNode node, StringBuffer output, String tabulations,
+	private void recursiveToHTMLString(SingleAccessKeyNode node, StringBuffer output, String tabulations,
 			boolean displayCharacterName, int firstNumbering, int secondNumbering) {
 		String characterName = null;
 		String state = null;
@@ -1261,7 +1261,7 @@ public class SingleAccessKeyTree {
 	 * @param displayCharacterName
 	 *            a boolean to know if characterName need to be displayed
 	 */
-	public void recursiveToHTMLStringForPdf(SingleAccessKeyNode node, StringBuffer output,
+	private void recursiveToHTMLStringForPdf(SingleAccessKeyNode node, StringBuffer output,
 			String tabulations, int firstNumbering, int secondNumbering) {
 		String characterName = null;
 		String state = null;
@@ -1329,7 +1329,7 @@ public class SingleAccessKeyTree {
 	 * 
 	 * @return String the HTML String
 	 */
-	public String toHtmlString(String header) {
+	private String toHtmlString(String header) {
 		String lineSep = System.getProperty("line.separator");
 		StringBuffer slk = new StringBuffer();
 		slk.append("<html>" + lineSep);
@@ -1460,6 +1460,7 @@ public class SingleAccessKeyTree {
 	 * @return File the text File
 	 * @throws IOException
 	 */
+	@Deprecated
 	public File toTxtFile(String header) throws IOException {
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
@@ -1484,6 +1485,7 @@ public class SingleAccessKeyTree {
 	 * @return
 	 * @throws IOException
 	 */
+	@Deprecated
 	public File toDotFile(String header) throws IOException {
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
@@ -1511,7 +1513,7 @@ public class SingleAccessKeyTree {
 	 * 
 	 * @return
 	 */
-	public String toFlatString() {
+	private String toFlatString() {
 		StringBuffer output = new StringBuffer();
 		multipleTraversalToString(root, output, System.getProperty("line.separator"));
 		return output.toString();
@@ -1525,6 +1527,7 @@ public class SingleAccessKeyTree {
 	 * @return a txt File
 	 * @throws IOException
 	 */
+	@Deprecated
 	public File toFlatTxtFile(String header) throws IOException {
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
@@ -1546,7 +1549,7 @@ public class SingleAccessKeyTree {
 	 * 
 	 * @return
 	 */
-	public String toSddString() {
+	private String toSddString() {
 		StringBuffer output = new StringBuffer();
 		String lineSeparator = System.getProperty("line.separator");
 
@@ -1572,7 +1575,7 @@ public class SingleAccessKeyTree {
 	 * 
 	 * @return
 	 */
-	public String toDotString() {
+	private String toDotString() {
 		StringBuffer output = new StringBuffer();
 		multipleTraversalToDotString(root, output, System.getProperty("line.separator"));
 		return output.toString();
@@ -1612,6 +1615,7 @@ public class SingleAccessKeyTree {
 	 * @throws COSVisitorException
 	 * @throws DocumentException
 	 */
+	@Deprecated
 	public File toPdfFile(String header) throws IOException, DocumentException {
 
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
@@ -1663,7 +1667,8 @@ public class SingleAccessKeyTree {
 	 * @throws COSVisitorException
 	 * @throws DocumentException
 	 */
-	public File toFlatPdfFile(String header) throws IOException, DocumentException {
+	public
+	@Deprecated File toFlatPdfFile(String header) throws IOException, DocumentException {
 
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
@@ -1710,6 +1715,7 @@ public class SingleAccessKeyTree {
 	 * @return File, the sdd file
 	 * @throws IOException
 	 */
+	@Deprecated
 	public File toSddFile(String header) throws IOException {
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
@@ -1732,6 +1738,7 @@ public class SingleAccessKeyTree {
 	 *            , header information
 	 * @return File, the Wikitext file
 	 */
+	@Deprecated
 	public File toWikiFile(String header) throws IOException {
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
@@ -1768,6 +1775,7 @@ public class SingleAccessKeyTree {
 	 * @return
 	 * @throws IOException
 	 */
+	@Deprecated
 	public File toFlatWikiFile(String header) throws IOException {
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
@@ -1799,7 +1807,7 @@ public class SingleAccessKeyTree {
 	 * 
 	 * @return
 	 */
-	public String toFlatWikiString() {
+	private String toFlatWikiString() {
 		StringBuffer output = new StringBuffer();
 		multipleTraversalToWikiString(root, output, System.getProperty("line.separator"));
 		return output.toString();
@@ -1813,6 +1821,7 @@ public class SingleAccessKeyTree {
 	 * @return
 	 * @throws IOException
 	 */
+	@Deprecated
 	public File toFlatSpeciesIDQuestionAnswerWikiFile(String header) throws IOException {
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
@@ -1848,6 +1857,7 @@ public class SingleAccessKeyTree {
 	 * @return
 	 * @throws IOException
 	 */
+	@Deprecated
 	public File toFlatSpeciesIDStatementWikiFile(String header) throws IOException {
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
@@ -1882,7 +1892,7 @@ public class SingleAccessKeyTree {
 	 * 
 	 * @return
 	 */
-	public String toFlatSpeciesIDQuestionAnswerWikiString() {
+	private String toFlatSpeciesIDQuestionAnswerWikiString() {
 
 		StringBuffer output = new StringBuffer();
 		multipleTraversalToSpeciesIDQuestionAnswerWikiString(root, output,
@@ -1897,7 +1907,7 @@ public class SingleAccessKeyTree {
 	 * 
 	 * @return
 	 */
-	public String toFlatSpeciesIDStatementWikiString() {
+	private String toFlatSpeciesIDStatementWikiString() {
 
 		StringBuffer output = new StringBuffer();
 		multipleTraversalToSpeciesIDStatementWikiString(root, output, System.getProperty("line.separator"));
@@ -1912,6 +1922,7 @@ public class SingleAccessKeyTree {
 	 * @return File, the html file
 	 * @throws IOException
 	 */
+	@Deprecated
 	public File toFlatHtmlFile(String header) throws IOException {
 
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
@@ -1936,7 +1947,7 @@ public class SingleAccessKeyTree {
 	 * @param header
 	 * @return
 	 */
-	public String toFlatHtmlString(String header) {
+	private String toFlatHtmlString(String header) {
 		StringBuffer output = new StringBuffer();
 		String lineSep = System.getProperty("line.separator");
 		StringBuffer slk = new StringBuffer();
@@ -2057,7 +2068,7 @@ public class SingleAccessKeyTree {
 	 * @param htmlString
 	 * @return
 	 */
-	public String escapeHTMLSpecialCharacters(String htmlString) {
+	private String escapeHTMLSpecialCharacters(String htmlString) {
 		return htmlString.replace(">", "&gt;").replace("<", "&lt;");
 	}
 
