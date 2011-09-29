@@ -131,8 +131,6 @@ public class IdentificationKeyHTMLGeneratorTest {
 				if (!utils.getVerbosity().contains(Utils.HEADERTAG)) {
 					header.setLength(0);
 				}
-				// resultFileName = identificationKeyGenerator.getSingleAccessKeyTree()
-				// .toHtmlFile(header.toString()).getName();
 				SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 				resultFileName = SingleAccessKeyTreeDumper.dumpHtmlFile(header.toString(), tree2dump)
 						.getName();

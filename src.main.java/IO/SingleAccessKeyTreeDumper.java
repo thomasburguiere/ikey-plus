@@ -1306,8 +1306,8 @@ public abstract class SingleAccessKeyTreeDumper {
 		// // end first traversal, breadth-first ////
 
 		// // second traversal, depth-first ////
-		HashMap<Integer, Integer> nodeChildParentNumberingMap = new HashMap<Integer, Integer>();
-		recursiveDepthFirst(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
+		HashMap<SingleAccessKeyNode, Integer> nodeChildParentNumberingMap = new HashMap<SingleAccessKeyNode, Integer>();
+		recursiveDepthFirst2(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
 		// // end second traversal, depth-first ////
 
 		// // third traversal, breadth-first ////
@@ -1330,33 +1330,23 @@ public abstract class SingleAccessKeyTreeDumper {
 
 			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
 					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
-							.get(0)) != null
-			// && child.getCharacter() != null && child.getCharacterState() != null
-			) {
+							.get(0)) != null) {
 				visitedNodes.add(child);
 
 				// / child node treatment
 
 				// displaying the parent node number and the child node character name only once
-				if (nodeChildParentNumberingMap.get(new Integer(counter)) != currentParentNumber) {
-					currentParentNumber = nodeChildParentNumberingMap.get(new Integer(counter));
+				if (nodeChildParentNumberingMap.get(child) != currentParentNumber) {
+					currentParentNumber = nodeChildParentNumberingMap.get(child);
 					output.append(lineSeparator);
-					if (currentParentNumber < 10)
-						output.append("   ");
-					else if (currentParentNumber < 100)
-						output.append("  ");
-					else if (currentParentNumber < 1000)
-						output.append(" ");
 					output.append("<span id=\"anchor" + currentParentNumber + "\"></span>"
 							+ currentParentNumber);
 
-					output.append("  " + child.getCharacter().getName() + " = ");
+					output.append("  " + child.getCharacter().getName());
+					output.append(lineSeparator);
+					output.append("::::::= ");
 				} else {
-					output.append("    ");
-					String blankCharacterName = "";
-					for (int i = 0; i < child.getCharacter().getName().length(); i++)
-						blankCharacterName += " ";
-					output.append("  " + blankCharacterName + " = ");
+					output.append("::::::= ");
 				}
 
 				// displaying the child node character state
@@ -1395,7 +1385,9 @@ public abstract class SingleAccessKeyTreeDumper {
 
 				queue.add(child);
 
-				counter++;
+				if (child.getChildren().size() > 0)
+					counter++;
+
 				// / end child node treatment
 
 			}
@@ -1974,9 +1966,11 @@ public abstract class SingleAccessKeyTreeDumper {
 							.get(0)) != null) {
 				visitedNodes.add(child);
 
-				// / child node treatment
-				nodeBreadthFirstIterationMap.put(child, new Integer(counter));
-				counter++;
+				if (child.getChildren().size() > 0) {
+					// / child node treatment
+					nodeBreadthFirstIterationMap.put(child, new Integer(counter));
+					counter++;
+				}
 
 				// / end child node treatment
 
@@ -2003,6 +1997,26 @@ public abstract class SingleAccessKeyTreeDumper {
 			Integer childNumber = nodeBreadthFirstIterationMap.get(childNode);
 			nodeChildParentNumberingMap.put(childNumber, parentNumber);
 			recursiveDepthFirst(childNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
+		}
+	}
+
+	/**
+	 * Helper method that traverses the SingleAccessKeyTree depth-first. It is used in multipleTraversal
+	 * methods in order to generate the nodeChildParentNumberingMap HashMap, that associates a child node
+	 * number with the number of its parent node
+	 * 
+	 * @param node
+	 * @param nodeBreadthFirstIterationMap
+	 * @param nodeChildParentNumberingMap
+	 */
+	private static void recursiveDepthFirst2(SingleAccessKeyNode node,
+			HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap,
+			HashMap<SingleAccessKeyNode, Integer> nodeChildParentNumberingMap) {
+
+		Integer parentNumber = nodeBreadthFirstIterationMap.get(node);
+		for (SingleAccessKeyNode childNode : node.getChildren()) {
+			nodeChildParentNumberingMap.put(childNode, parentNumber);
+			recursiveDepthFirst2(childNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
 		}
 	}
 

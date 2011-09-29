@@ -131,8 +131,6 @@ public class IdentificationKeyFlatWIKISpeciesIDStatementGeneratorTest {
 				if (!utils.getVerbosity().contains(Utils.HEADERTAG)) {
 					header.setLength(0);
 				}
-				// resultFileName = identificationKeyGenerator.getSingleAccessKeyTree()
-				// .toFlatSpeciesIDStatementWikiFile(header.toString()).getName();
 				SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 				resultFileName = SingleAccessKeyTreeDumper.dumpFlatSpeciesIDStatementWikiFile(
 						header.toString(), tree2dump).getName();

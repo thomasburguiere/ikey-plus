@@ -131,8 +131,6 @@ public class IdentificationKeyWIKIGeneratorTest {
 				if (!utils.getVerbosity().contains(Utils.HEADERTAG)) {
 					header.setLength(0);
 				}
-				// resultFileName = identificationKeyGenerator.getSingleAccessKeyTree()
-				// .toWikiFile(header.toString()).getName();
 				SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 				resultFileName = SingleAccessKeyTreeDumper.dumpWikiFile(header.toString(), tree2dump)
 						.getName();

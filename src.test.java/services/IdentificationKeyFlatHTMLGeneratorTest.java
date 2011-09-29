@@ -131,8 +131,6 @@ public class IdentificationKeyFlatHTMLGeneratorTest {
 				if (!utils.getVerbosity().contains(Utils.HEADERTAG)) {
 					header.setLength(0);
 				}
-				// resultFileName = identificationKeyGenerator.getSingleAccessKeyTree()
-				// .toFlatHtmlFile(header.toString()).getName();
 				SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 				resultFileName = SingleAccessKeyTreeDumper.dumpFlatHtmlFile(header.toString(), tree2dump)
 						.getName();
