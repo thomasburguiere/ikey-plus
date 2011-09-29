@@ -18,12 +18,12 @@ DEPLOYMENT
 3)Start the server
 
 2)Stop server and put a new confOverridable.properties file in Tomcat/webapps/IK_WS_REST-1.0/WEB-INF/classes/ directory.
-This file must contain :
+This file must contain (change parameters if necessary) :
 generatedKeyFiles.prefix = webapps/
 generatedKeyFiles.folder = generatedKeyFiles/
 // 2592000 is the number of second for 30 days.
 generatedKeyFiles.delete.period = 2592000
-host = http://localhost:8080/
+host = http://yourServerHost:8080/
 message.createdBy = Created by www.identificationKey.fr
 
 3)Start the server
