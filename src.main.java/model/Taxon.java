@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class Taxon {
 
+	private String id;
 	private String name = null;
 	private List<String> mediaObjectKeys = null;
 
@@ -83,6 +84,14 @@ public class Taxon {
 			}
 		}
 		return null;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }
