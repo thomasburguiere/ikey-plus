@@ -53,7 +53,7 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * generates a SDD-formated String representation of the SingleAccessKeyTree passed in paramater
 	 * 
 	 * @param tree2dump
-	 *            the SingleAccessKeyTree which is to be dumped in a SDD-formatted String
+	 *            the SingleAccessKeyTree which is to be dumped in a SDD-formatted File
 	 * @return
 	 */
 	private static String generateSddString(SingleAccessKeyTree tree2dump) {
@@ -143,8 +143,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		int currentParentNumber = -1;
 		queue.add(rootNode);
 
-		int taxonCounter = 1;
-		// root node treatment
+		
 
 		counter++;
 		// end root node treatment
