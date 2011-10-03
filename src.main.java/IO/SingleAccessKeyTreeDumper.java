@@ -2027,7 +2027,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-		File zipFile = File.createTempFile(Utils.KEY, "TEST." + Utils.ZIP, new File(path));
+		File zipFile = File.createTempFile(Utils.KEY, "." + Utils.ZIP, new File(path));
 
 		try {
 			// create the writing flow
