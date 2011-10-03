@@ -137,7 +137,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		// // SECOND TRAVERSAL, depth-first ////
 		HashMap<Integer, Integer> nodeChildParentNumberingMap = new HashMap<Integer, Integer>();
 		List<Integer> rootNodeChildrenIntegerList = new ArrayList<Integer>();
-		recursiveDepthFirst(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap,
+		recursiveDepthFirstIntegerIndex(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap,
 				rootNodeChildrenIntegerList);
 		// // END SECOND TRAVERSAL, depth-first ////
 
@@ -248,7 +248,7 @@ public abstract class SingleAccessKeyTreeDumper {
 				}
 
 				queue.add(child);
-				
+
 				counter++;
 				// / end child node treatment
 
@@ -398,12 +398,12 @@ public abstract class SingleAccessKeyTreeDumper {
 		// // first traversal, breadth-first ////
 		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
 		int counter = 1;
-		iterativeBreadthFirst2(rootNode, nodeBreadthFirstIterationMap, counter);
+		iterativeBreadthFirstSkipChildlessNodes(rootNode, nodeBreadthFirstIterationMap, counter);
 		// // end first traversal, breadth-first ////
 
 		// // second traversal, depth-first ////
 		HashMap<SingleAccessKeyNode, Integer> nodeChildParentNumberingMap = new HashMap<SingleAccessKeyNode, Integer>();
-		recursiveDepthFirst2(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
+		recursiveDepthFirstNodeIndex(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
 		// // end second traversal, depth-first ////
 
 		// // third traversal, breadth-first ////
@@ -483,7 +483,7 @@ public abstract class SingleAccessKeyTreeDumper {
 				output.append(lineSeparator);
 
 				queue.add(child);
-				if(child.hasChild())
+				if (child.hasChild())
 					counter++;
 				// / end child node treatment
 
@@ -898,13 +898,13 @@ public abstract class SingleAccessKeyTreeDumper {
 		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
 
 		int counter = 1;
-		iterativeBreadthFirst2(rootNode, nodeBreadthFirstIterationMap, counter);
+		iterativeBreadthFirstSkipChildlessNodes(rootNode, nodeBreadthFirstIterationMap, counter);
 
 		// // end first traversal, breadth-first ////
 
 		// // second traversal, depth-first ////
 		HashMap<SingleAccessKeyNode, Integer> nodeChildParentNumberingMap = new HashMap<SingleAccessKeyNode, Integer>();
-		recursiveDepthFirst2(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
+		recursiveDepthFirstNodeIndex(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
 		// // end second traversal, depth-first ////
 
 		// // third traversal, breadth-first ////
@@ -1302,13 +1302,13 @@ public abstract class SingleAccessKeyTreeDumper {
 		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
 		int counter = 1;
 
-		iterativeBreadthFirst2(rootNode, nodeBreadthFirstIterationMap, counter);
+		iterativeBreadthFirstSkipChildlessNodes(rootNode, nodeBreadthFirstIterationMap, counter);
 
 		// // end first traversal, breadth-first ////
 
 		// // second traversal, depth-first ////
 		HashMap<SingleAccessKeyNode, Integer> nodeChildParentNumberingMap = new HashMap<SingleAccessKeyNode, Integer>();
-		recursiveDepthFirst2(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
+		recursiveDepthFirstNodeIndex(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
 		// // end second traversal, depth-first ////
 
 		// // third traversal, breadth-first ////
@@ -1479,7 +1479,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		// // second traversal, depth-first ////
 		HashMap<Integer, Integer> nodeChildParentNumberingMap = new HashMap<Integer, Integer>();
-		recursiveDepthFirst(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
+		recursiveDepthFirstIntegerIndex(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
 		// // end second traversal, depth-first ////
 
 		// // third traversal, breadth-first ////
@@ -1663,13 +1663,13 @@ public abstract class SingleAccessKeyTreeDumper {
 		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
 
 		int counter = 1;
-		iterativeBreadthFirst2(rootNode, nodeBreadthFirstIterationMap, counter);
+		iterativeBreadthFirstSkipChildlessNodes(rootNode, nodeBreadthFirstIterationMap, counter);
 
 		// // end first traversal, breadth-first ////
 
 		// // second traversal, depth-first ////
 		HashMap<SingleAccessKeyNode, Integer> nodeChildParentNumberingMap = new HashMap<SingleAccessKeyNode, Integer>();
-		recursiveDepthFirst2(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
+		recursiveDepthFirstNodeIndex(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
 		// // end second traversal, depth-first ////
 
 		// // third traversal, breadth-first ////
@@ -1817,7 +1817,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		// // second traversal, depth-first ////
 		HashMap<Integer, Integer> nodeChildParentNumberingMap = new HashMap<Integer, Integer>();
-		recursiveDepthFirst(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
+		recursiveDepthFirstIntegerIndex(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
 		// // end second traversal, depth-first ////
 
 		// // third traversal, breadth-first ////
@@ -1917,7 +1917,7 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * @param nodeBreadthFirstIterationMap
 	 * @param counter
 	 */
-	private static void iterativeBreadthFirst2(SingleAccessKeyNode rootNode,
+	private static void iterativeBreadthFirstSkipChildlessNodes(SingleAccessKeyNode rootNode,
 			HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap, int counter) {
 		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
 		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
@@ -1941,7 +1941,7 @@ public abstract class SingleAccessKeyTreeDumper {
 							.get(0)) != null) {
 				visitedNodes.add(child);
 
-				if (child.getChildren().size() > 0) {
+				if (child.hasChild()) {
 					// / child node treatment
 					nodeBreadthFirstIterationMap.put(child, new Integer(counter));
 					counter++;
@@ -2007,7 +2007,7 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * @param nodeBreadthFirstIterationMap
 	 * @param nodeChildParentNumberingMap
 	 */
-	private static void recursiveDepthFirst(SingleAccessKeyNode node,
+	private static void recursiveDepthFirstIntegerIndex(SingleAccessKeyNode node,
 			HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap,
 			HashMap<Integer, Integer> nodeChildParentNumberingMap) {
 
@@ -2015,7 +2015,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		for (SingleAccessKeyNode childNode : node.getChildren()) {
 			Integer childNumber = nodeBreadthFirstIterationMap.get(childNode);
 			nodeChildParentNumberingMap.put(childNumber, parentNumber);
-			recursiveDepthFirst(childNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
+			recursiveDepthFirstIntegerIndex(childNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
 		}
 	}
 
@@ -2028,14 +2028,14 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * @param nodeBreadthFirstIterationMap
 	 * @param nodeChildParentNumberingMap
 	 */
-	private static void recursiveDepthFirst2(SingleAccessKeyNode node,
+	private static void recursiveDepthFirstNodeIndex(SingleAccessKeyNode node,
 			HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap,
 			HashMap<SingleAccessKeyNode, Integer> nodeChildParentNumberingMap) {
 
 		Integer parentNumber = nodeBreadthFirstIterationMap.get(node);
 		for (SingleAccessKeyNode childNode : node.getChildren()) {
 			nodeChildParentNumberingMap.put(childNode, parentNumber);
-			recursiveDepthFirst2(childNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
+			recursiveDepthFirstNodeIndex(childNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
 		}
 	}
 
@@ -2050,7 +2050,7 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * @param nodeChildParentNumberingMap
 	 * @param rootNodeChildrenIntegerList
 	 */
-	private static void recursiveDepthFirst(SingleAccessKeyNode node,
+	private static void recursiveDepthFirstIntegerIndex(SingleAccessKeyNode node,
 			HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap,
 			HashMap<Integer, Integer> nodeChildParentNumberingMap, List<Integer> rootNodeChildrenIntegerList) {
 
@@ -2061,7 +2061,7 @@ public abstract class SingleAccessKeyTreeDumper {
 			if (parentNumber == 1)
 				rootNodeChildrenIntegerList.add(childNumber);
 
-			recursiveDepthFirst(childNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap,
+			recursiveDepthFirstIntegerIndex(childNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap,
 					rootNodeChildrenIntegerList);
 		}
 	}
@@ -2077,7 +2077,7 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * @param nodeChildParentNumberingMap
 	 * @param rootNodeChildrenIntegerList
 	 */
-	private static void recursiveDepthFirst2(SingleAccessKeyNode node,
+	private static void recursiveDepthFirstNodeIndex(SingleAccessKeyNode node,
 			HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap,
 			HashMap<SingleAccessKeyNode, Integer> nodeChildParentNumberingMap,
 			List<SingleAccessKeyNode> rootNodeChildrenIntegerList) {
@@ -2088,7 +2088,7 @@ public abstract class SingleAccessKeyTreeDumper {
 			if (parentNumber == 1)
 				rootNodeChildrenIntegerList.add(childNode);
 
-			recursiveDepthFirst2(childNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap,
+			recursiveDepthFirstNodeIndex(childNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap,
 					rootNodeChildrenIntegerList);
 		}
 	}
