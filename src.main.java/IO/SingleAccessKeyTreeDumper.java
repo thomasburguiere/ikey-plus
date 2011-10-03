@@ -1473,13 +1473,13 @@ public abstract class SingleAccessKeyTreeDumper {
 		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
 
 		int counter = 1;
-		iterativeBreadthFirst(rootNode, nodeBreadthFirstIterationMap, counter);
+		iterativeBreadthFirstSkipChildlessNodes(rootNode, nodeBreadthFirstIterationMap, counter);
 
 		// // end first traversal, breadth-first ////
 
 		// // second traversal, depth-first ////
-		HashMap<Integer, Integer> nodeChildParentNumberingMap = new HashMap<Integer, Integer>();
-		recursiveDepthFirstIntegerIndex(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
+		HashMap<SingleAccessKeyNode, Integer> nodeChildParentNumberingMap = new HashMap<SingleAccessKeyNode, Integer>();
+		recursiveDepthFirstNodeIndex(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
 		// // end second traversal, depth-first ////
 
 		// // third traversal, breadth-first ////
@@ -1514,13 +1514,15 @@ public abstract class SingleAccessKeyTreeDumper {
 				// / child node treatment
 
 				// displaying the parent node number and the child node character name only once
-				if (nodeChildParentNumberingMap.get(new Integer(counter)) != currentParentNumber) {
-					currentParentNumber = nodeChildParentNumberingMap.get(new Integer(counter));
+				if (nodeChildParentNumberingMap.get(child) != currentParentNumber) {
+					currentParentNumber = nodeChildParentNumberingMap.get(child);
 					output.append(lineSeparator);
 
-					output.append("{{Lead Question |" + currentParentNumber + " | "
+					output.append("{{Lead Question |"
+							+ currentParentNumber
+							+ " | "
 							+ child.getCharacter().getName().replace(">", "&gt;").replace("<", "&lt;")
-							+ " }}");
+									.replace(">", "&gt;").replace("=", "&#61;") + " }}");
 					output.append(lineSeparator);
 					alphabetIndex = 0;
 
@@ -1549,7 +1551,7 @@ public abstract class SingleAccessKeyTreeDumper {
 					output.append(((QuantitativeMeasure) child.getCharacterState()).toStringInterval());
 				} else {
 					output.append(((State) child.getCharacterState()).getName().replace(">", "&gt;")
-							.replace("<", "&lt;"));
+							.replace("=", "&#61;").replace("<", "&lt;"));
 				}
 				output.append(tree2dump.nodeDescriptionAnalysis(child));
 				output.append("|");
@@ -1562,7 +1564,8 @@ public abstract class SingleAccessKeyTreeDumper {
 						if (!firstLoop) {
 							output.append(", ");
 						}
-						output.append(taxon.getName().replace(">", "&gt;").replace("<", "&lt;"));
+						output.append(taxon.getName().replace(">", "&gt;").replace("<", "&lt;")
+								.replace("=", "&#61;"));
 						firstLoop = false;
 					}
 				} else {
@@ -1574,7 +1577,8 @@ public abstract class SingleAccessKeyTreeDumper {
 
 				queue.add(child);
 
-				counter++;
+				if (child.hasChild())
+					counter++;
 				// / end child node treatment
 
 			}
@@ -1712,7 +1716,7 @@ public abstract class SingleAccessKeyTreeDumper {
 					output.append(((QuantitativeMeasure) child.getCharacterState()).toStringInterval());
 				} else {
 					output.append(((State) child.getCharacterState()).getName().replace(">", "&gt;")
-							.replace("<", "&lt;"));
+							.replace("<", "&lt;").replace("=", "&#61;"));
 				}
 				output.append(tree2dump.nodeDescriptionAnalysis(child));
 				output.append("|");
@@ -1725,7 +1729,8 @@ public abstract class SingleAccessKeyTreeDumper {
 						if (!firstLoop) {
 							output.append(", ");
 						}
-						output.append(taxon.getName().replace(">", "&gt;").replace("<", "&lt;"));
+						output.append(taxon.getName().replace(">", "&gt;").replace("<", "&lt;")
+								.replace("=", "&#61;"));
 						firstLoop = false;
 					}
 				} else {
@@ -2015,7 +2020,8 @@ public abstract class SingleAccessKeyTreeDumper {
 		for (SingleAccessKeyNode childNode : node.getChildren()) {
 			Integer childNumber = nodeBreadthFirstIterationMap.get(childNode);
 			nodeChildParentNumberingMap.put(childNumber, parentNumber);
-			recursiveDepthFirstIntegerIndex(childNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
+			recursiveDepthFirstIntegerIndex(childNode, nodeBreadthFirstIterationMap,
+					nodeChildParentNumberingMap);
 		}
 	}
 
@@ -2061,8 +2067,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			if (parentNumber == 1)
 				rootNodeChildrenIntegerList.add(childNumber);
 
-			recursiveDepthFirstIntegerIndex(childNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap,
-					rootNodeChildrenIntegerList);
+			recursiveDepthFirstIntegerIndex(childNode, nodeBreadthFirstIterationMap,
+					nodeChildParentNumberingMap, rootNodeChildrenIntegerList);
 		}
 	}
 
@@ -2088,8 +2094,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			if (parentNumber == 1)
 				rootNodeChildrenIntegerList.add(childNode);
 
-			recursiveDepthFirstNodeIndex(childNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap,
-					rootNodeChildrenIntegerList);
+			recursiveDepthFirstNodeIndex(childNode, nodeBreadthFirstIterationMap,
+					nodeChildParentNumberingMap, rootNodeChildrenIntegerList);
 		}
 	}
 
