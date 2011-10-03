@@ -15,7 +15,7 @@ import IO.SDDSaxParser;
 import IO.SingleAccessKeyTreeDumper;
 
 /**
- * This class allow to test the TEXT output of IdentificationKeyGenerator service
+ * This class allow to test the DOT output of IdentificationKeyGenerator service
  * 
  * @author Thomas Burguiere
  * @created 31-08-2011

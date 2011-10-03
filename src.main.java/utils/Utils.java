@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -34,6 +35,9 @@ public class Utils {
 	public static ResourceBundle bundleConf = ResourceBundle.getBundle("conf");
 	public static ResourceBundle bundleConfOverridable = ResourceBundle.getBundle("confOverridable");
 
+	// buffer
+	public static int BUFFER = 2048;
+
 	// file prefix
 	public static final String KEY = "key_";
 	public static final String ERROR = "error_";
@@ -47,6 +51,7 @@ public class Utils {
 	public static final String SPECIESIDWIKISTATEMENT = "speciesidwikistatement";
 	public static final String SPECIESIDWIKIQUESTIONANSWER = "speciesidwikiquestionanswer";
 	public static final String DOT = "dot";
+	public static final String ZIP = "zip";
 
 	// specific file extension
 	public static final String GV = "gv";
@@ -342,6 +347,16 @@ public class Utils {
 		roundedDouble = (int) (roundedDouble + .5);
 		roundedDouble /= multiplier;
 		return (float) roundedDouble;
+	}
+
+	/**
+	 * @param String
+	 *            , the string candidate to delete accents
+	 * @return String, the string without accents
+	 */
+	public static String unAccent(String s) {
+		String temp = Normalizer.normalize(s, Normalizer.Form.NFC);
+		return temp.replaceAll("[^\\p{ASCII}]", "");
 	}
 
 }

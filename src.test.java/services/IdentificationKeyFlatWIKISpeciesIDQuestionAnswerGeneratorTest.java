@@ -15,7 +15,8 @@ import IO.SDDSaxParser;
 import IO.SingleAccessKeyTreeDumper;
 
 /**
- * This class allow to test the WIKI output of IdentificationKeyGenerator service
+ * This class allow to test the flat WIKI SpeciesID Question/Answer output of IdentificationKeyGenerator
+ * service
  * 
  * @author Thomas Burguiere
  * @created 18-07-2011

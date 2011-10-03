@@ -15,7 +15,7 @@ import IO.SDDSaxParser;
 import IO.SingleAccessKeyTreeDumper;
 
 /**
- * This class allow to test the HTML output of IdentificationKeyGenerator service
+ * This class allow to test the flat HTML output of IdentificationKeyGenerator service
  * 
  * @author Thomas Burguiere
  * @created 10-07-2011

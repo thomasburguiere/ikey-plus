@@ -1,7 +1,10 @@
 package IO;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,7 +16,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
+import java.util.zip.Adler32;
+import java.util.zip.CheckedOutputStream;
+import java.util.zip.Deflater;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import model.DataSet;
 import model.QuantitativeMeasure;
@@ -39,6 +48,14 @@ import com.itextpdf.text.pdf.PdfWriter;
 public abstract class SingleAccessKeyTreeDumper {
 
 	// SDD DUMP
+	/**
+	 * generate a SDD file containing the key
+	 * 
+	 * @param String
+	 *            , header information
+	 * @return File the SDD File
+	 * @throws IOException
+	 */
 	public static File dumpSddFile(String header, SingleAccessKeyTree tree2dump) throws IOException {
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
@@ -628,7 +645,9 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("<div style='margin-left:30px;margin-top:20px;'>" + lineSep);
 		slk.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
 
-		slk.append("<div id=\"treecontrol\"><a title=\"Collapse the entire tree below\" href=\"#\"> Collapse All</a> | <a title=\"Expand the entire tree below\" href=\"#\"> Expand All</a> | <a title=\"Toggle the tree below, opening closed branches, closing open branches\" href=\"#\">Toggle All</a></div>"
+		// slk.append("<div id=\"treecontrol\"><a title=\"Collapse the entire tree below\" href=\"#\">Collapse All</a> | <a title=\"Expand the entire tree below\" href=\"#\">Expand All</a> | <a title=\"Toggle the tree below, opening closed branches, closing open branches\" href=\"#\">Toggle All</a></div>"
+		// + lineSep);
+		slk.append("<div><a style=\"color:#444;\" title=\"Collapse the entire tree below\" href=\"#\" onClick=\"window.location.href=window.location.href\">Collapse All</a></div><br/>"
 				+ lineSep);
 
 		slk.append("<ul id='tree'>" + lineSep);
@@ -646,7 +665,6 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("</html>");
 
 		return slk.toString();
-
 	}
 
 	/**
@@ -1030,49 +1048,59 @@ public abstract class SingleAccessKeyTreeDumper {
 	 *            , header information
 	 * @return File, the pdf file
 	 * @throws IOException
-	 * @throws COSVisitorException
-	 * @throws DocumentException
 	 */
-	public static File dumpPdfFile(String header, SingleAccessKeyTree tree2dump) throws IOException,
-			DocumentException {
+	public static File dumpPdfFile(String header, SingleAccessKeyTree tree2dump) throws IOException {
 
-		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
-		File pdfFile = File.createTempFile(Utils.KEY, "." + Utils.PDF, new File(path));
+		try {
+			String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+					+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
+			File pdfFile;
 
-		Document pdfDocument = new Document(PageSize.A3, 50, 50, 50, 50);
-		PdfWriter.getInstance(pdfDocument, new FileOutputStream(pdfFile));
+			pdfFile = File.createTempFile(Utils.KEY, "." + Utils.PDF, new File(path));
 
-		pdfDocument.open();
+			Document pdfDocument = new Document(PageSize.A3, 50, 50, 50, 50);
+			PdfWriter.getInstance(pdfDocument, new FileOutputStream(pdfFile));
 
-		StyleSheet styles = new StyleSheet();
-		styles.loadTagStyle("body", "color", "#333");
-		styles.loadTagStyle("body", "background", "#fff");
-		styles.loadTagStyle("ul", "indent", "15");
-		styles.loadTagStyle("li", "leading", "15");
-		styles.loadTagStyle("li", "color", "#fff");
+			pdfDocument.open();
 
-		styles.loadStyle("character", "color", "#333");
-		styles.loadStyle("state", "color", "#fe8a22");
-		styles.loadStyle("taxa", "color", "#67bb1b");
-		styles.loadStyle("line", "color", "#333");
+			StyleSheet styles = new StyleSheet();
+			styles.loadTagStyle("body", "color", "#333");
+			styles.loadTagStyle("body", "background", "#fff");
+			styles.loadTagStyle("ul", "indent", "15");
+			styles.loadTagStyle("li", "leading", "15");
+			styles.loadTagStyle("li", "color", "#fff");
 
-		HTMLWorker htmlWorker = new HTMLWorker(pdfDocument);
-		htmlWorker.setStyleSheet(styles);
+			styles.loadStyle("character", "color", "#333");
+			styles.loadStyle("state", "color", "#fe8a22");
+			styles.loadStyle("taxa", "color", "#67bb1b");
+			styles.loadStyle("line", "color", "#333");
 
-		StringBuffer output = new StringBuffer();
-		output.append("<html><head></head><body>");
-		output.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
-		output.append("<ul>");
-		recursiveToHTMLStringForPdf(tree2dump.getRoot(), output, "", 0, 0, tree2dump);
-		output.append("</ul></body></html>");
+			HTMLWorker htmlWorker = new HTMLWorker(pdfDocument);
+			htmlWorker.setStyleSheet(styles);
 
-		htmlWorker.parse(new StringReader(output.toString()));
+			StringBuffer output = new StringBuffer();
+			output.append("<html><head></head><body>");
+			output.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
+			output.append("<ul>");
+			recursiveToHTMLStringForPdf(tree2dump.getRoot(), output, "", 0, 0, tree2dump);
+			output.append("</ul></body></html>");
 
-		pdfDocument.close();
-		htmlWorker.close();
+			htmlWorker.parse(new StringReader(output.toString()));
 
-		return pdfFile;
+			pdfDocument.close();
+			htmlWorker.close();
+
+			return pdfFile;
+
+		} catch (IOException e) {
+			tree2dump.getUtils().setErrorMessage(Utils.getBundleConfElement("message.creatingFileError"), e);
+			e.printStackTrace();
+		} catch (DocumentException e) {
+			tree2dump.getUtils().setErrorMessage(Utils.getBundleConfElement("message.creatingFileError"), e);
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 	/**
@@ -1151,48 +1179,56 @@ public abstract class SingleAccessKeyTreeDumper {
 	 *            , header information
 	 * @return File, the pdf file
 	 * @throws IOException
-	 * @throws COSVisitorException
-	 * @throws DocumentException
 	 */
-	public static File dumpFlatPdfFile(String header, SingleAccessKeyTree tree2dump) throws IOException,
-			DocumentException {
+	public static File dumpFlatPdfFile(String header, SingleAccessKeyTree tree2dump) throws IOException {
 
-		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
-		File pdfFile = File.createTempFile(Utils.KEY, "." + Utils.PDF, new File(path));
+		try {
+			String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+					+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
+			File pdfFile = File.createTempFile(Utils.KEY, "." + Utils.PDF, new File(path));
 
-		Document pdfDocument = new Document(PageSize.A3, 50, 50, 50, 50);
-		PdfWriter.getInstance(pdfDocument, new FileOutputStream(pdfFile));
+			Document pdfDocument = new Document(PageSize.A3, 50, 50, 50, 50);
+			PdfWriter.getInstance(pdfDocument, new FileOutputStream(pdfFile));
 
-		pdfDocument.open();
+			pdfDocument.open();
 
-		StyleSheet styles = new StyleSheet();
-		styles.loadTagStyle("body", "color", "#333");
-		styles.loadTagStyle("body", "background", "#fff");
+			StyleSheet styles = new StyleSheet();
+			styles.loadTagStyle("body", "color", "#333");
+			styles.loadTagStyle("body", "background", "#fff");
 
-		styles.loadStyle("character", "color", "#333");
-		styles.loadStyle("state", "color", "#fe8a22");
-		styles.loadStyle("taxa", "color", "#67bb1b");
-		styles.loadStyle("line", "color", "#333");
+			styles.loadStyle("character", "color", "#333");
+			styles.loadStyle("state", "color", "#fe8a22");
+			styles.loadStyle("taxa", "color", "#67bb1b");
+			styles.loadStyle("line", "color", "#333");
 
-		HTMLWorker htmlWorker = new HTMLWorker(pdfDocument);
-		htmlWorker.setStyleSheet(styles);
+			HTMLWorker htmlWorker = new HTMLWorker(pdfDocument);
+			htmlWorker.setStyleSheet(styles);
 
-		StringBuffer output = new StringBuffer();
-		output.append("<html><head></head><body>");
-		output.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
+			StringBuffer output = new StringBuffer();
+			output.append("<html><head></head><body>");
+			output.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
 
-		multipleTraversalToHTMLString(tree2dump.getRoot(), output, System.getProperty("line.separator"),
-				false, tree2dump);
+			multipleTraversalToHTMLString(tree2dump.getRoot(), output, System.getProperty("line.separator"),
+					false, tree2dump);
 
-		output.append("</body></html>");
+			output.append("</body></html>");
 
-		htmlWorker.parse(new StringReader(output.toString()));
+			htmlWorker.parse(new StringReader(output.toString()));
 
-		pdfDocument.close();
-		htmlWorker.close();
+			pdfDocument.close();
+			htmlWorker.close();
 
-		return pdfFile;
+			return pdfFile;
+
+		} catch (IOException e) {
+			tree2dump.getUtils().setErrorMessage(Utils.getBundleConfElement("message.creatingFileError"), e);
+			e.printStackTrace();
+		} catch (DocumentException e) {
+			tree2dump.getUtils().setErrorMessage(Utils.getBundleConfElement("message.creatingFileError"), e);
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 	// END PDF DUMP, FLAT
@@ -1204,6 +1240,7 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * @param String
 	 *            , header information
 	 * @return File, the Wikitext file
+	 * @throws IOException
 	 */
 	public static File dumpWikiFile(String header, SingleAccessKeyTree tree2dump) throws IOException {
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
@@ -1241,7 +1278,7 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * representation
 	 * 
 	 * @param header
-	 * @return
+	 * @return File, the output flat wiki file
 	 * @throws IOException
 	 */
 	public static File dumpFlatWikiFile(String header, SingleAccessKeyTree tree2dump) throws IOException {
@@ -1406,7 +1443,7 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * representation complies with the wiki format used on species-id.net
 	 * 
 	 * @param header
-	 * @return
+	 * @return File, the output FlatSpeciesIDQuestionAnswerWiki file
 	 * @throws IOException
 	 */
 	public static File dumpFlatSpeciesIDQuestionAnswerWikiFile(String header, SingleAccessKeyTree tree2dump)
@@ -1596,7 +1633,7 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * representation complies with the wiki format used on species-id.net
 	 * 
 	 * @param header
-	 * @return
+	 * @return File, the output FlatSpeciesIDStatementWiki file
 	 * @throws IOException
 	 */
 	public static File dumpFlatSpeciesIDStatementWikiFile(String header, SingleAccessKeyTree tree2dump)
@@ -1760,7 +1797,7 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * get a DOT file containing the key
 	 * 
 	 * @param header
-	 * @return
+	 * @return File, the output dot file
 	 * @throws IOException
 	 */
 	public static File dumpDotFile(String header, SingleAccessKeyTree tree2dump) throws IOException {
@@ -1911,6 +1948,151 @@ public abstract class SingleAccessKeyTreeDumper {
 	}
 
 	// END DOT DUMP
+
+	// ZIP DUMP
+	/**
+	 * get a ZIP file containing all the key output formats
+	 * 
+	 * @param header
+	 * @return File, the output zip file
+	 * @throws IOException
+	 */
+	public static File dumpZipFile(String header, SingleAccessKeyTree tree2dump) throws IOException {
+
+		// create all output formats
+		File sddFile = dumpSddFile(header, tree2dump);
+		File txtFile = dumpTxtFile(header, tree2dump);
+		File flatTxtFile = dumpFlatTxtFile(header, tree2dump);
+		File htmlFile = dumpHtmlFile(header, tree2dump);
+		File flatHtmlFile = dumpFlatHtmlFile(header, tree2dump);
+		File pdfFile = dumpPdfFile(header, tree2dump);
+		File flatPdfFile = dumpFlatPdfFile(header, tree2dump);
+		File wikiFile = dumpWikiFile(header, tree2dump);
+		File flatWikiFile = dumpFlatWikiFile(header, tree2dump);
+		File flatSpeciesIDQuestionAnswerWikiFile = dumpFlatSpeciesIDQuestionAnswerWikiFile(header, tree2dump);
+		File flatSpeciesIDStatementWikiFile = dumpFlatSpeciesIDStatementWikiFile(header, tree2dump);
+		File dotFile = dumpDotFile(header, tree2dump);
+
+		// add all output file to the files list
+		List<File> filesList = new ArrayList<File>();
+		filesList.add(sddFile);
+		filesList.add(txtFile);
+		filesList.add(flatTxtFile);
+		filesList.add(htmlFile);
+		filesList.add(flatHtmlFile);
+		filesList.add(pdfFile);
+		filesList.add(flatPdfFile);
+		filesList.add(wikiFile);
+		filesList.add(flatWikiFile);
+		filesList.add(flatSpeciesIDQuestionAnswerWikiFile);
+		filesList.add(flatSpeciesIDStatementWikiFile);
+		filesList.add(dotFile);
+
+		String label = "";
+		if (tree2dump.getLabel() != null) {
+			label = tree2dump.getLabel() + "-";
+		}
+		// create a map matching file to file path
+		Map<File, String> correspondingFilePath = new HashMap<File, String>();
+		correspondingFilePath.put(sddFile, label + "key" + System.getProperty("file.separator") + "tree"
+				+ System.getProperty("file.separator") + sddFile.getName());
+		correspondingFilePath.put(txtFile, label + "key" + System.getProperty("file.separator") + "tree"
+				+ System.getProperty("file.separator") + txtFile.getName());
+		correspondingFilePath.put(flatTxtFile, label + "key" + System.getProperty("file.separator") + "flat"
+				+ System.getProperty("file.separator") + flatTxtFile.getName());
+		correspondingFilePath.put(htmlFile, label + "key" + System.getProperty("file.separator") + "tree"
+				+ System.getProperty("file.separator") + htmlFile.getName());
+		correspondingFilePath.put(flatHtmlFile, label + "key" + System.getProperty("file.separator") + "flat"
+				+ System.getProperty("file.separator") + flatHtmlFile.getName());
+		correspondingFilePath.put(pdfFile, label + "key" + System.getProperty("file.separator") + "tree"
+				+ System.getProperty("file.separator") + pdfFile.getName());
+		correspondingFilePath.put(flatPdfFile, label + "key" + System.getProperty("file.separator") + "flat"
+				+ System.getProperty("file.separator") + flatPdfFile.getName());
+		correspondingFilePath.put(wikiFile, label + "key" + System.getProperty("file.separator") + "tree"
+				+ System.getProperty("file.separator") + wikiFile.getName());
+		correspondingFilePath.put(flatWikiFile, label + "key" + System.getProperty("file.separator") + "flat"
+				+ System.getProperty("file.separator") + flatWikiFile.getName());
+		correspondingFilePath.put(
+				flatSpeciesIDQuestionAnswerWikiFile,
+				label + "key" + System.getProperty("file.separator") + "flat"
+						+ System.getProperty("file.separator")
+						+ flatSpeciesIDQuestionAnswerWikiFile.getName());
+		correspondingFilePath.put(
+				flatSpeciesIDStatementWikiFile,
+				label + "key" + System.getProperty("file.separator") + "flat"
+						+ System.getProperty("file.separator") + flatSpeciesIDStatementWikiFile.getName());
+		correspondingFilePath.put(dotFile, label + "key" + System.getProperty("file.separator") + "tree"
+				+ System.getProperty("file.separator") + dotFile.getName());
+
+		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
+
+		File zipFile = File.createTempFile(Utils.KEY, "TEST." + Utils.ZIP, new File(path));
+
+		try {
+			// create the writing flow
+			FileOutputStream dest = new FileOutputStream(zipFile);
+
+			// calculate the checksum : Adler32 (faster) or CRC32
+			CheckedOutputStream checksum = new CheckedOutputStream(dest, new Adler32());
+
+			// create the writing buffer
+			BufferedOutputStream buff = new BufferedOutputStream(checksum);
+
+			// create the zip writing flow
+			ZipOutputStream out = new ZipOutputStream(buff);
+
+			// specify the uncompress method
+			out.setMethod(ZipOutputStream.DEFLATED);
+
+			// specify the compress quality
+			out.setLevel(Deflater.BEST_COMPRESSION);
+
+			// Temporary buffer
+			byte data[] = new byte[Utils.BUFFER];
+
+			// for each file of the list
+			for (File file : filesList) {
+
+				// create the reading flow
+				FileInputStream fi = new FileInputStream(file);
+
+				// creation of a read buffer of the stream
+				BufferedInputStream buffi = new BufferedInputStream(fi, Utils.BUFFER);
+
+				// create input for this Zip file
+				ZipEntry entry = new ZipEntry(Utils.unAccent(correspondingFilePath.get(file)));
+
+				// add this entry in the flow of writing the Zip archive
+				out.putNextEntry(entry);
+
+				// writing the package file BUFFER bytes in the flow Writing
+				int count;
+				while ((count = buffi.read(data, 0, Utils.BUFFER)) != -1) {
+					out.write(data, 0, count);
+				}
+
+				// close the current entry
+				out.closeEntry();
+
+				// close the flow of reading
+				buffi.close();
+			}
+			// close the flow of writing
+			out.close();
+			buff.close();
+			checksum.close();
+			dest.close();
+
+		} catch (Exception e) {
+			tree2dump.getUtils().setErrorMessage(Utils.getBundleConfElement("message.creatingFileError"), e);
+			e.printStackTrace();
+		}
+
+		return zipFile;
+	}
+
+	// END ZIP DUMP
 
 	// ---------------------- HELPER METHODS ---------------------- //
 	/**
