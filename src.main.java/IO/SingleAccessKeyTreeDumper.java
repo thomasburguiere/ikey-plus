@@ -1260,14 +1260,66 @@ public abstract class SingleAccessKeyTreeDumper {
 		}
 		wikiFileWriter.append("== Identification Key==");
 		wikiFileWriter.newLine();
-		wikiFileWriter.append(" <nowiki>");
 
-		wikiFileWriter.append(generateTreeString(tree2dump));
+		wikiFileWriter.append(generateTreeWiki(tree2dump));
 
-		wikiFileWriter.append("</nowiki>");
 		wikiFileWriter.close();
 
 		return wikiFile;
+	}
+
+	private static String generateTreeWiki(SingleAccessKeyTree tree2dump) {
+		StringBuffer output = new StringBuffer();
+		recursiveToWiki(tree2dump.getRoot(), output, "", 0, 0, tree2dump);
+		return output.toString();
+	}
+
+	/**
+	 * recursively method to be abbe to display Wiki representation of this SingleAccessKeyTree
+	 * 
+	 * @param node
+	 * @param output
+	 * @param tabulations
+	 * @param firstNumbering
+	 * @param secondNumbering
+	 */
+	private static void recursiveToWiki(SingleAccessKeyNode node, StringBuffer output, String tabulations,
+			int firstNumbering, int secondNumbering, SingleAccessKeyTree tree2dump) {
+
+		if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
+			if (node.getCharacterState() instanceof QuantitativeMeasure) {
+				output.append(tabulations + firstNumbering + "." + secondNumbering + ") "
+						+ "<span style=\"color:#333\">" + node.getCharacter().getName() + "</span> | "
+						+ "<span style=\"color:#fe8a22\">"
+						+ ((QuantitativeMeasure) node.getCharacterState()).toStringInterval() + "</span>");
+			} else {
+				output.append(tabulations + firstNumbering + "." + secondNumbering + ") "
+						+ "<span style=\"color:#333\">" + node.getCharacter().getName() + "</span> | "
+						+ "<span style=\"color:#fe8a22\">" + node.getStringStates() + "</span>");
+			}
+			output.append(tree2dump.nodeDescriptionAnalysis(node));
+			if (node.getChildren().size() == 0) {
+				output.append(" -> ");
+				boolean firstLoop = true;
+				for (Taxon taxon : node.getRemainingTaxa()) {
+					if (!firstLoop) {
+						output.append(", ");
+					}
+					output.append("<span style=\"color:#67bb1b\">" + taxon.getName() + "</span>");
+					firstLoop = false;
+				}
+			} else {
+				output.append(" (taxa=" + node.getRemainingTaxa().size() + ")");
+			}
+			output.append(System.getProperty("line.separator"));
+			tabulations = tabulations + ":";
+		}
+		firstNumbering++;
+		secondNumbering = 0;
+		for (SingleAccessKeyNode childNode : node.getChildren()) {
+			secondNumbering++;
+			recursiveToWiki(childNode, output, tabulations, firstNumbering, secondNumbering, tree2dump);
+		}
 	}
 
 	// END WIKI DUMP, TREE
