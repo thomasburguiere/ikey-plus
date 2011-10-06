@@ -115,6 +115,9 @@ public abstract class SingleAccessKeyTreeDumper {
 			output.append("<Label>"
 					+ t.getName().replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 					+ "</Label>" + lineSeparator);
+			for (String mediaObjectKey : t.getMediaObjectKeys()) {
+				output.append("<MediaObject ref=\"" + mediaObjectKey + "\"/>" + lineSeparator);
+			}
 			output.append("</Representation>" + lineSeparator);
 			output.append("</TaxonName>" + lineSeparator);
 		}
@@ -123,6 +126,22 @@ public abstract class SingleAccessKeyTreeDumper {
 		output.append("<IdentificationKeys>" + lineSeparator);
 		multipleTraversalToSddString(tree2dump.getRoot(), output, lineSeparator, tree2dump);
 		output.append("</IdentificationKeys>" + lineSeparator);
+		output.append("<MediaObjects>" + lineSeparator);
+		for (Taxon t : originalDataSet.getTaxa()) {
+			for (String mediaObjectKey : t.getMediaObjectKeys()) {
+				output.append("<MediaObject id=\"" + mediaObjectKey + "\">" + lineSeparator);
+				output.append("<Representation>" + lineSeparator);
+				output.append("<Label>");
+				output.append(mediaObjectKey);
+				output.append("</Label>" + lineSeparator);
+				output.append("</Representation>" + lineSeparator);
+				output.append("<Type>Image</Type>" + lineSeparator);
+				output.append("<Source href=\"" + originalDataSet.getMediaObject(mediaObjectKey) + "\"/>"
+						+ lineSeparator);
+				output.append("</MediaObject>" + lineSeparator);
+			}
+		}
+		output.append("</MediaObjects>" + lineSeparator);
 		output.append("</Dataset>" + lineSeparator);
 		output.append("</Datasets>");
 		return output.toString();
