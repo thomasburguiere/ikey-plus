@@ -2065,7 +2065,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		}
 		// create a map matching file to file path
 		Map<File, String> correspondingFilePath = new HashMap<File, String>();
-		correspondingFilePath.put(sddFile, label + "key" + System.getProperty("file.separator") + "tree"
+		correspondingFilePath.put(sddFile, label + "key" + System.getProperty("file.separator") + "flat"
 				+ System.getProperty("file.separator") + sddFile.getName());
 		correspondingFilePath.put(txtFile, label + "key" + System.getProperty("file.separator") + "tree"
 				+ System.getProperty("file.separator") + txtFile.getName());
