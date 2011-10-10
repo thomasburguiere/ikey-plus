@@ -1666,7 +1666,11 @@ public abstract class SingleAccessKeyTreeDumper {
 
 				// displaying the child node number if it has children nodes, displaying the taxa otherwise
 				if (child.getChildren().size() == 0) {
-					output.append("result=");
+					if(child.getRemainingTaxa().size() == 1){
+						output.append("result=");
+					}else{
+						output.append("result text=");
+					}
 					boolean firstLoop = true;
 					for (Taxon taxon : child.getRemainingTaxa()) {
 						if (!firstLoop) {
@@ -1831,7 +1835,11 @@ public abstract class SingleAccessKeyTreeDumper {
 
 				// displaying the child node number if it has children nodes, displaying the taxa otherwise
 				if (child.getChildren().size() == 0) {
-					output.append("result=");
+					if(child.getRemainingTaxa().size() == 1){
+						output.append("result=");
+					}else{
+						output.append("result text=");
+					}
 					boolean firstLoop = true;
 					for (Taxon taxon : child.getRemainingTaxa()) {
 						if (!firstLoop) {
