@@ -818,10 +818,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />" + lineSep);
 		slk.append("<head>" + lineSep);
 		slk.append("<script src='" + Utils.getBundleConfElement("resources.jqueryPath") + "'></script>"
-				+ lineSep + "<script type='text/javascript' src='"
-				+ Utils.getBundleConfElement("resources.treeviewJsPath") + "'></script>" + lineSep
-				+ "<link rel='stylesheet' href='" + Utils.getBundleConfElement("resources.treeviewCssPath")
-				+ "' type='text/css' />" + lineSep);
+				+ lineSep);
 
 		slk.append("<style type='text/css'>" + lineSep);
 		slk.append("body{" + lineSep);
