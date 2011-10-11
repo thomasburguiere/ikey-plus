@@ -86,6 +86,18 @@ public class Taxon {
 		return null;
 	}
 
+	/**
+	 * get the first image key
+	 * 
+	 * @return String, the key
+	 */
+	public String getFirstImageKey() {
+		if (mediaObjectKeys.get(0) != null) {
+			return mediaObjectKeys.get(0);
+		}
+		return null;
+	}
+
 	public String getId() {
 		return id;
 	}
