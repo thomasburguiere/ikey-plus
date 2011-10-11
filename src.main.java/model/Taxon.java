@@ -92,7 +92,7 @@ public class Taxon {
 	 * @return String, the key
 	 */
 	public String getFirstImageKey() {
-		if (mediaObjectKeys.get(0) != null) {
+		if (mediaObjectKeys.size() > 0) {
 			return mediaObjectKeys.get(0);
 		}
 		return null;
