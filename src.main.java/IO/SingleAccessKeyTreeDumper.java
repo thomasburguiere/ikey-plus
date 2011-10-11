@@ -849,6 +849,11 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("   visibility: hidden;" + lineSep);
 		slk.append("}" + lineSep + lineSep);
 
+		slk.append("a.stateImageLink{" + lineSep);
+		slk.append("   color:#333;" + lineSep);
+		slk.append("   cursor: pointer;" + lineSep);
+		slk.append("}" + lineSep + lineSep);
+
 		slk.append("a{" + lineSep);
 		slk.append("   color:#67bb1b;" + lineSep);
 		slk.append("   font-style: italic;" + lineSep);
@@ -897,7 +902,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("function newStateURlWindow(viewNodeID){" + lineSep);
 		slk.append("	var viewNode = $('#viewNode'+viewNodeID);" + lineSep);
 		slk.append("	var newPage = '<html><head></head><body>';" + lineSep);
-		slk.append("	newPage += '<table><tr><th>state</th><th>image URL</th></tr>';" + lineSep);
+		slk.append("	newPage += '<table><tr><th>state</th><th>image</th></tr>';" + lineSep);
 		slk.append("	for(var i =0 ; i< viewNode.find('span.state').size();i++){" + lineSep);
 		slk.append("		var state =  viewNode.find('span.state')[i];" + lineSep);
 		slk.append("		var stateID = state.id.split('_')[1];" + lineSep);
@@ -910,7 +915,8 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("		stateContent = splitArray[splitArray.length - 1];" + lineSep);
 		slk.append("		newPage += '<tr>';" + lineSep);
 		slk.append("		var imgTag = 'No image';" + lineSep);
-		slk.append("		if(stateImageURLContent.length > 0 && stateImageURLContent.indexOf('http://')==0){" + lineSep);
+		slk.append("		if(stateImageURLContent.length > 0 && stateImageURLContent.indexOf('http://')==0){"
+				+ lineSep);
 		slk.append("			imgTag='<img src=\"'+stateImageURLContent+'\" width=\"200px\" />';" + lineSep);
 		slk.append("		}" + lineSep);
 		slk.append("		newPage += '<td>'+stateContent+'</td><td>'+imgTag+'</td>';" + lineSep);
@@ -1024,10 +1030,14 @@ public abstract class SingleAccessKeyTreeDumper {
 					}
 					output.append("<strong>" + currentParentNumber + "</strong>");
 
+					String htmlImageLink = "";
+					if (node.isChildrenContainsImages()) {
+						htmlImageLink = " </span><a class='stateImageLink' onClick='newStateURlWindow("
+								+ currentParentNumber + ");' >(<strong>?</strong>)</a>";
+					}
 					output.append("  <span class=\"character\">"
 							+ child.getCharacter().getName().replace(">", "&gt;").replace("<", "&lt;")
-							+ " </span><a onClick='newStateURlWindow(" + currentParentNumber
-							+ ");'>( <strong>?</strong> )</a> :<br/>");
+							+ htmlImageLink + ":<br/>");
 
 				} else {
 					output.append("    ");

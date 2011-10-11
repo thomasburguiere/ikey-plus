@@ -210,8 +210,26 @@ public class SingleAccessKeyNode {
 		this.nodeDescription = nodeDescription;
 	}
 
+	/**
+	 * @return String, the string representation
+	 */
 	public String toString() {
 		return character.toString() + " --> " + characterState.toString();
+	}
+
+	/**
+	 * test if children contains at least one image
+	 * 
+	 * @return boolean, true if at least one child contain images
+	 */
+	public boolean isChildrenContainsImages() {
+		for (SingleAccessKeyNode childNode : this.getChildren()) {
+			if (childNode.getCharacter().isSupportsCategoricalData()
+					&& ((State) childNode.getCharacterState()).getFirstImageKey() != null) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
