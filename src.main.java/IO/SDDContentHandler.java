@@ -172,6 +172,13 @@ public class SDDContentHandler implements ContentHandler {
 				currentState.setId(attributs.getValue("id"));
 			}
 
+			// <MediaObject> in <Representation> in <StateDefinition> in <States>
+			else if (localName.equals("MediaObject") && inStateDefinition && inRepresentation && inStates) {
+				if (attributs.getValue("ref") != null && currentState != null) {
+					currentState.getMediaObjectKeys().add(attributs.getValue("ref"));
+				}
+			}
+
 			// <StateReference> in <States>
 			else if (localName.equals("StateReference") && inStates) {
 				inStatesReference = true;

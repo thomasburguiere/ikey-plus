@@ -1,5 +1,6 @@
 package model;
 
+
 /**
  * This class represents a quantitative measure
  * 

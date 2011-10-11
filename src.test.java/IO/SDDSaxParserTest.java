@@ -91,6 +91,9 @@ public class SDDSaxParserTest {
 					System.out.println("\t" + character.getName());
 					for (State state : ((CategoricalCharacter) character).getStates()) {
 						System.out.println("\t\t" + state.getName());
+						for (String key : state.getMediaObjectKeys()) {
+							System.out.println("\t" + key);
+						}
 					}
 				} else {
 					System.out.println("\t*N*" + character.getName());
