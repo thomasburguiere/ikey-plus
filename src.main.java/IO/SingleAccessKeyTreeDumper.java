@@ -845,6 +845,10 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("   margin-left: 100px;" + lineSep);
 		slk.append("}" + lineSep + lineSep);
 
+		slk.append(".stateImageURL{" + lineSep);
+		slk.append("   visibility: hidden;" + lineSep);
+		slk.append("}" + lineSep + lineSep);
+
 		slk.append("a{" + lineSep);
 		slk.append("   color:#67bb1b;" + lineSep);
 		slk.append("   font-style: italic;" + lineSep);
@@ -889,6 +893,32 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("  $(document).ready(function(){" + lineSep);
 		slk.append("	screenshotPreview();" + lineSep);
 		slk.append(" });" + lineSep);
+
+		slk.append("function newStateURlWindow(viewNodeID){" + lineSep);
+		slk.append("	var viewNode = $('#viewNode'+viewNodeID);" + lineSep);
+		slk.append("	var newPage = '<html><head></head><body>';" + lineSep);
+		slk.append("	newPage += '<table><tr><th>state</th><th>image URL</th></tr>';" + lineSep);
+		slk.append("	for(var i =0 ; i< viewNode.find('span.state').size();i++){" + lineSep);
+		slk.append("		var state =  viewNode.find('span.state')[i];" + lineSep);
+		slk.append("		var stateID = state.id.split('state')[1];" + lineSep);
+
+		slk.append("		var stateContent = state.innerHTML;" + lineSep);
+		slk.append("		var splitArray = stateContent.split(';');" + lineSep);
+
+		slk.append("		var stateImageURL = $('#stateImageURL'+stateID);" + lineSep);
+		slk.append("		var stateImageURLContent = stateImageURL.html();" + lineSep);
+		slk.append("		stateContent = splitArray[splitArray.length - 1];" + lineSep);
+		slk.append("		newPage += '<tr>';" + lineSep);
+		slk.append("		newPage += '<td>'+stateContent+'</td><td>'+stateImageURLContent+'</td>';" + lineSep);
+		slk.append("		newPage += '</tr>';" + lineSep);
+		slk.append("	}");
+		slk.append("	newPage += '</table>';" + lineSep);
+		slk.append("	newPage += '</body></html>';" + lineSep);
+		slk.append("	var j = window.open('','State Illustrations', 'toolbar=1, width=800px, height=400px');" + lineSep);
+		slk.append("	j.document.write(newPage);" + lineSep);
+		slk.append("	j.document.close();" + lineSep);
+		slk.append("}");
+
 		slk.append("</script>" + lineSep);
 
 		slk.append("</head>" + lineSep);
@@ -979,16 +1009,20 @@ public abstract class SingleAccessKeyTreeDumper {
 					else if (currentParentNumber < 1000)
 						output.append(" ");
 
+					// close the previous opening <span class="viewNode"> if this is not the first one
+					if (currentParentNumber > 1)
+						output.append(lineSeparator + "</span>");
+					output.append("<span class=\"viewNode\" id=\"viewNode" + currentParentNumber + "\">");
+
 					if (activeLink) {
-						output.append("<a name=\"anchor" + currentParentNumber + "\"></a>" + "<strong>"
-								+ currentParentNumber + "</strong>");
-					} else {
-						output.append("<strong>" + currentParentNumber + "</strong>");
+						output.append("<a name=\"anchor" + currentParentNumber + "\"></a>");
 					}
+					output.append("<strong>" + currentParentNumber + "</strong>");
 
 					output.append("  <span class=\"character\">"
 							+ child.getCharacter().getName().replace(">", "&gt;").replace("<", "&lt;")
-							+ ": </span><br/>");
+							+ " </span><a href='#' onClick='newStateURlWindow(" + currentParentNumber
+							+ ");'>( <strong>?</strong> )</a> :<br/>");
 
 				} else {
 					output.append("    ");
@@ -1001,11 +1035,14 @@ public abstract class SingleAccessKeyTreeDumper {
 
 				// displaying the child node character state
 				if (child.getCharacterState() instanceof QuantitativeMeasure) {
-					output.append("<span class=\"state\">" + marging
+					output.append("<span class=\"state\" id=\"state" + counter + "\">" + marging
 							+ ((QuantitativeMeasure) child.getCharacterState()).toStringInterval()
 							+ "</span>");
 				} else {
-					output.append("<span class=\"state\">" + marging
+					output.append("<span class=\"stateImageURL\" id=\"stateImageURL" + counter + "\">");
+					output.append("image url " + counter); // TODO TEST CODE!!!
+					output.append("</span>");
+					output.append("<span class=\"state\" id=\"state" + counter + "\" >" + marging
 							+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;") + "</span>");
 				}
 				output.append("<span class=\"warning\">" + tree2dump.nodeDescriptionAnalysis(child)
@@ -2366,3 +2403,4 @@ public abstract class SingleAccessKeyTreeDumper {
 	}
 
 }
+
