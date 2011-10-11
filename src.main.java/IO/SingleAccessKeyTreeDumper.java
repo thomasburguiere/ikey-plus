@@ -820,6 +820,9 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("<script src='" + Utils.getBundleConfElement("resources.jqueryPath") + "'></script>"
 				+ lineSep);
 
+		// slk.append("<script src='" + Utils.getBundleConfElement("resources.prototypePath") + "'></script>"
+		// + lineSep);
+
 		slk.append("<style type='text/css'>" + lineSep);
 		slk.append("body{" + lineSep);
 		slk.append("   color:#333;" + lineSep);
@@ -868,7 +871,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("	color:#fff;" + lineSep);
 		slk.append("}" + lineSep + lineSep);
 		slk.append("</style>" + lineSep);
-
+		//
 		slk.append("<script>" + lineSep);
 		slk.append("this.screenshotPreview = function(){" + lineSep);
 		slk.append("	xOffset = -10;" + lineSep);
@@ -899,9 +902,13 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("	screenshotPreview();" + lineSep);
 		slk.append(" });" + lineSep);
 
+		// JQUERY
 		slk.append("function newStateURlWindow(viewNodeID){" + lineSep);
 		slk.append("	var viewNode = $('#viewNode'+viewNodeID);" + lineSep);
-		slk.append("	var newPage = '<html><head></head><body>';" + lineSep);
+		
+		slk.append("	var character = viewNode.find('span.character').html();" + lineSep);
+		
+		slk.append("	var newPage = '<html><head></head><body><h2>'+character+'</h2>';" + lineSep);
 		slk.append("	newPage += '<table><tr><th>state</th><th>image</th></tr>';" + lineSep);
 		slk.append("	for(var i =0 ; i< viewNode.find('span.state').size();i++){" + lineSep);
 		slk.append("		var state =  viewNode.find('span.state')[i];" + lineSep);
@@ -909,6 +916,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		slk.append("		var stateContent = state.innerHTML;" + lineSep);
 		slk.append("		var splitArray = stateContent.split(';');" + lineSep);
+
 
 		slk.append("		var stateImageURL = $('#stateImageURL_'+stateID);" + lineSep);
 		slk.append("		var stateImageURLContent = stateImageURL.html();" + lineSep);
@@ -928,7 +936,40 @@ public abstract class SingleAccessKeyTreeDumper {
 				+ lineSep);
 		slk.append("	j.document.write(newPage);" + lineSep);
 		slk.append("	j.document.close();" + lineSep);
-		slk.append("}");
+		slk.append("}" + lineSep);
+
+		// PROTOTYPE
+		// slk.append("function newStateURlWindow(viewNodeID){" + lineSep);
+		// slk.append("	var trueID = 'viewNode'+viewNodeID;" + lineSep);
+		// slk.append("	var viewNode = $(trueID);" + lineSep);
+		// slk.append("	var newPage = '<html><head></head><body>';" + lineSep);
+		// slk.append("	newPage += '<table><tr><th>state</th><th>image</th></tr>';" + lineSep);
+		// slk.append("	for(var i =0 ; i< viewNode.select('span.state').size();i++){" + lineSep);
+		// slk.append("		var state =  viewNode.select('span.state')[i];" + lineSep);
+		// slk.append("		var stateID = state.id.split('_')[1];" + lineSep);
+		//
+		// slk.append("		var stateContent = state.innerHTML;" + lineSep);
+		// slk.append("		var splitArray = stateContent.split(';');" + lineSep);
+		//
+		// slk.append("		var stateImageURL = $('stateImageURL_'+stateID);" + lineSep);
+		// slk.append("		var stateImageURLContent = stateImageURL.innerHTML;" + lineSep);
+		// slk.append("		stateContent = splitArray[splitArray.length - 1];" + lineSep);
+		// slk.append("		newPage += '<tr>';" + lineSep);
+		// slk.append("		var imgTag = 'No image';" + lineSep);
+		// slk.append("		if(stateImageURLContent.length > 0 && stateImageURLContent.indexOf('http://')==0){"
+		// + lineSep);
+		// slk.append("			imgTag='<img src=\"'+stateImageURLContent+'\" width=\"200px\" />';" + lineSep);
+		// slk.append("		}" + lineSep);
+		// slk.append("		newPage += '<td>'+stateContent+'</td><td>'+imgTag+'</td>';" + lineSep);
+		// slk.append("		newPage += '</tr>';" + lineSep);
+		// slk.append("	}");
+		// slk.append("	newPage += '</table>';" + lineSep);
+		// slk.append("	newPage += '</body></html>';" + lineSep);
+		// slk.append("	var j = window.open('','State Illustrations', 'toolbar=0, width=800px, height=400px');"
+		// + lineSep);
+		// slk.append("	j.document.write(newPage);" + lineSep);
+		// slk.append("	j.document.close();" + lineSep);
+		// slk.append("}");
 
 		slk.append("</script>" + lineSep);
 
