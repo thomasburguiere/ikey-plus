@@ -664,11 +664,16 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append(" });" + lineSep);
 
 		slk.append("function newStateImagesWindow(characterName, stateArray, urlArray){" + lineSep);
-		slk.append("	var newPage = '<html><head></head><body><h2>'+characterName+'</h2>';" + lineSep);
-		slk.append("	newPage += '<table><tr><th>state</th><th>image</th></tr>';" + lineSep);
+		slk.append("	var newPage = '<html><head>" + "<style type=\"text/css\">" + "body{" + "   color:#111;"
+				+ "   font-family: Verdana, helvetica, arial, sans-serif;" + "   font-size: 78%;"
+				+ "   background: #fff;" + "}" + "table {" + " border-collapse:collapse;" + " width:90%;"
+				+ "}" + "th, td {" + " border:1px solid #ddd;" + " width:20%;" + "}" + "td {"
+				+ " text-align:center;" + "}" + "caption {" + " font-weight:bold" + "}" + "</style>"
+				+ "</head><body><h2>'+characterName+'</h2>';" + lineSep);
+		slk.append("	newPage += '<table cellpadding=\"5\"><tr><th>state</th><th>image</th></tr>';" + lineSep);
 		slk.append("	for (var i=0; i < stateArray.length; i++){" + lineSep);
 		slk.append("		newPage += '<tr>';" + lineSep);
-		slk.append("		var imgTag = 'No image';" + lineSep);
+		slk.append("		var imgTag = '<center>No image</center>';" + lineSep);
 		slk.append("		if(urlArray[i].indexOf('http://')==0){" + lineSep);
 		slk.append("			imgTag='<img src=\"'+urlArray[i]+'\" width=\"200px\" />';" + lineSep);
 		slk.append("		}" + lineSep);
@@ -692,7 +697,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("<div style='margin-left:30px;margin-top:20px;'>" + lineSep);
 		slk.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
 
-		slk.append("<div id=\"treecontrol\"><a title=\"Collapse the entire tree below\" href=\"#\">Collapse All</a> | <a title=\"Expand the entire tree below\" href=\"#\">Expand All</a> | <a title=\"Toggle the tree below, opening closed branches, closing open branches\" href=\"#\">Toggle All</a></div>"
+		slk.append("<div id=\"treecontrol\"><a title=\"Collapse the entire tree below\" href=\"#\" onClick=\"window.location.href=window.location.href\">Collapse All</a> | <a title=\"Expand the entire tree below\" href=\"#\">Expand All</a></div>"
 				+ lineSep);
 		// slk.append("<div><a style=\"color:#444;\" title=\"Collapse the entire tree below\" href=\"#\" onClick=\"window.location.href=window.location.href\">Collapse All</a></div><br/>"
 		// + lineSep);
@@ -757,8 +762,8 @@ public abstract class SingleAccessKeyTreeDumper {
 									+ ((State) childNode.getCharacterState()).getName().replaceAll("\"", "")
 											.replaceAll("'", " ") + "\"";
 							javascriptUrlImageTab += "\""
-									+ ((State) childNode.getCharacterState()).getFirstImage(
-											tree2dump.getDataSet()).replaceAll("\"", "") + "\"";
+									+ ((State) childNode.getCharacterState()).getFirstImage(tree2dump
+											.getDataSet()) + "\"";
 							firstLoop = false;
 						}
 					}
@@ -964,11 +969,14 @@ public abstract class SingleAccessKeyTreeDumper {
 		// JQUERY
 		slk.append("function newStateImagesWindow(viewNodeID){" + lineSep);
 		slk.append("	var viewNode = $('#viewNode'+viewNodeID);" + lineSep);
-
 		slk.append("	var character = viewNode.find('span.character').html();" + lineSep);
-
-		slk.append("	var newPage = '<html><head></head><body><h2>'+character+'</h2>';" + lineSep);
-		slk.append("	newPage += '<table><tr><th>state</th><th>image</th></tr>';" + lineSep);
+		slk.append("	var newPage = '<html><head>" + "<style type=\"text/css\">" + "body{" + "   color:#111;"
+				+ "   font-family: Verdana, helvetica, arial, sans-serif;" + "   font-size: 78%;"
+				+ "   background: #fff;" + "}" + "table {" + " border-collapse:collapse;" + " width:90%;"
+				+ "}" + "th, td {" + " border:1px solid #ddd;" + " width:20%;" + "}" + "td {"
+				+ " text-align:center;" + "}" + "caption {" + " font-weight:bold" + "}" + "</style>"
+				+ "</head><body><h2>'+character+'</h2>';" + lineSep);
+		slk.append("	newPage += '<table cellpadding=\"5\"><tr><th>state</th><th>image</th></tr>';" + lineSep);
 		slk.append("	for(var i =0 ; i< viewNode.find('span.state').size();i++){" + lineSep);
 		slk.append("		var state =  viewNode.find('span.state')[i];" + lineSep);
 		slk.append("		var stateID = state.id.split('_')[1];" + lineSep);
@@ -980,7 +988,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("		var stateImageURLContent = stateImageURL.html();" + lineSep);
 		slk.append("		stateContent = splitArray[splitArray.length - 1];" + lineSep);
 		slk.append("		newPage += '<tr>';" + lineSep);
-		slk.append("		var imgTag = 'No image';" + lineSep);
+		slk.append("		var imgTag = '<center>No image</center>';" + lineSep);
 		slk.append("		if(stateImageURLContent.length > 0 && stateImageURLContent.indexOf('http://')==0){"
 				+ lineSep);
 		slk.append("			imgTag='<img src=\"'+stateImageURLContent+'\" width=\"200px\" />';" + lineSep);
