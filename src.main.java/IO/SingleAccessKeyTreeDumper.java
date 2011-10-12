@@ -605,6 +605,11 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("   font-style: italic;" + lineSep);
 		slk.append("}" + lineSep + lineSep);
 
+		slk.append("a.stateImageLink{" + lineSep);
+		slk.append("   color:#333;" + lineSep);
+		slk.append("   cursor: pointer;" + lineSep);
+		slk.append("}" + lineSep + lineSep);
+
 		slk.append("a{" + lineSep);
 		slk.append("   color:#67bb1b;" + lineSep);
 		slk.append("   font-style: italic;" + lineSep);
@@ -622,6 +627,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("</style>" + lineSep);
 
 		slk.append("<script>" + lineSep);
+
 		slk.append("this.screenshotPreview = function(){" + lineSep);
 		slk.append("	xOffset = -10;" + lineSep);
 		slk.append("	yOffset = -50;" + lineSep);
@@ -656,6 +662,28 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("	});" + lineSep);
 		slk.append("	screenshotPreview();" + lineSep);
 		slk.append(" });" + lineSep);
+
+		slk.append("function newStateImagesWindow(characterName, stateArray, urlArray){" + lineSep);
+		slk.append("	var newPage = '<html><head></head><body><h2>'+characterName+'</h2>';" + lineSep);
+		slk.append("	newPage += '<table><tr><th>state</th><th>image</th></tr>';" + lineSep);
+		slk.append("	for (var i=0; i < stateArray.length; i++){" + lineSep);
+		slk.append("		newPage += '<tr>';" + lineSep);
+		slk.append("		var imgTag = 'No image';" + lineSep);
+		slk.append("		if(urlArray[i].indexOf('http://')==0){" + lineSep);
+		slk.append("			imgTag='<img src=\"'+urlArray[i]+'\" width=\"200px\" />';" + lineSep);
+		slk.append("		}" + lineSep);
+		slk.append("		newPage += '<td>'+stateArray[i]+'</td><td>'+imgTag+'</td>';" + lineSep);
+		slk.append("		newPage += '</tr>';" + lineSep);
+		slk.append("	}" + lineSep);
+		slk.append("	newPage += '</table>';" + lineSep);
+		slk.append("	newPage += '</body></html>';" + lineSep);
+		slk.append("	var j = window.open('','State Illustrations', 'toolbar=0, width=800px, height=400px');"
+				+ lineSep);
+		slk.append("	j.document.write(newPage);" + lineSep);
+		slk.append("	j.document.close();" + lineSep);
+
+		slk.append("}" + lineSep);
+
 		slk.append("</script>" + lineSep);
 
 		slk.append("</head>" + lineSep);
@@ -664,16 +692,16 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("<div style='margin-left:30px;margin-top:20px;'>" + lineSep);
 		slk.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
 
-		// slk.append("<div id=\"treecontrol\"><a title=\"Collapse the entire tree below\" href=\"#\">Collapse All</a> | <a title=\"Expand the entire tree below\" href=\"#\">Expand All</a> | <a title=\"Toggle the tree below, opening closed branches, closing open branches\" href=\"#\">Toggle All</a></div>"
-		// + lineSep);
-		slk.append("<div><a style=\"color:#444;\" title=\"Collapse the entire tree below\" href=\"#\" onClick=\"window.location.href=window.location.href\">Collapse All</a></div><br/>"
+		slk.append("<div id=\"treecontrol\"><a title=\"Collapse the entire tree below\" href=\"#\">Collapse All</a> | <a title=\"Expand the entire tree below\" href=\"#\">Expand All</a> | <a title=\"Toggle the tree below, opening closed branches, closing open branches\" href=\"#\">Toggle All</a></div>"
 				+ lineSep);
+		// slk.append("<div><a style=\"color:#444;\" title=\"Collapse the entire tree below\" href=\"#\" onClick=\"window.location.href=window.location.href\">Collapse All</a></div><br/>"
+		// + lineSep);
 
 		slk.append("<ul id='tree'>" + lineSep);
 
 		StringBuffer output = new StringBuffer();
 
-		recursiveToHTMLString(tree2dump.getRoot(), output, "", true, 0, 0, tree2dump);
+		recursiveToHTMLString(tree2dump.getRoot(), null, output, "", true, 0, 0, tree2dump);
 
 		slk.append(output.toString());
 
@@ -700,9 +728,9 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * @param firstNumbering
 	 * @param secondNumbering
 	 */
-	private static void recursiveToHTMLString(SingleAccessKeyNode node, StringBuffer output,
-			String tabulations, boolean displayCharacterName, int firstNumbering, int secondNumbering,
-			SingleAccessKeyTree tree2dump) {
+	private static void recursiveToHTMLString(SingleAccessKeyNode node, SingleAccessKeyNode parentNode,
+			StringBuffer output, String tabulations, boolean displayCharacterName, int firstNumbering,
+			int secondNumbering, SingleAccessKeyTree tree2dump) {
 		String characterName = null;
 		String state = null;
 		if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
@@ -712,7 +740,38 @@ public abstract class SingleAccessKeyTreeDumper {
 						.replaceAll("\\>", "&gt;");
 				characterName = "<span class='character'>" + firstNumbering + ") " + "<b>" + characterName
 						+ "</b>" + "</span>";
-				output.append(tabulations + "\t<li>" + characterName + "</li>");
+
+				// create link to display states images
+				String htmlImageLink = "";
+				if (parentNode.isChildrenContainsImages()) {
+					String javascriptStateNameTab = "new Array(";
+					String javascriptUrlImageTab = "new Array(";
+					boolean firstLoop = true;
+					for (SingleAccessKeyNode childNode : parentNode.getChildren()) {
+						if (childNode.getCharacter().isSupportsCategoricalData()) {
+							if (!firstLoop) {
+								javascriptStateNameTab += ", ";
+								javascriptUrlImageTab += ", ";
+							}
+							javascriptStateNameTab += "\""
+									+ ((State) childNode.getCharacterState()).getName().replaceAll("\"", "")
+											.replaceAll("'", " ") + "\"";
+							javascriptUrlImageTab += "\""
+									+ ((State) childNode.getCharacterState()).getFirstImage(
+											tree2dump.getDataSet()).replaceAll("\"", "") + "\"";
+							firstLoop = false;
+						}
+					}
+					javascriptStateNameTab += ")";
+					javascriptUrlImageTab += ")";
+
+					htmlImageLink = " <a class='stateImageLink' onClick='newStateImagesWindow(\""
+							+ node.getCharacter().getName().replaceAll("\"", "").replaceAll("'", " ")
+							+ "\", " + javascriptStateNameTab + ", " + javascriptUrlImageTab
+							+ ");' >(<strong>?</strong>)</a>";
+				}
+
+				output.append(tabulations + "\t<li>" + characterName + htmlImageLink + "</li>");
 			}
 
 			if (node.getCharacterState() instanceof QuantitativeMeasure)
@@ -758,11 +817,11 @@ public abstract class SingleAccessKeyTreeDumper {
 		for (SingleAccessKeyNode childNode : node.getChildren()) {
 			secondNumbering++;
 			if (firstLoop) {
-				recursiveToHTMLString(childNode, output, tabulations, true, firstNumbering, secondNumbering,
-						tree2dump);
+				recursiveToHTMLString(childNode, node, output, tabulations, true, firstNumbering,
+						secondNumbering, tree2dump);
 			} else {
-				recursiveToHTMLString(childNode, output, tabulations, false, firstNumbering, secondNumbering,
-						tree2dump);
+				recursiveToHTMLString(childNode, node, output, tabulations, false, firstNumbering,
+						secondNumbering, tree2dump);
 			}
 			firstLoop = false;
 		}
@@ -903,11 +962,11 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append(" });" + lineSep);
 
 		// JQUERY
-		slk.append("function newStateURlWindow(viewNodeID){" + lineSep);
+		slk.append("function newStateImagesWindow(viewNodeID){" + lineSep);
 		slk.append("	var viewNode = $('#viewNode'+viewNodeID);" + lineSep);
-		
+
 		slk.append("	var character = viewNode.find('span.character').html();" + lineSep);
-		
+
 		slk.append("	var newPage = '<html><head></head><body><h2>'+character+'</h2>';" + lineSep);
 		slk.append("	newPage += '<table><tr><th>state</th><th>image</th></tr>';" + lineSep);
 		slk.append("	for(var i =0 ; i< viewNode.find('span.state').size();i++){" + lineSep);
@@ -916,7 +975,6 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		slk.append("		var stateContent = state.innerHTML;" + lineSep);
 		slk.append("		var splitArray = stateContent.split(';');" + lineSep);
-
 
 		slk.append("		var stateImageURL = $('#stateImageURL_'+stateID);" + lineSep);
 		slk.append("		var stateImageURLContent = stateImageURL.html();" + lineSep);
@@ -939,7 +997,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("}" + lineSep);
 
 		// PROTOTYPE
-		// slk.append("function newStateURlWindow(viewNodeID){" + lineSep);
+		// slk.append("function newStateImagesWindow(viewNodeID){" + lineSep);
 		// slk.append("	var trueID = 'viewNode'+viewNodeID;" + lineSep);
 		// slk.append("	var viewNode = $(trueID);" + lineSep);
 		// slk.append("	var newPage = '<html><head></head><body>';" + lineSep);
@@ -1073,12 +1131,12 @@ public abstract class SingleAccessKeyTreeDumper {
 
 					String htmlImageLink = "";
 					if (node.isChildrenContainsImages()) {
-						htmlImageLink = " </span><a class='stateImageLink' onClick='newStateURlWindow("
+						htmlImageLink = "<a class='stateImageLink' onClick='newStateImagesWindow("
 								+ currentParentNumber + ");' >(<strong>?</strong>)</a>";
 					}
 					output.append("  <span class=\"character\">"
 							+ child.getCharacter().getName().replace(">", "&gt;").replace("<", "&lt;")
-							+ htmlImageLink + ":<br/>");
+							+ " </span>" + htmlImageLink + ":<br/>");
 
 				} else {
 					output.append("    ");
