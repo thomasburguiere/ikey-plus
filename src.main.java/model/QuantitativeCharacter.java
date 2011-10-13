@@ -8,6 +8,8 @@ package model;
  */
 public class QuantitativeCharacter extends Character {
 
+	String MeasurementUnit = "";
+
 	/**
 	 * constructor by default
 	 */
@@ -21,6 +23,24 @@ public class QuantitativeCharacter extends Character {
 	public QuantitativeCharacter(String name) {
 		super();
 		this.setName(name);
+	}
+
+	/**
+	 * set the measurement unit
+	 * 
+	 * @return string, the measurement unit
+	 */
+	public String getMeasurementUnit() {
+		return MeasurementUnit;
+	}
+
+	/**
+	 * set the measurement unit
+	 * 
+	 * @param measurementUnit
+	 */
+	public void setMeasurementUnit(String measurementUnit) {
+		MeasurementUnit = measurementUnit;
 	}
 
 	/* (non-Javadoc)

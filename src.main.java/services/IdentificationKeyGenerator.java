@@ -69,7 +69,10 @@ public class IdentificationKeyGenerator {
 				new ArrayList<Taxon>(dataset.getTaxa()), new ArrayList<ICharacter>());
 
 		// delete useless nodes
-		optimizeSingleAccessKeyTree(null, this.singleAccessKeyTree.getRoot());
+		boolean isOptimized = true;
+		while (isOptimized) {
+			isOptimized = optimizeSingleAccessKeyTree(null, this.singleAccessKeyTree.getRoot(), false);
+		}
 	}
 
 	/**
@@ -283,9 +286,10 @@ public class IdentificationKeyGenerator {
 	 * 
 	 * @param parentNode
 	 * @param node
+	 * @return true, if the SingleAccessKeyTree has changed
 	 */
-	public void optimizeSingleAccessKeyTree(SingleAccessKeyNode parentNode, SingleAccessKeyNode node)
-			throws Exception {
+	public boolean optimizeSingleAccessKeyTree(SingleAccessKeyNode parentNode, SingleAccessKeyNode node,
+			boolean isOptimized) throws Exception {
 
 		if (node != null) {
 			if (parentNode != null) {
@@ -293,12 +297,14 @@ public class IdentificationKeyGenerator {
 						&& parentNode.getRemainingTaxa().size() == node.getRemainingTaxa().size()) {
 					parentNode.getChildren().addAll(node.getChildren());
 					parentNode.getChildren().remove(node);
+					isOptimized = true;
 				}
 			}
 			for (int i = 0; i < node.getChildren().size(); i++) {
-				optimizeSingleAccessKeyTree(node, node.getChildren().get(i));
+				isOptimized = optimizeSingleAccessKeyTree(node, node.getChildren().get(i), isOptimized);
 			}
 		}
+		return isOptimized;
 	}
 
 	/**

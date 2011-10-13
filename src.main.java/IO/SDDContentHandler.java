@@ -125,8 +125,8 @@ public class SDDContentHandler implements ContentHandler {
 				inRepresentation = true;
 			}
 
-			// <Label> in <Representation> in <Dataset>
-			else if (localName.equals("Label") && inRepresentation && inDataset) {
+			// <Label> in <Dataset>
+			else if (localName.equals("Label") && inDataset) {
 				buffer = new StringBuffer();
 			}
 
@@ -426,6 +426,13 @@ public class SDDContentHandler implements ContentHandler {
 				} else if (isDataSetLabel) {
 					this.dataSet.setLabel(buffer.toString());
 					isDataSetLabel = false;
+				}
+			}
+
+			// <Label> in <MeasurementUnit> in <Dataset>
+			else if (localName.equals("Label") && inMeasurementUnit && inDataset) {
+				if (currentQuantitativeCharacter != null) {
+					currentQuantitativeCharacter.setMeasurementUnit(buffer.toString());
 				}
 			}
 

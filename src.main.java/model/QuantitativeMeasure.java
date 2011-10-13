@@ -179,6 +179,19 @@ public class QuantitativeMeasure {
 	}
 
 	/**
+	 * get the string representation as interval with unit
+	 * 
+	 * @return String, the string representation
+	 */
+	public String toStringInterval(String unit) {
+
+		if (unit != null && !unit.equals("")) {
+			return toStringInterval() + " (" + unit + ")";
+		}
+		return toStringInterval();
+	}
+
+	/**
 	 * get the string representation as interval
 	 * 
 	 * @return String, the string representation

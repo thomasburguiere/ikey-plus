@@ -25,6 +25,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import model.DataSet;
+import model.QuantitativeCharacter;
 import model.QuantitativeMeasure;
 import model.SingleAccessKeyNode;
 import model.SingleAccessKeyTree;
@@ -127,20 +128,21 @@ public abstract class SingleAccessKeyTreeDumper {
 		multipleTraversalToSddString(tree2dump.getRoot(), output, lineSeparator, tree2dump);
 		output.append("</IdentificationKeys>" + lineSeparator);
 		output.append("<MediaObjects>" + lineSeparator);
-		for (Taxon t : originalDataSet.getTaxa()) {
-			for (String mediaObjectKey : t.getMediaObjectKeys()) {
-				output.append("<MediaObject id=\"" + mediaObjectKey + "\">" + lineSeparator);
-				output.append("<Representation>" + lineSeparator);
-				output.append("<Label>");
-				output.append(mediaObjectKey);
-				output.append("</Label>" + lineSeparator);
-				output.append("</Representation>" + lineSeparator);
-				output.append("<Type>Image</Type>" + lineSeparator);
-				output.append("<Source href=\"" + originalDataSet.getMediaObject(mediaObjectKey) + "\"/>"
-						+ lineSeparator);
-				output.append("</MediaObject>" + lineSeparator);
-			}
+
+		// creation of mediaObjects
+		for (String mediaObjectKey : originalDataSet.getMediaObjects().keySet()) {
+			output.append("<MediaObject id=\"" + mediaObjectKey + "\">" + lineSeparator);
+			output.append("<Representation>" + lineSeparator);
+			output.append("<Label>");
+			output.append(mediaObjectKey);
+			output.append("</Label>" + lineSeparator);
+			output.append("</Representation>" + lineSeparator);
+			output.append("<Type>Image</Type>" + lineSeparator);
+			output.append("<Source href=\"" + originalDataSet.getMediaObject(mediaObjectKey) + "\"/>"
+					+ lineSeparator);
+			output.append("</MediaObject>" + lineSeparator);
 		}
+
 		output.append("</MediaObjects>" + lineSeparator);
 		output.append("</Dataset>" + lineSeparator);
 		output.append("</Datasets>");
@@ -214,6 +216,15 @@ public abstract class SingleAccessKeyTreeDumper {
 					output.append("</Question>" + lineSeparator);
 					output.append("<Leads>" + lineSeparator);
 				}
+
+				// initiate the mediaObject Tags
+				String mediaObjectsTags = "";
+				if (child.getCharacter().isSupportsCategoricalData()) {
+					for (String mediaObjectKey : ((State) child.getCharacterState()).getMediaObjectKeys()) {
+						mediaObjectsTags += "<MediaObject ref=\"" + mediaObjectKey + "\"/>" + lineSeparator;
+					}
+				}
+
 				// other child nodes of the root node
 				if (rootNodeChildrenIntegerList.contains(new Integer(counter))) {
 					if (child.hasChild()) {
@@ -222,6 +233,7 @@ public abstract class SingleAccessKeyTreeDumper {
 								+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
 										.replace("&", "&amp;"));
 						output.append("</Statement>" + lineSeparator);
+						output.append(mediaObjectsTags);
 						output.append("<Question>" + lineSeparator);
 						output.append("<Text>"
 								+ child.getChildren().get(0).getCharacter().getName().replace(">", "&gt;")
@@ -236,6 +248,7 @@ public abstract class SingleAccessKeyTreeDumper {
 								+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
 										.replace("&", "&amp;") + lineSeparator);
 						output.append("</Statement>");
+						output.append(mediaObjectsTags);
 						for (Taxon t : child.getRemainingTaxa()) {
 							output.append("<TaxonName ref=\"" + t.getId() + "\"/>" + lineSeparator);
 							break;
@@ -255,6 +268,7 @@ public abstract class SingleAccessKeyTreeDumper {
 								+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
 										.replace("&", "&amp;"));
 						output.append("</Statement>" + lineSeparator);
+						output.append(mediaObjectsTags);
 						output.append("<Question>" + lineSeparator);
 						output.append("<Text>"
 								+ child.getChildren().get(0).getCharacter().getName().replace(">", "&gt;")
@@ -271,6 +285,7 @@ public abstract class SingleAccessKeyTreeDumper {
 								+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
 										.replace("&", "&amp;"));
 						output.append("</Statement>" + lineSeparator);
+						output.append(mediaObjectsTags);
 						for (Taxon t : child.getRemainingTaxa()) {
 							output.append("<TaxonName ref=\"" + t.getId() + "\"/>" + lineSeparator);
 							break;
@@ -344,9 +359,16 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
 			if (node.getCharacterState() instanceof QuantitativeMeasure) {
-				output.append(tabulations + firstNumbering + "." + secondNumbering + ") "
-						+ node.getCharacter().getName() + " | "
-						+ ((QuantitativeMeasure) node.getCharacterState()).toStringInterval());
+				output.append(tabulations
+						+ firstNumbering
+						+ "."
+						+ secondNumbering
+						+ ") "
+						+ node.getCharacter().getName()
+						+ " | "
+						+ ((QuantitativeMeasure) node.getCharacterState())
+								.toStringInterval(((QuantitativeCharacter) node.getCharacter())
+										.getMeasurementUnit()));
 			} else {
 				output.append(tabulations + firstNumbering + "." + secondNumbering + ") "
 						+ node.getCharacter().getName() + " | " + node.getStringStates());
@@ -363,7 +385,7 @@ public abstract class SingleAccessKeyTreeDumper {
 					firstLoop = false;
 				}
 			} else {
-				output.append(" (taxa=" + node.getRemainingTaxa().size() + ")");
+				output.append(" (items=" + node.getRemainingTaxa().size() + ")");
 			}
 			tabulations = tabulations + "\t";
 		}
@@ -495,7 +517,9 @@ public abstract class SingleAccessKeyTreeDumper {
 
 				// displaying the child node character state
 				if (child.getCharacterState() instanceof QuantitativeMeasure) {
-					output.append(((QuantitativeMeasure) child.getCharacterState()).toStringInterval());
+					output.append(((QuantitativeMeasure) child.getCharacterState())
+							.toStringInterval(((QuantitativeCharacter) child.getCharacter())
+									.getMeasurementUnit()));
 				} else {
 					output.append(child.getStringStates());
 				}
@@ -780,7 +804,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			}
 
 			if (node.getCharacterState() instanceof QuantitativeMeasure)
-				state = ((QuantitativeMeasure) node.getCharacterState()).toStringInterval();
+				state = ((QuantitativeMeasure) node.getCharacterState())
+						.toStringInterval(((QuantitativeCharacter) node.getCharacter()).getMeasurementUnit());
 			else
 				state = node.getStringStates();
 			state = "<span class='state'>" + firstNumbering + "." + secondNumbering + ") "
@@ -790,7 +815,7 @@ public abstract class SingleAccessKeyTreeDumper {
 			output.append("\n" + tabulations + "\t<li>");
 
 			if (node.hasChild()) {
-				output.append("&nbsp;" + state + " (taxa=" + node.getRemainingTaxa().size() + ")");
+				output.append("&nbsp;" + state + " (items=" + node.getRemainingTaxa().size() + ")");
 			} else {
 				output.append("&nbsp;" + state + "<span class='taxa'> -> ");
 				boolean firstLoop = true;
@@ -1155,15 +1180,17 @@ public abstract class SingleAccessKeyTreeDumper {
 				}
 				output.append("<span class=\"statesAndTaxa\">");
 
-				String mediaKey = ((State) child.getCharacterState()).getFirstImageKey();
-
+				String mediaKey = "";
 				// displaying the child node character state
 				if (child.getCharacterState() instanceof QuantitativeMeasure) {
-					output.append("<span class=\"state\" id=\"state" + mediaKey + "\">" + marging
-							+ ((QuantitativeMeasure) child.getCharacterState()).toStringInterval()
-							+ "</span>");
+					output.append("<span class=\"state\""
+							+ "\">"
+							+ marging
+							+ ((QuantitativeMeasure) child.getCharacterState())
+									.toStringInterval(((QuantitativeCharacter) child.getCharacter())
+											.getMeasurementUnit()) + "</span>");
 				} else {
-
+					mediaKey = ((State) child.getCharacterState()).getFirstImageKey();
 					output.append("<span class=\"state\" id=\"state_" + mediaKey + "\" >" + marging
 							+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;") + "</span>");
 
@@ -1200,10 +1227,12 @@ public abstract class SingleAccessKeyTreeDumper {
 
 				}
 				output.append("</span>"); // closes the opening <span class="statesAndTaxa">
-				output.append("<span class=\"stateImageURL\" id=\"stateImageURL_" + mediaKey + "\">");
-				output.append(((State) child.getCharacterState()).getFirstImage(tree2dump.getDataSet()) != null ? ((State) child
-						.getCharacterState()).getFirstImage(tree2dump.getDataSet()) : "");
-				output.append("</span>");
+				if (child.getCharacter().isSupportsCategoricalData()) {
+					output.append("<span class=\"stateImageURL\" id=\"stateImageURL_" + mediaKey + "\">");
+					output.append(((State) child.getCharacterState()).getFirstImage(tree2dump.getDataSet()) != null ? ((State) child
+							.getCharacterState()).getFirstImage(tree2dump.getDataSet()) : "");
+					output.append("</span>");
+				}
 				output.append("<br/>" + lineSeparator);
 
 				queue.add(child);
@@ -1307,7 +1336,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			output.append(tabulations + "\t<li>&nbsp;<span class='line'>" + characterName);
 
 			if (node.getCharacterState() instanceof QuantitativeMeasure)
-				state = ((QuantitativeMeasure) node.getCharacterState()).toStringInterval();
+				state = ((QuantitativeMeasure) node.getCharacterState())
+						.toStringInterval(((QuantitativeCharacter) node.getCharacter()).getMeasurementUnit());
 			else
 				state = node.getStringStates();
 			state = "<span class='state'>" + state.replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;")
@@ -1315,7 +1345,7 @@ public abstract class SingleAccessKeyTreeDumper {
 			state += "<span class=\"warning\">" + tree2dump.nodeDescriptionAnalysis(node) + "</span>";
 
 			if (node.hasChild()) {
-				output.append(" | " + state + " (taxa=" + node.getRemainingTaxa().size() + ")");
+				output.append(" | " + state + " (items=" + node.getRemainingTaxa().size() + ")");
 			} else {
 				output.append(" | " + state + "<span class='taxa'> -> ");
 				boolean firstLoop = true;
@@ -1468,10 +1498,18 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
 			if (node.getCharacterState() instanceof QuantitativeMeasure) {
-				output.append(tabulations + firstNumbering + "." + secondNumbering + ") "
-						+ "<span style=\"color:#333\">" + node.getCharacter().getName() + "</span> | "
+				output.append(tabulations
+						+ firstNumbering
+						+ "."
+						+ secondNumbering
+						+ ") "
+						+ "<span style=\"color:#333\">"
+						+ node.getCharacter().getName()
+						+ "</span> | "
 						+ "<span style=\"color:#fe8a22\">"
-						+ ((QuantitativeMeasure) node.getCharacterState()).toStringInterval() + "</span>");
+						+ ((QuantitativeMeasure) node.getCharacterState())
+								.toStringInterval(((QuantitativeCharacter) node.getCharacter())
+										.getMeasurementUnit()) + "</span>");
 			} else {
 				output.append(tabulations + firstNumbering + "." + secondNumbering + ") "
 						+ "<span style=\"color:#333\">" + node.getCharacter().getName() + "</span> | "
@@ -1489,7 +1527,7 @@ public abstract class SingleAccessKeyTreeDumper {
 					firstLoop = false;
 				}
 			} else {
-				output.append(" (taxa=" + node.getRemainingTaxa().size() + ")");
+				output.append(" (items=" + node.getRemainingTaxa().size() + ")");
 			}
 			output.append(System.getProperty("line.separator"));
 			tabulations = tabulations + ":";
@@ -1622,7 +1660,9 @@ public abstract class SingleAccessKeyTreeDumper {
 				// displaying the child node character state
 				output.append("<span style=\"color:#fe8a22;\">");// state coloring
 				if (child.getCharacterState() instanceof QuantitativeMeasure) {
-					output.append(((QuantitativeMeasure) child.getCharacterState()).toStringInterval());
+					output.append(((QuantitativeMeasure) child.getCharacterState())
+							.toStringInterval(((QuantitativeCharacter) child.getCharacter())
+									.getMeasurementUnit()));
 				} else {
 					output.append(child.getStringStates());
 				}
@@ -1817,7 +1857,9 @@ public abstract class SingleAccessKeyTreeDumper {
 				output.append("{{Lead|" + currentParentNumber + " " + stateID + "|");
 				alphabetIndex++;
 				if (child.getCharacterState() instanceof QuantitativeMeasure) {
-					output.append(((QuantitativeMeasure) child.getCharacterState()).toStringInterval());
+					output.append(((QuantitativeMeasure) child.getCharacterState())
+							.toStringInterval(((QuantitativeCharacter) child.getCharacter())
+									.getMeasurementUnit()));
 				} else {
 					output.append(((State) child.getCharacterState()).getName().replace(">", "&gt;")
 							.replace("=", "&#61;").replace("<", "&lt;"));
@@ -1986,7 +2028,9 @@ public abstract class SingleAccessKeyTreeDumper {
 
 				// displaying the child node character state
 				if (child.getCharacterState() instanceof QuantitativeMeasure) {
-					output.append(((QuantitativeMeasure) child.getCharacterState()).toStringInterval());
+					output.append(((QuantitativeMeasure) child.getCharacterState())
+							.toStringInterval(((QuantitativeCharacter) child.getCharacter())
+									.getMeasurementUnit()));
 				} else {
 					output.append(((State) child.getCharacterState()).getName().replace(">", "&gt;")
 							.replace("<", "&lt;").replace("=", "&#61;"));
@@ -2142,7 +2186,9 @@ public abstract class SingleAccessKeyTreeDumper {
 				// displaying the child node character state as a vertex label
 				if (child.getCharacterState() instanceof QuantitativeMeasure) {
 					output.append(" [label=\""
-							+ ((QuantitativeMeasure) child.getCharacterState()).toStringInterval());
+							+ ((QuantitativeMeasure) child.getCharacterState())
+									.toStringInterval(((QuantitativeCharacter) child.getCharacter())
+											.getMeasurementUnit()));
 				} else {
 					output.append(" [label=\"" + child.getStringStates());
 				}

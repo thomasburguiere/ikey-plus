@@ -103,9 +103,16 @@ public class SingleAccessKeyTree {
 
 		if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
 			if (node.getCharacterState() instanceof QuantitativeMeasure) {
-				output.append(tabulations + firstNumbering + "." + secondNumbering + ") "
-						+ node.getCharacter().getName() + " | "
-						+ ((QuantitativeMeasure) node.getCharacterState()).toStringInterval());
+				output.append(tabulations
+						+ firstNumbering
+						+ "."
+						+ secondNumbering
+						+ ") "
+						+ node.getCharacter().getName()
+						+ " | "
+						+ ((QuantitativeMeasure) node.getCharacterState())
+								.toStringInterval(((QuantitativeCharacter) node.getCharacter())
+										.getMeasurementUnit()));
 			} else {
 				output.append(tabulations + firstNumbering + "." + secondNumbering + ") "
 						+ node.getCharacter().getName() + " | " + node.getStringStates());
@@ -122,7 +129,7 @@ public class SingleAccessKeyTree {
 					firstLoop = false;
 				}
 			} else {
-				output.append(" (taxa=" + node.getRemainingTaxa().size() + ")");
+				output.append(" (items=" + node.getRemainingTaxa().size() + ")");
 			}
 			tabulations = tabulations + "\t";
 		}
