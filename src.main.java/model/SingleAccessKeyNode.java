@@ -222,10 +222,13 @@ public class SingleAccessKeyNode {
 	 * 
 	 * @return boolean, true if at least one child contain images
 	 */
-	public boolean isChildrenContainsImages() {
+	public boolean isChildrenContainsImages(DataSet dataSet) {
 		for (SingleAccessKeyNode childNode : this.getChildren()) {
 			if (childNode.getCharacter().isSupportsCategoricalData()
-					&& ((State) childNode.getCharacterState()).getFirstImageKey() != null) {
+					&& ((State) childNode.getCharacterState()).getFirstImageKey() != null
+					&& dataSet.getMediaObject(((State) childNode.getCharacterState()).getFirstImageKey()) != null
+					&& dataSet.getMediaObject(((State) childNode.getCharacterState()).getFirstImageKey())
+							.startsWith("http")) {
 				return true;
 			}
 		}

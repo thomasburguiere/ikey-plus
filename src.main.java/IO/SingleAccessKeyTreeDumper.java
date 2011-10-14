@@ -772,7 +772,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
 				// create link to display states images
 				String htmlImageLink = "";
-				if (parentNode.isChildrenContainsImages()) {
+				if (parentNode.isChildrenContainsImages(tree2dump.getDataSet())) {
 					String javascriptStateNameTab = "new Array(";
 					String javascriptUrlImageTab = "new Array(";
 					boolean firstLoop = true;
@@ -1163,7 +1163,7 @@ public abstract class SingleAccessKeyTreeDumper {
 					output.append("<strong>" + currentParentNumber + "</strong>");
 
 					String htmlImageLink = "";
-					if (node.isChildrenContainsImages()) {
+					if (node.isChildrenContainsImages(tree2dump.getDataSet())) {
 						htmlImageLink = "<a class='stateImageLink' onClick='newStateImagesWindow("
 								+ currentParentNumber + ");' >(<strong>?</strong>)</a>";
 					}
