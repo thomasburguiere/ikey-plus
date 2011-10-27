@@ -1418,7 +1418,7 @@ public abstract class SingleAccessKeyTreeDumper {
 			output.append("<html><head></head><body>");
 			output.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
 
-			multipleTraversalToHTMLString(tree2dump.getRoot(), output, System.getProperty("line.separator"),
+			multipleTraversalToHTMLStringForPdf(tree2dump.getRoot(), output, System.getProperty("line.separator"),
 					false, tree2dump);
 
 			output.append("</body></html>");
@@ -1439,6 +1439,149 @@ public abstract class SingleAccessKeyTreeDumper {
 		}
 
 		return null;
+	}
+	
+	/**
+	 * This methods outputs the {@link #SingleAccesKeyTree} as a flat HTML-formatted String for PDF output, 
+	 * In order to do this, the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first
+	 * traversal is a breadth-first traversal, in order to generate an HashMap (
+	 * <tt>nodeBreadthFirstIterationMap</tt>) that associates each node with an arbitrary Integer. The second
+	 * traversal is a depth-first traversal, in order to associate (in another HashMap :
+	 * <tt>nodeChildParentNumberingMap</tt>), for each node, the node number and the number of its parent
+	 * node. Finally, the last traversal is another breadh-first traversal that generates the flat key String
+	 * 
+	 * @param rootNode
+	 * @param output
+	 * @param lineSeparator
+	 */
+	private static void multipleTraversalToHTMLStringForPdf(SingleAccessKeyNode rootNode, StringBuffer output,
+			String lineSeparator, boolean activeLink, SingleAccessKeyTree tree2dump) {
+
+		String marging = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+
+		// // first traversal, breadth-first ////
+		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
+
+		int counter = 1;
+		iterativeBreadthFirstSkipChildlessNodes(rootNode, nodeBreadthFirstIterationMap, counter);
+
+		// // end first traversal, breadth-first ////
+
+		// // second traversal, depth-first ////
+		HashMap<SingleAccessKeyNode, Integer> nodeChildParentNumberingMap = new HashMap<SingleAccessKeyNode, Integer>();
+		recursiveDepthFirstNodeIndex(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
+		// // end second traversal, depth-first ////
+
+		// // third traversal, breadth-first ////
+		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
+		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
+
+		counter = 1;
+		int currentParentNumber = -1;
+		queue.add(rootNode);
+
+		// root node treatment
+
+		counter++;
+		// end root node treatment
+		visitedNodes.add(rootNode);
+
+		while (!queue.isEmpty()) {
+			SingleAccessKeyNode node = queue.remove();
+			SingleAccessKeyNode child = null;
+
+			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+							.get(0)) != null
+			// && child.getCharacter() != null && child.getCharacterState() != null
+			) {
+				visitedNodes.add(child);
+
+				// / child node treatment
+
+				// displaying the parent node number and the child node character name only once
+				if (nodeChildParentNumberingMap.get(child) != currentParentNumber) {
+					currentParentNumber = nodeChildParentNumberingMap.get(child);
+					output.append("<br/>" + lineSeparator);
+					if (currentParentNumber < 10)
+						output.append("   ");
+					else if (currentParentNumber < 100)
+						output.append("  ");
+					else if (currentParentNumber < 1000)
+						output.append(" ");
+
+					// close the previous opening <span class="viewNode"> if this is not the first one
+					if (currentParentNumber > 1)
+						output.append(lineSeparator + "</span>");
+					output.append("<span class=\"viewNode\" id=\"viewNode" + currentParentNumber + "\">");
+
+					if (activeLink) {
+						output.append("<a name=\"anchor" + currentParentNumber + "\"></a>");
+					}
+					output.append("<strong>" + currentParentNumber + "</strong>");
+
+					output.append("  <span class=\"character\">"
+							+ child.getCharacter().getName().replace(">", "&gt;").replace("<", "&lt;")
+							+ " </span> :<br/>");
+
+				} else {
+					output.append("    ");
+					String blankCharacterName = "";
+					for (int i = 0; i < child.getCharacter().getName().length(); i++)
+						blankCharacterName += " ";
+					output.append("  " + blankCharacterName);
+				}
+				output.append("<span class=\"statesAndTaxa\">");
+
+				// displaying the child node character state
+				if (child.getCharacterState() instanceof QuantitativeMeasure) {
+					output.append("<span class=\"state\""
+							+ "\">"
+							+ marging
+							+ ((QuantitativeMeasure) child.getCharacterState())
+									.toStringInterval(((QuantitativeCharacter) child.getCharacter())
+											.getMeasurementUnit()) + "</span>");
+				} else {
+					output.append("<span class=\"state\" id=\"state_" + "\" >" + marging
+							+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;") + "</span>");
+
+				}
+				output.append("<span class=\"warning\">" + tree2dump.nodeDescriptionAnalysis(child)
+						+ "</span>");
+
+				// displaying the child node number if it has children nodes, displaying the taxa otherwise
+				if (child.getChildren().size() == 0) {
+					output.append(" => <span class=\"taxa\">");
+					boolean firstLoop = true;
+					for (Taxon taxon : child.getRemainingTaxa()) {
+						if (!firstLoop) {
+							output.append(", ");
+						}
+						output.append(taxon.getName());
+						firstLoop = false;
+					}
+					output.append("</span>");
+				} else {
+					if (activeLink) {
+						output.append(" => <a href=\"#anchor" + counter + "\">" + counter + "</a>");
+					} else {
+						output.append(" => " + counter);
+					}
+
+				}
+				output.append("</span>"); // closes the opening <span class="statesAndTaxa">
+				output.append("<br/>" + lineSeparator);
+
+				queue.add(child);
+				if (child.hasChild())
+					counter++;
+				// / end child node treatment
+
+			}
+		}
+
+		// // end third traversal, breadth-first ////
+
 	}
 
 	// END PDF DUMP, FLAT
