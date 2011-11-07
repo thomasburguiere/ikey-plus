@@ -13,6 +13,7 @@ public class Character implements ICharacter {
 
 	private String name = null;
 	private String id = null;
+	public int weight = 3;
 	private ICharacter parentCharacter = null;
 	private List<State> inapplicableStates = null;
 	private List<ICharacter> childCharacters = null;
@@ -72,6 +73,23 @@ public class Character implements ICharacter {
 	@Override
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/* (non-Javadoc)
+	 * 
+	 * @see model.ICharacter#getweight() */
+	@Override
+	public int getWeight() {
+		return this.weight;
+	}
+
+	/* (non-Javadoc)
+	 * 
+	 * @see model.ICharacter#setWeight(int) */
+	@Override
+	public void setWeight(int weight) {
+		this.weight = weight;
+
 	}
 
 	/* (non-Javadoc)

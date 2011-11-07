@@ -1,7 +1,9 @@
 package IO;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import model.CategoricalCharacter;
 import model.CodedDescription;
@@ -52,6 +54,7 @@ public class SDDContentHandler implements ContentHandler {
 	private boolean inQuantitativeCharacter = false;
 	private boolean inCharacterTree = false;
 	private boolean inCharacters = false;
+	private boolean inRatings = false;
 	private boolean inMediaObject = false;
 	private boolean dataUnavailableFlag = false;
 
@@ -67,6 +70,8 @@ public class SDDContentHandler implements ContentHandler {
 	private StringBuffer buffer = null;
 	// kwnoledge base
 	private DataSet dataSet = null;
+	// Utils object
+	private Utils utils = null;
 	// current quantitative character
 	private CategoricalCharacter currentCategoricalCharacter = null;
 	// current quantitative character
@@ -91,13 +96,17 @@ public class SDDContentHandler implements ContentHandler {
 	List<State> currentOnlyApplicableState = null;
 	// id of current mediaObject
 	private String mediaObjectId = null;
+	// id of current mediaObject
+	private Map<ICharacter, Integer> ratingsCounter = null;
 
 	/**
 	 * Constructor by default
 	 */
-	public SDDContentHandler() {
+	public SDDContentHandler(Utils utils) {
 		super();
 		this.dataSet = new DataSet();
+		this.utils = utils;
+		this.ratingsCounter = new HashMap<ICharacter, Integer>();
 	}
 
 	/* (non-Javadoc)
@@ -347,6 +356,29 @@ public class SDDContentHandler implements ContentHandler {
 				inMeasurementUnit = true;
 			}
 
+			// <Ratings>
+			else if (localName.equals("Ratings")) {
+				inRatings = true;
+			}
+
+			// <Rating> in <Ratings>
+			else if (localName.equals("Rating") && inRatings) {
+				if (attributs.getValue("context").equals(utils.getWeightContext())) {
+					int currentRating = Utils.ratings.indexOf(attributs.getValue("rating")) + 1;
+					if (currentCodedDescriptionCharacter != null) {
+						if (this.ratingsCounter.get(currentCodedDescriptionCharacter) == null) {
+							this.ratingsCounter.put(currentCodedDescriptionCharacter, 0);
+							currentCodedDescriptionCharacter.setWeight(0);
+						}
+
+						currentCodedDescriptionCharacter.setWeight(currentCodedDescriptionCharacter
+								.getWeight() + currentRating);
+						this.ratingsCounter.put(currentCodedDescriptionCharacter,
+								this.ratingsCounter.get(currentCodedDescriptionCharacter) + 1);
+					}
+				}
+			}
+
 			// <MediaObject>
 			else if (localName.equals("MediaObject")) {
 				inMediaObject = true;
@@ -403,6 +435,14 @@ public class SDDContentHandler implements ContentHandler {
 							this.dataSet.getCodedDescriptions().get(taxon)
 									.addCharacterDescription(character, null);
 						}
+					}
+				}
+
+				// update (average) the weight for all characters
+				for (ICharacter character : this.dataSet.getCharacters()) {
+					if (this.ratingsCounter.get(character) != null) {
+						character.setWeight(Math.round((float) (character.getWeight())
+								/ (float) (this.ratingsCounter.get(character))));
 					}
 				}
 
@@ -624,6 +664,11 @@ public class SDDContentHandler implements ContentHandler {
 			else if (localName.equals("MeasurementUnit")) {
 				inMeasurementUnit = false;
 
+			}
+
+			// <Ratings>
+			else if (localName.equals("Ratings")) {
+				inRatings = false;
 			}
 
 			// <MediaObject>

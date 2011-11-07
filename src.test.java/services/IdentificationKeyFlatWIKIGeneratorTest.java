@@ -59,6 +59,8 @@ public class IdentificationKeyFlatWIKIGeneratorTest {
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/wrongSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/pruningSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/archaeoSDD.xml";
+				// String stringUrl =
+				// "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample.xml";
 
 				// options
 				utils.setFewStatesCharacterFirst(false);
@@ -66,6 +68,7 @@ public class IdentificationKeyFlatWIKIGeneratorTest {
 				utils.setPruning(false);
 				utils.setVerbosity("how");
 				utils.setScoreMethod(Utils.XPER);
+				utils.setWeightContext("CostEffectiveness");
 
 				// test if the URL is valid
 				URLConnection urlConnection;
@@ -82,7 +85,7 @@ public class IdentificationKeyFlatWIKIGeneratorTest {
 					utils.setErrorMessage(Utils.getBundleConfElement("message.urlError"), e);
 					e.printStackTrace();
 				}
-				sddSaxParser = new SDDSaxParser(stringUrl);
+				sddSaxParser = new SDDSaxParser(stringUrl, utils);
 				// construct header
 				header.append(System.getProperty("line.separator") + sddSaxParser.getDataset().getLabel()
 						+ ", " + Utils.getBundleConfOverridableElement("message.createdBy")
@@ -96,8 +99,9 @@ public class IdentificationKeyFlatWIKIGeneratorTest {
 						+ utils.isMergeCharacterStatesIfSameDiscimination());
 				header.append(System.getProperty("line.separator") + "pruning=" + utils.isPruning());
 				header.append(System.getProperty("line.separator") + "verbosity=" + utils.getVerbosity());
-				header.append(System.getProperty("line.separator") + "scoreMethod=" + utils.getScoreMethod()
-						+ System.getProperty("line.separator"));
+				header.append(System.getProperty("line.separator") + "scoreMethod=" + utils.getScoreMethod());
+				header.append(System.getProperty("line.separator") + "weightContext="
+						+ utils.getWeightContext() + System.getProperty("line.separator"));
 
 			} catch (Throwable t) {
 				utils.setErrorMessage(Utils.getBundleConfElement("message.parsingError"), t);

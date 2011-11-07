@@ -1418,8 +1418,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			output.append("<html><head></head><body>");
 			output.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
 
-			multipleTraversalToHTMLStringForPdf(tree2dump.getRoot(), output, System.getProperty("line.separator"),
-					false, tree2dump);
+			multipleTraversalToHTMLStringForPdf(tree2dump.getRoot(), output,
+					System.getProperty("line.separator"), false, tree2dump);
 
 			output.append("</body></html>");
 
@@ -1440,22 +1440,22 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		return null;
 	}
-	
+
 	/**
-	 * This methods outputs the {@link #SingleAccesKeyTree} as a flat HTML-formatted String for PDF output, 
-	 * In order to do this, the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first
-	 * traversal is a breadth-first traversal, in order to generate an HashMap (
-	 * <tt>nodeBreadthFirstIterationMap</tt>) that associates each node with an arbitrary Integer. The second
-	 * traversal is a depth-first traversal, in order to associate (in another HashMap :
-	 * <tt>nodeChildParentNumberingMap</tt>), for each node, the node number and the number of its parent
-	 * node. Finally, the last traversal is another breadh-first traversal that generates the flat key String
+	 * This methods outputs the {@link #SingleAccesKeyTree} as a flat HTML-formatted String for PDF output, In
+	 * order to do this, the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first traversal is a
+	 * breadth-first traversal, in order to generate an HashMap ( <tt>nodeBreadthFirstIterationMap</tt>) that
+	 * associates each node with an arbitrary Integer. The second traversal is a depth-first traversal, in
+	 * order to associate (in another HashMap : <tt>nodeChildParentNumberingMap</tt>), for each node, the node
+	 * number and the number of its parent node. Finally, the last traversal is another breadh-first traversal
+	 * that generates the flat key String
 	 * 
 	 * @param rootNode
 	 * @param output
 	 * @param lineSeparator
 	 */
-	private static void multipleTraversalToHTMLStringForPdf(SingleAccessKeyNode rootNode, StringBuffer output,
-			String lineSeparator, boolean activeLink, SingleAccessKeyTree tree2dump) {
+	private static void multipleTraversalToHTMLStringForPdf(SingleAccessKeyNode rootNode,
+			StringBuffer output, String lineSeparator, boolean activeLink, SingleAccessKeyTree tree2dump) {
 
 		String marging = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 

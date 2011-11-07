@@ -41,7 +41,7 @@ public class SDDSaxParserTest {
 		SDDSaxParser sddSaxParser = null;
 
 		try {
-			String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
+			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
 			// String stringUrl =
 			// "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-unknownData-fullSDD.xml";
 			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
@@ -54,6 +54,15 @@ public class SDDSaxParserTest {
 			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/wrongSDD.xml";
 			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/pruningSDD.xml";
 			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/archaeoSDD.xml";
+			String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample.xml";
+
+			// options
+			utils.setFewStatesCharacterFirst(false);
+			utils.setMergeCharacterStatesIfSameDiscimination(false);
+			utils.setPruning(false);
+			utils.setVerbosity("how");
+			utils.setScoreMethod(Utils.XPER);
+			utils.setWeightContext("CostEffectiveness");
 
 			// test if the URL is valid
 			URLConnection urlConnection;
@@ -71,7 +80,7 @@ public class SDDSaxParserTest {
 				utils.setErrorMessage(Utils.getBundleConfElement("message.urlError"), e);
 				e.printStackTrace();
 			}
-			sddSaxParser = new SDDSaxParser(stringUrl);
+			sddSaxParser = new SDDSaxParser(stringUrl, utils);
 		} catch (Throwable t) {
 			utils.setErrorMessage(Utils.getBundleConfElement("message.parsingError"), t);
 			t.printStackTrace();
@@ -86,9 +95,8 @@ public class SDDSaxParserTest {
 			// CHARACTERS
 			System.out.println("characters (" + dataset.getCharacters().size() + ") : ");
 			for (ICharacter character : dataset.getCharacters()) {
-
 				if (character instanceof CategoricalCharacter) {
-					System.out.println("\t" + character.getName());
+					System.out.println("\t" + character.getName() + "   w=" + character.getWeight());
 					for (State state : ((CategoricalCharacter) character).getStates()) {
 						System.out.println("\t\t" + state.getName());
 						for (String key : state.getMediaObjectKeys()) {
@@ -96,7 +104,7 @@ public class SDDSaxParserTest {
 						}
 					}
 				} else {
-					System.out.println("\t*N*" + character.getName());
+					System.out.println("\t*N*" + character.getName() + "   w=" + character.getWeight());
 				}
 			}
 			// TAXA AND DESCRIPTION

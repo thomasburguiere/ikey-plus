@@ -25,6 +25,8 @@ public class Utils {
 	private File errorMessageFile = null;
 
 	public static final String UNKNOWNDATA = "unknownData";
+	public static final List<String> ratings = new ArrayList<String>();
+	public static final List<String> ratingContext = new ArrayList<String>();
 	public static final String YES = "yes";
 	public static final String NO = "no";
 	public static final String HEADERTAG = "h";
@@ -66,11 +68,35 @@ public class Utils {
 	public static final String SOKALANDMICHENER = "sokalAndMichener";
 
 	// options
+	private String format = Utils.TXT;
+	private String representation = Utils.TREE;
 	private boolean fewStatesCharacterFirst = false;
 	private boolean mergeCharacterStatesIfSameDiscimination = false;
 	private boolean pruning = false;
 	private String verbosity = "";
 	private String scoreMethod = Utils.XPER;
+	private String weightContext = "";
+
+	/**
+	 * Constructor
+	 */
+	public Utils() {
+		super();
+		// initialize the rating values
+		ratings.add("Rating1of5");
+		ratings.add("Rating2of5");
+		ratings.add("Rating3of5");
+		ratings.add("Rating4of5");
+		ratings.add("Rating5of5");
+
+		// initialize the rating context values
+		ratingContext.add("ObservationConvenience");
+		ratingContext.add("Availability");
+		ratingContext.add("Repeatability");
+		ratingContext.add("CostEffectiveness");
+		ratingContext.add("PhylogeneticWeighting");
+		ratingContext.add("RequiredExpertise");
+	}
 
 	/**
 	 * Convert a String value to a Double value
@@ -195,6 +221,34 @@ public class Utils {
 	}
 
 	/**
+	 * @return String, the format
+	 */
+	public String getFormat() {
+		return format;
+	}
+
+	/**
+	 * @param format
+	 */
+	public void setFormat(String format) {
+		this.format = format;
+	}
+
+	/**
+	 * @return String, the representation
+	 */
+	public String getRepresentation() {
+		return representation;
+	}
+
+	/**
+	 * @param representation
+	 */
+	public void setRepresentation(String representation) {
+		this.representation = representation;
+	}
+
+	/**
 	 * @return true if fewStatesCharacterFirst is selected
 	 */
 	public boolean isFewStatesCharacterFirst() {
@@ -262,6 +316,25 @@ public class Utils {
 	 */
 	public void setScoreMethod(String scoreMethod) {
 		this.scoreMethod = scoreMethod;
+	}
+
+	/**
+	 * @return String, the weight context
+	 */
+	public String getWeightContext() {
+		return weightContext;
+	}
+
+	/**
+	 * @param weightContext
+	 *            , the weight context
+	 */
+	public void setWeightContext(String weightContext) {
+		for (String ratingContext : Utils.ratingContext) {
+			if (weightContext.equalsIgnoreCase(ratingContext)) {
+				this.weightContext = ratingContext;
+			}
+		}
 	}
 
 	/**
@@ -358,5 +431,4 @@ public class Utils {
 		String temp = Normalizer.normalize(s, Normalizer.Form.NFC);
 		return temp.replaceAll("[^\\p{ASCII}]", "");
 	}
-
 }

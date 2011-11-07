@@ -10,6 +10,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import utils.Utils;
+
 /**
  * This class allow to launch the parsing of SDD file
  * 
@@ -24,10 +26,10 @@ public class SDDSaxParser {
 	/**
 	 * constructor executing the parse method
 	 */
-	public SDDSaxParser(String uri) throws SAXException, IOException {
+	public SDDSaxParser(String uri, Utils utils) throws SAXException, IOException {
 		XMLReader saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
 
-		SDDContentHandler handler = new SDDContentHandler();
+		SDDContentHandler handler = new SDDContentHandler(utils);
 		saxReader.setContentHandler(handler);
 
 		URL url = new URL(uri);
