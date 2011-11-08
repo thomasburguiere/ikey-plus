@@ -39,6 +39,8 @@ host = http://yourServerHost:8080/
 # the following property may contain any message you want, that indicates
 # who generated the identification key (typically, your institution)
 message.createdBy = created by *placeholder*
+# Email address for assistance
+email.webmaster = yourwebm@steremail.com
 
 
 4)To restrict the access to the application you can add the following parameters in the <host> tag in the server.xml file of tomcat:

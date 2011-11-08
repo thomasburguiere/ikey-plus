@@ -203,6 +203,7 @@ public class Utils {
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
+		String lineReturn = System.getProperty("line.separator");
 		File erroFile = null;
 		try {
 			erroFile = File.createTempFile(Utils.ERROR, "." + Utils.TXT, new File(path));
@@ -213,6 +214,8 @@ public class Utils {
 					"UTF-8"));
 
 			txtFileWriter.append(this.errorMessage);
+			txtFileWriter.append(lineReturn + lineReturn + Utils.getBundleConfElement("message.webmaster")
+					+ Utils.getBundleConfOverridableElement("email.webmaster"));
 			txtFileWriter.close();
 		} catch (IOException e) {
 			e.printStackTrace();
