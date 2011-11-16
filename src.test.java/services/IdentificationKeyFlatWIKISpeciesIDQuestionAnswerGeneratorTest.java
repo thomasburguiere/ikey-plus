@@ -32,7 +32,8 @@ public class IdentificationKeyFlatWIKISpeciesIDQuestionAnswerGeneratorTest {
 		Utils utils = new Utils();
 
 		// set the confTest ResourceBundle
-		Utils.setBundleConfOverridable(ResourceBundle.getBundle("confOverridableTest"));
+		Utils.setBundleConfOverridable(ResourceBundle.getBundle("confTest"));
+		Utils.setBundleConf(ResourceBundle.getBundle("confTest"));
 
 		// String containing the name of the result file
 		String resultFileName = "";

@@ -15,12 +15,12 @@ import IO.SDDSaxParser;
 import IO.SingleAccessKeyTreeDumper;
 
 /**
- * This class allow to test the flat PDF output of IdentificationKeyGenerator service
+ * This class allow to test the flat HTML output of IdentificationKeyGenerator service
  * 
  * @author Thomas Burguiere
- * @created 18-07-2011
+ * @created 10-07-2011
  */
-public class IdentificationKeyFlatPDFGeneratorTest {
+public class IdentificationKeyInteractiveHTMLGeneratorTest {
 
 	public Logger logger = Logger.getAnonymousLogger();
 
@@ -138,7 +138,7 @@ public class IdentificationKeyFlatPDFGeneratorTest {
 					header.setLength(0);
 				}
 				SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
-				resultFileName = SingleAccessKeyTreeDumper.dumpFlatPdfFile(header.toString(), tree2dump)
+				resultFileName = SingleAccessKeyTreeDumper.dumpInteractiveHtmlFile(header.toString(), tree2dump)
 						.getName();
 			} catch (IOException e) {
 				utils.setErrorMessage(Utils.getBundleConfElement("message.creatingFileError"), e);
