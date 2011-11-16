@@ -5,6 +5,7 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -891,6 +892,23 @@ public abstract class SingleAccessKeyTreeDumper {
 		return htmlFile;
 	}
 
+	public static File dumpInteractiveHtmlFile(String header, SingleAccessKeyTree tree2dump)
+			throws IOException {
+		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
+		
+
+		File htmlFile = File.createTempFile(Utils.KEY, "." + Utils.HTML, new File(path));
+		FileOutputStream fileOutputStream = new FileOutputStream(htmlFile);
+		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
+		BufferedWriter htmlFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, "UTF-8"));
+		htmlFileWriter.append(generateInteractiveHtmlString(header, tree2dump));
+		htmlFileWriter.close();
+
+		return htmlFile;
+
+	}
+
 	/**
 	 * 
 	 * generates a flat, HTML-formatted, String representation of a key, in a String object, by calling the
@@ -1061,6 +1079,130 @@ public abstract class SingleAccessKeyTreeDumper {
 		// slk.append("	j.document.write(newPage);" + lineSep);
 		// slk.append("	j.document.close();" + lineSep);
 		// slk.append("}");
+
+		slk.append("</script>" + lineSep);
+
+		slk.append("</head>" + lineSep);
+
+		slk.append("<body>" + lineSep);
+		slk.append("<div style='margin-left:30px;margin-top:20px;'>" + lineSep);
+		slk.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
+
+		multipleTraversalToHTMLString(tree2dump.getRoot(), output, System.getProperty("line.separator"),
+				true, tree2dump);
+
+		slk.append(output.toString());
+
+		slk.append("</div>" + lineSep);
+
+		slk.append("</body>");
+		slk.append("</html>");
+
+		return slk.toString();
+	}
+
+	/**
+	 * 
+	 * generates a flat, HTML-formatted, String representation of a key, in a String object, by calling the
+	 * {@link #multipleTraversalToHTMLString} helper method
+	 * 
+	 * @param header
+	 * @return
+	 * @throws FileNotFoundException
+	 */
+	private static String generateInteractiveHtmlString(String header, SingleAccessKeyTree tree2dump)
+			throws FileNotFoundException {
+
+		String scriptFilesPaths = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleConfElement("resources.lisScriptsFolder");
+		
+		String cssFilePath = scriptFilesPaths+"lis.css";
+		
+		FileInputStream cssFileInputStream = new FileInputStream(new File(cssFilePath));
+
+		StringBuffer output = new StringBuffer();
+		String lineSep = System.getProperty("line.separator");
+		StringBuffer slk = new StringBuffer();
+		slk.append("<html>" + lineSep);
+		slk.append("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />" + lineSep);
+		slk.append("<head>" + lineSep);
+		slk.append("<script src='" + Utils.getBundleConfElement("resources.jqueryPath") + "'></script>"
+				+ lineSep);
+
+		// slk.append("<script src='" + Utils.getBundleConfElement("resources.prototypePath") + "'></script>"
+		// + lineSep);
+
+		slk.append("<style type='text/css'>" + lineSep);
+		slk.append("</style>" + lineSep);
+
+		//
+		slk.append("<script>" + lineSep);
+		slk.append("this.screenshotPreview = function(){" + lineSep);
+		slk.append("	xOffset = -10;" + lineSep);
+		slk.append("	yOffset = -50;" + lineSep);
+		slk.append("	$(\"a.screenshot\").hover(function(e){" + lineSep);
+		slk.append("		this.t = this.title;" + lineSep);
+		slk.append("		this.title = \"\";" + lineSep);
+		slk.append("		var c = (this.t != \"\") ? \"<br/>\" + this.t : \"\";" + lineSep);
+		slk.append("		$(\"body\").append(\"<p id='screenshot'><img src='\"+ this.rel +\"' alt='url preview' width='200px'/>\"+ c +\"</p>\");"
+				+ lineSep);
+		slk.append("		$(\"#screenshot\")" + lineSep);
+		slk.append("			.css(\"top\",(e.pageY - xOffset) + \"px\")" + lineSep);
+		slk.append("			.css(\"left\",(e.pageX + yOffset) + \"px\")" + lineSep);
+		slk.append("			.fadeIn(\"fast\");" + lineSep);
+		slk.append("    }," + lineSep);
+		slk.append("	function(){" + lineSep);
+		slk.append("		this.title = this.t;" + lineSep);
+		slk.append("		$(\"#screenshot\").remove();" + lineSep);
+		slk.append("    });" + lineSep);
+		slk.append("	$(\"a.screenshot\").mousemove(function(e){" + lineSep);
+		slk.append("		$(\"#screenshot\")" + lineSep);
+		slk.append("			.css(\"top\",(e.pageY - xOffset) + \"px\")" + lineSep);
+		slk.append("			.css(\"left\",(e.pageX + yOffset) + \"px\");" + lineSep);
+		slk.append("	});" + lineSep);
+		slk.append("};" + lineSep);
+
+		slk.append("  $(document).ready(function(){" + lineSep);
+		slk.append("	screenshotPreview();" + lineSep);
+		slk.append(" });" + lineSep);
+
+		// JQUERY
+		slk.append("function newStateImagesWindow(viewNodeID){" + lineSep);
+		slk.append("	var viewNode = $('#viewNode'+viewNodeID);" + lineSep);
+		slk.append("	var character = viewNode.find('span.character').html();" + lineSep);
+		slk.append("	var newPage = '<html><head>" + "<style type=\"text/css\">" + "body{" + "   color:#111;"
+				+ "   font-family: Verdana, helvetica, arial, sans-serif;" + "   font-size: 78%;"
+				+ "   background: #fff;" + "}" + "table {" + " border-collapse:collapse;" + " width:90%;"
+				+ "}" + "th, td {" + " border:1px solid #ddd;" + " width:20%;" + "}" + "td {"
+				+ " text-align:center;" + "}" + "caption {" + " font-weight:bold" + "}" + "</style>"
+				+ "</head><body><h2>'+character+'</h2>';" + lineSep);
+		slk.append("	newPage += '<table cellpadding=\"5\"><tr><th>state</th><th>image</th></tr>';" + lineSep);
+		slk.append("	for(var i =0 ; i< viewNode.find('span.state').size();i++){" + lineSep);
+		slk.append("		var state =  viewNode.find('span.state')[i];" + lineSep);
+		slk.append("		var stateID = state.id.split('_')[1];" + lineSep);
+
+		slk.append("		var stateContent = state.innerHTML;" + lineSep);
+		slk.append("		var splitArray = stateContent.split(';');" + lineSep);
+
+		slk.append("		var stateImageURL = $('#stateImageURL_'+stateID);" + lineSep);
+		slk.append("		var stateImageURLContent = stateImageURL.html();" + lineSep);
+		slk.append("		stateContent = splitArray[splitArray.length - 1];" + lineSep);
+		slk.append("		newPage += '<tr>';" + lineSep);
+		slk.append("		var imgTag = '<center>No image</center>';" + lineSep);
+		slk.append("		if(stateImageURLContent.length > 0 && stateImageURLContent.indexOf('http://')==0){"
+				+ lineSep);
+		slk.append("			imgTag='<img src=\"'+stateImageURLContent+'\" width=\"200px\" />';" + lineSep);
+		slk.append("		}" + lineSep);
+		slk.append("		newPage += '<td>'+stateContent+'</td><td>'+imgTag+'</td>';" + lineSep);
+		slk.append("		newPage += '</tr>';" + lineSep);
+		slk.append("	}");
+		slk.append("	newPage += '</table>';" + lineSep);
+		slk.append("	newPage += '</body></html>';" + lineSep);
+		slk.append("	var j = window.open('','State Illustrations', 'toolbar=0, width=800px, height=400px');"
+				+ lineSep);
+		slk.append("	j.document.write(newPage);" + lineSep);
+		slk.append("	j.document.close();" + lineSep);
+		slk.append("}" + lineSep);
 
 		slk.append("</script>" + lineSep);
 
