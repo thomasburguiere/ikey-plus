@@ -50,3 +50,32 @@ function newStateImagesWindow(viewNodeID) {
 	j.document.write(newPage);
 	j.document.close();
 }
+
+function goToViewNode(viewNodeID){
+	viewNodeHistory.push(viewNodeID);
+	toggleViewNode(viewNodeID);
+}
+
+function goToPreviousViewNode(){
+	if(viewNodeHistory.length <=1){
+		toggleViewNode(1);
+	}
+	else{
+		viewNodeHistory.pop();
+		var previousViewNodeID = viewNodeHistory.pop();
+		goToViewNode(previousViewNodeID);
+	}
+}
+
+function goToFirstViewNode(){
+	viewNodeHistory = [];
+	goToViewNode(1);
+}
+
+function toggleViewNode(viewNodeID){
+	$('.viewNode').hide();
+	$('#viewNode'+viewNodeID).show();
+	return false;
+}
+
+var viewNodeHistory = [];
