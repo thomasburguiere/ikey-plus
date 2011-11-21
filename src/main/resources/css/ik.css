@@ -1,0 +1,75 @@
+@CHARSET "UTF-8";
+
+body {
+	color: #333;
+	font-family: Verdana, helvetica, arial, sans-serif;
+	font-size: 78%;
+	background: #fff;
+}
+
+.character {
+	color: #333;
+}
+
+.state {
+	color: #fe8a22;
+}
+
+.taxa {
+	color: #67bb1b;
+	font-style: italic;
+}
+
+.statesAndTaxa {
+	margin-left: 100px;
+}
+
+.stateImageURL {
+	visibility: hidden;
+}
+
+a.stateImageLink {
+	color: #333;
+	cursor: pointer;
+}
+
+a {
+	color: #67bb1b;
+	font-style: italic;
+}
+
+#screenshot {
+	position: absolute;
+	border: 1px solid #ccc;
+	background: #333;
+	padding: 5px;
+	display: none;
+	color: #fff;
+}
+
+/*------------------------------------*\
+	IPHONE
+\*------------------------------------*/
+@media screen and (max-device-width: 480px) {
+	/*--- iPhone only CSS here ---*/
+	body {
+		-webkit-text-size-adjust: none;
+		font-family: Helvetica, Arial, Verdana, sans-serif;
+		margin: 0 0 0 10px;
+		padding: 0;
+		-webkit-user-select: none;
+		-webkit-text-size-adjust: none;
+	}
+	.statesAndTaxa {
+		margin-left: 0px;
+	}
+	div {
+		clear: both !important;
+		display: block !important;
+		width: 100% !important;
+		float: none !important;
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+
+}
