@@ -2,11 +2,12 @@ package IO;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -896,7 +897,6 @@ public abstract class SingleAccessKeyTreeDumper {
 			throws IOException {
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
-		
 
 		File htmlFile = File.createTempFile(Utils.KEY, "." + Utils.HTML, new File(path));
 		FileOutputStream fileOutputStream = new FileOutputStream(htmlFile);
@@ -1108,122 +1108,80 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * 
 	 * @param header
 	 * @return
-	 * @throws FileNotFoundException
+	 * @throws IOException
 	 */
 	private static String generateInteractiveHtmlString(String header, SingleAccessKeyTree tree2dump)
-			throws FileNotFoundException {
+			throws IOException {
 
-		String scriptFilesPaths = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleConfElement("resources.lisScriptsFolder");
-		
-		String cssFilePath = scriptFilesPaths+"lis.css";
-		
-		FileInputStream cssFileInputStream = new FileInputStream(new File(cssFilePath));
+		String cssFileURI = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleConfElement("resources.CSSFolder")
+				+ Utils.getBundleConfElement("resources.CSSName");
+
+		String jsFileURI = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleConfElement("resources.JSFolder")
+				+ Utils.getBundleConfElement("resources.JSName");
+
+		File cssFile = new File(cssFileURI);
+		File jsFile = new File(jsFileURI);
 
 		StringBuffer output = new StringBuffer();
 		String lineSep = System.getProperty("line.separator");
 		StringBuffer slk = new StringBuffer();
 		slk.append("<html>" + lineSep);
 		slk.append("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />" + lineSep);
+		slk.append("<meta name = \"viewport\" content = \"width = 250\">"+lineSep);
 		slk.append("<head>" + lineSep);
 		slk.append("<script src='" + Utils.getBundleConfElement("resources.jqueryPath") + "'></script>"
 				+ lineSep);
 
-		// slk.append("<script src='" + Utils.getBundleConfElement("resources.prototypePath") + "'></script>"
-		// + lineSep);
+
+
+		String nextLine = "";
+		BufferedReader cssReader = new BufferedReader(new FileReader(cssFile));
 
 		slk.append("<style type='text/css'>" + lineSep);
+		while ((nextLine = cssReader.readLine()) != null) {
+			slk.append(nextLine + lineSep);
+		}
 		slk.append("</style>" + lineSep);
+		cssReader.close();
 
 		//
+		nextLine = "";
+		BufferedReader jsReader = new BufferedReader(new FileReader(jsFile));
+
 		slk.append("<script>" + lineSep);
-		slk.append("this.screenshotPreview = function(){" + lineSep);
-		slk.append("	xOffset = -10;" + lineSep);
-		slk.append("	yOffset = -50;" + lineSep);
-		slk.append("	$(\"a.screenshot\").hover(function(e){" + lineSep);
-		slk.append("		this.t = this.title;" + lineSep);
-		slk.append("		this.title = \"\";" + lineSep);
-		slk.append("		var c = (this.t != \"\") ? \"<br/>\" + this.t : \"\";" + lineSep);
-		slk.append("		$(\"body\").append(\"<p id='screenshot'><img src='\"+ this.rel +\"' alt='url preview' width='200px'/>\"+ c +\"</p>\");"
-				+ lineSep);
-		slk.append("		$(\"#screenshot\")" + lineSep);
-		slk.append("			.css(\"top\",(e.pageY - xOffset) + \"px\")" + lineSep);
-		slk.append("			.css(\"left\",(e.pageX + yOffset) + \"px\")" + lineSep);
-		slk.append("			.fadeIn(\"fast\");" + lineSep);
-		slk.append("    }," + lineSep);
-		slk.append("	function(){" + lineSep);
-		slk.append("		this.title = this.t;" + lineSep);
-		slk.append("		$(\"#screenshot\").remove();" + lineSep);
-		slk.append("    });" + lineSep);
-		slk.append("	$(\"a.screenshot\").mousemove(function(e){" + lineSep);
-		slk.append("		$(\"#screenshot\")" + lineSep);
-		slk.append("			.css(\"top\",(e.pageY - xOffset) + \"px\")" + lineSep);
-		slk.append("			.css(\"left\",(e.pageX + yOffset) + \"px\");" + lineSep);
-		slk.append("	});" + lineSep);
-		slk.append("};" + lineSep);
-
-		slk.append("  $(document).ready(function(){" + lineSep);
-		slk.append("	screenshotPreview();" + lineSep);
-		slk.append(" });" + lineSep);
-
-		// JQUERY
-		slk.append("function newStateImagesWindow(viewNodeID){" + lineSep);
-		slk.append("	var viewNode = $('#viewNode'+viewNodeID);" + lineSep);
-		slk.append("	var character = viewNode.find('span.character').html();" + lineSep);
-		slk.append("	var newPage = '<html><head>" + "<style type=\"text/css\">" + "body{" + "   color:#111;"
-				+ "   font-family: Verdana, helvetica, arial, sans-serif;" + "   font-size: 78%;"
-				+ "   background: #fff;" + "}" + "table {" + " border-collapse:collapse;" + " width:90%;"
-				+ "}" + "th, td {" + " border:1px solid #ddd;" + " width:20%;" + "}" + "td {"
-				+ " text-align:center;" + "}" + "caption {" + " font-weight:bold" + "}" + "</style>"
-				+ "</head><body><h2>'+character+'</h2>';" + lineSep);
-		slk.append("	newPage += '<table cellpadding=\"5\"><tr><th>state</th><th>image</th></tr>';" + lineSep);
-		slk.append("	for(var i =0 ; i< viewNode.find('span.state').size();i++){" + lineSep);
-		slk.append("		var state =  viewNode.find('span.state')[i];" + lineSep);
-		slk.append("		var stateID = state.id.split('_')[1];" + lineSep);
-
-		slk.append("		var stateContent = state.innerHTML;" + lineSep);
-		slk.append("		var splitArray = stateContent.split(';');" + lineSep);
-
-		slk.append("		var stateImageURL = $('#stateImageURL_'+stateID);" + lineSep);
-		slk.append("		var stateImageURLContent = stateImageURL.html();" + lineSep);
-		slk.append("		stateContent = splitArray[splitArray.length - 1];" + lineSep);
-		slk.append("		newPage += '<tr>';" + lineSep);
-		slk.append("		var imgTag = '<center>No image</center>';" + lineSep);
-		slk.append("		if(stateImageURLContent.length > 0 && stateImageURLContent.indexOf('http://')==0){"
-				+ lineSep);
-		slk.append("			imgTag='<img src=\"'+stateImageURLContent+'\" width=\"200px\" />';" + lineSep);
-		slk.append("		}" + lineSep);
-		slk.append("		newPage += '<td>'+stateContent+'</td><td>'+imgTag+'</td>';" + lineSep);
-		slk.append("		newPage += '</tr>';" + lineSep);
-		slk.append("	}");
-		slk.append("	newPage += '</table>';" + lineSep);
-		slk.append("	newPage += '</body></html>';" + lineSep);
-		slk.append("	var j = window.open('','State Illustrations', 'toolbar=0, width=800px, height=400px');"
-				+ lineSep);
-		slk.append("	j.document.write(newPage);" + lineSep);
-		slk.append("	j.document.close();" + lineSep);
-		slk.append("}" + lineSep);
-
+		while ((nextLine = jsReader.readLine()) != null) {
+			slk.append(nextLine + lineSep);
+		}
+		
 		slk.append("</script>" + lineSep);
+		jsReader.close();
 
 		slk.append("</head>" + lineSep);
 
-		slk.append("<body>" + lineSep);
+		slk.append("<body onLoad=\'goToViewNode(1);\'>" + lineSep);
 		slk.append("<div style='margin-left:30px;margin-top:20px;'>" + lineSep);
 		slk.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
 
-		multipleTraversalToHTMLString(tree2dump.getRoot(), output, System.getProperty("line.separator"),
+		slk.append("<input type=\'button\' value=\'Previous Step\' onClick=\'goToPreviousViewNode();\' />");
+		slk.append("<input type=\'button\' value=\'RESET\' onClick=\'goToFirstViewNode();\' />");
+		
+		slk.append("<br/>");
+
+		multipleTraversalToInteractiveHTMLString(tree2dump.getRoot(), output, System.getProperty("line.separator"),
 				true, tree2dump);
 
 		slk.append(output.toString());
 
 		slk.append("</div>" + lineSep);
-
 		slk.append("</body>");
 		slk.append("</html>");
 
 		return slk.toString();
 	}
+
+	
 
 	/**
 	 * This methods outputs the {@link #SingleAccesKeyTree} as a flat HTML-formatted String, with mediawiki
@@ -1363,6 +1321,170 @@ public abstract class SingleAccessKeyTreeDumper {
 				} else {
 					if (activeLink) {
 						output.append(" => <a href=\"#anchor" + counter + "\">" + counter + "</a>");
+					} else {
+						output.append(" => " + counter);
+					}
+
+				}
+				output.append("</span>"); // closes the opening <span class="statesAndTaxa">
+				if (child.getCharacter().isSupportsCategoricalData()) {
+					output.append("<span class=\"stateImageURL\" id=\"stateImageURL_" + mediaKey + "\">");
+					output.append(((State) child.getCharacterState()).getFirstImage(tree2dump.getDataSet()) != null ? ((State) child
+							.getCharacterState()).getFirstImage(tree2dump.getDataSet()) : "");
+					output.append("</span>");
+				}
+				output.append("<br/>" + lineSeparator);
+
+				queue.add(child);
+				if (child.hasChild())
+					counter++;
+				// / end child node treatment
+
+			}
+		}
+
+		// // end third traversal, breadth-first ////
+
+	}
+	
+	/**
+	 * This methods outputs the {@link #SingleAccesKeyTree} as a flat HTML-formatted String, with mediawiki
+	 * hyperlinks. In order to do this, the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first
+	 * traversal is a breadth-first traversal, in order to generate an HashMap (
+	 * <tt>nodeBreadthFirstIterationMap</tt>) that associates each node with an arbitrary Integer. The second
+	 * traversal is a depth-first traversal, in order to associate (in another HashMap :
+	 * <tt>nodeChildParentNumberingMap</tt>), for each node, the node number and the number of its parent
+	 * node. Finally, the last traversal is another breadh-first traversal that generates the flat key String
+	 * 
+	 * @param rootNode
+	 * @param output
+	 * @param lineSeparator
+	 */
+	private static void multipleTraversalToInteractiveHTMLString(SingleAccessKeyNode rootNode, StringBuffer output,
+			String lineSeparator, boolean activeLink, SingleAccessKeyTree tree2dump) {
+
+		String marging ="&nbsp;&nbsp;&nbsp;";// "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+
+		// // first traversal, breadth-first ////
+		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
+
+		int counter = 1;
+		iterativeBreadthFirstSkipChildlessNodes(rootNode, nodeBreadthFirstIterationMap, counter);
+
+		// // end first traversal, breadth-first ////
+
+		// // second traversal, depth-first ////
+		HashMap<SingleAccessKeyNode, Integer> nodeChildParentNumberingMap = new HashMap<SingleAccessKeyNode, Integer>();
+		recursiveDepthFirstNodeIndex(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
+		// // end second traversal, depth-first ////
+
+		// // third traversal, breadth-first ////
+		Queue<SingleAccessKeyNode> queue = new LinkedList<SingleAccessKeyNode>();
+		ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<SingleAccessKeyNode>();
+
+		counter = 1;
+		int currentParentNumber = -1;
+		queue.add(rootNode);
+
+		// root node treatment
+
+		counter++;
+		// end root node treatment
+		visitedNodes.add(rootNode);
+
+		while (!queue.isEmpty()) {
+			SingleAccessKeyNode node = queue.remove();
+			SingleAccessKeyNode child = null;
+
+			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+							.get(0)) != null
+			// && child.getCharacter() != null && child.getCharacterState() != null
+			) {
+				visitedNodes.add(child);
+
+				// / child node treatment
+
+				// displaying the parent node number and the child node character name only once
+				if (nodeChildParentNumberingMap.get(child) != currentParentNumber) {
+					currentParentNumber = nodeChildParentNumberingMap.get(child);
+					output.append("<br/>" + lineSeparator);
+					if (currentParentNumber < 10)
+						output.append("   ");
+					else if (currentParentNumber < 100)
+						output.append("  ");
+					else if (currentParentNumber < 1000)
+						output.append(" ");
+
+					// close the previous opening <span class="viewNode"> if this is not the first one
+					if (currentParentNumber > 1)
+						output.append(lineSeparator + "</span>");
+					output.append("<span class=\"viewNode\" id=\"viewNode" + currentParentNumber + "\">");
+
+					if (activeLink) {
+						output.append("<a name=\"anchor" + currentParentNumber + "\"></a>");
+					}
+					output.append("<strong>" + currentParentNumber + "</strong>");
+
+					String htmlImageLink = "";
+					if (node.isChildrenContainsImages(tree2dump.getDataSet())) {
+						htmlImageLink = "<a class='stateImageLink' onClick='newStateImagesWindow("
+								+ currentParentNumber + ");' >(<strong>?</strong>)</a>";
+					}
+					output.append("  <span class=\"character\">"
+							+ child.getCharacter().getName().replace(">", "&gt;").replace("<", "&lt;")
+							+ " </span>" + htmlImageLink + ":<br/>");
+
+				} else {
+					output.append("    ");
+					String blankCharacterName = "";
+					for (int i = 0; i < child.getCharacter().getName().length(); i++)
+						blankCharacterName += " ";
+					output.append("  " + blankCharacterName);
+				}
+				output.append("<span class=\"statesAndTaxa\">");
+
+				String mediaKey = "";
+				// displaying the child node character state
+				if (child.getCharacterState() instanceof QuantitativeMeasure) {
+					output.append("<span class=\"state\""
+							+ "\">"
+							+ marging
+							+ ((QuantitativeMeasure) child.getCharacterState())
+									.toStringInterval(((QuantitativeCharacter) child.getCharacter())
+											.getMeasurementUnit()) + "</span>");
+				} else {
+					mediaKey = ((State) child.getCharacterState()).getFirstImageKey();
+					output.append("<span class=\"state\" id=\"state_" + mediaKey + "\" >" + marging
+							+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;") + "</span>");
+
+				}
+				output.append("<span class=\"warning\">" + tree2dump.nodeDescriptionAnalysis(child)
+						+ "</span>");
+
+				// displaying the child node number if it has children nodes, displaying the taxa otherwise
+				if (child.getChildren().size() == 0) {
+					output.append(" => <span class=\"taxa\">");
+					boolean firstLoop = true;
+					for (Taxon taxon : child.getRemainingTaxa()) {
+						if (!firstLoop) {
+							output.append(", ");
+						}
+						// create image previous using the first image in the list
+						if (taxon.getFirstImage(tree2dump.getDataSet()) != null) {
+							output.append("<a href=\"" + taxon.getFirstImage(tree2dump.getDataSet())
+									+ "\" class=\"screenshot\" rel=\""
+									+ taxon.getFirstImage(tree2dump.getDataSet()) + "\" target=\"_blank\">"
+									+ taxon.getName() + "</a>");
+						} else {
+							output.append(taxon.getName());
+						}
+						firstLoop = false;
+					}
+					output.append("</span>");
+				} else {
+					if (activeLink) {
+						output.append(" => <input type=\"button\" value=\"next step\" onClick=\'goToViewNode("+counter+")\' />");
 					} else {
 						output.append(" => " + counter);
 					}
