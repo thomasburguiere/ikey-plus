@@ -1359,7 +1359,7 @@ public abstract class SingleAccessKeyTreeDumper {
 	private static void multipleTraversalToInteractiveHTMLString(SingleAccessKeyNode rootNode,
 			StringBuffer output, String lineSeparator, boolean activeLink, SingleAccessKeyTree tree2dump) {
 
-		String marging = "&nbsp;&nbsp;&nbsp;";// "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		String marging = "<br/>&nbsp;&nbsp;&nbsp;";// "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 
 		// // first traversal, breadth-first ////
 		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
@@ -1480,7 +1480,7 @@ public abstract class SingleAccessKeyTreeDumper {
 					output.append("</span>");
 				} else {
 					if (activeLink) {
-						output.append(" => <input type=\"button\" value=\"next step\" onClick=\'goToViewNode("
+						output.append(" => <input class=\"nextNodeButton\" type=\"button\" value=\"next step\" onClick=\'goToViewNode("
 								+ counter + ")\' />");
 					} else {
 						output.append(" => " + counter);
