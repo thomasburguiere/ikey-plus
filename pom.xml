@@ -11,9 +11,10 @@
 		<sourceDirectory>${basedir}/src/</sourceDirectory>
 		<resources>
 			<resource>
-				<directory>${basedir}/src/</directory>
+				<directory>${basedir}/src/**</directory>
 				<includes>
 					<include>**/*.xml</include>
+					<include>**/*.properties</include>
 				</includes>
 				<filtering>false</filtering>
 			</resource>
@@ -28,7 +29,7 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 	<!-- Allows you to specify dependencies -->
 	<dependencies>
 		<dependency>
