@@ -78,4 +78,14 @@ function toggleViewNode(viewNodeID){
 	return false;
 }
 
+function initTree(){
+	 $('#tree').treeview({
+					collapsed: true,
+					unique: false,
+					control: "#treecontrol",
+					persist: 'location'
+				});
+}
+
+
 var viewNodeHistory = [];

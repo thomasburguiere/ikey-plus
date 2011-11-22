@@ -7,6 +7,15 @@ body {
 	background: #fff;
 }
 
+#treecontrol  a {
+	color: #333;
+	font-size: 85%;
+}
+
+#treecontrol  a:hover {
+	color: #777;
+}
+
 .character {
 	color: #333;
 }
@@ -71,8 +80,7 @@ a {
 		margin: 0 !important;
 		padding: 0 !important;
 	}
-	.nextNodeButton{
+	.nextNodeButton {
 		float: right;
 	}
-
 }
