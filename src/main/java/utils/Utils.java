@@ -35,7 +35,8 @@ public class Utils {
 
 	// properties file
 	public static ResourceBundle bundleConf = ResourceBundle.getBundle("main.resources.conf");
-	public static ResourceBundle bundleConfOverridable = ResourceBundle.getBundle("main.resources.confOverridable");
+	public static ResourceBundle bundleConfOverridable = ResourceBundle
+			.getBundle("main.resources.confOverridable");
 
 	// buffer
 	public static int BUFFER = 2048;
