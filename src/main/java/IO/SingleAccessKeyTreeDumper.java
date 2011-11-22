@@ -916,8 +916,22 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * 
 	 * @param header
 	 * @return
+	 * @throws IOException 
 	 */
-	private static String generateFlatHtmlString(String header, SingleAccessKeyTree tree2dump) {
+	private static String generateFlatHtmlString(String header, SingleAccessKeyTree tree2dump)
+			throws IOException {
+
+		String cssFileURI = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleConfElement("resources.CSSFolder")
+				+ Utils.getBundleConfElement("resources.CSSName");
+
+		String jsFileURI = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ Utils.getBundleConfElement("resources.JSFolder")
+				+ Utils.getBundleConfElement("resources.JSName");
+
+		File cssFile = new File(cssFileURI);
+		File jsFile = new File(jsFileURI);
+
 		StringBuffer output = new StringBuffer();
 		String lineSep = System.getProperty("line.separator");
 		StringBuffer slk = new StringBuffer();
@@ -927,160 +941,29 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("<script src='" + Utils.getBundleConfElement("resources.jqueryPath") + "'></script>"
 				+ lineSep);
 
-		// slk.append("<script src='" + Utils.getBundleConfElement("resources.prototypePath") + "'></script>"
-		// + lineSep);
+		String nextLine = "";
+		BufferedReader cssReader = new BufferedReader(new FileReader(cssFile));
 
+		
 		slk.append("<style type='text/css'>" + lineSep);
-		slk.append("body{" + lineSep);
-		slk.append("   color:#333;" + lineSep);
-		slk.append("   font-family: Verdana, helvetica, arial, sans-serif;" + lineSep);
-		slk.append("   font-size: 78%;" + lineSep);
-		slk.append("   background: #fff;" + lineSep);
-		slk.append("}" + lineSep + lineSep);
-
-		slk.append(".character{" + lineSep);
-		slk.append("   color:#333;" + lineSep);
-		slk.append("}" + lineSep + lineSep);
-
-		slk.append(".state{" + lineSep);
-		slk.append("   color:#fe8a22;" + lineSep);
-		slk.append("}" + lineSep + lineSep);
-
-		slk.append(".taxa{" + lineSep);
-		slk.append("   color:#67bb1b;" + lineSep);
-		slk.append("   font-style: italic;" + lineSep);
-		slk.append("}" + lineSep + lineSep);
-
-		slk.append(".statesAndTaxa{" + lineSep);
-		slk.append("   margin-left: 100px;" + lineSep);
-		slk.append("}" + lineSep + lineSep);
-
-		slk.append(".stateImageURL{" + lineSep);
-		slk.append("   visibility: hidden;" + lineSep);
-		slk.append("}" + lineSep + lineSep);
-
-		slk.append("a.stateImageLink{" + lineSep);
-		slk.append("   color:#333;" + lineSep);
-		slk.append("   cursor: pointer;" + lineSep);
-		slk.append("}" + lineSep + lineSep);
-
-		slk.append("a{" + lineSep);
-		slk.append("   color:#67bb1b;" + lineSep);
-		slk.append("   font-style: italic;" + lineSep);
-		slk.append("}" + lineSep + lineSep);
-
-		slk.append("#screenshot{" + lineSep);
-		slk.append("	position:absolute;" + lineSep);
-		slk.append("	border:1px solid #ccc;" + lineSep);
-		slk.append("	background:#333;" + lineSep);
-		slk.append("	padding:5px;" + lineSep);
-		slk.append("	display:none;" + lineSep);
-		slk.append("	color:#fff;" + lineSep);
-		slk.append("}" + lineSep + lineSep);
+		while ((nextLine = cssReader.readLine()) != null) {
+			slk.append(nextLine + lineSep);
+		}
 		slk.append("</style>" + lineSep);
+		cssReader.close();
+		
+		
 		//
+		nextLine = "";
+		BufferedReader jsReader = new BufferedReader(new FileReader(jsFile));
+
 		slk.append("<script>" + lineSep);
-		slk.append("this.screenshotPreview = function(){" + lineSep);
-		slk.append("	xOffset = -10;" + lineSep);
-		slk.append("	yOffset = -50;" + lineSep);
-		slk.append("	$(\"a.screenshot\").hover(function(e){" + lineSep);
-		slk.append("		this.t = this.title;" + lineSep);
-		slk.append("		this.title = \"\";" + lineSep);
-		slk.append("		var c = (this.t != \"\") ? \"<br/>\" + this.t : \"\";" + lineSep);
-		slk.append("		$(\"body\").append(\"<p id='screenshot'><img src='\"+ this.rel +\"' alt='url preview' width='200px'/>\"+ c +\"</p>\");"
-				+ lineSep);
-		slk.append("		$(\"#screenshot\")" + lineSep);
-		slk.append("			.css(\"top\",(e.pageY - xOffset) + \"px\")" + lineSep);
-		slk.append("			.css(\"left\",(e.pageX + yOffset) + \"px\")" + lineSep);
-		slk.append("			.fadeIn(\"fast\");" + lineSep);
-		slk.append("    }," + lineSep);
-		slk.append("	function(){" + lineSep);
-		slk.append("		this.title = this.t;" + lineSep);
-		slk.append("		$(\"#screenshot\").remove();" + lineSep);
-		slk.append("    });" + lineSep);
-		slk.append("	$(\"a.screenshot\").mousemove(function(e){" + lineSep);
-		slk.append("		$(\"#screenshot\")" + lineSep);
-		slk.append("			.css(\"top\",(e.pageY - xOffset) + \"px\")" + lineSep);
-		slk.append("			.css(\"left\",(e.pageX + yOffset) + \"px\");" + lineSep);
-		slk.append("	});" + lineSep);
-		slk.append("};" + lineSep);
-
-		slk.append("  $(document).ready(function(){" + lineSep);
-		slk.append("	screenshotPreview();" + lineSep);
-		slk.append(" });" + lineSep);
-
-		// JQUERY
-		slk.append("function newStateImagesWindow(viewNodeID){" + lineSep);
-		slk.append("	var viewNode = $('#viewNode'+viewNodeID);" + lineSep);
-		slk.append("	var character = viewNode.find('span.character').html();" + lineSep);
-		slk.append("	var newPage = '<html><head>" + "<style type=\"text/css\">" + "body{" + "   color:#111;"
-				+ "   font-family: Verdana, helvetica, arial, sans-serif;" + "   font-size: 78%;"
-				+ "   background: #fff;" + "}" + "table {" + " border-collapse:collapse;" + " width:90%;"
-				+ "}" + "th, td {" + " border:1px solid #ddd;" + " width:20%;" + "}" + "td {"
-				+ " text-align:center;" + "}" + "caption {" + " font-weight:bold" + "}" + "</style>"
-				+ "</head><body><h2>'+character+'</h2>';" + lineSep);
-		slk.append("	newPage += '<table cellpadding=\"5\"><tr><th>state</th><th>image</th></tr>';" + lineSep);
-		slk.append("	for(var i =0 ; i< viewNode.find('span.state').size();i++){" + lineSep);
-		slk.append("		var state =  viewNode.find('span.state')[i];" + lineSep);
-		slk.append("		var stateID = state.id.split('_')[1];" + lineSep);
-
-		slk.append("		var stateContent = state.innerHTML;" + lineSep);
-		slk.append("		var splitArray = stateContent.split(';');" + lineSep);
-
-		slk.append("		var stateImageURL = $('#stateImageURL_'+stateID);" + lineSep);
-		slk.append("		var stateImageURLContent = stateImageURL.html();" + lineSep);
-		slk.append("		stateContent = splitArray[splitArray.length - 1];" + lineSep);
-		slk.append("		newPage += '<tr>';" + lineSep);
-		slk.append("		var imgTag = '<center>No image</center>';" + lineSep);
-		slk.append("		if(stateImageURLContent.length > 0 && stateImageURLContent.indexOf('http://')==0){"
-				+ lineSep);
-		slk.append("			imgTag='<img src=\"'+stateImageURLContent+'\" width=\"200px\" />';" + lineSep);
-		slk.append("		}" + lineSep);
-		slk.append("		newPage += '<td>'+stateContent+'</td><td>'+imgTag+'</td>';" + lineSep);
-		slk.append("		newPage += '</tr>';" + lineSep);
-		slk.append("	}");
-		slk.append("	newPage += '</table>';" + lineSep);
-		slk.append("	newPage += '</body></html>';" + lineSep);
-		slk.append("	var j = window.open('','State Illustrations', 'toolbar=0, width=800px, height=400px');"
-				+ lineSep);
-		slk.append("	j.document.write(newPage);" + lineSep);
-		slk.append("	j.document.close();" + lineSep);
-		slk.append("}" + lineSep);
-
-		// PROTOTYPE
-		// slk.append("function newStateImagesWindow(viewNodeID){" + lineSep);
-		// slk.append("	var trueID = 'viewNode'+viewNodeID;" + lineSep);
-		// slk.append("	var viewNode = $(trueID);" + lineSep);
-		// slk.append("	var newPage = '<html><head></head><body>';" + lineSep);
-		// slk.append("	newPage += '<table><tr><th>state</th><th>image</th></tr>';" + lineSep);
-		// slk.append("	for(var i =0 ; i< viewNode.select('span.state').size();i++){" + lineSep);
-		// slk.append("		var state =  viewNode.select('span.state')[i];" + lineSep);
-		// slk.append("		var stateID = state.id.split('_')[1];" + lineSep);
-		//
-		// slk.append("		var stateContent = state.innerHTML;" + lineSep);
-		// slk.append("		var splitArray = stateContent.split(';');" + lineSep);
-		//
-		// slk.append("		var stateImageURL = $('stateImageURL_'+stateID);" + lineSep);
-		// slk.append("		var stateImageURLContent = stateImageURL.innerHTML;" + lineSep);
-		// slk.append("		stateContent = splitArray[splitArray.length - 1];" + lineSep);
-		// slk.append("		newPage += '<tr>';" + lineSep);
-		// slk.append("		var imgTag = 'No image';" + lineSep);
-		// slk.append("		if(stateImageURLContent.length > 0 && stateImageURLContent.indexOf('http://')==0){"
-		// + lineSep);
-		// slk.append("			imgTag='<img src=\"'+stateImageURLContent+'\" width=\"200px\" />';" + lineSep);
-		// slk.append("		}" + lineSep);
-		// slk.append("		newPage += '<td>'+stateContent+'</td><td>'+imgTag+'</td>';" + lineSep);
-		// slk.append("		newPage += '</tr>';" + lineSep);
-		// slk.append("	}");
-		// slk.append("	newPage += '</table>';" + lineSep);
-		// slk.append("	newPage += '</body></html>';" + lineSep);
-		// slk.append("	var j = window.open('','State Illustrations', 'toolbar=0, width=800px, height=400px');"
-		// + lineSep);
-		// slk.append("	j.document.write(newPage);" + lineSep);
-		// slk.append("	j.document.close();" + lineSep);
-		// slk.append("}");
+		while ((nextLine = jsReader.readLine()) != null) {
+			slk.append(nextLine + lineSep);
+		}
 
 		slk.append("</script>" + lineSep);
+		jsReader.close();
 
 		slk.append("</head>" + lineSep);
 
@@ -1296,7 +1179,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
 				// displaying the child node number if it has children nodes, displaying the taxa otherwise
 				if (child.getChildren().size() == 0) {
-					output.append(" => <span class=\"taxa\">");
+					output.append(" =&gt; <span class=\"taxa\">");
 					boolean firstLoop = true;
 					for (Taxon taxon : child.getRemainingTaxa()) {
 						if (!firstLoop) {
@@ -1316,9 +1199,9 @@ public abstract class SingleAccessKeyTreeDumper {
 					output.append("</span>");
 				} else {
 					if (activeLink) {
-						output.append(" => <a href=\"#anchor" + counter + "\">" + counter + "</a>");
+						output.append(" =&gt; <a href=\"#anchor" + counter + "\">" + counter + "</a>");
 					} else {
-						output.append(" => " + counter);
+						output.append(" =&gt; " + counter);
 					}
 
 				}
@@ -1359,7 +1242,7 @@ public abstract class SingleAccessKeyTreeDumper {
 	private static void multipleTraversalToInteractiveHTMLString(SingleAccessKeyNode rootNode,
 			StringBuffer output, String lineSeparator, boolean activeLink, SingleAccessKeyTree tree2dump) {
 
-		String marging = "<br/>&nbsp;&nbsp;&nbsp;";// "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		String marging = "<br/>&nbsp;&nbsp;&nbsp;";
 
 		// // first traversal, breadth-first ////
 		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
