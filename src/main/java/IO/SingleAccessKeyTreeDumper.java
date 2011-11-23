@@ -2456,6 +2456,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		File flatTxtFile = dumpFlatTxtFile(header, tree2dump);
 		File htmlFile = dumpHtmlFile(header, tree2dump);
 		File flatHtmlFile = dumpFlatHtmlFile(header, tree2dump);
+		File interactiveHtmlFile = dumpInteractiveHtmlFile(header, tree2dump);
 		File pdfFile = dumpPdfFile(header, tree2dump);
 		File flatPdfFile = dumpFlatPdfFile(header, tree2dump);
 		File wikiFile = dumpWikiFile(header, tree2dump);
@@ -2471,6 +2472,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		filesList.add(flatTxtFile);
 		filesList.add(htmlFile);
 		filesList.add(flatHtmlFile);
+		filesList.add(interactiveHtmlFile);
 		filesList.add(pdfFile);
 		filesList.add(flatPdfFile);
 		filesList.add(wikiFile);
@@ -2495,6 +2497,8 @@ public abstract class SingleAccessKeyTreeDumper {
 				+ System.getProperty("file.separator") + htmlFile.getName());
 		correspondingFilePath.put(flatHtmlFile, label + "key" + System.getProperty("file.separator") + "flat"
 				+ System.getProperty("file.separator") + flatHtmlFile.getName());
+		correspondingFilePath.put(interactiveHtmlFile, label + "key" + System.getProperty("file.separator") + "flat"
+				+ System.getProperty("file.separator") + interactiveHtmlFile.getName());
 		correspondingFilePath.put(pdfFile, label + "key" + System.getProperty("file.separator") + "tree"
 				+ System.getProperty("file.separator") + pdfFile.getName());
 		correspondingFilePath.put(flatPdfFile, label + "key" + System.getProperty("file.separator") + "flat"
