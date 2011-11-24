@@ -96,7 +96,7 @@ public class IdentificationKeyGenerator {
 			// calculate characters score
 			Map<ICharacter, Float> charactersScore = charactersScores(remainingCharacters, remainingTaxa,
 					childDependantCharacters, alreadyUsedCharacter);
-			ICharacter selectedCharacter = bestCharacter(charactersScore, remainingTaxa);
+			ICharacter selectedCharacter = bestCharacter(charactersScore, remainingTaxa, false);
 
 			// delete characters if score method is not Xper and score = 0
 			if (!utils.getScoreMethod().equalsIgnoreCase(Utils.XPER)) {
@@ -572,53 +572,87 @@ public class IdentificationKeyGenerator {
 	 * get the character with the best score
 	 * 
 	 * @param charactersScore
+	 * @param useWeights
+	 *            TODO
 	 * @return ICharacter, the best character
 	 */
-	private ICharacter bestCharacter(Map<ICharacter, Float> charactersScore, List<Taxon> remainingTaxa)
-			throws Exception {
+	private ICharacter bestCharacter(Map<ICharacter, Float> charactersScore, List<Taxon> remainingTaxa,
+			boolean useWeights) throws Exception {
 
-		float bestScore = 0;
-		int bestWeight = 0;
+		float bestScore = -1;
 		ICharacter bestCharacter = null;
 
-		for (ICharacter character : charactersScore.keySet()) {
-			// if the score of the current character has the same weight as the bestWeight
-			if (character.getWeight() >= bestWeight) {
-				bestCharacter = character;
-				bestWeight = character.getWeight();
-				// if the score of the current character has the same weight as the bestWeight and has a score
-				// better than the best score
-			} else if (character.getWeight() == bestWeight && charactersScore.get(character) >= bestScore) {
-				bestScore = charactersScore.get(character);
-				bestCharacter = character;
-			}
-		}
-
-		// HashMap<ICharacter, Float> characterScoreSubMap = new HashMap<ICharacter, Float>();
-		// for (ICharacter character : charactersScore.keySet()) {
-		// if(character.getWeight() >= bestWeight)
-		// characterScoreSubMap.put(character, charactersScore.get(character));
-		// }
-
-		charactersScore.remove(bestCharacter);
-
-		// if the set of scores contains at least one score similar to the best score
-		if (charactersScore.containsValue(bestScore) && bestCharacter.isSupportsCategoricalData()) {
-			int taxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) bestCharacter, remainingTaxa);
+		if (useWeights) {
+			int bestWeight = 0;
 			for (ICharacter character : charactersScore.keySet()) {
-				if (character.getWeight() == bestWeight && charactersScore.get(character) == bestScore
-						&& character.isSupportsCategoricalData()) {
-					// get the number of taxa contains in all child nodes
-					int currentTaxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) character,
-							remainingTaxa);
-					// if the taxa number of the current character is lower than the best score
-					if (currentTaxaNumber < taxaNumber) {
+				if (character.getWeight() >= bestWeight) {
+					bestCharacter = character;
+					bestWeight = character.getWeight();
+				} else if (character.getWeight() == bestWeight) {
+					// if the score of the current character is better than the best score
+					if (charactersScore.get(character) >= bestScore) {
 						bestScore = charactersScore.get(character);
 						bestCharacter = character;
-						taxaNumber = currentTaxaNumber;
 					}
 				}
 			}
+
+			// HashMap<ICharacter, Float> characterScoreSubMap = new HashMap<ICharacter, Float>();
+			// for (ICharacter character : charactersScore.keySet()) {
+			// if(character.getWeight() >= bestWeight)
+			// characterScoreSubMap.put(character, charactersScore.get(character));
+			// }
+
+			charactersScore.remove(bestCharacter);
+
+			// if the set of scores contains at least one score similar to the best score
+			if (charactersScore.containsValue(bestScore) && bestCharacter.isSupportsCategoricalData()) {
+				int taxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) bestCharacter,
+						remainingTaxa);
+				for (ICharacter character : charactersScore.keySet()) {
+					if (character.getWeight() == bestWeight && charactersScore.get(character) == bestScore
+							&& character.isSupportsCategoricalData()) {
+						int currentTaxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) character,
+								remainingTaxa);
+						// if the taxa number of the current character is lower than the best score
+						if (currentTaxaNumber < taxaNumber) {
+							bestScore = charactersScore.get(character);
+							bestCharacter = character;
+							taxaNumber = currentTaxaNumber;
+						}
+					}
+				}
+			}
+		} else {
+
+			// if the score of the current character is better than the best score
+			for (ICharacter character : charactersScore.keySet()) {
+				if (charactersScore.get(character) >= bestScore) {
+					bestScore = charactersScore.get(character);
+					bestCharacter = character;
+				}
+			}
+
+			charactersScore.remove(bestCharacter);
+
+			// if the set of scores contains at least one score similar to the best score
+			if (charactersScore.containsValue(bestScore) && bestCharacter.isSupportsCategoricalData()) {
+				int taxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) bestCharacter,
+						remainingTaxa);
+				for (ICharacter character : charactersScore.keySet()) {
+					if (charactersScore.get(character) == bestScore && character.isSupportsCategoricalData()) {
+						int currentTaxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) character,
+								remainingTaxa);
+						// if the taxa number of the current character is lower than the best score
+						if (currentTaxaNumber < taxaNumber) {
+							bestScore = charactersScore.get(character);
+							bestCharacter = character;
+							taxaNumber = currentTaxaNumber;
+						}
+					}
+				}
+			}
+
 		}
 		return bestCharacter;
 	}
