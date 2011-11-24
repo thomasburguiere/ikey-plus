@@ -588,7 +588,7 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * generates an HTML string that contains the identification key
 	 * 
 	 * @return String the HTML String
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	private static String generateHtmlString(String header, SingleAccessKeyTree tree2dump) throws IOException {
 		String lineSep = System.getProperty("line.separator");
@@ -604,8 +604,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		File cssFile = new File(cssFileURI);
 		File jsFile = new File(jsFileURI);
-		
-		
+
 		slk.append("<html>" + lineSep);
 		slk.append("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />" + lineSep);
 		slk.append("<head>" + lineSep);
@@ -1290,10 +1289,15 @@ public abstract class SingleAccessKeyTreeDumper {
 				}
 				output.append("</span>"); // closes the opening <span class="statesAndTaxa">
 				if (child.getCharacter().isSupportsCategoricalData()) {
+					output.append("<br/><span class=\"stateImageURLandContainer\" id=\"stateImageURLandContainer"
+							+ counter + "\" >");
 					output.append("<span class=\"stateImageURL\" id=\"stateImageURL_" + mediaKey + "\">");
 					output.append(((State) child.getCharacterState()).getFirstImage(tree2dump.getDataSet()) != null ? ((State) child
 							.getCharacterState()).getFirstImage(tree2dump.getDataSet()) : "");
 					output.append("</span>");
+					output.append("<br/><span class=\"stateImageContainer\" id=\"stateImageContainer"
+							+ counter + "\" ></span>"+lineSeparator);
+					output.append("</span>"); // closes the opening <span class="stateImageURLandContainer">
 				}
 				output.append("<br/>" + lineSeparator);
 
@@ -2497,8 +2501,8 @@ public abstract class SingleAccessKeyTreeDumper {
 				+ System.getProperty("file.separator") + htmlFile.getName());
 		correspondingFilePath.put(flatHtmlFile, label + "key" + System.getProperty("file.separator") + "flat"
 				+ System.getProperty("file.separator") + flatHtmlFile.getName());
-		correspondingFilePath.put(interactiveHtmlFile, label + "key" + System.getProperty("file.separator") + "flat"
-				+ System.getProperty("file.separator") + interactiveHtmlFile.getName());
+		correspondingFilePath.put(interactiveHtmlFile, label + "key" + System.getProperty("file.separator")
+				+ "flat" + System.getProperty("file.separator") + interactiveHtmlFile.getName());
 		correspondingFilePath.put(pdfFile, label + "key" + System.getProperty("file.separator") + "tree"
 				+ System.getProperty("file.separator") + pdfFile.getName());
 		correspondingFilePath.put(flatPdfFile, label + "key" + System.getProperty("file.separator") + "flat"
