@@ -577,20 +577,20 @@ public class IdentificationKeyGenerator {
 	private ICharacter bestCharacter(Map<ICharacter, Float> charactersScore, List<Taxon> remainingTaxa)
 			throws Exception {
 
-		float bestScore = -1;
+		float bestScore = 0;
 		int bestWeight = 0;
 		ICharacter bestCharacter = null;
 
 		for (ICharacter character : charactersScore.keySet()) {
-			// if the score of the current character is better than the best score
+			// if the score of the current character has the same weight as the bestWeight
 			if (character.getWeight() >= bestWeight) {
 				bestCharacter = character;
 				bestWeight = character.getWeight();
-			} else if (character.getWeight() == bestWeight) {
-				if (charactersScore.get(character) >= bestScore) {
-					bestScore = charactersScore.get(character);
-					bestCharacter = character;
-				}
+				// if the score of the current character has the same weight as the bestWeight and has a score
+				// better than the best score
+			} else if (character.getWeight() == bestWeight && charactersScore.get(character) >= bestScore) {
+				bestScore = charactersScore.get(character);
+				bestCharacter = character;
 			}
 		}
 
@@ -608,6 +608,7 @@ public class IdentificationKeyGenerator {
 			for (ICharacter character : charactersScore.keySet()) {
 				if (character.getWeight() == bestWeight && charactersScore.get(character) == bestScore
 						&& character.isSupportsCategoricalData()) {
+					// get the number of taxa contains in all child nodes
 					int currentTaxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) character,
 							remainingTaxa);
 					// if the taxa number of the current character is lower than the best score
