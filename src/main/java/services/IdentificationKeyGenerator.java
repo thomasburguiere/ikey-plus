@@ -583,7 +583,7 @@ public class IdentificationKeyGenerator {
 		float bestScore = -1;
 		ICharacter bestCharacter = null;
 
-		int bestWeight = 0;
+		int bestWeight = -1;
 		for (ICharacter character : charactersScore.keySet()) {
 			// if the current character weight is better than the bestWeight
 			if (character.getWeight() > bestWeight) {
