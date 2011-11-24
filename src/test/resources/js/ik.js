@@ -54,6 +54,7 @@ function newStateImagesWindow(viewNodeID) {
 function goToViewNode(viewNodeID){
 	viewNodeHistory.push(viewNodeID);
 	toggleViewNode(viewNodeID);
+	displayViewNodeStateImages(viewNodeID);
 }
 
 function goToPreviousViewNode(){
@@ -70,12 +71,25 @@ function goToPreviousViewNode(){
 function goToFirstViewNode(){
 	viewNodeHistory = [];
 	goToViewNode(1);
+	displayViewNodeStateImages(1);
 }
 
 function toggleViewNode(viewNodeID){
 	$('.viewNode').hide();
 	$('#viewNode'+viewNodeID).show();
 	return false;
+}
+
+function displayViewNodeStateImages(viewNodeID){
+	for( var i=0; i< $('#viewNode'+viewNodeID).children(".stateImageURLandContainer").size() ;i++){
+		var siuc = $($('#viewNode'+viewNodeID).children(".stateImageURLandContainer")[i]);
+		var imageContainer = siuc.find(".stateImageContainer");
+		var url = jQuery.trim(siuc.find('.stateImageURL').text());
+		
+		if(url != null && url.length > 0 && siuc.find(".stateImageInLine").size() == 0){
+			imageContainer.append('<img class="stateImageInLine" src="'+url+'" />')
+		}
+	}
 }
 
 function initTree(){
