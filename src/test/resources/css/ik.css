@@ -47,6 +47,10 @@ a {
 	font-style: italic;
 }
 
+img.stateImageInLine {
+	width: 700px;
+}
+
 #screenshot {
 	position: absolute;
 	border: 1px solid #ccc;
@@ -71,6 +75,9 @@ a {
 	}
 	.statesAndTaxa {
 		margin-left: 0px;
+	}
+	img.stateImageInLine {
+		width: 200px;
 	}
 	div {
 		clear: both !important;
