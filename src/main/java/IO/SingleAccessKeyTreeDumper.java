@@ -929,7 +929,12 @@ public abstract class SingleAccessKeyTreeDumper {
 		StringBuffer slk = new StringBuffer();
 		slk.append("<html>" + lineSep);
 		slk.append("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />" + lineSep);
-		slk.append("<meta name = \"viewport\" content = \"width = 250\">" + lineSep);
+		slk.append("<script type=\"text/javascript\">" + lineSep);
+		slk.append("if(screen.width<640 && screen.height < 500) {" + lineSep);
+		slk.append("  document.write('<meta name = \"viewport\" content = \"width = 250\">') ;" + lineSep);
+		slk.append("}" + lineSep);
+		slk.append("</script>");
+
 		slk.append("<head>" + lineSep);
 		slk.append("<script src='" + Utils.getBundleConfElement("resources.jqueryPath") + "'></script>"
 				+ lineSep);
@@ -1296,7 +1301,7 @@ public abstract class SingleAccessKeyTreeDumper {
 							.getCharacterState()).getFirstImage(tree2dump.getDataSet()) : "");
 					output.append("</span>");
 					output.append("<br/><span class=\"stateImageContainer\" id=\"stateImageContainer"
-							+ counter + "\" ></span>"+lineSeparator);
+							+ counter + "\" ></span>" + lineSeparator);
 					output.append("</span>"); // closes the opening <span class="stateImageURLandContainer">
 				}
 				output.append("<br/>" + lineSeparator);
