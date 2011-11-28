@@ -25,7 +25,7 @@ $(document).ready(function() {
 function newStateImagesWindow(viewNodeID) {
 	var viewNode = $('#viewNode' + viewNodeID);
 	var character = viewNode.find('span.character').html();
-	var newPage = '<html><head><style type="text/css">body{   color:#111;   font-family: Verdana, helvetica, arial, sans-serif;   font-size: 78%;   background: #fff;}table { border-collapse:collapse; width:90%;}th, td { border:1px solid #ddd; width:20%;}td { text-align:center;}caption { font-weight:bold}</style></head><body><h2>'
+	var newPage = '<html><head><style type="text/css">body{ color:#111; font-family: Verdana, helvetica, arial, sans-serif; font-size: 78%;   background: #fff;}table { border-collapse:collapse; width:90%;}th, td { border:1px solid #ddd; width:20%;}td { text-align:center;}caption { font-weight:bold}</style></head><body><h2>'
 			+ character + '</h2>';
 	newPage += '<table cellpadding="5"><tr><th>state</th><th>image</th></tr>';
 	for ( var i = 0; i < viewNode.find('span.state').size(); i++) {
@@ -51,55 +51,61 @@ function newStateImagesWindow(viewNodeID) {
 	j.document.close();
 }
 
-function goToViewNode(viewNodeID){
+function goToViewNode(viewNodeID) {
 	viewNodeHistory.push(viewNodeID);
 	toggleViewNode(viewNodeID);
 	displayViewNodeStateImages(viewNodeID);
 }
 
-function goToPreviousViewNode(){
-	if(viewNodeHistory.length <=1){
+function goToPreviousViewNode() {
+	if (viewNodeHistory.length <= 1) {
 		toggleViewNode(1);
-	}
-	else{
+	} else {
 		viewNodeHistory.pop();
 		var previousViewNodeID = viewNodeHistory.pop();
 		goToViewNode(previousViewNodeID);
 	}
 }
 
-function goToFirstViewNode(){
+function goToFirstViewNode() {
 	viewNodeHistory = [];
 	goToViewNode(1);
 	displayViewNodeStateImages(1);
 }
 
-function toggleViewNode(viewNodeID){
+function toggleViewNode(viewNodeID) {
 	$('.viewNode').hide();
-	$('#viewNode'+viewNodeID).show();
+	$('#viewNode' + viewNodeID).show();
 	return false;
 }
 
-function displayViewNodeStateImages(viewNodeID){
-	for( var i=0; i< $('#viewNode'+viewNodeID).children(".stateImageURLandContainer").size() ;i++){
-		var siuc = $($('#viewNode'+viewNodeID).children(".stateImageURLandContainer")[i]);
+function displayViewNodeStateImages(viewNodeID) {
+	for ( var i = 0; i < $('#viewNode' + viewNodeID).children(".stateImageURLandContainer").size(); i++) {
+		var siuc = $($('#viewNode' + viewNodeID).children(".stateImageURLandContainer")[i]);
 		var imageContainer = siuc.find(".stateImageContainer");
 		var url = jQuery.trim(siuc.find('.stateImageURL').text());
-		
-		if(url != null && url.length > 0 && siuc.find(".stateImageInLine").size() == 0){
-			imageContainer.append('<img class="stateImageInLine" src="'+url+'" />')
+
+		if (url != null && url.length > 0 && siuc.find(".stateImageInLine").size() == 0) {
+			imageContainer.append('<img class="stateImageInLine" src="' + url + '" />')
 		}
 	}
 }
 
-function initTree(){
-	 $('#tree').treeview({
-					collapsed: true,
-					unique: false,
-					control: "#treecontrol",
-					persist: 'location'
-				});
+function waitForViewNodes() {
+
 }
 
+function initViewNodes() {
+	$('#keyWait').remove();
+	$('#keyBody').css('visibility', 'visible');
+	goToFirstViewNode();
+
+}
+
+function initTree() {
+	$('#tree').treeview({
+		collapsed : true, unique : false, control : "#treecontrol", persist : 'location'
+	});
+}
 
 var viewNodeHistory = [];
