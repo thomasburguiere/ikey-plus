@@ -963,8 +963,13 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		slk.append("</head>" + lineSep);
 
-		slk.append("<body onLoad=\'goToViewNode(1);\'>" + lineSep);
-		slk.append("<div style='margin-left:30px;margin-top:20px;'>" + lineSep);
+		slk.append("<body onLoad=\'initViewNodes();\'>" + lineSep);
+
+		slk.append("<div id=\"keyWait\" style='margin-left:30px;margin-top:20px;' >" + lineSep);
+		slk.append("<blink>Generating Key, please wait...</blink>");
+		slk.append("</div>" + lineSep);
+
+		slk.append("<div id=\"keyBody\" style='visibility: hidden; margin-left:30px;margin-top:20px;'>" + lineSep);
 		slk.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
 
 		slk.append("<input type=\'button\' value=\'Previous Step\' onClick=\'goToPreviousViewNode();\' />");
