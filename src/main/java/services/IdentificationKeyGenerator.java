@@ -574,7 +574,6 @@ public class IdentificationKeyGenerator {
 	 * 
 	 * @param charactersScore
 	 * @param useWeights
-	 *            TODO
 	 * @return ICharacter, the best character
 	 */
 	private ICharacter bestCharacter(Map<ICharacter, Float> charactersScore, List<Taxon> remainingTaxa)
@@ -650,7 +649,6 @@ public class IdentificationKeyGenerator {
 	 * 
 	 * @param character
 	 * @param scoreMethod
-	 *            TODO
 	 * @param codedDescriptions
 	 * @return float, the discriminant power of the categorical character
 	 */
