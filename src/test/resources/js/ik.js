@@ -51,6 +51,29 @@ function newStateImagesWindow(viewNodeID) {
 	j.document.close();
 }
 
+function newStateImagesWindowTree(characterName,characterStates,statesURLs){
+	var newPage = '<html><head><style type="text/css">body{ color:#111; font-family: Verdana, helvetica, arial, sans-serif; font-size: 78%;   background: #fff;}table { border-collapse:collapse; width:90%;}th, td { border:1px solid #ddd; width:20%;}td { text-align:center;}caption { font-weight:bold}</style></head><body><h2>'
+		+ characterName + '</h2>';
+	newPage += '<table cellpadding="5"><tr><th>state</th><th>image</th></tr>';
+	
+	for(var i = 0 ; i < characterStates.length ; i++ ){
+		var state = characterStates[i];
+		var stateImageURL = statesURLs[i];
+		newPage += '<tr>';
+		var imgTag = '<center>No image</center>';
+		if(stateImageURL.length > 0 && stateImageURL.indexOf('http://') == 0){
+			imgTag = '<img src="' + stateImageURL + '" width="200px" />';
+		}
+		newPage += '<td>' + state + '</td><td>' + imgTag + '</td>';
+		newPage += '</tr>';
+	}
+	newPage += '</table>';
+	newPage += '</body></html>';
+	var j = window.open('', 'State Illustrations', 'toolbar=0, width=800px, height=400px');
+	j.document.write(newPage);
+	j.document.close();
+}
+
 function newSingleStateImageWindow(imageURL) {
 	var newPage = '<html><head></head><body><img src="'+imageURL+'"/></body></html>';
 	var j = window.open('', 'State Illustration', 'toolbar=0');
