@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.text.SimpleDateFormat;
@@ -593,9 +594,9 @@ public abstract class SingleAccessKeyTreeDumper {
 		String lineSep = System.getProperty("line.separator");
 		StringBuffer slk = new StringBuffer();
 
-		String cssFileURI = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleConfElement("resources.CSSFolder")
-				+ Utils.getBundleConfElement("resources.CSSName");
+		String cssFileURI = // Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+		// +
+		Utils.getBundleConfElement("resources.CSSFolder") + Utils.getBundleConfElement("resources.CSSName");
 
 		String jsFileURI = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfElement("resources.JSFolder")
@@ -839,13 +840,13 @@ public abstract class SingleAccessKeyTreeDumper {
 	private static String generateFlatHtmlString(String header, SingleAccessKeyTree tree2dump)
 			throws IOException {
 
-		String cssFileURI = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleConfElement("resources.CSSFolder")
-				+ Utils.getBundleConfElement("resources.CSSName");
+		String cssFileURI = // Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+		// +
+		Utils.getBundleConfElement("resources.CSSFolder") + Utils.getBundleConfElement("resources.CSSName");
 
-		String jsFileURI = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleConfElement("resources.JSFolder")
-				+ Utils.getBundleConfElement("resources.JSName");
+		String jsFileURI = // Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+		// +
+		Utils.getBundleConfElement("resources.JSFolder") + Utils.getBundleConfElement("resources.JSName");
 
 		File cssFile = new File(cssFileURI);
 		File jsFile = new File(jsFileURI);
@@ -912,17 +913,6 @@ public abstract class SingleAccessKeyTreeDumper {
 	private static String generateInteractiveHtmlString(String header, SingleAccessKeyTree tree2dump)
 			throws IOException {
 
-		String cssFileURI = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleConfElement("resources.CSSFolder")
-				+ Utils.getBundleConfElement("resources.CSSName");
-
-		String jsFileURI = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleConfElement("resources.JSFolder")
-				+ Utils.getBundleConfElement("resources.JSName");
-
-		File cssFile = new File(cssFileURI);
-		File jsFile = new File(jsFileURI);
-
 		StringBuffer output = new StringBuffer();
 		String lineSep = System.getProperty("line.separator");
 		StringBuffer slk = new StringBuffer();
@@ -938,26 +928,29 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("<script src='" + Utils.getBundleConfElement("resources.jqueryPath") + "'></script>"
 				+ lineSep);
 
-		String nextLine = "";
-		BufferedReader cssReader = new BufferedReader(new FileReader(cssFile));
-
 		slk.append("<style type='text/css'>" + lineSep);
-		while ((nextLine = cssReader.readLine()) != null) {
-			slk.append(nextLine + lineSep);
-		}
+		slk.append(Utils.IK_CSS);
 		slk.append("</style>" + lineSep);
-		cssReader.close();
-
-		nextLine = "";
-		BufferedReader jsReader = new BufferedReader(new FileReader(jsFile));
-
 		slk.append("<script>" + lineSep);
-		while ((nextLine = jsReader.readLine()) != null) {
-			slk.append(nextLine + lineSep);
+
+		InputStream in = SingleAccessKeyTreeDumper.class.getResourceAsStream("ik.js");
+		if (in != null) {
+			BufferedInputStream bin = new BufferedInputStream(in);
+			
+			// create a byte array
+			byte[] contents = new byte[1024];
+
+			int bytesRead = 0;
+			String strFileContents;
+
+			while ((bytesRead = bin.read(contents)) != -1) {
+
+				strFileContents = new String(contents, 0, bytesRead);
+				slk.append(strFileContents);
+			}
 		}
 
 		slk.append("</script>" + lineSep);
-		jsReader.close();
 
 		slk.append("</head>" + lineSep);
 
