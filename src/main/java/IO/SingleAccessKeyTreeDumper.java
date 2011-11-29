@@ -714,7 +714,7 @@ public abstract class SingleAccessKeyTreeDumper {
 					javascriptStateNameTab += ")";
 					javascriptUrlImageTab += ")";
 
-					htmlImageLink = " <a class='stateImageLink' onClick='newStateImagesWindow(\""
+					htmlImageLink = " <a class='stateImageLink' onClick='newStateImagesWindowTree(\""
 							+ node.getCharacter().getName().replaceAll("\"", "").replaceAll("'", " ")
 							+ "\", " + javascriptStateNameTab + ", " + javascriptUrlImageTab
 							+ ");' >(<strong>?</strong>)</a>";
