@@ -20,8 +20,6 @@ body {
 	color: #333;
 }
 
-
-
 .state {
 	color: #fe8a22;
 }
@@ -51,6 +49,7 @@ a {
 
 img.stateImageInLine {
 	width: 400px;
+	cursor: pointer;
 }
 
 #screenshot {

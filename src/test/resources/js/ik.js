@@ -51,6 +51,13 @@ function newStateImagesWindow(viewNodeID) {
 	j.document.close();
 }
 
+function newSingleStateImageWindow(imageURL) {
+	var newPage = '<html><head></head><body><img src="'+imageURL+'"/></body></html>';
+	var j = window.open('', 'State Illustration', 'toolbar=0');
+	j.document.write(newPage);
+	j.document.close();
+}
+
 function goToViewNode(viewNodeID) {
 	viewNodeHistory.push(viewNodeID);
 	toggleViewNode(viewNodeID);
@@ -83,20 +90,17 @@ function displayViewNodeStateImages(viewNodeID) {
 	for ( var i = 0; i < $('#viewNode' + viewNodeID).children(".stateImageURLandContainer").size(); i++) {
 		var siuc = $($('#viewNode' + viewNodeID).children(".stateImageURLandContainer")[i]);
 		var imageContainer = siuc.find(".stateImageContainer");
-		var url = jQuery.trim(siuc.find('.stateImageURL').text());
+		var imageURL = jQuery.trim(siuc.find('.stateImageURL').text());
 
-		if (url != null && url.length > 0 && siuc.find(".stateImageInLine").size() == 0) {
-			imageContainer.append('<img class="stateImageInLine" src="' + url + '" />')
+		if (imageURL != null && imageURL.length > 0 && siuc.find(".stateImageInLine").size() == 0) {
+			imageContainer.append('<img onClick=\"newSingleStateImageWindow(\'' + imageURL
+					+ '\')\" class="stateImageInLine" src="' + imageURL + '" />')
 		}
 	}
 }
 
-function waitForViewNodes() {
-
-}
-
 function initViewNodes() {
-	$('#keyWait').remove();
+	$('#keyWait').css('visibility', 'hidden');
 	$('#keyBody').css('visibility', 'visible');
 	goToFirstViewNode();
 
