@@ -32,6 +32,243 @@ public class Utils {
 	public static final String HEADERTAG = "h";
 	public static final String OTHERTAG = "o";
 	public static final String WARNINGTAG = "w";
+	
+	// web content
+	public static final String IK_CSS = " @CHARSET \"UTF-8\";" +
+"" +
+"body {" +
+"	color: #333;" +
+"	font-family: Verdana, helvetica, arial, sans-serif;" +
+"	font-size: 78%;" +
+"	background: #fff;" +
+"}" +
+"" +
+"#treecontrol  a {" +
+"	color: #333;" +
+"	font-size: 85%;" +
+"}" +
+"" +
+"#treecontrol  a:hover {" +
+"	color: #777;" +
+"}" +
+"" +
+".character {" +
+"	color: #333;" +
+"}" +
+"" +
+".state {" +
+"	color: #fe8a22;" +
+"}" +
+"" +
+".taxa {" +
+"	color: #67bb1b;" +
+"	font-style: italic;" +
+"}" +
+"" +
+".statesAndTaxa {" +
+"	margin-left: 100px;" +
+"}" +
+"" +
+".stateImageURL {" +
+"	visibility: hidden;" +
+"}" +
+"" +
+"a.stateImageLink {" +
+"	color: #333;" +
+"	cursor: pointer;" +
+"}" +
+"" +
+"a {" +
+"	color: #67bb1b;" +
+"	font-style: italic;" +
+"}" +
+"" +
+"img.stateImageInLine {" +
+"	width: 400px;" +
+"	cursor: pointer;" +
+"}" +
+"" +
+"#screenshot {" +
+"	position: absolute;" +
+"	border: 1px solid #ccc;" +
+"	background: #333;" +
+"	padding: 5px;" +
+"	display: none;" +
+"	color: #fff;" +
+"}" +
+"" +
+"/*------------------------------------*\\ " +
+"	IPHONE" +
+"\\*------------------------------------*/" +
+"@media screen and (max-device-width: 480px) {" +
+"	/*--- iPhone only CSS here ---*/" +
+"	body {" +
+"		-webkit-text-size-adjust: none;" +
+"		font-family: Helvetica, Arial, Verdana, sans-serif;" +
+"		margin: 0 0 0 10px;" +
+"		padding: 0;" +
+"		-webkit-user-select: none;" +
+"		-webkit-text-size-adjust: none;" +
+"		-webkit-text-size-adjust: none;" +
+"	}" +
+"	.statesAndTaxa {" +
+"		margin-left: 0px;" +
+"	}" +
+"	img.stateImageInLine {" +
+"		width: 200px;" +
+"	}" +
+"	div {" +
+"		clear: both !important;" +
+"		display: block !important;" +
+"		width: 100% !important;" +
+"		float: none !important;" +
+"		margin: 0 !important;" +
+"		padding: 0 !important;" +
+"	}" +
+"	.nextNodeButton {" +
+"		float: right;" +
+"	}" +
+"} ";
+	
+	
+	public static final String IK_JS = "this.screenshotPreview = function() {\n" +
+"	xOffset = -10;\n" +
+"	yOffset = -50;\n" +
+"	$(\"a.screenshot\").hover(\n" +
+"			function(e) {\n" +
+"				this.t = this.title;\n" +
+"				this.title = \"\";\n" +
+"				var c = (this.t != \"\") ? \"<br/>\" + this.t : \"\";\n" +
+"				$(\"body\").append(\n" +
+"						\"<p id='screenshot'><img src='\" + this.rel + \"' alt='url preview' width='200px'/>\"\n" +
+"								+ c + \"</p>\");\n" +
+"				$(\"#screenshot\").css(\"top\", (e.pageY - xOffset) + \"px\").css(\"left\",\n" +
+"						(e.pageX + yOffset) + \"px\").fadeIn(\"fast\");\n" +
+"			}, function() {\n" +
+"				this.title = this.t;\n" +
+"				$(\"#screenshot\").remove();\n" +
+"			});\n" +
+"	$(\"a.screenshot\").mousemove(function(e) {\n" +
+"		$(\"#screenshot\").css(\"top\", (e.pageY - xOffset) + \"px\").css(\"left\", (e.pageX + yOffset) + \"px\");\n" +
+"	});\n" +
+"};\n" +
+"$(document).ready(function() {\n" +
+"	screenshotPreview();\n" +
+"});\n" +
+"function newStateImagesWindow(viewNodeID) {\n" +
+"	var viewNode = $('#viewNode' + viewNodeID);\n" +
+"	var character = viewNode.find('span.character').html();\n" +
+"	var newPage = '<html><head><style type=\"text/css\">body{ color:#111; font-family: Verdana, helvetica, arial, sans-serif; font-size: 78%;   background: #fff;}table { border-collapse:collapse; width:90%;}th, td { border:1px solid #ddd; width:20%;}td { text-align:center;}caption { font-weight:bold}</style></head><body><h2>'\n" +
+"			+ character + '</h2>';\n" +
+"	newPage += '<table cellpadding=\"5\"><tr><th>state</th><th>image</th></tr>';\n" +
+"	for ( var i = 0; i < viewNode.find('span.state').size(); i++) {\n" +
+"		var state = viewNode.find('span.state')[i];\n" +
+"		var stateID = state.id.split('_')[1];\n" +
+"		var stateContent = state.innerHTML;\n" +
+"		var splitArray = stateContent.split(';');\n" +
+"		var stateImageURL = $('#stateImageURL_' + stateID);\n" +
+"		var stateImageURLContent = stateImageURL.html();\n" +
+"		stateContent = splitArray[splitArray.length - 1];\n" +
+"		newPage += '<tr>';\n" +
+"		var imgTag = '<center>No image</center>';\n" +
+"		if (stateImageURLContent.length > 0 && stateImageURLContent.indexOf('http://') == 0) {\n" +
+"			imgTag = '<img src=\"' + stateImageURLContent + '\" width=\"200px\" />';\n" +
+"		}\n" +
+"		newPage += '<td>' + stateContent + '</td><td>' + imgTag + '</td>';\n" +
+"		newPage += '</tr>';\n" +
+"	}\n" +
+"	newPage += '</table>';\n" +
+"	newPage += '</body></html>';\n" +
+"	var j = window.open('', 'State Illustrations', 'toolbar=0, width=800px, height=400px');\n" +
+"	j.document.write(newPage);\n" +
+"	j.document.close();\n" +
+"}\n" +
+"\n" +
+"function newStateImagesWindowTree(characterName,characterStates,statesURLs){\n" +
+"	var newPage = '<html><head><style type=\"text/css\">body{ color:#111; font-family: Verdana, helvetica, arial, sans-serif; font-size: 78%;   background: #fff;}table { border-collapse:collapse; width:90%;}th, td { border:1px solid #ddd; width:20%;}td { text-align:center;}caption { font-weight:bold}</style></head><body><h2>'\n" +
+"		+ characterName + '</h2>';\n" +
+"	newPage += '<table cellpadding=\"5\"><tr><th>state</th><th>image</th></tr>';\n" +
+"	\n" +
+"	for(var i = 0 ; i < characterStates.length ; i++ ){\n" +
+"		var state = characterStates[i];\n" +
+"		var stateImageURL = statesURLs[i];\n" +
+"		newPage += '<tr>';\n" +
+"		var imgTag = '<center>No image</center>';\n" +
+"		if(stateImageURL.length > 0 && stateImageURL.indexOf('http://') == 0){\n" +
+"			imgTag = '<img src=\"' + stateImageURL + '\" width=\"200px\" />';\n" +
+"		}\n" +
+"		newPage += '<td>' + state + '</td><td>' + imgTag + '</td>';\n" +
+"		newPage += '</tr>';\n" +
+"	}\n" +
+"	newPage += '</table>';\n" +
+"	newPage += '</body></html>';\n" +
+"	var j = window.open('', 'State Illustrations', 'toolbar=0, width=800px, height=400px');\n" +
+"	j.document.write(newPage);\n" +
+"	j.document.close();\n" +
+"}\n" +
+"\n" +
+"function newSingleStateImageWindow(imageURL) {\n" +
+"	var newPage = '<html><head></head><body><img src=\"'+imageURL+'\"/></body></html>';\n" +
+"	var j = window.open('', 'State Illustration', 'toolbar=0');\n" +
+"	j.document.write(newPage);\n" +
+"	j.document.close();\n" +
+"}\n" +
+"\n" +
+"function goToViewNode(viewNodeID) {\n" +
+"	viewNodeHistory.push(viewNodeID);\n" +
+"	toggleViewNode(viewNodeID);\n" +
+"	displayViewNodeStateImages(viewNodeID);\n" +
+"}\n" +
+"\n" +
+"function goToPreviousViewNode() {\n" +
+"	if (viewNodeHistory.length <= 1) {\n" +
+"		toggleViewNode(1);\n" +
+"	} else {\n" +
+"		viewNodeHistory.pop();\n" +
+"		var previousViewNodeID = viewNodeHistory.pop();\n" +
+"		goToViewNode(previousViewNodeID);\n" +
+"	}\n" +
+"}\n" +
+"\n" +
+"function goToFirstViewNode() {\n" +
+"	viewNodeHistory = [];\n" +
+"	goToViewNode(1);\n" +
+"	displayViewNodeStateImages(1);\n" +
+"}\n" +
+"\n" +
+"function toggleViewNode(viewNodeID) {\n" +
+"	$('.viewNode').hide();\n" +
+"	$('#viewNode' + viewNodeID).show();\n" +
+"	return false;\n" +
+"}\n" +
+"\n" +
+"function displayViewNodeStateImages(viewNodeID) {\n" +
+"	for ( var i = 0; i < $('#viewNode' + viewNodeID).children(\".stateImageURLandContainer\").size(); i++) {\n" +
+"		var siuc = $($('#viewNode' + viewNodeID).children(\".stateImageURLandContainer\")[i]);\n" +
+"		var imageContainer = siuc.find(\".stateImageContainer\");\n" +
+"		var imageURL = jQuery.trim(siuc.find('.stateImageURL').text());\n" +
+"\n" +
+"		if (imageURL != null && imageURL.length > 0 && siuc.find(\".stateImageInLine\").size() == 0) {\n" +
+"			imageContainer.append('<img onClick=\"newSingleStateImageWindow(\' + imageURL\n" +
+"					+ \')\" class=\"stateImageInLine\" src=\"' + imageURL + '\" />')\n" +
+"		}\n" +
+"	}\n" +
+"}\n" +
+"\n" +
+"function initViewNodes() {\n" +
+"	$('#keyWait').css('visibility', 'hidden');\n" +
+"	$('#keyBody').css('visibility', 'visible');\n" +
+"	goToFirstViewNode();\n" +
+"\n" +
+"}\n" +
+"\n" +
+"function initTree() {\n" +
+"	$('#tree').treeview({\n" +
+"		collapsed : true, unique : false, control : \"#treecontrol\", persist : 'location'\n" +
+"	});\n" +
+"}\n" +
+"\n" +
+"var viewNodeHistory = [];\n" ;
 
 	// properties file
 	public static ResourceBundle bundleConf = ResourceBundle.getBundle("main.resources.conf");
