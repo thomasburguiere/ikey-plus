@@ -47,6 +47,11 @@ a {
 	font-style: italic;
 }
 
+img.stateImageInLine {
+	width: 400px;
+	cursor: pointer;
+}
+
 #screenshot {
 	position: absolute;
 	border: 1px solid #ccc;
@@ -68,9 +73,13 @@ a {
 		padding: 0;
 		-webkit-user-select: none;
 		-webkit-text-size-adjust: none;
+		-webkit-text-size-adjust: none;
 	}
 	.statesAndTaxa {
 		margin-left: 0px;
+	}
+	img.stateImageInLine {
+		width: 200px;
 	}
 	div {
 		clear: both !important;
