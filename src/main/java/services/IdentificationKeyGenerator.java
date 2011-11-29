@@ -569,8 +569,8 @@ public class IdentificationKeyGenerator {
 	}
 
 	/**
-	 * get the character with the best score. By default we place first the characters with the best weight. If
-	 * no weight are detected in the SDD file, all the characters are initialized with the same weight (3)
+	 * get the character with the best score. By default we place first the characters with the best weight.
+	 * If no weight are detected in the SDD file, all the characters are initialized with the same weight (3)
 	 * 
 	 * @param charactersScore
 	 * @param useWeights

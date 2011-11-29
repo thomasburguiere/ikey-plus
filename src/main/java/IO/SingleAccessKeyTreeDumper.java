@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -949,7 +948,6 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("</style>" + lineSep);
 		cssReader.close();
 
-		//
 		nextLine = "";
 		BufferedReader jsReader = new BufferedReader(new FileReader(jsFile));
 
@@ -969,7 +967,8 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("Generating Key, please wait...");
 		slk.append("</div>" + lineSep);
 
-		slk.append("<div id=\"keyBody\" style='visibility: hidden; margin-left:30px;margin-top:20px;'>" + lineSep);
+		slk.append("<div id=\"keyBody\" style='visibility: hidden; margin-left:30px;margin-top:20px;'>"
+				+ lineSep);
 		slk.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
 
 		slk.append("<input type=\'button\' value=\'Previous Step\' onClick=\'goToPreviousViewNode();\' />");
@@ -1233,10 +1232,10 @@ public abstract class SingleAccessKeyTreeDumper {
 					output.append("<strong>" + currentParentNumber + "</strong>");
 
 					String htmlImageLink = "";
-//					if (node.isChildrenContainsImages(tree2dump.getDataSet())) {
-//						htmlImageLink = "<a class='stateImageLink' onClick='newStateImagesWindow("
-//								+ currentParentNumber + ");' >(<strong>?</strong>)</a>";
-//					}
+					// if (node.isChildrenContainsImages(tree2dump.getDataSet())) {
+					// htmlImageLink = "<a class='stateImageLink' onClick='newStateImagesWindow("
+					// + currentParentNumber + ");' >(<strong>?</strong>)</a>";
+					// }
 					output.append("  <span class=\"character\">"
 							+ child.getCharacter().getName().replace(">", "&gt;").replace("<", "&lt;")
 							+ " </span>" + htmlImageLink + ":<br/>");
