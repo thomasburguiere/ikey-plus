@@ -966,7 +966,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("<body onLoad=\'initViewNodes();\'>" + lineSep);
 
 		slk.append("<div id=\"keyWait\" style='margin-left:30px;margin-top:20px;' >" + lineSep);
-		slk.append("<blink>Generating Key, please wait...</blink>");
+		slk.append("Generating Key, please wait...");
 		slk.append("</div>" + lineSep);
 
 		slk.append("<div id=\"keyBody\" style='visibility: hidden; margin-left:30px;margin-top:20px;'>" + lineSep);
@@ -1233,10 +1233,10 @@ public abstract class SingleAccessKeyTreeDumper {
 					output.append("<strong>" + currentParentNumber + "</strong>");
 
 					String htmlImageLink = "";
-					if (node.isChildrenContainsImages(tree2dump.getDataSet())) {
-						htmlImageLink = "<a class='stateImageLink' onClick='newStateImagesWindow("
-								+ currentParentNumber + ");' >(<strong>?</strong>)</a>";
-					}
+//					if (node.isChildrenContainsImages(tree2dump.getDataSet())) {
+//						htmlImageLink = "<a class='stateImageLink' onClick='newStateImagesWindow("
+//								+ currentParentNumber + ");' >(<strong>?</strong>)</a>";
+//					}
 					output.append("  <span class=\"character\">"
 							+ child.getCharacter().getName().replace(">", "&gt;").replace("<", "&lt;")
 							+ " </span>" + htmlImageLink + ":<br/>");
