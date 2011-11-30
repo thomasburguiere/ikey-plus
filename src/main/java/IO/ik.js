@@ -123,7 +123,7 @@ function displayViewNodeStateImages(viewNodeID) {
 }
 
 function initViewNodes() {
-	$('#keyWait').css('visibility', 'hidden');
+	$('#keyWait').remove();
 	$('#keyBody').css('visibility', 'visible');
 	goToFirstViewNode();
 
