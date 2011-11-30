@@ -24,7 +24,7 @@ DEPLOYMENT
 2)Start the server
 
 
-3)Stop server and put a new /main/resources/confOverridable.properties file in Tomcat/webapps/IK_WS_REST-1.0/WEB-INF/classes/ directory.
+3)Stop server and put a new confOverridable.properties file in Tomcat/webapps/IK_WS_REST-1.0/WEB-INF/classes/main/resources/ directory (if the directories do not exist create it manually).
 This file must contain (change parameters if necessary) :
 
 # The two parameters below determine where the files created by the
