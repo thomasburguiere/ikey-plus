@@ -46,7 +46,7 @@ function newStateImagesWindow(viewNodeID) {
 	}
 	newPage += '</table>';
 	newPage += '</body></html>';
-	var j = window.open('', 'State Illustrations', 'toolbar=0, width=800px, height=400px');
+	var j = window.open('', 'State Illustrations', 'toolbar=0, width=800px, height=600px');
 	j.document.write(newPage);
 	j.document.close();
 }
@@ -69,7 +69,7 @@ function newStateImagesWindowTree(characterName,characterStates,statesURLs){
 	}
 	newPage += '</table>';
 	newPage += '</body></html>';
-	var j = window.open('', 'State Illustrations', 'toolbar=0, width=800px, height=400px');
+	var j = window.open('', 'State Illustrations', 'toolbar=0, width=800px, height=600px');
 	j.document.write(newPage);
 	j.document.close();
 }

@@ -594,17 +594,6 @@ public abstract class SingleAccessKeyTreeDumper {
 		String lineSep = System.getProperty("line.separator");
 		StringBuffer slk = new StringBuffer();
 
-		String cssFileURI = // Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-		// +
-		Utils.getBundleConfElement("resources.CSSFolder") + Utils.getBundleConfElement("resources.CSSName");
-
-		String jsFileURI = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleConfElement("resources.JSFolder")
-				+ Utils.getBundleConfElement("resources.JSName");
-
-		File cssFile = new File(cssFileURI);
-		File jsFile = new File(jsFileURI);
-
 		slk.append("<html>" + lineSep);
 		slk.append("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />" + lineSep);
 		slk.append("<head>" + lineSep);
@@ -614,27 +603,47 @@ public abstract class SingleAccessKeyTreeDumper {
 				+ "<link rel='stylesheet' href='" + Utils.getBundleConfElement("resources.treeviewCssPath")
 				+ "' type='text/css' />" + lineSep);
 
-		String nextLine = "";
-		BufferedReader cssReader = new BufferedReader(new FileReader(cssFile));
-
 		slk.append("<style type='text/css'>" + lineSep);
-		while ((nextLine = cssReader.readLine()) != null) {
-			slk.append(nextLine + lineSep);
+		
+		InputStream cssInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(Utils.getBundleConfElement("resources.CSSName"));
+		if (cssInputStream != null) {
+			BufferedInputStream bin = new BufferedInputStream(cssInputStream);
+			
+			// create a byte array
+			byte[] contents = new byte[1024];
+
+			int bytesRead = 0;
+			String strFileContents;
+
+			while ((bytesRead = bin.read(contents)) != -1) {
+
+				strFileContents = new String(contents, 0, bytesRead);
+				slk.append(strFileContents);
+			}
 		}
+		
 		slk.append("</style>" + lineSep);
-		cssReader.close();
-
-		//
-		nextLine = "";
-		BufferedReader jsReader = new BufferedReader(new FileReader(jsFile));
-
+		
 		slk.append("<script>" + lineSep);
-		while ((nextLine = jsReader.readLine()) != null) {
-			slk.append(nextLine + lineSep);
+
+		InputStream javascriptInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(Utils.getBundleConfElement("resources.JSName"));
+		if (javascriptInputStream != null) {
+			BufferedInputStream bin = new BufferedInputStream(javascriptInputStream);
+			
+			// create a byte array
+			byte[] contents = new byte[1024];
+
+			int bytesRead = 0;
+			String strFileContents;
+
+			while ((bytesRead = bin.read(contents)) != -1) {
+
+				strFileContents = new String(contents, 0, bytesRead);
+				slk.append(strFileContents);
+			}
 		}
 
 		slk.append("</script>" + lineSep);
-		jsReader.close();
 
 		slk.append("</head>" + lineSep);
 
@@ -840,17 +849,6 @@ public abstract class SingleAccessKeyTreeDumper {
 	private static String generateFlatHtmlString(String header, SingleAccessKeyTree tree2dump)
 			throws IOException {
 
-		String cssFileURI = // Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-		// +
-		Utils.getBundleConfElement("resources.CSSFolder") + Utils.getBundleConfElement("resources.CSSName");
-
-		String jsFileURI = // Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-		// +
-		Utils.getBundleConfElement("resources.JSFolder") + Utils.getBundleConfElement("resources.JSName");
-
-		File cssFile = new File(cssFileURI);
-		File jsFile = new File(jsFileURI);
-
 		StringBuffer output = new StringBuffer();
 		String lineSep = System.getProperty("line.separator");
 		StringBuffer slk = new StringBuffer();
@@ -860,27 +858,47 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("<script src='" + Utils.getBundleConfElement("resources.jqueryPath") + "'></script>"
 				+ lineSep);
 
-		String nextLine = "";
-		BufferedReader cssReader = new BufferedReader(new FileReader(cssFile));
-
 		slk.append("<style type='text/css'>" + lineSep);
-		while ((nextLine = cssReader.readLine()) != null) {
-			slk.append(nextLine + lineSep);
+		
+		InputStream cssInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(Utils.getBundleConfElement("resources.CSSName"));
+		if (cssInputStream != null) {
+			BufferedInputStream bin = new BufferedInputStream(cssInputStream);
+			
+			// create a byte array
+			byte[] contents = new byte[1024];
+
+			int bytesRead = 0;
+			String strFileContents;
+
+			while ((bytesRead = bin.read(contents)) != -1) {
+
+				strFileContents = new String(contents, 0, bytesRead);
+				slk.append(strFileContents);
+			}
 		}
+		
 		slk.append("</style>" + lineSep);
-		cssReader.close();
-
-		//
-		nextLine = "";
-		BufferedReader jsReader = new BufferedReader(new FileReader(jsFile));
-
+		
 		slk.append("<script>" + lineSep);
-		while ((nextLine = jsReader.readLine()) != null) {
-			slk.append(nextLine + lineSep);
+
+		InputStream javascriptInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(Utils.getBundleConfElement("resources.JSName"));
+		if (javascriptInputStream != null) {
+			BufferedInputStream bin = new BufferedInputStream(javascriptInputStream);
+			
+			// create a byte array
+			byte[] contents = new byte[1024];
+
+			int bytesRead = 0;
+			String strFileContents;
+
+			while ((bytesRead = bin.read(contents)) != -1) {
+
+				strFileContents = new String(contents, 0, bytesRead);
+				slk.append(strFileContents);
+			}
 		}
 
 		slk.append("</script>" + lineSep);
-		jsReader.close();
 
 		slk.append("</head>" + lineSep);
 
@@ -930,7 +948,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		slk.append("<style type='text/css'>" + lineSep);
 		
-		InputStream cssInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream("ik.css");
+		InputStream cssInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(Utils.getBundleConfElement("resources.CSSName"));
 		if (cssInputStream != null) {
 			BufferedInputStream bin = new BufferedInputStream(cssInputStream);
 			
@@ -951,7 +969,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		
 		slk.append("<script>" + lineSep);
 
-		InputStream javascriptInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream("ik.js");
+		InputStream javascriptInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(Utils.getBundleConfElement("resources.JSName"));
 		if (javascriptInputStream != null) {
 			BufferedInputStream bin = new BufferedInputStream(javascriptInputStream);
 			
