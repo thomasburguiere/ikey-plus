@@ -8,13 +8,15 @@
 	<!-- Allows you to specify the source files + xml -->
 	<build>
 		<defaultGoal>jar</defaultGoal>
-		<sourceDirectory>${basedir}/src/</sourceDirectory>
+		<sourceDirectory>${basedir}/src/**</sourceDirectory>
 		<resources>
 			<resource>
 				<directory>${basedir}/src/**</directory>
 				<includes>
 					<include>**/*.xml</include>
 					<include>**/*.properties</include>
+					<include>**/*.css</include>
+					<include>**/*.js</include>
 				</includes>
 				<filtering>false</filtering>
 			</resource>
