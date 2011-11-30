@@ -929,13 +929,31 @@ public abstract class SingleAccessKeyTreeDumper {
 				+ lineSep);
 
 		slk.append("<style type='text/css'>" + lineSep);
-		slk.append(Utils.IK_CSS);
+		
+		InputStream cssInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream("ik.css");
+		if (cssInputStream != null) {
+			BufferedInputStream bin = new BufferedInputStream(cssInputStream);
+			
+			// create a byte array
+			byte[] contents = new byte[1024];
+
+			int bytesRead = 0;
+			String strFileContents;
+
+			while ((bytesRead = bin.read(contents)) != -1) {
+
+				strFileContents = new String(contents, 0, bytesRead);
+				slk.append(strFileContents);
+			}
+		}
+		
 		slk.append("</style>" + lineSep);
+		
 		slk.append("<script>" + lineSep);
 
-		InputStream in = SingleAccessKeyTreeDumper.class.getResourceAsStream("ik.js");
-		if (in != null) {
-			BufferedInputStream bin = new BufferedInputStream(in);
+		InputStream javascriptInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream("ik.js");
+		if (javascriptInputStream != null) {
+			BufferedInputStream bin = new BufferedInputStream(javascriptInputStream);
 			
 			// create a byte array
 			byte[] contents = new byte[1024];
