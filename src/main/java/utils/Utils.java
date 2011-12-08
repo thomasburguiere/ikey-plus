@@ -24,14 +24,16 @@ public class Utils {
 	private String errorMessage = null;
 	private File errorMessageFile = null;
 
-	public static final String UNKNOWNDATA = "unknownData";
+	public static final String UNKNOWN_DATA = "unknownData";
 	public static final List<String> ratings = new ArrayList<String>();
 	public static final List<String> ratingContext = new ArrayList<String>();
 	public static final String YES = "yes";
 	public static final String NO = "no";
-	public static final String HEADERTAG = "h";
-	public static final String OTHERTAG = "o";
-	public static final String WARNINGTAG = "w";
+	public static final String HEADER_TAG = "h";
+	public static final String OTHER_TAG = "o";
+	public static final String WARNING_TAG = "w";
+
+	public static final int DEFAULT_WEIGHT = 3;
 
 	// properties file
 	public static ResourceBundle bundleConf = ResourceBundle.getBundle("main.resources.conf");
@@ -48,7 +50,7 @@ public class Utils {
 	// file type
 	public static final String TXT = "txt";
 	public static final String HTML = "html";
-	public static final String INTERACTIVEHTML = "interactivehtml";
+	public static final String INTERACTIVE_HTML = "interactivehtml";
 	public static final String PDF = "pdf";
 	public static final String SDD = "sdd";
 	public static final String WIKI = "wiki";
@@ -69,6 +71,10 @@ public class Utils {
 	public static final String JACCARD = "jaccard";
 	public static final String SOKALANDMICHENER = "sokalAndMichener";
 
+	// weight type
+	public static final String GLOBAL_CHARACTER_WEIGHT = "global";
+	public static final String CONTEXTUAL_CHARACTER_WEIGHT = "contextual";
+
 	// options
 	private String format = Utils.TXT;
 	private String representation = Utils.TREE;
@@ -78,6 +84,7 @@ public class Utils {
 	private String verbosity = "";
 	private String scoreMethod = Utils.XPER;
 	private String weightContext = "";
+	private String characterWeightType = Utils.GLOBAL_CHARACTER_WEIGHT;
 
 	/**
 	 * Constructor
@@ -340,6 +347,14 @@ public class Utils {
 				this.weightContext = ratingContext;
 			}
 		}
+	}
+
+	public String getCharacterWeightType() {
+		return characterWeightType;
+	}
+
+	public void setCharacterWeightType(String characterWeightType) {
+		this.characterWeightType = characterWeightType;
 	}
 
 	/**
