@@ -107,8 +107,8 @@ public class IdentificationKeyInteractiveHTMLGeneratorTest {
 				header.append(System.getProperty("line.separator") + "scoreMethod=" + utils.getScoreMethod());
 				header.append(System.getProperty("line.separator") + "weightContext="
 						+ utils.getWeightContext() + System.getProperty("line.separator"));
-				header.append(System.getProperty("line.separator") + "weightType="
-						+ utils.getWeightType() + System.getProperty("line.separator"));
+				header.append(System.getProperty("line.separator") + "weightType=" + utils.getWeightType()
+						+ System.getProperty("line.separator"));
 
 			} catch (Throwable t) {
 				utils.setErrorMessage(Utils.getBundleConfElement("message.parsingError"), t);
