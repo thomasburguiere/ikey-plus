@@ -47,7 +47,7 @@ public class IdentificationKeyDOTGeneratorTest {
 
 			SDDSaxParser sddSaxParser = null;
 			try {
-				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
+//				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-unknownData-fullSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
@@ -62,6 +62,7 @@ public class IdentificationKeyDOTGeneratorTest {
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/archaeoSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample.xml";
+				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample3_contextual.xml";
 
 				// options
 				utils.setFewStatesCharacterFirst(false);
@@ -134,7 +135,7 @@ public class IdentificationKeyDOTGeneratorTest {
 
 			// create key file
 			try {
-				if (!utils.getVerbosity().contains(Utils.HEADERTAG)) {
+				if (!utils.getVerbosity().contains(Utils.HEADER_TAG)) {
 					header.setLength(0);
 				}
 				SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();

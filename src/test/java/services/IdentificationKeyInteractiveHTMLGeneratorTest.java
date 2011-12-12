@@ -47,15 +47,16 @@ public class IdentificationKeyInteractiveHTMLGeneratorTest {
 
 			SDDSaxParser sddSaxParser = null;
 			try {
+//				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesImagesURL.xml";
+				
 				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-unknownData-fullSDD.xml";
-				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
+//				 String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/testSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml";
-				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesImagesURL.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/smallSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/wrongSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/pruningSDD.xml";
@@ -64,6 +65,7 @@ public class IdentificationKeyInteractiveHTMLGeneratorTest {
 				// "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample.xml";
 
 				// options
+
 				utils.setFewStatesCharacterFirst(true);
 				utils.setMergeCharacterStatesIfSameDiscimination(false);
 				utils.setPruning(false);
@@ -134,7 +136,7 @@ public class IdentificationKeyInteractiveHTMLGeneratorTest {
 
 			// create key file
 			try {
-				if (!utils.getVerbosity().contains(Utils.HEADERTAG)) {
+				if (!utils.getVerbosity().contains(Utils.HEADER_TAG)) {
 					header.setLength(0);
 				}
 				SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();

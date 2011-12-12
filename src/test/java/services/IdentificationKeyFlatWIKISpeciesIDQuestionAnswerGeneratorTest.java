@@ -135,7 +135,7 @@ public class IdentificationKeyFlatWIKISpeciesIDQuestionAnswerGeneratorTest {
 
 			// create key file
 			try {
-				if (!utils.getVerbosity().contains(Utils.HEADERTAG)) {
+				if (!utils.getVerbosity().contains(Utils.HEADER_TAG)) {
 					header.setLength(0);
 				}
 				SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();

@@ -47,7 +47,7 @@ public class IdentificationKeyFlatHTMLGeneratorTest {
 
 			SDDSaxParser sddSaxParser = null;
 			try {
-				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
+				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-unknownData-fullSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
@@ -60,8 +60,7 @@ public class IdentificationKeyFlatHTMLGeneratorTest {
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/wrongSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/pruningSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/archaeoSDD.xml";
-				// String stringUrl =
-				// "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample.xml";
+				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample3_contextual.xml";
 
 				// options
 				utils.setFewStatesCharacterFirst(true);
@@ -70,6 +69,7 @@ public class IdentificationKeyFlatHTMLGeneratorTest {
 				utils.setVerbosity("how");
 				utils.setScoreMethod(Utils.XPER);
 				utils.setWeightContext("CostEffectiveness");
+				utils.setWeightType(Utils.GLOBAL_CHARACTER_WEIGHT);
 
 				// test if the URL is valid
 				URLConnection urlConnection;
@@ -102,7 +102,9 @@ public class IdentificationKeyFlatHTMLGeneratorTest {
 				header.append(System.getProperty("line.separator") + "verbosity=" + utils.getVerbosity());
 				header.append(System.getProperty("line.separator") + "scoreMethod=" + utils.getScoreMethod());
 				header.append(System.getProperty("line.separator") + "weightContext="
-						+ utils.getWeightContext() + System.getProperty("line.separator"));
+						+ utils.getWeightContext());
+				header.append(System.getProperty("line.separator") + "weightType="
+						+ utils.getWeightType() + System.getProperty("line.separator"));
 
 			} catch (Throwable t) {
 				utils.setErrorMessage(Utils.getBundleConfElement("message.parsingError"), t);
@@ -134,7 +136,7 @@ public class IdentificationKeyFlatHTMLGeneratorTest {
 
 			// create key file
 			try {
-				if (!utils.getVerbosity().contains(Utils.HEADERTAG)) {
+				if (!utils.getVerbosity().contains(Utils.HEADER_TAG)) {
 					header.setLength(0);
 				}
 				SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
