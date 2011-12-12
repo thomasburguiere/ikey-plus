@@ -14,14 +14,14 @@ public class CodedDescription {
 
 	private String id = null;
 	private Map<ICharacter, Object> description = null;
-	private Map<ICharacter, Integer> characterWeights = null; 
+	private Map<ICharacter, Integer> characterWeights = null;
 
 	/**
 	 * the constructor by default
 	 */
 	public CodedDescription() {
 		this.description = new LinkedHashMap<ICharacter, Object>();
-		this.characterWeights  = new LinkedHashMap<ICharacter, Integer>();
+		this.characterWeights = new LinkedHashMap<ICharacter, Integer>();
 	}
 
 	/**
@@ -50,16 +50,16 @@ public class CodedDescription {
 	public void setCharacterWeights(Map<ICharacter, Integer> characterWeights) {
 		this.characterWeights = characterWeights;
 	}
-	
-	public Integer getCharacterWeight(ICharacter character){
+
+	public Integer getCharacterWeight(ICharacter character) {
 		return characterWeights.get(character);
 	}
-	
-	public void addCharacterWeight(ICharacter character, Integer weight){
+
+	public void addCharacterWeight(ICharacter character, Integer weight) {
 		characterWeights.put(character, weight);
 	}
-	
-	public void removeCharacterWeight(ICharacter character){
+
+	public void removeCharacterWeight(ICharacter character) {
 		characterWeights.remove(character);
 	}
 
