@@ -84,7 +84,7 @@ public class Utils {
 	private String verbosity = "";
 	private String scoreMethod = Utils.XPER;
 	private String weightContext = "";
-	private String characterWeightType = Utils.GLOBAL_CHARACTER_WEIGHT;
+	private String weightType = Utils.GLOBAL_CHARACTER_WEIGHT;
 
 	/**
 	 * Constructor
@@ -349,12 +349,12 @@ public class Utils {
 		}
 	}
 
-	public String getCharacterWeightType() {
-		return characterWeightType;
+	public String getWeightType() {
+		return weightType;
 	}
 
-	public void setCharacterWeightType(String characterWeightType) {
-		this.characterWeightType = characterWeightType;
+	public void setWeightType(String characterWeightType) {
+		this.weightType = characterWeightType;
 	}
 
 	/**

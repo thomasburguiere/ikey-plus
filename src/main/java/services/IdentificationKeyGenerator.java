@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import main.java.model.CategoricalCharacter;
+import main.java.model.CodedDescription;
 import main.java.model.DataSet;
 import main.java.model.ICharacter;
 import main.java.model.QuantitativeCharacter;
@@ -243,7 +244,7 @@ public class IdentificationKeyGenerator {
 
 			// if taxa are not described and if verbosity string contains correct tag, create a node
 			// "Other (not described)"
-			if (utils.getVerbosity().contains(Utils.OTHERTAG) && notDescribedTaxa != null
+			if (utils.getVerbosity().contains(Utils.OTHER_TAG) && notDescribedTaxa != null
 					&& notDescribedTaxa.size() > 0) {
 				// init new node
 				SingleAccessKeyNode notDescribedNode = new SingleAccessKeyNode();
@@ -557,9 +558,8 @@ public class IdentificationKeyGenerator {
 					if (max == -1)
 						max = scoreMap.get(childCharacter);
 					if (scoreMap.get(childCharacter) >= max) {
-						// init max score with child score + 0.0001 (to be sure
-						// parent
-						// score will be better)
+						// init max score with child score + 0.0001 (to ensure that
+						// the parent score will be better)
 						max = (float) (scoreMap.get(childCharacter) + 0.0001);
 					}
 				}
@@ -569,7 +569,10 @@ public class IdentificationKeyGenerator {
 	}
 
 	/**
-	 * get the character with the best score. By default we place first the characters with the best weight.
+	 * Returns the character with the best score.</br></br> Character weight takes precedence over
+	 * discriminant power.</br> By default, global character weights are used, but if
+	 * useContextualCharacterWeights is set to <b> <tt>true</tt></b>, contextual character weights are used,
+	 * <i>i.e.</i> for a given character, the weight applied may vary depending on the taxon considered.</br>
 	 * If no weight are detected in the SDD file, all the characters are initialized with the same weight (3)
 	 * 
 	 * @param charactersScore
@@ -580,49 +583,135 @@ public class IdentificationKeyGenerator {
 			throws Exception {
 
 		float bestScore = -1;
-		int bestWeight = -1;
 		ICharacter bestCharacter = null;
 
-		for (ICharacter character : charactersScore.keySet()) {
-			// if the current character weight is better than the bestWeight
-			if (character.getWeight() > bestWeight) {
-				bestCharacter = character;
-				bestWeight = character.getWeight();
-				// if the current character weight is equal to the bestWeight and the current character score
-				// is better than the best score
-			} else if (character.getWeight() == bestWeight && charactersScore.get(character) >= bestScore) {
-				bestScore = charactersScore.get(character);
-				bestCharacter = character;
-			}
-		}
+		if (utils.getWeightType().equalsIgnoreCase(Utils.CONTEXTUAL_CHARACTER_WEIGHT)) {
+			float bestWeight = -1;
 
-		// HashMap<ICharacter, Float> characterScoreSubMap = new HashMap<ICharacter, Float>();
-		// for (ICharacter character : charactersScore.keySet()) {
-		// if(character.getWeight() >= bestWeight)
-		// characterScoreSubMap.put(character, charactersScore.get(character));
-		// }
-
-		charactersScore.remove(bestCharacter);
-
-		// if the set of scores contains at least one score similar to the best score
-		if (charactersScore.containsValue(bestScore) && bestCharacter.isSupportsCategoricalData()) {
-			int lessTaxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) bestCharacter,
-					remainingTaxa);
 			for (ICharacter character : charactersScore.keySet()) {
-				if (character.getWeight() == bestWeight && charactersScore.get(character) == bestScore
-						&& character.isSupportsCategoricalData()) {
-					// get the number of taxa of all child nodes of the current CategoricalCharacter
-					int currentTaxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) character,
-							remainingTaxa);
-					// if the current taxa number is lower than the less taxa number
-					if (currentTaxaNumber < lessTaxaNumber) {
+
+				if (charactersScore.containsKey(character)) {
+					int nWeights = 0;
+					float weightsSum = 0;
+					float averageWeight = 0;
+					for (Taxon taxon : remainingTaxa) {
+
+						CodedDescription currentCodedDescription = dataset.getCodedDescription(taxon);
+						if (currentCodedDescription.getCharacterWeights().containsKey(character)) {
+							nWeights++;
+							weightsSum += currentCodedDescription.getCharacterWeight(character);
+						} else {
+							nWeights++;
+							weightsSum += Utils.DEFAULT_WEIGHT;
+						}
+
+					}
+					if (nWeights > 0)
+						averageWeight = (weightsSum / nWeights);
+
+					if (averageWeight > bestWeight) {
+						bestCharacter = character;
+						bestWeight = averageWeight;
+						bestScore = charactersScore.get(character);
+					} else if (averageWeight == bestWeight && charactersScore.get(character) >= bestScore) {
 						bestScore = charactersScore.get(character);
 						bestCharacter = character;
-						lessTaxaNumber = currentTaxaNumber;
+					}
+				}
+
+			}
+
+			charactersScore.remove(bestCharacter);
+
+			// if the set of scores contains at least one score similar to the best score
+			if (charactersScore.containsValue(bestScore) && bestCharacter.isSupportsCategoricalData()) {
+				int lessTaxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) bestCharacter,
+						remainingTaxa);
+
+				for (ICharacter character : charactersScore.keySet()) {
+					for (Taxon taxon : remainingTaxa) {
+						CodedDescription currentCodedDescription = dataset.getCodedDescription(taxon);
+						if (currentCodedDescription.getCharacterWeight(character) != null
+								&& currentCodedDescription.getCharacterWeight(character) == bestWeight
+								&& charactersScore.get(character) == bestScore
+								&& character.isSupportsCategoricalData()) {
+							// get the number of taxa of all child nodes of the current CategoricalCharacter
+							int currentTaxaNumber = getTaxaNumberForAllStates(
+									(CategoricalCharacter) character, remainingTaxa);
+							// if the current taxa number is lower than the less taxa number
+							if (currentTaxaNumber < lessTaxaNumber) {
+								bestScore = charactersScore.get(character);
+								bestCharacter = character;
+								lessTaxaNumber = currentTaxaNumber;
+							}
+						}
+					}
+				}
+
+			}
+
+		} else {
+
+			float bestWeight = -1;
+			for (ICharacter character : charactersScore.keySet()) {
+
+				System.out.println("");
+				System.out.println("character : " + character.getName());
+
+				System.out.println();
+				System.out.println("weight = " + character.getWeight());
+				System.out.println("score = " + charactersScore.get(character));
+				// if the current character weight is better than the bestWeight
+				if (character.getWeight() > bestWeight) {
+					bestCharacter = character;
+					bestWeight = character.getWeight();
+					bestScore = charactersScore.get(character);
+					// if the current character weight is equal to the bestWeight and the current character
+					// score
+					// is better than the best score
+				} else if (character.getWeight() == bestWeight && charactersScore.get(character) >= bestScore) {
+					bestScore = charactersScore.get(character);
+					bestCharacter = character;
+				}
+
+				System.out.println();
+				System.out.println("bestChar\t: " + bestCharacter.getName());
+				System.out.println("bestCharWeight :\t" + bestWeight);
+				System.out.println("bestCharScore :\t" + bestScore);
+				System.out.println();
+			}
+
+			System.out.println();
+			System.out.println("final bestChar\t: " + bestCharacter.getName());
+			System.out.println("final bestCharWeight :\t" + bestWeight);
+			System.out.println("final bestCharScore :\t" + bestScore);
+			System.out.println();
+			System.out.println("   ------    ");
+			System.out.println();
+
+			charactersScore.remove(bestCharacter);
+
+			// if the set of scores contains at least one score similar to the best score
+			if (charactersScore.containsValue(bestScore) && bestCharacter.isSupportsCategoricalData()) {
+				int lessTaxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) bestCharacter,
+						remainingTaxa);
+				for (ICharacter character : charactersScore.keySet()) {
+					if (character.getWeight() == bestWeight && charactersScore.get(character) == bestScore
+							&& character.isSupportsCategoricalData()) {
+						// get the number of taxa of all child nodes of the current CategoricalCharacter
+						int currentTaxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) character,
+								remainingTaxa);
+						// if the current taxa number is lower than the less taxa number
+						if (currentTaxaNumber < lessTaxaNumber) {
+							bestScore = charactersScore.get(character);
+							bestCharacter = character;
+							lessTaxaNumber = currentTaxaNumber;
+						}
 					}
 				}
 			}
 		}
+
 		return bestCharacter;
 	}
 

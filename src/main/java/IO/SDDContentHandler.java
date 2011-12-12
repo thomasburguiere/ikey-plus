@@ -374,6 +374,12 @@ public class SDDContentHandler implements ContentHandler {
 								.getWeight() + currentRating);
 						this.ratingsCounter.put(currentCodedDescriptionCharacter,
 								this.ratingsCounter.get(currentCodedDescriptionCharacter) + 1);
+
+						if (utils.getWeightType().equalsIgnoreCase(Utils.CONTEXTUAL_CHARACTER_WEIGHT)) {
+							currentCodedDescription.addCharacterWeight(currentCodedDescriptionCharacter,
+									currentRating);
+						}
+
 					}
 				}
 			}
@@ -430,18 +436,19 @@ public class SDDContentHandler implements ContentHandler {
 						} else if (this.dataSet.getCodedDescriptions().get(taxon)
 								.getCharacterDescription(character) instanceof String
 								&& ((String) this.dataSet.getCodedDescriptions().get(taxon)
-										.getCharacterDescription(character)).equals(Utils.UNKNOWNDATA)) {
+										.getCharacterDescription(character)).equals(Utils.UNKNOWN_DATA)) {
 							this.dataSet.getCodedDescriptions().get(taxon)
 									.addCharacterDescription(character, null);
 						}
 					}
 				}
 
-				// update (average) the weight for all characters
+				// update (average) the weight for all characters if the parameter
+				// useContextualCharacterWeights is not enabled
 				for (ICharacter character : this.dataSet.getCharacters()) {
 					if (this.ratingsCounter.get(character) != null) {
-						character.setWeight(Math.round((float) (character.getWeight())
-								/ (float) (this.ratingsCounter.get(character))));
+						character.setWeight((float) (character.getWeight())
+								/ (float) (this.ratingsCounter.get(character)));
 					}
 				}
 
@@ -629,7 +636,7 @@ public class SDDContentHandler implements ContentHandler {
 				inCategorical = false;
 				if (dataUnavailableFlag) {
 					currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
-							Utils.UNKNOWNDATA);
+							Utils.UNKNOWN_DATA);
 				} else {
 					currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
 							currentStatesList);
@@ -644,7 +651,7 @@ public class SDDContentHandler implements ContentHandler {
 				inQuantitative = false;
 				if (dataUnavailableFlag) {
 					currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
-							Utils.UNKNOWNDATA);
+							Utils.UNKNOWN_DATA);
 				} else {
 					currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
 							currentQuantitativeMeasure);

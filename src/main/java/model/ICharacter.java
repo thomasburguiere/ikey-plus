@@ -12,7 +12,7 @@ public interface ICharacter {
 
 	public String name = null;
 	public String id = null;
-	public int weight = 3;
+	public float weight = 3;
 	public ICharacter parentCharacter = null;
 	public List<State> inapplicableStates = null;
 	public List<ICharacter> childCharacters = null;
@@ -48,12 +48,12 @@ public interface ICharacter {
 	/**
 	 * @return int, Character weight
 	 */
-	public int getWeight();
+	public float getWeight();
 
 	/**
 	 * @param int , Character weight
 	 */
-	public void setWeight(int weight);
+	public void setWeight(float weight);
 
 	/**
 	 * @return List<State>, the list of inapplicable states

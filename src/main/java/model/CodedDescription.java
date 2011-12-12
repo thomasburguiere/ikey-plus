@@ -4,7 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * This class represents the description of a taxon
+ * This class represents the description of a taxon, i.e. the association of characters, and their
+ * character-states for this taxon
  * 
  * @author Florian Causse
  * @created 06-04-2011
@@ -13,12 +14,14 @@ public class CodedDescription {
 
 	private String id = null;
 	private Map<ICharacter, Object> description = null;
+	private Map<ICharacter, Integer> characterWeights = null; 
 
 	/**
 	 * the constructor by default
 	 */
 	public CodedDescription() {
 		this.description = new LinkedHashMap<ICharacter, Object>();
+		this.characterWeights  = new LinkedHashMap<ICharacter, Integer>();
 	}
 
 	/**
@@ -38,6 +41,26 @@ public class CodedDescription {
 	 */
 	public void setDescription(Map<ICharacter, Object> description) {
 		this.description = description;
+	}
+
+	public Map<ICharacter, Integer> getCharacterWeights() {
+		return characterWeights;
+	}
+
+	public void setCharacterWeights(Map<ICharacter, Integer> characterWeights) {
+		this.characterWeights = characterWeights;
+	}
+	
+	public Integer getCharacterWeight(ICharacter character){
+		return characterWeights.get(character);
+	}
+	
+	public void addCharacterWeight(ICharacter character, Integer weight){
+		characterWeights.put(character, weight);
+	}
+	
+	public void removeCharacterWeight(ICharacter character){
+		characterWeights.remove(character);
 	}
 
 	/**

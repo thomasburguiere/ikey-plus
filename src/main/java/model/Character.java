@@ -3,6 +3,8 @@ package main.java.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.java.utils.Utils;
+
 /**
  * This class represents a Character
  * 
@@ -13,7 +15,7 @@ public class Character implements ICharacter {
 
 	private String name = null;
 	private String id = null;
-	public int weight = 3;
+	public float weight = Utils.DEFAULT_WEIGHT;
 	private ICharacter parentCharacter = null;
 	private List<State> inapplicableStates = null;
 	private List<ICharacter> childCharacters = null;
@@ -79,7 +81,7 @@ public class Character implements ICharacter {
 	 * 
 	 * @see model.ICharacter#getweight() */
 	@Override
-	public int getWeight() {
+	public float getWeight() {
 		return this.weight;
 	}
 
@@ -87,7 +89,7 @@ public class Character implements ICharacter {
 	 * 
 	 * @see model.ICharacter#setWeight(int) */
 	@Override
-	public void setWeight(int weight) {
+	public void setWeight(float weight) {
 		this.weight = weight;
 
 	}
