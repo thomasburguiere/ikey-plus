@@ -71,6 +71,7 @@ public class IdentificationKeyDOTGeneratorTest {
 				utils.setVerbosity("how");
 				utils.setScoreMethod(Utils.XPER);
 				utils.setWeightContext("CostEffectiveness");
+				utils.setWeightType(Utils.GLOBAL_CHARACTER_WEIGHT);
 
 				// test if the URL is valid
 				URLConnection urlConnection;

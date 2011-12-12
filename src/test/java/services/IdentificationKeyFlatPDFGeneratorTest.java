@@ -47,7 +47,7 @@ public class IdentificationKeyFlatPDFGeneratorTest {
 
 			SDDSaxParser sddSaxParser = null;
 			try {
-				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
+//				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-unknownData-fullSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
@@ -62,6 +62,7 @@ public class IdentificationKeyFlatPDFGeneratorTest {
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/archaeoSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample.xml";
+				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample3_contextual.xml";
 
 				// options
 				utils.setFewStatesCharacterFirst(true);
@@ -70,6 +71,7 @@ public class IdentificationKeyFlatPDFGeneratorTest {
 				utils.setVerbosity("how");
 				utils.setScoreMethod(Utils.XPER);
 				utils.setWeightContext("CostEffectiveness");
+				utils.setWeightType(Utils.GLOBAL_CHARACTER_WEIGHT);
 
 				// test if the URL is valid
 				URLConnection urlConnection;

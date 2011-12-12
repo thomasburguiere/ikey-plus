@@ -55,13 +55,14 @@ public class IdentificationKeyHTMLGeneratorTest {
 				// "http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/testSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml";
-				 String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesImagesURL.xml";
+//				 String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesImagesURL.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/smallSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/wrongSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/pruningSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/archaeoSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample.xml";
+				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample3_contextual.xml";
 
 				// options
 				utils.setFewStatesCharacterFirst(true);
@@ -70,6 +71,7 @@ public class IdentificationKeyHTMLGeneratorTest {
 				utils.setVerbosity("how");
 				utils.setScoreMethod(Utils.XPER);
 				utils.setWeightContext("CostEffectiveness");
+				utils.setWeightType(Utils.GLOBAL_CHARACTER_WEIGHT);
 
 				// test if the URL is valid
 				URLConnection urlConnection;
