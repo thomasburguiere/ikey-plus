@@ -655,12 +655,6 @@ public class IdentificationKeyGenerator {
 			float bestWeight = -1;
 			for (ICharacter character : charactersScore.keySet()) {
 
-				System.out.println("");
-				System.out.println("character : " + character.getName());
-
-				System.out.println();
-				System.out.println("weight = " + character.getWeight());
-				System.out.println("score = " + charactersScore.get(character));
 				// if the current character weight is better than the bestWeight
 				if (character.getWeight() > bestWeight) {
 					bestCharacter = character;
@@ -674,20 +668,7 @@ public class IdentificationKeyGenerator {
 					bestCharacter = character;
 				}
 
-				System.out.println();
-				System.out.println("bestChar\t: " + bestCharacter.getName());
-				System.out.println("bestCharWeight :\t" + bestWeight);
-				System.out.println("bestCharScore :\t" + bestScore);
-				System.out.println();
 			}
-
-			System.out.println();
-			System.out.println("final bestChar\t: " + bestCharacter.getName());
-			System.out.println("final bestCharWeight :\t" + bestWeight);
-			System.out.println("final bestCharScore :\t" + bestScore);
-			System.out.println();
-			System.out.println("   ------    ");
-			System.out.println();
 
 			charactersScore.remove(bestCharacter);
 
