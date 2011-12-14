@@ -2,12 +2,10 @@ package main.java.IO;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -130,23 +128,26 @@ public abstract class SingleAccessKeyTreeDumper {
 		output.append("<IdentificationKeys>" + lineSeparator);
 		multipleTraversalToSddString(tree2dump.getRoot(), output, lineSeparator, tree2dump);
 		output.append("</IdentificationKeys>" + lineSeparator);
-		output.append("<MediaObjects>" + lineSeparator);
 
-		// creation of mediaObjects
-		for (String mediaObjectKey : originalDataSet.getMediaObjects().keySet()) {
-			output.append("<MediaObject id=\"" + mediaObjectKey + "\">" + lineSeparator);
-			output.append("<Representation>" + lineSeparator);
-			output.append("<Label>");
-			output.append(mediaObjectKey);
-			output.append("</Label>" + lineSeparator);
-			output.append("</Representation>" + lineSeparator);
-			output.append("<Type>Image</Type>" + lineSeparator);
-			output.append("<Source href=\"" + originalDataSet.getMediaObject(mediaObjectKey) + "\"/>"
-					+ lineSeparator);
-			output.append("</MediaObject>" + lineSeparator);
+		if (originalDataSet.getMediaObjects().keySet().size() > 0) {
+			output.append("<MediaObjects>" + lineSeparator);
+
+			// creation of mediaObjects
+			for (String mediaObjectKey : originalDataSet.getMediaObjects().keySet()) {
+				output.append("<MediaObject id=\"" + mediaObjectKey + "\">" + lineSeparator);
+				output.append("<Representation>" + lineSeparator);
+				output.append("<Label>");
+				output.append(mediaObjectKey);
+				output.append("</Label>" + lineSeparator);
+				output.append("</Representation>" + lineSeparator);
+				output.append("<Type>Image</Type>" + lineSeparator);
+				output.append("<Source href=\"" + originalDataSet.getMediaObject(mediaObjectKey) + "\"/>"
+						+ lineSeparator);
+				output.append("</MediaObject>" + lineSeparator);
+			}
+
+			output.append("</MediaObjects>" + lineSeparator);
 		}
-
-		output.append("</MediaObjects>" + lineSeparator);
 		output.append("</Dataset>" + lineSeparator);
 		output.append("</Datasets>");
 		return output.toString();
@@ -246,21 +247,39 @@ public abstract class SingleAccessKeyTreeDumper {
 						output.append("</Lead>" + lineSeparator);
 					} else {
 
-						output.append("<Lead>" + lineSeparator);
+//						output.append("<Lead>" + lineSeparator);
+//						output.append("<Statement>"
+//								+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
+//										.replace("&", "&amp;") + lineSeparator);
+//						output.append("</Statement>");
+//						output.append(mediaObjectsTags);
+//						for (Taxon t : child.getRemainingTaxa()) {
+//							output.append("<TaxonName ref=\"" + t.getId() + "\"/>" + lineSeparator);
+//							break;
+//							/* taxonCounter++; output.append("<Label>");
+//							 * output.append(t.getName().replace(">", "&gt;").replace("<", "&lt;")
+//							 * .replace("&", "&amp;")); output.append("</Label>" + lineSeparator);
+//							 * output.append("</TaxonName>" + lineSeparator); */
+//						}
+//						output.append("</Lead>" + lineSeparator);
+						
+						output.append("<Lead id=\"nil0\">" + lineSeparator);
 						output.append("<Statement>"
 								+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
-										.replace("&", "&amp;") + lineSeparator);
-						output.append("</Statement>");
+										.replace("&", "&amp;"));
+						output.append("</Statement>" + lineSeparator);
 						output.append(mediaObjectsTags);
-						for (Taxon t : child.getRemainingTaxa()) {
-							output.append("<TaxonName ref=\"" + t.getId() + "\"/>" + lineSeparator);
-							break;
-							/* taxonCounter++; output.append("<Label>");
-							 * output.append(t.getName().replace(">", "&gt;").replace("<", "&lt;")
-							 * .replace("&", "&amp;")); output.append("</Label>" + lineSeparator);
-							 * output.append("</TaxonName>" + lineSeparator); */
-						}
 						output.append("</Lead>" + lineSeparator);
+
+						for (Taxon t : child.getRemainingTaxa()) {
+							output.append("<Lead>" + lineSeparator);
+							output.append("<Parent ref=\"nil0\" />"
+									+ lineSeparator);
+							output.append("<Statement>_</Statement>" + lineSeparator);
+							output.append("<TaxonName ref=\"" + t.getId() + "\"/>" + lineSeparator);
+							output.append("</Lead>" + lineSeparator);
+						}
+						
 					}
 				} else {
 					if (child.hasChild()) {
@@ -281,7 +300,25 @@ public abstract class SingleAccessKeyTreeDumper {
 						output.append("</Lead>" + lineSeparator);
 
 					} else {
-						output.append("<Lead>" + lineSeparator);
+						// output.append("<Lead>" + lineSeparator);
+						// output.append("<Parent ref=\"lead" + (currentParentNumber - 1) + "\"/>"
+						// + lineSeparator);
+						// output.append("<Statement>"
+						// + child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
+						// .replace("&", "&amp;"));
+						// output.append("</Statement>" + lineSeparator);
+						// output.append(mediaObjectsTags);
+						// for (Taxon t : child.getRemainingTaxa()) {
+						// output.append("<TaxonName ref=\"" + t.getId() + "\"/>" + lineSeparator);
+						// break;
+						// /* taxonCounter++; output.append("<Label>");
+						// * output.append(t.getName().replace(">", "&gt;").replace("<", "&lt;")
+						// * .replace("&", "&amp;")); output.append("</Label>" + lineSeparator);
+						// * output.append("</TaxonName>" + lineSeparator); */
+						// }
+						// output.append("</Lead>" + lineSeparator);
+
+						output.append("<Lead id=\"nil" + (counter - 1) + "\">" + lineSeparator);
 						output.append("<Parent ref=\"lead" + (currentParentNumber - 1) + "\"/>"
 								+ lineSeparator);
 						output.append("<Statement>"
@@ -289,15 +326,16 @@ public abstract class SingleAccessKeyTreeDumper {
 										.replace("&", "&amp;"));
 						output.append("</Statement>" + lineSeparator);
 						output.append(mediaObjectsTags);
-						for (Taxon t : child.getRemainingTaxa()) {
-							output.append("<TaxonName ref=\"" + t.getId() + "\"/>" + lineSeparator);
-							break;
-							/* taxonCounter++; output.append("<Label>");
-							 * output.append(t.getName().replace(">", "&gt;").replace("<", "&lt;")
-							 * .replace("&", "&amp;")); output.append("</Label>" + lineSeparator);
-							 * output.append("</TaxonName>" + lineSeparator); */
-						}
 						output.append("</Lead>" + lineSeparator);
+
+						for (Taxon t : child.getRemainingTaxa()) {
+							output.append("<Lead>" + lineSeparator);
+							output.append("<Parent ref=\"nil" + (counter - 1) + "\" />"
+									+ lineSeparator);
+							output.append("<Statement>_</Statement>" + lineSeparator);
+							output.append("<TaxonName ref=\"" + t.getId() + "\"/>" + lineSeparator);
+							output.append("</Lead>" + lineSeparator);
+						}
 					}
 				}
 
