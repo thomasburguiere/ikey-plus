@@ -264,10 +264,7 @@ public abstract class SingleAccessKeyTreeDumper {
 //						output.append("</Lead>" + lineSeparator);
 						
 						output.append("<Lead id=\"nil0\">" + lineSeparator);
-						output.append("<Statement>"
-								+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
-										.replace("&", "&amp;"));
-						output.append("</Statement>" + lineSeparator);
+						output.append("<Statement>_</Statement>" + lineSeparator);
 						output.append(mediaObjectsTags);
 						output.append("</Lead>" + lineSeparator);
 
@@ -275,7 +272,10 @@ public abstract class SingleAccessKeyTreeDumper {
 							output.append("<Lead>" + lineSeparator);
 							output.append("<Parent ref=\"nil0\" />"
 									+ lineSeparator);
-							output.append("<Statement>_</Statement>" + lineSeparator);
+							output.append("<Statement>"
+									+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
+									.replace("&", "&amp;"));
+							output.append("</Statement>" + lineSeparator);
 							output.append("<TaxonName ref=\"" + t.getId() + "\"/>" + lineSeparator);
 							output.append("</Lead>" + lineSeparator);
 						}
@@ -321,10 +321,7 @@ public abstract class SingleAccessKeyTreeDumper {
 						output.append("<Lead id=\"nil" + (counter - 1) + "\">" + lineSeparator);
 						output.append("<Parent ref=\"lead" + (currentParentNumber - 1) + "\"/>"
 								+ lineSeparator);
-						output.append("<Statement>"
-								+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
-										.replace("&", "&amp;"));
-						output.append("</Statement>" + lineSeparator);
+						output.append("<Statement>_</Statement>" + lineSeparator);
 						output.append(mediaObjectsTags);
 						output.append("</Lead>" + lineSeparator);
 
@@ -332,7 +329,10 @@ public abstract class SingleAccessKeyTreeDumper {
 							output.append("<Lead>" + lineSeparator);
 							output.append("<Parent ref=\"nil" + (counter - 1) + "\" />"
 									+ lineSeparator);
-							output.append("<Statement>_</Statement>" + lineSeparator);
+							output.append("<Statement>"
+									+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
+									.replace("&", "&amp;"));
+							output.append("</Statement>" + lineSeparator);
 							output.append("<TaxonName ref=\"" + t.getId() + "\"/>" + lineSeparator);
 							output.append("</Lead>" + lineSeparator);
 						}
