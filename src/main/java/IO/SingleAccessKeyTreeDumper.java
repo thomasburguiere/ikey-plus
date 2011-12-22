@@ -264,7 +264,7 @@ public abstract class SingleAccessKeyTreeDumper {
 //						output.append("</Lead>" + lineSeparator);
 						
 						output.append("<Lead id=\"nil0\">" + lineSeparator);
-						output.append("<Statement>_</Statement>" + lineSeparator);
+						output.append("<Statement>nil</Statement>" + lineSeparator);
 						output.append(mediaObjectsTags);
 						output.append("</Lead>" + lineSeparator);
 
@@ -321,7 +321,7 @@ public abstract class SingleAccessKeyTreeDumper {
 						output.append("<Lead id=\"nil" + (counter - 1) + "\">" + lineSeparator);
 						output.append("<Parent ref=\"lead" + (currentParentNumber - 1) + "\"/>"
 								+ lineSeparator);
-						output.append("<Statement>_</Statement>" + lineSeparator);
+						output.append("<Statement>nil</Statement>" + lineSeparator);
 						output.append(mediaObjectsTags);
 						output.append("</Lead>" + lineSeparator);
 
