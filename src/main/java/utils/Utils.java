@@ -85,6 +85,7 @@ public class Utils {
 	private String scoreMethod = Utils.XPER;
 	private String weightContext = "";
 	private String weightType = Utils.GLOBAL_CHARACTER_WEIGHT;
+	private boolean statisticsEnabled = false;
 
 	/**
 	 * Constructor
@@ -353,8 +354,16 @@ public class Utils {
 		return weightType;
 	}
 
-	public void setWeightType(String characterWeightType) {
-		this.weightType = characterWeightType;
+	public void setWeightType(String weightType) {
+		this.weightType = weightType;
+	}
+
+	public boolean isStatisticsEnabled() {
+		return statisticsEnabled;
+	}
+
+	public void setStatisticsEnabled(boolean statisticsEnabled) {
+		this.statisticsEnabled = statisticsEnabled;
 	}
 
 	/**
