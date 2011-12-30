@@ -165,5 +165,35 @@ public class SingleAccessKeyTree {
 		}
 		return "";
 	}
+	
+	
+	/**
+	 * this method calls the private {@link recursiveTaxonPathStatistics} method
+	 */
+	public void gatherTaxonPathStatistics(){
+		recursiveTaxonPathStatistics(root, 1);
+	}
+	
+	/**
+	 * This traverses the SingleAccessKeyTree depth-first, and updates the path length statistics for
+	 * each taxon present in a terminal node
+	 * @param node
+	 * @param treeDepth
+	 */
+	private void recursiveTaxonPathStatistics(SingleAccessKeyNode node, int treeDepth){
+		if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
+			if (node.hasChild() == false) {
+				for (Taxon t : node.getRemainingTaxa()) {
+					t.updatePathStatistics(new Float(treeDepth));
+				}
+			}
+			treeDepth++;
+		}
+		for (SingleAccessKeyNode childNode : node.getChildren()) {
+			recursiveTaxonPathStatistics(childNode, treeDepth);
+		}
+	}
+	
+	
 
 }
