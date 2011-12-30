@@ -47,7 +47,7 @@ public class IdentificationKeyInteractiveHTMLGeneratorTest {
 
 			SDDSaxParser sddSaxParser = null;
 			try {
-				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesImagesURL.xml";
+				 String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesImagesURL.xml";
 
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
 				// String stringUrl =
@@ -63,7 +63,7 @@ public class IdentificationKeyInteractiveHTMLGeneratorTest {
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/archaeoSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample.xml";
-				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample3_contextual.xml";
+//				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample3_contextual.xml";
 
 				// options
 
@@ -74,6 +74,7 @@ public class IdentificationKeyInteractiveHTMLGeneratorTest {
 				utils.setScoreMethod(Utils.XPER);
 				utils.setWeightContext("CostEffectiveness");
 				utils.setWeightType(Utils.GLOBAL_CHARACTER_WEIGHT);
+				utils.setStatisticsEnabled(true);
 
 				// test if the URL is valid
 				URLConnection urlConnection;
@@ -136,7 +137,6 @@ public class IdentificationKeyInteractiveHTMLGeneratorTest {
 			header.append(System.getProperty("line.separator") + "parseDuration= " + parseDuration + "s");
 			header.append(System.getProperty("line.separator") + "keyCreationDuration= "
 					+ keyCreationDuration + "s");
-			header.append(System.getProperty("line.separator") + System.getProperty("line.separator"));
 
 			// create key file
 			try {
@@ -144,8 +144,20 @@ public class IdentificationKeyInteractiveHTMLGeneratorTest {
 					header.setLength(0);
 				}
 				SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+
+				if (utils.isStatisticsEnabled()) {
+					// define time before statistics gathering
+					beforeTime = System.currentTimeMillis();
+					tree2dump.gatherTaxonPathStatistics();
+					// define key statistics duration
+					double statsDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
+					header.append(System.getProperty("line.separator") + "statsDuration= " + statsDuration
+							+ " s" + System.getProperty("line.separator"));
+				}
+				header.append(System.getProperty("line.separator") + System.getProperty("line.separator"));
+
 				resultFileName = SingleAccessKeyTreeDumper.dumpInteractiveHtmlFile(header.toString(),
-						tree2dump).getName();
+						tree2dump, utils.isStatisticsEnabled()).getName();
 			} catch (IOException e) {
 				utils.setErrorMessage(Utils.getBundleConfElement("message.creatingFileError"), e);
 				e.printStackTrace();

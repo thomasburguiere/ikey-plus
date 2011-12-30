@@ -55,7 +55,7 @@ public class IdentificationKeySDDGeneratorTest {
 				// "http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/testSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml";
-				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesImagesURL.xml";
+//				 String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesImagesURL.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/smallSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/wrongSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/pruningSDD.xml";

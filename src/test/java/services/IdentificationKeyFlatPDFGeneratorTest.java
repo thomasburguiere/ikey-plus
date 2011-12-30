@@ -50,19 +50,20 @@ public class IdentificationKeyFlatPDFGeneratorTest {
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-unknownData-fullSDD.xml";
-				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
+//				 String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/testSDD.xml";
-				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml";
-				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesImagesURL.xml";
+				 String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml";
+//				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesImagesURL.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/smallSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/wrongSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/pruningSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/archaeoSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample.xml";
-				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample3_contextual.xml";
+				// String stringUrl =
+				// "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample3_contextual.xml";
 
 				// options
 				utils.setFewStatesCharacterFirst(true);
@@ -72,6 +73,7 @@ public class IdentificationKeyFlatPDFGeneratorTest {
 				utils.setScoreMethod(Utils.XPER);
 				utils.setWeightContext("CostEffectiveness");
 				utils.setWeightType(Utils.GLOBAL_CHARACTER_WEIGHT);
+				utils.setStatisticsEnabled(true);
 
 				// test if the URL is valid
 				URLConnection urlConnection;
@@ -134,16 +136,28 @@ public class IdentificationKeyFlatPDFGeneratorTest {
 			header.append(System.getProperty("line.separator") + "parseDuration= " + parseDuration + "s");
 			header.append(System.getProperty("line.separator") + "keyCreationDuration= "
 					+ keyCreationDuration + "s");
-			header.append(System.getProperty("line.separator") + System.getProperty("line.separator"));
 
 			// create key file
 			try {
-				if (!utils.getVerbosity().contains(Utils.HEADER_TAG)) {
-					header.setLength(0);
-				}
+
 				SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
-				resultFileName = SingleAccessKeyTreeDumper.dumpFlatPdfFile(header.toString(), tree2dump)
-						.getName();
+
+				if (utils.isStatisticsEnabled()) {
+					// define time before statistics gathering
+					beforeTime = System.currentTimeMillis();
+					tree2dump.gatherTaxonPathStatistics();
+					// define key statistics duration
+					double statsDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
+					header.append(System.getProperty("line.separator") + "statsDuration= " + statsDuration
+							+ " s" + System.getProperty("line.separator"));
+				}
+				header.append(System.getProperty("line.separator") + System.getProperty("line.separator"));
+
+				if (!utils.getVerbosity().contains(Utils.HEADER_TAG))
+					header.setLength(0);
+				resultFileName = SingleAccessKeyTreeDumper.dumpFlatPdfFile(header.toString(), tree2dump,
+						utils.isStatisticsEnabled()).getName();
+
 			} catch (IOException e) {
 				utils.setErrorMessage(Utils.getBundleConfElement("message.creatingFileError"), e);
 				e.printStackTrace();

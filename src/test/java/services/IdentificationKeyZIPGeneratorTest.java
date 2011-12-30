@@ -50,7 +50,7 @@ public class IdentificationKeyZIPGeneratorTest {
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-unknownData-fullSDD.xml";
-				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
+				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/testSDD.xml";
@@ -62,7 +62,8 @@ public class IdentificationKeyZIPGeneratorTest {
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/archaeoSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample.xml";
-				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample3_contextual.xml";
+				// String stringUrl =
+				// "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample3_contextual.xml";
 
 				// options
 				utils.setFewStatesCharacterFirst(false);
@@ -72,6 +73,7 @@ public class IdentificationKeyZIPGeneratorTest {
 				utils.setScoreMethod(Utils.XPER);
 				utils.setWeightContext("CostEffectiveness");
 				utils.setWeightType(Utils.GLOBAL_CHARACTER_WEIGHT);
+				utils.setStatisticsEnabled(true);
 
 				// test if the URL is valid
 				URLConnection urlConnection;
@@ -142,8 +144,8 @@ public class IdentificationKeyZIPGeneratorTest {
 					header.setLength(0);
 				}
 				SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
-				resultFileName = SingleAccessKeyTreeDumper.dumpZipFile(header.toString(), tree2dump)
-						.getName();
+				resultFileName = SingleAccessKeyTreeDumper.dumpZipFile(header.toString(), tree2dump,
+						utils.isStatisticsEnabled()).getName();
 			} catch (IOException e) {
 				utils.setErrorMessage(Utils.getBundleConfElement("message.creatingFileError"), e);
 				e.printStackTrace();
