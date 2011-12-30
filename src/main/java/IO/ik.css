@@ -7,6 +7,11 @@ body {
 	background: #fff;
 }
 
+table.statisticsTable {
+	font-family: Verdana, helvetica, arial, sans-serif;
+	font-size: 78%;
+}
+
 #treecontrol  a {
 	color: #333;
 	font-size: 85%;

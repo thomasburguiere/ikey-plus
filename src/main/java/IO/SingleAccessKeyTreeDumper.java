@@ -247,22 +247,22 @@ public abstract class SingleAccessKeyTreeDumper {
 						output.append("</Lead>" + lineSeparator);
 					} else {
 
-//						output.append("<Lead>" + lineSeparator);
-//						output.append("<Statement>"
-//								+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
-//										.replace("&", "&amp;") + lineSeparator);
-//						output.append("</Statement>");
-//						output.append(mediaObjectsTags);
-//						for (Taxon t : child.getRemainingTaxa()) {
-//							output.append("<TaxonName ref=\"" + t.getId() + "\"/>" + lineSeparator);
-//							break;
-//							/* taxonCounter++; output.append("<Label>");
-//							 * output.append(t.getName().replace(">", "&gt;").replace("<", "&lt;")
-//							 * .replace("&", "&amp;")); output.append("</Label>" + lineSeparator);
-//							 * output.append("</TaxonName>" + lineSeparator); */
-//						}
-//						output.append("</Lead>" + lineSeparator);
-						
+						// output.append("<Lead>" + lineSeparator);
+						// output.append("<Statement>"
+						// + child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
+						// .replace("&", "&amp;") + lineSeparator);
+						// output.append("</Statement>");
+						// output.append(mediaObjectsTags);
+						// for (Taxon t : child.getRemainingTaxa()) {
+						// output.append("<TaxonName ref=\"" + t.getId() + "\"/>" + lineSeparator);
+						// break;
+						// /* taxonCounter++; output.append("<Label>");
+						// * output.append(t.getName().replace(">", "&gt;").replace("<", "&lt;")
+						// * .replace("&", "&amp;")); output.append("</Label>" + lineSeparator);
+						// * output.append("</TaxonName>" + lineSeparator); */
+						// }
+						// output.append("</Lead>" + lineSeparator);
+
 						output.append("<Lead id=\"nil0\">" + lineSeparator);
 						output.append("<Statement>nil</Statement>" + lineSeparator);
 						output.append(mediaObjectsTags);
@@ -270,16 +270,15 @@ public abstract class SingleAccessKeyTreeDumper {
 
 						for (Taxon t : child.getRemainingTaxa()) {
 							output.append("<Lead>" + lineSeparator);
-							output.append("<Parent ref=\"nil0\" />"
-									+ lineSeparator);
+							output.append("<Parent ref=\"nil0\" />" + lineSeparator);
 							output.append("<Statement>"
 									+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
-									.replace("&", "&amp;"));
+											.replace("&", "&amp;"));
 							output.append("</Statement>" + lineSeparator);
 							output.append("<TaxonName ref=\"" + t.getId() + "\"/>" + lineSeparator);
 							output.append("</Lead>" + lineSeparator);
 						}
-						
+
 					}
 				} else {
 					if (child.hasChild()) {
@@ -327,11 +326,10 @@ public abstract class SingleAccessKeyTreeDumper {
 
 						for (Taxon t : child.getRemainingTaxa()) {
 							output.append("<Lead>" + lineSeparator);
-							output.append("<Parent ref=\"nil" + (counter - 1) + "\" />"
-									+ lineSeparator);
+							output.append("<Parent ref=\"nil" + (counter - 1) + "\" />" + lineSeparator);
 							output.append("<Statement>"
 									+ child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
-									.replace("&", "&amp;"));
+											.replace("&", "&amp;"));
 							output.append("</Statement>" + lineSeparator);
 							output.append("<TaxonName ref=\"" + t.getId() + "\"/>" + lineSeparator);
 							output.append("</Lead>" + lineSeparator);
@@ -363,7 +361,8 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * @return File the text File
 	 * @throws IOException
 	 */
-	public static File dumpTxtFile(String header, SingleAccessKeyTree tree2dump) throws IOException {
+	public static File dumpTxtFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics)
+			throws IOException {
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
@@ -375,6 +374,8 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		txtFileWriter.append(header);
 		txtFileWriter.append(generateTreeString(tree2dump));
+		if (showStatistics)
+			txtFileWriter.append(outputTaxonPathStatisticsString(tree2dump));
 		txtFileWriter.close();
 
 		return txtFile;
@@ -383,6 +384,7 @@ public abstract class SingleAccessKeyTreeDumper {
 	private static String generateTreeString(SingleAccessKeyTree tree2dump) {
 		StringBuffer output = new StringBuffer();
 		recursiveToString(tree2dump.getRoot(), output, System.getProperty("line.separator"), 0, 0, tree2dump);
+
 		return output.toString();
 	}
 
@@ -446,10 +448,13 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * 
 	 * @param header
 	 *            a String that contains the header
+	 * @param showStatistics
+	 *            TODO
 	 * @return a txt File
 	 * @throws IOException
 	 */
-	public static File dumpFlatTxtFile(String header, SingleAccessKeyTree tree2dump) throws IOException {
+	public static File dumpFlatTxtFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics)
+			throws IOException {
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
@@ -460,6 +465,9 @@ public abstract class SingleAccessKeyTreeDumper {
 		BufferedWriter txtFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, "UTF-8"));
 		txtFileWriter.append(header);
 		txtFileWriter.append(generateFlatString(tree2dump));
+		if (showStatistics)
+			txtFileWriter.append(outputTaxonPathStatisticsString(tree2dump));
+
 		txtFileWriter.close();
 
 		return txtFile;
@@ -475,6 +483,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		StringBuffer output = new StringBuffer();
 		multipleTraversalToString(tree2dump.getRoot(), output, System.getProperty("line.separator"),
 				tree2dump);
+
 		return output.toString();
 	}
 
@@ -606,7 +615,8 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * @return File, the html file
 	 * @throws IOException
 	 */
-	public static File dumpHtmlFile(String header, SingleAccessKeyTree tree2dump) throws IOException {
+	public static File dumpHtmlFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics)
+			throws IOException {
 
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
@@ -616,7 +626,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		FileOutputStream fileOutputStream = new FileOutputStream(htmlFile);
 		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
 		BufferedWriter htmlFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, "UTF-8"));
-		htmlFileWriter.append(generateHtmlString(header, tree2dump));
+		htmlFileWriter.append(generateHtmlString(header, tree2dump, showStatistics));
 		htmlFileWriter.close();
 
 		return htmlFile;
@@ -628,7 +638,8 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * @return String the HTML String
 	 * @throws IOException
 	 */
-	private static String generateHtmlString(String header, SingleAccessKeyTree tree2dump) throws IOException {
+	private static String generateHtmlString(String header, SingleAccessKeyTree tree2dump,
+			boolean showStatistics) throws IOException {
 		String lineSep = System.getProperty("line.separator");
 		StringBuffer slk = new StringBuffer();
 
@@ -706,6 +717,9 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		slk.append("</ul>" + lineSep);
 		slk.append("</div>" + lineSep);
+
+		if (showStatistics)
+			slk.append(outputTaxonPathStatisticsHTML(tree2dump));
 
 		slk.append("</body>");
 		slk.append("</html>");
@@ -840,12 +854,16 @@ public abstract class SingleAccessKeyTreeDumper {
 	/**
 	 * get a HTML file containing the key, in a flat representation
 	 * 
+	 * @param showStatistics
+	 *            TODO
 	 * @param String
 	 *            , header information
+	 * 
 	 * @return File, the html file
 	 * @throws IOException
 	 */
-	public static File dumpFlatHtmlFile(String header, SingleAccessKeyTree tree2dump) throws IOException {
+	public static File dumpFlatHtmlFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics)
+			throws IOException {
 
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
@@ -855,14 +873,14 @@ public abstract class SingleAccessKeyTreeDumper {
 		FileOutputStream fileOutputStream = new FileOutputStream(htmlFile);
 		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
 		BufferedWriter htmlFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, "UTF-8"));
-		htmlFileWriter.append(generateFlatHtmlString(header, tree2dump));
+		htmlFileWriter.append(generateFlatHtmlString(header, tree2dump, showStatistics));
 		htmlFileWriter.close();
 
 		return htmlFile;
 	}
 
-	public static File dumpInteractiveHtmlFile(String header, SingleAccessKeyTree tree2dump)
-			throws IOException {
+	public static File dumpInteractiveHtmlFile(String header, SingleAccessKeyTree tree2dump,
+			boolean showStatistics) throws IOException {
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
@@ -870,7 +888,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		FileOutputStream fileOutputStream = new FileOutputStream(htmlFile);
 		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
 		BufferedWriter htmlFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, "UTF-8"));
-		htmlFileWriter.append(generateInteractiveHtmlString(header, tree2dump));
+		htmlFileWriter.append(generateInteractiveHtmlString(header, tree2dump, showStatistics));
 		htmlFileWriter.close();
 
 		return htmlFile;
@@ -883,11 +901,13 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * {@link #multipleTraversalToHTMLString} helper method
 	 * 
 	 * @param header
+	 * @param showStatistics
+	 *            TODO
 	 * @return
 	 * @throws IOException
 	 */
-	private static String generateFlatHtmlString(String header, SingleAccessKeyTree tree2dump)
-			throws IOException {
+	private static String generateFlatHtmlString(String header, SingleAccessKeyTree tree2dump,
+			boolean showStatistics) throws IOException {
 
 		StringBuffer output = new StringBuffer();
 		String lineSep = System.getProperty("line.separator");
@@ -955,6 +975,11 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		slk.append("</div>" + lineSep);
 
+		if (showStatistics) {
+			tree2dump.gatherTaxonPathStatistics();
+			slk.append(outputTaxonPathStatisticsHTML(tree2dump));
+		}
+
 		slk.append("</body>");
 		slk.append("</html>");
 
@@ -970,8 +995,8 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * @return
 	 * @throws IOException
 	 */
-	private static String generateInteractiveHtmlString(String header, SingleAccessKeyTree tree2dump)
-			throws IOException {
+	private static String generateInteractiveHtmlString(String header, SingleAccessKeyTree tree2dump,
+			boolean showStatistics) throws IOException {
 
 		StringBuffer output = new StringBuffer();
 		String lineSep = System.getProperty("line.separator");
@@ -1055,6 +1080,10 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append(output.toString());
 
 		slk.append("</div>" + lineSep);
+
+		if (showStatistics)
+			slk.append(outputTaxonPathStatisticsHTML(tree2dump));
+
 		slk.append("</body>");
 		slk.append("</html>");
 
@@ -1406,7 +1435,8 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * @return File, the pdf file
 	 * @throws IOException
 	 */
-	public static File dumpPdfFile(String header, SingleAccessKeyTree tree2dump) throws IOException {
+	public static File dumpPdfFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics)
+			throws IOException {
 
 		try {
 			String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
@@ -1432,6 +1462,9 @@ public abstract class SingleAccessKeyTreeDumper {
 			styles.loadStyle("taxa", "color", "#67bb1b");
 			styles.loadStyle("line", "color", "#333");
 
+			styles.loadStyle("statisticsTable", "font-family", "Verdana, helvetica, arial, sans-serif;");
+			styles.loadStyle("statisticsTable", "font-size", "78%");
+
 			HTMLWorker htmlWorker = new HTMLWorker(pdfDocument);
 			htmlWorker.setStyleSheet(styles);
 
@@ -1440,7 +1473,12 @@ public abstract class SingleAccessKeyTreeDumper {
 			output.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
 			output.append("<ul>");
 			recursiveToHTMLStringForPdf(tree2dump.getRoot(), output, "", 0, 0, tree2dump);
-			output.append("</ul></body></html>");
+			output.append("</ul>");
+
+			if (showStatistics)
+				output.append(outputTaxonPathStatisticsHTML(tree2dump));
+
+			output.append("</body></html>");
 
 			htmlWorker.parse(new StringReader(output.toString()));
 
@@ -1533,12 +1571,16 @@ public abstract class SingleAccessKeyTreeDumper {
 	/**
 	 * get a PDF file containing the key, in a flat representation
 	 * 
+	 * @param showStatistics
+	 *            TODO
 	 * @param String
 	 *            , header information
+	 * 
 	 * @return File, the pdf file
 	 * @throws IOException
 	 */
-	public static File dumpFlatPdfFile(String header, SingleAccessKeyTree tree2dump) throws IOException {
+	public static File dumpFlatPdfFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics)
+			throws IOException {
 
 		try {
 			String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
@@ -1568,6 +1610,9 @@ public abstract class SingleAccessKeyTreeDumper {
 
 			multipleTraversalToHTMLStringForPdf(tree2dump.getRoot(), output,
 					System.getProperty("line.separator"), false, tree2dump);
+
+			if (showStatistics)
+				output.append(outputTaxonPathStatisticsHTML(tree2dump));
 
 			output.append("</body></html>");
 
@@ -1738,12 +1783,16 @@ public abstract class SingleAccessKeyTreeDumper {
 	/**
 	 * get a wiki file containing the key
 	 * 
+	 * @param showStatistics
+	 *            TODO
 	 * @param String
 	 *            , header information
+	 * 
 	 * @return File, the Wikitext file
 	 * @throws IOException
 	 */
-	public static File dumpWikiFile(String header, SingleAccessKeyTree tree2dump) throws IOException {
+	public static File dumpWikiFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics)
+			throws IOException {
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
@@ -1762,16 +1811,19 @@ public abstract class SingleAccessKeyTreeDumper {
 		wikiFileWriter.append("== Identification Key==");
 		wikiFileWriter.newLine();
 
-		wikiFileWriter.append(generateTreeWiki(tree2dump));
+		wikiFileWriter.append(generateTreeWiki(tree2dump, showStatistics));
 
 		wikiFileWriter.close();
 
 		return wikiFile;
 	}
 
-	private static String generateTreeWiki(SingleAccessKeyTree tree2dump) {
+	private static String generateTreeWiki(SingleAccessKeyTree tree2dump, boolean showStatistics) {
 		StringBuffer output = new StringBuffer();
 		recursiveToWiki(tree2dump.getRoot(), output, "", 0, 0, tree2dump);
+		if (showStatistics) {
+			output.append(outputTaxonPathStatisticsWiki(tree2dump));
+		}
 		return output.toString();
 	}
 
@@ -1839,10 +1891,13 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * representation
 	 * 
 	 * @param header
+	 * @param showStatistics
+	 *            TODO
 	 * @return File, the output flat wiki file
 	 * @throws IOException
 	 */
-	public static File dumpFlatWikiFile(String header, SingleAccessKeyTree tree2dump) throws IOException {
+	public static File dumpFlatWikiFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics)
+			throws IOException {
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
 				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
@@ -1861,6 +1916,9 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		wikiFlatFileWriter.append(generateFlatWikiString(tree2dump));
 
+		if (showStatistics)
+			wikiFlatFileWriter.append(outputTaxonPathStatisticsWiki(tree2dump));
+
 		// wikiFlatFileWriter.append("</nowiki>");
 		wikiFlatFileWriter.close();
 
@@ -1877,6 +1935,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		StringBuffer output = new StringBuffer();
 		multipleTraversalToWikiString(tree2dump.getRoot(), output, System.getProperty("line.separator"),
 				tree2dump);
+
 		return output.toString();
 	}
 
@@ -2534,19 +2593,20 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * @return File, the output zip file
 	 * @throws IOException
 	 */
-	public static File dumpZipFile(String header, SingleAccessKeyTree tree2dump) throws IOException {
+	public static File dumpZipFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics)
+			throws IOException {
 
 		// create all output formats
 		File sddFile = dumpSddFile(header, tree2dump);
-		File txtFile = dumpTxtFile(header, tree2dump);
-		File flatTxtFile = dumpFlatTxtFile(header, tree2dump);
-		File htmlFile = dumpHtmlFile(header, tree2dump);
-		File flatHtmlFile = dumpFlatHtmlFile(header, tree2dump);
-		File interactiveHtmlFile = dumpInteractiveHtmlFile(header, tree2dump);
-		File pdfFile = dumpPdfFile(header, tree2dump);
-		File flatPdfFile = dumpFlatPdfFile(header, tree2dump);
-		File wikiFile = dumpWikiFile(header, tree2dump);
-		File flatWikiFile = dumpFlatWikiFile(header, tree2dump);
+		File txtFile = dumpTxtFile(header, tree2dump, showStatistics);
+		File flatTxtFile = dumpFlatTxtFile(header, tree2dump, showStatistics);
+		File htmlFile = dumpHtmlFile(header, tree2dump, showStatistics);
+		File flatHtmlFile = dumpFlatHtmlFile(header, tree2dump, showStatistics);
+		File interactiveHtmlFile = dumpInteractiveHtmlFile(header, tree2dump, showStatistics);
+		File pdfFile = dumpPdfFile(header, tree2dump, showStatistics);
+		File flatPdfFile = dumpFlatPdfFile(header, tree2dump, showStatistics);
+		File wikiFile = dumpWikiFile(header, tree2dump, showStatistics);
+		File flatWikiFile = dumpFlatWikiFile(header, tree2dump, showStatistics);
 		File flatSpeciesIDQuestionAnswerWikiFile = dumpFlatSpeciesIDQuestionAnswerWikiFile(header, tree2dump);
 		File flatSpeciesIDStatementWikiFile = dumpFlatSpeciesIDStatementWikiFile(header, tree2dump);
 		File dotFile = dumpDotFile(header, tree2dump);
@@ -2867,7 +2927,137 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * @return
 	 */
 	private static String escapeHTMLSpecialCharacters(String htmlString) {
-		return htmlString.replace(">", "&gt;").replace("<", "&lt;");
+		return htmlString.replace(">", "&gt;").replace("<", "&lt;").replace("&", "&amp;");
+	}
+
+	private static String outputTaxonPathStatisticsString(SingleAccessKeyTree tree2dump) {
+		String lineSeparator = System.getProperty("line.separator");
+		StringBuffer output = new StringBuffer(0);
+
+		DataSet ds = tree2dump.getDataSet();
+		float sumNbPath = 0;
+		float sumMinPathLength = 0;
+		float sumAvgPathLength = 0;
+		float sumMaxPathLength = 0;
+		int c = 0;
+		output.append(lineSeparator + "STATISTICS" + lineSeparator);
+		output.append("Taxon\tnumber of paths leading to taxon\t");
+		output.append("length of the shortest path leading to taxon\t");
+		output.append("average length of paths leading to taxon\t");
+		output.append("length of the longest path leading to taxon\t");
+		output.append(lineSeparator);
+		for (Taxon t : ds.getTaxa()) {
+			output.append(t.getName() + "\t" + t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY) + "\t"
+					+ t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY) + "\t"
+					+ t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY) + "\t"
+					+ t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY));
+
+			sumNbPath += t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY);
+			sumMinPathLength += t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY);
+			sumMaxPathLength += t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY);
+			sumAvgPathLength += t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY);
+			c++;
+			output.append(lineSeparator);
+		}
+
+		output.append("AVERAGE\t" + (sumNbPath / (float) c) + "\t" + (sumMinPathLength / (float) c) + "\t"
+				+ (sumAvgPathLength / (float) c) + "\t" + (sumMaxPathLength / (float) c));
+		output.append(lineSeparator);
+
+		return output.toString();
+	}
+
+	private static String outputTaxonPathStatisticsHTML(SingleAccessKeyTree tree2dump) {
+		String lineSeparator = System.getProperty("line.separator");
+		StringBuffer output = new StringBuffer(0);
+		DataSet ds = tree2dump.getDataSet();
+
+		output.append("<div style=\"margin-left: 30px;word-wrap: break-word;\" id=\"statistics\">"
+				+ lineSeparator);
+		output.append("<br/><strong>STATISTICS</strong>" + lineSeparator);
+		output.append("<table class=\"statisticsTable\">" + lineSeparator);
+
+		float sumNbPath = 0;
+		float sumMinPathLength = 0;
+		float sumAvgPathLength = 0;
+		float sumMaxPathLength = 0;
+		int c = 0;
+		output.append("<tr>" + lineSeparator);
+		output.append("<td>Taxon</td>");
+		output.append("<td width=\"100px;\">Number of paths leading to taxon</td>");
+		output.append("<td width=\"100px;\">Length of the shortest path leading to taxon</td>");
+		output.append("<td width=\"100px;\">Average length of paths leading to taxon</td>");
+		output.append("<td width=\"100px;\">Length of the longest path leading to taxon</td>");
+		output.append("</tr>" + lineSeparator);
+
+		for (Taxon t : ds.getTaxa()) {
+			output.append("<tr>" + lineSeparator);
+			output.append("<td>" + escapeHTMLSpecialCharacters(t.getName()) + "</td><td>"
+					+ t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY) + "</td><td>"
+					+ t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY) + "</td><td>"
+					+ t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY) + "</td><td>"
+					+ t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY) + "</td>");
+
+			sumNbPath += t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY);
+			sumMinPathLength += t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY);
+			sumMaxPathLength += t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY);
+			sumAvgPathLength += t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY);
+			c++;
+			output.append("</tr>" + lineSeparator);
+		}
+
+		output.append("<tr><td>AVERAGE</td><td>" + (sumNbPath / (float) c) + "</td><td>"
+				+ (sumMinPathLength / (float) c) + "</td><td>" + (sumAvgPathLength / (float) c) + "</td><td>"
+				+ (sumMaxPathLength / (float) c) + "</td></tr>");
+		output.append(lineSeparator);
+
+		output.append("</table>" + lineSeparator);
+		output.append("</div>" + lineSeparator);
+		return output.toString();
+	}
+
+	private static String outputTaxonPathStatisticsWiki(SingleAccessKeyTree tree2dump) {
+		String lineSeparator = System.getProperty("line.separator");
+		StringBuffer output = new StringBuffer(0);
+		DataSet ds = tree2dump.getDataSet();
+
+		float sumNbPath = 0;
+		float sumMinPathLength = 0;
+		float sumAvgPathLength = 0;
+		float sumMaxPathLength = 0;
+		int c = 0;
+		output.append("== STATISTICS == " + lineSeparator);
+
+		output.append("{|align=\"center\" style=\"text-align:center;\"" + lineSeparator);
+		output.append("!Taxon" + lineSeparator);
+		output.append("!Number of paths leading to taxon" + lineSeparator);
+		output.append("!Length of the shortest path leading to taxon" + lineSeparator);
+		output.append("!Average length of paths leading to taxon" + lineSeparator);
+		output.append("!Length of the longest path leading to taxon" + lineSeparator);
+		output.append("|-" + lineSeparator);
+
+		for (Taxon t : ds.getTaxa()) {
+			output.append("|align=\"left\"|" + t.getName() + lineSeparator + "|"
+					+ t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY) + lineSeparator + "|"
+					+ t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY) + lineSeparator + "|"
+					+ t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY) + lineSeparator + "|"
+					+ t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY) + lineSeparator + "|-"
+					+ lineSeparator);
+
+			sumNbPath += t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY);
+			sumMinPathLength += t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY);
+			sumMaxPathLength += t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY);
+			sumAvgPathLength += t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY);
+			c++;
+		}
+
+		output.append("!align=\"left\"|AVERAGE" + lineSeparator + "|" + (sumNbPath / (float) c)
+				+ lineSeparator + "|" + (sumMinPathLength / (float) c) + lineSeparator + "|"
+				+ (sumAvgPathLength / (float) c) + lineSeparator + "|" + (sumMaxPathLength / (float) c)
+				+ lineSeparator + "|}");
+		output.append(lineSeparator);
+
+		return output.toString();
 	}
 
 }
