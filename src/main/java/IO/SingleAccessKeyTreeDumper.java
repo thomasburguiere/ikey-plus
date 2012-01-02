@@ -374,8 +374,11 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		txtFileWriter.append(header);
 		txtFileWriter.append(generateTreeString(tree2dump));
-		if (showStatistics)
+
+		if (showStatistics) {
+			tree2dump.gatherTaxonPathStatistics();
 			txtFileWriter.append(outputTaxonPathStatisticsString(tree2dump));
+		}
 		txtFileWriter.close();
 
 		return txtFile;
@@ -465,8 +468,11 @@ public abstract class SingleAccessKeyTreeDumper {
 		BufferedWriter txtFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, "UTF-8"));
 		txtFileWriter.append(header);
 		txtFileWriter.append(generateFlatString(tree2dump));
-		if (showStatistics)
+
+		if (showStatistics) {
+			tree2dump.gatherTaxonPathStatistics();
 			txtFileWriter.append(outputTaxonPathStatisticsString(tree2dump));
+		}
 
 		txtFileWriter.close();
 
@@ -718,8 +724,10 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("</ul>" + lineSep);
 		slk.append("</div>" + lineSep);
 
-		if (showStatistics)
+		if (showStatistics) {
+			tree2dump.gatherTaxonPathStatistics();
 			slk.append(outputTaxonPathStatisticsHTML(tree2dump));
+		}
 
 		slk.append("</body>");
 		slk.append("</html>");
@@ -1081,9 +1089,10 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		slk.append("</div>" + lineSep);
 
-		if (showStatistics)
+		if (showStatistics) {
+			tree2dump.gatherTaxonPathStatistics();
 			slk.append(outputTaxonPathStatisticsHTML(tree2dump));
-
+		}
 		slk.append("</body>");
 		slk.append("</html>");
 
@@ -1475,9 +1484,10 @@ public abstract class SingleAccessKeyTreeDumper {
 			recursiveToHTMLStringForPdf(tree2dump.getRoot(), output, "", 0, 0, tree2dump);
 			output.append("</ul>");
 
-			if (showStatistics)
+			if (showStatistics) {
+				tree2dump.gatherTaxonPathStatistics();
 				output.append(outputTaxonPathStatisticsHTML(tree2dump));
-
+			}
 			output.append("</body></html>");
 
 			htmlWorker.parse(new StringReader(output.toString()));
@@ -1611,8 +1621,10 @@ public abstract class SingleAccessKeyTreeDumper {
 			multipleTraversalToHTMLStringForPdf(tree2dump.getRoot(), output,
 					System.getProperty("line.separator"), false, tree2dump);
 
-			if (showStatistics)
+			if (showStatistics) {
+				tree2dump.gatherTaxonPathStatistics();
 				output.append(outputTaxonPathStatisticsHTML(tree2dump));
+			}
 
 			output.append("</body></html>");
 
@@ -1822,6 +1834,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		StringBuffer output = new StringBuffer();
 		recursiveToWiki(tree2dump.getRoot(), output, "", 0, 0, tree2dump);
 		if (showStatistics) {
+			tree2dump.gatherTaxonPathStatistics();
 			output.append(outputTaxonPathStatisticsWiki(tree2dump));
 		}
 		return output.toString();
@@ -1916,8 +1929,10 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		wikiFlatFileWriter.append(generateFlatWikiString(tree2dump));
 
-		if (showStatistics)
+		if (showStatistics) {
+			tree2dump.gatherTaxonPathStatistics();
 			wikiFlatFileWriter.append(outputTaxonPathStatisticsWiki(tree2dump));
+		}
 
 		// wikiFlatFileWriter.append("</nowiki>");
 		wikiFlatFileWriter.close();
@@ -2940,17 +2955,17 @@ public abstract class SingleAccessKeyTreeDumper {
 		float sumAvgPathLength = 0;
 		float sumMaxPathLength = 0;
 		int c = 0;
-		output.append(lineSeparator + "STATISTICS" + lineSeparator);
+		output.append(lineSeparator + lineSeparator + lineSeparator + "STATISTICS" + lineSeparator);
 		output.append("Taxon\tnumber of paths leading to taxon\t");
 		output.append("length of the shortest path leading to taxon\t");
 		output.append("average length of paths leading to taxon\t");
 		output.append("length of the longest path leading to taxon\t");
 		output.append(lineSeparator);
 		for (Taxon t : ds.getTaxa()) {
-			output.append(t.getName() + "\t" + t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY) + "\t"
-					+ t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY) + "\t"
-					+ t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY) + "\t"
-					+ t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY));
+			output.append(t.getName() + "\t" + t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY).intValue()
+					+ "\t" + t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY).intValue() + "\t"
+					+ Utils.roundFloat(t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY), 3) + "\t"
+					+ t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY).intValue());
 
 			sumNbPath += t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY);
 			sumMinPathLength += t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY);
@@ -2960,8 +2975,14 @@ public abstract class SingleAccessKeyTreeDumper {
 			output.append(lineSeparator);
 		}
 
-		output.append("AVERAGE\t" + (sumNbPath / (float) c) + "\t" + (sumMinPathLength / (float) c) + "\t"
-				+ (sumAvgPathLength / (float) c) + "\t" + (sumMaxPathLength / (float) c));
+		// round all average values
+		float averageNbPath = Utils.roundFloat((sumNbPath / (float) c), 3);
+		float averageMinPath = Utils.roundFloat((sumMinPathLength / (float) c), 3);
+		float averageAvgPath = Utils.roundFloat((sumAvgPathLength / (float) c), 3);
+		float averageMaxPath = Utils.roundFloat((sumMaxPathLength / (float) c), 3);
+
+		output.append("AVERAGE\t" + averageNbPath + "\t" + averageMinPath + "\t" + averageAvgPath + "\t"
+				+ averageMaxPath);
 		output.append(lineSeparator);
 
 		return output.toString();
@@ -2974,7 +2995,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		output.append("<div style=\"margin-left: 30px;word-wrap: break-word;\" id=\"statistics\">"
 				+ lineSeparator);
-		output.append("<br/><strong>STATISTICS</strong>" + lineSeparator);
+		output.append("<br/><br/><strong>STATISTICS</strong>" + lineSeparator);
 		output.append("<table class=\"statisticsTable\">" + lineSeparator);
 
 		float sumNbPath = 0;
@@ -2991,12 +3012,18 @@ public abstract class SingleAccessKeyTreeDumper {
 		output.append("</tr>" + lineSeparator);
 
 		for (Taxon t : ds.getTaxa()) {
-			output.append("<tr>" + lineSeparator);
+
+			if (c % 2 != 0) {
+				output.append("<tr style=\"background: #e5e5e5;\">" + lineSeparator);
+			} else {
+				output.append("<tr>" + lineSeparator);
+			}
 			output.append("<td>" + escapeHTMLSpecialCharacters(t.getName()) + "</td><td>"
-					+ t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY) + "</td><td>"
-					+ t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY) + "</td><td>"
-					+ t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY) + "</td><td>"
-					+ t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY) + "</td>");
+					+ t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY).intValue() + "</td><td>"
+					+ t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY).intValue() + "</td><td>"
+					+ Utils.roundFloat(t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY), 3)
+					+ "</td><td>" + t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY).intValue()
+					+ "</td>");
 
 			sumNbPath += t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY);
 			sumMinPathLength += t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY);
@@ -3006,9 +3033,14 @@ public abstract class SingleAccessKeyTreeDumper {
 			output.append("</tr>" + lineSeparator);
 		}
 
-		output.append("<tr><td>AVERAGE</td><td>" + (sumNbPath / (float) c) + "</td><td>"
-				+ (sumMinPathLength / (float) c) + "</td><td>" + (sumAvgPathLength / (float) c) + "</td><td>"
-				+ (sumMaxPathLength / (float) c) + "</td></tr>");
+		// round all average values
+		float averageNbPath = Utils.roundFloat((sumNbPath / (float) c), 3);
+		float averageMinPath = Utils.roundFloat((sumMinPathLength / (float) c), 3);
+		float averageAvgPath = Utils.roundFloat((sumAvgPathLength / (float) c), 3);
+		float averageMaxPath = Utils.roundFloat((sumMaxPathLength / (float) c), 3);
+
+		output.append("<tr><td>AVERAGE</td><td>" + averageNbPath + "</td><td>" + averageMinPath + "</td><td>"
+				+ averageAvgPath + "</td><td>" + averageMaxPath + "</td></tr>");
 		output.append(lineSeparator);
 
 		output.append("</table>" + lineSeparator);
@@ -3026,7 +3058,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		float sumAvgPathLength = 0;
 		float sumMaxPathLength = 0;
 		int c = 0;
-		output.append("== STATISTICS == " + lineSeparator);
+		output.append(lineSeparator + lineSeparator + "== STATISTICS == " + lineSeparator);
 
 		output.append("{|align=\"center\" style=\"text-align:center;\"" + lineSeparator);
 		output.append("!Taxon" + lineSeparator);
@@ -3038,11 +3070,11 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		for (Taxon t : ds.getTaxa()) {
 			output.append("|align=\"left\"|" + t.getName() + lineSeparator + "|"
-					+ t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY) + lineSeparator + "|"
-					+ t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY) + lineSeparator + "|"
-					+ t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY) + lineSeparator + "|"
-					+ t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY) + lineSeparator + "|-"
-					+ lineSeparator);
+					+ t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY).intValue() + lineSeparator + "|"
+					+ t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY).intValue() + lineSeparator + "|"
+					+ Utils.roundFloat(t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY), 3)
+					+ lineSeparator + "|" + t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY).intValue()
+					+ lineSeparator + "|-" + lineSeparator);
 
 			sumNbPath += t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY);
 			sumMinPathLength += t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY);
@@ -3051,10 +3083,15 @@ public abstract class SingleAccessKeyTreeDumper {
 			c++;
 		}
 
-		output.append("!align=\"left\"|AVERAGE" + lineSeparator + "|" + (sumNbPath / (float) c)
-				+ lineSeparator + "|" + (sumMinPathLength / (float) c) + lineSeparator + "|"
-				+ (sumAvgPathLength / (float) c) + lineSeparator + "|" + (sumMaxPathLength / (float) c)
-				+ lineSeparator + "|}");
+		// round all average values
+		float averageNbPath = Utils.roundFloat((sumNbPath / (float) c), 3);
+		float averageMinPath = Utils.roundFloat((sumMinPathLength / (float) c), 3);
+		float averageAvgPath = Utils.roundFloat((sumAvgPathLength / (float) c), 3);
+		float averageMaxPath = Utils.roundFloat((sumMaxPathLength / (float) c), 3);
+
+		output.append("!align=\"left\"|AVERAGE" + lineSeparator + "|" + averageNbPath + lineSeparator + "|"
+				+ averageMinPath + lineSeparator + "|" + averageAvgPath + lineSeparator + "|"
+				+ averageMaxPath + lineSeparator + "|}");
 		output.append(lineSeparator);
 
 		return output.toString();

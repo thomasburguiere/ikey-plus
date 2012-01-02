@@ -47,7 +47,7 @@ public class IdentificationKeyTXTGeneratorTest {
 
 			SDDSaxParser sddSaxParser = null;
 			try {
-				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
+				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-unknownData-fullSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
@@ -62,17 +62,17 @@ public class IdentificationKeyTXTGeneratorTest {
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/archaeoSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample.xml";
-				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample3_contextual.xml";
+				// String stringUrl =
+				// "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample3_contextual.xml";
 
 				// options
 				utils.setFewStatesCharacterFirst(false);
 				utils.setMergeCharacterStatesIfSameDiscimination(false);
 				utils.setPruning(false);
-				utils.setVerbosity("how");
+				utils.setVerbosity("hows");
 				utils.setScoreMethod(Utils.XPER);
 				utils.setWeightContext("CostEffectiveness");
 				utils.setWeightType(Utils.GLOBAL_CHARACTER_WEIGHT);
-				utils.setStatisticsEnabled(true);
 
 				// test if the URL is valid
 				URLConnection urlConnection;
@@ -105,7 +105,7 @@ public class IdentificationKeyTXTGeneratorTest {
 				header.append(System.getProperty("line.separator") + "verbosity=" + utils.getVerbosity());
 				header.append(System.getProperty("line.separator") + "scoreMethod=" + utils.getScoreMethod());
 				header.append(System.getProperty("line.separator") + "weightContext="
-						+ utils.getWeightContext() + System.getProperty("line.separator"));
+						+ utils.getWeightContext());
 				header.append(System.getProperty("line.separator") + "weightType=" + utils.getWeightType()
 						+ System.getProperty("line.separator"));
 
@@ -140,23 +140,13 @@ public class IdentificationKeyTXTGeneratorTest {
 			// create key file
 			try {
 				SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
-
-				if (utils.isStatisticsEnabled()) {
-					// define time before statistics gathering
-					beforeTime = System.currentTimeMillis();
-					tree2dump.gatherTaxonPathStatistics();
-					// define key statistics duration
-					double statsDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
-					header.append(System.getProperty("line.separator") + "statsDuration= " + statsDuration
-							+ " s" + System.getProperty("line.separator"));
-				}
 				header.append(System.getProperty("line.separator") + System.getProperty("line.separator"));
 
 				if (!utils.getVerbosity().contains(Utils.HEADER_TAG)) {
 					header.setLength(0);
 				}
 				resultFileName = SingleAccessKeyTreeDumper.dumpTxtFile(header.toString(), tree2dump,
-						utils.isStatisticsEnabled()).getName();
+						utils.getVerbosity().contains(Utils.STATISTIC_TAG)).getName();
 			} catch (IOException e) {
 				utils.setErrorMessage(Utils.getBundleConfElement("message.creatingFileError"), e);
 				e.printStackTrace();

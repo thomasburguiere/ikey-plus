@@ -32,6 +32,7 @@ public class Utils {
 	public static final String HEADER_TAG = "h";
 	public static final String OTHER_TAG = "o";
 	public static final String WARNING_TAG = "w";
+	public static final String STATISTIC_TAG = "s";
 
 	public static final int DEFAULT_WEIGHT = 3;
 
@@ -85,7 +86,6 @@ public class Utils {
 	private String scoreMethod = Utils.XPER;
 	private String weightContext = "";
 	private String weightType = Utils.GLOBAL_CHARACTER_WEIGHT;
-	private boolean statisticsEnabled = false;
 
 	/**
 	 * Constructor
@@ -356,14 +356,6 @@ public class Utils {
 
 	public void setWeightType(String weightType) {
 		this.weightType = weightType;
-	}
-
-	public boolean isStatisticsEnabled() {
-		return statisticsEnabled;
-	}
-
-	public void setStatisticsEnabled(boolean statisticsEnabled) {
-		this.statisticsEnabled = statisticsEnabled;
 	}
 
 	/**

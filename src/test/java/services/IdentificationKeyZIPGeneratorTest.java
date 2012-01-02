@@ -69,11 +69,10 @@ public class IdentificationKeyZIPGeneratorTest {
 				utils.setFewStatesCharacterFirst(false);
 				utils.setMergeCharacterStatesIfSameDiscimination(false);
 				utils.setPruning(false);
-				utils.setVerbosity("how");
+				utils.setVerbosity("hows");
 				utils.setScoreMethod(Utils.XPER);
 				utils.setWeightContext("CostEffectiveness");
 				utils.setWeightType(Utils.GLOBAL_CHARACTER_WEIGHT);
-				utils.setStatisticsEnabled(true);
 
 				// test if the URL is valid
 				URLConnection urlConnection;
@@ -106,7 +105,7 @@ public class IdentificationKeyZIPGeneratorTest {
 				header.append(System.getProperty("line.separator") + "verbosity=" + utils.getVerbosity());
 				header.append(System.getProperty("line.separator") + "scoreMethod=" + utils.getScoreMethod());
 				header.append(System.getProperty("line.separator") + "weightContext="
-						+ utils.getWeightContext() + System.getProperty("line.separator"));
+						+ utils.getWeightContext());
 				header.append(System.getProperty("line.separator") + "weightType=" + utils.getWeightType()
 						+ System.getProperty("line.separator"));
 
@@ -145,7 +144,7 @@ public class IdentificationKeyZIPGeneratorTest {
 				}
 				SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 				resultFileName = SingleAccessKeyTreeDumper.dumpZipFile(header.toString(), tree2dump,
-						utils.isStatisticsEnabled()).getName();
+						utils.getVerbosity().contains(Utils.STATISTIC_TAG)).getName();
 			} catch (IOException e) {
 				utils.setErrorMessage(Utils.getBundleConfElement("message.creatingFileError"), e);
 				e.printStackTrace();

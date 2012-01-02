@@ -55,7 +55,7 @@ public class IdentificationKeySDDGeneratorTest {
 				// "http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/testSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml";
-//				 String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesImagesURL.xml";
+				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesImagesURL.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/smallSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/wrongSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/pruningSDD.xml";
@@ -104,10 +104,9 @@ public class IdentificationKeySDDGeneratorTest {
 				header.append(System.getProperty("line.separator") + "verbosity=" + utils.getVerbosity());
 				header.append(System.getProperty("line.separator") + "scoreMethod=" + utils.getScoreMethod());
 				header.append(System.getProperty("line.separator") + "weightContext="
-						+ utils.getWeightContext() + System.getProperty("line.separator"));
+						+ utils.getWeightContext());
 				header.append(System.getProperty("line.separator") + "weightType=" + utils.getWeightType()
 						+ System.getProperty("line.separator"));
-
 			} catch (Throwable t) {
 				utils.setErrorMessage(Utils.getBundleConfElement("message.parsingError"), t);
 				t.printStackTrace();

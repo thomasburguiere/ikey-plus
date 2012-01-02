@@ -152,7 +152,6 @@ public class Taxon {
 			pathStatistics.put(LONGEST_PATH_IN_KEY, pathLength);
 		else if (pathLength > pathStatistics.get(LONGEST_PATH_IN_KEY))
 			pathStatistics.put(LONGEST_PATH_IN_KEY, pathLength);
-
 	}
 
 }
