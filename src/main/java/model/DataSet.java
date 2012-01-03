@@ -109,7 +109,7 @@ public class DataSet {
 	}
 
 	/**
-	 * get the label
+	 * get the label of the dataset
 	 * 
 	 * @return String, the label
 	 */
@@ -118,7 +118,7 @@ public class DataSet {
 	}
 
 	/**
-	 * set the label
+	 * set the label of the dataset
 	 * 
 	 * @param String
 	 *            , the label
@@ -131,7 +131,7 @@ public class DataSet {
 	 * get a Character by its identifier
 	 * 
 	 * @param String
-	 *            , Character identifier
+	 *            , the character identifier
 	 * @return ICharacter, a Character
 	 */
 	public ICharacter getCharacterById(String id) {

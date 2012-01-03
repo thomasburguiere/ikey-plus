@@ -34,7 +34,7 @@ public class CodedDescription {
 	}
 
 	/**
-	 * set the description (all Characters)
+	 * set the description of all the characters
 	 * 
 	 * @param Map
 	 *            <ICharacter, Object>
@@ -43,22 +43,51 @@ public class CodedDescription {
 		this.description = description;
 	}
 
+	/**
+	 * get all the character weights
+	 * 
+	 * @return Map<ICharacter, Integer>
+	 */
 	public Map<ICharacter, Integer> getCharacterWeights() {
 		return characterWeights;
 	}
 
+	/**
+	 * set all the character weights
+	 * 
+	 * @param Map
+	 *            <ICharacter, Integer>
+	 */
 	public void setCharacterWeights(Map<ICharacter, Integer> characterWeights) {
 		this.characterWeights = characterWeights;
 	}
 
+	/**
+	 * get a character weight
+	 * 
+	 * @param ICharacter
+	 * @return Integer
+	 */
 	public Integer getCharacterWeight(ICharacter character) {
 		return characterWeights.get(character);
 	}
 
+	/**
+	 * add a character weight
+	 * 
+	 * @param ICharacter
+	 * @param Integer
+	 */
 	public void addCharacterWeight(ICharacter character, Integer weight) {
 		characterWeights.put(character, weight);
 	}
 
+	/**
+	 * remove a character weight
+	 * 
+	 * @param ICharacter
+	 *            character
+	 */
 	public void removeCharacterWeight(ICharacter character) {
 		characterWeights.remove(character);
 	}

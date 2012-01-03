@@ -3031,8 +3031,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		return output.toString();
 	}
-	
-	
+
 	/**
 	 * Output method that loops over the list of taxa contained in the Dataset, and outputs basic path
 	 * statistics for each Taxon, in an HTML representation

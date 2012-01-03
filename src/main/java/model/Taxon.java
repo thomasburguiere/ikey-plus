@@ -115,22 +115,50 @@ public class Taxon {
 		return null;
 	}
 
+	/**
+	 * get the ID
+	 * 
+	 * @return String, the ID
+	 */
 	public String getId() {
 		return id;
 	}
 
+	/**
+	 * set the ID
+	 * 
+	 * @param String
+	 *            , the ID
+	 */
 	public void setId(String id) {
 		this.id = id;
 	}
 
+	/**
+	 * get the statistic values
+	 * 
+	 * @return HashMap<Integer, Float>
+	 */
 	public HashMap<Integer, Float> getTaxonStatistics() {
 		return pathStatistics;
 	}
 
+	/**
+	 * set the statistic values
+	 * 
+	 * @param HashMap
+	 *            <Integer, Float>
+	 */
 	public void setTaxonStatistics(HashMap<Integer, Float> taxonStatistics) {
 		this.pathStatistics = taxonStatistics;
 	}
 
+	/**
+	 * update the statistic values
+	 * 
+	 * @param Float
+	 *            , the length of the path
+	 */
 	public void updatePathStatistics(Float pathLength) {
 		float oldNbPath = pathStatistics.get(NB_PATH_IN_KEY);
 		float oldSumPathLength = pathStatistics.get(SUM_PATHLENGTHS_IN_KEY);

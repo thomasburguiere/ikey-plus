@@ -35,64 +35,87 @@ public interface ICharacter {
 	public void setName(String name);
 
 	/**
+	 * getter for ID
+	 * 
 	 * @return String, Character identifier
 	 */
 	public String getId();
 
 	/**
+	 * setter for ID
+	 * 
 	 * @param String
 	 *            , Character identifier
 	 */
 	public void setId(String id);
 
 	/**
+	 * getter for weight
+	 * 
 	 * @return int, Character weight
 	 */
 	public float getWeight();
 
 	/**
+	 * setter for weight
+	 * 
 	 * @param int , Character weight
 	 */
 	public void setWeight(float weight);
 
 	/**
+	 * get the inapplicable states
+	 * 
 	 * @return List<State>, the list of inapplicable states
 	 */
 	public List<State> getInapplicableStates();
 
 	/**
+	 * set the inapplicable states
+	 * 
 	 * @param List
 	 *            <State> , the list of inapplicable states
 	 */
 	public void setInapplicableStates(List<State> inapplicableStates);
 
 	/**
+	 * 
+	 * get the parent character
+	 * 
 	 * @return ICharacter, the parent character
 	 */
 	public ICharacter getParentCharacter();
 
 	/**
+	 * 
+	 * set the parent character
+	 * 
 	 * @param ICharacter
 	 *            , the parent character
 	 */
 	public void setParentCharacter(ICharacter parentCharacter);
 
 	/**
+	 * get all child characters
+	 * 
 	 * @return List<ICharacter>, the list of child characters
 	 */
 	public List<ICharacter> getChildCharacters();
 
 	/**
+	 * 
+	 * set the child characters
+	 * 
 	 * @param List
 	 *            <ICharacter>, the list of child characters
 	 */
 	public void setChildCharacters(List<ICharacter> childCharacters);
 
 	/**
+	 * get all children in the hierarchies
+	 * 
 	 * @param List
 	 *            <ICharacter>, the list of all child characters
 	 */
 	public List<ICharacter> getAllChildren();
-
-	public String toString();
 }

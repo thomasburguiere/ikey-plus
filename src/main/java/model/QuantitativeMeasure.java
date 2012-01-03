@@ -140,6 +140,8 @@ public class QuantitativeMeasure {
 	}
 
 	/**
+	 * test if the min value is included
+	 * 
 	 * @return boolean, true if Min value is include in the interval
 	 */
 	public boolean isMinInclude() {
@@ -147,6 +149,9 @@ public class QuantitativeMeasure {
 	}
 
 	/**
+	 * 
+	 * set if the min value is included
+	 * 
 	 * @param minInclud
 	 */
 	public void setMinInclude(boolean minInclude) {
@@ -154,6 +159,9 @@ public class QuantitativeMeasure {
 	}
 
 	/**
+	 * 
+	 * test if the max value is included
+	 * 
 	 * @return boolean, true if Max value is include in the interval
 	 */
 	public boolean isMaxInclude() {
@@ -161,6 +169,9 @@ public class QuantitativeMeasure {
 	}
 
 	/**
+	 * 
+	 * set if the max value is included
+	 * 
 	 * @param maxInclud
 	 */
 	public void setMaxInclude(boolean maxInclude) {
@@ -176,19 +187,6 @@ public class QuantitativeMeasure {
 	public String toString() {
 		return "Min=" + min + "  Max=" + max + "  Mean=" + mean + "  SD=" + sd + "  UMethLower=" + uMethLower
 				+ "  UMethUpper=" + uMethUpper;
-	}
-
-	/**
-	 * get the string representation as interval with unit
-	 * 
-	 * @return String, the string representation
-	 */
-	public String toStringInterval(String unit) {
-
-		if (unit != null && !unit.equals("")) {
-			return toStringInterval() + " (" + unit + ")";
-		}
-		return toStringInterval();
 	}
 
 	/**
@@ -212,6 +210,19 @@ public class QuantitativeMeasure {
 			end = "[";
 		}
 		return start + this.getCalculateMinimum() + ", " + this.getCalculateMaximum() + end;
+	}
+
+	/**
+	 * get the string representation as interval with unit
+	 * 
+	 * @return String, the string representation
+	 */
+	public String toStringInterval(String unit) {
+
+		if (unit != null && !unit.equals("")) {
+			return toStringInterval() + " (" + unit + ")";
+		}
+		return toStringInterval();
 	}
 
 	/**
@@ -249,6 +260,9 @@ public class QuantitativeMeasure {
 	}
 
 	/**
+	 * 
+	 * test if a quantitativeMeasure is include in the interval
+	 * 
 	 * @param quantitativeMeasure
 	 * @return boolean, true if quantitativeMeasure is include in the current quantitativeMeasure
 	 */

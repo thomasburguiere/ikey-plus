@@ -67,10 +67,10 @@ public class IdentificationKeyFlatHTMLGeneratorTest {
 				utils.setFewStatesCharacterFirst(true);
 				utils.setMergeCharacterStatesIfSameDiscimination(false);
 				utils.setPruning(false);
-				utils.setVerbosity("hows");
+				utils.setVerbosity("hs");
 				utils.setScoreMethod(Utils.XPER);
 				utils.setWeightContext("CostEffectiveness");
-				utils.setWeightType(Utils.CONTEXTUAL_CHARACTER_WEIGHT);
+				utils.setWeightType(Utils.GLOBAL_CHARACTER_WEIGHT);
 
 				// test if the URL is valid
 				URLConnection urlConnection;

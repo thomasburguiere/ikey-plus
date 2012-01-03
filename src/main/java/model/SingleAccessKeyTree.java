@@ -1,7 +1,5 @@
 package main.java.model;
 
-import javax.jws.Oneway;
-
 import main.java.utils.Utils;
 
 /**
@@ -83,10 +81,21 @@ public class SingleAccessKeyTree {
 		this.dataSet = dataSet;
 	}
 
+	/**
+	 * get the utils object
+	 * 
+	 * @return Utils, the utils object
+	 */
 	public Utils getUtils() {
 		return utils;
 	}
 
+	/**
+	 * set the utils object
+	 * 
+	 * @param Utils
+	 *            , the utils object
+	 */
 	public void setUtils(Utils utils) {
 		this.utils = utils;
 	}

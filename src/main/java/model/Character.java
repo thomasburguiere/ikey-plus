@@ -154,7 +154,7 @@ public class Character implements ICharacter {
 	}
 
 	/**
-	 * add to the list all child characters
+	 * add all the child character in a list
 	 * 
 	 * @param allChildrenCharacter
 	 *            , the list of character
@@ -169,6 +169,8 @@ public class Character implements ICharacter {
 	}
 
 	/**
+	 * clone the character
+	 * 
 	 * @return ICharacter, the cloned character
 	 */
 	public ICharacter clone() {
@@ -187,7 +189,12 @@ public class Character implements ICharacter {
 		return newCharacter;
 	}
 
+	/**
+	 * get the string value characterizing the current character
+	 * 
+	 * @return String, the character name
+	 */
 	public String toString() {
-		return name;
+		return this.name;
 	}
 }

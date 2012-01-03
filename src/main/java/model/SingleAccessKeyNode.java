@@ -26,6 +26,9 @@ public class SingleAccessKeyNode {
 	}
 
 	/**
+	 * 
+	 * constructor with character and character state parameters
+	 * 
 	 * @param ICharacter
 	 *            , a character
 	 * @param Object
@@ -183,6 +186,9 @@ public class SingleAccessKeyNode {
 	}
 
 	/**
+	 * 
+	 * test if the node has children
+	 * 
 	 * @return true if this SingleAccessKeyNode's child list size is greater than 0
 	 */
 	public boolean hasChild() {
@@ -190,6 +196,9 @@ public class SingleAccessKeyNode {
 	}
 
 	/**
+	 * 
+	 * test if the node is empty
+	 * 
 	 * @return true if this SingleAccessKeynode's character or characterState is null
 	 */
 	public boolean isEmpty() {
@@ -197,6 +206,8 @@ public class SingleAccessKeyNode {
 	}
 
 	/**
+	 * get the node description
+	 * 
 	 * @return String, the message to display for this node
 	 */
 	public String getNodeDescription() {
@@ -204,6 +215,8 @@ public class SingleAccessKeyNode {
 	}
 
 	/**
+	 * set the node description
+	 * 
 	 * @param nodeDescription
 	 */
 	public void setNodeDescription(String nodeDescription) {
@@ -211,6 +224,8 @@ public class SingleAccessKeyNode {
 	}
 
 	/**
+	 * the string value characterizing the node
+	 * 
 	 * @return String, the string representation
 	 */
 	public String toString() {
