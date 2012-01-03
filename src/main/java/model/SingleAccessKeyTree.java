@@ -1,5 +1,7 @@
 package main.java.model;
 
+import javax.jws.Oneway;
+
 import main.java.utils.Utils;
 
 /**
@@ -183,8 +185,12 @@ public class SingleAccessKeyTree {
 	private void recursiveTaxonPathStatistics(SingleAccessKeyNode node, int treeDepth) {
 		if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
 			if (node.hasChild() == false) {
-				for (Taxon t : node.getRemainingTaxa()) {
-					t.updatePathStatistics(new Float(treeDepth));
+				if (node.getCharacter().isSupportsCategoricalData()
+						&& !((State) node.getCharacterState()).getName().equals(
+								Utils.getBundleConfElement("message.notDescribed"))) {
+					for (Taxon t : node.getRemainingTaxa()) {
+						t.updatePathStatistics(new Float(treeDepth));
+					}
 				}
 			}
 			treeDepth++;
@@ -193,5 +199,4 @@ public class SingleAccessKeyTree {
 			recursiveTaxonPathStatistics(childNode, treeDepth);
 		}
 	}
-
 }
