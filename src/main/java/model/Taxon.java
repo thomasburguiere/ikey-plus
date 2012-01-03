@@ -44,8 +44,8 @@ public class Taxon {
 		// initializing the taxonStatistics
 		pathStatistics = new HashMap<Integer, Float>();
 		pathStatistics.put(NB_PATH_IN_KEY, new Float(0));
-		pathStatistics.put(SHORTEST_PATH_IN_KEY, new Float(-1));
-		pathStatistics.put(LONGEST_PATH_IN_KEY, new Float(-1));
+		pathStatistics.put(SHORTEST_PATH_IN_KEY, new Float(0));
+		pathStatistics.put(LONGEST_PATH_IN_KEY, new Float(0));
 		pathStatistics.put(AVERAGE_PATHLENGTH_IN_KEY, new Float(0));
 		pathStatistics.put(SUM_PATHLENGTHS_IN_KEY, new Float(0));
 
@@ -143,12 +143,12 @@ public class Taxon {
 		pathStatistics.put(NB_PATH_IN_KEY, newNbPath);
 		pathStatistics.put(SUM_PATHLENGTHS_IN_KEY, newSumPathLength);
 
-		if (pathStatistics.get(SHORTEST_PATH_IN_KEY) == -1)
+		if (pathStatistics.get(SHORTEST_PATH_IN_KEY) == 0)
 			pathStatistics.put(SHORTEST_PATH_IN_KEY, pathLength);
 		else if (pathLength < pathStatistics.get(SHORTEST_PATH_IN_KEY))
 			pathStatistics.put(SHORTEST_PATH_IN_KEY, pathLength);
 
-		if (pathStatistics.get(LONGEST_PATH_IN_KEY) == -1)
+		if (pathStatistics.get(LONGEST_PATH_IN_KEY) == 0)
 			pathStatistics.put(LONGEST_PATH_IN_KEY, pathLength);
 		else if (pathLength > pathStatistics.get(LONGEST_PATH_IN_KEY))
 			pathStatistics.put(LONGEST_PATH_IN_KEY, pathLength);
