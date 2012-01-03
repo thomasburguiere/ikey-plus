@@ -42,7 +42,7 @@ import com.itextpdf.text.html.simpleparser.StyleSheet;
 import com.itextpdf.text.pdf.PdfWriter;
 
 /**
- * This class generate all outputs format of the key
+ * This static class generates all outputs format of any SingleAccessKeyTree object
  * 
  * @author Thomas Burguiere
  * @created 28-09-2011
@@ -154,14 +154,13 @@ public abstract class SingleAccessKeyTreeDumper {
 	}
 
 	/**
-	 * This methods outputs the {@link #SingleAccesKeyTree} as a flat wiki-formatted String that complies with
-	 * the wiki format used on <a href="http://species-id.net">species-id.net</a>, with mediawiki hyperlinks.
-	 * In order to do this, the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first traversal is a
-	 * breadth-first traversal, in order to generate an HashMap ( <tt>nodeBreadthFirstIterationMap</tt>) that
-	 * associates each node with an arbitrary Integer. The second traversal is a depth-first traversal, in
-	 * order to associate (in another HashMap : <tt>nodeChildParentNumberingMap</tt>), for each node, the node
-	 * number and the number of its parent node. Finally, the last traversal is another breadh-first traversal
-	 * that generates the flat key String
+	 * This methods outputs the {@link #SingleAccesKeyTree} as a flat SDD-formatted String that complies with
+	 * the SDD format . In order to do this, the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first
+	 * traversal is a breadth-first traversal, in order to generate an HashMap (
+	 * <tt>nodeBreadthFirstIterationMap</tt>) that associates each node with an arbitrary Integer. The second
+	 * traversal is a depth-first traversal, in order to associate (in another HashMap :
+	 * <tt>nodeChildParentNumberingMap</tt>), for each node, the node number and the number of its parent
+	 * node. Finally, the last traversal is another breadh-first traversal that generates the flat key String
 	 * 
 	 * @param rootNode
 	 * @param output
@@ -384,6 +383,12 @@ public abstract class SingleAccessKeyTreeDumper {
 		return txtFile;
 	}
 
+	/**
+	 * Generates a simple character string that contains the tree-formatted key.
+	 * 
+	 * @param tree2dump
+	 * @return
+	 */
 	private static String generateTreeString(SingleAccessKeyTree tree2dump) {
 		StringBuffer output = new StringBuffer();
 		recursiveToString(tree2dump.getRoot(), output, System.getProperty("line.separator"), 0, 0, tree2dump);
@@ -392,7 +397,8 @@ public abstract class SingleAccessKeyTreeDumper {
 	}
 
 	/**
-	 * recursively method to be abbe to display String representation of this SingleAccessKeyTree
+	 * This method recursively traverses the SingleAccessKeyTree depth-first, in order to generate a character
+	 * string that contains a tree-oriented representation of the key
 	 * 
 	 * @param node
 	 * @param output
@@ -494,13 +500,13 @@ public abstract class SingleAccessKeyTreeDumper {
 	}
 
 	/**
-	 * This methods outputs the {@link #SingleAccesKeyTree} as a flat key. In order to do this, the
-	 * <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first traversal is a breadth-first traversal, in
-	 * order to generate an HashMap (<tt>nodeBreadthFirstIterationMap</tt>) that associates each node with an
-	 * arbitrary Integer. The second traversal is a depth-first traversal, in order to associate (in another
-	 * HashMap : <tt>nodeChildParentNumberingMap</tt>), for each node, the node number and the number of its
-	 * parent node. Finally, the last traversal is another breadh-first traversal that generates the flat key
-	 * String
+	 * This methods outputs the {@link #SingleAccesKeyTree} as a flat character String. In order to do this,
+	 * the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first traversal is a breadth-first traversal,
+	 * in order to generate an HashMap (<tt>nodeBreadthFirstIterationMap</tt>) that associates each node with
+	 * an arbitrary Integer. The second traversal is a depth-first traversal, in order to associate (in
+	 * another HashMap : <tt>nodeChildParentNumberingMap</tt>), for each node, the node number and the number
+	 * of its parent node. Finally, the last traversal is another breadh-first traversal that generates the
+	 * flat key String
 	 * 
 	 * @param rootNode
 	 * @param output
@@ -860,14 +866,15 @@ public abstract class SingleAccessKeyTreeDumper {
 
 	// HTML DUMP, FLAT
 	/**
-	 * get a HTML file containing the key, in a flat representation
+	 * generates an HTML file that contains the key, in a flat representation, by calling the
+	 * {@link #generateFlatHtmlString} method
 	 * 
 	 * @param showStatistics
 	 *            TODO
-	 * @param String
-	 *            , header information
+	 * @param header
+	 *            header information
 	 * 
-	 * @return File, the html file
+	 * @return the html file
 	 * @throws IOException
 	 */
 	public static File dumpFlatHtmlFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics)
@@ -887,6 +894,17 @@ public abstract class SingleAccessKeyTreeDumper {
 		return htmlFile;
 	}
 
+	/**
+	 * generates an HTML file that contains the key, in a flat, interactive representation (i.e. only one node
+	 * of the key is displayed, and the end-user can navigate through each node of the key), by calling
+	 * {@link #generateInteractiveHtmlString}
+	 * 
+	 * @param header
+	 * @param tree2dump
+	 * @param showStatistics
+	 * @return File, the html file
+	 * @throws IOException
+	 */
 	public static File dumpInteractiveHtmlFile(String header, SingleAccessKeyTree tree2dump,
 			boolean showStatistics) throws IOException {
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
@@ -997,7 +1015,7 @@ public abstract class SingleAccessKeyTreeDumper {
 	/**
 	 * 
 	 * generates a flat, HTML-formatted, String representation of a key, in a String object, by calling the
-	 * {@link #multipleTraversalToHTMLString} helper method
+	 * {@link #multipleTraversalToInteractiveHTMLString} helper method
 	 * 
 	 * @param header
 	 * @return
@@ -1100,13 +1118,13 @@ public abstract class SingleAccessKeyTreeDumper {
 	}
 
 	/**
-	 * This methods outputs the {@link #SingleAccesKeyTree} as a flat HTML-formatted String, with mediawiki
-	 * hyperlinks. In order to do this, the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first
-	 * traversal is a breadth-first traversal, in order to generate an HashMap (
-	 * <tt>nodeBreadthFirstIterationMap</tt>) that associates each node with an arbitrary Integer. The second
-	 * traversal is a depth-first traversal, in order to associate (in another HashMap :
-	 * <tt>nodeChildParentNumberingMap</tt>), for each node, the node number and the number of its parent
-	 * node. Finally, the last traversal is another breadh-first traversal that generates the flat key String
+	 * This methods outputs the {@link #SingleAccesKeyTree} as a flat HTML-formatted String. In order to do
+	 * this, the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first traversal is a breadth-first
+	 * traversal, in order to generate an HashMap ( <tt>nodeBreadthFirstIterationMap</tt>) that associates
+	 * each node with an arbitrary Integer. The second traversal is a depth-first traversal, in order to
+	 * associate (in another HashMap : <tt>nodeChildParentNumberingMap</tt>), for each node, the node number
+	 * and the number of its parent node. Finally, the last traversal is another breadh-first traversal that
+	 * generates the flat key String
 	 * 
 	 * @param rootNode
 	 * @param output
@@ -1115,7 +1133,8 @@ public abstract class SingleAccessKeyTreeDumper {
 	private static void multipleTraversalToHTMLString(SingleAccessKeyNode rootNode, StringBuffer output,
 			String lineSeparator, boolean activeLink, SingleAccessKeyTree tree2dump) {
 
-		String marging = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		String marging = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp"
+				+ ";&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 
 		// // first traversal, breadth-first ////
 		HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<SingleAccessKeyNode, Integer>();
@@ -1264,13 +1283,13 @@ public abstract class SingleAccessKeyTreeDumper {
 	}
 
 	/**
-	 * This methods outputs the {@link #SingleAccesKeyTree} as a flat HTML-formatted String, with mediawiki
-	 * hyperlinks. In order to do this, the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first
-	 * traversal is a breadth-first traversal, in order to generate an HashMap (
-	 * <tt>nodeBreadthFirstIterationMap</tt>) that associates each node with an arbitrary Integer. The second
-	 * traversal is a depth-first traversal, in order to associate (in another HashMap :
-	 * <tt>nodeChildParentNumberingMap</tt>), for each node, the node number and the number of its parent
-	 * node. Finally, the last traversal is another breadh-first traversal that generates the flat key String
+	 * This methods outputs the {@link #SingleAccesKeyTree} as a flat, interactive HTML-formatted String. In
+	 * order to do this, the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first traversal is a
+	 * breadth-first traversal, in order to generate an HashMap ( <tt>nodeBreadthFirstIterationMap</tt>) that
+	 * associates each node with an arbitrary Integer. The second traversal is a depth-first traversal, in
+	 * order to associate (in another HashMap : <tt>nodeChildParentNumberingMap</tt>), for each node, the node
+	 * number and the number of its parent node. Finally, the last traversal is another breadh-first traversal
+	 * that generates the flat key String
 	 * 
 	 * @param rootNode
 	 * @param output
@@ -1437,7 +1456,8 @@ public abstract class SingleAccessKeyTreeDumper {
 
 	// PDF DUMP, TREE
 	/**
-	 * get a PDF file containing the key
+	 * Generates a PDF file containing a tree formatted representation key, generated by
+	 * {@link #recursiveToHTMLStringForPdf}
 	 * 
 	 * @param String
 	 *            , header information
@@ -1461,6 +1481,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
 			StyleSheet styles = new StyleSheet();
 			styles.loadTagStyle("body", "color", "#333");
+			styles.loadTagStyle("body", "background", "#fff");
 			styles.loadTagStyle("ul", "indent", "15");
 			styles.loadTagStyle("li", "leading", "15");
 			styles.loadTagStyle("li", "color", "#fff");
@@ -1469,7 +1490,6 @@ public abstract class SingleAccessKeyTreeDumper {
 			styles.loadStyle("state", "color", "#fe8a22");
 			styles.loadStyle("taxa", "color", "#67bb1b");
 			styles.loadStyle("line", "color", "#333");
-			styles.loadStyle("paire", "bgcolor", "#e5e5e5");
 
 			styles.loadStyle("statisticsTable", "font-family", "Verdana, helvetica, arial, sans-serif;");
 			styles.loadStyle("statisticsTable", "font-size", "78%");
@@ -1579,7 +1599,8 @@ public abstract class SingleAccessKeyTreeDumper {
 
 	// PDF DUMP, FLAT
 	/**
-	 * get a PDF file containing the key, in a flat representation
+	 * generates a PDF file containing the key, in a flat representation, using
+	 * {@link #multipleTraversalToHTMLStringForPdf}
 	 * 
 	 * @param showStatistics
 	 *            TODO
@@ -1604,12 +1625,12 @@ public abstract class SingleAccessKeyTreeDumper {
 
 			StyleSheet styles = new StyleSheet();
 			styles.loadTagStyle("body", "color", "#333");
+			styles.loadTagStyle("body", "background", "#fff");
 
 			styles.loadStyle("character", "color", "#333");
 			styles.loadStyle("state", "color", "#fe8a22");
 			styles.loadStyle("taxa", "color", "#67bb1b");
 			styles.loadStyle("line", "color", "#333");
-			styles.loadStyle("paire", "bgcolor", "#e5e5e5");
 
 			HTMLWorker htmlWorker = new HTMLWorker(pdfDocument);
 			htmlWorker.setStyleSheet(styles);
@@ -1793,7 +1814,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
 	// WIKI DUMP, TREE
 	/**
-	 * get a wiki file containing the key
+	 * generates a wiki file containing the key, in a tree orientation, using {@link #generateTreeWiki}
 	 * 
 	 * @param showStatistics
 	 *            TODO
@@ -1830,6 +1851,14 @@ public abstract class SingleAccessKeyTreeDumper {
 		return wikiFile;
 	}
 
+	/**
+	 * Generates a character String that contains the tree-oriented key, in the wiki format, using
+	 * {@link #recursiveToWiki}
+	 * 
+	 * @param tree2dump
+	 * @param showStatistics
+	 * @return
+	 */
 	private static String generateTreeWiki(SingleAccessKeyTree tree2dump, boolean showStatistics) {
 		StringBuffer output = new StringBuffer();
 		recursiveToWiki(tree2dump.getRoot(), output, "", 0, 0, tree2dump);
@@ -1841,7 +1870,8 @@ public abstract class SingleAccessKeyTreeDumper {
 	}
 
 	/**
-	 * recursively method to be abbe to display Wiki representation of this SingleAccessKeyTree
+	 * This method recursively traverses the key depth-first, in order to generate a tree represensation of
+	 * this key,
 	 * 
 	 * @param node
 	 * @param output
@@ -1901,7 +1931,7 @@ public abstract class SingleAccessKeyTreeDumper {
 	// WIKI DUMP, FLAT
 	/**
 	 * Generates a File containing a flat wiki-formatted representation of the SingleAccessKeytree, in a flat
-	 * representation
+	 * representation, using {@link #generateFlatWikiString}
 	 * 
 	 * @param header
 	 * @param showStatistics
@@ -2076,8 +2106,9 @@ public abstract class SingleAccessKeyTreeDumper {
 
 	// SPECIES-ID WIKI DUMP, QUESTION/ANSWER
 	/**
-	 * Generates a File containing a flat wiki-formatted representation of the SingleAccessKeytree, this wiki
-	 * representation complies with the wiki format used on species-id.net
+	 * Generates a File containing a flat wiki-formatted representation of the <tt>SingleAccessKeytree</tt>,
+	 * by calling {@link #generateFlatSpeciesIDQuestionAnswerWikiString}. This wiki representation complies
+	 * with the wiki format used on <a href="http://species-id.net">species-id.net</a>.
 	 * 
 	 * @param header
 	 * @return File, the output FlatSpeciesIDQuestionAnswerWiki file
@@ -2113,8 +2144,8 @@ public abstract class SingleAccessKeyTreeDumper {
 
 	/**
 	 * generates a flat, wiki-formatted, String representation of a key that complies with the wiki format
-	 * used on <a href="http://species-id.net">species-id.net</a>, in a String object, by calling the
-	 * {@link #multipleTraversalToString} helper method
+	 * used on <a href="http://species-id.net">species-id.net</a>, in a String object, by calling
+	 * {@link #multipleTraversalToSpeciesIDQuestionAnswerWikiString}.
 	 * 
 	 * @return
 	 */
@@ -2272,8 +2303,9 @@ public abstract class SingleAccessKeyTreeDumper {
 
 	// SPECIES-ID WIKI DUMP, STATEMENT
 	/**
-	 * Generates a File containing a flat wiki-formatted representation of the SingleAccessKeytree, this wiki
-	 * representation complies with the wiki format used on species-id.net
+	 * Generates a File containing a flat wiki-formatted representation of the SingleAccessKeytree, by calling
+	 * {@link #generateFlatSpeciesIDStatementWikiString}. This wiki representation complies with the wiki
+	 * format used on <a href="http://species-id.net">species-id.net</a>
 	 * 
 	 * @param header
 	 * @return File, the output FlatSpeciesIDStatementWiki file
@@ -2310,7 +2342,7 @@ public abstract class SingleAccessKeyTreeDumper {
 	/**
 	 * generates a flat, wiki-formatted, String representation of a key that complies with the wiki format
 	 * used on <a href="http://species-id.net">species-id.net</a>, in a String object, by calling the
-	 * {@link #multipleTraversalToString} helper method
+	 * {@link #multipleTraversalToSpeciesIDStatementWikiString} helper method
 	 * 
 	 * @return
 	 */
@@ -2443,7 +2475,8 @@ public abstract class SingleAccessKeyTreeDumper {
 
 	// DOT DUMP
 	/**
-	 * get a DOT file containing the key
+	 * generates a DOT file (viewable with <a href="http://www.graphviz.org">graphviz</a>) containing the key,
+	 * by calling {@link #generateDotString}
 	 * 
 	 * @param header
 	 * @return File, the output dot file
@@ -2471,7 +2504,8 @@ public abstract class SingleAccessKeyTreeDumper {
 	}
 
 	/**
-	 * generates a DOT-formatted String representation of the key
+	 * generates a DOT-formatted String representation of the key, by calling
+	 * {@link #multipleTraversalToDotString}
 	 * 
 	 * @return
 	 */
@@ -2602,7 +2636,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
 	// ZIP DUMP
 	/**
-	 * get a ZIP file containing all the key output formats
+	 * generates a a ZIP file containing all the key output formats
 	 * 
 	 * @param header
 	 * @return File, the output zip file
@@ -2938,6 +2972,9 @@ public abstract class SingleAccessKeyTreeDumper {
 	}
 
 	/**
+	 * Helper method that receives a character string, escapes special HTML character contained in that
+	 * character String, and returns it
+	 * 
 	 * @param htmlString
 	 * @return
 	 */
@@ -2945,6 +2982,13 @@ public abstract class SingleAccessKeyTreeDumper {
 		return htmlString.replace(">", "&gt;").replace("<", "&lt;").replace("&", "&amp;");
 	}
 
+	/**
+	 * Output method that loops over the list of taxa contained in the Dataset, and outputs basic path
+	 * statistics for each Taxon, in a plain-text representation
+	 * 
+	 * @param tree2dump
+	 * @return
+	 */
 	private static String outputTaxonPathStatisticsString(SingleAccessKeyTree tree2dump) {
 		String lineSeparator = System.getProperty("line.separator");
 		StringBuffer output = new StringBuffer(0);
@@ -2987,7 +3031,15 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		return output.toString();
 	}
-
+	
+	
+	/**
+	 * Output method that loops over the list of taxa contained in the Dataset, and outputs basic path
+	 * statistics for each Taxon, in an HTML representation
+	 * 
+	 * @param tree2dump
+	 * @return
+	 */
 	private static String outputTaxonPathStatisticsHTML(SingleAccessKeyTree tree2dump) {
 		String lineSeparator = System.getProperty("line.separator");
 		StringBuffer output = new StringBuffer(0);
@@ -3014,7 +3066,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		for (Taxon t : ds.getTaxa()) {
 
 			if (c % 2 != 0) {
-				output.append("<tr class=\"paire\">" + lineSeparator);
+				output.append("<tr style=\"background: #e5e5e5;\">" + lineSeparator);
 			} else {
 				output.append("<tr>" + lineSeparator);
 			}
@@ -3048,6 +3100,13 @@ public abstract class SingleAccessKeyTreeDumper {
 		return output.toString();
 	}
 
+	/**
+	 * Output method that loops over the list of taxa contained in the Dataset, and outputs basic path
+	 * statistics for each Taxon, in a wiki representation
+	 * 
+	 * @param tree2dump
+	 * @return
+	 */
 	private static String outputTaxonPathStatisticsWiki(SingleAccessKeyTree tree2dump) {
 		String lineSeparator = System.getProperty("line.separator");
 		StringBuffer output = new StringBuffer(0);
