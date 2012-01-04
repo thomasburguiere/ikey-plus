@@ -19,11 +19,16 @@ import java.util.Set;
  * @created 07-04-2011
  * 
  */
+/**
+ * @author Utilisateur
+ * 
+ */
 public class Utils {
 
 	private String errorMessage = null;
 	private File errorMessageFile = null;
 
+	// static variable
 	public static final String UNKNOWN_DATA = "unknownData";
 	public static final List<String> ratings = new ArrayList<String>();
 	public static final List<String> ratingContext = new ArrayList<String>();
@@ -33,7 +38,6 @@ public class Utils {
 	public static final String OTHER_TAG = "o";
 	public static final String WARNING_TAG = "w";
 	public static final String STATISTIC_TAG = "s";
-
 	public static final int DEFAULT_WEIGHT = 3;
 
 	// properties file
@@ -41,7 +45,7 @@ public class Utils {
 	public static ResourceBundle bundleConfOverridable = ResourceBundle
 			.getBundle("main.resources.confOverridable");
 
-	// buffer
+	// buffer size
 	public static int BUFFER = 2048;
 
 	// file prefix
@@ -92,14 +96,14 @@ public class Utils {
 	 */
 	public Utils() {
 		super();
-		// initialize the rating values
+		// initialize the list of rating values
 		ratings.add("Rating1of5");
 		ratings.add("Rating2of5");
 		ratings.add("Rating3of5");
 		ratings.add("Rating4of5");
 		ratings.add("Rating5of5");
 
-		// initialize the rating context values
+		// initialize the list of rating contexts
 		ratingContext.add("ObservationConvenience");
 		ratingContext.add("Availability");
 		ratingContext.add("Repeatability");
@@ -162,6 +166,8 @@ public class Utils {
 	}
 
 	/**
+	 * getter for the error message
+	 * 
 	 * @return String, the error file name
 	 */
 	public String getErrorMessage() {
@@ -169,6 +175,8 @@ public class Utils {
 	}
 
 	/**
+	 * setter for the error message
+	 * 
 	 * @param msg
 	 */
 	public void setErrorMessage(String msg) {
@@ -179,6 +187,8 @@ public class Utils {
 	}
 
 	/**
+	 * setter for the error message with Throwable object
+	 * 
 	 * @param msg
 	 *            , the readable message
 	 * @param t
@@ -192,6 +202,8 @@ public class Utils {
 	}
 
 	/**
+	 * getter for file message
+	 * 
 	 * @return File, the error file
 	 */
 	public File getErrorMessageFile() {
@@ -199,6 +211,8 @@ public class Utils {
 	}
 
 	/**
+	 * setter for file message
+	 * 
 	 * @param errorMessageFile
 	 *            , the error file
 	 */
@@ -207,7 +221,9 @@ public class Utils {
 	}
 
 	/**
-	 * @return String, the error file
+	 * method creating the error message
+	 * 
+	 * @return File, the error file
 	 */
 	public File createErrorFile() {
 		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
@@ -234,6 +250,8 @@ public class Utils {
 	}
 
 	/**
+	 * get the format of the generated key
+	 * 
 	 * @return String, the format
 	 */
 	public String getFormat() {
@@ -241,6 +259,9 @@ public class Utils {
 	}
 
 	/**
+	 * 
+	 * set the format of the generated key
+	 * 
 	 * @param format
 	 */
 	public void setFormat(String format) {
@@ -248,6 +269,8 @@ public class Utils {
 	}
 
 	/**
+	 * get the representation of the generated key
+	 * 
 	 * @return String, the representation
 	 */
 	public String getRepresentation() {
@@ -255,6 +278,8 @@ public class Utils {
 	}
 
 	/**
+	 * set the representation of the generated key
+	 * 
 	 * @param representation
 	 */
 	public void setRepresentation(String representation) {
@@ -262,6 +287,8 @@ public class Utils {
 	}
 
 	/**
+	 * test if the fewStatesCharacterFirst option is active
+	 * 
 	 * @return true if fewStatesCharacterFirst is selected
 	 */
 	public boolean isFewStatesCharacterFirst() {
@@ -269,6 +296,8 @@ public class Utils {
 	}
 
 	/**
+	 * set the fewStatesCharacterFirst option
+	 * 
 	 * @param fewStatesCharacterFirst
 	 */
 	public void setFewStatesCharacterFirst(boolean fewStatesCharacterFirst) {
@@ -276,6 +305,8 @@ public class Utils {
 	}
 
 	/**
+	 * test if the mergeCharacterStatesIfSameDiscimination option is active
+	 * 
 	 * @return true if mergeCharacterStatesIfSameDiscimination is selected
 	 */
 	public boolean isMergeCharacterStatesIfSameDiscimination() {
@@ -283,6 +314,8 @@ public class Utils {
 	}
 
 	/**
+	 * set the mergeCharacterStatesIfSameDiscimination option
+	 * 
 	 * @param mergeCharacterStatesIfSameDiscimination
 	 */
 	public void setMergeCharacterStatesIfSameDiscimination(boolean mergeCharacterStatesIfSameDiscimination) {
@@ -290,6 +323,8 @@ public class Utils {
 	}
 
 	/**
+	 * test if the pruning option is active
+	 * 
 	 * @return true if pruning is selected
 	 */
 	public boolean isPruning() {
@@ -297,6 +332,8 @@ public class Utils {
 	}
 
 	/**
+	 * set the pruning option
+	 * 
 	 * @param pruning
 	 */
 	public void setPruning(boolean pruning) {
@@ -304,6 +341,8 @@ public class Utils {
 	}
 
 	/**
+	 * get the verbosity value
+	 * 
 	 * @return String, the verbosity string
 	 */
 	public String getVerbosity() {
@@ -311,6 +350,8 @@ public class Utils {
 	}
 
 	/**
+	 * set the verbosity value
+	 * 
 	 * @param verbosity
 	 */
 	public void setVerbosity(String verbosity) {
@@ -318,6 +359,8 @@ public class Utils {
 	}
 
 	/**
+	 * get the score method
+	 * 
 	 * @return String, the score method selected
 	 */
 	public String getScoreMethod() {
@@ -325,6 +368,8 @@ public class Utils {
 	}
 
 	/**
+	 * set the score method
+	 * 
 	 * @param scoreMethod
 	 */
 	public void setScoreMethod(String scoreMethod) {
@@ -332,6 +377,8 @@ public class Utils {
 	}
 
 	/**
+	 * get the weight context
+	 * 
 	 * @return String, the weight context
 	 */
 	public String getWeightContext() {
@@ -339,6 +386,8 @@ public class Utils {
 	}
 
 	/**
+	 * set the weight context
+	 * 
 	 * @param weightContext
 	 *            , the weight context
 	 */
@@ -350,10 +399,20 @@ public class Utils {
 		}
 	}
 
+	/**
+	 * get the weight type
+	 * 
+	 * @return String, the weight type
+	 */
 	public String getWeightType() {
 		return weightType;
 	}
 
+	/**
+	 * set the weight type
+	 * 
+	 * @param weightType
+	 */
 	public void setWeightType(String weightType) {
 		this.weightType = weightType;
 	}
@@ -363,7 +422,7 @@ public class Utils {
 	 * 
 	 * @param list1
 	 * @param list2
-	 * @return
+	 * @return List<?>
 	 */
 	public static List<?> intersection(List<?> list1, List<?> list2) {
 		List<Object> list = new ArrayList<Object>();
@@ -379,10 +438,10 @@ public class Utils {
 	 * excluded elements
 	 * 
 	 * @param primaryList
-	 *            the list which elements are to be retained
+	 *            , the list which elements are to be retained
 	 * @param excludedList
-	 *            the list which elements shall not remain in the final list
-	 * @return
+	 *            , the list which elements shall not remain in the final list
+	 * @return List<?>
 	 */
 	public static List<?> exclusion(List<?> primaryList, List<?> excludedList) {
 		List<Object> list = new ArrayList<Object>();
@@ -398,7 +457,7 @@ public class Utils {
 	 * 
 	 * @param list1
 	 * @param list2
-	 * @return
+	 * @return List<?>
 	 */
 	public static List<?> union(List<?> list1, List<?> list2) {
 		Set<Object> set = new HashSet<Object>();
@@ -408,6 +467,8 @@ public class Utils {
 	}
 
 	/**
+	 * This method round a float value
+	 * 
 	 * @param floatToRound
 	 *            the float number that will be rounded
 	 * @param roundFactor
@@ -426,6 +487,8 @@ public class Utils {
 	}
 
 	/**
+	 * This method round a double value
+	 * 
 	 * @param score
 	 *            the double number that will be rounded
 	 * @param roundFactor
@@ -444,6 +507,8 @@ public class Utils {
 	}
 
 	/**
+	 * This method delete accent containing in a string
+	 * 
 	 * @param String
 	 *            , the string candidate to delete accents
 	 * @return String, the string without accents
