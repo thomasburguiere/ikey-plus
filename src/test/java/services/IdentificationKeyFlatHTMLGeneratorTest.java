@@ -137,11 +137,6 @@ public class IdentificationKeyFlatHTMLGeneratorTest {
 			// create key file
 			try {
 				SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
-				/* if (utils.isStatisticsEnabled()) { // define time before statistics gathering beforeTime =
-				 * System.currentTimeMillis(); tree2dump.gatherTaxonPathStatistics(); // define key statistics
-				 * duration double statsDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
-				 * header.append(System.getProperty("line.separator") + "statsDuration= " + statsDuration +
-				 * " s" + System.getProperty("line.separator")); } */
 				header.append(System.getProperty("line.separator") + System.getProperty("line.separator"));
 
 				if (!utils.getVerbosity().contains(Utils.HEADER_TAG)) {

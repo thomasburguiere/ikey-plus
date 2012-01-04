@@ -41,7 +41,7 @@ public class SDDSaxParserTest {
 		SDDSaxParser sddSaxParser = null;
 
 		try {
-			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
+			String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
 			// String stringUrl =
 			// "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-unknownData-fullSDD.xml";
 			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
@@ -54,7 +54,8 @@ public class SDDSaxParserTest {
 			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/wrongSDD.xml";
 			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/pruningSDD.xml";
 			// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/archaeoSDD.xml";
-			String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample.xml";
+			// String stringUrl =
+			// "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample.xml";
 
 			// options
 			utils.setFewStatesCharacterFirst(false);
@@ -90,9 +91,9 @@ public class SDDSaxParserTest {
 
 		DataSet dataset = sddSaxParser.getDataset();
 		if (dataset != null) {
-			// DISPLAY THE DATASET
+			// display the dataset
 			System.out.println("dataSetLabel : " + dataset.getLabel());
-			// CHARACTERS
+			// characters
 			System.out.println("characters (" + dataset.getCharacters().size() + ") : ");
 			for (ICharacter character : dataset.getCharacters()) {
 				if (character instanceof CategoricalCharacter) {
@@ -107,7 +108,7 @@ public class SDDSaxParserTest {
 					System.out.println("\t*N*" + character.getName() + "   w=" + character.getWeight());
 				}
 			}
-			// TAXA AND DESCRIPTION
+			// taxa and description
 			System.out.println("taxa (" + dataset.getTaxa().size() + ") : ");
 			for (Taxon taxon : dataset.getTaxa()) {
 				System.out.println("\t" + taxon.getName());
@@ -131,7 +132,7 @@ public class SDDSaxParserTest {
 					}
 				}
 			}
-			// CHARACTER TREE BY PARENTS
+			// character tree by parents
 			System.out.println("characterTree by parent : ");
 			for (ICharacter character : dataset.getCharacters()) {
 				if (character.getParentCharacter() != null) {
@@ -142,7 +143,7 @@ public class SDDSaxParserTest {
 					}
 				}
 			}
-			// CHARACTER TREE BY CHILDREN
+			// character tree by children
 			System.out.println("characterTree by children : ");
 			for (ICharacter character : dataset.getCharacters()) {
 				if (character.getParentCharacter() == null) {
@@ -151,7 +152,7 @@ public class SDDSaxParserTest {
 				}
 			}
 
-			// MEDIAOBJECTS
+			// media objects
 			System.out.println("media objects : ");
 			for (String key : dataset.getMediaObjects().keySet()) {
 				// display the media object URL
