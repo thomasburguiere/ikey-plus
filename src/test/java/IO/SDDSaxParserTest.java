@@ -20,7 +20,7 @@ import main.java.utils.Utils;
 import org.junit.Test;
 
 /**
- * This class allow to test the SDDSaxParser
+ * This class allows to test the SDDSaxParser
  * 
  * @author Florian Causse
  * @created 18-04-2011
