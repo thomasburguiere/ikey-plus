@@ -12,7 +12,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 /**
- * This class allow to launch the parsing of SDD file
+ * This class starts the parsing of a SDD file
  * 
  * @author Florian Causse
  * @created 18-04-2011
@@ -23,7 +23,7 @@ public class SDDSaxParser {
 	private DataSet dataset = null;
 
 	/**
-	 * constructor executing the parse method
+	 * constructor which executes the parse method
 	 */
 	public SDDSaxParser(String uri, Utils utils) throws SAXException, IOException {
 		XMLReader saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");

@@ -21,7 +21,7 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
 /**
- * This class extend ContentHandler to be able to treat each SDD tag and extract data
+ * This class extends the ContentHandler class, in order to be able to treat each SDD tag and extract data
  * 
  * @author Florian Causse
  * @created 18-04-2011
@@ -99,7 +99,7 @@ public class SDDContentHandler implements ContentHandler {
 	private Map<ICharacter, Integer> ratingsCounter = null;
 
 	/**
-	 * Constructor by default
+	 * Default constructor
 	 */
 	public SDDContentHandler(Utils utils) {
 		super();
