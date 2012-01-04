@@ -15,7 +15,7 @@ import main.java.utils.Utils;
 import org.junit.Test;
 
 /**
- * This class allow to test the PDF output of IdentificationKeyGenerator service
+ * This class allows to test the PDF output of IdentificationKeyGenerator service
  * 
  * @author Thomas Burguiere
  * @created 18-07-2011
@@ -24,6 +24,9 @@ public class IdentificationKeyPDFGeneratorTest {
 
 	public Logger logger = Logger.getAnonymousLogger();
 
+	/**
+	 * Start the test
+	 */
 	@Test
 	public void testIdentificationKeyGenerator() {
 
@@ -47,14 +50,14 @@ public class IdentificationKeyPDFGeneratorTest {
 
 			SDDSaxParser sddSaxParser = null;
 			try {
-				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
+				 String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-unknownData-fullSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/testSDD.xml";
-				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml";
+//				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesImagesURL.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/smallSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/wrongSDD.xml";

@@ -15,7 +15,7 @@ import main.java.utils.Utils;
 import org.junit.Test;
 
 /**
- * This class allow to test the interactive HTML output of IdentificationKeyGenerator service
+ * This class allows to test the interactive HTML output of IdentificationKeyGenerator service
  * 
  * @author Thomas Burguiere
  * @created 10-07-2011
@@ -24,6 +24,9 @@ public class IdentificationKeyInteractiveHTMLGeneratorTest {
 
 	public Logger logger = Logger.getAnonymousLogger();
 
+	/**
+	 * Start the test
+	 */
 	@Test
 	public void testIdentificationKeyGenerator() {
 

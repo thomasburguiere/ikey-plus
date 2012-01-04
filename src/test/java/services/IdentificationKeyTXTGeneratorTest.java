@@ -15,7 +15,7 @@ import main.java.utils.Utils;
 import org.junit.Test;
 
 /**
- * This class allow to test the TEXT output of IdentificationKeyGenerator service
+ * This class allows to test the TEXT output of IdentificationKeyGenerator service
  * 
  * @author Florian Causse
  * @created 18-04-2011
@@ -24,6 +24,9 @@ public class IdentificationKeyTXTGeneratorTest {
 
 	public Logger logger = Logger.getAnonymousLogger();
 
+	/**
+	 * Start the test
+	 */
 	@Test
 	public void testIdentificationKeyGenerator() {
 

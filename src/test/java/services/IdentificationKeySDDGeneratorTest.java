@@ -15,7 +15,7 @@ import main.java.utils.Utils;
 import org.junit.Test;
 
 /**
- * This class allow to test the SDD output of IdentificationKeyGenerator service
+ * This class allows to test the SDD output of IdentificationKeyGenerator service
  * 
  * @author Thomas Burguiere
  * @created 31-08-2011
@@ -24,6 +24,9 @@ public class IdentificationKeySDDGeneratorTest {
 
 	public Logger logger = Logger.getAnonymousLogger();
 
+	/**
+	 * Start the test
+	 */
 	@Test
 	public void testIdentificationKeyGenerator() {
 
@@ -47,7 +50,7 @@ public class IdentificationKeySDDGeneratorTest {
 
 			SDDSaxParser sddSaxParser = null;
 			try {
-				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
+				 String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-unknownData-fullSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
@@ -62,7 +65,7 @@ public class IdentificationKeySDDGeneratorTest {
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/archaeoSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample.xml";
-				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample3_contextual.xml";
+//				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample3_contextual.xml";
 
 				// options
 				utils.setFewStatesCharacterFirst(false);

@@ -15,7 +15,7 @@ import main.java.utils.Utils;
 import org.junit.Test;
 
 /**
- * This class allow to test the ZIP output of IdentificationKeyGenerator service
+ * This class allows to test the ZIP output of IdentificationKeyGenerator service
  * 
  * @author Florian Causse
  * @created 03-10-2011
@@ -24,6 +24,9 @@ public class IdentificationKeyZIPGeneratorTest {
 
 	public Logger logger = Logger.getAnonymousLogger();
 
+	/**
+	 * Start the test
+	 */
 	@Test
 	public void testIdentificationKeyGenerator() {
 
@@ -47,10 +50,10 @@ public class IdentificationKeyZIPGeneratorTest {
 
 			SDDSaxParser sddSaxParser = null;
 			try {
-				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
+				 String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-unknownData-fullSDD.xml";
-				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
+//				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/testSDD.xml";

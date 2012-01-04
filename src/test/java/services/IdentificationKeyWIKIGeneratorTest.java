@@ -15,7 +15,7 @@ import main.java.utils.Utils;
 import org.junit.Test;
 
 /**
- * This class allow to test the WIKI output of IdentificationKeyGenerator service
+ * This class allows to test the WIKI output of IdentificationKeyGenerator service
  * 
  * @author Thomas Burguiere
  * @created 18-07-2011
@@ -23,7 +23,10 @@ import org.junit.Test;
 public class IdentificationKeyWIKIGeneratorTest {
 
 	public Logger logger = Logger.getAnonymousLogger();
-
+	
+	/**
+	 * Start the test
+	 */
 	@Test
 	public void testIdentificationKeyGenerator() {
 
