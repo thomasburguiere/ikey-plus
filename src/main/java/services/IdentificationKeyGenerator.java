@@ -807,17 +807,11 @@ public class IdentificationKeyGenerator {
 	}
 
 	/**
-	 * Calculate the discriminant power for quantitative character
+	 * Calculate the discriminant power for a quantitative character
 	 * 
 	 * @param character
 	 * @param codedDescriptions
 	 * @return float, the discriminant power of the quantitative character
-	 */
-	/**
-	 * @param character
-	 * @param remainingTaxa
-	 * @return
-	 * @throws Exception
 	 */
 	private float quantitativeCharacterScore(QuantitativeCharacter character, List<Taxon> remainingTaxa,
 			List<ICharacter> alreadyUsedCharacter) throws Exception {
