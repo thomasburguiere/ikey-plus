@@ -1481,7 +1481,6 @@ public abstract class SingleAccessKeyTreeDumper {
 
 			StyleSheet styles = new StyleSheet();
 			styles.loadTagStyle("body", "color", "#333");
-			styles.loadTagStyle("body", "background", "#fff");
 			styles.loadTagStyle("ul", "indent", "15");
 			styles.loadTagStyle("li", "leading", "15");
 			styles.loadTagStyle("li", "color", "#fff");
@@ -1490,6 +1489,7 @@ public abstract class SingleAccessKeyTreeDumper {
 			styles.loadStyle("state", "color", "#fe8a22");
 			styles.loadStyle("taxa", "color", "#67bb1b");
 			styles.loadStyle("line", "color", "#333");
+			styles.loadStyle("paire", "bgcolor", "#e5e5e5");
 
 			styles.loadStyle("statisticsTable", "font-family", "Verdana, helvetica, arial, sans-serif;");
 			styles.loadStyle("statisticsTable", "font-size", "78%");
@@ -1625,12 +1625,12 @@ public abstract class SingleAccessKeyTreeDumper {
 
 			StyleSheet styles = new StyleSheet();
 			styles.loadTagStyle("body", "color", "#333");
-			styles.loadTagStyle("body", "background", "#fff");
 
 			styles.loadStyle("character", "color", "#333");
 			styles.loadStyle("state", "color", "#fe8a22");
 			styles.loadStyle("taxa", "color", "#67bb1b");
 			styles.loadStyle("line", "color", "#333");
+			styles.loadStyle("paire", "bgcolor", "#e5e5e5");
 
 			HTMLWorker htmlWorker = new HTMLWorker(pdfDocument);
 			htmlWorker.setStyleSheet(styles);
@@ -3065,7 +3065,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		for (Taxon t : ds.getTaxa()) {
 
 			if (c % 2 != 0) {
-				output.append("<tr style=\"background: #e5e5e5;\">" + lineSeparator);
+				output.append("<tr class=\"paire\">" + lineSeparator);
 			} else {
 				output.append("<tr>" + lineSeparator);
 			}

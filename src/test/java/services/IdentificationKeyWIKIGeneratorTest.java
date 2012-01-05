@@ -23,7 +23,7 @@ import org.junit.Test;
 public class IdentificationKeyWIKIGeneratorTest {
 
 	public Logger logger = Logger.getAnonymousLogger();
-	
+
 	/**
 	 * Start the test
 	 */
