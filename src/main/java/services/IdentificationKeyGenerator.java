@@ -52,7 +52,7 @@ public class IdentificationKeyGenerator {
 	/**
 	 * Create the identification key tree
 	 */
-	public void createIdentificationKey() throws Exception {
+	public void createIdentificationKey() throws OutOfMemoryError, Exception {
 
 		this.singleAccessKeyTree = new SingleAccessKeyTree(utils);
 		this.singleAccessKeyTree.setDataSet(dataset);

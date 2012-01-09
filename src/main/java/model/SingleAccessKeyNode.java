@@ -20,8 +20,10 @@ public class SingleAccessKeyNode {
 
 	/**
 	 * constructor
+	 * 
+	 * @throws Exception
 	 */
-	public SingleAccessKeyNode() {
+	public SingleAccessKeyNode() throws OutOfMemoryError, Exception {
 		this(null, null);
 	}
 
@@ -33,8 +35,10 @@ public class SingleAccessKeyNode {
 	 *            , a character
 	 * @param Object
 	 *            , the description concerning the current character -> List<State> or QuantitativeMeasure
+	 * @throws Exception
 	 */
-	public SingleAccessKeyNode(ICharacter character, Object characterState) {
+	public SingleAccessKeyNode(ICharacter character, Object characterState) throws OutOfMemoryError,
+			Exception {
 		super();
 		this.character = character;
 		this.characterState = characterState;

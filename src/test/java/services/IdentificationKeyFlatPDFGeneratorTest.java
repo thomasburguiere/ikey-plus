@@ -47,14 +47,14 @@ public class IdentificationKeyFlatPDFGeneratorTest {
 
 			SDDSaxParser sddSaxParser = null;
 			try {
-				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
+				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-unknownData-fullSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/milichia_revision-sdd.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/testSDD.xml";
-				String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml";
+				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/feuillesImagesURL.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/smallSDD.xml";
 				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/wrongSDD.xml";
@@ -64,6 +64,7 @@ public class IdentificationKeyFlatPDFGeneratorTest {
 				// "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample3_contextual.xml";
+				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/bambousSDD.xml";
 
 				// options
 				utils.setFewStatesCharacterFirst(true);
@@ -124,7 +125,11 @@ public class IdentificationKeyFlatPDFGeneratorTest {
 				identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), utils);
 				identificationKeyGenerator.createIdentificationKey();
 			} catch (Throwable t) {
-				utils.setErrorMessage(Utils.getBundleConfElement("message.creatingKeyError"), t);
+				if (t instanceof OutOfMemoryError) {
+					utils.setErrorMessage(Utils.getBundleConfElement("message.memoryError"), t);
+				} else {
+					utils.setErrorMessage(Utils.getBundleConfElement("message.creatingKeyError"), t);
+				}
 				t.printStackTrace();
 			}
 

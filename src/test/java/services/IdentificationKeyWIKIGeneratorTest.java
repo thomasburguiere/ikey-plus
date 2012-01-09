@@ -67,6 +67,7 @@ public class IdentificationKeyWIKIGeneratorTest {
 				// "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample.xml";
 				// String stringUrl =
 				// "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample3_contextual.xml";
+				// String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/bambousSDD.xml";
 
 				// options
 				utils.setFewStatesCharacterFirst(false);
@@ -127,7 +128,11 @@ public class IdentificationKeyWIKIGeneratorTest {
 				identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), utils);
 				identificationKeyGenerator.createIdentificationKey();
 			} catch (Throwable t) {
-				utils.setErrorMessage(Utils.getBundleConfElement("message.creatingKeyError"), t);
+				if (t instanceof OutOfMemoryError) {
+					utils.setErrorMessage(Utils.getBundleConfElement("message.memoryError"), t);
+				} else {
+					utils.setErrorMessage(Utils.getBundleConfElement("message.creatingKeyError"), t);
+				}
 				t.printStackTrace();
 			}
 
