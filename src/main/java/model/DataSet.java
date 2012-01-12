@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This class represent a knowledge base
+ * This class represents a knowledge base
  * 
  * @author Florian Causse
  * @created 06-04-2011
