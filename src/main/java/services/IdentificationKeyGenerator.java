@@ -399,7 +399,9 @@ public class IdentificationKeyGenerator {
 	 * calculate the 2 best intervals for quantitative character node
 	 * 
 	 * @param character
-	 * @return List<QuantitativeMeasure>, the two QuantitativeMeasure for the key
+	 * @param remainingTaxa
+	 * @return the two interval
+	 * @throws Exception
 	 */
 	private List<QuantitativeMeasure> splitQuantitativeCharacter(ICharacter character,
 			List<Taxon> remainingTaxa) throws Exception {
