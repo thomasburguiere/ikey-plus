@@ -3006,17 +3006,20 @@ public abstract class SingleAccessKeyTreeDumper {
 		output.append("length of the longest path leading to taxon\t");
 		output.append(lineSeparator);
 		for (Taxon t : ds.getTaxa()) {
+
 			output.append(t.getName() + "\t" + t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY).intValue()
 					+ "\t" + t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY).intValue() + "\t"
 					+ Utils.roundFloat(t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY), 3) + "\t"
 					+ t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY).intValue());
 
-			sumNbPath += t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY);
-			sumMinPathLength += t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY);
-			sumMaxPathLength += t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY);
-			sumAvgPathLength += t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY);
-			c++;
-			output.append(lineSeparator);
+			if (t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY) > 0) {
+				sumNbPath += t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY);
+				sumMinPathLength += t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY);
+				sumMaxPathLength += t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY);
+				sumAvgPathLength += t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY);
+				c++;
+				output.append(lineSeparator);
+			}
 		}
 
 		// round all average values
@@ -3054,6 +3057,7 @@ public abstract class SingleAccessKeyTreeDumper {
 		float sumAvgPathLength = 0;
 		float sumMaxPathLength = 0;
 		int c = 0;
+		int i = 0;
 		output.append("<tr>" + lineSeparator);
 		output.append("<td>Taxon</td>");
 		output.append("<td width=\"100px;\">Number of paths leading to taxon</td>");
@@ -3064,7 +3068,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		for (Taxon t : ds.getTaxa()) {
 
-			if (c % 2 != 0) {
+			if (i % 2 != 0) {
 				output.append("<tr class=\"paire\">" + lineSeparator);
 			} else {
 				output.append("<tr>" + lineSeparator);
@@ -3076,11 +3080,14 @@ public abstract class SingleAccessKeyTreeDumper {
 					+ "</td><td>" + t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY).intValue()
 					+ "</td>");
 
-			sumNbPath += t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY);
-			sumMinPathLength += t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY);
-			sumMaxPathLength += t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY);
-			sumAvgPathLength += t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY);
-			c++;
+			if (t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY) > 0) {
+				sumNbPath += t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY);
+				sumMinPathLength += t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY);
+				sumMaxPathLength += t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY);
+				sumAvgPathLength += t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY);
+				c++;
+			}
+			i++;
 			output.append("</tr>" + lineSeparator);
 		}
 
@@ -3134,11 +3141,13 @@ public abstract class SingleAccessKeyTreeDumper {
 					+ lineSeparator + "|" + t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY).intValue()
 					+ lineSeparator + "|-" + lineSeparator);
 
-			sumNbPath += t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY);
-			sumMinPathLength += t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY);
-			sumMaxPathLength += t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY);
-			sumAvgPathLength += t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY);
-			c++;
+			if (t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY) > 0) {
+				sumNbPath += t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY);
+				sumMinPathLength += t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY);
+				sumMaxPathLength += t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY);
+				sumAvgPathLength += t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY);
+				c++;
+			}
 		}
 
 		// round all average values
