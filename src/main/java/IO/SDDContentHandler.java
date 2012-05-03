@@ -420,8 +420,9 @@ public class SDDContentHandler implements ContentHandler {
 				inDataset = false;
 				isFirstDataset = false;
 
-				// null description will be consider as unknown data. Empty states list or QuantitativeMeasure
-				// will be consider as not specified (not described).
+				// null description will be considered as unknown data. Empty states list or
+				// QuantitativeMeasure
+				// will be considered as not specified (not described).
 				for (Taxon taxon : this.dataSet.getCodedDescriptions().keySet()) {
 					for (ICharacter character : this.dataSet.getCharacters()) {
 						if (this.dataSet.getCodedDescriptions().get(taxon).getCharacterDescription(character) == null) {
