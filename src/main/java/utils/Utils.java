@@ -84,7 +84,7 @@ public class Utils {
 	private String format = Utils.TXT;
 	private String representation = Utils.TREE;
 	private boolean fewStatesCharacterFirst = false;
-	private boolean mergeCharacterStatesIfSameDiscimination = false;
+	private boolean mergeCharacterStatesIfSameDiscrimination = false;
 	private boolean pruning = false;
 	private String verbosity = "";
 	private String scoreMethod = Utils.XPER;
@@ -305,21 +305,21 @@ public class Utils {
 	}
 
 	/**
-	 * test if the mergeCharacterStatesIfSameDiscimination option is active
+	 * test if the mergeCharacterStatesIfSameDiscrimination option is active
 	 * 
-	 * @return true if mergeCharacterStatesIfSameDiscimination is selected
+	 * @return true if mergeCharacterStatesIfSameDiscrimination is selected
 	 */
-	public boolean isMergeCharacterStatesIfSameDiscimination() {
-		return mergeCharacterStatesIfSameDiscimination;
+	public boolean isMergeCharacterStatesIfSameDiscrimination() {
+		return mergeCharacterStatesIfSameDiscrimination;
 	}
 
 	/**
-	 * set the mergeCharacterStatesIfSameDiscimination option
+	 * set the mergeCharacterStatesIfSameDiscrimination option
 	 * 
-	 * @param mergeCharacterStatesIfSameDiscimination
+	 * @param mergeCharacterStatesIfSameDiscrimination
 	 */
-	public void setMergeCharacterStatesIfSameDiscimination(boolean mergeCharacterStatesIfSameDiscimination) {
-		this.mergeCharacterStatesIfSameDiscimination = mergeCharacterStatesIfSameDiscimination;
+	public void setMergeCharacterStatesIfSameDiscrimination(boolean mergeCharacterStatesIfSameDiscrimination) {
+		this.mergeCharacterStatesIfSameDiscrimination = mergeCharacterStatesIfSameDiscrimination;
 	}
 
 	/**

@@ -66,7 +66,7 @@ public class IdentificationKeyFlatHTMLGeneratorTest {
 
 				// options
 				utils.setFewStatesCharacterFirst(true);
-				utils.setMergeCharacterStatesIfSameDiscimination(false);
+				utils.setMergeCharacterStatesIfSameDiscrimination(false);
 				utils.setPruning(false);
 				utils.setVerbosity("hs");
 				utils.setScoreMethod(Utils.XPER);
@@ -98,8 +98,8 @@ public class IdentificationKeyFlatHTMLGeneratorTest {
 				header.append(System.getProperty("line.separator") + "fewStatesCharacterFirst="
 						+ utils.isFewStatesCharacterFirst());
 				header.append(System.getProperty("line.separator")
-						+ "mergeCharacterStatesIfSameDiscimination="
-						+ utils.isMergeCharacterStatesIfSameDiscimination());
+						+ "mergeCharacterStatesIfSameDiscrimination="
+						+ utils.isMergeCharacterStatesIfSameDiscrimination());
 				header.append(System.getProperty("line.separator") + "pruning=" + utils.isPruning());
 				header.append(System.getProperty("line.separator") + "verbosity=" + utils.getVerbosity());
 				header.append(System.getProperty("line.separator") + "scoreMethod=" + utils.getScoreMethod());

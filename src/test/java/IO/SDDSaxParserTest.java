@@ -59,7 +59,7 @@ public class SDDSaxParserTest {
 
 			// options
 			utils.setFewStatesCharacterFirst(false);
-			utils.setMergeCharacterStatesIfSameDiscimination(false);
+			utils.setMergeCharacterStatesIfSameDiscrimination(false);
 			utils.setPruning(false);
 			utils.setVerbosity("how");
 			utils.setScoreMethod(Utils.XPER);

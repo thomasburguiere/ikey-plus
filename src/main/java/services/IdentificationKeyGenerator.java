@@ -154,7 +154,7 @@ public class IdentificationKeyGenerator {
 						node.setCharacterState(state);
 
 						// mergeCharacterStatesIfSameDiscrimination option handling
-						if (utils.isMergeCharacterStatesIfSameDiscimination()) {
+						if (utils.isMergeCharacterStatesIfSameDiscrimination()) {
 							if (mergeNodesIfSameDiscrimination(futureChildNodes, node)) {
 								continue;
 							}
