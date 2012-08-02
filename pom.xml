@@ -29,7 +29,7 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
-
+			
 			<!-- Disable tests for installation -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -37,6 +37,40 @@
 				<configuration>
 					<skip>true</skip>
 				</configuration>
+			</plugin>
+			
+			
+			<!-- Deploy the jar in the webservice projects -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<goals>
+					<goal>jar</goal>
+				</goals>
+				<configuration>
+					<outputDirectory>../IK_WS_REST/WebContent/WEB-INF/lib/</outputDirectory>
+					<outputDirectory>../IK_WS_SOAP/WebContent/WEB-INF/lib/</outputDirectory>
+
+				</configuration>
+			</plugin>
+
+			<!-- Deploy the jar containing sources in the xper3 project -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>../IK_WS_REST/WebContent/WEB-INF/lib/</outputDirectory>
+							<outputDirectory>../IK_WS_SOAP/WebContent/WEB-INF/lib/</outputDirectory>
+							<attach>true</attach>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 
 		</plugins>
