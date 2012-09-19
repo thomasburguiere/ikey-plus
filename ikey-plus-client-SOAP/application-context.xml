@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:simple="http://cxf.apache.org/simple"
+      xmlns:soap="http://cxf.apache.org/bindings/soap"
+      xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+		http://cxf.apache.org/bindings/soap http://cxf.apache.org/schemas/configuration/soap.xsd
+		http://cxf.apache.org/simple http://cxf.apache.org/schemas/simple.xsd">
+
+  <bean id="jaxWsProxyFactoryBean" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+  	<property name="address" value="http://localhost:8080/IK_WS_SOAP-1.0/identificationKey"/>
+  	<property name="serviceClass" value="IIdentificationKey"/>
+  </bean>
+
+</beans>
+
