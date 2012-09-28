@@ -5,7 +5,6 @@ import java.util.List;
 
 import fr.lis.ikeyplus.utils.Utils;
 
-
 /**
  * This class represents a Character
  * 
@@ -20,6 +19,7 @@ public class Character implements ICharacter {
 	private ICharacter parentCharacter = null;
 	private List<State> inapplicableStates = null;
 	private List<ICharacter> childCharacters = null;
+	private List<String> mediaObjectKeys = null;
 
 	/**
 	 * constructor by default
@@ -93,6 +93,30 @@ public class Character implements ICharacter {
 	public void setWeight(float weight) {
 		this.weight = weight;
 
+	}
+
+	/**
+	 * @return the mediaObjectKey
+	 */
+	public List<String> getMediaObjectKeys() {
+		return mediaObjectKeys;
+	}
+
+	/**
+	 * @param mediaObjectKey
+	 *            the mediaObjectKey to set
+	 */
+	public void setMediaObjectKeys(List<String> mediaObjectKey) {
+		this.mediaObjectKeys = mediaObjectKey;
+	}
+
+	public String getFirstImage(DataSet dataset) {
+		if (dataset != null && mediaObjectKeys != null && mediaObjectKeys.size() > 0) {
+			if (dataset.getMediaObject(mediaObjectKeys.get(0)).startsWith("http")) {
+				return dataset.getMediaObject(mediaObjectKeys.get(0));
+			}
+		}
+		return null;
 	}
 
 	/* (non-Javadoc)
