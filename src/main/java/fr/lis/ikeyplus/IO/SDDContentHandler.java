@@ -1,6 +1,5 @@
 package fr.lis.ikeyplus.IO;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +19,6 @@ import fr.lis.ikeyplus.model.QuantitativeMeasure;
 import fr.lis.ikeyplus.model.State;
 import fr.lis.ikeyplus.model.Taxon;
 import fr.lis.ikeyplus.utils.Utils;
-
 
 /**
  * This class extends the ContentHandler class, in order to be able to treat each SDD tag and extract data
@@ -163,11 +161,25 @@ public class SDDContentHandler implements ContentHandler {
 				currentCategoricalCharacter.setId(attributes.getValue("id"));
 			}
 
+			// <MediaObject> in <Representation> in <CategoricalCharacter>
+			else if (localName.equals("MediaObject") && inCategoricalCharacter) {
+				if (attributes.getValue("ref") != null && currentCategoricalCharacter != null) {
+					currentCategoricalCharacter.getMediaObjectKeys().add(attributes.getValue("ref"));
+				}
+			}
+
 			// <QuantitativeCharacter> in <Characters>
 			else if (localName.equals("QuantitativeCharacter") && inCharacters) {
 				inQuantitativeCharacter = true;
 				currentQuantitativeCharacter = new QuantitativeCharacter();
 				currentQuantitativeCharacter.setId(attributes.getValue("id"));
+			}
+
+			// <MediaObject> in <Representation> in <QuantitativeCharacter>
+			else if (localName.equals("MediaObject") && inQuantitativeCharacter) {
+				if (attributes.getValue("ref") != null && currentQuantitativeCharacter != null) {
+					currentQuantitativeCharacter.getMediaObjectKeys().add(attributes.getValue("ref"));
+				}
 			}
 
 			// <States>
