@@ -36,6 +36,7 @@ public class Character implements ICharacter {
 		this.name = name;
 		this.inapplicableStates = new ArrayList<State>();
 		this.childCharacters = new ArrayList<ICharacter>();
+		this.mediaObjectKeys = new ArrayList<String>();
 	}
 
 	/* (non-Javadoc)
