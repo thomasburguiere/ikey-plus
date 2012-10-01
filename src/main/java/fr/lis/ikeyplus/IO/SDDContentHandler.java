@@ -162,7 +162,8 @@ public class SDDContentHandler implements ContentHandler {
 			}
 
 			// <MediaObject> in <Representation> in <CategoricalCharacter>
-			else if (localName.equals("MediaObject") && inCategoricalCharacter) {
+			else if (localName.equals("MediaObject") && inRepresentation && inCategoricalCharacter
+					&& !inStates) {
 				if (attributes.getValue("ref") != null && currentCategoricalCharacter != null) {
 					currentCategoricalCharacter.getMediaObjectKeys().add(attributes.getValue("ref"));
 				}
@@ -176,7 +177,8 @@ public class SDDContentHandler implements ContentHandler {
 			}
 
 			// <MediaObject> in <Representation> in <QuantitativeCharacter>
-			else if (localName.equals("MediaObject") && inQuantitativeCharacter) {
+			else if (localName.equals("MediaObject") && inRepresentation && inQuantitativeCharacter
+					&& !inStates) {
 				if (attributes.getValue("ref") != null && currentQuantitativeCharacter != null) {
 					currentQuantitativeCharacter.getMediaObjectKeys().add(attributes.getValue("ref"));
 				}
