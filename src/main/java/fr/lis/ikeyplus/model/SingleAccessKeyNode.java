@@ -143,6 +143,23 @@ public class SingleAccessKeyNode {
 	}
 
 	/**
+	 * @return the list of States contained by this node, if the node does contain a
+	 *         {@link QuantitativeMeasure}
+	 */
+	public List<State> getStates() {
+		if (this.characterState instanceof State) {
+			List<State> states = new ArrayList<State>();
+			states.add((State) this.getCharacterState());
+			for (Object state : this.getOtherCharacterStates()) {
+				if (state instanceof State)
+					states.add((State) state);
+			}
+			return states;
+		}
+		return null;
+	}
+
+	/**
 	 * get all children
 	 * 
 	 * @return List<SingleAccessKeyNode>, all child nodes
