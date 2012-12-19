@@ -16,6 +16,7 @@ public interface ICharacter {
 	public ICharacter parentCharacter = null;
 	public List<State> inapplicableStates = null;
 	public List<ICharacter> childCharacters = null;
+	public List<String> mediaObjectKeys = null;
 
 	public boolean isSupportsCategoricalData();
 
@@ -118,4 +119,20 @@ public interface ICharacter {
 	 *            <ICharacter>, the list of all child characters
 	 */
 	public List<ICharacter> getAllChildren();
+
+	/**
+	 * @return
+	 */
+	public List<String> getMediaObjectKeys();
+
+	/**
+	 * @param mediaObjects
+	 */
+	public void setMediaObjectKeys(List<String> mediaObjects);
+
+	/**
+	 * @param dataset
+	 * @return
+	 */
+	public String getFirstImage(DataSet dataset);
 }
