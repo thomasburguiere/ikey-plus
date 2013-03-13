@@ -1,7 +1,6 @@
 package fr.lis.ikeyplus.services;
 
 import java.io.IOException;
-import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 import org.junit.BeforeClass;
