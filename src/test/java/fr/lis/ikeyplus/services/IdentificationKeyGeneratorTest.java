@@ -21,14 +21,15 @@ public class IdentificationKeyGeneratorTest {
 		// creation of Utils object (containing options)
 
 		// set the confTest ResourceBundle
-//		Utils.setBundleConfOverridable(ResourceBundle.getBundle("fr.lis.ikeyplus.confTest"));
-//		Utils.setBundleConf(ResourceBundle.getBundle("fr.lis.ikeyplus.confTest"));
+		// Utils.setBundleConfOverridable(ResourceBundle.getBundle("fr.lis.ikeyplus.confTest"));
+		// Utils.setBundleConf(ResourceBundle.getBundle("fr.lis.ikeyplus.confTest"));
 
 	}
 
 	@Test
 	public void test() {
-		String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
+//		String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
+		String stringUrl = "src/test/resources/inputFiles/Key_test.sdd.xml";
 
 		// options
 		utils.setFewStatesCharacterFirst(false);
@@ -55,6 +56,7 @@ public class IdentificationKeyGeneratorTest {
 				identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), utils);
 				identificationKeyGenerator.createIdentificationKey();
 				SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+				logger.info("done");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

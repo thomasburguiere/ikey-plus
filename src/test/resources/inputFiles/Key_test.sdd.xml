@@ -1,0 +1,3375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Datasets xmlns="http://rs.tdwg.org/UBIF/2006/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://rs.tdwg.org/UBIF/2006/ http://rs.tdwg.org/UBIF/2006/Schema/1.1/SDD.xsd">
+    <TechnicalMetadata created="1970-01-01T09:31:00">
+        <Generator name="Xper2"
+            notes="This software is developed and distributed by LIS - Laboratoire Informatique et Systématique (LIS) - Université Pierre et Marie Curie - Paris VI - Copyright (c) 2004-2009" version="1.1"/>
+    </TechnicalMetadata>
+    <Dataset xml:lang="en">
+        <Representation>
+            <Label>European families of spiders</Label>
+        </Representation>
+        <RevisionData>
+            <Creators>
+                <Agent ref="a0" role="aut"/>
+            </Creators>
+            <DateCreated>1970-01-01T18:48:00</DateCreated>
+            <DateModified>1970-01-01T09:31:00</DateModified>
+        </RevisionData>
+        <Characters>
+            <CategoricalCharacter id="c1">
+                <Representation>
+                    <Label>Chélicères</Label>
+                </Representation>
+                <States>
+                    <StateDefinition id="s1">
+                        <Representation>
+                            <Label>Articulation longitudinale</Label>
+                            <Detail>Les chélicères sont articulés, de telle sorte que leur mouvement se fait d'avant en arrière.</Detail>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s2">
+                        <Representation>
+                            <Label>Articulation transversale</Label>
+                            <Detail>Les chelicères sont articulés comme une pince.</Detail>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s3">
+                        <Representation>
+                            <Label>Aspect massif</Label>
+                            <Detail>Les chélicères sont aussi larges ou/et aussi longs que le prosome (Atypidae).</Detail>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s4">
+                        <Representation>
+                            <Label>Proportionellement petits</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s5">
+                        <Representation>
+                            <Label>Longs et saillants</Label>
+                            <Detail>Les chélicères dépassent du prosome sur une longueur à peu près égales à celle de l'opisthosome (Dysderidae).</Detail>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s6">
+                        <Representation>
+                            <Label>A condyles latéraux</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s7">
+                        <Representation>
+                            <Label>A arrêtes de stridulation</Label>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c2">
+                <Representation>
+                    <Label>Filières postérieures</Label>
+                </Representation>
+                <States>
+                    <StateDefinition id="s8">
+                        <Representation>
+                            <Label>3 segments</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s9">
+                        <Representation>
+                            <Label>2 segments</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s10">
+                        <Representation>
+                            <Label>Plus courtes que les antérieures</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s11">
+                        <Representation>
+                            <Label>Plus longues que les antérieures</Label>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c3">
+                <Representation>
+                    <Label>Yeux</Label>
+                </Representation>
+                <States>
+                    <StateDefinition id="s12">
+                        <Representation>
+                            <Label>8</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s13">
+                        <Representation>
+                            <Label>6</Label>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c4">
+                <Representation>
+                    <Label>Disposition des yeux</Label>
+                </Representation>
+                <States>
+                    <StateDefinition id="s14">
+                        <Representation>
+                            <Label>Centrée</Label>
+                            <Detail>Yeux concentrés sur le prosome en un petit centre occulaire.</Detail>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s15">
+                        <Representation>
+                            <Label>2/3 de cercle</Label>
+                            <Detail>Voir image.</Detail>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s16">
+                        <Representation>
+                            <Label>Latéraux antérieurs et postérieurs espacés</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s17">
+                        <Representation>
+                            <Label>2 rangées de 4 yeux</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s18">
+                        <Representation>
+                            <Label>Masse compacte</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s19">
+                        <Representation>
+                            <Label>3 groupes écartés de 2 yeux</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s20">
+                        <Representation>
+                            <Label>3 groupes raprochés de 2 yeux</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s21">
+                        <Representation>
+                            <Label>2 groupes de 3 grands yeux, séparés par 1 groupe de 2 petits yeux</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s22">
+                        <Representation>
+                            <Label>4 grands yeux antérieus, 4 petits plus en arrière</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s23">
+                        <Representation>
+                            <Label>Hexagonale</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s24">
+                        <Representation>
+                            <Label>1 ligne antérieure de 4 yeux, 1 quadrilatère postérieur de 4 yeux</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s25">
+                        <Representation>
+                            <Label>1 ligne antérieure de 4 yeux, 1 quadrilatère postérieur de 4 yeux écartés</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s26">
+                        <Representation>
+                            <Label>2 rangées récurvées de 4 yeux</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s27">
+                        <Representation>
+                            <Label>1 queadrilatère de 4 yeux, entouré de 2 groupes de 2 yeux</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s28">
+                        <Representation>
+                            <Label>2 rangées récurvées de 4 yeux écartés</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s29">
+                        <Representation>
+                            <Label>Rang antérieur récurvé de 4 yeux, rang postérieur procurvé de 4 yeux</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s30">
+                        <Representation>
+                            <Label>2 rangées de 4 yeux écartés</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s31">
+                        <Representation>
+                            <Label>2 rangées de 4 yeux raprochés</Label>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c5">
+                <Representation>
+                    <Label>Particularités des yeux</Label>
+                </Representation>
+                <States>
+                    <StateDefinition id="s32">
+                        <Representation>
+                            <Label>Yeux médio-postérieurs en forme de reins</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s33">
+                        <Representation>
+                            <Label>Ovales</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s34">
+                        <Representation>
+                            <Label>Yeux médio-antérieurs très petits</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s35">
+                        <Representation>
+                            <Label>Yeux médio-antérieurs très grands</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s36">
+                        <Representation>
+                            <Label>Yeux médio-antérieurs grands</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s37">
+                        <Representation>
+                            <Label>Yeux postérieurs grands</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s38">
+                        <Representation>
+                            <Label>Annelés de blanc</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s39">
+                        <Representation>
+                            <Label>Yeux médio-postérieurs ronds</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s40">
+                        <Representation>
+                            <Label>Yeux médio-antérieurs ronds</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s41">
+                        <Representation>
+                            <Label>Yeux médians ronds</Label>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c6">
+                <Representation>
+                    <Label>Aspect général</Label>
+                </Representation>
+                <States>
+                    <StateDefinition id="s42">
+                        <Representation>
+                            <Label>Aspect de mygale</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s43">
+                        <Representation>
+                            <Label>Gracile</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s44">
+                        <Representation>
+                            <Label>En forme de crabe</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s45">
+                        <Representation>
+                            <Label>De fourmi</Label>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c7">
+                <Representation>
+                    <Label>Forme du prosome</Label>
+                </Representation>
+                <States>
+                    <StateDefinition id="s46">
+                        <Representation>
+                            <Label>Région céphalique bulbeuse</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s47">
+                        <Representation>
+                            <Label>Presque circulaire</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s48">
+                        <Representation>
+                            <Label>Région céphalique avancée</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s49">
+                        <Representation>
+                            <Label>Taille similaire à celle de l'opisthosome</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s50">
+                        <Representation>
+                            <Label>Forme approximativement rectangulaire</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s51">
+                        <Representation>
+                            <Label>Région céphalique surélevée</Label>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c8">
+                <Representation>
+                    <Label>Forme de l'opisthosome</Label>
+                </Representation>
+                <States>
+                    <StateDefinition id="s52">
+                        <Representation>
+                            <Label>Allongée</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s53">
+                        <Representation>
+                            <Label>3 tubercules</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s54">
+                        <Representation>
+                            <Label>Postérieurement étroit</Label>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c9">
+                <Representation>
+                    <Label>Tubercule anal</Label>
+                </Representation>
+                <States>
+                    <StateDefinition id="s55">
+                        <Representation>
+                            <Label>Gros et frangé de longues soies</Label>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c10">
+                <Representation>
+                    <Label>Shémas opisthosomaux</Label>
+                </Representation>
+                <States>
+                    <StateDefinition id="s56">
+                        <Representation>
+                            <Label>Rouge avec macules noires</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s57">
+                        <Representation>
+                            <Label>Unicolore, éventuellement métallisé</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s58">
+                        <Representation>
+                            <Label>Deux paires de macules blanches</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s59">
+                        <Representation>
+                            <Label>Jaune, zèbré de noir</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s60">
+                        <Representation>
+                            <Label>Pas d'ornementation</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s61">
+                        <Representation>
+                            <Label>Dorsalement foncé, ventralement clair</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s62">
+                        <Representation>
+                            <Label>Macules caractéristiques (Anyphaenidae)</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s63">
+                        <Representation>
+                            <Label>Schémas argentés complexes et caractéristiques (Theridiosomatidae)</Label>
+                            <Detail>Opisthosome globuleux et argenté, portant une croix/ancre noire.</Detail>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s64">
+                        <Representation>
+                            <Label>Femelle verte, male à rayures rouges (Hétéropodidae)</Label>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c11">
+                <Representation>
+                    <Label>Toile</Label>
+                </Representation>
+                <States>
+                    <StateDefinition id="s65">
+                        <Representation>
+                            <Label>Chaussette</Label>
+                            <Detail>Toile en forme de chaussette, tapissant un terrier creusé verticalement, recouvert de litière agglomérée par la toile.</Detail>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s66">
+                        <Representation>
+                            <Label>Tube à toit</Label>
+                            <Detail>Le tube est enfoui dans le sol et recouvert d'un toit de soie calamistrée.</Detail>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s67">
+                        <Representation>
+                            <Label>Etoilée</Label>
+                            <Detail>Toile de petite taille en forme d'étoile ou de chapiteaux.</Detail>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s68">
+                        <Representation>
+                            <Label>Triangulaire</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s69">
+                        <Representation>
+                            <Label>Orbiculaire simple</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s70">
+                        <Representation>
+                            <Label>Orbiculaire avec une bande</Label>
+                            <Detail>La toile est orbiculaire, avec une bande irrégulière de soies bien visible, blanche, le long de la toile.</Detail>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s71">
+                        <Representation>
+                            <Label>Horizontale</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s72">
+                        <Representation>
+                            <Label>Verticale</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s73">
+                        <Representation>
+                            <Label>Retraite tubulaire</Label>
+                            <Detail>Trou dans un mur ou dans le sol tapissé de toile et dont l'entrée est entourée d'un réseau complexe.</Detail>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s74">
+                        <Representation>
+                            <Label>Nappe</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s75">
+                        <Representation>
+                            <Label>Scaphandre</Label>
+                            <Detail>Toile formant une poche autour de l'abdomen et contenant l'air.</Detail>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s76">
+                        <Representation>
+                            <Label>Toile de fils entrecroisés</Label>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c12">
+                <Representation>
+                    <Label>Cribellum</Label>
+                    <Detail>Pièce antérieure aux filières provenant de la soudure de la première paire de filières, donnant de la soie dite cribellée.</Detail>
+                </Representation>
+                <States>
+                    <StateDefinition id="s77">
+                        <Representation>
+                            <Label>Présence</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s78">
+                        <Representation>
+                            <Label>Absence</Label>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c13">
+                <Representation>
+                    <Label>Tarse</Label>
+                </Representation>
+                <States>
+                    <StateDefinition id="s79">
+                        <Representation>
+                            <Label>Plusieurs trichobotries</Label>
+                            <Detail>Les trichobotries sont de longues soies sensoriel pour la détection des mouvements de l'air.</Detail>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s80">
+                        <Representation>
+                            <Label>Trichobotrie unique</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s81">
+                        <Representation>
+                            <Label>Flexible</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s82">
+                        <Representation>
+                            <Label>3 griffes</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s83">
+                        <Representation>
+                            <Label>2 griffes</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s84">
+                        <Representation>
+                            <Label>IV équipé de fausses griffes</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s85">
+                        <Representation>
+                            <Label>Griffes tarsales auxiliaires</Label>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c14">
+                <Representation>
+                    <Label>Calamistrum</Label>
+                    <Detail>Rang de soies spécialisées sur le métatarse IV.</Detail>
+                </Representation>
+                <States>
+                    <StateDefinition id="s86">
+                        <Representation>
+                            <Label>Présence</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s87">
+                        <Representation>
+                            <Label>Absence</Label>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c15">
+                <Representation>
+                    <Label>Nombre de rangés</Label>
+                </Representation>
+                <States>
+                    <StateDefinition id="s88">
+                        <Representation>
+                            <Label>Double rangée de soies</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s89">
+                        <Representation>
+                            <Label>Simple rangée de soies</Label>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <QuantitativeCharacter id="c16">
+                <Representation>
+                    <Label>Taille</Label>
+                </Representation>
+                <MeasurementUnit>
+                    <Label role="Abbrev">mm</Label>
+                </MeasurementUnit>
+            </QuantitativeCharacter>
+            <CategoricalCharacter id="c17">
+                <Representation>
+                    <Label>Organes sexuels</Label>
+                </Representation>
+                <States>
+                    <StateDefinition id="s90">
+                        <Representation>
+                            <Label>Visibles, bien dévellopés au stade adulte</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s91">
+                        <Representation>
+                            <Label>Pédipalpes peu dévellopés, épigynes absents au stade adulte</Label>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c18">
+                <Representation>
+                    <Label>Filières</Label>
+                </Representation>
+                <States>
+                    <StateDefinition id="s92">
+                        <Representation>
+                            <Label>En carré</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s93">
+                        <Representation>
+                            <Label>En ligne</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s94">
+                        <Representation>
+                            <Label>Médianes bien vivibles</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s95">
+                        <Representation>
+                            <Label>Antérieures cylindriques séparées</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s96">
+                        <Representation>
+                            <Label>Antérieures cylindriques raprochées</Label>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c19">
+                <Representation>
+                    <Label>Stigmates trachéens</Label>
+                </Representation>
+                <States>
+                    <StateDefinition id="s97">
+                        <Representation>
+                            <Label>Aux 2/3 ou à mi-chemin entre les filières et la fente épi-gastrique</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s98">
+                        <Representation>
+                            <Label>Proches de la fente épi-gastrique</Label>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c20">
+                <Representation>
+                    <Label>Pattes</Label>
+                </Representation>
+                <States>
+                    <StateDefinition id="s99">
+                        <Representation>
+                            <Label>III et IV portant de longues soies fines</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s100">
+                        <Representation>
+                            <Label>Portants beacoup de longues soies</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s101">
+                        <Representation>
+                            <Label>Longues</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s102">
+                        <Representation>
+                            <Label>I et II portant, sur la face interne, une séries de soies</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s103">
+                        <Representation>
+                            <Label>Métatarses incurvés</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s104">
+                        <Representation>
+                            <Label>I et II plus robustes que les pattes III et IV</Label>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c21">
+                <Representation>
+                    <Label>Lames maxillaires</Label>
+                </Representation>
+                <States>
+                    <StateDefinition id="s105">
+                        <Representation>
+                            <Label>Largement plus longues que larges</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s106">
+                        <Representation>
+                            <Label>Peu plus ou moins longues que larges</Label>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c22">
+                <Representation>
+                    <Label>Labium</Label>
+                </Representation>
+                <States>
+                    <StateDefinition id="s107">
+                        <Representation>
+                            <Label>Antérieurement bien renflé</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s108">
+                        <Representation>
+                            <Label>Antérieurement à peine renflé</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s109">
+                        <Representation>
+                            <Label>Moins ou aussi long que large</Label>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s110">
+                        <Representation>
+                            <Label>Plus longs que large</Label>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+        </Characters>
+        <CharacterTrees>
+            <CharacterTree id="ct1">
+                <Representation>
+                    <Label>Ordre et dépendance entre caractères</Label>
+                </Representation>
+                <ShouldContainAllCharacters>true</ShouldContainAllCharacters>
+                <Nodes>
+                    <CharNode>
+                        <Character ref="c1"/>
+                    </CharNode>
+                    <CharNode>
+                        <Character ref="c3"/>
+                    </CharNode>
+                    <CharNode>
+                        <Character ref="c6"/>
+                    </CharNode>
+                    <CharNode>
+                        <Character ref="c9"/>
+                    </CharNode>
+                    <CharNode>
+                        <Character ref="c11"/>
+                    </CharNode>
+                    <CharNode>
+                        <Character ref="c12"/>
+                    </CharNode>
+                    <CharNode>
+                        <Character ref="c13"/>
+                    </CharNode>
+                    <CharNode>
+                        <Character ref="c14"/>
+                    </CharNode>
+                    <CharNode>
+                        <DependencyRules>
+                            <InapplicableIf>
+                                <State ref="s87"/>
+                            </InapplicableIf>
+                        </DependencyRules>
+                        <Character ref="c15"/>
+                    </CharNode>
+                    <CharNode>
+                        <Character ref="c16"/>
+                    </CharNode>
+                    <CharNode>
+                        <Character ref="c17"/>
+                    </CharNode>
+                    <CharNode>
+                        <Character ref="c18"/>
+                    </CharNode>
+                    <CharNode>
+                        <Character ref="c19"/>
+                    </CharNode>
+                    <CharNode>
+                        <Character ref="c20"/>
+                    </CharNode>
+                    <CharNode>
+                        <Character ref="c21"/>
+                    </CharNode>
+                    <CharNode>
+                        <Character ref="c22"/>
+                    </CharNode>
+                </Nodes>
+            </CharacterTree>
+        </CharacterTrees>
+        <CodedDescriptions>
+            <CodedDescription id="D1">
+                <Representation>
+                    <Label>Atipidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s1"/>
+                        <State ref="s3"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s8"/>
+                        <State ref="s11"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s14"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <State ref="s42"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <State ref="s51"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <State ref="s65"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="7.0"/>
+                        <Measure type="Max" value="18.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D2">
+                <Representation>
+                    <Label>Eresidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s16"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <State ref="s46"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <State ref="s56"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <State ref="s66"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s77"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s86"/>
+                    </Categorical>
+                    <Categorical ref="c15">
+                        <State ref="s89"/>
+                    </Categorical>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="6.0"/>
+                        <Measure type="Max" value="16.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D3">
+                <Representation>
+                    <Label>Oecobiidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s15"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <State ref="s32"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <State ref="s47"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <State ref="s55"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <State ref="s67"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s77"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <State ref="s79"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s86"/>
+                    </Categorical>
+                    <Categorical ref="c15">
+                        <State ref="s88"/>
+                    </Categorical>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="2.0"/>
+                        <Measure type="Max" value="2.5"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D4">
+                <Representation>
+                    <Label>Uloboridae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s16"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <State ref="s68"/>
+                        <State ref="s70"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s77"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s86"/>
+                    </Categorical>
+                    <Categorical ref="c15">
+                        <State ref="s89"/>
+                    </Categorical>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="3.0"/>
+                        <Measure type="Max" value="6.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D5">
+                <Representation>
+                    <Label>Titanoecidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s17"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <State ref="s48"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <State ref="s57"/>
+                        <State ref="s58"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <State ref="s73"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s77"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s86"/>
+                    </Categorical>
+                    <Categorical ref="c15">
+                        <State ref="s89"/>
+                    </Categorical>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="3.0"/>
+                        <Measure type="Max" value="7.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D6">
+                <Representation>
+                    <Label>Dictynidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s17"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <State ref="s48"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <State ref="s76"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s77"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <State ref="s80"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s86"/>
+                    </Categorical>
+                    <Categorical ref="c15">
+                        <State ref="s89"/>
+                    </Categorical>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="1.0"/>
+                        <Measure type="Max" value="4.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D7">
+                <Representation>
+                    <Label>Amaurobiidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s17"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <State ref="s48"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <State ref="s73"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s77"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s86"/>
+                    </Categorical>
+                    <Categorical ref="c15">
+                        <State ref="s89"/>
+                    </Categorical>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="4.0"/>
+                        <Measure type="Max" value="15.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D8">
+                <Representation>
+                    <Label>Scytodidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                        <State ref="s4"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s13"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s19"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <State ref="s33"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <State ref="s47"/>
+                        <State ref="s49"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <State ref="s59"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="3.0"/>
+                        <Measure type="Max" value="6.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s91"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D9">
+                <Representation>
+                    <Label>Oonopidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                        <State ref="s4"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s13"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s18"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <State ref="s33"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <State ref="s48"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <State ref="s57"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="1.2"/>
+                        <Measure type="Max" value="2.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s91"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D10">
+                <Representation>
+                    <Label>Dysderidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                        <State ref="s3"/>
+                        <State ref="s5"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s13"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s14"/>
+                        <State ref="s15"/>
+                        <State ref="s18"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <State ref="s52"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <State ref="s60"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="5.0"/>
+                        <Measure type="Max" value="15.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s91"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D11">
+                <Representation>
+                    <Label>Segestridae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s13"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s20"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <State ref="s52"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <State ref="s73"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="6.0"/>
+                        <Measure type="Max" value="22.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s91"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D12">
+                <Representation>
+                    <Label>Pholcidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s21"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <State ref="s34"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <State ref="s43"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <State ref="s47"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <State ref="s52"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <State ref="s57"/>
+                        <State ref="s60"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <State ref="s74"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <State ref="s81"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="2.0"/>
+                        <Measure type="Max" value="10.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <State ref="s101"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D13">
+                <Representation>
+                    <Label>Salticidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s22"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <State ref="s35"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <State ref="s45"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <State ref="s50"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="2.0"/>
+                        <Measure type="Max" value="10.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D14">
+                <Representation>
+                    <Label>Hahniidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s17"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="1.3"/>
+                        <Measure type="Max" value="3.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s93"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <State ref="s97"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D15">
+                <Representation>
+                    <Label>Oxyopidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s23"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <State ref="s48"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <State ref="s54"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="4.0"/>
+                        <Measure type="Max" value="10.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <State ref="s100"/>
+                        <State ref="s101"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D16">
+                <Representation>
+                    <Label>Zodariidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                        <State ref="s10"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s27"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <State ref="s36"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <State ref="s61"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="1.6"/>
+                        <Measure type="Max" value="5.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D17">
+                <Representation>
+                    <Label>Lycosidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s24"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <State ref="s37"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <State ref="s48"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="2.8"/>
+                        <Measure type="Max" value="27.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D18">
+                <Representation>
+                    <Label>Pisauridae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s25"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="9.0"/>
+                        <Measure type="Max" value="20.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <State ref="s101"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D19">
+                <Representation>
+                    <Label>Zoridae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s26"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <State ref="s41"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <State ref="s48"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="3.0"/>
+                        <Measure type="Max" value="6.5"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D20">
+                <Representation>
+                    <Label>Argyronetidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s17"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <State ref="s57"/>
+                        <State ref="s60"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <State ref="s73"/>
+                        <State ref="s75"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="8.0"/>
+                        <Measure type="Max" value="15.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <State ref="s98"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <State ref="s99"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D21">
+                <Representation>
+                    <Label>Anyphaenidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s17"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <State ref="s62"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="4.0"/>
+                        <Measure type="Max" value="7.5"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <State ref="s97"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D22">
+                <Representation>
+                    <Label>Mimetidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s17"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <State ref="s53"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="2.4"/>
+                        <Measure type="Max" value="4.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <State ref="s103"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D23">
+                <Representation>
+                    <Label>Agelenidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s11"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s17"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <State ref="s73"/>
+                        <State ref="s74"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <State ref="s79"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="2.5"/>
+                        <Measure type="Max" value="20.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                        <State ref="s94"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D24">
+                <Representation>
+                    <Label>Thomisidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s28"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <State ref="s44"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="2.0"/>
+                        <Measure type="Max" value="11.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <State ref="s104"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D25">
+                <Representation>
+                    <Label>Philodromidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s28"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <State ref="s44"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="3.0"/>
+                        <Measure type="Max" value="12.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D26">
+                <Representation>
+                    <Label>Heteropodidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s29"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <State ref="s38"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <State ref="s64"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="7.0"/>
+                        <Measure type="Max" value="15.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D27">
+                <Representation>
+                    <Label>Gnaphosidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s17"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <State ref="s83"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="2.0"/>
+                        <Measure type="Max" value="13.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                        <State ref="s94"/>
+                        <State ref="s95"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D28">
+                <Representation>
+                    <Label>Clubionidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s30"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <State ref="s39"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <State ref="s83"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="3.0"/>
+                        <Measure type="Max" value="13.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                        <State ref="s96"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <State ref="s106"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <State ref="s110"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D29">
+                <Representation>
+                    <Label>Liocranidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s31"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <State ref="s39"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <State ref="s83"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="2.5"/>
+                        <Measure type="Max" value="10.5"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <State ref="s106"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <State ref="s109"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D30">
+                <Representation>
+                    <Label>Nesticidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s17"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <State ref="s76"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <State ref="s82"/>
+                        <State ref="s84"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="3.0"/>
+                        <Measure type="Max" value="6.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <State ref="s107"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D31">
+                <Representation>
+                    <Label>Tetragnathidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                        <State ref="s3"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s17"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <State ref="s69"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <State ref="s82"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="2.5"/>
+                        <Measure type="Max" value="16.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <State ref="s105"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <State ref="s109"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D32">
+                <Representation>
+                    <Label>Theridiosomatidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s17"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <State ref="s68"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <State ref="s82"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="1.0"/>
+                        <Measure type="Max" value="3.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <State ref="s106"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <State ref="s109"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D33">
+                <Representation>
+                    <Label>Araneidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                        <State ref="s6"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s17"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <State ref="s41"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <State ref="s69"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <State ref="s82"/>
+                        <State ref="s85"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="2.0"/>
+                        <Measure type="Max" value="22.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D34">
+                <Representation>
+                    <Label>Linyphiidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                        <State ref="s7"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s17"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <State ref="s40"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <State ref="s74"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <State ref="s82"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="1.5"/>
+                        <Measure type="Max" value="7.4"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D35">
+                <Representation>
+                    <Label>Theridiidae</Label>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s17"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c8">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c9">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c10">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c11">
+                        <State ref="s69"/>
+                    </Categorical>
+                    <Categorical ref="c12">
+                        <State ref="s78"/>
+                    </Categorical>
+                    <Categorical ref="c13">
+                        <State ref="s82"/>
+                        <State ref="s84"/>
+                    </Categorical>
+                    <Categorical ref="c14">
+                        <State ref="s87"/>
+                    </Categorical>
+                    <Categorical ref="c15"/>
+                    <Quantitative ref="c16">
+                        <Measure type="Min" value="1.1"/>
+                        <Measure type="Max" value="14.0"/>
+                    </Quantitative>
+                    <Categorical ref="c17">
+                        <State ref="s90"/>
+                    </Categorical>
+                    <Categorical ref="c18">
+                        <State ref="s92"/>
+                    </Categorical>
+                    <Categorical ref="c19">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c20">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c21">
+                        <Status code="DataUnavailable"/>
+                    </Categorical>
+                    <Categorical ref="c22">
+                        <State ref="s108"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+        </CodedDescriptions>
+        <Agents>
+            <Agent id="a0">
+                <Representation>
+                    <Label>Unknown</Label>
+                </Representation>
+            </Agent>
+        </Agents>
+        <MediaObjects/>
+    </Dataset>
+</Datasets>
