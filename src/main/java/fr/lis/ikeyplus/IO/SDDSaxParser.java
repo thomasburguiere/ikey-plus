@@ -1,6 +1,9 @@
 package fr.lis.ikeyplus.IO;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.xml.sax.InputSource;
@@ -10,7 +13,6 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 import fr.lis.ikeyplus.model.DataSet;
 import fr.lis.ikeyplus.utils.Utils;
-
 
 /**
  * This class starts the parsing of a SDD file
@@ -32,9 +34,13 @@ public class SDDSaxParser {
 		SDDContentHandler handler = new SDDContentHandler(utils);
 		saxReader.setContentHandler(handler);
 
-		URL url = new URL(uri);
 		InputSource is = null;
-		is = new InputSource(url.openStream());
+		try {
+			URL url = new URL(uri);
+			is = new InputSource(url.openStream());
+		} catch (MalformedURLException e) {
+			is = new InputSource(new FileInputStream(new File(uri)));
+		}
 
 		saxReader.parse(is);
 		this.setDataset(handler.getDataSet());
