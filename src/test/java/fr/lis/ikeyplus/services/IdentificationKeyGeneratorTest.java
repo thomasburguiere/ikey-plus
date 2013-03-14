@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 
 import fr.lis.ikeyplus.IO.SDDSaxParser;
+import fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 import fr.lis.ikeyplus.utils.Utils;
 
@@ -27,14 +28,14 @@ public class IdentificationKeyGeneratorTest {
 	}
 
 	@Test
-	public void test() {
-//		String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
+	public void test() throws Exception {
+		// String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 		String stringUrl = "src/test/resources/inputFiles/Key_test.sdd.xml";
-
+		
 		// options
 		utils.setFewStatesCharacterFirst(false);
 		utils.setMergeCharacterStatesIfSameDiscrimination(false);
-		utils.setPruning(false);
+		utils.setPruning(true);
 		utils.setVerbosity("hows");
 		utils.setScoreMethod(Utils.XPER);
 		utils.setWeightContext("CostEffectiveness");
@@ -58,8 +59,8 @@ public class IdentificationKeyGeneratorTest {
 				SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 				logger.info("done");
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				throw (e);
 			}
 
 		} catch (SAXException e) {
