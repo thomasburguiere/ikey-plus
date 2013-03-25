@@ -1,0 +1,836 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Datasets xmlns="http://rs.tdwg.org/UBIF/2006/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://rs.tdwg.org/UBIF/2006/ http://rs.tdwg.org/UBIF/2006/Schema/1.1/SDD.xsd">
+    <TechnicalMetadata created="1970-01-01T16:33:00">
+        <Generator name="Xper2"
+            notes="This software is developed and distributed by LIS - Laboratoire Informatique et Systématique (LIS) - Université Pierre et Marie Curie - Paris VI - Copyright (c) 2004-2009" version="1.1"/>
+    </TechnicalMetadata>
+    <Dataset xml:lang="fr">
+        <Representation>
+            <Label>Gadiformes (Teleostei, Paracanthopterygii)</Label>
+            <Detail>C'est une base de connaissances à l'aide de la identification au niveau de familles au sein de l'orde Gadiformes. C'est une base construite pour les étudiants, stagières, chercheurs, controleurs de péche, chargé de collections et la communauté en genéral. Elle utilise des données cualitatives de type morphoanatomiques externes et internes.</Detail>
+        </Representation>
+        <RevisionData>
+            <Creators>
+                <Agent ref="a1" role="aut"/>
+            </Creators>
+            <DateCreated>2013-03-21T16:33:31</DateCreated>
+            <DateModified>2013-03-21T16:33:31</DateModified>
+        </RevisionData>
+        <DescriptiveConcepts>
+            <DescriptiveConcept id="dc1">
+                <Representation>
+                    <Label>Externes</Label>
+                    <Detail>La diversité morphologique au sein de l'ordre des Gadiformes est très significative. Les caractères externes permettent une identification facile et claire au niveau de famille, cependant, les caractéres internes permettent aller plus loin dans l'identification taxonomique, par exemple, au sein des genres et pour arriver à l'espéce. Pour ce base de connaissances, j'ai structuré les descripteurs en &lt;i&gt; externes &lt;/i&gt; pour guider l'identification taxonomique parmi les qualités externes des espécimens à identifier.</Detail>
+                </Representation>
+            </DescriptiveConcept>
+        </DescriptiveConcepts>
+        <Characters>
+            <CategoricalCharacter id="c1">
+                <Representation>
+                    <Label>Présence de barbillons</Label>
+                    <Detail>Le barbillon est la projection charnue vers la bouche, menton ou museau. On dit que cet organe est utilisé pour localiser la nourriture &lt;a href="http://www.fishbase.org/Glossary/Glossary.php?q=barbel&amp;language=english&amp;sc=is"&gt;http://www.fishbase.org/Glossary/Glossary.php?q=barbel&amp;language=english&amp;sc=is&lt;/a&gt; &lt;a href="http://www.briancoad.com/Dictionary/Complete%20Dictionary.htm"&gt;http://www.briancoad.com/Dictionary/Complete%20Dictionary.htm&lt;/a&gt;&lt;br&gt;&lt;br&gt;Les barbillons chez les Gadiformes, existent vers le menton et/ou le museau.</Detail>
+                </Representation>
+                <States>
+                    <StateDefinition id="s1">
+                        <Representation>
+                            <Label>Oui au niveau du menton</Label>
+                            <Detail>Chez l'ordre des Gadiformes, le nombre de barbillos au niveau du menton est toujours d'un.</Detail>
+                            <MediaObject ref="m10"/>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s2">
+                        <Representation>
+                            <Label>Oui au niveau du menton et museau</Label>
+                            <Detail>Les genres &lt;i&gt; Gaidropsarus,&lt;/i&gt;&lt;i&gt; Ciliata,&lt;/i&gt; et &lt;i&gt;Enchelyopus&lt;/i&gt; présentent non seulement des barbillons au niveau du menton mais aussi au niveau du museau. Le nombre de barbillons au niveau du museau varie entre 2 et 4 (Nelson, 2006).</Detail>
+                            <MediaObject ref="m11"/>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s3">
+                        <Representation>
+                            <Label>Non</Label>
+                            <Detail>Parmi les Gadiformes, quelque familles ne présentent pas de barbillons</Detail>
+                            <MediaObject ref="m12"/>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c2">
+                <Representation>
+                    <Label>Présence d'un organe lumineux </Label>
+                    <Detail>L'organe lumineux, chez les Gadiformes, c'est un "sac allongé" incrusté à la paroi abdominale, juste en face de l'anus. Il est couvert pour nombreux mélanophores ce qui donnent l'apparence extérieure d'une tache noire et allongé (Okamura, 1970. &lt;i&gt; Studies on the Macruroids Fishes of Japan&lt;/i&gt;). &lt;br&gt;&lt;br&gt;Cet organe est souvent présent chez Macrouridae, &lt;i&gt; Steindachneria &lt;/i&gt; et &lt;i&gt; Physiculus &lt;/i&gt;.&lt;br&gt;&lt;br&gt;Chez Macrouridae, l'illumination de son environnement a été constaté par le bathyscaphe; en effet, c'est le résultat le plus commun de la luminiscense produit par l'organe lumineux. L'organe lumineux aurait une fonction de reconnaissance (Okamura, 1970).</Detail>
+                </Representation>
+                <States>
+                    <StateDefinition id="s4">
+                        <Representation>
+                            <Label>Oui</Label>
+                            <MediaObject ref="m13"/>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s5">
+                        <Representation>
+                            <Label>Non</Label>
+                            <MediaObject ref="m14"/>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c3">
+                <Representation>
+                    <Label>Nombre des nageoires dorsales</Label>
+                    <Detail>La nageorie dorsale se trouve le long du dos. Dans les textes, elle est abrégé D, ou D1, D2 et D3 quand il y a plusieurs nageoires dorsales et la plus antérieur est désignée la première&lt;a href="http://www.fishbase.org/Glossary/Glossary.php?q=dorsal+fin&amp;language=english&amp;sc=is"&gt; http://www.fishbase.org/Glossary/Glossary.php?q=dorsal+fin&amp;language=english&amp;sc=is&lt;a/&gt;, &lt;a href="http://www.briancoad.com/Dictionary/Complete%20Dictionary.htm"&gt; http://www.briancoad.com/Dictionary/Complete%20Dictionary.htm&lt;a/&gt;&lt;br&gt;&lt;br&gt;Parmi les Gadiformes il peut y avoir un, deux ou trois nageoires dorsales.</Detail>
+                </Representation>
+                <States>
+                    <StateDefinition id="s6">
+                        <Representation>
+                            <Label>Une</Label>
+                            <Detail>La seule nageoire dorsale consiste en une nageoire à base longue.</Detail>
+                            <MediaObject ref="m15"/>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s7">
+                        <Representation>
+                            <Label>Deux</Label>
+                            <Detail>Deux nageoires dorsaux constistent en deux nageoires à bases de longueur différentes. La plus antérieur peut être fine et longue tandis que la deuxième peut avoir un contour ondulé ou plat. Entre les deux nageoires peut aussi avoir un espace trés large.</Detail>
+                            <MediaObject ref="m16"/>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s8">
+                        <Representation>
+                            <Label>Trois</Label>
+                            <Detail>Trois nageoires dorsaux, sont de nageoires qui possèdent aussi leur bases de longueur similaires.</Detail>
+                            <MediaObject ref="m17"/>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c4">
+                <Representation>
+                    <Label>Nombre des nageoires anales </Label>
+                    <Detail>La nageoire anale est impaire et située ventralement derrière l'anus. Dans les textes, elle est abrégé A, ou A1 et A2 quand sont deux nageoires anales. La plus antérieur est désigné le premier &lt;a href="http://www.fishbase.org/Glossary/Glossary.php?q=anal+fin&amp;language=english&amp;sc=is"&gt; http://www.fishbase.org/Glossary/Glossary.php?q=anal+fin&amp;language=english&amp;sc=is&lt;a/&gt; et &lt;a href="http://www.briancoad.com/Dictionary/Complete%20Dictionary.htm"&gt; http://www.briancoad.com/Dictionary/Complete%20Dictionary.htm&lt;a/&gt;&lt;br&gt;&lt;br&gt;Chez les Gadiformes la nageoire anale se situe habituellement sur le postérieure partie moitié du corp.</Detail>
+                </Representation>
+                <States>
+                    <StateDefinition id="s9">
+                        <Representation>
+                            <Label>Une</Label>
+                            <Detail>Parmi les Gadiformes, certains possédent une nageoire anale. Cet nageoire existe à base longue et contour plat mais aussi, à base longue et contour ondulé.</Detail>
+                            <MediaObject ref="m18"/>
+                            <MediaObject ref="m19"/>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s10">
+                        <Representation>
+                            <Label>Deux</Label>
+                            <Detail>Parmi les Gadiformes, certains possèdent deux nageoires anales à base de longueur similaires ou différentes.</Detail>
+                            <MediaObject ref="m20"/>
+                            <MediaObject ref="m21"/>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c5">
+                <Representation>
+                    <Label>Localisation des nageoires pelviennes</Label>
+                    <Detail>Les nageoires pelviennes ou parfois nommées 'ventrales' peut se trouver en position abdominale ou en position thoracique ou jugulaire &lt;a href="http://www.fishbase.org/Glossary/Glossary.php?q=pelvic+fins&amp;language=english&amp;sc=is"&gt;http://www.fishbase.org/Glossary/Glossary.php?q=pelvic+fins&amp;language=english&amp;sc=is&lt;a/&gt;.&lt;br&gt;&lt;br&gt;Chez les Gadiformes, les nageoires pelviennes se trouvent en position thoracique ou jugulaire.</Detail>
+                </Representation>
+                <States>
+                    <StateDefinition id="s11">
+                        <Representation>
+                            <Label>Thoracique</Label>
+                            <MediaObject ref="m22"/>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s12">
+                        <Representation>
+                            <Label>Jugulaire</Label>
+                            <MediaObject ref="m23"/>
+                            <MediaObject ref="m24"/>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c6">
+                <Representation>
+                    <Label>Localisation nageoire pectoral</Label>
+                </Representation>
+                <States>
+                    <StateDefinition id="s13">
+                        <Representation>
+                            <Label>Au-dessus de l'overture branquiale </Label>
+                            <MediaObject ref="m25"/>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s14">
+                        <Representation>
+                            <Label>Sous l'overture branquiale</Label>
+                            <MediaObject ref="m26"/>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+            <CategoricalCharacter id="c7">
+                <Representation>
+                    <Label>Morphologie de la nageoire caudale</Label>
+                    <Detail>La nageoire caudale est constitué par la partie finale de la colonne vertebrale &lt;a href="http://www.briancoad.com/Dictionary/Complete%20Dictionary.htm"&gt; http://www.briancoad.com/Dictionary/Complete%20Dictionary.htm&lt;a/&gt; &lt;br&gt;&lt;br&gt;Parmi les Gadiformes, certains possèdent une nageoire caudale indistincte à l'extérieur, c'est à dire, confondu avec la nageoire anale et la deuxième nageoire dorsale. Ce particularité, se réfere à la forme de la nageoire caudale filamenteuse, partagé par certains familles des Gadiformes.</Detail>
+                </Representation>
+                <States>
+                    <StateDefinition id="s15">
+                        <Representation>
+                            <Label>Filamenteuse</Label>
+                            <MediaObject ref="m27"/>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s16">
+                        <Representation>
+                            <Label>Arrondi</Label>
+                            <MediaObject ref="m28"/>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s17">
+                        <Representation>
+                            <Label>Concave</Label>
+                            <MediaObject ref="m29"/>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s18">
+                        <Representation>
+                            <Label>Tronqué</Label>
+                            <MediaObject ref="m30"/>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s19">
+                        <Representation>
+                            <Label>Asymétrique</Label>
+                            <MediaObject ref="m31"/>
+                        </Representation>
+                    </StateDefinition>
+                    <StateDefinition id="s20">
+                        <Representation>
+                            <Label>Fourchu</Label>
+                            <MediaObject ref="m32"/>
+                        </Representation>
+                    </StateDefinition>
+                </States>
+            </CategoricalCharacter>
+        </Characters>
+        <CharacterTrees>
+            <CharacterTree id="ct1">
+                <Representation>
+                    <Label>Ordre et dépendance entre caractères</Label>
+                </Representation>
+                <ShouldContainAllCharacters>true</ShouldContainAllCharacters>
+                <Nodes>
+                    <CharNode>
+                        <Character ref="c1"/>
+                    </CharNode>
+                    <CharNode>
+                        <Character ref="c2"/>
+                    </CharNode>
+                    <CharNode>
+                        <Character ref="c3"/>
+                    </CharNode>
+                    <CharNode>
+                        <Character ref="c4"/>
+                    </CharNode>
+                    <CharNode>
+                        <Character ref="c5"/>
+                    </CharNode>
+                    <CharNode>
+                        <Character ref="c6"/>
+                    </CharNode>
+                    <CharNode>
+                        <Character ref="c7"/>
+                    </CharNode>
+                </Nodes>
+            </CharacterTree>
+            <CharacterTree id="ct2">
+                <Representation>
+                    <Label>Arbre secondaire Xper2 : groupes et variables contenues dans ces groupes</Label>
+                </Representation>
+                <Nodes>
+                    <Node id="cn1">
+                        <DescriptiveConcept ref="dc1"/>
+                    </Node>
+                    <CharNode>
+                        <Parent ref="cn1"/>
+                        <Character ref="c1"/>
+                    </CharNode>
+                    <CharNode>
+                        <Parent ref="cn1"/>
+                        <Character ref="c2"/>
+                    </CharNode>
+                    <CharNode>
+                        <Parent ref="cn1"/>
+                        <Character ref="c3"/>
+                    </CharNode>
+                    <CharNode>
+                        <Parent ref="cn1"/>
+                        <Character ref="c4"/>
+                    </CharNode>
+                    <CharNode>
+                        <Parent ref="cn1"/>
+                        <Character ref="c5"/>
+                    </CharNode>
+                    <CharNode>
+                        <Parent ref="cn1"/>
+                        <Character ref="c6"/>
+                    </CharNode>
+                    <CharNode>
+                        <Parent ref="cn1"/>
+                        <Character ref="c7"/>
+                    </CharNode>
+                </Nodes>
+            </CharacterTree>
+        </CharacterTrees>
+        <CodedDescriptions>
+            <CodedDescription id="D1">
+                <Representation>
+                    <Label>Muraenolepididae</Label>
+                    <Detail>Nom valide &lt;a href="http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&amp;search_value=164667"&gt;http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&amp;search_value=164667&lt;/a&gt;&lt;br&gt;&lt;br&gt;Cette famille comprens un genre &lt;i&gt; Muraenolepis &lt;/i&gt; avec quatre espèces valides (Nelson, J. 2006. &lt;i&gt; Fishes of the World &lt;/i&gt;. Wiley and Sons Ed. USA. 266 p):&lt;br&gt;&lt;i&gt; Muraenolepis marmoratus &lt;/i&gt;Günther, 1880 &lt;a href="http://www.itis.gov/servlet/SingleRpt/SingleRpt"&gt;http://www.itis.gov/servlet/SingleRpt/SingleRpt&lt;/a&gt; &lt;br&gt;&lt;i&gt; Muraenolepis microcephalus &lt;/i&gt; Norman, 1937 &lt;a href="http://www.itis.gov/servlet/SingleRpt/SingleRpt"&gt;http://www.itis.gov/servlet/SingleRpt/SingleRpt&lt;/a&gt; &lt;br&gt;&lt;i&gt; Muraenolepis microps &lt;/i&gt;Lönnberg, 1905 &lt;a href="http://www.itis.gov/servlet/SingleRpt/SingleRpt"&gt;http://www.itis.gov/servlet/SingleRpt/SingleRpt&lt;/a&gt; &lt;br&gt;&lt;i&gt; Muraenolepis orangiensis &lt;/i&gt; Vaillant, 1888.&lt;br&gt;&lt;a href="http://www.itis.gov/servlet/SingleRpt/SingleRpt"&gt;http://www.itis.gov/servlet/SingleRpt/SingleRpt&lt;/a&gt; &lt;br&gt;&lt;br&gt;On considère Muraenolepididae comme le taxon le plus primitive au sein des Gadiformes (Nelson, 2006).</Detail>
+                    <MediaObject ref="m1"/>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s1"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s5"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s7"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <State ref="s11"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <State ref="s13"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <State ref="s16"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D2">
+                <Representation>
+                    <Label>Bregmacerotidae</Label>
+                    <Detail>Nom valide &lt;br&gt; &lt;a href="http://www.itis.gov/servlet/SingleRpt/SingleRpt"&gt;http://www.itis.gov/servlet/SingleRpt/SingleRpt&lt;/a&gt;&lt;br&gt;&lt;br&gt;Cet famille contiens qu'un seule genre &lt;i&gt; Bregmaceros &lt;/i&gt; avec 15 espèces (Nelson, J. 2006. &lt;i&gt; Fishes of the World &lt;/i&gt;. Wiley and Sons Ed. USA. 266 p).</Detail>
+                    <MediaObject ref="m2"/>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s3"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s5"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s7"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <State ref="s14"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <State ref="s20"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D3">
+                <Representation>
+                    <Label>Euclichthyidae</Label>
+                    <Detail>Nom valide &lt;br&gt;&lt;a href="http://www.itis.gov/servlet/SingleRpt/SingleRpt"&gt;http://www.itis.gov/servlet/SingleRpt/SingleRpt&lt;/a&gt;&lt;br&gt;&lt;br&gt;Cet famille à un status provisoire, cependant, on reconnaît une seule espèce &lt;i&gt; Euclichthys polynemus &lt;/i&gt; McCulloch, 1926 &lt;br&gt;(Nelson, J. 2006. &lt;i&gt; Fishes of the World &lt;/i&gt;. Wiley and Sons Ed. USA. 266 p) &lt;a href="http://www.itis.gov/servlet/SingleRpt/SingleRpt"&gt;http://www.itis.gov/servlet/SingleRpt/SingleRpt&lt;/a&gt;</Detail>
+                    <MediaObject ref="m3"/>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s3"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s5"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s7"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <State ref="s12"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <State ref="s14"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <State ref="s19"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D4">
+                <Representation>
+                    <Label>Macrouridae</Label>
+                    <Detail>Nom valide &lt;a href="http://www.itis.gov/servlet/SingleRpt/SingleRpt"&gt;http://www.itis.gov/servlet/SingleRpt/SingleRpt&lt;/a&gt;&lt;br&gt;&lt;br&gt;Macrouridae contiens environ 350 espèces, 27 genres et quatre sous familles à savoir, Macrouroidinae, Bathygadinae, Trachyrincinae et Macrourinae (Nelson, J. 2006. &lt;i&gt; Fishes of the World &lt;/i&gt;. Wiley and Sons Ed. USA. 266 p).&lt;br&gt;&lt;br&gt;Macrourinae contiens 320 espèces (Nelson, J. 2006. &lt;i&gt; Fishes of the World &lt;/i&gt;. Wiley and Sons Ed. USA. 266 p).</Detail>
+                    <MediaObject ref="m4"/>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s1"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s4"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s6"/>
+                        <State ref="s7"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <State ref="s11"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <State ref="s14"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <State ref="s15"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D5">
+                <Representation>
+                    <Label>Moridae</Label>
+                    <Detail>Nom valide &lt;a href="http://www.itis.gov/servlet/SingleRpt/SingleRpt"&gt;http://www.itis.gov/servlet/SingleRpt/SingleRpt&lt;/a&gt;&lt;br&gt;&lt;br&gt;La famille Mordiae, comprens 18 genres et près de 105 espèces (Nelson, 2006).</Detail>
+                    <MediaObject ref="m5"/>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s1"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s4"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s7"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <State ref="s11"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <State ref="s14"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <State ref="s16"/>
+                        <State ref="s17"/>
+                        <State ref="s18"/>
+                        <State ref="s20"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D6">
+                <Representation>
+                    <Label>Melanonidae</Label>
+                    <Detail>Nom valide &lt;a href="http://www.itis.gov/servlet/SingleRpt/SingleRpt"&gt;http://www.itis.gov/servlet/SingleRpt/SingleRpt&lt;/a&gt;&lt;br&gt;&lt;br&gt;Au sein de cet famille existe une seule espéce &lt;i&gt; Melanonus gracilis &lt;/i&gt; Günther, 1878. &lt;br&gt;&lt;br&gt;La position de Melanonidae dans la classification phylogénétique est uncertain (Nelson, 2006).</Detail>
+                    <MediaObject ref="m6"/>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s3"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s5"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s6"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <State ref="s11"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <State ref="s14"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <State ref="s16"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D7">
+                <Representation>
+                    <Label>Merclucciidae</Label>
+                    <Detail>Nom valide &lt;a href="http://www.itis.gov/servlet/SingleRpt/SingleRpt"&gt;http://www.itis.gov/servlet/SingleRpt/SingleRpt&lt;/a&gt;&lt;br&gt;&lt;br&gt;Merlucciidae c'est une famille qui contiens trois sous-familles à savoir, Merlucciinae, Macrouronidae et Steindachneriidae. &lt;br&gt;&lt;br&gt;Merlucciinae contiens un seule genre &lt;i&gt; Merluccius&lt;/i&gt; Rafinesque, 1810 avec 13 espèces. Macruronidae contiens trois genres, &lt;i&gt; Lyconus&lt;/i&gt;, &lt;i&gt; Macruronus&lt;/i&gt;, &lt;i&gt; Lyconodes &lt;/i&gt; et près de 8 espèces (Nelson, 2006). Steindachneriidae contiens une seule espèce, &lt;i&gt; Steindachneria argentea &lt;/i&gt; Goode and Bean, 1896. &lt;br&gt;&lt;br&gt;Le status de famille pour Macruronidae et Steindachneriidae donné par Nelson dans son ouvrage &lt;i&gt; Fishes of the World &lt;/i&gt; de 1994 a été refusé et apparissent comme des noms invalides &lt;a href="http://www.itis.gov/servlet/SingleRpt/SingleRpt"&gt;http://www.itis.gov/servlet/SingleRpt/SingleRpt&lt;/a&gt; &lt;br&gt;Dans la publication de &lt;i&gt; Fishes of the World &lt;/i&gt; de 2006, suivi ici, Nelson, reconnais leur status de sous-famille mais ne change pas leur graphie.</Detail>
+                    <MediaObject ref="m7"/>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s3"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s4"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s6"/>
+                        <State ref="s7"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <State ref="s11"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <State ref="s14"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <State ref="s15"/>
+                        <State ref="s18"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D8">
+                <Representation>
+                    <Label>Phycidae</Label>
+                    <Detail>Nom invalide d'après &lt;a href="http://www.itis.gov/servlet/SingleRpt/SingleRpt"&gt;http://www.itis.gov/servlet/SingleRpt/SingleRpt&lt;/a&gt; qui suive la classification proposé par Cohen &lt;i&gt;et al.&lt;/i&gt; (1990) dans l'ouvrage &lt;i&gt; Gadiforms species catalog.&lt;/i&gt;&lt;br&gt;&lt;br&gt;Phycidae a été proposé d'abord par Nelson dans son ouvrage &lt;i&gt; Fishes of the World &lt;/i&gt; (Wiley and Sons Ed. USA. 266 p) de 1994. Dans l'édition de 2006, suivi ici, l'auteur garde leur status familial et reconnaît deux sous familles, Gaidropsarinae et Phycinae. &lt;br&gt;&lt;br&gt;Gaidropsarinae contiens trois genres avec 15 espèces. &lt;i&gt; Gaidropsarus &lt;/i&gt; Rafinesque, 1810, &lt;i&gt; Ciliata &lt;/i&gt; Couch, 1832 et &lt;i&gt; Enchelyopus &lt;/i&gt; Bloch and Schneider, 1801.&lt;br&gt;Phycinae contiens deux genres, &lt;i&gt; Phycis &lt;/i&gt; Artedi in Walbaum, 1792 avec trois espèces et &lt;i&gt; Urophycis &lt;/i&gt; Gill, 1863 avec 10 espèces.</Detail>
+                    <MediaObject ref="m8"/>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s1"/>
+                        <State ref="s2"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s5"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s7"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s9"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <State ref="s11"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <State ref="s14"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <State ref="s16"/>
+                        <State ref="s18"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+            <CodedDescription id="D9">
+                <Representation>
+                    <Label>Gadidae</Label>
+                    <Detail>Nom valide &lt;a href="http://www.itis.gov/servlet/SingleRpt/SingleRpt"&gt;http://www.itis.gov/servlet/SingleRpt/SingleRpt&lt;/a&gt;&lt;br&gt;&lt;br&gt;Nelson, dans son ouvrage &lt;i&gt; Fishes of the World &lt;/i&gt; (Wiley and Sons Ed. USA. 266 p) de 2006 reconnaît trois sous-familles, Lotinae, Gadinae et Ranicipitinae.&lt;br&gt;&lt;br&gt;Lotinae contiens trois genres, &lt;i&gt; Brosme &lt;/i&gt; Oken, 1817 et &lt;i&gt; Lota &lt;/i&gt; Oken, 1817 avec une espèce respectivement et &lt;i&gt; Molva &lt;/i&gt; avec trois espèces. &lt;br&gt;&lt;br&gt;Gadinae contiens 12 genres &lt;i&gt; Arctogadus &lt;/i&gt;Dryagin, 1932; &lt;i&gt; Boreogadus &lt;/i&gt;Günther, 1862; &lt;i&gt; Eleginus &lt;/i&gt;Fischer, 1813; &lt;i&gt; Gadiculus &lt;/i&gt;Guichenot, 1850; &lt;i&gt; Gadus &lt;/i&gt; Linnaeus, 1758; &lt;i&gt; Melanogrammus &lt;/i&gt;Gill, 1862; &lt;i&gt; Merlangius &lt;/i&gt;Geoffroy, 1767; &lt;i&gt; Microgadus &lt;/i&gt;Gill, 1865; &lt;i&gt; Micromesistius &lt;/i&gt;Gill, 1863; &lt;i&gt; Pollachius &lt;/i&gt;Nilsson, 1832 ; &lt;i&gt;Theragra &lt;/i&gt; Lucas in Jordan and Evermann, 1898 et &lt;i&gt; Trisopterus &lt;/i&gt; Rafinesque, 1814 avec 25 espèces environ.&lt;br&gt;&lt;br&gt;Ranicipitinae contiens une seule espéce, &lt;i&gt; Raniceps raninus&lt;/i&gt; (Linnaeus, 1758).</Detail>
+                    <MediaObject ref="m9"/>
+                </Representation>
+                <SummaryData>
+                    <Categorical ref="c1">
+                        <State ref="s1"/>
+                    </Categorical>
+                    <Categorical ref="c2">
+                        <State ref="s5"/>
+                    </Categorical>
+                    <Categorical ref="c3">
+                        <State ref="s6"/>
+                        <State ref="s7"/>
+                        <State ref="s8"/>
+                    </Categorical>
+                    <Categorical ref="c4">
+                        <State ref="s9"/>
+                        <State ref="s10"/>
+                    </Categorical>
+                    <Categorical ref="c5">
+                        <State ref="s11"/>
+                    </Categorical>
+                    <Categorical ref="c6">
+                        <State ref="s14"/>
+                    </Categorical>
+                    <Categorical ref="c7">
+                        <State ref="s16"/>
+                        <State ref="s18"/>
+                        <State ref="s20"/>
+                    </Categorical>
+                </SummaryData>
+            </CodedDescription>
+        </CodedDescriptions>
+        <Agents>
+            <Agent id="a1">
+                <Representation>
+                    <Label>Lina Maria Duque Vélez</Label>
+                </Representation>
+            </Agent>
+        </Agents>
+        <MediaObjects>
+            <MediaObject id="m1">
+                <Representation>
+                    <Label>Muraenolepididae - m1</Label>
+                    <Detail role="Caption">Muraenolepididae</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/Muraenolepididae.png"/>
+            </MediaObject>
+            <MediaObject id="m2">
+                <Representation>
+                    <Label>Bregmacerotidae - m2</Label>
+                    <Detail role="Caption">Bregmacerotidae</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/Bregmacerotidae.png"/>
+            </MediaObject>
+            <MediaObject id="m3">
+                <Representation>
+                    <Label>Euclichthyidae - m3</Label>
+                    <Detail role="Caption">Euclichthyidae</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/Euclichtyidae.png"/>
+            </MediaObject>
+            <MediaObject id="m4">
+                <Representation>
+                    <Label>Macrouridae - m4</Label>
+                    <Detail role="Caption">Macrouridae</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/Macrouridae.png"/>
+            </MediaObject>
+            <MediaObject id="m5">
+                <Representation>
+                    <Label>Moridae - m5</Label>
+                    <Detail role="Caption">Moridae</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/Moridae.png"/>
+            </MediaObject>
+            <MediaObject id="m6">
+                <Representation>
+                    <Label>Melanonidae - m6</Label>
+                    <Detail role="Caption">Melanonidae</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/Melanonidae.png"/>
+            </MediaObject>
+            <MediaObject id="m7">
+                <Representation>
+                    <Label>Merclucciidae - m7</Label>
+                    <Detail role="Caption">Merclucciidae</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/Merlucciidae.png"/>
+            </MediaObject>
+            <MediaObject id="m8">
+                <Representation>
+                    <Label>Phycidae - m8</Label>
+                    <Detail role="Caption">Phycidae</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/Phycidae.png"/>
+            </MediaObject>
+            <MediaObject id="m9">
+                <Representation>
+                    <Label>Gadidae - m9</Label>
+                    <Detail role="Caption">Gadidae</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/Gadidae.png"/>
+            </MediaObject>
+            <MediaObject id="m10">
+                <Representation>
+                    <Label>Oui au niveau du menton - m10</Label>
+                    <Detail role="Caption">Oui au niveau du menton</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/BarbillonMenton.png"/>
+            </MediaObject>
+            <MediaObject id="m11">
+                <Representation>
+                    <Label>Oui au niveau du menton et museau - m11</Label>
+                    <Detail role="Caption">Oui au niveau du menton et museau</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/BarbillonMentonMuseau.png"/>
+            </MediaObject>
+            <MediaObject id="m12">
+                <Representation>
+                    <Label>Non - m12</Label>
+                    <Detail role="Caption">Non</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/SansBarbillon.png"/>
+            </MediaObject>
+            <MediaObject id="m13">
+                <Representation>
+                    <Label>Oui - m13</Label>
+                    <Detail role="Caption">Oui</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/OrganeLumineux.jpg"/>
+            </MediaObject>
+            <MediaObject id="m14">
+                <Representation>
+                    <Label>Non - m14</Label>
+                    <Detail role="Caption">Non</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/SansOrganLuminous.png"/>
+            </MediaObject>
+            <MediaObject id="m15">
+                <Representation>
+                    <Label>Une - m15</Label>
+                    <Detail role="Caption">Une</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/UneDorsale.png"/>
+            </MediaObject>
+            <MediaObject id="m16">
+                <Representation>
+                    <Label>Deux - m16</Label>
+                    <Detail role="Caption">Deux</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/DeuxDorsales.png"/>
+            </MediaObject>
+            <MediaObject id="m17">
+                <Representation>
+                    <Label>Trois - m17</Label>
+                    <Detail role="Caption">Trois</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/TroisDorsales.png"/>
+            </MediaObject>
+            <MediaObject id="m18">
+                <Representation>
+                    <Label>Une - m18</Label>
+                    <Detail role="Caption">Une</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/UneAnale.png"/>
+            </MediaObject>
+            <MediaObject id="m19">
+                <Representation>
+                    <Label>Une - m19</Label>
+                    <Detail role="Caption">Une</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/UneAnale2.png"/>
+            </MediaObject>
+            <MediaObject id="m20">
+                <Representation>
+                    <Label>Deux - m20</Label>
+                    <Detail role="Caption">Deux</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/DeuxAnales.png"/>
+            </MediaObject>
+            <MediaObject id="m21">
+                <Representation>
+                    <Label>Deux - m21</Label>
+                    <Detail role="Caption">Deux</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/DeuxAnales2.png"/>
+            </MediaObject>
+            <MediaObject id="m22">
+                <Representation>
+                    <Label>Thoracique - m22</Label>
+                    <Detail role="Caption">Thoracique</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/Thoracique.png"/>
+            </MediaObject>
+            <MediaObject id="m23">
+                <Representation>
+                    <Label>Jugulaire - m23</Label>
+                    <Detail role="Caption">Jugulaire</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/Jugulaire.png"/>
+            </MediaObject>
+            <MediaObject id="m24">
+                <Representation>
+                    <Label>Jugulaire - m24</Label>
+                    <Detail role="Caption">Jugulaire</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/Jugulaire2.png"/>
+            </MediaObject>
+            <MediaObject id="m25">
+                <Representation>
+                    <Label>Au-dessus de l'overture branquiale - m25</Label>
+                    <Detail role="Caption">Au-dessus de l'overture branquiale</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/AuDessus.png"/>
+            </MediaObject>
+            <MediaObject id="m26">
+                <Representation>
+                    <Label>Sous l'overture branquiale - m26</Label>
+                    <Detail role="Caption">Sous l'overture branquiale</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/SousAbertureBranquaile.png"/>
+            </MediaObject>
+            <MediaObject id="m27">
+                <Representation>
+                    <Label>Filamenteuse - m27</Label>
+                    <Detail role="Caption">Filamenteuse</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/Filamenteuse.png"/>
+            </MediaObject>
+            <MediaObject id="m28">
+                <Representation>
+                    <Label>Arrondi - m28</Label>
+                    <Detail role="Caption">Arrondi</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/Arrondi.png"/>
+            </MediaObject>
+            <MediaObject id="m29">
+                <Representation>
+                    <Label>Concave - m29</Label>
+                    <Detail role="Caption">Concave</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/Concave.png"/>
+            </MediaObject>
+            <MediaObject id="m30">
+                <Representation>
+                    <Label>Tronqué - m30</Label>
+                    <Detail role="Caption">Tronqué</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/Tronque.png"/>
+            </MediaObject>
+            <MediaObject id="m31">
+                <Representation>
+                    <Label>Asymétrique - m31</Label>
+                    <Detail role="Caption">Asymétrique</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/Asymetrique.png"/>
+            </MediaObject>
+            <MediaObject id="m32">
+                <Representation>
+                    <Label>Fourchu - m32</Label>
+                    <Detail role="Caption">Fourchu</Detail>
+                </Representation>
+                <Type>Image</Type>
+                <Source href="images/Fourchu.png"/>
+            </MediaObject>
+        </MediaObjects>
+    </Dataset>
+</Datasets>
