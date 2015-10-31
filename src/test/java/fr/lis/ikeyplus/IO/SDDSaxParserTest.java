@@ -1,5 +1,16 @@
 package fr.lis.ikeyplus.IO;
 
+import fr.lis.ikeyplus.model.CategoricalCharacter;
+import fr.lis.ikeyplus.model.CodedDescription;
+import fr.lis.ikeyplus.model.DataSet;
+import fr.lis.ikeyplus.model.ICharacter;
+import fr.lis.ikeyplus.model.QuantitativeMeasure;
+import fr.lis.ikeyplus.model.State;
+import fr.lis.ikeyplus.model.Taxon;
+import fr.lis.ikeyplus.utils.Utils;
+import org.junit.Ignore;
+import org.junit.Test;
+
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
@@ -8,20 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import fr.lis.ikeyplus.model.CategoricalCharacter;
-
-import fr.lis.ikeyplus.model.CodedDescription;
-import fr.lis.ikeyplus.model.DataSet;
-import fr.lis.ikeyplus.model.ICharacter;
-import fr.lis.ikeyplus.model.QuantitativeMeasure;
-import fr.lis.ikeyplus.model.State;
-import fr.lis.ikeyplus.model.Taxon;
-import fr.lis.ikeyplus.utils.Utils;
-
-import org.junit.Ignore;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
 /**
  * This class allows to test the SDDSaxParser
@@ -32,6 +30,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SDDSaxParserTest {
 
 	private static final int EXPECTED_NB_OF_CHARACTERS = 303;
+	private static final int EXPECTED_NB_OF_TAXA = 144;
+	public static final String DATASET_NAME = "Project: Cichorieae";
 	public Logger logger = Logger.getAnonymousLogger();
 
 	@Test
@@ -40,9 +40,9 @@ public class SDDSaxParserTest {
 		Utils utils = new Utils();
 		SDDSaxParser sddSaxParser = new SDDSaxParser(new File("src/test/resources/inputFiles/Cichorieae-fullSDD.xml"), utils);
 		DataSet dataset = sddSaxParser.getDataset();
-		assertThat(dataset.getLabel()).isEqualToIgnoringCase("Project: Cichorieae");
-		assertThat(dataset.getCharacters()).hasSize(EXPECTED_NB_OF_CHARACTERS);
-		assertThat(dataset.getTaxa()).hasSize(144);
+		assertEquals(dataset.getLabel(), DATASET_NAME);
+		assertEquals(dataset.getCharacters().size(), EXPECTED_NB_OF_CHARACTERS);
+		assertEquals(dataset.getTaxa().size(), EXPECTED_NB_OF_TAXA);
 
 	}
 
