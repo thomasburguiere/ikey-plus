@@ -19,6 +19,7 @@ import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 import fr.lis.ikeyplus.model.State;
 import fr.lis.ikeyplus.model.Taxon;
 import fr.lis.ikeyplus.utils.IkeyConfig;
+import fr.lis.ikeyplus.utils.IkeyUtils;
 
 /**
  * This class is the service generating identification keys
@@ -974,10 +975,10 @@ public class IdentificationKeyGenerator {
 		float out = 0;
 
 		// Sokal & Michener method
-		if (config.getScoreMethod() == IkeyConfig.ScoreMethod.SOKALANDMICHENER) {
+		if (config.getScoreMethod() == IkeyConfig.ScoreMethod.SOKAL_AND_MICHENER) {
 			out = 1 - ((commonPresent + commonAbsent) / (commonPresent + commonAbsent + other));
 			// round to 10^-3
-			out = IkeyConfig.roundFloat(out, 3);
+			out = IkeyUtils.roundFloat(out, 3);
 		}
 		// Jaccard Method
 		else if (config.getScoreMethod() == IkeyConfig.ScoreMethod.JACCARD) {
@@ -985,7 +986,7 @@ public class IdentificationKeyGenerator {
 				// case where description are empty
 				out = 1 - (commonPresent / (commonPresent + other));
 				// round to 10^-3
-				out = IkeyConfig.roundFloat(out, 3);
+				out = IkeyUtils.roundFloat(out, 3);
 			} catch (ArithmeticException a) {
 				out = 0;
 			}

@@ -32,6 +32,7 @@ import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 import fr.lis.ikeyplus.model.State;
 import fr.lis.ikeyplus.model.Taxon;
 import fr.lis.ikeyplus.utils.IkeyConfig;
+import fr.lis.ikeyplus.utils.IkeyUtils;
 
 /**
  * This static class generates all outputs format of any SingleAccessKeyTree object
@@ -193,8 +194,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			SingleAccessKeyNode node = queue.remove();
 			SingleAccessKeyNode child = null;
 
-			while (IkeyConfig.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) IkeyConfig.exclusion(node.getChildren(), visitedNodes)
+			while (IkeyUtils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
 							.get(0)) != null) {
 				visitedNodes.add(child);
 
@@ -548,8 +549,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			SingleAccessKeyNode node = queue.remove();
 			SingleAccessKeyNode child = null;
 
-			while (IkeyConfig.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) IkeyConfig.exclusion(node.getChildren(), visitedNodes)
+			while (IkeyUtils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
 							.get(0)) != null
 			// && child.getCharacter() != null && child.getCharacterState() != null
 			) {
@@ -1184,8 +1185,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			SingleAccessKeyNode node = queue.remove();
 			SingleAccessKeyNode child = null;
 
-			while (IkeyConfig.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) IkeyConfig.exclusion(node.getChildren(), visitedNodes)
+			while (IkeyUtils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
 							.get(0)) != null
 			// && child.getCharacter() != null && child.getCharacterState() != null
 			) {
@@ -1348,8 +1349,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			SingleAccessKeyNode node = queue.remove();
 			SingleAccessKeyNode child = null;
 
-			while (IkeyConfig.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) IkeyConfig.exclusion(node.getChildren(), visitedNodes)
+			while (IkeyUtils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
 							.get(0)) != null
 			// && child.getCharacter() != null && child.getCharacterState() != null
 			) {
@@ -1592,8 +1593,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			SingleAccessKeyNode node = queue.remove();
 			SingleAccessKeyNode child = null;
 
-			while (IkeyConfig.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) IkeyConfig.exclusion(node.getChildren(), visitedNodes)
+			while (IkeyUtils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
 							.get(0)) != null
 			// && child.getCharacter() != null && child.getCharacterState() != null
 			) {
@@ -1907,8 +1908,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			SingleAccessKeyNode node = queue.remove();
 			SingleAccessKeyNode child = null;
 
-			while (IkeyConfig.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) IkeyConfig.exclusion(node.getChildren(), visitedNodes)
+			while (IkeyUtils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
 							.get(0)) != null) {
 				visitedNodes.add(child);
 
@@ -2087,8 +2088,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			SingleAccessKeyNode node = queue.remove();
 			SingleAccessKeyNode child = null;
 
-			while (IkeyConfig.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) IkeyConfig.exclusion(node.getChildren(), visitedNodes)
+			while (IkeyUtils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
 							.get(0)) != null) {
 				visitedNodes.add(child);
 
@@ -2284,8 +2285,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			SingleAccessKeyNode node = queue.remove();
 			SingleAccessKeyNode child = null;
 
-			while (IkeyConfig.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) IkeyConfig.exclusion(node.getChildren(), visitedNodes)
+			while (IkeyUtils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
 							.get(0)) != null) {
 				visitedNodes.add(child);
 
@@ -2439,8 +2440,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			SingleAccessKeyNode node = queue.remove();
 			SingleAccessKeyNode child = null;
 
-			while (IkeyConfig.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) IkeyConfig.exclusion(node.getChildren(), visitedNodes)
+			while (IkeyUtils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
 							.get(0)) != null
 			// && child.getCharacter() != null && child.getCharacterState() != null
 			) {
@@ -2619,7 +2620,7 @@ public abstract class SingleAccessKeyTreeDumper {
 				BufferedInputStream buffi = new BufferedInputStream(fi, IkeyConfig.BUFFER);
 
 				// create input for this Zip file
-				ZipEntry entry = new ZipEntry(IkeyConfig.unAccent(correspondingFilePath.get(file)));
+				ZipEntry entry = new ZipEntry(IkeyUtils.unAccent(correspondingFilePath.get(file)));
 
 				// add this entry in the flow of writing the Zip archive
 				out.putNextEntry(entry);
@@ -2681,8 +2682,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			SingleAccessKeyNode child = null;
 
 			// exclusion(node.getChildren(), visitedNodes) is the list of unvisited children nodes of the
-			while (IkeyConfig.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) IkeyConfig.exclusion(node.getChildren(), visitedNodes)
+			while (IkeyUtils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
 							.get(0)) != null) {
 				visitedNodes.add(child);
 
@@ -2727,8 +2728,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			SingleAccessKeyNode child = null;
 
 			// exclusion(node.getChildren(), visitedNodes) is the list of unvisited children nodes of the
-			while (IkeyConfig.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) IkeyConfig.exclusion(node.getChildren(), visitedNodes)
+			while (IkeyUtils.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
 							.get(0)) != null) {
 				visitedNodes.add(child);
 
@@ -2877,7 +2878,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
 			output.append(t.getName() + "\t" + t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY).intValue()
 					+ "\t" + t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY).intValue() + "\t"
-					+ IkeyConfig.roundFloat(t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY), 3) + "\t"
+					+ IkeyUtils.roundFloat(t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY), 3) + "\t"
 					+ t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY).intValue());
 
 			if (t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY) > 0) {
@@ -2891,10 +2892,10 @@ public abstract class SingleAccessKeyTreeDumper {
 		}
 
 		// round all average values
-		float averageNbPath = IkeyConfig.roundFloat((sumNbPath / (float) c), 3);
-		float averageMinPath = IkeyConfig.roundFloat((sumMinPathLength / (float) c), 3);
-		float averageAvgPath = IkeyConfig.roundFloat((sumAvgPathLength / (float) c), 3);
-		float averageMaxPath = IkeyConfig.roundFloat((sumMaxPathLength / (float) c), 3);
+		float averageNbPath = IkeyUtils.roundFloat((sumNbPath / (float) c), 3);
+		float averageMinPath = IkeyUtils.roundFloat((sumMinPathLength / (float) c), 3);
+		float averageAvgPath = IkeyUtils.roundFloat((sumAvgPathLength / (float) c), 3);
+		float averageMaxPath = IkeyUtils.roundFloat((sumMaxPathLength / (float) c), 3);
 
 		output.append("AVERAGE\t" + averageNbPath + "\t" + averageMinPath + "\t" + averageAvgPath + "\t"
 				+ averageMaxPath);
@@ -2944,7 +2945,7 @@ public abstract class SingleAccessKeyTreeDumper {
 			output.append("<td>" + escapeHTMLSpecialCharacters(t.getName()) + "</td><td>"
 					+ t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY).intValue() + "</td><td>"
 					+ t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY).intValue() + "</td><td>"
-					+ IkeyConfig.roundFloat(t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY), 3)
+					+ IkeyUtils.roundFloat(t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY), 3)
 					+ "</td><td>" + t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY).intValue()
 					+ "</td>");
 
@@ -2960,10 +2961,10 @@ public abstract class SingleAccessKeyTreeDumper {
 		}
 
 		// round all average values
-		float averageNbPath = IkeyConfig.roundFloat((sumNbPath / (float) c), 3);
-		float averageMinPath = IkeyConfig.roundFloat((sumMinPathLength / (float) c), 3);
-		float averageAvgPath = IkeyConfig.roundFloat((sumAvgPathLength / (float) c), 3);
-		float averageMaxPath = IkeyConfig.roundFloat((sumMaxPathLength / (float) c), 3);
+		float averageNbPath = IkeyUtils.roundFloat((sumNbPath / (float) c), 3);
+		float averageMinPath = IkeyUtils.roundFloat((sumMinPathLength / (float) c), 3);
+		float averageAvgPath = IkeyUtils.roundFloat((sumAvgPathLength / (float) c), 3);
+		float averageMaxPath = IkeyUtils.roundFloat((sumMaxPathLength / (float) c), 3);
 
 		output.append("<tr><td>AVERAGE</td><td>" + averageNbPath + "</td><td>" + averageMinPath + "</td><td>"
 				+ averageAvgPath + "</td><td>" + averageMaxPath + "</td></tr>");
@@ -3005,7 +3006,7 @@ public abstract class SingleAccessKeyTreeDumper {
 			output.append("|align=\"left\"|" + t.getName() + lineSeparator + "|"
 					+ t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY).intValue() + lineSeparator + "|"
 					+ t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY).intValue() + lineSeparator + "|"
-					+ IkeyConfig.roundFloat(t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY), 3)
+					+ IkeyUtils.roundFloat(t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY), 3)
 					+ lineSeparator + "|" + t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY).intValue()
 					+ lineSeparator + "|-" + lineSeparator);
 
@@ -3019,10 +3020,10 @@ public abstract class SingleAccessKeyTreeDumper {
 		}
 
 		// round all average values
-		float averageNbPath = IkeyConfig.roundFloat((sumNbPath / (float) c), 3);
-		float averageMinPath = IkeyConfig.roundFloat((sumMinPathLength / (float) c), 3);
-		float averageAvgPath = IkeyConfig.roundFloat((sumAvgPathLength / (float) c), 3);
-		float averageMaxPath = IkeyConfig.roundFloat((sumMaxPathLength / (float) c), 3);
+		float averageNbPath = IkeyUtils.roundFloat((sumNbPath / (float) c), 3);
+		float averageMinPath = IkeyUtils.roundFloat((sumMinPathLength / (float) c), 3);
+		float averageAvgPath = IkeyUtils.roundFloat((sumAvgPathLength / (float) c), 3);
+		float averageMaxPath = IkeyUtils.roundFloat((sumMaxPathLength / (float) c), 3);
 
 		output.append("!align=\"left\"|AVERAGE" + lineSeparator + "|" + averageNbPath + lineSeparator + "|"
 				+ averageMinPath + lineSeparator + "|" + averageAvgPath + lineSeparator + "|"

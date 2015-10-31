@@ -337,22 +337,22 @@ public class SDDContentHandler implements ContentHandler {
 			else if (localName.equals("Measure") && inQuantitative) {
 				if (currentQuantitativeMeasure != null) {
 					if (attributes.getValue("type").equals("Min")) {
-						currentQuantitativeMeasure.setMin(IkeyConfig.convertStringToDouble(attributes
+						currentQuantitativeMeasure.setMin(Double.valueOf(attributes
 								.getValue("value")));
 					} else if (attributes.getValue("type").equals("Max")) {
-						currentQuantitativeMeasure.setMax(IkeyConfig.convertStringToDouble(attributes
+						currentQuantitativeMeasure.setMax(Double.valueOf(attributes
 								.getValue("value")));
 					} else if (attributes.getValue("type").equals("Mean")) {
-						currentQuantitativeMeasure.setMean(IkeyConfig.convertStringToDouble(attributes
+						currentQuantitativeMeasure.setMean(Double.valueOf(attributes
 								.getValue("value")));
 					} else if (attributes.getValue("type").equals("SD")) {
-						currentQuantitativeMeasure.setSD(IkeyConfig.convertStringToDouble(attributes
+						currentQuantitativeMeasure.setSD(Double.valueOf(attributes
 								.getValue("value")));
 					} else if (attributes.getValue("type").equals("UMethLower")) {
-						currentQuantitativeMeasure.setUMethLower(IkeyConfig.convertStringToDouble(attributes
+						currentQuantitativeMeasure.setUMethLower(Double.valueOf(attributes
 								.getValue("value")));
 					} else if (attributes.getValue("type").equals("UMethUpper")) {
-						currentQuantitativeMeasure.setUMethUpper(IkeyConfig.convertStringToDouble(attributes
+						currentQuantitativeMeasure.setUMethUpper(Double.valueOf(attributes
 								.getValue("value")));
 					}
 				}

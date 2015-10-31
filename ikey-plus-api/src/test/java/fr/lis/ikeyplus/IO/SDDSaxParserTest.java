@@ -43,7 +43,6 @@ public class SDDSaxParserTest {
 		assertEquals(dataset.getLabel(), DATASET_NAME);
 		assertEquals(dataset.getCharacters().size(), EXPECTED_NB_OF_CHARACTERS);
 		assertEquals(dataset.getTaxa().size(), EXPECTED_NB_OF_TAXA);
-
 	}
 
 	@Test

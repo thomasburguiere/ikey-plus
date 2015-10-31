@@ -209,13 +209,13 @@ public class IdentificationKeyImpl {
 								resultFile = SingleAccessKeyTreeDumper.dumpWikiFile(header.toString(),
 										tree2dump, config.getVerbosity().contains(IkeyConfig.STATISTIC_TAG));
 							}
-						} else if (config.getFormat()==IkeyConfig.OutputFormat.SPECIESIDWIKISTATEMENT) {
+						} else if (config.getFormat()==IkeyConfig.OutputFormat.SPECIES_ID_WIKI_STATEMENT) {
 							resultFile = SingleAccessKeyTreeDumper.dumpFlatSpeciesIDStatementWikiFile(
 									header.toString(), tree2dump);
 						} else if (config.getFormat()==IkeyConfig.OutputFormat.INTERACTIVE_HTML) {
 							resultFile = SingleAccessKeyTreeDumper.dumpInteractiveHtmlFile(header.toString(),
 									tree2dump, config.getVerbosity().contains(IkeyConfig.STATISTIC_TAG));
-						} else if (config.getFormat()==IkeyConfig.OutputFormat.SPECIESIDWIKIQUESTIONANSWER) {
+						} else if (config.getFormat()==IkeyConfig.OutputFormat.SPECIES_ID_WIKI_QUESTION_ANSWER) {
 							resultFile = SingleAccessKeyTreeDumper.dumpFlatSpeciesIDQuestionAnswerWikiFile(
 									header.toString(), tree2dump);
 						} else if (config.getFormat()==IkeyConfig.OutputFormat.DOT) {
