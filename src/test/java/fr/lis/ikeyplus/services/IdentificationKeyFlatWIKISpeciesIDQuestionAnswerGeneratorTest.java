@@ -6,6 +6,7 @@ import java.net.URLConnection;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import fr.lis.ikeyplus.IO.SDDSaxParser;
@@ -20,6 +21,7 @@ import fr.lis.ikeyplus.utils.Utils;
  * @author Thomas Burguiere
  * @created 18-07-2011
  */
+@Ignore
 public class IdentificationKeyFlatWIKISpeciesIDQuestionAnswerGeneratorTest {
 
 	public Logger logger = Logger.getAnonymousLogger();

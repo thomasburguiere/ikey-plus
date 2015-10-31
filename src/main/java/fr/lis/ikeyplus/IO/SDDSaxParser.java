@@ -46,6 +46,18 @@ public class SDDSaxParser {
 		this.setDataset(handler.getDataSet());
 	}
 
+    public SDDSaxParser(File inputFile, Utils conf) throws SAXException, IOException {
+        XMLReader saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
+
+        SDDContentHandler handler = new SDDContentHandler(conf);
+        saxReader.setContentHandler(handler);
+
+        InputSource is = new InputSource(new FileInputStream(inputFile));
+
+        saxReader.parse(is);
+        this.setDataset(handler.getDataSet());
+    }
+
 	/**
 	 * get the current dataset
 	 * 

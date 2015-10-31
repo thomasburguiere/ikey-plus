@@ -1,5 +1,7 @@
 package fr.lis.ikeyplus.IO;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
@@ -18,7 +20,11 @@ import fr.lis.ikeyplus.model.State;
 import fr.lis.ikeyplus.model.Taxon;
 import fr.lis.ikeyplus.utils.Utils;
 
+import org.junit.Ignore;
 import org.junit.Test;
+import org.xml.sax.SAXException;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * This class allows to test the SDDSaxParser
@@ -28,9 +34,23 @@ import org.junit.Test;
  */
 public class SDDSaxParserTest {
 
+	private static final int EXPECTED_NB_OF_CHARACTERS = 303;
 	public Logger logger = Logger.getAnonymousLogger();
 
 	@Test
+	public void should_parse_local_file() throws Exception {
+		// creation of Utils object (containing options)
+		Utils utils = new Utils();
+		SDDSaxParser sddSaxParser = new SDDSaxParser(new File("src/test/resources/inputFiles/Cichorieae-fullSDD.xml"), utils);
+		DataSet dataset = sddSaxParser.getDataset();
+		assertThat(dataset.getLabel()).isEqualToIgnoringCase("Project: Cichorieae");
+		assertThat(dataset.getCharacters()).hasSize(EXPECTED_NB_OF_CHARACTERS);
+		assertThat(dataset.getTaxa()).hasSize(144);
+
+	}
+
+	@Test
+	@Ignore
 	public void testSDDSaxParser() {
 
 		logger.info("testSDDSaxParser");

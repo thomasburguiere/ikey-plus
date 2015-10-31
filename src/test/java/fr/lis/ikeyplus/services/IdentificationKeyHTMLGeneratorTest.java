@@ -12,6 +12,7 @@ import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 import fr.lis.ikeyplus.services.IdentificationKeyGenerator;
 import fr.lis.ikeyplus.utils.Utils;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -20,6 +21,7 @@ import org.junit.Test;
  * @author Thomas Burguiere
  * @created 10-07-2011
  */
+@Ignore
 public class IdentificationKeyHTMLGeneratorTest {
 
 	public Logger logger = Logger.getAnonymousLogger();
