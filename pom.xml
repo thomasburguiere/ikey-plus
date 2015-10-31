@@ -1,83 +1,50 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>identificationKeyAPI</groupId>
-	<artifactId>identificationKeyAPI</artifactId>
-	<version>1.0-SNAPSHOT</version>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>identificationKeyAPI</groupId>
+    <artifactId>identificationKeyAPI</artifactId>
+    <version>1.0-SNAPSHOT</version>
 
-	<!-- publishing to the CDM maven repository -->
-	<distributionManagement>
+    <properties>
+        <version.junit>4.8.2</version.junit>
+        <version.assertj-core>3.2.0</version.assertj-core>
+    </properties>
 
-		<repository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>wp5.e-taxonomy.eu</id>
-			<name>Edit Maven Repository</name>
-			<url>scpexe://wp5.e-taxonomy.eu/var/www/wp5.e-taxonomy.eu/mavenrepo/</url>
-			<layout>default</layout>
-		</repository>
-	</distributionManagement>
-	<!-- /publishing to the CDM maven repository -->
+    <build>
 
-	<!-- Allows you to specify the source files + xml -->
-	<build>
+        <defaultGoal>jar</defaultGoal>
 
-		<defaultGoal>jar</defaultGoal>
-
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-			<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
             </plugin>
-		</plugins>
-	</build>
 
-	<!-- dependencies -->
-	<dependencies>
-		<dependency>
-			<groupId>xerces</groupId>
-			<artifactId>xercesImpl</artifactId>
-			<version>2.9.1</version>
-		</dependency>
+        </plugins>
+    </build>
+    <!-- dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.9.1</version>
+        </dependency>
 
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.8.2</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${version.junit}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.2.0</version>
+            <version>${version.assertj-core}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
-	<repositories>
-
-
-		<repository>
-			<id>itextpdf.com</id>
-			<name>Maven Repository for iText</name>
-			<url>http://maven.itextpdf.com/</url>
-		</repository>
-	</repositories>
 </project>

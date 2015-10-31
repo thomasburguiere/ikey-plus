@@ -1,7 +1,6 @@
 package fr.lis.ikeyplus.IO;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import fr.lis.ikeyplus.IO.SDDSaxParser;
 import fr.lis.ikeyplus.model.CategoricalCharacter;
 
 import fr.lis.ikeyplus.model.CodedDescription;
@@ -22,7 +20,6 @@ import fr.lis.ikeyplus.utils.Utils;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.xml.sax.SAXException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
