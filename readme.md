@@ -17,21 +17,21 @@ Build
 
 Run `mvn install`
 
-Usage
------
+Usage - API
+-----------
 
-Include the generated jar in your app, then:
+Include the api jar in your app, then:
 
 ```java
 # setup generator conf example
-Utils conf = new Utils();
+IkeyConfig conf = new IkeyConfig();
 conf.setFewStatesCharacterFirst(true);
 conf.setMergeCharacterStatesIfSameDiscrimination(false);
 conf.setPruning(false);
 conf.setVerbosity("hs");
-conf.setScoreMethod(Utils.XPER);
-conf.setWeightContext("CostEffectiveness");
-conf.setWeightType(Utils.GLOBAL_CHARACTER_WEIGHT);
+conf.setScoreMethod(IkeyConfig.XPER);
+conf.setWeightContext(IkeyConfig.WeightContext.OBSERVATION_CONVENIENCE);
+conf.setWeightType(IkeyConfig.WeightType.GLOBAL);
 
 # initialize sdd parser
 SDDSaxParser sddSaxParser = new SDDSaxParser(new File("inputFile.sdd"), conf);
@@ -45,7 +45,7 @@ SingleAccessKeyTree resultKey = identificationKeyGenerator.getSingleAccessKeyTre
 
 # dump key to a file
 SingleAccessKeyTreeDumper.dumpFlatHtmlFile(header.toString(), resultKey,
-					conf.getVerbosity().contains(Utils.STATISTIC_TAG)).getName();
+					conf.getVerbosity().contains(IkeyConfig.STATISTIC_TAG)).getName();
 ```
 
 

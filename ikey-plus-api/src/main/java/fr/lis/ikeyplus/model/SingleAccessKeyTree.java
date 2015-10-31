@@ -1,6 +1,6 @@
 package fr.lis.ikeyplus.model;
 
-import fr.lis.ikeyplus.utils.Utils;
+import fr.lis.ikeyplus.utils.IkeyConfig;
 
 /**
  * This class represents a single access key tree
@@ -12,14 +12,14 @@ public class SingleAccessKeyTree {
 
 	private SingleAccessKeyNode root = null;
 	private DataSet dataSet = null;
-	// the utils object (containing options)
-	private Utils utils = null;
+	// the config object (containing options)
+	private IkeyConfig config = null;
 
 	/**
 	 * constructor
 	 */
-	public SingleAccessKeyTree(Utils utils) {
-		this(null, utils);
+	public SingleAccessKeyTree(IkeyConfig config) {
+		this(null, config);
 	}
 
 	/**
@@ -28,10 +28,10 @@ public class SingleAccessKeyTree {
 	 * @param SingleAccessKeyNode
 	 *            , the root node
 	 */
-	public SingleAccessKeyTree(SingleAccessKeyNode root, Utils utils) {
+	public SingleAccessKeyTree(SingleAccessKeyNode root, IkeyConfig utils) {
 		super();
 		this.root = root;
-		this.utils = utils;
+		this.config = utils;
 	}
 
 	/**
@@ -82,22 +82,22 @@ public class SingleAccessKeyTree {
 	}
 
 	/**
-	 * get the utils object
+	 * get the config object
 	 * 
-	 * @return Utils, the utils object
+	 * @return IkeyConfig, the config object
 	 */
-	public Utils getUtils() {
-		return utils;
+	public IkeyConfig getConfig() {
+		return config;
 	}
 
 	/**
-	 * set the utils object
+	 * set the config object
 	 * 
 	 * @param Utils
-	 *            , the utils object
+	 *            , the config object
 	 */
-	public void setUtils(Utils utils) {
-		this.utils = utils;
+	public void setConfig(IkeyConfig config) {
+		this.config = config;
 	}
 
 	/**
@@ -171,7 +171,7 @@ public class SingleAccessKeyTree {
 	 */
 	public String nodeDescriptionAnalysis(SingleAccessKeyNode node) {
 		if (node.getNodeDescription() != null && node.getNodeDescription().trim().length() > 0
-				&& utils.getVerbosity().contains(Utils.WARNING_TAG)) {
+				&& config.getVerbosity().contains(IkeyConfig.WARNING_TAG)) {
 			return " (" + node.getNodeDescription() + ")";
 		}
 		return "";
@@ -196,7 +196,7 @@ public class SingleAccessKeyTree {
 			if (node.hasChild() == false) {
 				if (node.getCharacter().isSupportsCategoricalData()
 						&& !((State) node.getCharacterState()).getName().equals(
-								Utils.getBundleConfElement("message.notDescribed"))) {
+								IkeyConfig.getBundleConfElement("message.notDescribed"))) {
 					for (Taxon t : node.getRemainingTaxa()) {
 						t.updatePathStatistics(new Float(treeDepth));
 					}

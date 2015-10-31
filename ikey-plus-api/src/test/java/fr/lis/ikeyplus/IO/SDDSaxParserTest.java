@@ -7,7 +7,7 @@ import fr.lis.ikeyplus.model.ICharacter;
 import fr.lis.ikeyplus.model.QuantitativeMeasure;
 import fr.lis.ikeyplus.model.State;
 import fr.lis.ikeyplus.model.Taxon;
-import fr.lis.ikeyplus.utils.Utils;
+import fr.lis.ikeyplus.utils.IkeyConfig;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -36,9 +36,9 @@ public class SDDSaxParserTest {
 
 	@Test
 	public void should_parse_local_file() throws Exception {
-		// creation of Utils object (containing options)
-		Utils utils = new Utils();
-		SDDSaxParser sddSaxParser = new SDDSaxParser(new File("src/test/resources/inputFiles/Cichorieae-fullSDD.xml"), utils);
+		// creation of IkeyConfig object (containing options)
+		IkeyConfig config = new IkeyConfig();
+		SDDSaxParser sddSaxParser = new SDDSaxParser(new File("src/test/resources/inputFiles/Cichorieae-fullSDD.xml"), config);
 		DataSet dataset = sddSaxParser.getDataset();
 		assertEquals(dataset.getLabel(), DATASET_NAME);
 		assertEquals(dataset.getCharacters().size(), EXPECTED_NB_OF_CHARACTERS);
@@ -53,8 +53,8 @@ public class SDDSaxParserTest {
 		logger.info("testSDDSaxParser");
 		long beforeTime = System.currentTimeMillis();
 
-		// creation of Utils object (containing options)
-		Utils utils = new Utils();
+		// creation of IkeyConfig object (containing options)
+		IkeyConfig config = new IkeyConfig();
 
 		SDDSaxParser sddSaxParser = null;
 
@@ -76,12 +76,12 @@ public class SDDSaxParserTest {
 			// "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample.xml";
 
 			// options
-			utils.setFewStatesCharacterFirst(false);
-			utils.setMergeCharacterStatesIfSameDiscrimination(false);
-			utils.setPruning(false);
-			utils.setVerbosity("how");
-			utils.setScoreMethod(Utils.XPER);
-			utils.setWeightContext("CostEffectiveness");
+			config.setFewStatesCharacterFirst(false);
+			config.setMergeCharacterStatesIfSameDiscrimination(false);
+			config.setPruning(false);
+			config.setVerbosity("how");
+			config.setScoreMethod(IkeyConfig.ScoreMethod.XPER);
+			config.setWeightContext(IkeyConfig.WeightContext.COST_EFFECTIVENESS);
 
 			// test if the URL is valid
 			URLConnection urlConnection;
@@ -93,15 +93,15 @@ public class SDDSaxParserTest {
 				// Open data stream
 				httpStream = urlConnection.getInputStream();
 			} catch (java.net.MalformedURLException e) {
-				utils.setErrorMessage(Utils.getBundleConfElement("message.urlError"), e);
+				config.setErrorMessage(IkeyConfig.getBundleConfElement("message.urlError"), e);
 				e.printStackTrace();
 			} catch (java.io.IOException e) {
-				utils.setErrorMessage(Utils.getBundleConfElement("message.urlError"), e);
+				config.setErrorMessage(IkeyConfig.getBundleConfElement("message.urlError"), e);
 				e.printStackTrace();
 			}
-			sddSaxParser = new SDDSaxParser(stringUrl, utils);
+			sddSaxParser = new SDDSaxParser(stringUrl, config);
 		} catch (Throwable t) {
-			utils.setErrorMessage(Utils.getBundleConfElement("message.parsingError"), t);
+			config.setErrorMessage(IkeyConfig.getBundleConfElement("message.parsingError"), t);
 			t.printStackTrace();
 		}
 

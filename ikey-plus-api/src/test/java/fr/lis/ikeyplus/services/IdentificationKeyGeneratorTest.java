@@ -3,29 +3,28 @@ package fr.lis.ikeyplus.services;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+import fr.lis.ikeyplus.utils.IkeyConfig;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
 import fr.lis.ikeyplus.IO.SDDSaxParser;
-import fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
-import fr.lis.ikeyplus.utils.Utils;
 
 @Ignore
 public class IdentificationKeyGeneratorTest {
 
-	private Utils utils = new Utils();
+	private IkeyConfig utils = new IkeyConfig();
 	public Logger logger = Logger.getAnonymousLogger();
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		// creation of Utils object (containing options)
+		// creation of IkeyConfig object (containing options)
 
 		// set the confTest ResourceBundle
-		// Utils.setBundleConfOverridable(ResourceBundle.getBundle("fr.lis.ikeyplus.confTest"));
-		// Utils.setBundleConf(ResourceBundle.getBundle("fr.lis.ikeyplus.confTest"));
+		// IkeyConfig.setBundleConfOverridable(ResourceBundle.getBundle("fr.lis.ikeyplus.confTest"));
+		// IkeyConfig.setBundleConf(ResourceBundle.getBundle("fr.lis.ikeyplus.confTest"));
 
 	}
 
@@ -39,9 +38,9 @@ public class IdentificationKeyGeneratorTest {
 		utils.setMergeCharacterStatesIfSameDiscrimination(false);
 		utils.setPruning(true);
 		utils.setVerbosity("hows");
-		utils.setScoreMethod(Utils.XPER);
-		utils.setWeightContext("CostEffectiveness");
-		utils.setWeightType(Utils.GLOBAL_CHARACTER_WEIGHT);
+		utils.setScoreMethod(IkeyConfig.ScoreMethod.XPER);
+		utils.setWeightContext(IkeyConfig.WeightContext.COST_EFFECTIVENESS);
+		utils.setWeightType(IkeyConfig.WeightType.GLOBAL);
 
 		logger.info("testIdentificationKeyGenerator");
 		// define time before parsing SDD file

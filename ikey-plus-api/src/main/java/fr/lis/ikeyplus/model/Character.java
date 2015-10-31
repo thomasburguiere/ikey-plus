@@ -3,7 +3,7 @@ package fr.lis.ikeyplus.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.lis.ikeyplus.utils.Utils;
+import fr.lis.ikeyplus.utils.IkeyConfig;
 
 /**
  * This class represents a Character
@@ -15,7 +15,7 @@ public class Character implements ICharacter {
 
 	private String name = null;
 	private String id = null;
-	public float weight = Utils.DEFAULT_WEIGHT;
+	public float weight = IkeyConfig.DEFAULT_WEIGHT;
 	private ICharacter parentCharacter = null;
 	private List<State> inapplicableStates = null;
 	private List<ICharacter> childCharacters = null;

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import fr.lis.ikeyplus.utils.IkeyConfig;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
@@ -18,7 +19,6 @@ import fr.lis.ikeyplus.model.QuantitativeCharacter;
 import fr.lis.ikeyplus.model.QuantitativeMeasure;
 import fr.lis.ikeyplus.model.State;
 import fr.lis.ikeyplus.model.Taxon;
-import fr.lis.ikeyplus.utils.Utils;
 
 /**
  * This class extends the ContentHandler class, in order to be able to treat each SDD tag and extract data
@@ -69,8 +69,8 @@ public class SDDContentHandler implements ContentHandler {
 	private StringBuffer buffer = null;
 	// kwnoledge base
 	private DataSet dataSet = null;
-	// Utils object
-	private Utils utils = null;
+	// IkeyConfig object
+	private IkeyConfig config = null;
 	// current quantitative character
 	private CategoricalCharacter currentCategoricalCharacter = null;
 	// current quantitative character
@@ -101,10 +101,10 @@ public class SDDContentHandler implements ContentHandler {
 	/**
 	 * Default constructor
 	 */
-	public SDDContentHandler(Utils utils) {
+	public SDDContentHandler(IkeyConfig config) {
 		super();
 		this.dataSet = new DataSet();
-		this.utils = utils;
+		this.config = config;
 		this.ratingsCounter = new HashMap<ICharacter, Integer>();
 	}
 
@@ -337,22 +337,22 @@ public class SDDContentHandler implements ContentHandler {
 			else if (localName.equals("Measure") && inQuantitative) {
 				if (currentQuantitativeMeasure != null) {
 					if (attributes.getValue("type").equals("Min")) {
-						currentQuantitativeMeasure.setMin(Utils.convertStringToDouble(attributes
+						currentQuantitativeMeasure.setMin(IkeyConfig.convertStringToDouble(attributes
 								.getValue("value")));
 					} else if (attributes.getValue("type").equals("Max")) {
-						currentQuantitativeMeasure.setMax(Utils.convertStringToDouble(attributes
+						currentQuantitativeMeasure.setMax(IkeyConfig.convertStringToDouble(attributes
 								.getValue("value")));
 					} else if (attributes.getValue("type").equals("Mean")) {
-						currentQuantitativeMeasure.setMean(Utils.convertStringToDouble(attributes
+						currentQuantitativeMeasure.setMean(IkeyConfig.convertStringToDouble(attributes
 								.getValue("value")));
 					} else if (attributes.getValue("type").equals("SD")) {
-						currentQuantitativeMeasure.setSD(Utils.convertStringToDouble(attributes
+						currentQuantitativeMeasure.setSD(IkeyConfig.convertStringToDouble(attributes
 								.getValue("value")));
 					} else if (attributes.getValue("type").equals("UMethLower")) {
-						currentQuantitativeMeasure.setUMethLower(Utils.convertStringToDouble(attributes
+						currentQuantitativeMeasure.setUMethLower(IkeyConfig.convertStringToDouble(attributes
 								.getValue("value")));
 					} else if (attributes.getValue("type").equals("UMethUpper")) {
-						currentQuantitativeMeasure.setUMethUpper(Utils.convertStringToDouble(attributes
+						currentQuantitativeMeasure.setUMethUpper(IkeyConfig.convertStringToDouble(attributes
 								.getValue("value")));
 					}
 				}
@@ -378,8 +378,8 @@ public class SDDContentHandler implements ContentHandler {
 
 			// <Rating> in <Ratings>
 			else if (localName.equals("Rating") && inRatings) {
-				if (attributes.getValue("context").equals(utils.getWeightContext())) {
-					int currentRating = Utils.ratings.indexOf(attributes.getValue("rating")) + 1;
+				if (attributes.getValue("context").equals(config.getWeightContext().toString())) {
+					int currentRating = IkeyConfig.ratings.indexOf(attributes.getValue("rating")) + 1;
 					if (currentCodedDescriptionCharacter != null) {
 						if (this.ratingsCounter.get(currentCodedDescriptionCharacter) == null) {
 							this.ratingsCounter.put(currentCodedDescriptionCharacter, 0);
@@ -391,7 +391,7 @@ public class SDDContentHandler implements ContentHandler {
 						this.ratingsCounter.put(currentCodedDescriptionCharacter,
 								this.ratingsCounter.get(currentCodedDescriptionCharacter) + 1);
 
-						if (utils.getWeightType().equalsIgnoreCase(Utils.CONTEXTUAL_CHARACTER_WEIGHT)) {
+						if (config.getWeightType() == IkeyConfig.WeightType.CONTEXTUAL) {
 							currentCodedDescription.addCharacterWeight(currentCodedDescriptionCharacter,
 									currentRating);
 						}
@@ -453,7 +453,7 @@ public class SDDContentHandler implements ContentHandler {
 						} else if (this.dataSet.getCodedDescriptions().get(taxon)
 								.getCharacterDescription(character) instanceof String
 								&& ((String) this.dataSet.getCodedDescriptions().get(taxon)
-										.getCharacterDescription(character)).equals(Utils.UNKNOWN_DATA)) {
+										.getCharacterDescription(character)).equals(IkeyConfig.UNKNOWN_DATA)) {
 							this.dataSet.getCodedDescriptions().get(taxon)
 									.addCharacterDescription(character, null);
 						}
@@ -653,7 +653,7 @@ public class SDDContentHandler implements ContentHandler {
 				inCategorical = false;
 				if (dataUnavailableFlag) {
 					currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
-							Utils.UNKNOWN_DATA);
+							IkeyConfig.UNKNOWN_DATA);
 				} else {
 					currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
 							currentStatesList);
@@ -668,7 +668,7 @@ public class SDDContentHandler implements ContentHandler {
 				inQuantitative = false;
 				if (dataUnavailableFlag) {
 					currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
-							Utils.UNKNOWN_DATA);
+							IkeyConfig.UNKNOWN_DATA);
 				} else {
 					currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
 							currentQuantitativeMeasure);

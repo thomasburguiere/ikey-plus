@@ -23,7 +23,7 @@ import java.util.Set;
  * @author Utilisateur
  * 
  */
-public class Utils {
+public class IkeyConfig {
 
 	private String errorMessage = null;
 	private File errorMessageFile = null;
@@ -52,49 +52,161 @@ public class Utils {
 	public static final String KEY = "key_";
 	public static final String ERROR = "error_";
 
-	// file type
-	public static final String TXT = "txt";
-	public static final String HTML = "html";
-	public static final String INTERACTIVE_HTML = "interactivehtml";
-	public static final String PDF = "pdf";
-	public static final String SDD = "sdd";
-	public static final String WIKI = "wiki";
-	public static final String SPECIESIDWIKISTATEMENT = "speciesidwikistatement";
-	public static final String SPECIESIDWIKIQUESTIONANSWER = "speciesidwikiquestionanswer";
-	public static final String DOT = "dot";
-	public static final String ZIP = "zip";
-
 	// specific file extension
 	public static final String GV = "gv";
 
-	// representation type
-	public static final String TREE = "tree";
-	public static final String FLAT = "flat";
-
-	// score method type
+	// method method type
 	public static final String XPER = "xper";
 	public static final String JACCARD = "jaccard";
 	public static final String SOKALANDMICHENER = "sokalAndMichener";
 
-	// weight type
-	public static final String GLOBAL_CHARACTER_WEIGHT = "global";
-	public static final String CONTEXTUAL_CHARACTER_WEIGHT = "contextual";
 
 	// options
-	private String format = Utils.TXT;
-	private String representation = Utils.TREE;
+	private OutputFormat format = OutputFormat.TXT;
+	private KeyRepresentation representation = KeyRepresentation.FLAT;
 	private boolean fewStatesCharacterFirst = false;
 	private boolean mergeCharacterStatesIfSameDiscrimination = false;
 	private boolean pruning = false;
 	private String verbosity = "";
-	private String scoreMethod = Utils.XPER;
-	private String weightContext = "";
-	private String weightType = Utils.GLOBAL_CHARACTER_WEIGHT;
+	private ScoreMethod scoreMethod = ScoreMethod.XPER;
+	private WeightContext weightContext = null;
+	private WeightType weightType = WeightType.GLOBAL;
+
+	public enum ScoreMethod {
+		XPER("xper"),
+		JACCARD("jaccard"),
+		SOKALANDMICHENER("sokalAndMichener");
+
+		private final String method;
+
+		public String toString(){
+			return method;
+		}
+
+		ScoreMethod(String method) {
+			this.method = method;
+		}
+		public static ScoreMethod fromString(String text) {
+			if (text != null) {
+				for (ScoreMethod entry : values()) {
+					if (entry.toString().equals(text)) {
+						return entry;
+					}
+				}
+			}
+			return null;
+		}
+	}
+
+	public enum KeyRepresentation {
+		TREE("tree"),
+		FLAT("flat");
+
+		private final String representation;
+
+		KeyRepresentation(String representation) {
+			this.representation = representation;
+		}
+
+		public String toString(){
+			return representation;
+		}
+
+		public static KeyRepresentation fromString(String text) {
+			if (text != null) {
+				for (KeyRepresentation entry : values()) {
+					if (entry.toString().equals(text)) {
+						return entry;
+					}
+				}
+			}
+			return null;
+		}
+	}
+
+	public enum OutputFormat {
+		TXT("txt"),
+		HTML("html"),
+		INTERACTIVE_HTML("interactivehtml"),
+		PDF("pdf"),
+		SDD("sdd"),
+		WIKI("wiki"),
+		SPECIESIDWIKISTATEMENT("speciesidwikistatement"),
+		SPECIESIDWIKIQUESTIONANSWER("speciesidwikiquestionanswer"),
+		DOT("dot"),
+		ZIP("zip");
+
+		private final String format;
+
+		OutputFormat(String format) {
+			this.format = format;
+		}
+
+		public String toString() {
+			return format;
+		}
+		public static OutputFormat fromString(String text) {
+			if (text != null) {
+				for (OutputFormat entry : values()) {
+					if (entry.toString().equals(text)) {
+						return entry;
+					}
+				}
+			}
+			return null;
+		}
+	}
+
+	public enum WeightType{
+		GLOBAL("global"),
+		CONTEXTUAL("contextual");
+
+		private final String type;
+
+		WeightType(String type) {
+			this.type = type;
+		}
+
+		public String toString() {
+			return type;
+		}
+	}
+
+	public enum WeightContext {
+		OBSERVATION_CONVENIENCE("ObservationConvenience"),
+		AVAILABILITY("Availability"),
+		REPEATABILITY("Repeatability"),
+		COST_EFFECTIVENESS("CostEffectiveness"),
+		PHYLOGENETIC_WEIGHTING("PhylogeneticWeighting"),
+		REQUIRED_EXPERTISE("RequiredExpertise");
+
+		private final String contextType;
+
+		WeightContext(String contextType) {
+			this.contextType = contextType;
+		}
+
+		public String toString() {
+			return contextType;
+		}
+
+		public static WeightContext fromString(String text) {
+			if (text != null) {
+				for (WeightContext entry : values()) {
+					if (entry.toString().equals(text)) {
+						return entry;
+					}
+				}
+			}
+			return null;
+		}
+	}
+
 
 	/**
 	 * Constructor
 	 */
-	public Utils() {
+	public IkeyConfig() {
 		super();
 		// initialize the list of rating values
 		ratings.add("Rating1of5");
@@ -135,7 +247,7 @@ public class Utils {
 	 * @return String the element corresponding to the key
 	 */
 	public static String getBundleConfElement(String key) {
-		return Utils.bundleConf.getString(key);
+		return IkeyConfig.bundleConf.getString(key);
 	}
 
 	/**
@@ -144,7 +256,7 @@ public class Utils {
 	 * @return String the element corresponding to the key
 	 */
 	public static String getBundleConfOverridableElement(String key) {
-		return Utils.bundleConfOverridable.getString(key);
+		return IkeyConfig.bundleConfOverridable.getString(key);
 	}
 
 	/**
@@ -153,7 +265,7 @@ public class Utils {
 	 * @param bundle
 	 */
 	public static void setBundleConf(ResourceBundle bundleConf) {
-		Utils.bundleConf = bundleConf;
+		IkeyConfig.bundleConf = bundleConf;
 	}
 
 	/**
@@ -162,7 +274,7 @@ public class Utils {
 	 * @param bundle
 	 */
 	public static void setBundleConfOverridable(ResourceBundle bundleConfOverridable) {
-		Utils.bundleConfOverridable = bundleConfOverridable;
+		IkeyConfig.bundleConfOverridable = bundleConfOverridable;
 	}
 
 	/**
@@ -226,22 +338,22 @@ public class Utils {
 	 * @return File, the error file
 	 */
 	public File createErrorFile() {
-		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
+		String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		String lineReturn = System.getProperty("line.separator");
 		File erroFile = null;
 		try {
-			erroFile = File.createTempFile(Utils.ERROR, "." + Utils.TXT, new File(path));
+			erroFile = File.createTempFile(IkeyConfig.ERROR, "." + OutputFormat.TXT, new File(path));
 
 			FileOutputStream fileOutputStream = new FileOutputStream(erroFile);
-			fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
+			fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
 			BufferedWriter txtFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream,
 					"UTF-8"));
 
 			txtFileWriter.append(this.errorMessage);
-			txtFileWriter.append(lineReturn + lineReturn + Utils.getBundleConfElement("message.webmaster")
-					+ Utils.getBundleConfOverridableElement("email.webmaster"));
+			txtFileWriter.append(lineReturn + lineReturn + IkeyConfig.getBundleConfElement("message.webmaster")
+					+ IkeyConfig.getBundleConfOverridableElement("email.webmaster"));
 			txtFileWriter.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -254,7 +366,7 @@ public class Utils {
 	 * 
 	 * @return String, the format
 	 */
-	public String getFormat() {
+	public OutputFormat getFormat() {
 		return format;
 	}
 
@@ -264,7 +376,7 @@ public class Utils {
 	 * 
 	 * @param format
 	 */
-	public void setFormat(String format) {
+	public void setFormat(OutputFormat format) {
 		this.format = format;
 	}
 
@@ -273,7 +385,7 @@ public class Utils {
 	 * 
 	 * @return String, the representation
 	 */
-	public String getRepresentation() {
+	public KeyRepresentation getRepresentation() {
 		return representation;
 	}
 
@@ -282,7 +394,7 @@ public class Utils {
 	 * 
 	 * @param representation
 	 */
-	public void setRepresentation(String representation) {
+	public void setRepresentation(KeyRepresentation representation) {
 		this.representation = representation;
 	}
 
@@ -359,20 +471,20 @@ public class Utils {
 	}
 
 	/**
-	 * get the score method
+	 * get the method method
 	 * 
-	 * @return String, the score method selected
+	 * @return String, the method method selected
 	 */
-	public String getScoreMethod() {
+	public ScoreMethod getScoreMethod() {
 		return scoreMethod;
 	}
 
 	/**
-	 * set the score method
+	 * set the method method
 	 * 
 	 * @param scoreMethod
 	 */
-	public void setScoreMethod(String scoreMethod) {
+	public void setScoreMethod(ScoreMethod scoreMethod) {
 		this.scoreMethod = scoreMethod;
 	}
 
@@ -381,7 +493,7 @@ public class Utils {
 	 * 
 	 * @return String, the weight context
 	 */
-	public String getWeightContext() {
+	public WeightContext getWeightContext() {
 		return weightContext;
 	}
 
@@ -391,12 +503,8 @@ public class Utils {
 	 * @param weightContext
 	 *            , the weight context
 	 */
-	public void setWeightContext(String weightContext) {
-		for (String ratingContext : Utils.ratingContext) {
-			if (weightContext.equalsIgnoreCase(ratingContext)) {
-				this.weightContext = ratingContext;
-			}
-		}
+	public void setWeightContext(WeightContext weightContext) {
+		this.weightContext = weightContext;
 	}
 
 	/**
@@ -404,7 +512,7 @@ public class Utils {
 	 * 
 	 * @return String, the weight type
 	 */
-	public String getWeightType() {
+	public WeightType getWeightType() {
 		return weightType;
 	}
 
@@ -413,7 +521,7 @@ public class Utils {
 	 * 
 	 * @param weightType
 	 */
-	public void setWeightType(String weightType) {
+	public void setWeightType(WeightType weightType) {
 		this.weightType = weightType;
 	}
 

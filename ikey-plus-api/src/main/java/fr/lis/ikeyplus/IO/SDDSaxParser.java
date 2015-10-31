@@ -12,7 +12,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 import fr.lis.ikeyplus.model.DataSet;
-import fr.lis.ikeyplus.utils.Utils;
+import fr.lis.ikeyplus.utils.IkeyConfig;
 
 /**
  * This class starts the parsing of a SDD file
@@ -28,7 +28,7 @@ public class SDDSaxParser {
 	/**
 	 * constructor which parses the content of the input file
 	 */
-	public SDDSaxParser(String uri, Utils utils) throws SAXException, IOException {
+	public SDDSaxParser(String uri, IkeyConfig utils) throws SAXException, IOException {
 		XMLReader saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
 
 		SDDContentHandler handler = new SDDContentHandler(utils);
@@ -49,7 +49,7 @@ public class SDDSaxParser {
 	/**
 	 * constructor which parses the content of the input file
 	 */
-    public SDDSaxParser(File inputFile, Utils conf) throws SAXException, IOException {
+    public SDDSaxParser(File inputFile, IkeyConfig conf) throws SAXException, IOException {
         XMLReader saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
 
         SDDContentHandler handler = new SDDContentHandler(conf);

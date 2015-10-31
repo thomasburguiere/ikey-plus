@@ -10,7 +10,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
-import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,7 +31,7 @@ import fr.lis.ikeyplus.model.SingleAccessKeyNode;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 import fr.lis.ikeyplus.model.State;
 import fr.lis.ikeyplus.model.Taxon;
-import fr.lis.ikeyplus.utils.Utils;
+import fr.lis.ikeyplus.utils.IkeyConfig;
 
 /**
  * This static class generates all outputs format of any SingleAccessKeyTree object
@@ -52,10 +51,10 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * @throws IOException
 	 */
 	public static File dumpSddFile(String header, SingleAccessKeyTree tree2dump) throws IOException {
-		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
+		String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-		File sddFile = File.createTempFile(Utils.KEY, "." + Utils.SDD, new File(path));
+		File sddFile = File.createTempFile(IkeyConfig.KEY, "." + IkeyConfig.OutputFormat.SDD, new File(path));
 
 		FileOutputStream fileOutputStream = new FileOutputStream(sddFile);
 		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
@@ -194,8 +193,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			SingleAccessKeyNode node = queue.remove();
 			SingleAccessKeyNode child = null;
 
-			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+			while (IkeyConfig.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) IkeyConfig.exclusion(node.getChildren(), visitedNodes)
 							.get(0)) != null) {
 				visitedNodes.add(child);
 
@@ -355,12 +354,12 @@ public abstract class SingleAccessKeyTreeDumper {
 	 */
 	public static File dumpTxtFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics)
 			throws IOException {
-		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
+		String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		if (!new File(path).exists())
 			new File(path).mkdirs();
-		File txtFile = File.createTempFile(Utils.KEY, "." + Utils.TXT, new File(path));
+		File txtFile = File.createTempFile(IkeyConfig.KEY, "." + IkeyConfig.OutputFormat.TXT, new File(path));
 
 		FileOutputStream fileOutputStream = new FileOutputStream(txtFile);
 		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
@@ -462,10 +461,10 @@ public abstract class SingleAccessKeyTreeDumper {
 	 */
 	public static File dumpFlatTxtFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics)
 			throws IOException {
-		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
+		String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-		File txtFile = File.createTempFile(Utils.KEY, "." + Utils.TXT, new File(path));
+		File txtFile = File.createTempFile(IkeyConfig.KEY, "." + IkeyConfig.OutputFormat.TXT, new File(path));
 
 		FileOutputStream fileOutputStream = new FileOutputStream(txtFile);
 		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
@@ -549,8 +548,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			SingleAccessKeyNode node = queue.remove();
 			SingleAccessKeyNode child = null;
 
-			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+			while (IkeyConfig.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) IkeyConfig.exclusion(node.getChildren(), visitedNodes)
 							.get(0)) != null
 			// && child.getCharacter() != null && child.getCharacterState() != null
 			) {
@@ -632,10 +631,10 @@ public abstract class SingleAccessKeyTreeDumper {
 	public static File dumpHtmlFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics)
 			throws IOException {
 
-		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
+		String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-		File htmlFile = File.createTempFile(Utils.KEY, "." + Utils.HTML, new File(path));
+		File htmlFile = File.createTempFile(IkeyConfig.KEY, "." + IkeyConfig.OutputFormat.HTML, new File(path));
 
 		FileOutputStream fileOutputStream = new FileOutputStream(htmlFile);
 		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
@@ -668,15 +667,15 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("<meta name=\'author\' content=\'Laboratoire Informatique et Systematique, UMR 7207, MNHN Paris\' />"
 				+ lineSep);
 		slk.append("<head>" + lineSep);
-		slk.append("<script src='" + Utils.getBundleConfElement("resources.jqueryPath") + "'></script>"
+		slk.append("<script src='" + IkeyConfig.getBundleConfElement("resources.jqueryPath") + "'></script>"
 				+ lineSep + "<script type='text/javascript' src='"
-				+ Utils.getBundleConfElement("resources.treeviewJsPath") + "'></script>" + lineSep
-				+ "<link rel='stylesheet' href='" + Utils.getBundleConfElement("resources.treeviewCssPath")
+				+ IkeyConfig.getBundleConfElement("resources.treeviewJsPath") + "'></script>" + lineSep
+				+ "<link rel='stylesheet' href='" + IkeyConfig.getBundleConfElement("resources.treeviewCssPath")
 				+ "' type='text/css' />" + lineSep);
 
 		slk.append("<style type='text/css'>" + lineSep);
 
-		InputStream cssInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(Utils
+		InputStream cssInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(IkeyConfig
 				.getBundleConfElement("resources.CSSName"));
 		if (cssInputStream != null) {
 			BufferedInputStream bin = new BufferedInputStream(cssInputStream);
@@ -698,7 +697,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		slk.append("<script>" + lineSep);
 
-		InputStream javascriptInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(Utils
+		InputStream javascriptInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(IkeyConfig
 				.getBundleConfElement("resources.JSName"));
 		if (javascriptInputStream != null) {
 			BufferedInputStream bin = new BufferedInputStream(javascriptInputStream);
@@ -890,10 +889,10 @@ public abstract class SingleAccessKeyTreeDumper {
 	public static File dumpFlatHtmlFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics)
 			throws IOException {
 
-		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
+		String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-		File htmlFile = File.createTempFile(Utils.KEY, "." + Utils.HTML, new File(path));
+		File htmlFile = File.createTempFile(IkeyConfig.KEY, "." + IkeyConfig.OutputFormat.HTML, new File(path));
 
 		FileOutputStream fileOutputStream = new FileOutputStream(htmlFile);
 		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
@@ -921,10 +920,10 @@ public abstract class SingleAccessKeyTreeDumper {
 	 */
 	public static File dumpInteractiveHtmlFile(String header, SingleAccessKeyTree tree2dump,
 			boolean showStatistics) throws IOException {
-		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
+		String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-		File htmlFile = File.createTempFile(Utils.KEY, "." + Utils.HTML, new File(path));
+		File htmlFile = File.createTempFile(IkeyConfig.KEY, "." + IkeyConfig.OutputFormat.HTML, new File(path));
 		FileOutputStream fileOutputStream = new FileOutputStream(htmlFile);
 		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
 		BufferedWriter htmlFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, "UTF-8"));
@@ -959,12 +958,12 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("<meta name=\'author\' content=\'Laboratoire Informatique et Systematique, UMR 7207, MNHN Paris\' />"
 				+ lineSep);
 		slk.append("<head>" + lineSep);
-		slk.append("<script src='" + Utils.getBundleConfElement("resources.jqueryPath") + "'></script>"
+		slk.append("<script src='" + IkeyConfig.getBundleConfElement("resources.jqueryPath") + "'></script>"
 				+ lineSep);
 
 		slk.append("<style type='text/css'>" + lineSep);
 
-		InputStream cssInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(Utils
+		InputStream cssInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(IkeyConfig
 				.getBundleConfElement("resources.CSSName"));
 		if (cssInputStream != null) {
 			BufferedInputStream bin = new BufferedInputStream(cssInputStream);
@@ -986,7 +985,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		slk.append("<script>" + lineSep);
 
-		InputStream javascriptInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(Utils
+		InputStream javascriptInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(IkeyConfig
 				.getBundleConfElement("resources.JSName"));
 		if (javascriptInputStream != null) {
 			BufferedInputStream bin = new BufferedInputStream(javascriptInputStream);
@@ -1054,12 +1053,12 @@ public abstract class SingleAccessKeyTreeDumper {
 		slk.append("</script>");
 
 		slk.append("<head>" + lineSep);
-		slk.append("<script src='" + Utils.getBundleConfElement("resources.jqueryPath") + "'></script>"
+		slk.append("<script src='" + IkeyConfig.getBundleConfElement("resources.jqueryPath") + "'></script>"
 				+ lineSep);
 
 		slk.append("<style type='text/css'>" + lineSep);
 
-		InputStream cssInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(Utils
+		InputStream cssInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(IkeyConfig
 				.getBundleConfElement("resources.CSSName"));
 		if (cssInputStream != null) {
 			BufferedInputStream bin = new BufferedInputStream(cssInputStream);
@@ -1081,7 +1080,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
 		slk.append("<script>" + lineSep);
 
-		InputStream javascriptInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(Utils
+		InputStream javascriptInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(IkeyConfig
 				.getBundleConfElement("resources.JSName"));
 		if (javascriptInputStream != null) {
 			BufferedInputStream bin = new BufferedInputStream(javascriptInputStream);
@@ -1185,8 +1184,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			SingleAccessKeyNode node = queue.remove();
 			SingleAccessKeyNode child = null;
 
-			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+			while (IkeyConfig.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) IkeyConfig.exclusion(node.getChildren(), visitedNodes)
 							.get(0)) != null
 			// && child.getCharacter() != null && child.getCharacterState() != null
 			) {
@@ -1349,8 +1348,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			SingleAccessKeyNode node = queue.remove();
 			SingleAccessKeyNode child = null;
 
-			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+			while (IkeyConfig.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) IkeyConfig.exclusion(node.getChildren(), visitedNodes)
 							.get(0)) != null
 			// && child.getCharacter() != null && child.getCharacterState() != null
 			) {
@@ -1593,8 +1592,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			SingleAccessKeyNode node = queue.remove();
 			SingleAccessKeyNode child = null;
 
-			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+			while (IkeyConfig.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) IkeyConfig.exclusion(node.getChildren(), visitedNodes)
 							.get(0)) != null
 			// && child.getCharacter() != null && child.getCharacterState() != null
 			) {
@@ -1703,10 +1702,10 @@ public abstract class SingleAccessKeyTreeDumper {
 	 */
 	public static File dumpWikiFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics)
 			throws IOException {
-		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
+		String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-		File wikiFile = File.createTempFile(Utils.KEY, "." + Utils.WIKI, new File(path));
+		File wikiFile = File.createTempFile(IkeyConfig.KEY, "." + IkeyConfig.OutputFormat.WIKI, new File(path));
 
 		FileOutputStream fileOutputStream = new FileOutputStream(wikiFile);
 		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
@@ -1818,10 +1817,10 @@ public abstract class SingleAccessKeyTreeDumper {
 	 */
 	public static File dumpFlatWikiFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics)
 			throws IOException {
-		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
+		String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-		File wikiFile = File.createTempFile(Utils.KEY, "." + Utils.WIKI, new File(path));
+		File wikiFile = File.createTempFile(IkeyConfig.KEY, "." + IkeyConfig.OutputFormat.WIKI, new File(path));
 		BufferedWriter wikiFlatFileWriter = new BufferedWriter(new FileWriter(wikiFile));
 
 		if (header != null && !header.equals("")) {
@@ -1908,8 +1907,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			SingleAccessKeyNode node = queue.remove();
 			SingleAccessKeyNode child = null;
 
-			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+			while (IkeyConfig.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) IkeyConfig.exclusion(node.getChildren(), visitedNodes)
 							.get(0)) != null) {
 				visitedNodes.add(child);
 
@@ -1993,10 +1992,10 @@ public abstract class SingleAccessKeyTreeDumper {
 	 */
 	public static File dumpFlatSpeciesIDQuestionAnswerWikiFile(String header, SingleAccessKeyTree tree2dump)
 			throws IOException {
-		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
+		String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-		File wikiFile = File.createTempFile(Utils.KEY, "." + Utils.WIKI, new File(path));
+		File wikiFile = File.createTempFile(IkeyConfig.KEY, "." + IkeyConfig.OutputFormat.WIKI, new File(path));
 
 		FileOutputStream fileOutputStream = new FileOutputStream(wikiFile);
 		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
@@ -2088,8 +2087,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			SingleAccessKeyNode node = queue.remove();
 			SingleAccessKeyNode child = null;
 
-			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+			while (IkeyConfig.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) IkeyConfig.exclusion(node.getChildren(), visitedNodes)
 							.get(0)) != null) {
 				visitedNodes.add(child);
 
@@ -2121,8 +2120,8 @@ public abstract class SingleAccessKeyTreeDumper {
 						stateID = alphabet[alphabetIndex];
 					}
 				} catch (Exception e) {
-					tree2dump.getUtils().setErrorMessage(
-							Utils.getBundleConfElement("message.stateNumberError"), e);
+					tree2dump.getConfig().setErrorMessage(
+							IkeyConfig.getBundleConfElement("message.stateNumberError"), e);
 					e.printStackTrace();
 				}
 
@@ -2190,10 +2189,10 @@ public abstract class SingleAccessKeyTreeDumper {
 	 */
 	public static File dumpFlatSpeciesIDStatementWikiFile(String header, SingleAccessKeyTree tree2dump)
 			throws IOException {
-		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
+		String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-		File wikiFile = File.createTempFile(Utils.KEY, "." + Utils.WIKI, new File(path));
+		File wikiFile = File.createTempFile(IkeyConfig.KEY, "." + IkeyConfig.OutputFormat.WIKI, new File(path));
 
 		FileOutputStream fileOutputStream = new FileOutputStream(wikiFile);
 		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
@@ -2285,8 +2284,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			SingleAccessKeyNode node = queue.remove();
 			SingleAccessKeyNode child = null;
 
-			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+			while (IkeyConfig.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) IkeyConfig.exclusion(node.getChildren(), visitedNodes)
 							.get(0)) != null) {
 				visitedNodes.add(child);
 
@@ -2360,13 +2359,13 @@ public abstract class SingleAccessKeyTreeDumper {
 	 * @throws IOException
 	 */
 	public static File dumpDotFile(String header, SingleAccessKeyTree tree2dump) throws IOException {
-		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
+		String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
 		header = header.replace(System.getProperty("line.separator"), System.getProperty("line.separator")
 				+ "//");
 		header = header + System.getProperty("line.separator");
-		File dotFile = File.createTempFile("key_", "." + Utils.GV, new File(path));
+		File dotFile = File.createTempFile("key_", "." + IkeyConfig.GV, new File(path));
 
 		FileOutputStream fileOutputStream = new FileOutputStream(dotFile);
 		fileOutputStream.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
@@ -2440,8 +2439,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			SingleAccessKeyNode node = queue.remove();
 			SingleAccessKeyNode child = null;
 
-			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+			while (IkeyConfig.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) IkeyConfig.exclusion(node.getChildren(), visitedNodes)
 							.get(0)) != null
 			// && child.getCharacter() != null && child.getCharacterState() != null
 			) {
@@ -2583,10 +2582,10 @@ public abstract class SingleAccessKeyTreeDumper {
 		correspondingFilePath.put(dotFile, label + "key" + System.getProperty("file.separator") + "tree"
 				+ System.getProperty("file.separator") + dotFile.getName());
 
-		String path = Utils.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ Utils.getBundleConfOverridableElement("generatedKeyFiles.folder");
+		String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+				+ IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-		File zipFile = File.createTempFile(Utils.KEY, "." + Utils.ZIP, new File(path));
+		File zipFile = File.createTempFile(IkeyConfig.KEY, "." + IkeyConfig.OutputFormat.ZIP, new File(path));
 
 		try {
 			// create the writing flow
@@ -2608,7 +2607,7 @@ public abstract class SingleAccessKeyTreeDumper {
 			out.setLevel(Deflater.BEST_COMPRESSION);
 
 			// Temporary buffer
-			byte data[] = new byte[Utils.BUFFER];
+			byte data[] = new byte[IkeyConfig.BUFFER];
 
 			// for each file of the list
 			for (File file : filesList) {
@@ -2617,17 +2616,17 @@ public abstract class SingleAccessKeyTreeDumper {
 				FileInputStream fi = new FileInputStream(file);
 
 				// creation of a read buffer of the stream
-				BufferedInputStream buffi = new BufferedInputStream(fi, Utils.BUFFER);
+				BufferedInputStream buffi = new BufferedInputStream(fi, IkeyConfig.BUFFER);
 
 				// create input for this Zip file
-				ZipEntry entry = new ZipEntry(Utils.unAccent(correspondingFilePath.get(file)));
+				ZipEntry entry = new ZipEntry(IkeyConfig.unAccent(correspondingFilePath.get(file)));
 
 				// add this entry in the flow of writing the Zip archive
 				out.putNextEntry(entry);
 
 				// writing the package file BUFFER bytes in the flow Writing
 				int count;
-				while ((count = buffi.read(data, 0, Utils.BUFFER)) != -1) {
+				while ((count = buffi.read(data, 0, IkeyConfig.BUFFER)) != -1) {
 					out.write(data, 0, count);
 				}
 
@@ -2644,7 +2643,7 @@ public abstract class SingleAccessKeyTreeDumper {
 			dest.close();
 
 		} catch (Exception e) {
-			tree2dump.getUtils().setErrorMessage(Utils.getBundleConfElement("message.creatingFileError"), e);
+			tree2dump.getConfig().setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingFileError"), e);
 			e.printStackTrace();
 		}
 
@@ -2682,8 +2681,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			SingleAccessKeyNode child = null;
 
 			// exclusion(node.getChildren(), visitedNodes) is the list of unvisited children nodes of the
-			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+			while (IkeyConfig.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) IkeyConfig.exclusion(node.getChildren(), visitedNodes)
 							.get(0)) != null) {
 				visitedNodes.add(child);
 
@@ -2728,8 +2727,8 @@ public abstract class SingleAccessKeyTreeDumper {
 			SingleAccessKeyNode child = null;
 
 			// exclusion(node.getChildren(), visitedNodes) is the list of unvisited children nodes of the
-			while (Utils.exclusion(node.getChildren(), visitedNodes).size() > 0
-					&& (child = (SingleAccessKeyNode) Utils.exclusion(node.getChildren(), visitedNodes)
+			while (IkeyConfig.exclusion(node.getChildren(), visitedNodes).size() > 0
+					&& (child = (SingleAccessKeyNode) IkeyConfig.exclusion(node.getChildren(), visitedNodes)
 							.get(0)) != null) {
 				visitedNodes.add(child);
 
@@ -2878,7 +2877,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
 			output.append(t.getName() + "\t" + t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY).intValue()
 					+ "\t" + t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY).intValue() + "\t"
-					+ Utils.roundFloat(t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY), 3) + "\t"
+					+ IkeyConfig.roundFloat(t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY), 3) + "\t"
 					+ t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY).intValue());
 
 			if (t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY) > 0) {
@@ -2892,10 +2891,10 @@ public abstract class SingleAccessKeyTreeDumper {
 		}
 
 		// round all average values
-		float averageNbPath = Utils.roundFloat((sumNbPath / (float) c), 3);
-		float averageMinPath = Utils.roundFloat((sumMinPathLength / (float) c), 3);
-		float averageAvgPath = Utils.roundFloat((sumAvgPathLength / (float) c), 3);
-		float averageMaxPath = Utils.roundFloat((sumMaxPathLength / (float) c), 3);
+		float averageNbPath = IkeyConfig.roundFloat((sumNbPath / (float) c), 3);
+		float averageMinPath = IkeyConfig.roundFloat((sumMinPathLength / (float) c), 3);
+		float averageAvgPath = IkeyConfig.roundFloat((sumAvgPathLength / (float) c), 3);
+		float averageMaxPath = IkeyConfig.roundFloat((sumMaxPathLength / (float) c), 3);
 
 		output.append("AVERAGE\t" + averageNbPath + "\t" + averageMinPath + "\t" + averageAvgPath + "\t"
 				+ averageMaxPath);
@@ -2945,7 +2944,7 @@ public abstract class SingleAccessKeyTreeDumper {
 			output.append("<td>" + escapeHTMLSpecialCharacters(t.getName()) + "</td><td>"
 					+ t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY).intValue() + "</td><td>"
 					+ t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY).intValue() + "</td><td>"
-					+ Utils.roundFloat(t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY), 3)
+					+ IkeyConfig.roundFloat(t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY), 3)
 					+ "</td><td>" + t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY).intValue()
 					+ "</td>");
 
@@ -2961,10 +2960,10 @@ public abstract class SingleAccessKeyTreeDumper {
 		}
 
 		// round all average values
-		float averageNbPath = Utils.roundFloat((sumNbPath / (float) c), 3);
-		float averageMinPath = Utils.roundFloat((sumMinPathLength / (float) c), 3);
-		float averageAvgPath = Utils.roundFloat((sumAvgPathLength / (float) c), 3);
-		float averageMaxPath = Utils.roundFloat((sumMaxPathLength / (float) c), 3);
+		float averageNbPath = IkeyConfig.roundFloat((sumNbPath / (float) c), 3);
+		float averageMinPath = IkeyConfig.roundFloat((sumMinPathLength / (float) c), 3);
+		float averageAvgPath = IkeyConfig.roundFloat((sumAvgPathLength / (float) c), 3);
+		float averageMaxPath = IkeyConfig.roundFloat((sumMaxPathLength / (float) c), 3);
 
 		output.append("<tr><td>AVERAGE</td><td>" + averageNbPath + "</td><td>" + averageMinPath + "</td><td>"
 				+ averageAvgPath + "</td><td>" + averageMaxPath + "</td></tr>");
@@ -3006,7 +3005,7 @@ public abstract class SingleAccessKeyTreeDumper {
 			output.append("|align=\"left\"|" + t.getName() + lineSeparator + "|"
 					+ t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY).intValue() + lineSeparator + "|"
 					+ t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY).intValue() + lineSeparator + "|"
-					+ Utils.roundFloat(t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY), 3)
+					+ IkeyConfig.roundFloat(t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY), 3)
 					+ lineSeparator + "|" + t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY).intValue()
 					+ lineSeparator + "|-" + lineSeparator);
 
@@ -3020,10 +3019,10 @@ public abstract class SingleAccessKeyTreeDumper {
 		}
 
 		// round all average values
-		float averageNbPath = Utils.roundFloat((sumNbPath / (float) c), 3);
-		float averageMinPath = Utils.roundFloat((sumMinPathLength / (float) c), 3);
-		float averageAvgPath = Utils.roundFloat((sumAvgPathLength / (float) c), 3);
-		float averageMaxPath = Utils.roundFloat((sumMaxPathLength / (float) c), 3);
+		float averageNbPath = IkeyConfig.roundFloat((sumNbPath / (float) c), 3);
+		float averageMinPath = IkeyConfig.roundFloat((sumMinPathLength / (float) c), 3);
+		float averageAvgPath = IkeyConfig.roundFloat((sumAvgPathLength / (float) c), 3);
+		float averageMaxPath = IkeyConfig.roundFloat((sumMaxPathLength / (float) c), 3);
 
 		output.append("!align=\"left\"|AVERAGE" + lineSeparator + "|" + averageNbPath + lineSeparator + "|"
 				+ averageMinPath + lineSeparator + "|" + averageAvgPath + lineSeparator + "|"

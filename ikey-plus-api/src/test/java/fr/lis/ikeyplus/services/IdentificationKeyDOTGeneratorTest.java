@@ -6,13 +6,13 @@ import java.net.URLConnection;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
+import fr.lis.ikeyplus.utils.IkeyConfig;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import fr.lis.ikeyplus.IO.SDDSaxParser;
 import fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
-import fr.lis.ikeyplus.utils.Utils;
 
 /**
  * This class allow to test the DOT output of IdentificationKeyGenerator service
@@ -28,12 +28,12 @@ public class IdentificationKeyDOTGeneratorTest {
 	@Test
 	public void testIdentificationKeyGenerator() {
 
-		// creation of Utils object (containing options)
-		Utils utils = new Utils();
+		// creation of IkeyConfig object (containing options)
+		IkeyConfig utils = new IkeyConfig();
 
 		// set the confTest ResourceBundle
-		Utils.setBundleConfOverridable(ResourceBundle.getBundle("fr.lis.ikeyplus.confTest"));
-		Utils.setBundleConf(ResourceBundle.getBundle("fr.lis.ikeyplus.confTest"));
+		IkeyConfig.setBundleConfOverridable(ResourceBundle.getBundle("fr.lis.ikeyplus.confTest"));
+		IkeyConfig.setBundleConf(ResourceBundle.getBundle("fr.lis.ikeyplus.confTest"));
 
 		// String containing the name of the result file
 		String resultFileName = "";
@@ -72,9 +72,9 @@ public class IdentificationKeyDOTGeneratorTest {
 				utils.setMergeCharacterStatesIfSameDiscrimination(false);
 				utils.setPruning(false);
 				utils.setVerbosity("how");
-				utils.setScoreMethod(Utils.XPER);
-				utils.setWeightContext("CostEffectiveness");
-				utils.setWeightType(Utils.GLOBAL_CHARACTER_WEIGHT);
+				utils.setScoreMethod(IkeyConfig.ScoreMethod.XPER);
+				utils.setWeightContext(IkeyConfig.WeightContext.COST_EFFECTIVENESS);
+				utils.setWeightType(IkeyConfig.WeightType.GLOBAL);
 
 				// test if the URL is valid
 				URLConnection urlConnection;
@@ -85,16 +85,16 @@ public class IdentificationKeyDOTGeneratorTest {
 					// Open data stream
 					urlConnection.getInputStream();
 				} catch (java.net.MalformedURLException e) {
-					utils.setErrorMessage(Utils.getBundleConfElement("message.urlError"), e);
+					utils.setErrorMessage(IkeyConfig.getBundleConfElement("message.urlError"), e);
 					e.printStackTrace();
 				} catch (java.io.IOException e) {
-					utils.setErrorMessage(Utils.getBundleConfElement("message.urlError"), e);
+					utils.setErrorMessage(IkeyConfig.getBundleConfElement("message.urlError"), e);
 					e.printStackTrace();
 				}
 				sddSaxParser = new SDDSaxParser(stringUrl, utils);
 				// construct header
 				header.append(System.getProperty("line.separator") + sddSaxParser.getDataset().getLabel()
-						+ ", " + Utils.getBundleConfOverridableElement("message.createdBy")
+						+ ", " + IkeyConfig.getBundleConfOverridableElement("message.createdBy")
 						+ System.getProperty("line.separator"));
 				header.append(System.getProperty("line.separator") + "Options:");
 				header.append(System.getProperty("line.separator") + "sddURL=" + stringUrl);
@@ -111,7 +111,7 @@ public class IdentificationKeyDOTGeneratorTest {
 				header.append(System.getProperty("line.separator") + "weightType=" + utils.getWeightType()
 						+ System.getProperty("line.separator"));
 			} catch (Throwable t) {
-				utils.setErrorMessage(Utils.getBundleConfElement("message.parsingError"), t);
+				utils.setErrorMessage(IkeyConfig.getBundleConfElement("message.parsingError"), t);
 				t.printStackTrace();
 			}
 
@@ -126,9 +126,9 @@ public class IdentificationKeyDOTGeneratorTest {
 				identificationKeyGenerator.createIdentificationKey();
 			} catch (Throwable t) {
 				if (t instanceof OutOfMemoryError) {
-					utils.setErrorMessage(Utils.getBundleConfElement("message.memoryError"), t);
+					utils.setErrorMessage(IkeyConfig.getBundleConfElement("message.memoryError"), t);
 				} else {
-					utils.setErrorMessage(Utils.getBundleConfElement("message.creatingKeyError"), t);
+					utils.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingKeyError"), t);
 				}
 				t.printStackTrace();
 			}
@@ -144,18 +144,18 @@ public class IdentificationKeyDOTGeneratorTest {
 
 			// create key file
 			try {
-				if (!utils.getVerbosity().contains(Utils.HEADER_TAG)) {
+				if (!utils.getVerbosity().contains(IkeyConfig.HEADER_TAG)) {
 					header.setLength(0);
 				}
 				SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 				resultFileName = SingleAccessKeyTreeDumper.dumpDotFile(header.toString(), tree2dump)
 						.getName();
 			} catch (IOException e) {
-				utils.setErrorMessage(Utils.getBundleConfElement("message.creatingFileError"), e);
+				utils.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingFileError"), e);
 				e.printStackTrace();
 			}
 		} catch (Throwable t) {
-			utils.setErrorMessage(Utils.getBundleConfElement("message.error"), t);
+			utils.setErrorMessage(IkeyConfig.getBundleConfElement("message.error"), t);
 			t.printStackTrace();
 		}
 
