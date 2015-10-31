@@ -34,7 +34,7 @@ conf.setWeightContext("CostEffectiveness");
 conf.setWeightType(Utils.GLOBAL_CHARACTER_WEIGHT);
 
 # initialize sdd parser
-SDDSaxParser sddSaxParser = new SDDSaxParser(InputSddFileStringUrl, conf);
+SDDSaxParser sddSaxParser = new SDDSaxParser(new File("inputFile.sdd"), conf);
 
 # initialize key generator
 IdentificationKeyGenerator identificationKeyGenerator = 

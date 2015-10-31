@@ -26,7 +26,7 @@ public class SDDSaxParser {
 	private DataSet dataset = null;
 
 	/**
-	 * constructor which executes the parse method
+	 * constructor which parses the content of the input file
 	 */
 	public SDDSaxParser(String uri, Utils utils) throws SAXException, IOException {
 		XMLReader saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
@@ -46,6 +46,9 @@ public class SDDSaxParser {
 		this.setDataset(handler.getDataSet());
 	}
 
+	/**
+	 * constructor which parses the content of the input file
+	 */
     public SDDSaxParser(File inputFile, Utils conf) throws SAXException, IOException {
         XMLReader saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
 
@@ -58,21 +61,10 @@ public class SDDSaxParser {
         this.setDataset(handler.getDataSet());
     }
 
-	/**
-	 * get the current dataset
-	 * 
-	 * @return DataSet, the current dataset
-	 */
 	public DataSet getDataset() {
 		return dataset;
 	}
 
-	/**
-	 * set the current dataset
-	 * 
-	 * @param DataSet
-	 *            , the current dataset
-	 */
 	public void setDataset(DataSet dataset) {
 		this.dataset = dataset;
 	}
