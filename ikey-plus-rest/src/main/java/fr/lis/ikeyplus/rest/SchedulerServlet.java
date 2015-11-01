@@ -22,50 +22,49 @@ import static org.quartz.TriggerBuilder.newTrigger;
 
 /**
  * this class schedules the deletion of old key files
- * 
+ *
  * @author Thomas burguiere
- * 
  */
 public class SchedulerServlet extends GenericServlet {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	public void init(ServletConfig servletConfig) throws ServletException {
-		super.init(servletConfig);
+    @Override
+    public void init(ServletConfig servletConfig) throws ServletException {
+        super.init(servletConfig);
 
-		try {
+        try {
 
-			String cronSchedule = getInitParameter("cronSchedule");
-			System.out.println(cronSchedule);
+            String cronSchedule = getInitParameter("cronSchedule");
+            System.out.println(cronSchedule);
 
-			// Get Servlet Context
-			ServletContext servletContext = getServletContext();
-			// Get Schedule Factory from servlet sontext
-			SchedulerFactory schedulerFactory = (SchedulerFactory) servletContext
-					.getAttribute(QuartzInitializerServlet.QUARTZ_FACTORY_KEY);
+            // Get Servlet Context
+            ServletContext servletContext = getServletContext();
+            // Get Schedule Factory from servlet sontext
+            SchedulerFactory schedulerFactory = (SchedulerFactory) servletContext
+                    .getAttribute(QuartzInitializerServlet.QUARTZ_FACTORY_KEY);
 
-			Scheduler scheduler = schedulerFactory.getScheduler();
+            Scheduler scheduler = schedulerFactory.getScheduler();
 
-			JobDetail job = newJob(Worker.class).withIdentity("deleteJob", "deleteGroup").build();
+            JobDetail job = newJob(Worker.class).withIdentity("deleteJob", "deleteGroup").build();
 
-			CronTrigger cronTrigger = newTrigger().withIdentity("cronTrigger", "triggerGroup")
-					.withSchedule(cronSchedule(cronSchedule)).startNow().build();
+            CronTrigger cronTrigger = newTrigger().withIdentity("cronTrigger", "triggerGroup")
+                    .withSchedule(cronSchedule(cronSchedule)).startNow().build();
 
-			scheduler.scheduleJob(job, cronTrigger);
+            scheduler.scheduleJob(job, cronTrigger);
 
-		} catch (SchedulerException e) {
-			e.printStackTrace();
+        } catch (SchedulerException e) {
+            e.printStackTrace();
 
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-	}
+    }
 
-	@Override
-	public void service(ServletRequest serveletRequest, ServletResponse servletResponse)
-			throws ServletException, IOException {
-	}
+    @Override
+    public void service(ServletRequest serveletRequest, ServletResponse servletResponse)
+            throws ServletException, IOException {
+    }
 
 }

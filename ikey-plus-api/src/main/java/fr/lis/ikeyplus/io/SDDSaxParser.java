@@ -16,39 +16,39 @@ import fr.lis.ikeyplus.utils.IkeyConfig;
 
 /**
  * This class starts the parsing of a SDD file
- * 
+ *
  * @author Florian Causse
  * @created 18-04-2011
  */
 public class SDDSaxParser {
 
-	// kwnoledge base (call dataset)
-	private DataSet dataset = null;
+    // kwnoledge base (call dataset)
+    private DataSet dataset = null;
 
-	/**
-	 * constructor which parses the content of the input file
-	 */
-	public SDDSaxParser(String uri, IkeyConfig utils) throws SAXException, IOException {
-		XMLReader saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
+    /**
+     * constructor which parses the content of the input file
+     */
+    public SDDSaxParser(String uri, IkeyConfig utils) throws SAXException, IOException {
+        XMLReader saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
 
-		SDDContentHandler handler = new SDDContentHandler(utils);
-		saxReader.setContentHandler(handler);
+        SDDContentHandler handler = new SDDContentHandler(utils);
+        saxReader.setContentHandler(handler);
 
-		InputSource is = null;
-		try {
-			URL url = new URL(uri);
-			is = new InputSource(url.openStream());
-		} catch (MalformedURLException e) {
-			is = new InputSource(new FileInputStream(new File(uri)));
-		}
+        InputSource is = null;
+        try {
+            URL url = new URL(uri);
+            is = new InputSource(url.openStream());
+        } catch (MalformedURLException e) {
+            is = new InputSource(new FileInputStream(new File(uri)));
+        }
 
-		saxReader.parse(is);
-		this.setDataset(handler.getDataSet());
-	}
+        saxReader.parse(is);
+        this.setDataset(handler.getDataSet());
+    }
 
-	/**
-	 * constructor which parses the content of the input file
-	 */
+    /**
+     * constructor which parses the content of the input file
+     */
     public SDDSaxParser(File inputFile, IkeyConfig conf) throws SAXException, IOException {
         XMLReader saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
 
@@ -61,12 +61,12 @@ public class SDDSaxParser {
         this.setDataset(handler.getDataSet());
     }
 
-	public DataSet getDataset() {
-		return dataset;
-	}
+    public DataSet getDataset() {
+        return dataset;
+    }
 
-	public void setDataset(DataSet dataset) {
-		this.dataset = dataset;
-	}
+    public void setDataset(DataSet dataset) {
+        this.dataset = dataset;
+    }
 
 }

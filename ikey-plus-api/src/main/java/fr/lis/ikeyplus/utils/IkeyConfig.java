@@ -14,492 +14,488 @@ import java.util.Set;
 
 /**
  * This class allow to manage all external functionalities : error massage, properties...
- * 
+ *
  * @author Florian Causse
  * @created 07-04-2011
- * 
  */
+
 /**
  * @author Utilisateur
- * 
  */
 public class IkeyConfig {
 
-	private String errorMessage = null;
-	private File errorMessageFile = null;
+    private String errorMessage = null;
+    private File errorMessageFile = null;
 
-	// static variable
-	public static final String UNKNOWN_DATA = "unknownData";
-	public static final List<String> ratings = new ArrayList<String>();
-	public static final List<String> ratingContext = new ArrayList<String>();
-	public static final String YES = "yes";
-	public static final String NO = "no";
-	public static final String HEADER_TAG = "h";
-	public static final String OTHER_TAG = "o";
-	public static final String WARNING_TAG = "w";
-	public static final String STATISTIC_TAG = "s";
-	public static final int DEFAULT_WEIGHT = 3;
+    // static variable
+    public static final String UNKNOWN_DATA = "unknownData";
+    public static final List<String> ratings = new ArrayList<String>();
+    public static final List<String> ratingContext = new ArrayList<String>();
+    public static final String YES = "yes";
+    public static final String NO = "no";
+    public static final String HEADER_TAG = "h";
+    public static final String OTHER_TAG = "o";
+    public static final String WARNING_TAG = "w";
+    public static final String STATISTIC_TAG = "s";
+    public static final int DEFAULT_WEIGHT = 3;
 
-	// properties file
-	public static ResourceBundle bundleConf = ResourceBundle.getBundle("fr.lis.ikeyplus.conf");
-	public static ResourceBundle bundleConfOverridable = ResourceBundle
-			.getBundle("fr.lis.ikeyplus.confOverridable");
+    // properties file
+    public static ResourceBundle bundleConf = ResourceBundle.getBundle("fr.lis.ikeyplus.conf");
+    public static ResourceBundle bundleConfOverridable = ResourceBundle
+            .getBundle("fr.lis.ikeyplus.confOverridable");
 
-	// buffer size
-	public static int BUFFER = 2048;
+    // buffer size
+    public static int BUFFER = 2048;
 
-	// file prefix
-	public static final String KEY = "key_";
-	public static final String ERROR = "error_";
+    // file prefix
+    public static final String KEY = "key_";
+    public static final String ERROR = "error_";
 
-	// specific file extension
-	public static final String GV = "gv";
+    // specific file extension
+    public static final String GV = "gv";
 
-	// options
-	private OutputFormat format = OutputFormat.TXT;
-	private KeyRepresentation representation = KeyRepresentation.FLAT;
-	private boolean fewStatesCharacterFirst = false;
-	private boolean mergeCharacterStatesIfSameDiscrimination = false;
-	private boolean pruning = false;
-	private String verbosity = "";
-	private ScoreMethod scoreMethod = ScoreMethod.XPER;
-	private WeightContext weightContext = null;
-	private WeightType weightType = WeightType.GLOBAL;
+    // options
+    private OutputFormat format = OutputFormat.TXT;
+    private KeyRepresentation representation = KeyRepresentation.FLAT;
+    private boolean fewStatesCharacterFirst = false;
+    private boolean mergeCharacterStatesIfSameDiscrimination = false;
+    private boolean pruning = false;
+    private String verbosity = "";
+    private ScoreMethod scoreMethod = ScoreMethod.XPER;
+    private WeightContext weightContext = null;
+    private WeightType weightType = WeightType.GLOBAL;
 
-	public enum ScoreMethod {
-		XPER("xper"),
-		JACCARD("jaccard"),
-		SOKAL_AND_MICHENER("sokalAndMichener");
+    public enum ScoreMethod {
+        XPER("xper"),
+        JACCARD("jaccard"),
+        SOKAL_AND_MICHENER("sokalAndMichener");
 
-		private final String method;
+        private final String method;
 
-		public String toString(){
-			return method;
-		}
+        public String toString() {
+            return method;
+        }
 
-		ScoreMethod(String method) {
-			this.method = method;
-		}
-		public static ScoreMethod fromString(String text) {
-			if (text != null) {
-				for (ScoreMethod entry : values()) {
-					if (entry.toString().equals(text)) {
-						return entry;
-					}
-				}
-			}
-			return null;
-		}
-	}
+        ScoreMethod(String method) {
+            this.method = method;
+        }
 
-	public enum KeyRepresentation {
-		TREE("tree"),
-		FLAT("flat");
+        public static ScoreMethod fromString(String text) {
+            if (text != null) {
+                for (ScoreMethod entry : values()) {
+                    if (entry.toString().equals(text)) {
+                        return entry;
+                    }
+                }
+            }
+            return null;
+        }
+    }
 
-		private final String representation;
+    public enum KeyRepresentation {
+        TREE("tree"),
+        FLAT("flat");
 
-		KeyRepresentation(String representation) {
-			this.representation = representation;
-		}
+        private final String representation;
 
-		public String toString(){
-			return representation;
-		}
+        KeyRepresentation(String representation) {
+            this.representation = representation;
+        }
 
-		public static KeyRepresentation fromString(String text) {
-			if (text != null) {
-				for (KeyRepresentation entry : values()) {
-					if (entry.toString().equals(text)) {
-						return entry;
-					}
-				}
-			}
-			return null;
-		}
-	}
+        public String toString() {
+            return representation;
+        }
 
-	public enum OutputFormat {
-		TXT("txt"),
-		HTML("html"),
-		INTERACTIVE_HTML("interactivehtml"),
-		PDF("pdf"),
-		SDD("sdd"),
-		WIKI("wiki"),
-		SPECIES_ID_WIKI_STATEMENT("speciesidwikistatement"),
-		SPECIES_ID_WIKI_QUESTION_ANSWER("speciesidwikiquestionanswer"),
-		DOT("dot"),
-		ZIP("zip");
+        public static KeyRepresentation fromString(String text) {
+            if (text != null) {
+                for (KeyRepresentation entry : values()) {
+                    if (entry.toString().equals(text)) {
+                        return entry;
+                    }
+                }
+            }
+            return null;
+        }
+    }
 
-		private final String format;
+    public enum OutputFormat {
+        TXT("txt"),
+        HTML("html"),
+        INTERACTIVE_HTML("interactivehtml"),
+        PDF("pdf"),
+        SDD("sdd"),
+        WIKI("wiki"),
+        SPECIES_ID_WIKI_STATEMENT("speciesidwikistatement"),
+        SPECIES_ID_WIKI_QUESTION_ANSWER("speciesidwikiquestionanswer"),
+        DOT("dot"),
+        ZIP("zip");
 
-		OutputFormat(String format) {
-			this.format = format;
-		}
+        private final String format;
 
-		public String toString() {
-			return format;
-		}
-		public static OutputFormat fromString(String text) {
-			if (text != null) {
-				for (OutputFormat entry : values()) {
-					if (entry.toString().equals(text)) {
-						return entry;
-					}
-				}
-			}
-			return null;
-		}
-	}
+        OutputFormat(String format) {
+            this.format = format;
+        }
 
-	public enum WeightType{
-		GLOBAL("global"),
-		CONTEXTUAL("contextual");
+        public String toString() {
+            return format;
+        }
 
-		private final String type;
+        public static OutputFormat fromString(String text) {
+            if (text != null) {
+                for (OutputFormat entry : values()) {
+                    if (entry.toString().equals(text)) {
+                        return entry;
+                    }
+                }
+            }
+            return null;
+        }
+    }
 
-		WeightType(String type) {
-			this.type = type;
-		}
+    public enum WeightType {
+        GLOBAL("global"),
+        CONTEXTUAL("contextual");
 
-		public String toString() {
-			return type;
-		}
-	}
+        private final String type;
 
-	public enum WeightContext {
-		OBSERVATION_CONVENIENCE("ObservationConvenience"),
-		AVAILABILITY("Availability"),
-		REPEATABILITY("Repeatability"),
-		COST_EFFECTIVENESS("CostEffectiveness"),
-		PHYLOGENETIC_WEIGHTING("PhylogeneticWeighting"),
-		REQUIRED_EXPERTISE("RequiredExpertise");
+        WeightType(String type) {
+            this.type = type;
+        }
 
-		private final String contextType;
+        public String toString() {
+            return type;
+        }
+    }
 
-		WeightContext(String contextType) {
-			this.contextType = contextType;
-		}
+    public enum WeightContext {
+        OBSERVATION_CONVENIENCE("ObservationConvenience"),
+        AVAILABILITY("Availability"),
+        REPEATABILITY("Repeatability"),
+        COST_EFFECTIVENESS("CostEffectiveness"),
+        PHYLOGENETIC_WEIGHTING("PhylogeneticWeighting"),
+        REQUIRED_EXPERTISE("RequiredExpertise");
 
-		public String toString() {
-			return contextType;
-		}
+        private final String contextType;
 
-		public static WeightContext fromString(String text) {
-			if (text != null) {
-				for (WeightContext entry : values()) {
-					if (entry.toString().equals(text)) {
-						return entry;
-					}
-				}
-			}
-			return null;
-		}
-	}
+        WeightContext(String contextType) {
+            this.contextType = contextType;
+        }
+
+        public String toString() {
+            return contextType;
+        }
+
+        public static WeightContext fromString(String text) {
+            if (text != null) {
+                for (WeightContext entry : values()) {
+                    if (entry.toString().equals(text)) {
+                        return entry;
+                    }
+                }
+            }
+            return null;
+        }
+    }
 
 
-	/**
-	 * Constructor
-	 */
-	public IkeyConfig() {
-		super();
-		// initialize the list of rating values
-		ratings.add("Rating1of5");
-		ratings.add("Rating2of5");
-		ratings.add("Rating3of5");
-		ratings.add("Rating4of5");
-		ratings.add("Rating5of5");
+    /**
+     * Constructor
+     */
+    public IkeyConfig() {
+        super();
+        // initialize the list of rating values
+        ratings.add("Rating1of5");
+        ratings.add("Rating2of5");
+        ratings.add("Rating3of5");
+        ratings.add("Rating4of5");
+        ratings.add("Rating5of5");
 
-		// initialize the list of rating contexts
-		ratingContext.add("ObservationConvenience");
-		ratingContext.add("Availability");
-		ratingContext.add("Repeatability");
-		ratingContext.add("CostEffectiveness");
-		ratingContext.add("PhylogeneticWeighting");
-		ratingContext.add("RequiredExpertise");
-	}
+        // initialize the list of rating contexts
+        ratingContext.add("ObservationConvenience");
+        ratingContext.add("Availability");
+        ratingContext.add("Repeatability");
+        ratingContext.add("CostEffectiveness");
+        ratingContext.add("PhylogeneticWeighting");
+        ratingContext.add("RequiredExpertise");
+    }
 
-	/**
-	 * Getter for configuration elements or messages
-	 *
-	 * @return String the element corresponding to the key
-	 */
-	public static String getBundleConfElement(String key) {
-		return IkeyConfig.bundleConf.getString(key);
-	}
+    /**
+     * Getter for configuration elements or messages
+     *
+     * @return String the element corresponding to the key
+     */
+    public static String getBundleConfElement(String key) {
+        return IkeyConfig.bundleConf.getString(key);
+    }
 
-	/**
-	 * Getter for overridable configuration elements or messages
-	 * 
-	 * @return String the element corresponding to the key
-	 */
-	public static String getBundleConfOverridableElement(String key) {
-		return IkeyConfig.bundleConfOverridable.getString(key);
-	}
+    /**
+     * Getter for overridable configuration elements or messages
+     *
+     * @return String the element corresponding to the key
+     */
+    public static String getBundleConfOverridableElement(String key) {
+        return IkeyConfig.bundleConfOverridable.getString(key);
+    }
 
-	/**
-	 * setter for configuration ResourceBundle
-	 * 
-	 * @param bundle
-	 */
-	public static void setBundleConf(ResourceBundle bundleConf) {
-		IkeyConfig.bundleConf = bundleConf;
-	}
+    /**
+     * setter for configuration ResourceBundle
+     *
+     * @param bundle
+     */
+    public static void setBundleConf(ResourceBundle bundleConf) {
+        IkeyConfig.bundleConf = bundleConf;
+    }
 
-	/**
-	 * setter for overridable configuration ResourceBundle
-	 * 
-	 * @param bundle
-	 */
-	public static void setBundleConfOverridable(ResourceBundle bundleConfOverridable) {
-		IkeyConfig.bundleConfOverridable = bundleConfOverridable;
-	}
+    /**
+     * setter for overridable configuration ResourceBundle
+     *
+     * @param bundle
+     */
+    public static void setBundleConfOverridable(ResourceBundle bundleConfOverridable) {
+        IkeyConfig.bundleConfOverridable = bundleConfOverridable;
+    }
 
-	/**
-	 * getter for the error message
-	 * 
-	 * @return String, the error file name
-	 */
-	public String getErrorMessage() {
-		return this.errorMessage;
-	}
+    /**
+     * getter for the error message
+     *
+     * @return String, the error file name
+     */
+    public String getErrorMessage() {
+        return this.errorMessage;
+    }
 
-	/**
-	 * setter for the error message
-	 * 
-	 * @param msg
-	 */
-	public void setErrorMessage(String msg) {
-		if (getErrorMessage() == null) {
-			errorMessage = msg;
-			setErrorMessageFile(createErrorFile());
-		}
-	}
+    /**
+     * setter for the error message
+     *
+     * @param msg
+     */
+    public void setErrorMessage(String msg) {
+        if (getErrorMessage() == null) {
+            errorMessage = msg;
+            setErrorMessageFile(createErrorFile());
+        }
+    }
 
-	/**
-	 * setter for the error message with Throwable object
-	 * 
-	 * @param msg
-	 *            , the readable message
-	 * @param t
-	 *            , the exception
-	 */
-	public void setErrorMessage(String msg, Throwable t) {
-		if (getErrorMessage() == null) {
-			errorMessage = msg + ": " + t.getMessage();
-			setErrorMessageFile(createErrorFile());
-		}
-	}
+    /**
+     * setter for the error message with Throwable object
+     *
+     * @param msg , the readable message
+     * @param t   , the exception
+     */
+    public void setErrorMessage(String msg, Throwable t) {
+        if (getErrorMessage() == null) {
+            errorMessage = msg + ": " + t.getMessage();
+            setErrorMessageFile(createErrorFile());
+        }
+    }
 
-	/**
-	 * getter for file message
-	 * 
-	 * @return File, the error file
-	 */
-	public File getErrorMessageFile() {
-		return this.errorMessageFile;
-	}
+    /**
+     * getter for file message
+     *
+     * @return File, the error file
+     */
+    public File getErrorMessageFile() {
+        return this.errorMessageFile;
+    }
 
-	/**
-	 * setter for file message
-	 * 
-	 * @param errorMessageFile
-	 *            , the error file
-	 */
-	public void setErrorMessageFile(File errorMessageFile) {
-		this.errorMessageFile = errorMessageFile;
-	}
+    /**
+     * setter for file message
+     *
+     * @param errorMessageFile , the error file
+     */
+    public void setErrorMessageFile(File errorMessageFile) {
+        this.errorMessageFile = errorMessageFile;
+    }
 
-	/**
-	 * method creating the error message
-	 * 
-	 * @return File, the error file
-	 */
-	public File createErrorFile() {
-		String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-				+ IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
+    /**
+     * method creating the error message
+     *
+     * @return File, the error file
+     */
+    public File createErrorFile() {
+        String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+                + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-		String lineReturn = System.getProperty("line.separator");
-		File erroFile = null;
-		try {
-			erroFile = File.createTempFile(IkeyConfig.ERROR, "." + OutputFormat.TXT, new File(path));
+        String lineReturn = System.getProperty("line.separator");
+        File erroFile = null;
+        try {
+            erroFile = File.createTempFile(IkeyConfig.ERROR, "." + OutputFormat.TXT, new File(path));
 
-			FileOutputStream fileOutputStream = new FileOutputStream(erroFile);
-			fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
-			BufferedWriter txtFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream,
-					"UTF-8"));
+            FileOutputStream fileOutputStream = new FileOutputStream(erroFile);
+            fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
+            BufferedWriter txtFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream,
+                    "UTF-8"));
 
-			txtFileWriter.append(this.errorMessage);
-			txtFileWriter.append(lineReturn + lineReturn + IkeyConfig.getBundleConfElement("message.webmaster")
-					+ IkeyConfig.getBundleConfOverridableElement("email.webmaster"));
-			txtFileWriter.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return erroFile;
-	}
+            txtFileWriter.append(this.errorMessage);
+            txtFileWriter.append(lineReturn + lineReturn + IkeyConfig.getBundleConfElement("message.webmaster")
+                    + IkeyConfig.getBundleConfOverridableElement("email.webmaster"));
+            txtFileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return erroFile;
+    }
 
-	/**
-	 * get the format of the generated key
-	 * 
-	 * @return String, the format
-	 */
-	public OutputFormat getFormat() {
-		return format;
-	}
+    /**
+     * get the format of the generated key
+     *
+     * @return String, the format
+     */
+    public OutputFormat getFormat() {
+        return format;
+    }
 
-	/**
-	 * 
-	 * set the format of the generated key
-	 * 
-	 * @param format
-	 */
-	public void setFormat(OutputFormat format) {
-		this.format = format;
-	}
+    /**
+     * set the format of the generated key
+     *
+     * @param format
+     */
+    public void setFormat(OutputFormat format) {
+        this.format = format;
+    }
 
-	/**
-	 * get the representation of the generated key
-	 * 
-	 * @return String, the representation
-	 */
-	public KeyRepresentation getRepresentation() {
-		return representation;
-	}
+    /**
+     * get the representation of the generated key
+     *
+     * @return String, the representation
+     */
+    public KeyRepresentation getRepresentation() {
+        return representation;
+    }
 
-	/**
-	 * set the representation of the generated key
-	 * 
-	 * @param representation
-	 */
-	public void setRepresentation(KeyRepresentation representation) {
-		this.representation = representation;
-	}
+    /**
+     * set the representation of the generated key
+     *
+     * @param representation
+     */
+    public void setRepresentation(KeyRepresentation representation) {
+        this.representation = representation;
+    }
 
-	/**
-	 * test if the fewStatesCharacterFirst option is active
-	 * 
-	 * @return true if fewStatesCharacterFirst is selected
-	 */
-	public boolean isFewStatesCharacterFirst() {
-		return fewStatesCharacterFirst;
-	}
+    /**
+     * test if the fewStatesCharacterFirst option is active
+     *
+     * @return true if fewStatesCharacterFirst is selected
+     */
+    public boolean isFewStatesCharacterFirst() {
+        return fewStatesCharacterFirst;
+    }
 
-	/**
-	 * set the fewStatesCharacterFirst option
-	 * 
-	 * @param fewStatesCharacterFirst
-	 */
-	public void setFewStatesCharacterFirst(boolean fewStatesCharacterFirst) {
-		this.fewStatesCharacterFirst = fewStatesCharacterFirst;
-	}
+    /**
+     * set the fewStatesCharacterFirst option
+     *
+     * @param fewStatesCharacterFirst
+     */
+    public void setFewStatesCharacterFirst(boolean fewStatesCharacterFirst) {
+        this.fewStatesCharacterFirst = fewStatesCharacterFirst;
+    }
 
-	/**
-	 * test if the mergeCharacterStatesIfSameDiscrimination option is active
-	 * 
-	 * @return true if mergeCharacterStatesIfSameDiscrimination is selected
-	 */
-	public boolean isMergeCharacterStatesIfSameDiscrimination() {
-		return mergeCharacterStatesIfSameDiscrimination;
-	}
+    /**
+     * test if the mergeCharacterStatesIfSameDiscrimination option is active
+     *
+     * @return true if mergeCharacterStatesIfSameDiscrimination is selected
+     */
+    public boolean isMergeCharacterStatesIfSameDiscrimination() {
+        return mergeCharacterStatesIfSameDiscrimination;
+    }
 
-	/**
-	 * set the mergeCharacterStatesIfSameDiscrimination option
-	 * 
-	 * @param mergeCharacterStatesIfSameDiscrimination
-	 */
-	public void setMergeCharacterStatesIfSameDiscrimination(boolean mergeCharacterStatesIfSameDiscrimination) {
-		this.mergeCharacterStatesIfSameDiscrimination = mergeCharacterStatesIfSameDiscrimination;
-	}
+    /**
+     * set the mergeCharacterStatesIfSameDiscrimination option
+     *
+     * @param mergeCharacterStatesIfSameDiscrimination
+     */
+    public void setMergeCharacterStatesIfSameDiscrimination(boolean mergeCharacterStatesIfSameDiscrimination) {
+        this.mergeCharacterStatesIfSameDiscrimination = mergeCharacterStatesIfSameDiscrimination;
+    }
 
-	/**
-	 * test if the pruning option is active
-	 * 
-	 * @return true if pruning is selected
-	 */
-	public boolean isPruning() {
-		return pruning;
-	}
+    /**
+     * test if the pruning option is active
+     *
+     * @return true if pruning is selected
+     */
+    public boolean isPruning() {
+        return pruning;
+    }
 
-	/**
-	 * set the pruning option
-	 * 
-	 * @param pruning
-	 */
-	public void setPruning(boolean pruning) {
-		this.pruning = pruning;
-	}
+    /**
+     * set the pruning option
+     *
+     * @param pruning
+     */
+    public void setPruning(boolean pruning) {
+        this.pruning = pruning;
+    }
 
-	/**
-	 * get the verbosity value
-	 * 
-	 * @return String, the verbosity string
-	 */
-	public String getVerbosity() {
-		return verbosity;
-	}
+    /**
+     * get the verbosity value
+     *
+     * @return String, the verbosity string
+     */
+    public String getVerbosity() {
+        return verbosity;
+    }
 
-	/**
-	 * set the verbosity value
-	 * 
-	 * @param verbosity
-	 */
-	public void setVerbosity(String verbosity) {
-		this.verbosity = verbosity;
-	}
+    /**
+     * set the verbosity value
+     *
+     * @param verbosity
+     */
+    public void setVerbosity(String verbosity) {
+        this.verbosity = verbosity;
+    }
 
-	/**
-	 * get the method method
-	 * 
-	 * @return String, the method method selected
-	 */
-	public ScoreMethod getScoreMethod() {
-		return scoreMethod;
-	}
+    /**
+     * get the method method
+     *
+     * @return String, the method method selected
+     */
+    public ScoreMethod getScoreMethod() {
+        return scoreMethod;
+    }
 
-	/**
-	 * set the method method
-	 * 
-	 * @param scoreMethod
-	 */
-	public void setScoreMethod(ScoreMethod scoreMethod) {
-		this.scoreMethod = scoreMethod;
-	}
+    /**
+     * set the method method
+     *
+     * @param scoreMethod
+     */
+    public void setScoreMethod(ScoreMethod scoreMethod) {
+        this.scoreMethod = scoreMethod;
+    }
 
-	/**
-	 * get the weight context
-	 * 
-	 * @return String, the weight context
-	 */
-	public WeightContext getWeightContext() {
-		return weightContext;
-	}
+    /**
+     * get the weight context
+     *
+     * @return String, the weight context
+     */
+    public WeightContext getWeightContext() {
+        return weightContext;
+    }
 
-	/**
-	 * set the weight context
-	 * 
-	 * @param weightContext
-	 *            , the weight context
-	 */
-	public void setWeightContext(WeightContext weightContext) {
-		this.weightContext = weightContext;
-	}
+    /**
+     * set the weight context
+     *
+     * @param weightContext , the weight context
+     */
+    public void setWeightContext(WeightContext weightContext) {
+        this.weightContext = weightContext;
+    }
 
-	/**
-	 * get the weight type
-	 * 
-	 * @return String, the weight type
-	 */
-	public WeightType getWeightType() {
-		return weightType;
-	}
+    /**
+     * get the weight type
+     *
+     * @return String, the weight type
+     */
+    public WeightType getWeightType() {
+        return weightType;
+    }
 
-	/**
-	 * set the weight type
-	 * 
-	 * @param weightType
-	 */
-	public void setWeightType(WeightType weightType) {
-		this.weightType = weightType;
-	}
+    /**
+     * set the weight type
+     *
+     * @param weightType
+     */
+    public void setWeightType(WeightType weightType) {
+        this.weightType = weightType;
+    }
 
 }

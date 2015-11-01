@@ -29,10 +29,8 @@ public class IkeyUtils {
      * This method returns a list containing the elements of a primary list that do not appear in a list of
      * excluded elements
      *
-     * @param primaryList
-     *            , the list which elements are to be retained
-     * @param excludedList
-     *            , the list which elements shall not remain in the final list
+     * @param primaryList  , the list which elements are to be retained
+     * @param excludedList , the list which elements shall not remain in the final list
      * @return List<?>
      */
     public static List<?> exclusion(List<?> primaryList, List<?> excludedList) {
@@ -61,11 +59,9 @@ public class IkeyUtils {
     /**
      * This method round a float value
      *
-     * @param floatToRound
-     *            the float number that will be rounded
-     * @param roundFactor
-     *            the power of 10 used to round the float, e.g. if roundFactor = 3, the float number will be
-     *            rounded with 10^3 as a multiplier
+     * @param floatToRound the float number that will be rounded
+     * @param roundFactor  the power of 10 used to round the float, e.g. if roundFactor = 3, the float number will be
+     *                     rounded with 10^3 as a multiplier
      * @return float, the rounded value
      */
     public static float roundFloat(float floatToRound, int roundFactor) {
@@ -81,11 +77,9 @@ public class IkeyUtils {
     /**
      * This method round a double value
      *
-     * @param score
-     *            the double number that will be rounded
-     * @param roundFactor
-     *            the power of 10 used to round the float, e.g. if roundFactor = 3, the float number will be
-     *            rounded with 10^3 as a multiplier
+     * @param score       the double number that will be rounded
+     * @param roundFactor the power of 10 used to round the float, e.g. if roundFactor = 3, the float number will be
+     *                    rounded with 10^3 as a multiplier
      * @return double, the rounded value
      */
     public static double roundDouble(double score, int roundFactor) {
@@ -101,8 +95,7 @@ public class IkeyUtils {
     /**
      * This method delete accent containing in a string
      *
-     * @param String
-     *            , the string candidate to delete accents
+     * @param String , the string candidate to delete accents
      * @return String, the string without accents
      */
     public static String unAccent(String s) {
