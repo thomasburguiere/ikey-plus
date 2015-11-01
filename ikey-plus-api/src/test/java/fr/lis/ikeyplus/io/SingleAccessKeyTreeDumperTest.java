@@ -3,6 +3,7 @@ package fr.lis.ikeyplus.IO;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 import fr.lis.ikeyplus.services.IdentificationKeyGenerator;
 import fr.lis.ikeyplus.utils.IkeyConfig;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
@@ -16,14 +17,11 @@ import static junit.framework.Assert.assertEquals;
 
 public class SingleAccessKeyTreeDumperTest {
 
-
     @Test
     public void should_generate_cichorieae_flat_html_key() throws Exception {
         String stringUrl = "src/test/resources/inputFiles/cichorieae.sdd.xml";
 
         IkeyConfig config = IkeyConfig.builder().pruning().verbosity(IkeyConfig.VerbosityLevel.HEADER).build();
-
-        setup();
 
         SDDSaxParser sddSaxParser;
         try {
@@ -56,7 +54,8 @@ public class SingleAccessKeyTreeDumperTest {
         }
     }
 
-    private void setup() {
+    @BeforeClass
+    public static void setup() {
         IkeyConfig.setBundleConfOverridable(ResourceBundle.getBundle("confTest"));
         IkeyConfig.setBundleConf(ResourceBundle.getBundle("confTest"));
 
