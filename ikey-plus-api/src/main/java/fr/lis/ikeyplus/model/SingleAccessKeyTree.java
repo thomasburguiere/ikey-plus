@@ -86,9 +86,11 @@ public class SingleAccessKeyTree {
         }
         firstNumbering++;
         secondNumbering = 0;
-        for (SingleAccessKeyNode childNode : node.getChildren()) {
-            secondNumbering++;
-            recursiveToString(childNode, output, tabulations, firstNumbering, secondNumbering);
+        if (node != null) {
+            for (SingleAccessKeyNode childNode : node.getChildren()) {
+                secondNumbering++;
+                recursiveToString(childNode, output, tabulations, firstNumbering, secondNumbering);
+            }
         }
     }
 
@@ -123,20 +125,23 @@ public class SingleAccessKeyTree {
      * taxon present in a terminal node
      */
     private void recursiveTaxonPathStatistics(SingleAccessKeyNode node, int treeDepth) {
-        if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
-            if (node.hasChild() == false) {
-                if (node.getCharacter().isSupportsCategoricalData()
-                        && !((State) node.getCharacterState()).getName().equals(
-                        IkeyConfig.getBundleConfElement("message.notDescribed"))) {
-                    for (Taxon t : node.getRemainingTaxa()) {
-                        t.updatePathStatistics(new Float(treeDepth));
+
+        if (node != null) {
+            if (node.getCharacter() != null && node.getCharacterState() != null) {
+                if (!node.hasChild()) {
+                    if (node.getCharacter().isSupportsCategoricalData()
+                            && !((State) node.getCharacterState()).getName().equals(
+                            IkeyConfig.getBundleConfElement("message.notDescribed"))) {
+                        for (Taxon t : node.getRemainingTaxa()) {
+                            t.updatePathStatistics((float) treeDepth);
+                        }
                     }
                 }
+                treeDepth++;
             }
-            treeDepth++;
-        }
-        for (SingleAccessKeyNode childNode : node.getChildren()) {
-            recursiveTaxonPathStatistics(childNode, treeDepth);
+            for (SingleAccessKeyNode childNode : node.getChildren()) {
+                recursiveTaxonPathStatistics(childNode, treeDepth);
+            }
         }
     }
 }

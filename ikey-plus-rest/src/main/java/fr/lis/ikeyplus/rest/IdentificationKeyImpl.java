@@ -228,7 +228,7 @@ public class IdentificationKeyImpl {
                         resultFile = SingleAccessKeyTreeDumper.dumpSddFile(tree2dump);
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.ZIP) {
                         resultFile = SingleAccessKeyTreeDumper.dumpZipFile(header.toString(), tree2dump,
-                                config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), null);
+                                config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolder);
                     } else {
                         if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
                             resultFile = SingleAccessKeyTreeDumper.dumpFlatTxtFile(header.toString(),
@@ -243,7 +243,9 @@ public class IdentificationKeyImpl {
                     config.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingFileError"));
                 }
                 // initiate the result file name
-                resultFileName = resultFile.getName();
+                if (resultFile != null) {
+                    resultFileName = resultFile.getName();
+                }
 
             } else {
                 config.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingKeyError"));

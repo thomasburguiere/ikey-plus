@@ -174,8 +174,8 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 // / child node treatment
 
-                if (nodeChildParentNumberingMap.get(new Integer(counter)) != currentParentNumber) {
-                    currentParentNumber = nodeChildParentNumberingMap.get(new Integer(counter));
+                if (nodeChildParentNumberingMap.get(Integer.valueOf(counter)) != currentParentNumber) {
+                    currentParentNumber = nodeChildParentNumberingMap.get(Integer.valueOf(counter));
                 }
 
                 if (counter == 2) {// first child node of the root node
@@ -194,7 +194,7 @@ public abstract class SingleAccessKeyTreeDumper {
                 }
 
                 // other child nodes of the root node
-                if (rootNodeChildrenIntegerList.contains(new Integer(counter))) {
+                if (rootNodeChildrenIntegerList.contains(Integer.valueOf(counter))) {
                     if (child.hasChild()) {
                         output.append("<Lead id=\"lead").append(counter - 1).append("\">").append(lineSeparator);
                         output.append("<Statement>").append(child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
@@ -377,9 +377,11 @@ public abstract class SingleAccessKeyTreeDumper {
         }
         firstNumbering++;
         secondNumbering = 0;
-        for (SingleAccessKeyNode childNode : node.getChildren()) {
-            secondNumbering++;
-            recursiveToString(childNode, output, tabulations, firstNumbering, secondNumbering, tree2dump);
+        if (node != null) {
+            for (SingleAccessKeyNode childNode : node.getChildren()) {
+                secondNumbering++;
+                recursiveToString(childNode, output, tabulations, firstNumbering, secondNumbering, tree2dump);
+            }
         }
     }
 
@@ -740,23 +742,25 @@ public abstract class SingleAccessKeyTreeDumper {
         firstNumbering++;
         secondNumbering = 0;
         boolean firstLoop = true;
-        for (SingleAccessKeyNode childNode : node.getChildren()) {
-            secondNumbering++;
-            if (firstLoop) {
-                recursiveToHTMLString(childNode, node, output, tabulations, true, firstNumbering,
-                        secondNumbering, tree2dump);
-            } else {
-                recursiveToHTMLString(childNode, node, output, tabulations, false, firstNumbering,
-                        secondNumbering, tree2dump);
+        if (node != null) {
+            for (SingleAccessKeyNode childNode : node.getChildren()) {
+                secondNumbering++;
+                if (firstLoop) {
+                    recursiveToHTMLString(childNode, node, output, tabulations, true, firstNumbering,
+                            secondNumbering, tree2dump);
+                } else {
+                    recursiveToHTMLString(childNode, node, output, tabulations, false, firstNumbering,
+                            secondNumbering, tree2dump);
+                }
+                firstLoop = false;
             }
-            firstLoop = false;
-        }
-        if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
+            if (node.getCharacter() != null && node.getCharacterState() != null) {
 
-            if (node.hasChild())
-                output.append(tabulations).append("</li></ul>\n");
-            else
-                output.append(tabulations).append("</li>\n");
+                if (node.hasChild())
+                    output.append(tabulations).append("</li></ul>\n");
+                else
+                    output.append(tabulations).append("</li>\n");
+            }
         }
     }
 
@@ -1325,17 +1329,19 @@ public abstract class SingleAccessKeyTreeDumper {
         }
         firstNumbering++;
         secondNumbering = 0;
-        for (SingleAccessKeyNode childNode : node.getChildren()) {
-            secondNumbering++;
-            recursiveToHTMLStringForPdf(childNode, output, tabulations, firstNumbering, secondNumbering,
-                    tree2dump);
-        }
-        if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
+        if (node != null) {
+            for (SingleAccessKeyNode childNode : node.getChildren()) {
+                secondNumbering++;
+                recursiveToHTMLStringForPdf(childNode, output, tabulations, firstNumbering, secondNumbering,
+                        tree2dump);
+            }
+            if (node.getCharacter() != null && node.getCharacterState() != null) {
 
-            if (node.hasChild())
-                output.append(tabulations).append("</span></li></ul>\n");
-            else
-                output.append(tabulations).append("</span></li>\n");
+                if (node.hasChild())
+                    output.append(tabulations).append("</span></li></ul>\n");
+                else
+                    output.append(tabulations).append("</span></li>\n");
+            }
         }
     }
 
@@ -1545,9 +1551,11 @@ public abstract class SingleAccessKeyTreeDumper {
         }
         firstNumbering++;
         secondNumbering = 0;
-        for (SingleAccessKeyNode childNode : node.getChildren()) {
-            secondNumbering++;
-            recursiveToWiki(childNode, output, tabulations, firstNumbering, secondNumbering, tree2dump);
+        if (node != null) {
+            for (SingleAccessKeyNode childNode : node.getChildren()) {
+                secondNumbering++;
+                recursiveToWiki(childNode, output, tabulations, firstNumbering, secondNumbering, tree2dump);
+            }
         }
     }
 
