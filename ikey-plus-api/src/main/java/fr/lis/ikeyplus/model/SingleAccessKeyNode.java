@@ -123,16 +123,16 @@ public class SingleAccessKeyNode {
      */
     public String getStatesToString(String separator) {
 
-        String result = "";
+        StringBuilder result = new StringBuilder("");
         if (this.getCharacterState() instanceof State) {
-            result = ((State) this.getCharacterState()).getName();
+            result.append(((State) this.getCharacterState()).getName());
             for (Object state : this.getOtherCharacterStates()) {
                 if (state instanceof State) {
-                    result = result + separator + ((State) state).getName();
+                    result.append(separator + ((State) state).getName());
                 }
             }
         }
-        return result;
+        return result.toString();
     }
 
     /**

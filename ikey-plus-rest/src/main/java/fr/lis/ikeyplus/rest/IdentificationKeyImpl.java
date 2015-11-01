@@ -111,7 +111,7 @@ public class IdentificationKeyImpl {
                     // open URL (HTTP query)
                     urlConnection = fileURL.openConnection();
                     // Open data stream
-                    httpStream = urlConnection.getInputStream();
+                    urlConnection.getInputStream();
                 } catch (java.net.MalformedURLException e) {
                     e.printStackTrace();
                     config.setErrorMessage(IkeyConfig.getBundleConfElement("message.urlError"), e);
@@ -219,7 +219,7 @@ public class IdentificationKeyImpl {
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.DOT) {
                         resultFile = SingleAccessKeyTreeDumper.dumpDotFile(header.toString(), tree2dump);
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.SDD) {
-                        resultFile = SingleAccessKeyTreeDumper.dumpSddFile(header.toString(), tree2dump);
+                        resultFile = SingleAccessKeyTreeDumper.dumpSddFile(tree2dump);
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.ZIP) {
                         resultFile = SingleAccessKeyTreeDumper.dumpZipFile(header.toString(), tree2dump,
                                 config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTIC));

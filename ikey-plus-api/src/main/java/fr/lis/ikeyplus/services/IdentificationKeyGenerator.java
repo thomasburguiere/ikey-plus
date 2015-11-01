@@ -101,10 +101,10 @@ public class IdentificationKeyGenerator {
 
             // delete characters if score method is not Xper and score = 0
             if (config.getScoreMethod() != IkeyConfig.ScoreMethod.XPER) {
-                for (ICharacter character : charactersScore.keySet()) {
-                    if (charactersScore.get(character) <= 0) {
-                        remainingCharacters.removeAll(character.getAllChildren());
-                        remainingCharacters.remove(character);
+                for (Map.Entry<ICharacter, Float> entry : charactersScore.entrySet()) {
+                    if (entry.getValue() <= 0) {
+                        remainingCharacters.removeAll(entry.getKey().getAllChildren());
+                        remainingCharacters.remove(entry.getKey());
                     }
                 }
             }
@@ -415,15 +415,7 @@ public class IdentificationKeyGenerator {
         Collections.sort(allValues, new Comparator<Double>() {
             @Override
             public int compare(Double val1, Double val2) {
-                final int result;
-                if (val1 > val2) {
-                    result = 1;
-                } else if (val1 < val2) {
-                    result = -1;
-                } else {
-                    result = 0;
-                }
-                return result;
+                return Double.compare(val1, val2);
             }
         });
         // determine the best threshold to cut the interval in 2 part

@@ -1,6 +1,7 @@
 package fr.lis.ikeyplus.utils;
 
 import com.google.common.collect.Sets;
+import com.google.common.io.Closeables;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -33,12 +34,12 @@ public class IkeyConfig {
     public static final WeightValue DEFAULT_WEIGHT = WeightValue.THREE;
 
     // properties file
-    public static ResourceBundle bundleConf = ResourceBundle.getBundle("fr.lis.ikeyplus.conf");
-    public static ResourceBundle bundleConfOverridable = ResourceBundle
+    private static ResourceBundle bundleConf = ResourceBundle.getBundle("fr.lis.ikeyplus.conf");
+    private static ResourceBundle bundleConfOverridable = ResourceBundle
             .getBundle("fr.lis.ikeyplus.confOverridable");
 
     // buffer size
-    public static int BUFFER = 2048;
+    public static final int BUFFER = 2048;
 
     // file prefix
     public static final String KEY = "key_";
@@ -63,7 +64,7 @@ public class IkeyConfig {
 
         private final String flag;
 
-        public String toString(){
+        public String toString() {
             return flag;
         }
 
@@ -354,26 +355,34 @@ public class IkeyConfig {
      *
      * @return File, the error file
      */
-    public File createErrorFile() {
+    public File createErrorFile()  {
         String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
         String lineReturn = System.getProperty("line.separator");
         File erroFile = null;
+        FileOutputStream fileOutputStream = null;
         try {
             erroFile = File.createTempFile(IkeyConfig.ERROR, "." + OutputFormat.TXT, new File(path));
 
-            FileOutputStream fileOutputStream = new FileOutputStream(erroFile);
+            fileOutputStream = new FileOutputStream(erroFile);
             fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
             BufferedWriter txtFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream,
                     "UTF-8"));
 
             txtFileWriter.append(this.errorMessage);
-            txtFileWriter.append(lineReturn + lineReturn + IkeyConfig.getBundleConfElement("message.webmaster")
-                    + IkeyConfig.getBundleConfOverridableElement("email.webmaster"));
+            txtFileWriter.append(lineReturn)
+                            .append(lineReturn)
+                            .append(IkeyConfig.getBundleConfElement("message.webmaster"))
+                            .append(IkeyConfig.getBundleConfOverridableElement("email.webmaster"));
             txtFileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                Closeables.close(fileOutputStream,true);
+            } catch (IOException ignored) {
+            }
         }
         return erroFile;
     }

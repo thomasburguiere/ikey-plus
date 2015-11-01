@@ -155,7 +155,7 @@ public class IdentificationKeySDDGeneratorTest {
                     header.setLength(0);
                 }
                 SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
-                resultFileName = SingleAccessKeyTreeDumper.dumpSddFile(header.toString(), tree2dump)
+                resultFileName = SingleAccessKeyTreeDumper.dumpSddFile(tree2dump)
                         .getName();
             } catch (IOException e) {
                 utils.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingFileError"), e);
