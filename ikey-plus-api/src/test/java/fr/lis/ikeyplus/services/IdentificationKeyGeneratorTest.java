@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import fr.lis.ikeyplus.IO.SDDSaxParser;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 import fr.lis.ikeyplus.utils.IkeyConfig;
+import fr.lis.ikeyplus.utils.IkeyUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.xml.sax.SAXException;
@@ -23,12 +24,11 @@ public class IdentificationKeyGeneratorTest {
     @Test
     public void should_generate_genetta_identification_key_with_default_options() throws Exception {
         String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
-        IkeyConfig config = new IkeyConfig();
-        // options
-        config.setFewStatesCharacterFirst(false);
-        config.setMergeCharacterStatesIfSameDiscrimination(false);
-        config.setPruning(true);
-        config.setVerbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTIC));
+
+        IkeyConfig config  = IkeyConfig.builder()
+            .pruning()
+            .verbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTIC))
+        .build();
 
         // define time before parsing SDD file
         long beforeTime = System.currentTimeMillis();
@@ -64,13 +64,12 @@ public class IdentificationKeyGeneratorTest {
     @Test
     public void should_generate_genetta_identification_key_with_weights_options() throws Exception {
         String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
-        IkeyConfig config = new IkeyConfig();
-        // options
-        config.setFewStatesCharacterFirst(false);
-        config.setMergeCharacterStatesIfSameDiscrimination(false);
-        config.setPruning(true);
-        config.setVerbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTIC));
-        config.setWeightContext(IkeyConfig.WeightContext.OBSERVATION_CONVENIENCE);
+
+        IkeyConfig config = IkeyConfig.builder()
+            .pruning()
+            .verbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTIC))
+            .weightContext(IkeyConfig.WeightContext.OBSERVATION_CONVENIENCE)
+        .build();
 
         SDDSaxParser sddSaxParser;
         try {
@@ -103,12 +102,11 @@ public class IdentificationKeyGeneratorTest {
     @Test
     public void should_generate_cichorieae_identification_key_with_default_options() throws Exception {
         String stringUrl = "src/test/resources/inputFiles/cichorieae.sdd.xml";
-        IkeyConfig config = new IkeyConfig();
-        // options
-        config.setFewStatesCharacterFirst(false);
-        config.setMergeCharacterStatesIfSameDiscrimination(false);
-        config.setPruning(true);
-        config.setVerbosity(Sets.newHashSet(HEADER, WARNING, STATISTIC));
+
+        IkeyConfig config = IkeyConfig.builder()
+            .pruning()
+            .verbosity(Sets.newHashSet(HEADER, WARNING, STATISTIC))
+        .build();
 
         SDDSaxParser sddSaxParser;
         try {

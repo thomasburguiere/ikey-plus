@@ -19,14 +19,10 @@ public class SingleAccessKeyTreeDumperTest extends TestCase {
 
 
     @Test
-    public void testDumpFlatHtmlFile() throws Exception {
+    public void should_generate_cichorieae_flat_html_key() throws Exception {
         String stringUrl = "src/test/resources/inputFiles/cichorieae.sdd.xml";
-        IkeyConfig config = new IkeyConfig();
-        // options
-        config.setFewStatesCharacterFirst(false);
-        config.setMergeCharacterStatesIfSameDiscrimination(false);
-        config.setVerbosity(Sets.newHashSet(IkeyConfig.VerbosityLevel.HEADER));
-        config.setPruning(true);
+
+        IkeyConfig config = IkeyConfig.builder().pruning().verbosity(IkeyConfig.VerbosityLevel.HEADER).build();
 
         setup();
 

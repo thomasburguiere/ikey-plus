@@ -107,7 +107,7 @@ public class IkeyUtils {
     /**
      * This method delete accent containing in a string
      *
-     * @param String , the string candidate to delete accents
+     * @param s , the string candidate to delete accents
      * @return String, the string without accents
      */
     public static String unAccent(String s) {

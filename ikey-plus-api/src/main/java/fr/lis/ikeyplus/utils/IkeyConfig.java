@@ -1,5 +1,6 @@
 package fr.lis.ikeyplus.utils;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
 
@@ -34,6 +35,109 @@ public class IkeyConfig {
     private ScoreMethod scoreMethod = ScoreMethod.XPER;
     private WeightContext weightContext = WeightContext.NO_WEIGHT;
     private WeightType weightType = WeightType.GLOBAL;
+
+    private IkeyConfig() {}
+
+    private IkeyConfig(OutputFormat format,
+                       KeyRepresentation representation,
+                       boolean fewStatesCharacterFirst,
+                       boolean mergeCharacterStatesIfSameDiscrimination,
+                       boolean pruning,
+                       Set<VerbosityLevel> verbosity,
+                       ScoreMethod scoreMethod,
+                       WeightContext weightContext,
+                       WeightType weightType) {
+
+        this.format = format;
+        this.representation = representation;
+        this.fewStatesCharacterFirst = fewStatesCharacterFirst;
+        this.mergeCharacterStatesIfSameDiscrimination = mergeCharacterStatesIfSameDiscrimination;
+        this.pruning = pruning;
+        this.verbosity = verbosity;
+        this.scoreMethod = scoreMethod;
+        this.weightContext = weightContext;
+        this.weightType = weightType;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private OutputFormat format = OutputFormat.TXT;
+        private KeyRepresentation representation = KeyRepresentation.TREE;
+        private boolean fewStatesCharacterFirst = false;
+        private boolean mergeCharacterStatesIfSameDiscrimination = false;
+        private boolean pruning = false;
+        private Set<VerbosityLevel> verbosity = Sets.newHashSet();
+        private ScoreMethod scoreMethod = ScoreMethod.XPER;
+        private WeightContext weightContext = WeightContext.NO_WEIGHT;
+        private WeightType weightType = WeightType.GLOBAL;
+
+        public Builder format(OutputFormat format) {
+            this.format = format;
+            return this;
+        }
+
+        public Builder representation(KeyRepresentation representation) {
+            this.representation = representation;
+            return this;
+        }
+
+        public Builder fewStatesCharacterFirst() {
+            this.fewStatesCharacterFirst = true;
+            return this;
+        }
+
+        public Builder mergeCharacterStatesIfSameDiscrimination(){
+            this.mergeCharacterStatesIfSameDiscrimination = true;
+            return this;
+        }
+
+        public Builder pruning(){
+            this.pruning = true;
+            return this;
+        }
+
+        public Builder scoreMethod(ScoreMethod scoreMethod) {
+            this.scoreMethod = scoreMethod;
+            return this;
+        }
+
+        public Builder weightContext(WeightContext weightContext) {
+            this.weightContext = weightContext;
+            return this;
+        }
+
+        public Builder weightType(WeightType weightType) {
+            this.weightType = weightType;
+            return this;
+        }
+
+        public Builder verbosity(VerbosityLevel verbosityLevel){
+            this.verbosity.add(verbosityLevel);
+            return this;
+        }
+
+        public Builder verbosity(Set<VerbosityLevel> verbosityLevels){
+            this.verbosity.addAll(verbosityLevels);
+            return this;
+        }
+
+        public IkeyConfig build() {
+            return new IkeyConfig(
+                    this.format,
+                    this.representation,
+                    this.fewStatesCharacterFirst,
+                    this.mergeCharacterStatesIfSameDiscrimination,
+                    this.pruning,
+                    ImmutableSet.copyOf(this.verbosity),
+                    this.scoreMethod,
+                    this.weightContext,
+                    this.weightType);
+        }
+    }
+
 
     public enum VerbosityLevel {
         HEADER("h"), OTHER("o"), WARNING("w"), STATISTIC("s");
@@ -231,9 +335,6 @@ public class IkeyConfig {
     }
 
 
-    private IkeyConfig() {
-
-    }
 
     public static String getBundleConfElement(String key) {
         return IkeyConfig.bundleConf.getString(key);
@@ -313,72 +414,39 @@ public class IkeyConfig {
         return format;
     }
 
-    public void setFormat(OutputFormat format) {
-        this.format = format;
-    }
 
     public KeyRepresentation getRepresentation() {
         return representation;
     }
 
-    public void setRepresentation(KeyRepresentation representation) {
-        this.representation = representation;
-    }
 
     public boolean isFewStatesCharacterFirst() {
         return fewStatesCharacterFirst;
-    }
-
-    public void setFewStatesCharacterFirst(boolean fewStatesCharacterFirst) {
-        this.fewStatesCharacterFirst = fewStatesCharacterFirst;
     }
 
     public boolean isMergeCharacterStatesIfSameDiscrimination() {
         return mergeCharacterStatesIfSameDiscrimination;
     }
 
-    public void setMergeCharacterStatesIfSameDiscrimination(boolean mergeCharacterStatesIfSameDiscrimination) {
-        this.mergeCharacterStatesIfSameDiscrimination = mergeCharacterStatesIfSameDiscrimination;
-    }
-
     public boolean isPruning() {
         return pruning;
-    }
-
-    public void setPruning(boolean pruning) {
-        this.pruning = pruning;
     }
 
     public Set<VerbosityLevel> getVerbosity() {
         return verbosity;
     }
 
-    public void setVerbosity(Set<VerbosityLevel> verbosity) {
-        this.verbosity = verbosity;
-    }
-
     public ScoreMethod getScoreMethod() {
         return scoreMethod;
     }
 
-    public void setScoreMethod(ScoreMethod scoreMethod) {
-        this.scoreMethod = scoreMethod;
-    }
 
     public WeightContext getWeightContext() {
         return weightContext;
     }
 
-    public void setWeightContext(WeightContext weightContext) {
-        this.weightContext = weightContext;
-    }
-
     public WeightType getWeightType() {
         return weightType;
-    }
-
-    public void setWeightType(WeightType weightType) {
-        this.weightType = weightType;
     }
 
 }

@@ -40,7 +40,7 @@ public class IdentificationKeyImpl {
             @FormParam("weightType") String weightType) {
 
         // creation of IkeyConfig object (containing options)
-        IkeyConfig config = new IkeyConfig();
+        IkeyConfig config;
         // String containing the name of the result file
         String resultFileName = null;
         // String containing the URL of the result file
@@ -50,43 +50,45 @@ public class IdentificationKeyImpl {
         try {
 
             // define header string
-            StringBuffer header = new StringBuffer();
+            StringBuilder header = new StringBuilder();
 
+            IkeyConfig.Builder configBuilder = IkeyConfig.builder();
             // options initialization
             if (format != null && IkeyConfig.OutputFormat.fromString(format) != null) {
-                config.setFormat(IkeyConfig.OutputFormat.fromString(format));
+                configBuilder.format(IkeyConfig.OutputFormat.fromString(format));
             } else {
-                config.setFormat(IkeyConfig.OutputFormat.TXT);
+                configBuilder.format(IkeyConfig.OutputFormat.TXT);
             }
 
             if (representation != null && IkeyConfig.KeyRepresentation.fromString(representation) != null) {
-                config.setRepresentation(IkeyConfig.KeyRepresentation.fromString(representation));
+                configBuilder.representation(IkeyConfig.KeyRepresentation.fromString(representation));
             } else {
-                config.setRepresentation(IkeyConfig.KeyRepresentation.FLAT);
+                configBuilder.representation(IkeyConfig.KeyRepresentation.FLAT);
             }
             if (fewStatesCharacterFirst != null && fewStatesCharacterFirst.equalsIgnoreCase(IkeyUtils.YES)) {
-                config.setFewStatesCharacterFirst(true);
+                configBuilder.fewStatesCharacterFirst();
             }
             if (mergeCharacterStatesIfSameDiscrimination != null
                     && mergeCharacterStatesIfSameDiscrimination.equalsIgnoreCase(IkeyUtils.YES)) {
-                config.setMergeCharacterStatesIfSameDiscrimination(true);
+                configBuilder.mergeCharacterStatesIfSameDiscrimination();
             }
             if (pruning != null && pruning.equalsIgnoreCase(IkeyUtils.YES)) {
-                config.setPruning(true);
+                configBuilder.pruning();
             }
             if (verbosity != null && IkeyConfig.VerbosityLevel.fromString(verbosity) != null) {
-                config.setVerbosity(IkeyConfig.VerbosityLevel.fromString(verbosity));
+                configBuilder.verbosity(IkeyConfig.VerbosityLevel.fromString(verbosity));
             }
             if (scoreMethod != null && IkeyConfig.ScoreMethod.fromString(scoreMethod) != null) {
-                config.setScoreMethod(IkeyConfig.ScoreMethod.fromString(scoreMethod));
+                configBuilder.scoreMethod(IkeyConfig.ScoreMethod.fromString(scoreMethod));
             }
             if (weightContext != null && IkeyConfig.WeightContext.fromString(weightContext) != null) {
-                config.setWeightContext(IkeyConfig.WeightContext.fromString(weightContext));
+                configBuilder.weightContext(IkeyConfig.WeightContext.fromString(weightContext));
             }
             if (weightType != null && weightType.equalsIgnoreCase(IkeyConfig.WeightType.CONTEXTUAL.toString())) {
-                config.setWeightType(IkeyConfig.WeightType.CONTEXTUAL);
+                configBuilder.weightType(IkeyConfig.WeightType.CONTEXTUAL);
             }
 
+            config = configBuilder.build();
 //			// calculate CPU usage
 //			double usageCPU = 0;
 //			try {
@@ -247,11 +249,11 @@ public class IdentificationKeyImpl {
             // if CPU usage is more than 80%
 //			} else {
 //				config.setErrorMessage(IkeyConfig.getBundleConfElement("message.serverBusy"));
-
 //			}
 
         } catch (Exception e) {
             e.printStackTrace();
+            config = IkeyConfig.builder().build();
             config.setErrorMessage(IkeyConfig.getBundleConfElement("message.error"), e);
         }
 

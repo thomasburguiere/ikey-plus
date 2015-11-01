@@ -41,7 +41,7 @@ public class SDDSaxParserTest {
     @Test
     public void should_parse_local_file() throws Exception {
         // creation of IkeyConfig object (containing options)
-        IkeyConfig config = new IkeyConfig();
+        IkeyConfig config = IkeyConfig.builder().build();
         SDDSaxParser sddSaxParser = new SDDSaxParser(new File("src/test/resources/inputFiles/cichorieae.sdd.xml"), config);
         DataSet dataset = sddSaxParser.getDataset();
         assertEquals(dataset.getLabel(), DATASET_NAME);
@@ -57,10 +57,14 @@ public class SDDSaxParserTest {
         long beforeTime = System.currentTimeMillis();
 
         // creation of IkeyConfig object (containing options)
-        IkeyConfig config = new IkeyConfig();
 
         SDDSaxParser sddSaxParser = null;
 
+        // options
+        IkeyConfig config = IkeyConfig.builder()
+                .verbosity(Sets.newHashSet(HEADER, OTHER, WARNING))
+                .weightContext(IkeyConfig.WeightContext.COST_EFFECTIVENESS)
+                .build();
         try {
             String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/cichorieae.sdd.xml";
             // String stringUrl =
@@ -78,13 +82,6 @@ public class SDDSaxParserTest {
             // String stringUrl =
             // "http://www.infosyslab.fr/vibrant/project/test/varanusSDD_RatingExample.xml";
 
-            // options
-            config.setFewStatesCharacterFirst(false);
-            config.setMergeCharacterStatesIfSameDiscrimination(false);
-            config.setPruning(false);
-            config.setVerbosity(Sets.newHashSet(HEADER, OTHER, WARNING));
-            config.setScoreMethod(IkeyConfig.ScoreMethod.XPER);
-            config.setWeightContext(IkeyConfig.WeightContext.COST_EFFECTIVENESS);
 
             // test if the URL is valid
             URLConnection urlConnection;
