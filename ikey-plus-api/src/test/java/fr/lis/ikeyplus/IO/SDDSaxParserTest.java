@@ -1,5 +1,6 @@
 package fr.lis.ikeyplus.io;
 
+import com.google.common.collect.Sets;
 import fr.lis.ikeyplus.model.CategoricalCharacter;
 import fr.lis.ikeyplus.model.CodedDescription;
 import fr.lis.ikeyplus.model.DataSet;
@@ -19,6 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.HEADER;
+import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.OTHER;
+import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.WARNING;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -78,7 +82,7 @@ public class SDDSaxParserTest {
             config.setFewStatesCharacterFirst(false);
             config.setMergeCharacterStatesIfSameDiscrimination(false);
             config.setPruning(false);
-            config.setVerbosity("how");
+            config.setVerbosity(Sets.newHashSet(HEADER, OTHER, WARNING));
             config.setScoreMethod(IkeyConfig.ScoreMethod.XPER);
             config.setWeightContext(IkeyConfig.WeightContext.COST_EFFECTIVENESS);
 

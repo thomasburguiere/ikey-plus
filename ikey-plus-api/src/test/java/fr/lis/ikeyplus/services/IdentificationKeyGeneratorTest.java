@@ -1,16 +1,20 @@
 package fr.lis.ikeyplus.services;
 
-import java.io.IOException;
-import java.util.logging.Logger;
-
+import com.google.common.collect.Sets;
+import fr.lis.ikeyplus.io.SDDSaxParser;
+import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-import fr.lis.ikeyplus.io.SDDSaxParser;
-import fr.lis.ikeyplus.model.SingleAccessKeyTree;
+import java.io.IOException;
+import java.util.logging.Logger;
+
+import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.HEADER;
+import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.OTHER;
+import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.STATISTIC;
+import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.WARNING;
 
 public class IdentificationKeyGeneratorTest {
 
@@ -40,7 +44,7 @@ public class IdentificationKeyGeneratorTest {
         config.setFewStatesCharacterFirst(false);
         config.setMergeCharacterStatesIfSameDiscrimination(false);
         config.setPruning(true);
-        config.setVerbosity("hows");
+        config.setVerbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTIC));
         config.setScoreMethod(IkeyConfig.ScoreMethod.XPER);
         config.setWeightContext(IkeyConfig.WeightContext.COST_EFFECTIVENESS);
         config.setWeightType(IkeyConfig.WeightType.GLOBAL);

@@ -73,8 +73,8 @@ public class IdentificationKeyImpl {
             if (pruning != null && pruning.equalsIgnoreCase(IkeyConfig.YES)) {
                 config.setPruning(true);
             }
-            if (verbosity != null) {
-                config.setVerbosity(verbosity.toLowerCase());
+            if (verbosity != null && IkeyConfig.VerbosityLevel.fromString(verbosity) != null) {
+                config.setVerbosity(IkeyConfig.VerbosityLevel.fromString(verbosity));
             }
             if (scoreMethod != null && IkeyConfig.ScoreMethod.fromString(scoreMethod) != null) {
                 config.setScoreMethod(IkeyConfig.ScoreMethod.fromString(scoreMethod));
@@ -179,40 +179,40 @@ public class IdentificationKeyImpl {
                     header.append(System.getProperty("line.separator")
                             + System.getProperty("line.separator"));
 
-                    if (!config.getVerbosity().contains(IkeyConfig.HEADER_TAG)) {
+                    if (!config.getVerbosity().contains(IkeyConfig.VerbosityLevel.HEADER)) {
                         header.setLength(0);
                     }
 //						if (config.getFormat().equalsIgnoreCase(IkeyConfig.PDF)) {
 //							if (config.getRepresentation().equalsIgnoreCase(IkeyConfig.FLAT)) {
 //								resultFile = SingleAccessKeyTreeDumper.dumpFlatPdfFile(header.toString(),
-//										tree2dump, config.getVerbosity().contains(IkeyConfig.STATISTIC_TAG));
+//										tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTIC));
 //							} else {
 //								resultFile = SingleAccessKeyTreeDumper.dumpPdfFile(header.toString(),
-//										tree2dump, config.getVerbosity().contains(IkeyConfig.STATISTIC_TAG));
+//										tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTIC));
 //							}
 //						}
                     else if (config.getFormat() == IkeyConfig.OutputFormat.HTML) {
                         if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
                             resultFile = SingleAccessKeyTreeDumper.dumpFlatHtmlFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.STATISTIC_TAG));
+                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTIC));
                         } else {
                             resultFile = SingleAccessKeyTreeDumper.dumpHtmlFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.STATISTIC_TAG));
+                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTIC));
                         }
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.WIKI) {
                         if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
                             resultFile = SingleAccessKeyTreeDumper.dumpFlatWikiFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.STATISTIC_TAG));
+                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTIC));
                         } else {
                             resultFile = SingleAccessKeyTreeDumper.dumpWikiFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.STATISTIC_TAG));
+                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTIC));
                         }
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.SPECIES_ID_WIKI_STATEMENT) {
                         resultFile = SingleAccessKeyTreeDumper.dumpFlatSpeciesIDStatementWikiFile(
                                 header.toString(), tree2dump);
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.INTERACTIVE_HTML) {
                         resultFile = SingleAccessKeyTreeDumper.dumpInteractiveHtmlFile(header.toString(),
-                                tree2dump, config.getVerbosity().contains(IkeyConfig.STATISTIC_TAG));
+                                tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTIC));
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.SPECIES_ID_WIKI_QUESTION_ANSWER) {
                         resultFile = SingleAccessKeyTreeDumper.dumpFlatSpeciesIDQuestionAnswerWikiFile(
                                 header.toString(), tree2dump);
@@ -222,14 +222,14 @@ public class IdentificationKeyImpl {
                         resultFile = SingleAccessKeyTreeDumper.dumpSddFile(header.toString(), tree2dump);
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.ZIP) {
                         resultFile = SingleAccessKeyTreeDumper.dumpZipFile(header.toString(), tree2dump,
-                                config.getVerbosity().contains(IkeyConfig.STATISTIC_TAG));
+                                config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTIC));
                     } else {
                         if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
                             resultFile = SingleAccessKeyTreeDumper.dumpFlatTxtFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.STATISTIC_TAG));
+                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTIC));
                         } else {
                             resultFile = SingleAccessKeyTreeDumper.dumpTxtFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.STATISTIC_TAG));
+                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTIC));
                         }
                     }
                 } catch (IOException e) {

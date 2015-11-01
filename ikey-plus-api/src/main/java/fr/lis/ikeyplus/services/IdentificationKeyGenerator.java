@@ -244,7 +244,7 @@ public class IdentificationKeyGenerator {
 
             // if taxa are not described and if verbosity string contains correct tag, create a node
             // "Other (not described)"
-            if (config.getVerbosity().contains(IkeyConfig.OTHER_TAG) && notDescribedTaxa != null
+            if (config.getVerbosity().contains(IkeyConfig.VerbosityLevel.OTHER) && notDescribedTaxa != null
                     && notDescribedTaxa.size() > 0) {
                 // init new node
                 SingleAccessKeyNode notDescribedNode = new SingleAccessKeyNode();

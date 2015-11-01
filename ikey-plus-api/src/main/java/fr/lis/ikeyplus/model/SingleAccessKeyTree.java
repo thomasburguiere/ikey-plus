@@ -167,7 +167,7 @@ public class SingleAccessKeyTree {
      */
     public String nodeDescriptionAnalysis(SingleAccessKeyNode node) {
         if (node.getNodeDescription() != null && node.getNodeDescription().trim().length() > 0
-                && config.getVerbosity().contains(IkeyConfig.WARNING_TAG)) {
+                && config.getVerbosity().contains(IkeyConfig.VerbosityLevel.WARNING)) {
             return " (" + node.getNodeDescription() + ")";
         }
         return "";

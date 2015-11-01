@@ -1,18 +1,22 @@
 package fr.lis.ikeyplus.services;
 
+import com.google.common.collect.Sets;
+import fr.lis.ikeyplus.io.SDDSaxParser;
+import fr.lis.ikeyplus.io.SingleAccessKeyTreeDumper;
+import fr.lis.ikeyplus.model.SingleAccessKeyTree;
+import fr.lis.ikeyplus.utils.IkeyConfig;
+import org.junit.Ignore;
+import org.junit.Test;
+
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
-import fr.lis.ikeyplus.utils.IkeyConfig;
-import org.junit.Ignore;
-import org.junit.Test;
-
-import fr.lis.ikeyplus.io.SDDSaxParser;
-import fr.lis.ikeyplus.io.SingleAccessKeyTreeDumper;
-import fr.lis.ikeyplus.model.SingleAccessKeyTree;
+import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.HEADER;
+import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.OTHER;
+import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.WARNING;
 
 /**
  * This class allow to test the flat WIKI SpeciesID Question/Answer output of IdentificationKeyGenerator
@@ -72,7 +76,7 @@ public class IdentificationKeyFlatWIKISpeciesIDQuestionAnswerGeneratorTest {
                 utils.setFewStatesCharacterFirst(false);
                 utils.setMergeCharacterStatesIfSameDiscrimination(false);
                 utils.setPruning(false);
-                utils.setVerbosity("how");
+                utils.setVerbosity(Sets.newHashSet(HEADER, OTHER, WARNING));
                 utils.setScoreMethod(IkeyConfig.ScoreMethod.XPER);
                 utils.setWeightContext(IkeyConfig.WeightContext.COST_EFFECTIVENESS);
                 utils.setWeightType(IkeyConfig.WeightType.GLOBAL);
@@ -145,7 +149,7 @@ public class IdentificationKeyFlatWIKISpeciesIDQuestionAnswerGeneratorTest {
 
             // create key file
             try {
-                if (!utils.getVerbosity().contains(IkeyConfig.HEADER_TAG)) {
+                if (!utils.getVerbosity().contains(IkeyConfig.VerbosityLevel.HEADER)) {
                     header.setLength(0);
                 }
                 SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();

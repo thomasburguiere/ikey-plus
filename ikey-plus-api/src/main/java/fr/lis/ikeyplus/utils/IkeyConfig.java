@@ -1,5 +1,7 @@
 package fr.lis.ikeyplus.utils;
 
+import com.google.common.collect.Sets;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,10 +35,6 @@ public class IkeyConfig {
     public static final List<String> ratingContext = new ArrayList<String>();
     public static final String YES = "yes";
     public static final String NO = "no";
-    public static final String HEADER_TAG = "h";
-    public static final String OTHER_TAG = "o";
-    public static final String WARNING_TAG = "w";
-    public static final String STATISTIC_TAG = "s";
     public static final int DEFAULT_WEIGHT = 3;
 
     // properties file
@@ -60,10 +58,37 @@ public class IkeyConfig {
     private boolean fewStatesCharacterFirst = false;
     private boolean mergeCharacterStatesIfSameDiscrimination = false;
     private boolean pruning = false;
-    private String verbosity = "";
+    private Set<VerbosityLevel> verbosity = Sets.newHashSet();
     private ScoreMethod scoreMethod = ScoreMethod.XPER;
     private WeightContext weightContext = null;
     private WeightType weightType = WeightType.GLOBAL;
+
+    public enum VerbosityLevel {
+        HEADER("h"), OTHER("o"), WARNING("w"), STATISTIC("s");
+
+        private final String flag;
+
+        public String toString(){
+            return flag;
+        }
+
+        public static Set<VerbosityLevel> fromString(String s) {
+            if (s != null) {
+                Set<VerbosityLevel> verbosity = new HashSet<VerbosityLevel>();
+                for (VerbosityLevel level : values()) {
+                    if (s.toLowerCase().contains(level.toString())) {
+                        verbosity.add(level);
+                    }
+                }
+                return verbosity;
+            }
+            return null;
+        }
+
+        VerbosityLevel(String flag) {
+            this.flag = flag;
+        }
+    }
 
     public enum ScoreMethod {
         XPER("xper"),
@@ -431,7 +456,7 @@ public class IkeyConfig {
      *
      * @return String, the verbosity string
      */
-    public String getVerbosity() {
+    public Set<VerbosityLevel> getVerbosity() {
         return verbosity;
     }
 
@@ -440,7 +465,7 @@ public class IkeyConfig {
      *
      * @param verbosity
      */
-    public void setVerbosity(String verbosity) {
+    public void setVerbosity(Set<VerbosityLevel> verbosity) {
         this.verbosity = verbosity;
     }
 

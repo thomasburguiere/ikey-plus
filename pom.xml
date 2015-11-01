@@ -14,6 +14,7 @@
         <version.junit>4.8.2</version.junit>
         <version.assertj-core>3.2.0</version.assertj-core>
         <version.xercesImpl>2.9.1</version.xercesImpl>
+        <version.guava>18.0</version.guava>
     </properties>
 
 
@@ -37,6 +38,11 @@
                 <artifactId>assertj-core</artifactId>
                 <version>${version.assertj-core}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${version.guava}</version>
             </dependency>
         </dependencies>
 

@@ -1,18 +1,21 @@
 package fr.lis.ikeyplus.services;
 
+import com.google.common.collect.Sets;
+import fr.lis.ikeyplus.io.SDDSaxParser;
+import fr.lis.ikeyplus.io.SingleAccessKeyTreeDumper;
+import fr.lis.ikeyplus.model.SingleAccessKeyTree;
+import fr.lis.ikeyplus.utils.IkeyConfig;
+import org.junit.Ignore;
+import org.junit.Test;
+
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
-import fr.lis.ikeyplus.utils.IkeyConfig;
-import org.junit.Ignore;
-import org.junit.Test;
-
-import fr.lis.ikeyplus.io.SDDSaxParser;
-import fr.lis.ikeyplus.io.SingleAccessKeyTreeDumper;
-import fr.lis.ikeyplus.model.SingleAccessKeyTree;
+import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.HEADER;
+import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.STATISTIC;
 
 /**
  * This class allow to test the flat HTML output of IdentificationKeyGenerator service
@@ -69,7 +72,7 @@ public class IdentificationKeyFlatHTMLGeneratorTest {
                 utils.setFewStatesCharacterFirst(true);
                 utils.setMergeCharacterStatesIfSameDiscrimination(false);
                 utils.setPruning(false);
-                utils.setVerbosity("hs");
+                utils.setVerbosity(Sets.newHashSet(HEADER, STATISTIC));
                 utils.setScoreMethod(IkeyConfig.ScoreMethod.XPER);
                 utils.setWeightContext(IkeyConfig.WeightContext.COST_EFFECTIVENESS);
                 utils.setWeightType(IkeyConfig.WeightType.GLOBAL);
@@ -145,11 +148,11 @@ public class IdentificationKeyFlatHTMLGeneratorTest {
                 SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
                 header.append(System.getProperty("line.separator") + System.getProperty("line.separator"));
 
-                if (!utils.getVerbosity().contains(IkeyConfig.HEADER_TAG)) {
+                if (!utils.getVerbosity().contains(IkeyConfig.VerbosityLevel.HEADER)) {
                     header.setLength(0);
                 }
                 resultFileName = SingleAccessKeyTreeDumper.dumpFlatHtmlFile(header.toString(), tree2dump,
-                        utils.getVerbosity().contains(IkeyConfig.STATISTIC_TAG)).getName();
+                        utils.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTIC)).getName();
             } catch (IOException e) {
                 utils.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingFileError"), e);
                 e.printStackTrace();
