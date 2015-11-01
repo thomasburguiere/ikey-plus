@@ -8,9 +8,11 @@ import fr.lis.ikeyplus.utils.IkeyConfig;
 import fr.lis.ikeyplus.utils.IkeyUtils;
 
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +29,30 @@ import java.net.URLConnection;
 @Path("/identificationKey")
 public class IdentificationKeyImpl {
 
+    @GET
+    public String getIdentificationKey(
+            @QueryParam("sddURL") String sddURL,
+            @QueryParam("format") String format,
+            @QueryParam("representation") String representation,
+            @QueryParam("fewStatesCharacterFirst") String fewStatesCharacterFirst,
+            @QueryParam("mergeCharacterStatesIfSameDiscrimination") String mergeCharacterStatesIfSameDiscrimination,
+            @QueryParam("pruning") boolean pruning,
+            @QueryParam("verbosity") String verbosity,
+            @QueryParam("scoreMethod") String scoreMethod,
+            @QueryParam("weightContext") String weightContext,
+            @QueryParam("weightType") String weightType) {
+        return createIdentificationKey(
+                sddURL,
+                format,
+                representation,
+                fewStatesCharacterFirst,
+                mergeCharacterStatesIfSameDiscrimination,
+                pruning,
+                verbosity,
+                scoreMethod,
+                weightContext,
+                weightType);
+    }
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     public String createIdentificationKey(
@@ -35,8 +61,10 @@ public class IdentificationKeyImpl {
             @FormParam("representation") String representation,
             @FormParam("fewStatesCharacterFirst") String fewStatesCharacterFirst,
             @FormParam("mergeCharacterStatesIfSameDiscrimination") String mergeCharacterStatesIfSameDiscrimination,
-            @FormParam("enablePruning") String pruning, @FormParam("verbosity") String verbosity,
-            @FormParam("scoreMethod") String scoreMethod, @FormParam("weightContext") String weightContext,
+            @FormParam("pruning") boolean pruning,
+            @FormParam("verbosity") String verbosity,
+            @FormParam("scoreMethod") String scoreMethod,
+            @FormParam("weightContext") String weightContext,
             @FormParam("weightType") String weightType) {
 
         // creation of IkeyConfig object (containing options)
@@ -55,43 +83,7 @@ public class IdentificationKeyImpl {
             // define header string
             StringBuilder header = new StringBuilder();
 
-            IkeyConfig.Builder configBuilder = IkeyConfig.builder();
-            // options initialization
-            if (format != null && IkeyConfig.OutputFormat.fromString(format) != null) {
-                configBuilder.format(IkeyConfig.OutputFormat.fromString(format));
-            } else {
-                configBuilder.format(IkeyConfig.OutputFormat.TXT);
-            }
-
-            if (representation != null && IkeyConfig.KeyRepresentation.fromString(representation) != null) {
-                configBuilder.representation(IkeyConfig.KeyRepresentation.fromString(representation));
-            } else {
-                configBuilder.representation(IkeyConfig.KeyRepresentation.FLAT);
-            }
-            if (fewStatesCharacterFirst != null && fewStatesCharacterFirst.equalsIgnoreCase(IkeyUtils.YES)) {
-                configBuilder.fewStatesCharacterFirst();
-            }
-            if (mergeCharacterStatesIfSameDiscrimination != null
-                    && mergeCharacterStatesIfSameDiscrimination.equalsIgnoreCase(IkeyUtils.YES)) {
-                configBuilder.mergeCharacterStatesIfSameDiscrimination();
-            }
-            if (pruning != null && pruning.equalsIgnoreCase(IkeyUtils.YES)) {
-                configBuilder.enablePruning();
-            }
-            if (verbosity != null && IkeyConfig.VerbosityLevel.fromString(verbosity) != null) {
-                configBuilder.verbosity(IkeyConfig.VerbosityLevel.fromString(verbosity));
-            }
-            if (scoreMethod != null && IkeyConfig.ScoreMethod.fromString(scoreMethod) != null) {
-                configBuilder.scoreMethod(IkeyConfig.ScoreMethod.fromString(scoreMethod));
-            }
-            if (weightContext != null && IkeyConfig.WeightContext.fromString(weightContext) != null) {
-                configBuilder.weightContext(IkeyConfig.WeightContext.fromString(weightContext));
-            }
-            if (weightType != null && weightType.equalsIgnoreCase(IkeyConfig.WeightType.CONTEXTUAL.toString())) {
-                configBuilder.weightType(IkeyConfig.WeightType.CONTEXTUAL);
-            }
-
-            config = configBuilder.build();
+            config = initializeConfig(format, representation, fewStatesCharacterFirst, mergeCharacterStatesIfSameDiscrimination, pruning, verbosity, scoreMethod, weightContext, weightType);
 //			// calculate CPU usage
 //			double usageCPU = 0;
 //			try {
@@ -197,7 +189,8 @@ public class IdentificationKeyImpl {
 //										tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS));
 //							}
 //						}
-                    else if (config.getFormat() == IkeyConfig.OutputFormat.HTML) {
+                    //else
+                    if (config.getFormat() == IkeyConfig.OutputFormat.HTML) {
                         if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
                             resultFile = SingleAccessKeyTreeDumper.dumpFlatHtmlFile(header.toString(),
                                     tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolder);
@@ -271,5 +264,47 @@ public class IdentificationKeyImpl {
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder") + resultFileName;
 
         return resultFileUrl;
+    }
+
+    private IkeyConfig initializeConfig(@FormParam("format") String format, @FormParam("representation") String representation, @FormParam("fewStatesCharacterFirst") String fewStatesCharacterFirst, @FormParam("mergeCharacterStatesIfSameDiscrimination") String mergeCharacterStatesIfSameDiscrimination, @FormParam("pruning") boolean pruning, @FormParam("verbosity") String verbosity, @FormParam("scoreMethod") String scoreMethod, @FormParam("weightContext") String weightContext, @FormParam("weightType") String weightType) {
+        IkeyConfig config;
+        IkeyConfig.Builder configBuilder = IkeyConfig.builder();
+        // options initialization
+        if (format != null && IkeyConfig.OutputFormat.fromString(format) != null) {
+            configBuilder.format(IkeyConfig.OutputFormat.fromString(format));
+        } else {
+            configBuilder.format(IkeyConfig.OutputFormat.TXT);
+        }
+
+        if (representation != null && IkeyConfig.KeyRepresentation.fromString(representation) != null) {
+            configBuilder.representation(IkeyConfig.KeyRepresentation.fromString(representation));
+        } else {
+            configBuilder.representation(IkeyConfig.KeyRepresentation.FLAT);
+        }
+        if (fewStatesCharacterFirst != null && fewStatesCharacterFirst.equalsIgnoreCase(IkeyUtils.YES)) {
+            configBuilder.fewStatesCharacterFirst();
+        }
+        if (mergeCharacterStatesIfSameDiscrimination != null
+                && mergeCharacterStatesIfSameDiscrimination.equalsIgnoreCase(IkeyUtils.YES)) {
+            configBuilder.mergeCharacterStatesIfSameDiscrimination();
+        }
+        if (pruning) {
+            configBuilder.enablePruning();
+        }
+        if (verbosity != null && IkeyConfig.VerbosityLevel.fromString(verbosity) != null) {
+            configBuilder.verbosity(IkeyConfig.VerbosityLevel.fromString(verbosity));
+        }
+        if (scoreMethod != null && IkeyConfig.ScoreMethod.fromString(scoreMethod) != null) {
+            configBuilder.scoreMethod(IkeyConfig.ScoreMethod.fromString(scoreMethod));
+        }
+        if (weightContext != null && IkeyConfig.WeightContext.fromString(weightContext) != null) {
+            configBuilder.weightContext(IkeyConfig.WeightContext.fromString(weightContext));
+        }
+        if (weightType != null && weightType.equalsIgnoreCase(IkeyConfig.WeightType.CONTEXTUAL.toString())) {
+            configBuilder.weightType(IkeyConfig.WeightType.CONTEXTUAL);
+        }
+
+        config = configBuilder.build();
+        return config;
     }
 }
