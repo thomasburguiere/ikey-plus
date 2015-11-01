@@ -1,11 +1,8 @@
 package fr.lis.ikeyplus.IO;
 
-import com.google.common.collect.Sets;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 import fr.lis.ikeyplus.services.IdentificationKeyGenerator;
 import fr.lis.ikeyplus.utils.IkeyConfig;
-import junit.framework.TestCase;
-import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
@@ -15,7 +12,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
-public class SingleAccessKeyTreeDumperTest extends TestCase {
+import static junit.framework.Assert.assertEquals;
+
+public class SingleAccessKeyTreeDumperTest {
 
 
     @Test
