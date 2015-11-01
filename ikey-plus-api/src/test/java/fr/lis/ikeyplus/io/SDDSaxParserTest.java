@@ -42,7 +42,7 @@ public class SDDSaxParserTest {
     public void should_parse_local_file() throws Exception {
         // creation of IkeyConfig object (containing options)
         IkeyConfig config = new IkeyConfig();
-        SDDSaxParser sddSaxParser = new SDDSaxParser(new File("src/test/resources/inputFiles/Cichorieae-fullSDD.xml"), config);
+        SDDSaxParser sddSaxParser = new SDDSaxParser(new File("src/test/resources/inputFiles/cichorieae.sdd.xml"), config);
         DataSet dataset = sddSaxParser.getDataset();
         assertEquals(dataset.getLabel(), DATASET_NAME);
         assertEquals(dataset.getCharacters().size(), EXPECTED_NB_OF_CHARACTERS);
@@ -62,7 +62,7 @@ public class SDDSaxParserTest {
         SDDSaxParser sddSaxParser = null;
 
         try {
-            String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
+            String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/cichorieae.sdd.xml";
             // String stringUrl =
             // "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-unknownData-fullSDD.xml";
             // String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";

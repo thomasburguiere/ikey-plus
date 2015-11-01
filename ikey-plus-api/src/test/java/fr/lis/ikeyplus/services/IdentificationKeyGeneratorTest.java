@@ -11,7 +11,6 @@ import org.xml.sax.SAXException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.logging.Logger;
 
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.HEADER;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.OTHER;
@@ -20,8 +19,6 @@ import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.WARNING;
 import static org.junit.Assert.assertEquals;
 
 public class IdentificationKeyGeneratorTest {
-
-    public Logger logger = Logger.getAnonymousLogger();
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
@@ -43,7 +40,6 @@ public class IdentificationKeyGeneratorTest {
         config.setPruning(true);
         config.setVerbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTIC));
 
-        logger.info("testIdentificationKeyGenerator");
         // define time before parsing SDD file
         long beforeTime = System.currentTimeMillis();
 
@@ -61,7 +57,6 @@ public class IdentificationKeyGeneratorTest {
                 byte[] encoded =  Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta.txt"));
                 String genettaFixture = new String(encoded, "UTF-8");
                 assertEquals(tree2dump.toString(), genettaFixture);
-                logger.info("done");
             } catch (Exception e) {
                 e.printStackTrace();
                 throw (e);
@@ -87,10 +82,6 @@ public class IdentificationKeyGeneratorTest {
         config.setVerbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTIC));
         config.setWeightContext(IkeyConfig.WeightContext.OBSERVATION_CONVENIENCE);
 
-        logger.info("testIdentificationKeyGenerator");
-        // define time before parsing SDD file
-        long beforeTime = System.currentTimeMillis();
-
         SDDSaxParser sddSaxParser = null;
         try {
             sddSaxParser = new SDDSaxParser(stringUrl, config);
@@ -105,7 +96,6 @@ public class IdentificationKeyGeneratorTest {
                 byte[] encoded =  Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta_weights.txt"));
                 String genettaFixture = new String(encoded, "UTF-8");
                 assertEquals(tree2dump.toString(), genettaFixture);
-                logger.info("done");
             } catch (Exception e) {
                 e.printStackTrace();
                 throw (e);
@@ -122,17 +112,13 @@ public class IdentificationKeyGeneratorTest {
 
     @Test
     public void should_generate_cichorieae_identification_key_with_default_options() throws Exception {
-        String stringUrl = "src/test/resources/inputFiles/Cichorieae-fullSDD.xml";
+        String stringUrl = "src/test/resources/inputFiles/cichorieae.sdd.xml";
         IkeyConfig config = new IkeyConfig();
         // options
         config.setFewStatesCharacterFirst(false);
         config.setMergeCharacterStatesIfSameDiscrimination(false);
         config.setPruning(true);
         config.setVerbosity(Sets.newHashSet(HEADER, WARNING, STATISTIC));
-
-        logger.info("testIdentificationKeyGenerator");
-        // define time before parsing SDD file
-        long beforeTime = System.currentTimeMillis();
 
         SDDSaxParser sddSaxParser = null;
         try {
@@ -148,7 +134,6 @@ public class IdentificationKeyGeneratorTest {
                 byte[] encoded =  Files.readAllBytes(Paths.get("src/test/resources/fixtures/cichorieae.txt"));
                 String fixture = new String(encoded, "UTF-8");
                 assertEquals(tree2dump.toString(), fixture);
-                logger.info("done");
             } catch (Exception e) {
                 e.printStackTrace();
                 throw (e);

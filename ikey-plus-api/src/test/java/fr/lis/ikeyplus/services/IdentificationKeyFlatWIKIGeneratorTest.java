@@ -52,7 +52,7 @@ public class IdentificationKeyFlatWIKIGeneratorTest {
 
             SDDSaxParser sddSaxParser = null;
             try {
-                String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-fullSDD.xml";
+                String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/cichorieae.sdd.xml";
                 // String stringUrl =
                 // "http://www.infosyslab.fr/vibrant/project/test/Cichorieae-unknownData-fullSDD.xml";
                 // String stringUrl = "http://www.infosyslab.fr/vibrant/project/test/phlebotomes-SDD.xml";
