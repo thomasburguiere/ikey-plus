@@ -1,0 +1,496 @@
+
+1.1) rosette leaves <indumentum> | glabrous (items=34)
+	2.1) growth form <general> | herb (items=28)
+		3.1) involucre <shape at (+ after) flowering> | campanulate (items=10)
+			4.1) pappus <persistence> | persistent (items=4)
+				5.1) outer involucral bracts <apex> | acute -> Crepis viscidula Froel.
+				5.2) outer involucral bracts <apex> | acuminate (items=2)
+					6.1) anthertube apical appendages <apex> | acute -> Crepis chondrilloides Jacq.
+					6.2) anthertube apical appendages <apex> | obtuse -> Crepis baldaccii subsp. albanica Jáv.
+				5.3) outer involucral bracts <apex> | obtuse -> Crepis aurea (L.) Cass.
+			4.2) pappus <persistence> | caducous (items=6)
+				5.1) outer involucral bracts <shape> | ovate (items=3)
+					6.1) pappus <texture> | fragile -> Crepis bupleurifolia (Boiss. & Kotschy) Freyn & Sint.
+					6.2) pappus <texture> | flexible (items=2)
+						7.1) flowering stems <diameter (approx.)> | slender -> Crepis auriculifolia Spreng.
+						7.2) flowering stems <diameter (approx.)> | robust -> Crepis achyrophoroides Vatke
+				5.2) outer involucral bracts <shape> | obovate -> Crepis achyrophoroides Vatke
+				5.3) outer involucral bracts <shape> | linear (items=2)
+					6.1) pappus <colour> | white -> Crepis filiformis Viv.
+					6.2) pappus <colour> | whitish -> Crepis canariensis (Sch. Bip.) Babc.
+				5.4) outer involucral bracts <shape> | linear-ovate (items=2)
+					6.1) achenes <apex> | attenuate -> Crepis auriculifolia Spreng.
+					6.2) achenes <apex> | with a filiform beak -> Crepis clausonis (Pomel) Pomel
+		3.2) involucre <shape at (+ after) flowering> | cylindrical (items=3)
+			4.1) pappus <persistence> | persistent (items=2)
+				5.1) achenes <colour> | brown -> Crepis noronhaea Babc.
+				5.2) achenes <colour> | stramineous -> Crepis demavendi Bornm.
+			4.2) pappus <persistence> | caducous -> Crepis patula Poir.
+		3.3) involucre <shape at (+ after) flowering> | turbinate (items=2)
+			4.1) flowering stems <diameter (approx.)> | slender -> Crepis noronhaea Babc.
+			4.2) flowering stems <diameter (approx.)> | robust -> Crepis divaricata (Lowe) F. W. Schultz
+		3.4) involucre <shape at (+ after) flowering> | cylindric-campanulate (items=16)
+			4.1) outer involucral bracts <shape> | ovate (items=9)
+				5.1) inner involucral bracts <apex> | acute (items=5)
+					6.1) achenes <apex> | attenuate (items=3)
+						7.1) anthertube apical appendages <apex> | acute -> Crepis auriculifolia Spreng.
+						7.2) anthertube apical appendages <apex> | acuminate (items=2)
+							8.1) cauline leaves <base> | amplexicaul -> Crepis willemetioides Boiss.
+							8.2) cauline leaves <base> | petiole-like attenuate -> Crepis leontodontoides All.
+							8.3) cauline leaves <base> | cordate -> Crepis willemetioides Boiss.
+					6.2) achenes <apex> | attenuate into an ill-defined beak -> Crepis leontodontoides All.
+					6.3) achenes <apex> | with a filiform beak -> Crepis libyca (Pamp.) Babc.
+					6.4) achenes <apex> | with a stout beak -> Crepis divaricata (Lowe) F. W. Schultz
+				5.2) inner involucral bracts <apex> | obtuse (items=3)
+					6.1) pappus <persistence> | persistent -> Crepis tingitana Ball
+					6.2) pappus <persistence> | caducous (items=2)
+						7.1) outer involucral bracts <apex> | acute -> Crepis rueppellii Sch.Bip.
+						7.2) outer involucral bracts <apex> | subacute -> Crepis vesicaria L.
+				5.3) inner involucral bracts <apex> | acuminate (items=3)
+					6.1) anthertube apical appendages <apex> | acute -> Crepis auriculifolia Spreng.
+					6.2) anthertube apical appendages <apex> | obtuse -> Crepis tectorum L.
+					6.3) anthertube apical appendages <apex> | acuminate -> Crepis willemetioides Boiss.
+			4.2) outer involucral bracts <shape> | ovate-oblong -> Crepis tectorum L.
+			4.3) outer involucral bracts <shape> | obovate -> Crepis tectorum L.
+			4.4) outer involucral bracts <shape> | elliptic -> Crepis tectorum L.
+			4.5) outer involucral bracts <shape> | oblong -> Crepis tectorum L.
+			4.6) outer involucral bracts <shape> | linear (items=5)
+				5.1) inner involucral bracts <apex> | acute -> Crepis arenaria (Pomel) Pomel
+				5.2) inner involucral bracts <apex> | obtuse (items=3)
+					6.1) pappus <colour> | white -> Crepis bellidifolia Loisel.
+					6.2) pappus <colour> | orange-brown -> Crepis tybakiensis Vierh.
+					6.3) pappus <colour> | yellowish -> Crepis oporinoides Froel.
+				5.3) inner involucral bracts <apex> | acuminate -> Crepis tectorum L.
+			4.7) outer involucral bracts <shape> | deltoid -> Crepis tectorum L.
+			4.8) outer involucral bracts <shape> | triangular -> Crepis tectorum L.
+			4.9) outer involucral bracts <shape> | triangular-ovate (items=2)
+				5.1) pappus <persistence> | persistent -> Crepis atribarba A. Heller
+				5.2) pappus <persistence> | caducous -> Crepis tectorum L.
+			4.10) outer involucral bracts <shape> | linear-ovate (items=6)
+				5.1) anthertube apical appendages <apex> | acute (items=2)
+					6.1) achenes <apex> | attenuate -> Crepis auriculifolia Spreng.
+					6.2) achenes <apex> | attenuate into an ill-defined beak -> Crepis carbonaria Sch. Bip.
+				5.2) anthertube apical appendages <apex> | obtuse -> Crepis tectorum L.
+				5.3) anthertube apical appendages <apex> | acuminate (items=3)
+					6.1) inner involucral bracts <apex> | acute (items=2)
+						7.1) cauline leaves <base> | amplexicaul -> Crepis willemetioides Boiss.
+						7.2) cauline leaves <base> | petiole-like attenuate -> Crepis leontodontoides All.
+						7.3) cauline leaves <base> | cordate -> Crepis willemetioides Boiss.
+					6.2) inner involucral bracts <apex> | obtuse -> Crepis carbonaria Sch. Bip.
+					6.3) inner involucral bracts <apex> | acuminate -> Crepis willemetioides Boiss.
+				5.4) anthertube apical appendages <apex> | truncate -> Crepis robertioides Boiss.
+	2.2) growth form <general> | rosette herb (items=6)
+		3.1) growth form <lifetime> | annual (items=3)
+			4.1) receptacle <paleate or not> | with scales -> Crepis sancta (L.) Bornm.
+			4.2) receptacle <paleate or not> | without scales -> Lactuca sativa L.
+			4.3) receptacle <paleate or not> | naked -> Crepis capillaris (L.) Wallr.
+		3.2) growth form <lifetime> | biennial (items=2)
+			4.1) achenes <apex> | attenuate -> Crepis capillaris (L.) Wallr.
+			4.2) achenes <apex> | with a filiform beak -> Lactuca sativa L.
+		3.3) growth form <lifetime> | perennial (items=3)
+			4.1) corolla <indumentum> | glabrous -> Lactuca tetrantha B. L. Burtt & P. H. Davis
+			4.2) corolla <indumentum> | pubescent -> Crepis bursifolia L.
+			4.3) corolla <indumentum> | woolly -> Sonchus bulbosus (L.) N. Kilian & Greuter
+1.2) rosette leaves <indumentum> | pubescent (items=39)
+	2.1) outer involucral bracts <shape> | ovate (items=19)
+		3.1) involucre <shape at (+ after) flowering> | campanulate (items=11)
+			4.1) pappus <persistence> | persistent (items=8)
+				5.1) achenes <colour> | brown (items=6)
+					6.1) corolla <colour> | yellow (items=5)
+						7.1) outer involucral bracts <apex> | acute (items=4)
+							8.1) achenes <apex> | attenuate (items=3)
+								9.1) achenes <compression> | compressed (items=2)
+									10.1) achenes <surface structure> | muricate -> Crepis alpestris (Jacq.) Tausch
+									10.2) achenes <surface structure> | smooth -> Crepis viscidula Froel.
+								9.2) achenes <compression> | straight -> Crepis bithynica Boiss.
+								9.3) achenes <compression> | dorsoventrally compressed -> Crepis bithynica Boiss.
+							8.2) achenes <apex> | attenuate into an ill-defined beak -> Crepis alpestris (Jacq.) Tausch
+							8.3) achenes <apex> | with a filiform beak -> Crepis newii subsp. oliveriana (Kuntze) C. Jeffrey & Beentje
+						7.2) outer involucral bracts <apex> | acuminate -> Crepis baldaccii Halácsy
+					6.2) corolla <colour> | white -> Crepis dioritica Boiss.
+				5.2) achenes <colour> | brownish-yellow (items=2)
+					6.1) anthertube apical appendages <apex> | acute -> Crepis dioritica Boiss.
+					6.2) anthertube apical appendages <apex> | truncate -> Crepis pyrenaica (L.) Greuter
+				5.3) achenes <colour> | greenish-yellow -> Crepis bithynica Boiss.
+				5.4) achenes <colour> | reddish -> Crepis oreades Schrenk
+			4.2) pappus <persistence> | caducous (items=3)
+				5.1) achenes <apex> | attenuate -> Crepis auriculifolia Spreng.
+				5.2) achenes <apex> | attenuate into an ill-defined beak -> Crepis salzmannii Babc.
+				5.3) achenes <apex> | with a filiform beak -> Crepis achyrophoroides Vatke
+		3.2) involucre <shape at (+ after) flowering> | cylindrical (items=3)
+			4.1) pappus <colour> | white -> Crepis atheniensis Babc.
+			4.2) pappus <colour> | yellow -> Crepis napifera (Franch.) Babc.
+			4.3) pappus <colour> | greyish -> Crepis erythia Pau
+		3.3) involucre <shape at (+ after) flowering> | cylindric-campanulate (items=6)
+			4.1) anthertube apical appendages <apex> | acute (items=2)
+				5.1) pappus <persistence> | persistent -> Crepis rubra L.
+				5.2) pappus <persistence> | caducous -> Crepis auriculifolia Spreng.
+			4.2) anthertube apical appendages <apex> | obtuse -> Crepis rueppellii Sch.Bip.
+			4.3) anthertube apical appendages <apex> | acuminate (items=3)
+				5.1) achenes <colour> | brown (items=2)
+					6.1) cauline leaves <base> | amplexicaul -> Crepis willemetioides Boiss.
+					6.2) cauline leaves <base> | petiole-like attenuate -> Crepis leontodontoides All.
+					6.3) cauline leaves <base> | cordate -> Crepis willemetioides Boiss.
+				5.2) achenes <colour> | stramineous -> Crepis elbrusensis Boiss.
+				5.3) achenes <colour> | yellowish -> Crepis leontodontoides All.
+	2.2) outer involucral bracts <shape> | obovate -> Crepis achyrophoroides Vatke
+	2.3) outer involucral bracts <shape> | linear (items=16)
+		3.1) pappus <persistence> | persistent (items=9)
+			4.1) achenes <apex> | attenuate (items=5)
+				5.1) pappus <colour> | white (items=3)
+					6.1) achenes <colour> | brown (items=2)
+						7.1) achenes <surface structure> | muricate -> Crepis hookeriana Ball
+						7.2) achenes <surface structure> | smooth -> Crepis viscidula Froel.
+					6.2) achenes <colour> | brownish-yellow -> Crepis faureliana Maire
+				5.2) pappus <colour> | whitish -> Crepis subscaposa Collett & Hemsl.
+				5.3) pappus <colour> | yellow -> Crepis subscaposa Collett & Hemsl.
+				5.4) pappus <colour> | yellowish -> Crepis oporinoides Froel.
+			4.2) achenes <apex> | attenuate into an ill-defined beak (items=2)
+				5.1) pappus <texture> | fragile -> Crepis xylorrhiza Sch. Bip.
+				5.2) pappus <texture> | flexible -> Crepis newii Oliv. & Hiern subsp. newii - NUR TEIL (Crepis bruceae Babc.)
+			4.3) achenes <apex> | with a filiform beak (items=2)
+				5.1) anthertube apical appendages <apex> | acute -> Crepis gossweileri S. Moore
+				5.2) anthertube apical appendages <apex> | obtuse -> Crepis triasii (Cambess.) Nyman
+		3.2) pappus <persistence> | caducous (items=7)
+			4.1) style branches <colour> | yellow (items=5)
+				5.1) involucre <shape at (+ after) flowering> | campanulate (items=2)
+					6.1) flowering branches <posture> | ascending -> Crepis connexa Babc.
+					6.2) flowering branches <posture> | remote -> Crepis turcica Degen & Bald.
+				5.2) involucre <shape at (+ after) flowering> | cylindrical -> Crepis patula Poir.
+				5.3) involucre <shape at (+ after) flowering> | cylindric-campanulate (items=2)
+					6.1) inner involucral bracts <apex> | acute -> Crepis arenaria (Pomel) Pomel
+					6.2) inner involucral bracts <apex> | obtuse -> Crepis bellidifolia Loisel.
+			4.2) style branches <colour> | green -> Crepis muhlisii Babc.
+			4.3) style branches <colour> | greenish -> Crepis bursifolia L.
+	2.4) outer involucral bracts <shape> | deltoid -> Crepis viscidula Froel.
+	2.5) outer involucral bracts <shape> | linear-ovate (items=11)
+		3.1) involucre <shape at (+ after) flowering> | campanulate (items=5)
+			4.1) achenes <colour> | brown (items=3)
+				5.1) pappus <persistence> | persistent (items=2)
+					6.1) achenes <shape> | cylindrical -> Crepis lampsanoides (Gouan) Tausch
+					6.2) achenes <shape> | fusiform -> Crepis baldaccii Halácsy
+				5.2) pappus <persistence> | caducous -> Crepis auriculifolia Spreng.
+			4.2) achenes <colour> | brownish-yellow -> Crepis clausonis (Pomel) Pomel
+			4.3) achenes <colour> | stramineous -> Crepis auriculifolia Spreng.
+			4.4) achenes <colour> | orange-red -> Crepis auriculifolia Spreng.
+			4.5) achenes <colour> | reddish -> Crepis oreades Schrenk
+		3.2) involucre <shape at (+ after) flowering> | cylindrical (items=2)
+			4.1) pappus <persistence> | persistent -> Crepis lampsanoides (Gouan) Tausch
+			4.2) pappus <persistence> | caducous -> Crepis patula Poir.
+		3.3) involucre <shape at (+ after) flowering> | cylindric-campanulate (items=5)
+			4.1) anthertube apical appendages <apex> | acute (items=2)
+				5.1) pappus <persistence> | persistent -> Crepis elymaitica Bornm.
+				5.2) pappus <persistence> | caducous -> Crepis auriculifolia Spreng.
+			4.2) anthertube apical appendages <apex> | acuminate (items=2)
+				5.1) cauline leaves <base> | amplexicaul -> Crepis willemetioides Boiss.
+				5.2) cauline leaves <base> | petiole-like attenuate -> Crepis leontodontoides All.
+				5.3) cauline leaves <base> | cordate -> Crepis willemetioides Boiss.
+			4.3) anthertube apical appendages <apex> | truncate -> Crepis robertioides Boiss.
+		3.4) involucre <shape at (+ after) flowering> | cylindric-turbinate -> Crepis apula (Fiori) Babc.
+1.3) rosette leaves <indumentum> | puberulous (items=11)
+	2.1) corolla tube <indumentum> | glabrous -> Crepis insignis Babc.
+	2.2) corolla tube <indumentum> | hispid -> Crepis alpina L.
+	2.3) corolla tube <indumentum> | pubescent (items=7)
+		3.1) outer involucral bracts <shape> | ovate (items=4)
+			4.1) growth form <lifetime> | annual (items=2)
+				5.1) pappus <persistence> | persistent -> Crepis alpina L.
+				5.2) pappus <persistence> | caducous -> Crepis amplexifolia (Godr.) Willk.
+			4.2) growth form <lifetime> | perennial (items=2)
+				5.1) flowering stems <branching rate> | weakly branched -> Crepis chondrilloides Jacq.
+				5.2) flowering stems <branching rate> | branched -> Crepis libyca (Pamp.) Babc.
+		3.2) outer involucral bracts <shape> | linear (items=3)
+			4.1) pappus <persistence> | persistent (items=2)
+				5.1) growth form <lifetime> | annual -> Crepis nigricans Viv.
+				5.2) growth form <lifetime> | perennial -> Crepis chondrilloides Jacq.
+			4.2) pappus <persistence> | caducous -> Crepis filiformis Viv.
+		3.3) outer involucral bracts <shape> | linear-ovate -> Crepis aculeata (DC.) Boiss.
+	2.4) corolla tube <indumentum> | puberulous (items=2)
+		3.1) anthertube apical appendages <apex> | acute -> Crepis schachtii Babc.
+		3.2) anthertube apical appendages <apex> | obtuse -> Crepis baldaccii subsp. albanica Jáv.
+	2.5) corolla tube <indumentum> | strigose -> Crepis straussii Bornm.
+1.4) rosette leaves <indumentum> | floccose -> Crepis hookeriana Ball
+1.5) rosette leaves <indumentum> | woolly (items=3)
+	2.1) pappus <persistence> | persistent -> Crepis lacera Ten.
+	2.2) pappus <persistence> | caducous (items=2)
+		3.1) anthertube apical appendages <apex> | acute -> Crepis auriculifolia Spreng.
+		3.2) anthertube apical appendages <apex> | acuminate -> Crepis leontodontoides All.
+1.6) rosette leaves <indumentum> | scabridulous -> Crepis urundica Babc.
+1.7) rosette leaves <indumentum> | subglabrous (items=4)
+	2.1) rosette leaves <incision> | lyrate -> Crepis foetida L.
+	2.2) rosette leaves <incision> | lyrate-pinnatisect -> Crepis fraasii Sch. Bip.
+	2.3) rosette leaves <incision> | pinnatifid (items=2)
+		3.1) growth form <general> | herb -> Crepis foetida L.
+		3.2) growth form <general> | rosette herb -> Hypochaeris glabra L.
+	2.4) rosette leaves <incision> | runcinate (items=2)
+		3.1) pappus <persistence> | persistent -> Crepis foetida L.
+		3.2) pappus <persistence> | caducous -> Crepis reuteriana Boiss.
+1.8) rosette leaves <indumentum> | glabrescent (items=17)
+	2.1) outer involucral bracts <shape> | ovate (items=9)
+		3.1) cauline leaves <in outline> | linear (items=4)
+			4.1) rosette leaves <margin> | entire -> Crepis amplexifolia (Godr.) Willk.
+			4.2) rosette leaves <margin> | ciliate -> Crepis amplexifolia (Godr.) Willk.
+			4.3) rosette leaves <margin> | sinuate-dentate -> Crepis oreades Schrenk
+			4.4) rosette leaves <margin> | dentate (items=2)
+				5.1) flowering stems <colour> | tinged purple -> Crepis erythia Pau
+				5.2) flowering stems <colour> | purple -> Crepis bakeri Greene
+			4.5) rosette leaves <margin> | denticulate -> Crepis amplexifolia (Godr.) Willk.
+		3.2) cauline leaves <in outline> | elliptic-ovate -> Crepis barbigera Coville
+		3.3) cauline leaves <in outline> | elliptic (items=2)
+			4.1) outer involucral bracts <apex> | acute -> Crepis viscidula Froel.
+			4.2) outer involucral bracts <apex> | acuminate -> Crepis bakeri Greene
+		3.4) cauline leaves <in outline> | oblong -> Crepis chrysantha (Ledeb.) Turcz.
+		3.5) cauline leaves <in outline> | ovate (items=4)
+			4.1) pappus <persistence> | persistent (items=3)
+				5.1) achenes <colour> | brown (items=2)
+					6.1) achenes <surface structure> | muricate -> Crepis alpestris (Jacq.) Tausch
+					6.2) achenes <surface structure> | smooth -> Crepis viscidula Froel.
+				5.2) achenes <colour> | reddish -> Crepis oreades Schrenk
+			4.2) pappus <persistence> | caducous -> Crepis amplexifolia (Godr.) Willk.
+		3.6) cauline leaves <in outline> | obovate (items=3)
+			4.1) achenes <surface structure> | muricate (items=2)
+				5.1) anthertube apical appendages <apex> | acute -> Crepis alpestris (Jacq.) Tausch
+				5.2) anthertube apical appendages <apex> | acuminate -> Crepis chrysantha (Ledeb.) Turcz.
+			4.2) achenes <surface structure> | smooth -> Crepis viscidula Froel.
+		3.7) cauline leaves <in outline> | linear-ovate -> Crepis auriculifolia Spreng.
+		3.8) cauline leaves <in outline> | oblong-ovate -> Crepis chrysantha (Ledeb.) Turcz.
+	2.2) outer involucral bracts <shape> | oblong -> Crepis chrysantha (Ledeb.) Turcz.
+	2.3) outer involucral bracts <shape> | linear (items=5)
+		3.1) flowering stems <branching rate> | weakly branched (items=2)
+			4.1) achenes <surface structure> | muricate -> Crepis dens-leonis K. Koch
+			4.2) achenes <surface structure> | smooth -> Crepis viscidula Froel.
+		3.2) flowering stems <branching rate> | unbranched -> Crepis hookeriana Ball
+		3.3) flowering stems <branching rate> | branched (items=2)
+			4.1) pappus <texture> | fragile -> Crepis athoa Boiss.
+			4.2) pappus <texture> | flexible -> Crepis nigricans Viv.
+	2.4) outer involucral bracts <shape> | deltoid (items=2)
+		3.1) outer involucral bracts <apex> | acute -> Crepis viscidula Froel.
+		3.2) outer involucral bracts <apex> | acuminate -> Crepis bakeri Greene
+	2.5) outer involucral bracts <shape> | linear-ovate (items=6)
+		3.1) cauline leaves <in outline> | linear (items=2)
+			4.1) rosette leaves <margin> | sinuate-dentate -> Crepis oreades Schrenk
+			4.2) rosette leaves <margin> | denticulate -> Crepis carbonaria Sch. Bip.
+		3.2) cauline leaves <in outline> | oblong -> Crepis aculeata (DC.) Boiss.
+		3.3) cauline leaves <in outline> | ovate (items=3)
+			4.1) involucre <shape at (+ after) flowering> | campanulate -> Crepis oreades Schrenk
+			4.2) involucre <shape at (+ after) flowering> | cylindrical -> Crepis aculeata (DC.) Boiss.
+			4.3) involucre <shape at (+ after) flowering> | cylindric-campanulate -> Crepis carbonaria Sch. Bip.
+		3.4) cauline leaves <in outline> | obovate (items=2)
+			4.1) anthertube apical appendages <apex> | acute -> Crepis bungei Froel.
+			4.2) anthertube apical appendages <apex> | acuminate -> Crepis juvenalis (Delile) F. W. Schultz
+		3.5) cauline leaves <in outline> | linear-ovate -> Crepis auriculifolia Spreng.
+1.9) rosette leaves <indumentum> | hispid (items=12)
+	2.1) involucre <shape at (+ after) flowering> | campanulate (items=6)
+		3.1) rosette leaves <incision> | entire -> Crepis bithynica Boiss.
+		3.2) rosette leaves <incision> | lyrate-pinnatisect -> Crepis fraasii Sch. Bip.
+		3.3) rosette leaves <incision> | pinnatifid (items=2)
+			4.1) flowering stems <section> | terete -> Crepis heterotricha Froel.
+			4.2) flowering stems <section> | striate -> Crepis bithynica Boiss.
+		3.4) rosette leaves <incision> | pinnatisect (items=2)
+			4.1) pappus <persistence> | persistent -> Crepis willdenowii Czerep.
+			4.2) pappus <persistence> | caducous -> Crepis amanica Babc.
+		3.5) rosette leaves <incision> | pinnatipartite -> Crepis oreades Schrenk
+		3.6) rosette leaves <incision> | runcinate -> Crepis oreades Schrenk
+	2.2) involucre <shape at (+ after) flowering> | cylindrical (items=3)
+		3.1) pappus <persistence> | persistent (items=2)
+			4.1) achenes <apex> | attenuate -> Crepis barbigera Coville
+			4.2) achenes <apex> | with a stout beak -> Crepis noronhaea Babc.
+		3.2) pappus <persistence> | caducous -> Crepis capillaris (L.) Wallr.
+	2.3) involucre <shape at (+ after) flowering> | turbinate (items=3)
+		3.1) flowering stems <section> | terete -> Crepis noronhaea Babc.
+		3.2) flowering stems <section> | sulcate -> Crepis divaricata (Lowe) F. W. Schultz
+		3.3) flowering stems <section> | striate -> Crepis capillaris (L.) Wallr.
+	2.4) involucre <shape at (+ after) flowering> | cylindric-campanulate (items=3)
+		3.1) outer involucral bracts <shape> | ovate -> Crepis divaricata (Lowe) F. W. Schultz
+		3.2) outer involucral bracts <shape> | linear -> Crepis lacera Ten.
+		3.3) outer involucral bracts <shape> | linear-ovate -> Crepis carbonaria Sch. Bip.
+1.10) rosette leaves <indumentum> | hispidulous (items=14)
+	2.1) growth form <lifetime> | annual (items=8)
+		3.1) growth form <general> | herb (items=4)
+			4.1) pappus <colour> | white (items=3)
+				5.1) inner involucral bracts <indumentum> | glabrous -> Crepis neglecta subsp. corymbosa (Ten.) Nyman
+				5.2) inner involucral bracts <indumentum> | hispid -> Crepis suffreniana (DC.) J. Lloyd
+				5.3) inner involucral bracts <indumentum> | pubescent -> Crepis foetida L.
+				5.4) inner involucral bracts <indumentum> | tomentose -> Crepis suffreniana (DC.) J. Lloyd
+			4.2) pappus <colour> | brownish -> Hypochaeris achyrophorus L.
+		3.2) growth form <general> | rosette herb (items=4)
+			4.1) flowering stems <indumentum> | arachnoid -> Picris pauciflora Willd.
+			4.2) flowering stems <indumentum> | hispidulous -> Picris pauciflora Willd.
+			4.3) flowering stems <indumentum> | glabrous -> Hypochaeris glabra L.
+			4.4) flowering stems <indumentum> | subglabrous -> Crepis sancta (L.) Bornm.
+			4.5) flowering stems <indumentum> | glandular -> Crepis sancta (L.) Bornm.
+			4.6) flowering stems <indumentum> | hispid -> Picris rhagadioloides (L.) Desf.
+	2.2) growth form <lifetime> | biennial (items=2)
+		3.1) anthertube apical appendages <apex> | acute -> Crepis foetida L.
+		3.2) anthertube apical appendages <apex> | obtuse -> Crepis ciliata K. Koch
+	2.3) growth form <lifetime> | perennial (items=6)
+		3.1) involucre <shape at (+ after) flowering> | campanulate (items=4)
+			4.1) growth form <general> | herb (items=3)
+				5.1) pappus <persistence> | persistent (items=2)
+					6.1) inner involucral bracts <apex> | subacute -> Crepis foetida L.
+					6.2) inner involucral bracts <apex> | acuminate -> Crepis armena Froel.
+				5.2) pappus <persistence> | caducous -> Crepis reuteriana Boiss.
+			4.2) growth form <general> | rosette herb -> Leontodon tuberosus L.
+		3.2) involucre <shape at (+ after) flowering> | cylindrical (items=3)
+			4.1) pappus <persistence> | persistent (items=2)
+				5.1) anthertube apical appendages <apex> | acute -> Crepis foetida L.
+				5.2) anthertube apical appendages <apex> | acuminate -> Crepis elongata Babc.
+			4.2) pappus <persistence> | caducous -> Crepis reuteriana Boiss.
+		3.3) involucre <shape at (+ after) flowering> | cylindric-campanulate -> Crepis tingitana Ball
+1.11) rosette leaves <indumentum> | tomentose (items=22)
+	2.1) involucre <shape at (+ after) flowering> | campanulate (items=11)
+		3.1) flowering stems <indumentum> | pubescent -> Crepis chrysantha (Ledeb.) Turcz.
+		3.2) flowering stems <indumentum> | puberulous -> Crepis turcica Degen & Bald.
+		3.3) flowering stems <indumentum> | tomentose (items=8)
+			4.1) growth form <lifetime> | annual -> Crepis insignis Babc.
+			4.2) growth form <lifetime> | perennial (items=7)
+				5.1) flowering stems <posture> | erect (items=6)
+					6.1) achenes <colour> | brown (items=4)
+						7.1) inner involucral bracts <apex> | acute -> Crepis turcica Degen & Bald.
+						7.2) inner involucral bracts <apex> | obtuse (items=2)
+							8.1) outer involucral bracts <shape> | ovate -> Crepis alpestris (Jacq.) Tausch
+							8.2) outer involucral bracts <shape> | linear-ovate -> Crepis bungei Froel.
+						7.3) inner involucral bracts <apex> | acuminate -> Crepis pantocsekii (Vis.) Latzel
+					6.2) achenes <colour> | black -> Crepis willdenowii Czerep.
+					6.3) achenes <colour> | yellow -> Crepis bungei Froel.
+					6.4) achenes <colour> | reddish (items=2)
+						7.1) corolla tube <indumentum> | glabrous -> Crepis bungei Froel.
+						7.2) corolla tube <indumentum> | pubescent -> Crepis oreades Schrenk
+						7.3) corolla tube <indumentum> | scabridulous -> Crepis bungei Froel.
+				5.2) flowering stems <posture> | ascending (items=2)
+					6.1) receptacle <surface> | areolate -> Crepis oreades Schrenk
+					6.2) receptacle <surface> | shortly ciliate -> Crepis arcuata Kamari & Strid
+		3.4) flowering stems <indumentum> | glabrous (items=2)
+			4.1) pappus <texture> | fragile -> Crepis athoa Boiss.
+			4.2) pappus <texture> | flexible -> Crepis chrysantha (Ledeb.) Turcz.
+		3.5) flowering stems <indumentum> | glabrescent (items=2)
+			4.1) outer involucral bracts <shape> | ovate -> Crepis alpestris (Jacq.) Tausch
+			4.2) outer involucral bracts <shape> | linear-ovate -> Crepis bungei Froel.
+		3.6) flowering stems <indumentum> | scabridulous -> Crepis chrysantha (Ledeb.) Turcz.
+		3.7) flowering stems <indumentum> | glandular (items=4)
+			4.1) rosette leaves <in outline> | oblong -> Crepis chrysantha (Ledeb.) Turcz.
+			4.2) rosette leaves <in outline> | ovate -> Crepis arcuata Kamari & Strid
+			4.3) rosette leaves <in outline> | obovate (items=2)
+				5.1) anthertube apical appendages <apex> | acute -> Crepis alpestris (Jacq.) Tausch
+				5.2) anthertube apical appendages <apex> | acuminate -> Crepis chrysantha (Ledeb.) Turcz.
+			4.4) rosette leaves <in outline> | oblong-obovate -> Crepis alikeri Czerep.
+		3.8) flowering stems <indumentum> | woolly -> Crepis chrysantha (Ledeb.) Turcz.
+		3.9) flowering stems <indumentum> | hispid (items=2)
+			4.1) corolla <colour> | yellow -> Crepis willdenowii Czerep.
+			4.2) corolla <colour> | pink -> Crepis alikeri Czerep.
+	2.2) involucre <shape at (+ after) flowering> | cylindrical (items=3)
+		3.1) rosette leaves <in outline> | elliptic -> Crepis bakeri Greene
+		3.2) rosette leaves <in outline> | oblong -> Crepis aculeata (DC.) Boiss.
+		3.3) rosette leaves <in outline> | ovate -> Crepis aculeata (DC.) Boiss.
+		3.4) rosette leaves <in outline> | elliptic-ovate -> Crepis barbigera Coville
+	2.3) involucre <shape at (+ after) flowering> | turbinate -> Crepis bakeri Greene
+	2.4) involucre <shape at (+ after) flowering> | cylindric-campanulate (items=8)
+		3.1) outer involucral bracts <shape> | ovate (items=3)
+			4.1) inner involucral bracts <apex> | acute -> Crepis leontodontoides All.
+			4.2) inner involucral bracts <apex> | obtuse -> Crepis rueppellii Sch.Bip.
+			4.3) inner involucral bracts <apex> | acuminate -> Crepis tectorum L.
+		3.2) outer involucral bracts <shape> | ovate-oblong -> Crepis tectorum L.
+		3.3) outer involucral bracts <shape> | obovate -> Crepis tectorum L.
+		3.4) outer involucral bracts <shape> | elliptic -> Crepis tectorum L.
+		3.5) outer involucral bracts <shape> | oblong -> Crepis tectorum L.
+		3.6) outer involucral bracts <shape> | linear (items=2)
+			4.1) pappus <persistence> | persistent -> Crepis lacera Ten.
+			4.2) pappus <persistence> | caducous -> Crepis tectorum L.
+		3.7) outer involucral bracts <shape> | deltoid -> Crepis tectorum L.
+		3.8) outer involucral bracts <shape> | triangular -> Crepis tectorum L.
+		3.9) outer involucral bracts <shape> | triangular-ovate (items=3)
+			4.1) pappus <persistence> | persistent (items=2)
+				5.1) cauline leaves <in outline> | linear -> Crepis atribarba A. Heller
+				5.2) cauline leaves <in outline> | elliptic-ovate -> Crepis acuminata Nutt.
+				5.3) cauline leaves <in outline> | ovate -> Crepis atribarba A. Heller
+			4.2) pappus <persistence> | caducous -> Crepis tectorum L.
+		3.10) outer involucral bracts <shape> | linear-ovate (items=4)
+			4.1) anthertube apical appendages <apex> | obtuse -> Crepis tectorum L.
+			4.2) anthertube apical appendages <apex> | acuminate (items=2)
+				5.1) pappus <persistence> | persistent -> Crepis juvenalis (Delile) F. W. Schultz
+				5.2) pappus <persistence> | caducous -> Crepis leontodontoides All.
+			4.3) anthertube apical appendages <apex> | truncate -> Crepis robertioides Boiss.
+1.12) rosette leaves <indumentum> | hirsute -> Crepis vesicaria L.
+1.13) rosette leaves <indumentum> | glandular (items=22)
+	2.1) outer involucral bracts <shape> | ovate (items=11)
+		3.1) involucre <shape at (+ after) flowering> | campanulate (items=9)
+			4.1) inner involucral bracts <shape> | ovate (items=8)
+				5.1) inner involucral bracts <apex> | acute (items=6)
+					6.1) pappus <persistence> | persistent (items=5)
+						7.1) corolla <colour> | yellow (items=4)
+							8.1) outer involucral bracts <apex> | acute (items=3)
+								9.1) corolla tube <indumentum> | pubescent (items=2)
+									10.1) achenes <epidermis/indumentum> | glabrous -> Crepis bithynica Boiss.
+									10.2) achenes <epidermis/indumentum> | pilose -> Crepis oreades Schrenk
+								9.2) corolla tube <indumentum> | puberulous -> Crepis schachtii Babc.
+							8.2) outer involucral bracts <apex> | acuminate -> Crepis baldaccii Halácsy
+						7.2) corolla <colour> | white -> Crepis dioritica Boiss.
+					6.2) pappus <persistence> | caducous -> Crepis auriculifolia Spreng.
+				5.2) inner involucral bracts <apex> | obtuse (items=2)
+					6.1) achenes <colour> | brown -> Crepis alpestris (Jacq.) Tausch
+					6.2) achenes <colour> | reddish -> Crepis oreades Schrenk
+				5.3) inner involucral bracts <apex> | acuminate (items=5)
+					6.1) pappus <persistence> | persistent (items=4)
+						7.1) corolla tube <indumentum> | pubescent (items=3)
+							8.1) corolla <colour> | yellow (items=2)
+								9.1) outer involucral bracts <apex> | acute -> Crepis armena Froel.
+								9.2) outer involucral bracts <apex> | acuminate -> Crepis baldaccii Halácsy
+								9.3) outer involucral bracts <apex> | obtuse -> Crepis armena Froel.
+							8.2) corolla <colour> | white -> Crepis dioritica Boiss.
+						7.2) corolla tube <indumentum> | puberulous -> Crepis schachtii Babc.
+					6.2) pappus <persistence> | caducous -> Crepis auriculifolia Spreng.
+			4.2) inner involucral bracts <shape> | ovate-oblong (items=2)
+				5.1) receptacle <surface> | areolate -> Crepis oreades Schrenk
+				5.2) receptacle <surface> | shortly ciliate -> Crepis arcuata Kamari & Strid
+		3.2) involucre <shape at (+ after) flowering> | cylindric-campanulate (items=2)
+			4.1) anthertube apical appendages <apex> | acute -> Crepis auriculifolia Spreng.
+			4.2) anthertube apical appendages <apex> | obtuse -> Crepis rueppellii Sch.Bip.
+		3.3) involucre <shape at (+ after) flowering> | cylindric-turbinate -> Crepis alpina L.
+	2.2) outer involucral bracts <shape> | linear (items=9)
+		3.1) flowering stems <indumentum> | pilose -> Crepis newii Oliv. & Hiern subsp. newii - NUR TEIL (Crepis bruceae Babc.)
+		3.2) flowering stems <indumentum> | pubescent (items=3)
+			4.1) involucre <shape at (+ after) flowering> | campanulate (items=2)
+				5.1) flowering stems <solidity> | hollow -> Crepis newii Oliv. & Hiern subsp. newii - NUR TEIL (Crepis bruceae Babc.)
+				5.2) flowering stems <solidity> | medullary -> Crepis subscaposa Collett & Hemsl.
+			4.2) involucre <shape at (+ after) flowering> | cylindric-campanulate -> Crepis faureliana Maire
+		3.3) flowering stems <indumentum> | puberulous -> Crepis turcica Degen & Bald.
+		3.4) flowering stems <indumentum> | tomentose (items=5)
+			4.1) receptacle <surface> | alveolate (items=2)
+				5.1) pappus <persistence> | persistent -> Crepis faureliana Maire
+				5.2) pappus <persistence> | caducous -> Crepis turcica Degen & Bald.
+			4.2) receptacle <surface> | areolate (items=2)
+				5.1) inner involucral bracts <apex> | acute -> Crepis urundica Babc.
+				5.2) inner involucral bracts <apex> | obtuse -> Crepis subscaposa Collett & Hemsl.
+			4.3) receptacle <surface> | shortly ciliate (items=3)
+				5.1) inner involucral bracts <shape> | ovate (items=2)
+					6.1) pappus <persistence> | persistent -> Crepis faureliana Maire
+					6.2) pappus <persistence> | caducous -> Crepis turcica Degen & Bald.
+				5.2) inner involucral bracts <shape> | ovate-oblong -> Crepis arcuata Kamari & Strid
+		3.5) flowering stems <indumentum> | floccose -> Crepis hookeriana Ball
+		3.6) flowering stems <indumentum> | glabrous (items=2)
+			4.1) pappus <persistence> | persistent -> Crepis oporinoides Froel.
+			4.2) pappus <persistence> | caducous -> Crepis connexa Babc.
+		3.7) flowering stems <indumentum> | glabrescent (items=2)
+			4.1) flowering stems <branching rate> | weakly branched -> Crepis subscaposa Collett & Hemsl.
+			4.2) flowering stems <branching rate> | unbranched -> Crepis hookeriana Ball
+		3.8) flowering stems <indumentum> | glandular (items=5)
+			4.1) involucre <shape at (+ after) flowering> | campanulate (items=4)
+				5.1) inner involucral bracts <shape> | ovate (items=3)
+					6.1) cauline leaves <apex> | acute -> Crepis newii Oliv. & Hiern subsp. newii - NUR TEIL (Crepis bruceae Babc.)
+					6.2) cauline leaves <apex> | acuminate -> Crepis subscaposa Collett & Hemsl.
+					6.3) cauline leaves <apex> | obtuse -> Crepis urundica Babc.
+				5.2) inner involucral bracts <shape> | ovate-oblong -> Crepis arcuata Kamari & Strid
+			4.2) involucre <shape at (+ after) flowering> | cylindric-campanulate -> Crepis faureliana Maire
+		3.9) flowering stems <indumentum> | hispid -> Crepis urundica Babc.
+	2.3) outer involucral bracts <shape> | linear-ovate (items=6)
+		3.1) involucre <shape at (+ after) flowering> | campanulate (items=3)
+			4.1) pappus <persistence> | persistent (items=2)
+				5.1) achenes <colour> | brown -> Crepis baldaccii Halácsy
+				5.2) achenes <colour> | reddish -> Crepis oreades Schrenk
+			4.2) pappus <persistence> | caducous -> Crepis auriculifolia Spreng.
+		3.2) involucre <shape at (+ after) flowering> | cylindric-campanulate (items=3)
+			4.1) pappus <persistence> | persistent (items=2)
+				5.1) achenes <apex> | attenuate -> Crepis robertioides Boiss.
+				5.2) achenes <apex> | with a filiform beak -> Crepis elymaitica Bornm.
+			4.2) pappus <persistence> | caducous -> Crepis auriculifolia Spreng.
+		3.3) involucre <shape at (+ after) flowering> | cylindric-turbinate -> Crepis apula (Fiori) Babc.
+1.14) rosette leaves <indumentum> | pilose -> Crepis fraasii Sch. Bip.

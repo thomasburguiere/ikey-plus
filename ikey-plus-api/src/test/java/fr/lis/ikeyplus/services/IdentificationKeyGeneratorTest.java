@@ -21,7 +21,6 @@ import static org.junit.Assert.assertEquals;
 
 public class IdentificationKeyGeneratorTest {
 
-    private IkeyConfig config = new IkeyConfig();
     public Logger logger = Logger.getAnonymousLogger();
 
     @BeforeClass
@@ -34,14 +33,10 @@ public class IdentificationKeyGeneratorTest {
 
     }
 
-    public void should_generate_key() {
-
-    }
-
     @Test
-    public void test() throws Exception {
+    public void should_generate_genetta_identification_key_with_default_options() throws Exception {
         String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
-
+        IkeyConfig config = new IkeyConfig();
         // options
         config.setFewStatesCharacterFirst(false);
         config.setMergeCharacterStatesIfSameDiscrimination(false);
@@ -65,9 +60,8 @@ public class IdentificationKeyGeneratorTest {
                 identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
                 identificationKeyGenerator.createIdentificationKey();
                 SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
-                assertEquals(tree2dump.getRoot().getChildren().get(0).toString(), "Rings on tail --> present");
 
-                byte[] encoded =  Files.readAllBytes(Paths.get("src/test/resources/genettaFixtures/tree/genetta.txt"));
+                byte[] encoded =  Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta.txt"));
                 String genettaFixture = new String(encoded, "UTF-8");
                 assertEquals(tree2dump.toString(), genettaFixture);
                 logger.info("done");
@@ -84,4 +78,51 @@ public class IdentificationKeyGeneratorTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void should_generate_cichorieae_identification_key_with_default_options() throws Exception {
+        String stringUrl = "src/test/resources/inputFiles/Cichorieae-fullSDD.xml";
+        IkeyConfig config = new IkeyConfig();
+        // options
+        config.setFewStatesCharacterFirst(false);
+        config.setMergeCharacterStatesIfSameDiscrimination(false);
+        config.setPruning(true);
+        config.setVerbosity(Sets.newHashSet(HEADER, WARNING, STATISTIC));
+        config.setScoreMethod(IkeyConfig.ScoreMethod.XPER);
+        config.setWeightContext(IkeyConfig.WeightContext.COST_EFFECTIVENESS);
+        config.setWeightType(IkeyConfig.WeightType.GLOBAL);
+
+        logger.info("testIdentificationKeyGenerator");
+        // define time before parsing SDD file
+        long beforeTime = System.currentTimeMillis();
+
+        SDDSaxParser sddSaxParser = null;
+        try {
+            sddSaxParser = new SDDSaxParser(stringUrl, config);
+
+            IdentificationKeyGenerator identificationKeyGenerator = null;
+
+            try {
+                identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
+                identificationKeyGenerator.createIdentificationKey();
+                SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+
+                byte[] encoded =  Files.readAllBytes(Paths.get("src/test/resources/fixtures/cichorieae.txt"));
+                String fixture = new String(encoded, "UTF-8");
+                assertEquals(tree2dump.toString(), fixture);
+                logger.info("done");
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw (e);
+            }
+
+        } catch (SAXException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
 }
