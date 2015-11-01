@@ -15,6 +15,7 @@ import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.HEADER;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.OTHER;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.STATISTIC;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.WARNING;
+import static org.junit.Assert.assertEquals;
 
 public class IdentificationKeyGeneratorTest {
 
@@ -37,8 +38,7 @@ public class IdentificationKeyGeneratorTest {
 
     @Test
     public void test() throws Exception {
-        // String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
-        String stringUrl = "src/test/resources/inputFiles/Key_test.sdd.xml";
+        String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
         // options
         config.setFewStatesCharacterFirst(false);
@@ -63,6 +63,7 @@ public class IdentificationKeyGeneratorTest {
                 identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
                 identificationKeyGenerator.createIdentificationKey();
                 SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+                assertEquals(tree2dump.getRoot().getChildren().get(0).toString(), "Rings on tail --> present");
                 logger.info("done");
             } catch (Exception e) {
                 e.printStackTrace();
