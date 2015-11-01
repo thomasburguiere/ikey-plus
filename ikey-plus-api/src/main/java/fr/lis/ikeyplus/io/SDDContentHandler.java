@@ -379,7 +379,7 @@ public class SDDContentHandler implements ContentHandler {
             // <Rating> in <Ratings>
             else if (localName.equals("Rating") && inRatings) {
                 if (attributes.getValue("context").equals(config.getWeightContext().toString())) {
-                    int currentRating = IkeyConfig.ratings.indexOf(attributes.getValue("rating")) + 1;
+                    int currentRating = IkeyConfig.WeightValue.fromString(attributes.getValue("rating")).getIntWeight();
                     if (currentCodedDescriptionCharacter != null) {
                         if (this.ratingsCounter.get(currentCodedDescriptionCharacter) == null) {
                             this.ratingsCounter.put(currentCodedDescriptionCharacter, 0);

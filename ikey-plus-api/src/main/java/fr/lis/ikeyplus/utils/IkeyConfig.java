@@ -7,10 +7,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.text.Normalizer;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -31,10 +28,9 @@ public class IkeyConfig {
 
     // static variable
     public static final String UNKNOWN_DATA = "unknownData";
-    public static final List<String> ratings = new ArrayList<String>();
     public static final String YES = "yes";
     public static final String NO = "no";
-    public static final int DEFAULT_WEIGHT = 3;
+    public static final WeightValue DEFAULT_WEIGHT = WeightValue.THREE;
 
     // properties file
     public static ResourceBundle bundleConf = ResourceBundle.getBundle("fr.lis.ikeyplus.conf");
@@ -176,6 +172,41 @@ public class IkeyConfig {
         }
     }
 
+    public enum WeightValue {
+        ONE("Rating1of5", 1),
+        TWO("Rating2of5", 2),
+        THREE("Rating3of5", 3),
+        FOUR("Rating4of5", 4),
+        FIVE("Rating5of5", 5);
+
+        private final String description;
+        private final int intWeight;
+
+        public String toString() {
+            return description;
+        }
+
+        public int getIntWeight() {
+            return intWeight;
+        }
+
+        WeightValue(String description, int intWeight) {
+            this.description = description;
+            this.intWeight = intWeight;
+        }
+
+        public static WeightValue fromString(String text) {
+            if (text != null) {
+                for (WeightValue entry : values()) {
+                    if (entry.toString().equals(text)) {
+                        return entry;
+                    }
+                }
+            }
+            return THREE;
+        }
+    }
+
     public enum WeightType {
         GLOBAL("global"),
         CONTEXTUAL("contextual");
@@ -228,12 +259,6 @@ public class IkeyConfig {
      */
     public IkeyConfig() {
         super();
-        // initialize the list of rating values
-        ratings.add("Rating1of5");
-        ratings.add("Rating2of5");
-        ratings.add("Rating3of5");
-        ratings.add("Rating4of5");
-        ratings.add("Rating5of5");
     }
 
     /**

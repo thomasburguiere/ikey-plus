@@ -604,7 +604,7 @@ public class IdentificationKeyGenerator {
                             weightsSum += currentCodedDescription.getCharacterWeight(character);
                         } else {
                             nWeights++;
-                            weightsSum += IkeyConfig.DEFAULT_WEIGHT;
+                            weightsSum += IkeyConfig.DEFAULT_WEIGHT.getIntWeight();
                         }
 
                     }

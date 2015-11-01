@@ -15,7 +15,7 @@ public class Character implements ICharacter {
 
     private String name = null;
     private String id = null;
-    public float weight = IkeyConfig.DEFAULT_WEIGHT;
+    public float weight = IkeyConfig.DEFAULT_WEIGHT.getIntWeight();
     private ICharacter parentCharacter = null;
     private List<State> inapplicableStates = null;
     private List<ICharacter> childCharacters = null;
