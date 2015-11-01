@@ -9,13 +9,12 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-import fr.lis.ikeyplus.IO.SDDSaxParser;
+import fr.lis.ikeyplus.io.SDDSaxParser;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 
-@Ignore
 public class IdentificationKeyGeneratorTest {
 
-	private IkeyConfig utils = new IkeyConfig();
+	private IkeyConfig config = new IkeyConfig();
 	public Logger logger = Logger.getAnonymousLogger();
 
 	@BeforeClass
@@ -28,19 +27,23 @@ public class IdentificationKeyGeneratorTest {
 
 	}
 
+	public void should_generate_key(){
+
+	}
+
 	@Test
 	public void test() throws Exception {
 		// String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 		String stringUrl = "src/test/resources/inputFiles/Key_test.sdd.xml";
 		
 		// options
-		utils.setFewStatesCharacterFirst(false);
-		utils.setMergeCharacterStatesIfSameDiscrimination(false);
-		utils.setPruning(true);
-		utils.setVerbosity("hows");
-		utils.setScoreMethod(IkeyConfig.ScoreMethod.XPER);
-		utils.setWeightContext(IkeyConfig.WeightContext.COST_EFFECTIVENESS);
-		utils.setWeightType(IkeyConfig.WeightType.GLOBAL);
+		config.setFewStatesCharacterFirst(false);
+		config.setMergeCharacterStatesIfSameDiscrimination(false);
+		config.setPruning(true);
+		config.setVerbosity("hows");
+		config.setScoreMethod(IkeyConfig.ScoreMethod.XPER);
+		config.setWeightContext(IkeyConfig.WeightContext.COST_EFFECTIVENESS);
+		config.setWeightType(IkeyConfig.WeightType.GLOBAL);
 
 		logger.info("testIdentificationKeyGenerator");
 		// define time before parsing SDD file
@@ -48,14 +51,12 @@ public class IdentificationKeyGeneratorTest {
 
 		SDDSaxParser sddSaxParser = null;
 		try {
-			sddSaxParser = new SDDSaxParser(stringUrl, utils);
-
-			sddSaxParser = new SDDSaxParser(stringUrl, utils);
+			sddSaxParser = new SDDSaxParser(stringUrl, config);
 
 			IdentificationKeyGenerator identificationKeyGenerator = null;
 
 			try {
-				identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), utils);
+				identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
 				identificationKeyGenerator.createIdentificationKey();
 				SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 				logger.info("done");

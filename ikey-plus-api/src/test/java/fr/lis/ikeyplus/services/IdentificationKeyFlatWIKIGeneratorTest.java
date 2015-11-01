@@ -10,8 +10,8 @@ import fr.lis.ikeyplus.utils.IkeyConfig;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import fr.lis.ikeyplus.IO.SDDSaxParser;
-import fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper;
+import fr.lis.ikeyplus.io.SDDSaxParser;
+import fr.lis.ikeyplus.io.SingleAccessKeyTreeDumper;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 
 /**

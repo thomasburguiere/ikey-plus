@@ -1,4 +1,4 @@
-package fr.lis.ikeyplus.IO;
+package fr.lis.ikeyplus.io;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

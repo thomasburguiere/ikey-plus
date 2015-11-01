@@ -1,4 +1,4 @@
-package fr.lis.ikeyplus.IO;
+package fr.lis.ikeyplus.io;
 
 import java.io.File;
 import java.io.FileInputStream;
