@@ -1,4 +1,4 @@
-package fr.lis.ikeyplus.io;
+package fr.lis.ikeyplus.IO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
