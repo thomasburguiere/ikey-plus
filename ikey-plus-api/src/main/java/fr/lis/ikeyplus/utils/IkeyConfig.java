@@ -32,7 +32,6 @@ public class IkeyConfig {
     // static variable
     public static final String UNKNOWN_DATA = "unknownData";
     public static final List<String> ratings = new ArrayList<String>();
-    public static final List<String> ratingContext = new ArrayList<String>();
     public static final String YES = "yes";
     public static final String NO = "no";
     public static final int DEFAULT_WEIGHT = 3;
@@ -60,7 +59,7 @@ public class IkeyConfig {
     private boolean pruning = false;
     private Set<VerbosityLevel> verbosity = Sets.newHashSet();
     private ScoreMethod scoreMethod = ScoreMethod.XPER;
-    private WeightContext weightContext = null;
+    private WeightContext weightContext = WeightContext.NO_WEIGHT;
     private WeightType weightType = WeightType.GLOBAL;
 
     public enum VerbosityLevel {
@@ -198,7 +197,8 @@ public class IkeyConfig {
         REPEATABILITY("Repeatability"),
         COST_EFFECTIVENESS("CostEffectiveness"),
         PHYLOGENETIC_WEIGHTING("PhylogeneticWeighting"),
-        REQUIRED_EXPERTISE("RequiredExpertise");
+        REQUIRED_EXPERTISE("RequiredExpertise"),
+        NO_WEIGHT("");
 
         private final String contextType;
 
@@ -234,14 +234,6 @@ public class IkeyConfig {
         ratings.add("Rating3of5");
         ratings.add("Rating4of5");
         ratings.add("Rating5of5");
-
-        // initialize the list of rating contexts
-        ratingContext.add("ObservationConvenience");
-        ratingContext.add("Availability");
-        ratingContext.add("Repeatability");
-        ratingContext.add("CostEffectiveness");
-        ratingContext.add("PhylogeneticWeighting");
-        ratingContext.add("RequiredExpertise");
     }
 
     /**

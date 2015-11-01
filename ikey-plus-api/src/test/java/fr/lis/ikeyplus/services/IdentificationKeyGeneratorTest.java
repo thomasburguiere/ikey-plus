@@ -42,9 +42,6 @@ public class IdentificationKeyGeneratorTest {
         config.setMergeCharacterStatesIfSameDiscrimination(false);
         config.setPruning(true);
         config.setVerbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTIC));
-        config.setScoreMethod(IkeyConfig.ScoreMethod.XPER);
-        config.setWeightContext(IkeyConfig.WeightContext.COST_EFFECTIVENESS);
-        config.setWeightType(IkeyConfig.WeightType.GLOBAL);
 
         logger.info("testIdentificationKeyGenerator");
         // define time before parsing SDD file
@@ -80,6 +77,50 @@ public class IdentificationKeyGeneratorTest {
     }
 
     @Test
+    public void should_generate_genetta_identification_key_with_weights_options() throws Exception {
+        String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
+        IkeyConfig config = new IkeyConfig();
+        // options
+        config.setFewStatesCharacterFirst(false);
+        config.setMergeCharacterStatesIfSameDiscrimination(false);
+        config.setPruning(true);
+        config.setVerbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTIC));
+        config.setWeightContext(IkeyConfig.WeightContext.OBSERVATION_CONVENIENCE);
+
+        logger.info("testIdentificationKeyGenerator");
+        // define time before parsing SDD file
+        long beforeTime = System.currentTimeMillis();
+
+        SDDSaxParser sddSaxParser = null;
+        try {
+            sddSaxParser = new SDDSaxParser(stringUrl, config);
+
+            IdentificationKeyGenerator identificationKeyGenerator = null;
+
+            try {
+                identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
+                identificationKeyGenerator.createIdentificationKey();
+                SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+
+                byte[] encoded =  Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta_weights.txt"));
+                String genettaFixture = new String(encoded, "UTF-8");
+                assertEquals(tree2dump.toString(), genettaFixture);
+                logger.info("done");
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw (e);
+            }
+
+        } catch (SAXException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void should_generate_cichorieae_identification_key_with_default_options() throws Exception {
         String stringUrl = "src/test/resources/inputFiles/Cichorieae-fullSDD.xml";
         IkeyConfig config = new IkeyConfig();
@@ -88,9 +129,6 @@ public class IdentificationKeyGeneratorTest {
         config.setMergeCharacterStatesIfSameDiscrimination(false);
         config.setPruning(true);
         config.setVerbosity(Sets.newHashSet(HEADER, WARNING, STATISTIC));
-        config.setScoreMethod(IkeyConfig.ScoreMethod.XPER);
-        config.setWeightContext(IkeyConfig.WeightContext.COST_EFFECTIVENESS);
-        config.setWeightType(IkeyConfig.WeightType.GLOBAL);
 
         logger.info("testIdentificationKeyGenerator");
         // define time before parsing SDD file
