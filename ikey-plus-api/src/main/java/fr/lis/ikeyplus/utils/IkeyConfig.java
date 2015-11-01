@@ -12,41 +12,17 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-/**
- * This class allow to manage all external functionalities : error massage, properties...
- *
- * @author Florian Causse
- * @created 07-04-2011
- */
-
-/**
- * @author Utilisateur
- */
 public class IkeyConfig {
 
     private String errorMessage = null;
     private File errorMessageFile = null;
 
-    // static variable
-    public static final String UNKNOWN_DATA = "unknownData";
-    public static final String YES = "yes";
-    public static final String NO = "no";
     public static final WeightValue DEFAULT_WEIGHT = WeightValue.THREE;
 
     // properties file
     private static ResourceBundle bundleConf = ResourceBundle.getBundle("fr.lis.ikeyplus.conf");
     private static ResourceBundle bundleConfOverridable = ResourceBundle
             .getBundle("fr.lis.ikeyplus.confOverridable");
-
-    // buffer size
-    public static final int BUFFER = 2048;
-
-    // file prefix
-    public static final String KEY = "key_";
-    public static final String ERROR = "error_";
-
-    // specific file extension
-    public static final String GV = "gv";
 
     // options
     private OutputFormat format = OutputFormat.TXT;
@@ -255,63 +231,30 @@ public class IkeyConfig {
     }
 
 
-    /**
-     * Constructor
-     */
-    public IkeyConfig() {
-        super();
+    private IkeyConfig() {
+
     }
 
-    /**
-     * Getter for configuration elements or messages
-     *
-     * @return String the element corresponding to the key
-     */
     public static String getBundleConfElement(String key) {
         return IkeyConfig.bundleConf.getString(key);
     }
 
-    /**
-     * Getter for overridable configuration elements or messages
-     *
-     * @return String the element corresponding to the key
-     */
     public static String getBundleConfOverridableElement(String key) {
         return IkeyConfig.bundleConfOverridable.getString(key);
     }
 
-    /**
-     * setter for configuration ResourceBundle
-     *
-     * @param bundle
-     */
     public static void setBundleConf(ResourceBundle bundleConf) {
         IkeyConfig.bundleConf = bundleConf;
     }
 
-    /**
-     * setter for overridable configuration ResourceBundle
-     *
-     * @param bundle
-     */
     public static void setBundleConfOverridable(ResourceBundle bundleConfOverridable) {
         IkeyConfig.bundleConfOverridable = bundleConfOverridable;
     }
 
-    /**
-     * getter for the error message
-     *
-     * @return String, the error file name
-     */
     public String getErrorMessage() {
         return this.errorMessage;
     }
 
-    /**
-     * setter for the error message
-     *
-     * @param msg
-     */
     public void setErrorMessage(String msg) {
         if (getErrorMessage() == null) {
             errorMessage = msg;
@@ -319,12 +262,6 @@ public class IkeyConfig {
         }
     }
 
-    /**
-     * setter for the error message with Throwable object
-     *
-     * @param msg , the readable message
-     * @param t   , the exception
-     */
     public void setErrorMessage(String msg, Throwable t) {
         if (getErrorMessage() == null) {
             errorMessage = msg + ": " + t.getMessage();
@@ -332,30 +269,15 @@ public class IkeyConfig {
         }
     }
 
-    /**
-     * getter for file message
-     *
-     * @return File, the error file
-     */
     public File getErrorMessageFile() {
         return this.errorMessageFile;
     }
 
-    /**
-     * setter for file message
-     *
-     * @param errorMessageFile , the error file
-     */
     public void setErrorMessageFile(File errorMessageFile) {
         this.errorMessageFile = errorMessageFile;
     }
 
-    /**
-     * method creating the error message
-     *
-     * @return File, the error file
-     */
-    public File createErrorFile()  {
+    public File createErrorFile() {
         String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
@@ -363,7 +285,7 @@ public class IkeyConfig {
         File erroFile = null;
         FileOutputStream fileOutputStream = null;
         try {
-            erroFile = File.createTempFile(IkeyConfig.ERROR, "." + OutputFormat.TXT, new File(path));
+            erroFile = File.createTempFile(IkeyUtils.ERROR, "." + OutputFormat.TXT, new File(path));
 
             fileOutputStream = new FileOutputStream(erroFile);
             fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
@@ -372,179 +294,89 @@ public class IkeyConfig {
 
             txtFileWriter.append(this.errorMessage);
             txtFileWriter.append(lineReturn)
-                            .append(lineReturn)
-                            .append(IkeyConfig.getBundleConfElement("message.webmaster"))
-                            .append(IkeyConfig.getBundleConfOverridableElement("email.webmaster"));
+                    .append(lineReturn)
+                    .append(IkeyConfig.getBundleConfElement("message.webmaster"))
+                    .append(IkeyConfig.getBundleConfOverridableElement("email.webmaster"));
             txtFileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             try {
-                Closeables.close(fileOutputStream,true);
+                Closeables.close(fileOutputStream, true);
             } catch (IOException ignored) {
             }
         }
         return erroFile;
     }
 
-    /**
-     * get the format of the generated key
-     *
-     * @return String, the format
-     */
     public OutputFormat getFormat() {
         return format;
     }
 
-    /**
-     * set the format of the generated key
-     *
-     * @param format
-     */
     public void setFormat(OutputFormat format) {
         this.format = format;
     }
 
-    /**
-     * get the representation of the generated key
-     *
-     * @return String, the representation
-     */
     public KeyRepresentation getRepresentation() {
         return representation;
     }
 
-    /**
-     * set the representation of the generated key
-     *
-     * @param representation
-     */
     public void setRepresentation(KeyRepresentation representation) {
         this.representation = representation;
     }
 
-    /**
-     * test if the fewStatesCharacterFirst option is active
-     *
-     * @return true if fewStatesCharacterFirst is selected
-     */
     public boolean isFewStatesCharacterFirst() {
         return fewStatesCharacterFirst;
     }
 
-    /**
-     * set the fewStatesCharacterFirst option
-     *
-     * @param fewStatesCharacterFirst
-     */
     public void setFewStatesCharacterFirst(boolean fewStatesCharacterFirst) {
         this.fewStatesCharacterFirst = fewStatesCharacterFirst;
     }
 
-    /**
-     * test if the mergeCharacterStatesIfSameDiscrimination option is active
-     *
-     * @return true if mergeCharacterStatesIfSameDiscrimination is selected
-     */
     public boolean isMergeCharacterStatesIfSameDiscrimination() {
         return mergeCharacterStatesIfSameDiscrimination;
     }
 
-    /**
-     * set the mergeCharacterStatesIfSameDiscrimination option
-     *
-     * @param mergeCharacterStatesIfSameDiscrimination
-     */
     public void setMergeCharacterStatesIfSameDiscrimination(boolean mergeCharacterStatesIfSameDiscrimination) {
         this.mergeCharacterStatesIfSameDiscrimination = mergeCharacterStatesIfSameDiscrimination;
     }
 
-    /**
-     * test if the pruning option is active
-     *
-     * @return true if pruning is selected
-     */
     public boolean isPruning() {
         return pruning;
     }
 
-    /**
-     * set the pruning option
-     *
-     * @param pruning
-     */
     public void setPruning(boolean pruning) {
         this.pruning = pruning;
     }
 
-    /**
-     * get the verbosity value
-     *
-     * @return String, the verbosity string
-     */
     public Set<VerbosityLevel> getVerbosity() {
         return verbosity;
     }
 
-    /**
-     * set the verbosity value
-     *
-     * @param verbosity
-     */
     public void setVerbosity(Set<VerbosityLevel> verbosity) {
         this.verbosity = verbosity;
     }
 
-    /**
-     * get the method method
-     *
-     * @return String, the method method selected
-     */
     public ScoreMethod getScoreMethod() {
         return scoreMethod;
     }
 
-    /**
-     * set the method method
-     *
-     * @param scoreMethod
-     */
     public void setScoreMethod(ScoreMethod scoreMethod) {
         this.scoreMethod = scoreMethod;
     }
 
-    /**
-     * get the weight context
-     *
-     * @return String, the weight context
-     */
     public WeightContext getWeightContext() {
         return weightContext;
     }
 
-    /**
-     * set the weight context
-     *
-     * @param weightContext , the weight context
-     */
     public void setWeightContext(WeightContext weightContext) {
         this.weightContext = weightContext;
     }
 
-    /**
-     * get the weight type
-     *
-     * @return String, the weight type
-     */
     public WeightType getWeightType() {
         return weightType;
     }
 
-    /**
-     * set the weight type
-     *
-     * @param weightType
-     */
     public void setWeightType(WeightType weightType) {
         this.weightType = weightType;
     }

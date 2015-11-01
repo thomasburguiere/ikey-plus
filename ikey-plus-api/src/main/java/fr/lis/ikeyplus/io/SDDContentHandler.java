@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import fr.lis.ikeyplus.utils.IkeyConfig;
+import fr.lis.ikeyplus.utils.IkeyUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
@@ -453,7 +454,7 @@ public class SDDContentHandler implements ContentHandler {
                         } else if (this.dataSet.getCodedDescriptions().get(taxon)
                                 .getCharacterDescription(character) instanceof String
                                 && ((String) this.dataSet.getCodedDescriptions().get(taxon)
-                                .getCharacterDescription(character)).equals(IkeyConfig.UNKNOWN_DATA)) {
+                                .getCharacterDescription(character)).equals(IkeyUtils.UNKNOWN_DATA)) {
                             this.dataSet.getCodedDescriptions().get(taxon)
                                     .addCharacterDescription(character, null);
                         }
@@ -653,7 +654,7 @@ public class SDDContentHandler implements ContentHandler {
                 inCategorical = false;
                 if (dataUnavailableFlag) {
                     currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
-                            IkeyConfig.UNKNOWN_DATA);
+                            IkeyUtils.UNKNOWN_DATA);
                 } else {
                     currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
                             currentStatesList);
@@ -668,7 +669,7 @@ public class SDDContentHandler implements ContentHandler {
                 inQuantitative = false;
                 if (dataUnavailableFlag) {
                     currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
-                            IkeyConfig.UNKNOWN_DATA);
+                            IkeyUtils.UNKNOWN_DATA);
                 } else {
                     currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
                             currentQuantitativeMeasure);

@@ -55,7 +55,7 @@ public abstract class SingleAccessKeyTreeDumper {
         String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-        File sddFile = File.createTempFile(IkeyConfig.KEY, "." + IkeyConfig.OutputFormat.SDD, new File(path));
+        File sddFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.SDD, new File(path));
 
         FileOutputStream fileOutputStream = new FileOutputStream(sddFile);
         fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
@@ -341,7 +341,7 @@ public abstract class SingleAccessKeyTreeDumper {
         if (!new File(path).exists()) {
             new File(path).mkdirs();
         }
-        File txtFile = File.createTempFile(IkeyConfig.KEY, "." + IkeyConfig.OutputFormat.TXT, new File(path));
+        File txtFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.TXT, new File(path));
 
         FileOutputStream fileOutputStream = new FileOutputStream(txtFile);
         fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
@@ -437,7 +437,7 @@ public abstract class SingleAccessKeyTreeDumper {
         String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-        File txtFile = File.createTempFile(IkeyConfig.KEY, "." + IkeyConfig.OutputFormat.TXT, new File(path));
+        File txtFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.TXT, new File(path));
 
         FileOutputStream fileOutputStream = new FileOutputStream(txtFile);
         fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
@@ -607,7 +607,7 @@ public abstract class SingleAccessKeyTreeDumper {
         String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-        File htmlFile = File.createTempFile(IkeyConfig.KEY, "." + IkeyConfig.OutputFormat.HTML, new File(path));
+        File htmlFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.HTML, new File(path));
 
         FileOutputStream fileOutputStream = new FileOutputStream(htmlFile);
         fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
@@ -850,7 +850,7 @@ public abstract class SingleAccessKeyTreeDumper {
         String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-        File htmlFile = File.createTempFile(IkeyConfig.KEY, "." + IkeyConfig.OutputFormat.HTML, new File(path));
+        File htmlFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.HTML, new File(path));
 
         FileOutputStream fileOutputStream = new FileOutputStream(htmlFile);
         fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
@@ -881,7 +881,7 @@ public abstract class SingleAccessKeyTreeDumper {
         String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-        File htmlFile = File.createTempFile(IkeyConfig.KEY, "." + IkeyConfig.OutputFormat.HTML, new File(path));
+        File htmlFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.HTML, new File(path));
         FileOutputStream fileOutputStream = new FileOutputStream(htmlFile);
         fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
         BufferedWriter htmlFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, "UTF-8"));
@@ -1619,7 +1619,7 @@ public abstract class SingleAccessKeyTreeDumper {
         String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-        File wikiFile = File.createTempFile(IkeyConfig.KEY, "." + IkeyConfig.OutputFormat.WIKI, new File(path));
+        File wikiFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.WIKI, new File(path));
 
         FileOutputStream fileOutputStream = new FileOutputStream(wikiFile);
         fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
@@ -1723,7 +1723,7 @@ public abstract class SingleAccessKeyTreeDumper {
         String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-        File wikiFile = File.createTempFile(IkeyConfig.KEY, "." + IkeyConfig.OutputFormat.WIKI, new File(path));
+        File wikiFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.WIKI, new File(path));
         BufferedWriter wikiFlatFileWriter = new BufferedWriter(new FileWriter(wikiFile));
 
         if (header != null && !header.equals("")) {
@@ -1896,7 +1896,7 @@ public abstract class SingleAccessKeyTreeDumper {
         String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-        File wikiFile = File.createTempFile(IkeyConfig.KEY, "." + IkeyConfig.OutputFormat.WIKI, new File(path));
+        File wikiFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.WIKI, new File(path));
 
         FileOutputStream fileOutputStream = new FileOutputStream(wikiFile);
         fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
@@ -2091,7 +2091,7 @@ public abstract class SingleAccessKeyTreeDumper {
         String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-        File wikiFile = File.createTempFile(IkeyConfig.KEY, "." + IkeyConfig.OutputFormat.WIKI, new File(path));
+        File wikiFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.WIKI, new File(path));
 
         FileOutputStream fileOutputStream = new FileOutputStream(wikiFile);
         fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
@@ -2265,7 +2265,7 @@ public abstract class SingleAccessKeyTreeDumper {
         header = header.replace(System.getProperty("line.separator"), System.getProperty("line.separator")
                 + "//");
         header = header + System.getProperty("line.separator");
-        File dotFile = File.createTempFile("key_", "." + IkeyConfig.GV, new File(path));
+        File dotFile = File.createTempFile("key_", "." + IkeyUtils.GV, new File(path));
 
         FileOutputStream fileOutputStream = new FileOutputStream(dotFile);
         fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
@@ -2484,7 +2484,7 @@ public abstract class SingleAccessKeyTreeDumper {
         String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-        File zipFile = File.createTempFile(IkeyConfig.KEY, "." + IkeyConfig.OutputFormat.ZIP, new File(path));
+        File zipFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.ZIP, new File(path));
 
         try {
             // create the writing flow
@@ -2506,7 +2506,7 @@ public abstract class SingleAccessKeyTreeDumper {
             out.setLevel(Deflater.BEST_COMPRESSION);
 
             // Temporary buffer
-            byte data[] = new byte[IkeyConfig.BUFFER];
+            byte data[] = new byte[IkeyUtils.BUFFER];
 
             // for each file of the list
             for (File file : filesList) {
@@ -2515,7 +2515,7 @@ public abstract class SingleAccessKeyTreeDumper {
                 FileInputStream fi = new FileInputStream(file);
 
                 // creation of a read buffer of the stream
-                BufferedInputStream buffi = new BufferedInputStream(fi, IkeyConfig.BUFFER);
+                BufferedInputStream buffi = new BufferedInputStream(fi, IkeyUtils.BUFFER);
 
                 // create input for this Zip file
                 ZipEntry entry = new ZipEntry(IkeyUtils.unAccent(correspondingFilePath.get(file)));
@@ -2525,7 +2525,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 // writing the package file BUFFER bytes in the flow Writing
                 int count;
-                while ((count = buffi.read(data, 0, IkeyConfig.BUFFER)) != -1) {
+                while ((count = buffi.read(data, 0, IkeyUtils.BUFFER)) != -1) {
                     out.write(data, 0, count);
                 }
 

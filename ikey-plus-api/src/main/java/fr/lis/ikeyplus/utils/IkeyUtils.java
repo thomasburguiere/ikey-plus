@@ -9,6 +9,18 @@ import java.util.Set;
 public class IkeyUtils {
 
 
+    // static variable
+    public static final String UNKNOWN_DATA = "unknownData";
+    public static final String YES = "yes";
+    public static final String NO = "no";
+    // file prefix
+    public static final String KEY = "key_";
+    public static final String ERROR = "error_";
+    // specific file extension
+    public static final String GV = "gv";
+    // buffer size
+    public static final int BUFFER = 2048;
+
     /**
      * This method returns the intersection of two Lists
      *
