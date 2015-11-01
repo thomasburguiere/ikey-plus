@@ -9,6 +9,8 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.logging.Logger;
 
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.HEADER;
@@ -64,6 +66,10 @@ public class IdentificationKeyGeneratorTest {
                 identificationKeyGenerator.createIdentificationKey();
                 SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
                 assertEquals(tree2dump.getRoot().getChildren().get(0).toString(), "Rings on tail --> present");
+
+                byte[] encoded =  Files.readAllBytes(Paths.get("src/test/resources/genettaFixtures/tree/genetta.txt"));
+                String genettaFixture = new String(encoded, "UTF-8");
+                assertEquals(tree2dump.toString(), genettaFixture);
                 logger.info("done");
             } catch (Exception e) {
                 e.printStackTrace();

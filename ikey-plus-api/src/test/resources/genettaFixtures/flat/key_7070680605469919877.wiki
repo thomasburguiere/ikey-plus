@@ -1,0 +1,56 @@
+﻿== Identification Key==
+{{Key Start|title=Genets and Oyans}}
+
+{{Lead Question |1 | Rings on tail }}
+{{Lead|1 a|present|2}}
+{{Lead|1 b|absent|result=Genetta piscivora}}
+
+{{Lead Question |2 | Relative width of the bright rings over the dark rings (middle of tail, dorsal view) }}
+{{Lead|2 a|less than 20 %|3}}
+{{Lead|2 b|between 50 and 75 %|4}}
+{{Lead|2 c|ca. 100 %|5}}
+{{Lead|2 d|ca. 200 %|6}}
+
+{{Lead Question |3 | Interorbital constriction }}
+{{Lead|3 a|strong (inferior to 1 - 0.12)|7}}
+{{Lead|3 b|intermediate (equal to 1 +/- 0.12)|8}}
+{{Lead|3 c|weak (superior to 1 + 0.12)|result=Genetta servalina}}
+
+{{Lead Question |4 | Coat of forefoot }}
+{{Lead|4 a|dark|result=Genetta cristata}}
+{{Lead|4 b|same as ground coloration but dark around pads|9}}
+{{Lead|4 c|same as ground coloration|10}}
+
+{{Lead Question |5 | Mid-dorsal line, coloration }}
+{{Lead|5 a|longitudinally crossed by a brighter (ground coloration) line|11}}
+{{Lead|5 b|full dark|result=Genetta genetta}}
+
+{{Lead Question |6 | Mid-dorsal line, coloration }}
+{{Lead|6 a|longitudinally crossed by a brighter (ground coloration) line|12}}
+{{Lead|6 b|full dark|result=Genetta felina}}
+
+{{Lead Question |7 | Longitudinal coalescence of the first row of dorsal spots (contiguous to mid-dorsal line) }}
+{{Lead|7 a|absent|result=Genetta pardina}}
+{{Lead|7 b|weak,at the rump (fusion of 2-3 spots)|result=Genetta victoriae}}
+{{Lead|7 c|complete, forming a continuous stripe on the whole back|result=Genetta poensis}}
+
+{{Lead Question |8 | Distal part of the tail }}
+{{Lead|8 a|alternation of dark and bright rings|result=Genetta johnstoni}}
+{{Lead|8 b|several bright terminal rings are covered with dark|result=Genetta bourloni}}
+
+{{Lead Question |9 | Longitudinal coalescence of the first row of dorsal spots (contiguous to mid-dorsal line) }}
+{{Lead|9 a|absent|result=Genetta tigrina}}
+{{Lead|9 b|important, at the rump (fusion of&gt; 3 spots)|result=Genetta angolensis}}
+
+{{Lead Question |10 | Ventral inflation of the caudal entotympanic bone (ceb) }}
+{{Lead|10 a|strong (twice as much inflated than ectotympanic bone)|result text=Genetta maculata, Genetta "letabae"}}
+{{Lead|10 b|very strong (thrice as much inflated than ectotympanic bone)|result=Genetta "schoutedeni"}}
+
+{{Lead Question |11 | Ventral inflation of the caudal entotympanic bone (ceb) }}
+{{Lead|11 a|weak (similar level of inflation with ectotympanic bone)|result=Genetta abyssinica}}
+{{Lead|11 b|strong (twice as much inflated than ectotympanic bone)|result=Genetta thierryi}}
+
+{{Lead Question |12 | Shape of the first dark rings of the tail }}
+{{Lead|12 a|"chevron"|result=Poiana leightoni}}
+{{Lead|12 b|circle|result=Poiana richardsonii}}
+{{Key End}}

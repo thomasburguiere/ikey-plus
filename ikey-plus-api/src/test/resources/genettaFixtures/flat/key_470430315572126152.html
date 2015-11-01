@@ -1,0 +1,341 @@
+﻿<html>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script type="text/javascript">
+if(screen.width<640 && screen.height < 500) {
+  document.write('<meta name = "viewport" content = "width = 250">') ;
+}
+</script><head>
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js'></script>
+<style type='text/css'>
+@CHARSET "UTF-8";
+
+body {
+	color: #333;
+	font-family: Verdana, helvetica, arial, sans-serif;
+	font-size: 78%;
+	background: #fff;
+}
+
+table.statisticsTable {
+	font-family: Verdana, helvetica, arial, sans-serif;
+	font-size: 78%;
+}
+
+#treecontrol  a {
+	color: #333;
+	font-size: 85%;
+}
+
+#treecontrol  a:hover {
+	color: #777;
+}
+
+.character {
+	color: #333;
+}
+
+.state {
+	color: #fe8a22;
+}
+
+.taxa {
+	color: #67bb1b;
+	font-style: italic;
+}
+
+.statesAndTaxa {
+	margin-left: 100px;
+}
+
+.stateImageURL {
+	visibility: hidden;
+}
+
+a.stateImageLink {
+	color: #333;
+	cursor: pointer;
+}
+
+a {
+	color: #67bb1b;
+	font-style: italic;
+}
+
+img.stateImageInLine {
+	width: 400px;
+	cursor: pointer;
+}
+
+#screenshot {
+	position: absolute;
+	border: 1px solid #ccc;
+	background: #333;
+	padding: 5px;
+	display: none;
+	color: #fff;
+}
+
+.paire {
+	background: #e5e5e5;
+}
+
+/*------------------------------------*\
+	IPHONE
+\*------------------------------------*/
+@media screen and (max-device-width: 480px) {
+	/*--- iPhone only CSS here ---*/
+	body {
+		-webkit-text-size-adjust: none;
+		font-family: Helvetica, Arial, Verdana, sans-serif;
+		margin: 0 0 0 10px;
+		padding: 0;
+		-webkit-user-select: none;
+		-webkit-text-size-adjust: none;
+		-webkit-text-size-adjust: none;
+	}
+	.statesAndTaxa {
+		margin-left: 0px;
+	}
+	img.stateImageInLine {
+		width: 200px;
+	}
+	div {
+		clear: both !important;
+		display: block !important;
+		width: 100% !important;
+		float: none !important;
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+	.nextNodeButton {
+		float: right;
+	}
+}</style>
+<script>
+this.screenshotPreview = function() {
+	xOffset = -10;
+	yOffset = -50;
+	$("a.screenshot").hover(
+			function(e) {
+				this.t = this.title;
+				this.title = "";
+				var c = (this.t != "") ? "<br/>" + this.t : "";
+				$("body").append(
+						"<p id='screenshot'><img src='" + this.rel + "' alt='url preview' width='200px'/>"
+								+ c + "</p>");
+				$("#screenshot").css("top", (e.pageY - xOffset) + "px").css("left",
+						(e.pageX + yOffset) + "px").fadeIn("fast");
+			}, function() {
+				this.title = this.t;
+				$("#screenshot").remove();
+			});
+	$("a.screenshot").mousemove(function(e) {
+		$("#screenshot").css("top", (e.pageY - xOffset) + "px").css("left", (e.pageX + yOffset) + "px");
+	});
+};
+$(document).ready(function() {
+	screenshotPreview();
+});
+function newStateImagesWindow(viewNodeID) {
+	var viewNode = $('#viewNode' + viewNodeID);
+	var character = viewNode.find('span.character').html();
+	var newPage = '<html><head><style type="text/css">body{ color:#111; font-family: Verdana, helvetica, arial, sans-serif; font-size: 78%;   background: #fff;}table { border-collapse:collapse; width:90%;}th, td { border:1px solid #ddd; width:20%;}td { text-align:center;}caption { font-weight:bold}</style></head><body><h2>'
+			+ character + '</h2>';
+	newPage += '<table cellpadding="5"><tr><th>state</th><th>image</th></tr>';
+	for ( var i = 0; i < viewNode.find('span.state').size(); i++) {
+		var state = viewNode.find('span.state')[i];
+		var stateID = state.id.split('_')[1];
+		var stateContent = state.innerHTML;
+		var splitArray = stateContent.split(';');
+		var stateImageURL = $('#stateImageURL_' + stateID);
+		var stateImageURLContent = stateImageURL.html();
+		stateContent = splitArray[splitArray.length - 1];
+		newPage += '<tr>';
+		var imgTag = '<center>No image</center>';
+		if (stateImageURLContent.length > 0 && stateImageURLContent.indexOf('http://') == 0) {
+			imgTag = '<img src="' + stateImageURLContent + '" width="200px" />';
+		}
+		newPage += '<td>' + stateContent + '</td><td>' + imgTag + '</td>';
+		newPage += '</tr>';
+	}
+	newPage += '</table>';
+	newPage += '</body></html>';
+	var j = window.open('', 'State Illustrations', 'toolbar=0, width=800px, height=600px');
+	j.document.write(newPage);
+	j.document.close();
+}
+
+function newStateImagesWindowTree(characterName,characterStates,statesURLs){
+	var newPage = '<html><head><style type="text/css">body{ color:#111; font-family: Verdana, helvetica, arial, sans-serif; font-size: 78%;   background: #fff;}table { border-collapse:collapse; width:90%;}th, td { border:1px solid #ddd; width:20%;}td { text-align:center;}caption { font-weight:bold}</style></head><body><h2>'
+		+ characterName + '</h2>';
+	newPage += '<table cellpadding="5"><tr><th>state</th><th>image</th></tr>';
+	
+	for(var i = 0 ; i < characterStates.length ; i++ ){
+		var state = characterStates[i];
+		var stateImageURL = statesURLs[i];
+		newPage += '<tr>';
+		var imgTag = '<center>No image</center>';
+		if(stateImageURL.length > 0 && stateImageURL.indexOf('http://') == 0){
+			imgTag = '<img src="' + stateImageURL + '" width="200px" />';
+		}
+		newPage += '<td>' + state + '</td><td>' + imgTag + '</td>';
+		newPage += '</tr>';
+	}
+	newPage += '</table>';
+	newPage += '</body></html>';
+	var j = window.open('', 'State Illustrations', 'toolbar=0, width=800px, height=600px');
+	j.document.write(newPage);
+	j.document.close();
+}
+
+function newSingleStateImageWindow(imageURL) {
+	var newPage = '<html><head></head><body><img src="'+imageURL+'"/></body></html>';
+	var j = window.open('', 'State Illustration', 'toolbar=0');
+	j.document.write(newPage);
+	j.document.close();
+}
+
+function goToViewNode(viewNodeID) {
+	viewNodeHistory.push(viewNodeID);
+	toggleViewNode(viewNodeID);
+	displayViewNodeStateImages(viewNodeID);
+}
+
+function goToPreviousViewNode() {
+	if (viewNodeHistory.length <= 1) {
+		toggleViewNode(1);
+	} else {
+		viewNodeHistory.pop();
+		var previousViewNodeID = viewNodeHistory.pop();
+		goToViewNode(previousViewNodeID);
+	}
+}
+
+function goToFirstViewNode() {
+	viewNodeHistory = [];
+	goToViewNode(1);
+	displayViewNodeStateImages(1);
+}
+
+function toggleViewNode(viewNodeID) {
+	$('.viewNode').hide();
+	$('#viewNode' + viewNodeID).show();
+	return false;
+}
+
+function displayViewNodeStateImages(viewNodeID) {
+	for ( var i = 0; i < $('#viewNode' + viewNodeID).children(".stateImageURLandContainer").size(); i++) {
+		var siuc = $($('#viewNode' + viewNodeID).children(".stateImageURLandContainer")[i]);
+		var imageContainer = siuc.find(".stateImageContainer");
+		var imageURL = jQuery.trim(siuc.find('.stateImageURL').text());
+
+		if (imageURL != null && imageURL.length > 0 && siuc.find(".stateImageInLine").size() == 0) {
+			imageContainer.append('<img onClick=\"newSingleStateImageWindow(\'' + imageURL
+					+ '\')\" class="stateImageInLine" src="' + imageURL + '" />')
+		}
+	}
+}
+
+function initViewNodes() {
+	$('#keyWait').remove();
+	$('#keyBody').css('visibility', 'visible');
+	goToFirstViewNode();
+
+}
+
+function initTree() {
+	$('#tree').treeview({
+		collapsed : true, unique : false, control : "#treecontrol", persist : 'location'
+	});
+}
+
+var viewNodeHistory = [];
+</script>
+</head>
+<body onLoad='initViewNodes();'>
+<div id="keyWait" style='margin-left:30px;margin-top:20px;' >
+Generating Key, please wait...</div>
+<div id="keyBody" style='visibility: hidden; margin-left:30px;margin-top:20px;'>
+<input type='button' value='Previous Step' onClick='goToPreviousViewNode();' /><input type='button' value='RESET' onClick='goToFirstViewNode();' /><br/><br/>
+   <span class="viewNode" id="viewNode1"><a name="anchor1"></a><strong>1</strong>  <span class="character">Rings on tail </span>:<br/><span class="statesAndTaxa"><span class="state" id="state_null" ><br/>&nbsp;&nbsp;&nbsp;present</span><span class="warning"></span> => <input class="nextNodeButton" type="button" value="next step" onClick='goToViewNode(2)' /></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer2" ><span class="stateImageURL" id="stateImageURL_null"></span><br/><span class="stateImageContainer" id="stateImageContainer2" ></span>
+</span><br/>
+                   <span class="statesAndTaxa"><span class="state" id="state_null" ><br/>&nbsp;&nbsp;&nbsp;absent</span><span class="warning"></span> => <span class="taxa"><a href="http://lully.snv.jussieu.fr/images_genettas/Genpis_AMNH__51514_(bis).jpg" class="screenshot" rel="http://lully.snv.jussieu.fr/images_genettas/Genpis_AMNH__51514_(bis).jpg" target="_blank">Genetta piscivora</a></span></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer3" ><span class="stateImageURL" id="stateImageURL_null"></span><br/><span class="stateImageContainer" id="stateImageContainer3" ></span>
+</span><br/>
+<br/>
+   
+</span><span class="viewNode" id="viewNode2"><a name="anchor2"></a><strong>2</strong>  <span class="character">Relative width of the bright rings over the dark rings (middle of tail, dorsal view) </span>:<br/><span class="statesAndTaxa"><span class="state" id="state_m144" ><br/>&nbsp;&nbsp;&nbsp;less than 20 %</span><span class="warning"></span> => <input class="nextNodeButton" type="button" value="next step" onClick='goToViewNode(3)' /></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer3" ><span class="stateImageURL" id="stateImageURL_m144">http://lully.snv.jussieu.fr/images_genettas/39_width_rings_inf20.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer3" ></span>
+</span><br/>
+                                                                                          <span class="statesAndTaxa"><span class="state" id="state_m145" ><br/>&nbsp;&nbsp;&nbsp;between 50 and 75 %</span><span class="warning"></span> => <input class="nextNodeButton" type="button" value="next step" onClick='goToViewNode(4)' /></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer4" ><span class="stateImageURL" id="stateImageURL_m145">http://lully.snv.jussieu.fr/images_genettas/39_width_rings_75.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer4" ></span>
+</span><br/>
+                                                                                          <span class="statesAndTaxa"><span class="state" id="state_m146" ><br/>&nbsp;&nbsp;&nbsp;ca. 100 %</span><span class="warning"></span> => <input class="nextNodeButton" type="button" value="next step" onClick='goToViewNode(5)' /></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer5" ><span class="stateImageURL" id="stateImageURL_m146">http://lully.snv.jussieu.fr/images_genettas/39_width_rings_100.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer5" ></span>
+</span><br/>
+                                                                                          <span class="statesAndTaxa"><span class="state" id="state_m147" ><br/>&nbsp;&nbsp;&nbsp;ca. 200 %</span><span class="warning"></span> => <input class="nextNodeButton" type="button" value="next step" onClick='goToViewNode(6)' /></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer6" ><span class="stateImageURL" id="stateImageURL_m147">http://lully.snv.jussieu.fr/images_genettas/39_width_rings_200.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer6" ></span>
+</span><br/>
+<br/>
+   
+</span><span class="viewNode" id="viewNode3"><a name="anchor3"></a><strong>3</strong>  <span class="character">Interorbital constriction </span>:<br/><span class="statesAndTaxa"><span class="state" id="state_m87" ><br/>&nbsp;&nbsp;&nbsp;strong (inferior to 1 - 0.12)</span><span class="warning"></span> => <input class="nextNodeButton" type="button" value="next step" onClick='goToViewNode(7)' /></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer7" ><span class="stateImageURL" id="stateImageURL_m87">http://lully.snv.jussieu.fr/images_genettas/4_Int1_strong.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer7" ></span>
+</span><br/>
+                               <span class="statesAndTaxa"><span class="state" id="state_m88" ><br/>&nbsp;&nbsp;&nbsp;intermediate (equal to 1 +/- 0.12)</span><span class="warning"></span> => <input class="nextNodeButton" type="button" value="next step" onClick='goToViewNode(8)' /></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer8" ><span class="stateImageURL" id="stateImageURL_m88">http://lully.snv.jussieu.fr/images_genettas/4_Int1_intermediate.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer8" ></span>
+</span><br/>
+                               <span class="statesAndTaxa"><span class="state" id="state_m89" ><br/>&nbsp;&nbsp;&nbsp;weak (superior to 1 + 0.12)</span><span class="warning"></span> => <span class="taxa"><a href="http://lully.snv.jussieu.fr/images_genettas/Genser_AMNH_115447.jpg" class="screenshot" rel="http://lully.snv.jussieu.fr/images_genettas/Genser_AMNH_115447.jpg" target="_blank">Genetta servalina</a></span></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer9" ><span class="stateImageURL" id="stateImageURL_m89">http://lully.snv.jussieu.fr/images_genettas/4_Int1_weak.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer9" ></span>
+</span><br/>
+<br/>
+   
+</span><span class="viewNode" id="viewNode4"><a name="anchor4"></a><strong>4</strong>  <span class="character">Coat of forefoot </span>:<br/><span class="statesAndTaxa"><span class="state" id="state_null" ><br/>&nbsp;&nbsp;&nbsp;dark</span><span class="warning"></span> => <span class="taxa"><a href="http://lully.snv.jussieu.fr/images_genettas/Gencri_AMNH_170379.jpg" class="screenshot" rel="http://lully.snv.jussieu.fr/images_genettas/Gencri_AMNH_170379.jpg" target="_blank">Genetta cristata</a></span></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer9" ><span class="stateImageURL" id="stateImageURL_null"></span><br/><span class="stateImageContainer" id="stateImageContainer9" ></span>
+</span><br/>
+                      <span class="statesAndTaxa"><span class="state" id="state_null" ><br/>&nbsp;&nbsp;&nbsp;same as ground coloration but dark around pads</span><span class="warning"></span> => <input class="nextNodeButton" type="button" value="next step" onClick='goToViewNode(9)' /></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer9" ><span class="stateImageURL" id="stateImageURL_null"></span><br/><span class="stateImageContainer" id="stateImageContainer9" ></span>
+</span><br/>
+                      <span class="statesAndTaxa"><span class="state" id="state_null" ><br/>&nbsp;&nbsp;&nbsp;same as ground coloration</span><span class="warning"></span> => <input class="nextNodeButton" type="button" value="next step" onClick='goToViewNode(10)' /></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer10" ><span class="stateImageURL" id="stateImageURL_null"></span><br/><span class="stateImageContainer" id="stateImageContainer10" ></span>
+</span><br/>
+<br/>
+   
+</span><span class="viewNode" id="viewNode5"><a name="anchor5"></a><strong>5</strong>  <span class="character">Mid-dorsal line, coloration </span>:<br/><span class="statesAndTaxa"><span class="state" id="state_m163" ><br/>&nbsp;&nbsp;&nbsp;longitudinally crossed by a brighter (ground coloration) line</span><span class="warning"></span> => <input class="nextNodeButton" type="button" value="next step" onClick='goToViewNode(11)' /></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer11" ><span class="stateImageURL" id="stateImageURL_m163">http://lully.snv.jussieu.fr/images_genettas/22_midline_crossed.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer11" ></span>
+</span><br/>
+                                 <span class="statesAndTaxa"><span class="state" id="state_m164" ><br/>&nbsp;&nbsp;&nbsp;full dark</span><span class="warning"></span> => <span class="taxa"><a href="http://lully.snv.jussieu.fr/images_genettas/Gengen_AMNH_80740.jpg" class="screenshot" rel="http://lully.snv.jussieu.fr/images_genettas/Gengen_AMNH_80740.jpg" target="_blank">Genetta genetta</a></span></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer12" ><span class="stateImageURL" id="stateImageURL_m164">http://lully.snv.jussieu.fr/images_genettas/21_midline_continuous.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer12" ></span>
+</span><br/>
+<br/>
+   
+</span><span class="viewNode" id="viewNode6"><a name="anchor6"></a><strong>6</strong>  <span class="character">Mid-dorsal line, coloration </span>:<br/><span class="statesAndTaxa"><span class="state" id="state_m163" ><br/>&nbsp;&nbsp;&nbsp;longitudinally crossed by a brighter (ground coloration) line</span><span class="warning"></span> => <input class="nextNodeButton" type="button" value="next step" onClick='goToViewNode(12)' /></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer12" ><span class="stateImageURL" id="stateImageURL_m163">http://lully.snv.jussieu.fr/images_genettas/22_midline_crossed.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer12" ></span>
+</span><br/>
+                                 <span class="statesAndTaxa"><span class="state" id="state_m164" ><br/>&nbsp;&nbsp;&nbsp;full dark</span><span class="warning"></span> => <span class="taxa"><a href="http://lully.snv.jussieu.fr/images_genettas/Genfel_AMNH__116356.jpg" class="screenshot" rel="http://lully.snv.jussieu.fr/images_genettas/Genfel_AMNH__116356.jpg" target="_blank">Genetta felina</a></span></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer13" ><span class="stateImageURL" id="stateImageURL_m164">http://lully.snv.jussieu.fr/images_genettas/21_midline_continuous.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer13" ></span>
+</span><br/>
+<br/>
+   
+</span><span class="viewNode" id="viewNode7"><a name="anchor7"></a><strong>7</strong>  <span class="character">Longitudinal coalescence of the first row of dorsal spots (contiguous to mid-dorsal line) </span>:<br/><span class="statesAndTaxa"><span class="state" id="state_m155" ><br/>&nbsp;&nbsp;&nbsp;absent</span><span class="warning"></span> => <span class="taxa"><a href="http://lully.snv.jussieu.fr/images_genettas/Genpar_MNHN_1977-699_(skull1).jpg" class="screenshot" rel="http://lully.snv.jussieu.fr/images_genettas/Genpar_MNHN_1977-699_(skull1).jpg" target="_blank">Genetta pardina</a></span></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer13" ><span class="stateImageURL" id="stateImageURL_m155">http://lully.snv.jussieu.fr/images_genettas/23_1st_row_coal_absent.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer13" ></span>
+</span><br/>
+                                                                                               <span class="statesAndTaxa"><span class="state" id="state_m156" ><br/>&nbsp;&nbsp;&nbsp;weak,at the rump (fusion of 2-3 spots)</span><span class="warning"></span> => <span class="taxa"><a href="http://lully.snv.jussieu.fr/images_genettas/Genvic_AMNH_51406_(skull1).jpg" class="screenshot" rel="http://lully.snv.jussieu.fr/images_genettas/Genvic_AMNH_51406_(skull1).jpg" target="_blank">Genetta victoriae</a></span></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer13" ><span class="stateImageURL" id="stateImageURL_m156">http://lully.snv.jussieu.fr/images_genettas/23_1st_row_coal_low.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer13" ></span>
+</span><br/>
+                                                                                               <span class="statesAndTaxa"><span class="state" id="state_m158" ><br/>&nbsp;&nbsp;&nbsp;complete, forming a continuous stripe on the whole back</span><span class="warning"></span> => <span class="taxa"><a href="http://lully.snv.jussieu.fr/images_genettas/Genpoe_AMNH_167490.jpg" class="screenshot" rel="http://lully.snv.jussieu.fr/images_genettas/Genpoe_AMNH_167490.jpg" target="_blank">Genetta poensis</a></span></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer13" ><span class="stateImageURL" id="stateImageURL_m158">http://lully.snv.jussieu.fr/images_genettas/22_midline_crossed.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer13" ></span>
+</span><br/>
+<br/>
+   
+</span><span class="viewNode" id="viewNode8"><a name="anchor8"></a><strong>8</strong>  <span class="character">Distal part of the tail </span>:<br/><span class="statesAndTaxa"><span class="state" id="state_m150" ><br/>&nbsp;&nbsp;&nbsp;alternation of dark and bright rings</span><span class="warning"></span> => <span class="taxa"><a href="http://lully.snv.jussieu.fr/images_genettas/Genjoh_Ivory_Coast.jpg" class="screenshot" rel="http://lully.snv.jussieu.fr/images_genettas/Genjoh_Ivory_Coast.jpg" target="_blank">Genetta johnstoni</a></span></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer13" ><span class="stateImageURL" id="stateImageURL_m150">http://lully.snv.jussieu.fr/images_genettas/35_tail_alternation.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer13" ></span>
+</span><br/>
+                             <span class="statesAndTaxa"><span class="state" id="state_m152" ><br/>&nbsp;&nbsp;&nbsp;several bright terminal rings are covered with dark</span><span class="warning"></span> => <span class="taxa"><a href="http://lully.snv.jussieu.fr/images_genettas/Genbou_Gaubert.jpg" class="screenshot" rel="http://lully.snv.jussieu.fr/images_genettas/Genbou_Gaubert.jpg" target="_blank">Genetta bourloni</a></span></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer13" ><span class="stateImageURL" id="stateImageURL_m152">http://lully.snv.jussieu.fr/images_genettas/35_tail_half_dark.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer13" ></span>
+</span><br/>
+<br/>
+   
+</span><span class="viewNode" id="viewNode9"><a name="anchor9"></a><strong>9</strong>  <span class="character">Longitudinal coalescence of the first row of dorsal spots (contiguous to mid-dorsal line) </span>:<br/><span class="statesAndTaxa"><span class="state" id="state_m155" ><br/>&nbsp;&nbsp;&nbsp;absent</span><span class="warning"></span> => <span class="taxa"><a href="http://lully.snv.jussieu.fr/images_genettas/Gentig_AMNH_169060_(skull1).jpg" class="screenshot" rel="http://lully.snv.jussieu.fr/images_genettas/Gentig_AMNH_169060_(skull1).jpg" target="_blank">Genetta tigrina</a></span></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer13" ><span class="stateImageURL" id="stateImageURL_m155">http://lully.snv.jussieu.fr/images_genettas/23_1st_row_coal_absent.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer13" ></span>
+</span><br/>
+                                                                                               <span class="statesAndTaxa"><span class="state" id="state_m157" ><br/>&nbsp;&nbsp;&nbsp;important, at the rump (fusion of&gt; 3 spots)</span><span class="warning"></span> => <span class="taxa"><a href="http://lully.snv.jussieu.fr/images_genettas/Genang_AMNH_80869_(skull1).jpg" class="screenshot" rel="http://lully.snv.jussieu.fr/images_genettas/Genang_AMNH_80869_(skull1).jpg" target="_blank">Genetta angolensis</a></span></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer13" ><span class="stateImageURL" id="stateImageURL_m157">http://lully.snv.jussieu.fr/images_genettas/23_1st_row_coal_high.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer13" ></span>
+</span><br/>
+<br/>
+  
+</span><span class="viewNode" id="viewNode10"><a name="anchor10"></a><strong>10</strong>  <span class="character">Ventral inflation of the caudal entotympanic bone (ceb) </span>:<br/><span class="statesAndTaxa"><span class="state" id="state_m93" ><br/>&nbsp;&nbsp;&nbsp;strong (twice as much inflated than ectotympanic bone)</span><span class="warning"></span> => <span class="taxa"><a href="http://lully.snv.jussieu.fr/images_genettas/Genmac_FMNH_27022_(bis).jpg" class="screenshot" rel="http://lully.snv.jussieu.fr/images_genettas/Genmac_FMNH_27022_(bis).jpg" target="_blank">Genetta maculata</a>, Genetta "letabae"</span></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer13" ><span class="stateImageURL" id="stateImageURL_m93">http://lully.snv.jussieu.fr/images_genettas/6_ceb_strong.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer13" ></span>
+</span><br/>
+                                                             <span class="statesAndTaxa"><span class="state" id="state_m94" ><br/>&nbsp;&nbsp;&nbsp;very strong (thrice as much inflated than ectotympanic bone)</span><span class="warning"></span> => <span class="taxa"><a href="http://lully.snv.jussieu.fr/images_genettas/Gensch_MRAC_18949_skin_TYPE.jpg" class="screenshot" rel="http://lully.snv.jussieu.fr/images_genettas/Gensch_MRAC_18949_skin_TYPE.jpg" target="_blank">Genetta "schoutedeni"</a></span></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer13" ><span class="stateImageURL" id="stateImageURL_m94">http://lully.snv.jussieu.fr/images_genettas/6_ceb_vstrong.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer13" ></span>
+</span><br/>
+<br/>
+  
+</span><span class="viewNode" id="viewNode11"><a name="anchor11"></a><strong>11</strong>  <span class="character">Ventral inflation of the caudal entotympanic bone (ceb) </span>:<br/><span class="statesAndTaxa"><span class="state" id="state_m92" ><br/>&nbsp;&nbsp;&nbsp;weak (similar level of inflation with ectotympanic bone)</span><span class="warning"></span> => <span class="taxa"><a href="http://lully.snv.jussieu.fr/images_genettas/Genaby_AMNH_81048.jpg" class="screenshot" rel="http://lully.snv.jussieu.fr/images_genettas/Genaby_AMNH_81048.jpg" target="_blank">Genetta abyssinica</a></span></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer13" ><span class="stateImageURL" id="stateImageURL_m92">http://lully.snv.jussieu.fr/images_genettas/6_ceb_weak.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer13" ></span>
+</span><br/>
+                                                             <span class="statesAndTaxa"><span class="state" id="state_m93" ><br/>&nbsp;&nbsp;&nbsp;strong (twice as much inflated than ectotympanic bone)</span><span class="warning"></span> => <span class="taxa"><a href="http://lully.snv.jussieu.fr/images_genettas/Genthi_Burkina_Faso.jpg" class="screenshot" rel="http://lully.snv.jussieu.fr/images_genettas/Genthi_Burkina_Faso.jpg" target="_blank">Genetta thierryi</a></span></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer13" ><span class="stateImageURL" id="stateImageURL_m93">http://lully.snv.jussieu.fr/images_genettas/6_ceb_strong.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer13" ></span>
+</span><br/>
+<br/>
+  
+</span><span class="viewNode" id="viewNode12"><a name="anchor12"></a><strong>12</strong>  <span class="character">Shape of the first dark rings of the tail </span>:<br/><span class="statesAndTaxa"><span class="state" id="state_m148" ><br/>&nbsp;&nbsp;&nbsp;"chevron"</span><span class="warning"></span> => <span class="taxa"><a href="http://lully.snv.jussieu.fr/images_genettas/Poilei_MNHN_1962-1190.jpg" class="screenshot" rel="http://lully.snv.jussieu.fr/images_genettas/Poilei_MNHN_1962-1190.jpg" target="_blank">Poiana leightoni</a></span></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer13" ><span class="stateImageURL" id="stateImageURL_m148">http://lully.snv.jussieu.fr/images_genettas/40_tail_ring_chevron.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer13" ></span>
+</span><br/>
+                                               <span class="statesAndTaxa"><span class="state" id="state_m149" ><br/>&nbsp;&nbsp;&nbsp;circle</span><span class="warning"></span> => <span class="taxa"><a href="http://lully.snv.jussieu.fr/images_genettas/Poiric_AMNH_51439_(skull1).jpg" class="screenshot" rel="http://lully.snv.jussieu.fr/images_genettas/Poiric_AMNH_51439_(skull1).jpg" target="_blank">Poiana richardsonii</a></span></span><br/><span class="stateImageURLandContainer" id="stateImageURLandContainer13" ><span class="stateImageURL" id="stateImageURL_m149">http://lully.snv.jussieu.fr/images_genettas/40_tail_ring_circle.jpg</span><br/><span class="stateImageContainer" id="stateImageContainer13" ></span>
+</span><br/>
+</div>
+</body></html>
