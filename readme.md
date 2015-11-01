@@ -23,29 +23,22 @@ Usage - API
 Include the api jar in your app, then:
 
 ```java
-# setup generator conf example
-IkeyConfig conf = new IkeyConfig();
-conf.setFewStatesCharacterFirst(true);
-conf.setMergeCharacterStatesIfSameDiscrimination(false);
-conf.setPruning(false);
-conf.setVerbosity("hs");
-conf.setScoreMethod(IkeyConfig.XPER);
-conf.setWeightContext(IkeyConfig.WeightContext.OBSERVATION_CONVENIENCE);
-conf.setWeightType(IkeyConfig.WeightType.GLOBAL);
+# setup generator config with reasonable default values
+IkeyConfig config = IkeyConfig.builder().build();
 
 # initialize sdd parser
-SDDSaxParser sddSaxParser = new SDDSaxParser(new File("inputFile.sdd"), conf);
+SDDSaxParser sddSaxParser = new SDDSaxParser(new File("inputFile.sdd"), config);
 
 # initialize key generator
 IdentificationKeyGenerator identificationKeyGenerator = 
-	new IdentificationKeyGenerator(sddSaxParser.getDataset(), conf);
+	new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
 
 # compute identification key
 SingleAccessKeyTree resultKey = identificationKeyGenerator.getSingleAccessKeyTree();
 
 # dump key to a file
-SingleAccessKeyTreeDumper.dumpFlatHtmlFile(header.toString(), resultKey,
-					conf.getVerbosity().contains(IkeyConfig.STATISTIC_TAG)).getName();
+boolean statisticsEnabled = true or false;
+File resultFile = SingleAccessKeyTreeDumper.dumpFlatHtmlFile("header", resultKey, statisticsEnabled, generatedFilesFolder);
 ```
 
 Usage - REST API

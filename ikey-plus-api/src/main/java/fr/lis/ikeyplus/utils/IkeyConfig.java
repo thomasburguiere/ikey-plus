@@ -30,7 +30,7 @@ public class IkeyConfig {
     private KeyRepresentation representation = KeyRepresentation.FLAT;
     private boolean fewStatesCharacterFirst = false;
     private boolean mergeCharacterStatesIfSameDiscrimination = false;
-    private boolean pruning = false;
+    private boolean pruningEnabled = false;
     private Set<VerbosityLevel> verbosity = Sets.newHashSet();
     private ScoreMethod scoreMethod = ScoreMethod.XPER;
     private WeightContext weightContext = WeightContext.NO_WEIGHT;
@@ -42,7 +42,7 @@ public class IkeyConfig {
                        KeyRepresentation representation,
                        boolean fewStatesCharacterFirst,
                        boolean mergeCharacterStatesIfSameDiscrimination,
-                       boolean pruning,
+                       boolean pruningEnabled,
                        Set<VerbosityLevel> verbosity,
                        ScoreMethod scoreMethod,
                        WeightContext weightContext,
@@ -52,7 +52,7 @@ public class IkeyConfig {
         this.representation = representation;
         this.fewStatesCharacterFirst = fewStatesCharacterFirst;
         this.mergeCharacterStatesIfSameDiscrimination = mergeCharacterStatesIfSameDiscrimination;
-        this.pruning = pruning;
+        this.pruningEnabled = pruningEnabled;
         this.verbosity = verbosity;
         this.scoreMethod = scoreMethod;
         this.weightContext = weightContext;
@@ -68,7 +68,7 @@ public class IkeyConfig {
         private KeyRepresentation representation = KeyRepresentation.TREE;
         private boolean fewStatesCharacterFirst = false;
         private boolean mergeCharacterStatesIfSameDiscrimination = false;
-        private boolean pruning = false;
+        private boolean pruningEnabled = false;
         private Set<VerbosityLevel> verbosity = Sets.newHashSet();
         private ScoreMethod scoreMethod = ScoreMethod.XPER;
         private WeightContext weightContext = WeightContext.NO_WEIGHT;
@@ -94,8 +94,8 @@ public class IkeyConfig {
             return this;
         }
 
-        public Builder pruning(){
-            this.pruning = true;
+        public Builder enablePruning(){
+            this.pruningEnabled = true;
             return this;
         }
 
@@ -130,7 +130,7 @@ public class IkeyConfig {
                     this.representation,
                     this.fewStatesCharacterFirst,
                     this.mergeCharacterStatesIfSameDiscrimination,
-                    this.pruning,
+                    this.pruningEnabled,
                     ImmutableSet.copyOf(this.verbosity),
                     this.scoreMethod,
                     this.weightContext,
@@ -140,7 +140,7 @@ public class IkeyConfig {
 
 
     public enum VerbosityLevel {
-        HEADER("h"), OTHER("o"), WARNING("w"), STATISTIC("s");
+        HEADER("h"), OTHER("o"), WARNING("w"), STATISTICS("s");
 
         private final String flag;
 
@@ -428,8 +428,8 @@ public class IkeyConfig {
         return mergeCharacterStatesIfSameDiscrimination;
     }
 
-    public boolean isPruning() {
-        return pruning;
+    public boolean isPruningEnabled() {
+        return pruningEnabled;
     }
 
     public Set<VerbosityLevel> getVerbosity() {

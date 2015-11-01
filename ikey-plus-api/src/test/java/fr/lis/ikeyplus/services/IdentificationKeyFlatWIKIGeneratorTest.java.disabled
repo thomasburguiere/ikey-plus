@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.HEADER;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.OTHER;
-import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.STATISTIC;
+import static STATISTICS;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.WARNING;
 /**
  * This class allow to test the flat WIKI output of IdentificationKeyGenerator service

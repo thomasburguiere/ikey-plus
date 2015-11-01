@@ -17,11 +17,13 @@ import static junit.framework.Assert.assertEquals;
 
 public class SingleAccessKeyTreeDumperTest {
 
+    private static String generatedFilesFolder;
+
     @Test
     public void should_generate_cichorieae_flat_html_key() throws Exception {
         String stringUrl = "src/test/resources/inputFiles/cichorieae.sdd.xml";
 
-        IkeyConfig config = IkeyConfig.builder().pruning().verbosity(IkeyConfig.VerbosityLevel.HEADER).build();
+        IkeyConfig config = IkeyConfig.builder().enablePruning().verbosity(IkeyConfig.VerbosityLevel.HEADER).build();
 
         SDDSaxParser sddSaxParser;
         try {
@@ -33,7 +35,8 @@ public class SingleAccessKeyTreeDumperTest {
                 identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
                 identificationKeyGenerator.createIdentificationKey();
                 SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
-                File file = SingleAccessKeyTreeDumper.dumpFlatHtmlFile("", tree2dump, false);
+                boolean statisticsEnabled = config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS);
+                File file = SingleAccessKeyTreeDumper.dumpFlatHtmlFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
                 byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
                 String result = new String(resultBytes, "UTF-8");
 
@@ -59,10 +62,10 @@ public class SingleAccessKeyTreeDumperTest {
         IkeyConfig.setBundleConfOverridable(ResourceBundle.getBundle("confTest"));
         IkeyConfig.setBundleConf(ResourceBundle.getBundle("confTest"));
 
-        String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+        generatedFilesFolder = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
-        if (!new File(path).exists()) {
-            new File(path).mkdirs();
+        if (!new File(generatedFilesFolder).exists()) {
+            new File(generatedFilesFolder).mkdirs();
         }
     }
 }

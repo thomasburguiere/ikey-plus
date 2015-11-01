@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.HEADER;
-import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.STATISTIC;
+import static STATISTICS;
 
 /**
  * This class allow to test the flat HTML output of IdentificationKeyGenerator service

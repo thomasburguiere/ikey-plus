@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.HEADER;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.OTHER;
-import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.STATISTIC;
+import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.STATISTICS;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.WARNING;
 import static org.junit.Assert.assertEquals;
 
@@ -24,8 +24,8 @@ public class IdentificationKeyGeneratorTest {
         String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
         IkeyConfig config  = IkeyConfig.builder()
-            .pruning()
-            .verbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTIC))
+            .enablePruning()
+            .verbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTICS))
         .build();
 
         // define time before parsing SDD file
@@ -64,8 +64,8 @@ public class IdentificationKeyGeneratorTest {
         String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
         IkeyConfig config = IkeyConfig.builder()
-            .pruning()
-            .verbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTIC))
+            .enablePruning()
+            .verbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTICS))
             .weightContext(IkeyConfig.WeightContext.OBSERVATION_CONVENIENCE)
         .build();
 
@@ -102,8 +102,8 @@ public class IdentificationKeyGeneratorTest {
         String stringUrl = "src/test/resources/inputFiles/cichorieae.sdd.xml";
 
         IkeyConfig config = IkeyConfig.builder()
-            .pruning()
-            .verbosity(Sets.newHashSet(HEADER, WARNING, STATISTIC))
+            .enablePruning()
+            .verbosity(Sets.newHashSet(HEADER, WARNING, STATISTICS))
         .build();
 
         SDDSaxParser sddSaxParser;

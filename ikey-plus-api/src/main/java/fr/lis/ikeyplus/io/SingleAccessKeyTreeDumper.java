@@ -764,13 +764,10 @@ public abstract class SingleAccessKeyTreeDumper {
 
     // HTML DUMP, FLAT
 
-    public static File dumpFlatHtmlFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics)
+    public static File dumpFlatHtmlFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics, String generatedFilesFolder)
             throws IOException {
 
-        String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-                + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
-
-        File htmlFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.HTML, new File(path));
+        File htmlFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.HTML, new File(generatedFilesFolder));
 
         FileOutputStream fileOutputStream = new FileOutputStream(htmlFile);
         fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
@@ -2217,7 +2214,7 @@ public abstract class SingleAccessKeyTreeDumper {
     // END DOT DUMP
 
     // ZIP DUMP
-    public static File dumpZipFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics)
+    public static File dumpZipFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics, String generatedFilesFolder)
             throws IOException {
 
         // create all output formats
@@ -2225,7 +2222,7 @@ public abstract class SingleAccessKeyTreeDumper {
         File txtFile = dumpTxtFile(header, tree2dump, showStatistics);
         File flatTxtFile = dumpFlatTxtFile(header, tree2dump, showStatistics);
         File htmlFile = dumpHtmlFile(header, tree2dump, showStatistics);
-        File flatHtmlFile = dumpFlatHtmlFile(header, tree2dump, showStatistics);
+        File flatHtmlFile = dumpFlatHtmlFile(header, tree2dump, showStatistics, generatedFilesFolder);
         File interactiveHtmlFile = dumpInteractiveHtmlFile(header, tree2dump, showStatistics);
         File wikiFile = dumpWikiFile(header, tree2dump, showStatistics);
         File flatWikiFile = dumpFlatWikiFile(header, tree2dump, showStatistics);

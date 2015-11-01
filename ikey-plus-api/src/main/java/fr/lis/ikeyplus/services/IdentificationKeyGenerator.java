@@ -179,7 +179,7 @@ public class IdentificationKeyGenerator {
                         newRemainingCharacters.removeAll(inapplicableCharacters);
 
                         // pruning option handling
-                        if (config.isPruning() && remainingTaxa.containsAll(newRemainingTaxa)
+                        if (config.isPruningEnabled() && remainingTaxa.containsAll(newRemainingTaxa)
                                 && newRemainingTaxa.containsAll(remainingTaxa)
                                 && !childDependantCharacters.contains(selectedCharacter)) {
                             node.setNodeDescription(IkeyConfig.getBundleConfElement("message.warning.pruning"));
@@ -220,7 +220,7 @@ public class IdentificationKeyGenerator {
                                 remainingCharacters);
 
                         // pruning option handling
-                        if (config.isPruning() && remainingTaxa.containsAll(newRemainingTaxa)
+                        if (config.isPruningEnabled() && remainingTaxa.containsAll(newRemainingTaxa)
                                 && newRemainingTaxa.containsAll(remainingTaxa)
                                 && !childDependantCharacters.contains(selectedCharacter)) {
                             node.setNodeDescription(IkeyConfig.getBundleConfElement("message.warning.pruning"));
