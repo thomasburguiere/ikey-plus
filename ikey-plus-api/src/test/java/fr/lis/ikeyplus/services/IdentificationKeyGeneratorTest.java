@@ -20,16 +20,6 @@ import static org.junit.Assert.assertEquals;
 
 public class IdentificationKeyGeneratorTest {
 
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-        // creation of IkeyConfig object (containing options)
-
-        // set the confTest ResourceBundle
-        // IkeyConfig.setBundleConfOverridable(ResourceBundle.getBundle("fr.lis.ikeyplus.confTest"));
-        // IkeyConfig.setBundleConf(ResourceBundle.getBundle("fr.lis.ikeyplus.confTest"));
-
-    }
-
     @Test
     public void should_generate_genetta_identification_key_with_default_options() throws Exception {
         String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
@@ -43,7 +33,7 @@ public class IdentificationKeyGeneratorTest {
         // define time before parsing SDD file
         long beforeTime = System.currentTimeMillis();
 
-        SDDSaxParser sddSaxParser = null;
+        SDDSaxParser sddSaxParser;
         try {
             sddSaxParser = new SDDSaxParser(stringUrl, config);
 
@@ -54,9 +44,9 @@ public class IdentificationKeyGeneratorTest {
                 identificationKeyGenerator.createIdentificationKey();
                 SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 
-                byte[] encoded =  Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta.txt"));
+                byte[] encoded = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta.txt"));
                 String genettaFixture = new String(encoded, "UTF-8");
-                assertEquals(tree2dump.toString(), genettaFixture);
+                assertEquals(genettaFixture, tree2dump.toString());
             } catch (Exception e) {
                 e.printStackTrace();
                 throw (e);
@@ -82,7 +72,7 @@ public class IdentificationKeyGeneratorTest {
         config.setVerbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTIC));
         config.setWeightContext(IkeyConfig.WeightContext.OBSERVATION_CONVENIENCE);
 
-        SDDSaxParser sddSaxParser = null;
+        SDDSaxParser sddSaxParser;
         try {
             sddSaxParser = new SDDSaxParser(stringUrl, config);
 
@@ -93,9 +83,9 @@ public class IdentificationKeyGeneratorTest {
                 identificationKeyGenerator.createIdentificationKey();
                 SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 
-                byte[] encoded =  Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta_weights.txt"));
+                byte[] encoded = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta_weights.txt"));
                 String genettaFixture = new String(encoded, "UTF-8");
-                assertEquals(tree2dump.toString(), genettaFixture);
+                assertEquals(genettaFixture, tree2dump.toString());
             } catch (Exception e) {
                 e.printStackTrace();
                 throw (e);
@@ -120,7 +110,7 @@ public class IdentificationKeyGeneratorTest {
         config.setPruning(true);
         config.setVerbosity(Sets.newHashSet(HEADER, WARNING, STATISTIC));
 
-        SDDSaxParser sddSaxParser = null;
+        SDDSaxParser sddSaxParser;
         try {
             sddSaxParser = new SDDSaxParser(stringUrl, config);
 
@@ -131,9 +121,9 @@ public class IdentificationKeyGeneratorTest {
                 identificationKeyGenerator.createIdentificationKey();
                 SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 
-                byte[] encoded =  Files.readAllBytes(Paths.get("src/test/resources/fixtures/cichorieae.txt"));
+                byte[] encoded = Files.readAllBytes(Paths.get("src/test/resources/fixtures/cichorieae.txt"));
                 String fixture = new String(encoded, "UTF-8");
-                assertEquals(tree2dump.toString(), fixture);
+                assertEquals(fixture, tree2dump.toString());
             } catch (Exception e) {
                 e.printStackTrace();
                 throw (e);

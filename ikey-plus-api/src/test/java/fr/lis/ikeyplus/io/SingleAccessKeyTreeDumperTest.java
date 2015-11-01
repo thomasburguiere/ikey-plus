@@ -46,7 +46,7 @@ public class SingleAccessKeyTreeDumperTest extends TestCase {
 
                 byte[] fixtureBytes = Files.readAllBytes(Paths.get("src/test/resources/fixtures/cichorieae_flat.html"));
                 String fixture = new String(fixtureBytes, "UTF-8");
-                assertEquals(result, fixture);
+                assertEquals(fixture, result);
             } catch (Exception e) {
                 e.printStackTrace();
                 throw (e);
