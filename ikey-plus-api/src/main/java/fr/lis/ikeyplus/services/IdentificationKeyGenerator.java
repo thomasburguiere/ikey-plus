@@ -1,13 +1,5 @@
 package fr.lis.ikeyplus.services;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import fr.lis.ikeyplus.model.CategoricalCharacter;
 import fr.lis.ikeyplus.model.CodedDescription;
 import fr.lis.ikeyplus.model.DataSet;
@@ -20,6 +12,14 @@ import fr.lis.ikeyplus.model.State;
 import fr.lis.ikeyplus.model.Taxon;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import fr.lis.ikeyplus.utils.IkeyUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This class is the service generating identification keys
@@ -38,21 +38,12 @@ public class IdentificationKeyGenerator {
     // the maximum number of states per character
     private int maxNbStatesPerCharacter;
 
-    /**
-     * Constructor
-     *
-     * @param singleAccessKeyTree
-     * @param dataSet
-     */
     public IdentificationKeyGenerator(DataSet dataset, IkeyConfig config) throws Exception {
         super();
         this.dataset = dataset;
         this.config = config;
     }
 
-    /**
-     * Create the identification key tree
-     */
     public void createIdentificationKey() throws OutOfMemoryError, Exception {
 
         this.singleAccessKeyTree = new SingleAccessKeyTree(config);
@@ -77,14 +68,6 @@ public class IdentificationKeyGenerator {
         }
     }
 
-    /**
-     * Create child Nodes for the SingleAccessKeyTree
-     *
-     * @param parentNode
-     * @param remainingCharacters
-     * @param remainingTaxa
-     * @param alreadyUsedCharacter , the list of numerical characters already used at least one time
-     */
     private void calculateSingleAccessKeyNodeChild(SingleAccessKeyNode parentNode,
                                                    List<ICharacter> remainingCharacters, List<Taxon> remainingTaxa,
                                                    List<ICharacter> alreadyUsedCharacter) throws Exception {
@@ -259,13 +242,6 @@ public class IdentificationKeyGenerator {
         }
     }
 
-    /**
-     * merge character state if remaining taxa are similar between 2 nodes
-     *
-     * @param futureChildNodes
-     * @param node
-     * @return true if the current node has been merge with one of future child nodes
-     */
     private boolean mergeNodesIfSameDiscrimination(List<SingleAccessKeyNode> futureChildNodes,
                                                    SingleAccessKeyNode node) {
 
@@ -282,13 +258,6 @@ public class IdentificationKeyGenerator {
         return false;
     }
 
-    /**
-     * Delete useless nodes (parentNode and ChildNode have the same nb of taxa)
-     *
-     * @param parentNode
-     * @param node
-     * @return true, if the SingleAccessKeyTree has changed
-     */
     public boolean optimizeSingleAccessKeyTree(SingleAccessKeyNode parentNode, SingleAccessKeyNode node,
                                                boolean isOptimized) throws Exception {
 
@@ -308,12 +277,6 @@ public class IdentificationKeyGenerator {
         return isOptimized;
     }
 
-    /**
-     * @param remaningTaxa
-     * @param character
-     * @param state
-     * @return List<Taxon>, the list of remaining taxa
-     */
     private List<Taxon> getRemainingTaxa(List<Taxon> remainingTaxa, CategoricalCharacter character,
                                          State state) throws Exception {
 
@@ -331,12 +294,6 @@ public class IdentificationKeyGenerator {
         return newRemainingTaxa;
     }
 
-    /**
-     * @param remaningTaxa
-     * @param character
-     * @param quantitativeMeasure
-     * @return List<Taxon>, the list of remaining taxa
-     */
     private List<Taxon> getRemainingTaxa(List<Taxon> remainingTaxa, QuantitativeCharacter character,
                                          QuantitativeMeasure quantitativeMeasure) throws Exception {
 
@@ -353,11 +310,6 @@ public class IdentificationKeyGenerator {
         return newRemainingTaxa;
     }
 
-    /**
-     * @param remaningTaxa
-     * @param character
-     * @return List<Taxon>, the list of not described taxa for categorical character
-     */
     private List<Taxon> getNotDescribedTaxa(List<Taxon> remainingTaxa, CategoricalCharacter character)
             throws Exception {
 
@@ -374,11 +326,6 @@ public class IdentificationKeyGenerator {
         return notDescribedTaxa;
     }
 
-    /**
-     * @param remaningTaxa
-     * @param character
-     * @return List<Taxon>, the list of not described taxa for quantitative character
-     */
     private List<Taxon> getNotDescribedTaxa(List<Taxon> remainingTaxa, QuantitativeCharacter character)
             throws Exception {
 
@@ -395,14 +342,6 @@ public class IdentificationKeyGenerator {
         return notDescribedTaxa;
     }
 
-    /**
-     * calculate the 2 best intervals for quantitative character node
-     *
-     * @param character
-     * @param remainingTaxa
-     * @return the two interval
-     * @throws Exception
-     */
     private List<QuantitativeMeasure> splitQuantitativeCharacter(ICharacter character,
                                                                  List<Taxon> remainingTaxa) throws Exception {
 
@@ -458,13 +397,6 @@ public class IdentificationKeyGenerator {
         return quantitativeMeasures;
     }
 
-    /**
-     * get all Min and Max for all remaining taxa concerning one quantitative character
-     *
-     * @param character
-     * @param remainingTaxa
-     * @return List<Double>, the list of Min and Max values of all remaining taxa
-     */
     private List<Double> getAllNumericalValues(ICharacter character, List<Taxon> remainingTaxa)
             throws Exception {
 
@@ -487,13 +419,6 @@ public class IdentificationKeyGenerator {
         return allValues;
     }
 
-    /**
-     * Calculate the discriminant power for all taxa
-     *
-     * @param characters
-     * @param codedDescriptions
-     * @return Map<ICharacter,Float>, a MAP contening all discriminant power of all taxa
-     */
     private Map<ICharacter, Float> charactersScores(List<ICharacter> characters, List<Taxon> remaningTaxa,
                                                     List<ICharacter> childDependantCharacters, List<ICharacter> alreadyUsedCharacter)
             throws Exception {
@@ -516,11 +441,6 @@ public class IdentificationKeyGenerator {
         return scoreMap;
     }
 
-    /**
-     * consider children in the calculate score
-     *
-     * @param scoreMap
-     */
     private void considerChildCharacterScore(HashMap<ICharacter, Float> scoreMap,
                                              List<ICharacter> childDependantCharacters) throws Exception {
         for (ICharacter character : scoreMap.keySet()) {
@@ -534,11 +454,6 @@ public class IdentificationKeyGenerator {
         }
     }
 
-    /**
-     * @param scoreMap
-     * @param character
-     * @return float, the max score of all character child
-     */
     private float getMaxChildScore(HashMap<ICharacter, Float> scoreMap, ICharacter character)
             throws Exception {
         List<ICharacter> characters = character.getAllChildren();
@@ -568,10 +483,6 @@ public class IdentificationKeyGenerator {
      * useContextualCharacterWeights is set to <b> <tt>true</tt></b>, contextual character weights are used,
      * <i>i.e.</i> for a given character, the weight applied may vary depending on the taxon considered.</br>
      * If no weight are detected in the SDD file, all the characters are initialized with the same weight (3)
-     *
-     * @param charactersScore
-     * @param useWeights
-     * @return ICharacter, the best character
      */
     private ICharacter bestCharacter(Map<ICharacter, Float> charactersScore, List<Taxon> remainingTaxa)
             throws Exception {
@@ -690,13 +601,6 @@ public class IdentificationKeyGenerator {
         return bestCharacter;
     }
 
-    /**
-     * get the sum of taxa for each state
-     *
-     * @param bestCharacter
-     * @param remainingTaxa
-     * @return int, the sum of all taxa
-     */
     private int getTaxaNumberForAllStates(CategoricalCharacter character, List<Taxon> remainingTaxa) {
         int taxaNumber = 0;
         for (Taxon taxon : remainingTaxa) {
@@ -708,14 +612,6 @@ public class IdentificationKeyGenerator {
         return taxaNumber;
     }
 
-    /**
-     * Calculate the discriminant power for categorical character
-     *
-     * @param character
-     * @param scoreMethod
-     * @param codedDescriptions
-     * @return float, the discriminant power of the categorical character
-     */
     private float categoricalCharacterScore(CategoricalCharacter character, List<Taxon> remainingTaxa)
             throws Exception {
         int cpt = 0;
@@ -800,13 +696,6 @@ public class IdentificationKeyGenerator {
         return score;
     }
 
-    /**
-     * Calculate the discriminant power for a quantitative character
-     *
-     * @param character
-     * @param codedDescriptions
-     * @return float, the discriminant power of the quantitative character
-     */
     private float quantitativeCharacterScore(QuantitativeCharacter character, List<Taxon> remainingTaxa,
                                              List<ICharacter> alreadyUsedCharacter) throws Exception {
         int cpt = 0;
@@ -899,15 +788,6 @@ public class IdentificationKeyGenerator {
         return score;
     }
 
-    /**
-     * Calculate the common percentage between two interval
-     *
-     * @param min1
-     * @param max1
-     * @param min2
-     * @param max2
-     * @return float, the common percentage
-     **/
     public static float calculCommonPercentage(double min1, double max1, double min2, double max2)
             throws Exception {
         double minLowerTmp = 0;
@@ -940,11 +820,6 @@ public class IdentificationKeyGenerator {
         return res;
     }
 
-    /**
-     * This method calculates the maximum number of character per state for the entire dataset
-     *
-     * @return
-     */
     private int calculateMaxNbStatesPerCharacter() {
         int max = 2;
         for (ICharacter ic : dataset.getCharacters()) {
@@ -955,12 +830,6 @@ public class IdentificationKeyGenerator {
         return max;
     }
 
-    /**
-     * @param commonPresent
-     * @param commonAbsent
-     * @param other
-     * @return float, the score using the method requested
-     */
     private float applyScoreMethod(float commonPresent, float commonAbsent, float other) {
 
         float out = 0;
@@ -993,44 +862,25 @@ public class IdentificationKeyGenerator {
         return out;
     }
 
-    /**
-     * @return SingleAccessKeyTree
-     */
     public SingleAccessKeyTree getSingleAccessKeyTree() {
         return singleAccessKeyTree;
     }
 
-    /**
-     * @param singleAccessKeyTree
-     */
     public void setSingleAccessKeyTree(SingleAccessKeyTree singleAccessKeyTree) {
         this.singleAccessKeyTree = singleAccessKeyTree;
     }
 
-    /**
-     * @return DataSet
-     */
     public DataSet getDataSet() {
         return dataset;
     }
 
-    /**
-     * @param dataSet
-     */
     public void setDataSet(DataSet dataSet) {
         this.dataset = dataSet;
     }
 
-    /**
-     * @return int, the max number of states
-     */
     public int getMaxNumStatesPerCharacter() {
         return maxNbStatesPerCharacter;
     }
-
-    /**
-     * @param maxNumStatesPerCharacter
-     */
     public void setMaxNumStatesPerCharacter(int maxNumStatesPerCharacter) {
         this.maxNbStatesPerCharacter = maxNumStatesPerCharacter;
     }
