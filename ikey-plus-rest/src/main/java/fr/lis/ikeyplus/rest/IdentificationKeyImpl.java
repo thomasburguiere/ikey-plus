@@ -197,7 +197,7 @@ public class IdentificationKeyImpl {
                                     tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolder);
                         } else {
                             resultFile = SingleAccessKeyTreeDumper.dumpHtmlFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS));
+                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolder);
                         }
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.WIKI) {
                         if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {

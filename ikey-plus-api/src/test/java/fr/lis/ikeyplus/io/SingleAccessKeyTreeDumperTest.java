@@ -58,6 +58,48 @@ public class SingleAccessKeyTreeDumperTest {
         }
     }
 
+    @Test
+    public void should_generate_cichorieae_flat_tree_key() throws Exception {
+        String stringUrl = "src/test/resources/inputFiles/cichorieae.sdd.xml";
+
+        IkeyConfig config = IkeyConfig.builder()
+                .enablePruning()
+                .verbosity(IkeyConfig.VerbosityLevel.HEADER)
+                .representation(IkeyConfig.KeyRepresentation.TREE)
+                .build();
+
+        SDDSaxParser sddSaxParser;
+        try {
+            sddSaxParser = new SDDSaxParser(stringUrl, config);
+
+            IdentificationKeyGenerator identificationKeyGenerator = null;
+
+            try {
+                identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
+                identificationKeyGenerator.createIdentificationKey();
+                SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+                boolean statisticsEnabled = config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS);
+                File file = SingleAccessKeyTreeDumper.dumpHtmlFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
+                byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
+                String result = new String(resultBytes, "UTF-8");
+
+                byte[] fixtureBytes = Files.readAllBytes(Paths.get("src/test/resources/fixtures/cichorieae_tree.html"));
+                String fixture = new String(fixtureBytes, "UTF-8");
+                assertThat(result).isEqualTo(fixture);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw (e);
+            }
+
+        } catch (SAXException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
     @BeforeClass
     public static void setup() {
         IkeyConfig.setBundleConfOverridable(ResourceBundle.getBundle("confTest"));
