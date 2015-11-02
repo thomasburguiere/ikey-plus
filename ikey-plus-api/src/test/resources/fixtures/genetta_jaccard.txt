@@ -1,0 +1,34 @@
+
+1.1) Rings on tail | present (items=18)
+	2.1) Relative width of the bright rings over the dark rings (middle of tail, dorsal view) | less than 20 % (items=6)
+		3.1) Longitudinal coalescence of the first row of dorsal spots (contiguous to mid-dorsal line) | absent (items=2)
+			4.1) Mid-dorsal line, coloration | longitudinally crossed by a brighter (ground coloration) line -> Genetta servalina
+			4.2) Mid-dorsal line, coloration | full dark -> Genetta pardina
+		3.2) Longitudinal coalescence of the first row of dorsal spots (contiguous to mid-dorsal line) | weak,at the rump (fusion of 2-3 spots) (items=2)
+			4.1) Mid-dorsal line, coloration | longitudinally crossed by a brighter (ground coloration) line -> Genetta victoriae
+			4.2) Mid-dorsal line, coloration | full dark -> Genetta johnstoni
+		3.3) Longitudinal coalescence of the first row of dorsal spots (contiguous to mid-dorsal line) | important, at the rump (fusion of> 3 spots) (items=2)
+			4.1) Distal part of the tail | alternation of dark and bright rings -> Genetta johnstoni
+			4.2) Distal part of the tail | several bright terminal rings are covered with dark -> Genetta bourloni
+		3.4) Longitudinal coalescence of the first row of dorsal spots (contiguous to mid-dorsal line) | complete, forming a continuous stripe on the whole back (items=2)
+			4.1) Distal part of the tail | alternation of dark and bright rings -> Genetta johnstoni
+			4.2) Distal part of the tail | several bright terminal rings are covered with dark -> Genetta poensis
+	2.2) Relative width of the bright rings over the dark rings (middle of tail, dorsal view) | between 50 and 75 % (items=6)
+		3.1) Coat of forefoot | dark -> Genetta cristata
+		3.2) Coat of forefoot | same as ground coloration but dark around pads (items=2)
+			4.1) Longitudinal coalescence of the first row of dorsal spots (contiguous to mid-dorsal line) | absent -> Genetta tigrina
+			4.2) Longitudinal coalescence of the first row of dorsal spots (contiguous to mid-dorsal line) | important, at the rump (fusion of> 3 spots) -> Genetta angolensis
+		3.3) Coat of forefoot | same as ground coloration (items=3)
+			4.1) Ventral inflation of the caudal entotympanic bone (ceb) | strong (twice as much inflated than ectotympanic bone) -> Genetta maculata, Genetta "letabae"
+			4.2) Ventral inflation of the caudal entotympanic bone (ceb) | very strong (thrice as much inflated than ectotympanic bone) -> Genetta "schoutedeni"
+	2.3) Relative width of the bright rings over the dark rings (middle of tail, dorsal view) | ca. 100 % (items=3)
+		3.1) Mid-dorsal line, coloration | longitudinally crossed by a brighter (ground coloration) line (items=2)
+			4.1) Ventral inflation of the caudal entotympanic bone (ceb) | weak (similar level of inflation with ectotympanic bone) -> Genetta abyssinica
+			4.2) Ventral inflation of the caudal entotympanic bone (ceb) | strong (twice as much inflated than ectotympanic bone) -> Genetta thierryi
+		3.2) Mid-dorsal line, coloration | full dark -> Genetta genetta
+	2.4) Relative width of the bright rings over the dark rings (middle of tail, dorsal view) | ca. 200 % (items=3)
+		3.1) Mid-dorsal line, coloration | longitudinally crossed by a brighter (ground coloration) line (items=2)
+			4.1) Shape of the first dark rings of the tail | "chevron" -> Poiana leightoni
+			4.2) Shape of the first dark rings of the tail | circle -> Poiana richardsonii
+		3.2) Mid-dorsal line, coloration | full dark -> Genetta felina
+1.2) Rings on tail | absent -> Genetta piscivora

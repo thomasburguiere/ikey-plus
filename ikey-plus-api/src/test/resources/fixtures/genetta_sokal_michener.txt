@@ -1,0 +1,34 @@
+
+1.1) Coat of inner upper leg | same as ground coloration (items=10)
+	2.1) Mid-dorsal line | present (items=9)
+		3.1) Mid-dorsal line, coloration | longitudinally crossed by a brighter (ground coloration) line (items=5)
+			4.1) Mid-dorsal line, pattern | not a continuous stripe (one row of median spots) (items=3)
+				5.1) Density of distribution of dorsal spots | low (items=2)
+					6.1) Shape of the first dark rings of the tail | "chevron" -> Poiana leightoni
+					6.2) Shape of the first dark rings of the tail | circle -> Poiana richardsonii
+				5.2) Density of distribution of dorsal spots | high -> Genetta cristata
+			4.2) Mid-dorsal line, pattern | continuous stripe (items=2)
+				5.1) "Dirty"stripe longitudinally crossing the rings of the upper part of the tail | well marked -> Genetta thierryi
+				5.2) "Dirty"stripe longitudinally crossing the rings of the upper part of the tail | hardly visible -> Genetta abyssinica
+		3.2) Mid-dorsal line, coloration | full dark (items=4)
+			4.1) Ventral inflation of the caudal entotympanic bone (ceb) | weak (similar level of inflation with ectotympanic bone) -> Genetta genetta
+			4.2) Ventral inflation of the caudal entotympanic bone (ceb) | strong (twice as much inflated than ectotympanic bone) -> Genetta maculata, Genetta "letabae"
+			4.3) Ventral inflation of the caudal entotympanic bone (ceb) | very strong (thrice as much inflated than ectotympanic bone) -> Genetta "schoutedeni"
+	2.2) Mid-dorsal line | absent -> Genetta piscivora
+1.2) Coat of inner upper leg | dark (items=9)
+	2.1) Length of hairs on tail | short (from 20 to 30 mm) (items=5)
+		3.1) Tip of the tail | dark (items=3)
+			4.1) P3 lingual cusp | absent or extremely reduced -> Genetta pardina
+			4.2) P3 lingual cusp | present (items=2)
+				5.1) Premaxillary-maxillary suture position in relation to cusp of P1 | forward -> Genetta poensis
+				5.2) Premaxillary-maxillary suture position in relation to cusp of P1 | at the same level -> Genetta bourloni
+		3.2) Tip of the tail | bright (items=2)
+			4.1) Mid-dorsal line, coloration | longitudinally crossed by a brighter (ground coloration) line -> Genetta servalina
+			4.2) Mid-dorsal line, coloration | full dark -> Genetta johnstoni
+	2.2) Length of hairs on tail | long (from 40 to 45 mm) (items=4)
+		3.1) "Dirty"stripe longitudinally crossing the rings of the upper part of the tail | well marked (items=2)
+			4.1) Tip of the tail | dark -> Genetta angolensis
+			4.2) Tip of the tail | bright -> Genetta felina
+		3.2) "Dirty"stripe longitudinally crossing the rings of the upper part of the tail | hardly visible (items=2)
+			4.1) Mid-dorsal line, coloration | longitudinally crossed by a brighter (ground coloration) line -> Genetta victoriae
+			4.2) Mid-dorsal line, coloration | full dark -> Genetta tigrina
