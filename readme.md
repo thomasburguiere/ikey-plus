@@ -1,6 +1,8 @@
 Ikey+: Identification key generator
 ===================================
 
+[![Build Status](https://travis-ci.org/thomasburguiere/ikey-plus.svg?branch=master)](https://travis-ci.org/thomasburguiere/ikey-plus) [![codecov.io](https://codecov.io/github/thomasburguiere/ikey-plus/coverage.svg?branch=master)](https://codecov.io/github/thomasburguiere/ikey-plus?branch=master)
+
 Authors : 
 
 - Florian Causse 
