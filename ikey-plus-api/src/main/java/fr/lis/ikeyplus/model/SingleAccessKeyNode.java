@@ -7,7 +7,6 @@ import java.util.List;
  * This class represents a node of single access key
  *
  * @author Florian Causse
- * @created 18-04-2011
  */
 public class SingleAccessKeyNode {
 
@@ -18,109 +17,51 @@ public class SingleAccessKeyNode {
     private String nodeDescription = null;
     private List<Taxon> remainingTaxa = null;
 
-    /**
-     * constructor
-     *
-     * @throws Exception
-     */
     public SingleAccessKeyNode() throws OutOfMemoryError, Exception {
         this(null, null);
     }
 
-    /**
-     * constructor with character and character state parameters
-     *
-     * @param ICharacter , a character
-     * @param Object     , the description concerning the current character -> List<State> or QuantitativeMeasure
-     * @throws Exception
-     */
     public SingleAccessKeyNode(ICharacter character, Object characterState) throws OutOfMemoryError,
             Exception {
         super();
         this.character = character;
         this.characterState = characterState;
-        this.otherCharacterStates = new ArrayList<Object>();
-        this.children = new ArrayList<SingleAccessKeyNode>();
-        this.remainingTaxa = new ArrayList<Taxon>();
+        this.otherCharacterStates = new ArrayList<>();
+        this.children = new ArrayList<>();
+        this.remainingTaxa = new ArrayList<>();
     }
-
-    /**
-     * get the character assign to the node
-     *
-     * @return ICharacter, a character
-     */
     public ICharacter getCharacter() {
         return character;
     }
 
-    /**
-     * set the character assign to the node
-     *
-     * @param ICharacter , a character
-     */
     public void setCharacter(ICharacter character) {
         this.character = character;
     }
 
-    /**
-     * get the description assign to the Node
-     *
-     * @return Object, the description concerning the node
-     */
     public Object getCharacterState() {
         return characterState;
     }
 
-    /**
-     * set the description assign to the node
-     *
-     * @param Object , the description concerning the node
-     */
     public void setCharacterState(Object characterState) {
         this.characterState = characterState;
     }
 
-    /**
-     * get the other states of the node
-     *
-     * @return Object, the description concerning the node
-     */
     public List<Object> getOtherCharacterStates() {
         return otherCharacterStates;
     }
 
-    /**
-     * set the other states of the node
-     *
-     * @param Object , the description concerning the node
-     */
     public void setOtherCharacterStates(List<Object> otherCharacterStates) {
         this.otherCharacterStates = otherCharacterStates;
     }
 
-    /**
-     * add other state to the node
-     *
-     * @param Object , the description concerning the node
-     */
     public void addOtherCharacterStates(Object otherCharacterState) {
         this.otherCharacterStates.add(otherCharacterState);
     }
 
-    /**
-     * get states as String using default separator
-     *
-     * @return String, the list of states
-     */
     public String getStringStates() {
         return getStatesToString(" OR ");
     }
 
-    /**
-     * get states as String using new separator
-     *
-     * @return String, the list of states
-     */
     public String getStatesToString(String separator) {
 
         StringBuilder result = new StringBuilder("");
@@ -128,20 +69,16 @@ public class SingleAccessKeyNode {
             result.append(((State) this.getCharacterState()).getName());
             for (Object state : this.getOtherCharacterStates()) {
                 if (state instanceof State) {
-                    result.append(separator + ((State) state).getName());
+                    result.append(separator).append(((State) state).getName());
                 }
             }
         }
         return result.toString();
     }
 
-    /**
-     * @return the list of States contained by this node, if the node does contain a
-     * {@link QuantitativeMeasure}
-     */
     public List<State> getStates() {
         if (this.characterState instanceof State) {
-            List<State> states = new ArrayList<State>();
+            List<State> states = new ArrayList<>();
             states.add((State) this.getCharacterState());
             for (Object state : this.getOtherCharacterStates()) {
                 if (state instanceof State)
@@ -152,101 +89,46 @@ public class SingleAccessKeyNode {
         return null;
     }
 
-    /**
-     * get all children
-     *
-     * @return List<SingleAccessKeyNode>, all child nodes
-     */
     public List<SingleAccessKeyNode> getChildren() {
         return children;
     }
 
-    /**
-     * set all children
-     *
-     * @param List <SingleAccessKeyNode>, all child nodes
-     */
     public void setChildren(List<SingleAccessKeyNode> children) {
         this.children = children;
     }
 
-    /**
-     * add one child
-     *
-     * @param SingleAccessKeyNode , a node
-     */
     public void addChild(SingleAccessKeyNode singleAccessKeyNode) {
         this.children.add(singleAccessKeyNode);
     }
 
-    /**
-     * get the remaining taxa
-     *
-     * @return List<Taxon>
-     */
     public List<Taxon> getRemainingTaxa() {
         return remainingTaxa;
     }
 
-    /**
-     * set the remaining taxa
-     *
-     * @param remainingTaxa
-     */
     public void setRemainingTaxa(List<Taxon> remainingTaxa) {
         this.remainingTaxa = remainingTaxa;
     }
 
-    /**
-     * test if the node has children
-     *
-     * @return true if this SingleAccessKeyNode's child list size is greater than 0
-     */
     public boolean hasChild() {
         return children.size() > 0;
     }
 
-    /**
-     * test if the node is empty
-     *
-     * @return true if this SingleAccessKeynode's character or characterState is null
-     */
     public boolean isEmpty() {
         return character == null || characterState == null;
     }
 
-    /**
-     * get the node description
-     *
-     * @return String, the message to display for this node
-     */
     public String getNodeDescription() {
         return nodeDescription;
     }
 
-    /**
-     * set the node description
-     *
-     * @param nodeDescription
-     */
     public void setNodeDescription(String nodeDescription) {
         this.nodeDescription = nodeDescription;
     }
 
-    /**
-     * the string value characterizing the node
-     *
-     * @return String, the string representation
-     */
     public String toString() {
         return character.toString() + " --> " + characterState.toString();
     }
 
-    /**
-     * test if children contains at least one image
-     *
-     * @return boolean, true if at least one child contain images
-     */
     public boolean isChildrenContainsImages(DataSet dataSet) {
         for (SingleAccessKeyNode childNode : this.getChildren()) {
             if (childNode.getCharacter().isSupportsCategoricalData()

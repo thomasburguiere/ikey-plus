@@ -59,7 +59,7 @@ public class IdentificationKeyGenerator {
 
         // calculate next node
         calculateSingleAccessKeyNodeChild(rootNode, dataset.getCharacters(),
-                new ArrayList<Taxon>(dataset.getTaxa()), new ArrayList<ICharacter>());
+                new ArrayList<>(dataset.getTaxa()), new ArrayList<ICharacter>());
 
         // delete useless nodes
         boolean isOptimized = true;
@@ -75,7 +75,7 @@ public class IdentificationKeyGenerator {
         if (remainingCharacters.size() > 0 && remainingTaxa.size() > 1) {
 
             // get the list of characters which discriminant power depends on the child character
-            List<ICharacter> childDependantCharacters = new ArrayList<ICharacter>();
+            List<ICharacter> childDependantCharacters = new ArrayList<>();
 
             // calculate characters score
             Map<ICharacter, Float> charactersScore = charactersScores(remainingCharacters, remainingTaxa,
@@ -93,7 +93,7 @@ public class IdentificationKeyGenerator {
             }
 
             // get not described taxa
-            List<Taxon> notDescribedTaxa = null;
+            List<Taxon> notDescribedTaxa;
             if (selectedCharacter.isSupportsCategoricalData()) {
                 notDescribedTaxa = getNotDescribedTaxa(remainingTaxa,
                         ((CategoricalCharacter) selectedCharacter));
@@ -121,7 +121,7 @@ public class IdentificationKeyGenerator {
             if (selectedCharacter.isSupportsCategoricalData()) {
 
                 // create a child nodes list for mergeCharacterStatesIfSameDiscrimination option
-                List<SingleAccessKeyNode> futureChildNodes = new ArrayList<SingleAccessKeyNode>();
+                List<SingleAccessKeyNode> futureChildNodes = new ArrayList<>();
 
                 for (State state : ((CategoricalCharacter) selectedCharacter).getStates()) {
                     List<Taxon> newRemainingTaxa = getRemainingTaxa(remainingTaxa,
@@ -150,7 +150,7 @@ public class IdentificationKeyGenerator {
                         parentNode.addChild(node);
 
                         // create new remaining characters list
-                        List<ICharacter> newRemainingCharacters = new ArrayList<ICharacter>(
+                        List<ICharacter> newRemainingCharacters = new ArrayList<>(
                                 remainingCharacters);
                         // remove last best character from the remaining characters list
                         newRemainingCharacters.remove(selectedCharacter);
@@ -169,7 +169,7 @@ public class IdentificationKeyGenerator {
                         } else {
                             // calculate next node
                             calculateSingleAccessKeyNodeChild(node, newRemainingCharacters, newRemainingTaxa,
-                                    new ArrayList<ICharacter>(alreadyUsedCharacter));
+                                    new ArrayList<>(alreadyUsedCharacter));
                         }
                     }
                 }
@@ -199,7 +199,7 @@ public class IdentificationKeyGenerator {
                         parentNode.addChild(node);
 
                         // create new remaining characters list, we don't remove the last best character
-                        List<ICharacter> newRemainingCharacters = new ArrayList<ICharacter>(
+                        List<ICharacter> newRemainingCharacters = new ArrayList<>(
                                 remainingCharacters);
 
                         // pruning option handling
@@ -214,11 +214,11 @@ public class IdentificationKeyGenerator {
                                 newRemainingCharacters.remove(selectedCharacter);
                                 // calculate next node without selected character
                                 calculateSingleAccessKeyNodeChild(node, newRemainingCharacters,
-                                        newRemainingTaxa, new ArrayList<ICharacter>(alreadyUsedCharacter));
+                                        newRemainingTaxa, new ArrayList<>(alreadyUsedCharacter));
                             } else {
                                 // calculate next node
                                 calculateSingleAccessKeyNodeChild(node, newRemainingCharacters,
-                                        newRemainingTaxa, new ArrayList<ICharacter>(alreadyUsedCharacter));
+                                        newRemainingTaxa, new ArrayList<>(alreadyUsedCharacter));
                             }
                         }
                     }
@@ -280,7 +280,7 @@ public class IdentificationKeyGenerator {
     private List<Taxon> getRemainingTaxa(List<Taxon> remainingTaxa, CategoricalCharacter character,
                                          State state) throws Exception {
 
-        List<Taxon> newRemainingTaxa = new ArrayList<Taxon>();
+        List<Taxon> newRemainingTaxa = new ArrayList<>();
 
         // init new remaining taxa list with taxa description matching the
         // current state
@@ -297,7 +297,7 @@ public class IdentificationKeyGenerator {
     private List<Taxon> getRemainingTaxa(List<Taxon> remainingTaxa, QuantitativeCharacter character,
                                          QuantitativeMeasure quantitativeMeasure) throws Exception {
 
-        List<Taxon> newRemainingTaxa = new ArrayList<Taxon>();
+        List<Taxon> newRemainingTaxa = new ArrayList<>();
 
         // init new remaining taxa list with taxa description matching the
         // current state
@@ -313,7 +313,7 @@ public class IdentificationKeyGenerator {
     private List<Taxon> getNotDescribedTaxa(List<Taxon> remainingTaxa, CategoricalCharacter character)
             throws Exception {
 
-        List<Taxon> notDescribedTaxa = new ArrayList<Taxon>();
+        List<Taxon> notDescribedTaxa = new ArrayList<>();
 
         // init not described taxa list with taxa without description
         for (Taxon taxon : remainingTaxa) {
@@ -329,7 +329,7 @@ public class IdentificationKeyGenerator {
     private List<Taxon> getNotDescribedTaxa(List<Taxon> remainingTaxa, QuantitativeCharacter character)
             throws Exception {
 
-        List<Taxon> notDescribedTaxa = new ArrayList<Taxon>();
+        List<Taxon> notDescribedTaxa = new ArrayList<>();
 
         // init not described taxa list with taxa without description
         for (Taxon taxon : remainingTaxa) {
@@ -345,7 +345,7 @@ public class IdentificationKeyGenerator {
     private List<QuantitativeMeasure> splitQuantitativeCharacter(ICharacter character,
                                                                  List<Taxon> remainingTaxa) throws Exception {
 
-        List<QuantitativeMeasure> quantitativeMeasures = new ArrayList<QuantitativeMeasure>();
+        List<QuantitativeMeasure> quantitativeMeasures = new ArrayList<>();
         QuantitativeMeasure quantitativeMeasure1 = new QuantitativeMeasure();
         QuantitativeMeasure quantitativeMeasure2 = new QuantitativeMeasure();
 
@@ -358,12 +358,12 @@ public class IdentificationKeyGenerator {
             }
         });
         // determine the best threshold to cut the interval in 2 part
-        Double threshold = null;
+        Double threshold;
         Double bestThreshold = null;
         int difference = allValues.size();
         int differenceMin = difference;
-        int taxaBefore = 0;
-        int taxaAfter = 0;
+        int taxaBefore;
+        int taxaAfter;
         for (int i = 0; i < allValues.size() / 2; i++) {
             threshold = allValues.get(i * 2 + 1);
             taxaBefore = 0;
@@ -384,9 +384,9 @@ public class IdentificationKeyGenerator {
         // split the interval in 2 part
         if (allValues.size() > 2 && bestThreshold != null) {
             quantitativeMeasure1.setMin(allValues.get(0));
-            quantitativeMeasure1.setMax(new Double(bestThreshold));
+            quantitativeMeasure1.setMax(bestThreshold);
             quantitativeMeasure1.setMaxInclude(false);
-            quantitativeMeasure2.setMin(new Double(bestThreshold));
+            quantitativeMeasure2.setMin(bestThreshold);
             quantitativeMeasure2.setMax(allValues.get(allValues.size() - 1));
         }
 
@@ -400,7 +400,7 @@ public class IdentificationKeyGenerator {
     private List<Double> getAllNumericalValues(ICharacter character, List<Taxon> remainingTaxa)
             throws Exception {
 
-        List<Double> allValues = new ArrayList<Double>();
+        List<Double> allValues = new ArrayList<>();
 
         for (Taxon taxon : remainingTaxa) {
             if (dataset.getCodedDescription(taxon).getCharacterDescription(character) != null
@@ -422,7 +422,7 @@ public class IdentificationKeyGenerator {
     private Map<ICharacter, Float> charactersScores(List<ICharacter> characters, List<Taxon> remaningTaxa,
                                                     List<ICharacter> childDependantCharacters, List<ICharacter> alreadyUsedCharacter)
             throws Exception {
-        LinkedHashMap<ICharacter, Float> scoreMap = new LinkedHashMap<ICharacter, Float>();
+        LinkedHashMap<ICharacter, Float> scoreMap = new LinkedHashMap<>();
         for (ICharacter character : characters) {
             if (character.isSupportsCategoricalData()) {
                 scoreMap.put(character,
@@ -790,11 +790,11 @@ public class IdentificationKeyGenerator {
 
     public static float calculCommonPercentage(double min1, double max1, double min2, double max2)
             throws Exception {
-        double minLowerTmp = 0;
-        double maxUpperTmp = 0;
-        double minUpperTmp = 0;
-        double maxLowerTmp = 0;
-        float res = 0;
+        double minLowerTmp;
+        double maxUpperTmp;
+        double minUpperTmp;
+        double maxLowerTmp;
+        float res;
 
         if (min1 <= min2) {
             minLowerTmp = min1;
@@ -832,7 +832,7 @@ public class IdentificationKeyGenerator {
 
     private float applyScoreMethod(float commonPresent, float commonAbsent, float other) {
 
-        float out = 0;
+        float out;
 
         // Sokal & Michener method
         if (config.getScoreMethod() == IkeyConfig.ScoreMethod.SOKAL_AND_MICHENER) {
@@ -866,16 +866,8 @@ public class IdentificationKeyGenerator {
         return singleAccessKeyTree;
     }
 
-    public void setSingleAccessKeyTree(SingleAccessKeyTree singleAccessKeyTree) {
-        this.singleAccessKeyTree = singleAccessKeyTree;
-    }
-
     public DataSet getDataSet() {
         return dataset;
-    }
-
-    public void setDataSet(DataSet dataSet) {
-        this.dataset = dataSet;
     }
 
     public int getMaxNumStatesPerCharacter() {

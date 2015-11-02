@@ -23,74 +23,41 @@ public class Taxon {
     private List<String> mediaObjectKeys = null;
     private HashMap<Integer, Float> pathStatistics;
 
-    /**
-     * constructor
-     */
     public Taxon() {
         this(null);
     }
 
-    /**
-     * constructor with name param
-     *
-     * @param String , the name
-     */
     public Taxon(String name) {
         super();
         this.name = name;
-        mediaObjectKeys = new ArrayList<String>();
+        mediaObjectKeys = new ArrayList<>();
 
         // initializing the taxonStatistics
-        pathStatistics = new HashMap<Integer, Float>();
-        pathStatistics.put(NB_PATH_IN_KEY, new Float(0));
-        pathStatistics.put(SHORTEST_PATH_IN_KEY, new Float(0));
-        pathStatistics.put(LONGEST_PATH_IN_KEY, new Float(0));
-        pathStatistics.put(AVERAGE_PATHLENGTH_IN_KEY, new Float(0));
-        pathStatistics.put(SUM_PATHLENGTHS_IN_KEY, new Float(0));
+        pathStatistics = new HashMap<>();
+        pathStatistics.put(NB_PATH_IN_KEY, (float) 0);
+        pathStatistics.put(SHORTEST_PATH_IN_KEY, (float) 0);
+        pathStatistics.put(LONGEST_PATH_IN_KEY, (float) 0);
+        pathStatistics.put(AVERAGE_PATHLENGTH_IN_KEY, (float) 0);
+        pathStatistics.put(SUM_PATHLENGTHS_IN_KEY, (float) 0);
 
     }
 
-    /**
-     * get the taxon name
-     *
-     * @return String, the name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * set the taxon name
-     *
-     * @param String , the name
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * get the key list of mediaObject
-     *
-     * @return List<String>, the key list of mediaObject
-     */
     public List<String> getMediaObjectKeys() {
         return mediaObjectKeys;
     }
 
-    /**
-     * set the key list of mediaObject
-     *
-     * @param mediaObjectKeys , the key list of mediaObject
-     */
     public void setMediaObjectKeys(List<String> mediaObjectKeys) {
         this.mediaObjectKeys = mediaObjectKeys;
     }
 
-    /**
-     * get the first image
-     *
-     * @return String, the URL to the image
-     */
     public String getFirstImage(DataSet dataSet) {
         if (dataSet != null && mediaObjectKeys != null && mediaObjectKeys.size() > 0) {
             if (dataSet.getMediaObject(mediaObjectKeys.get(0)).startsWith("http")) {
@@ -100,11 +67,6 @@ public class Taxon {
         return null;
     }
 
-    /**
-     * get the first image key
-     *
-     * @return String, the key
-     */
     public String getFirstImageKey() {
         if (mediaObjectKeys.size() > 0) {
             return mediaObjectKeys.get(0);
@@ -112,47 +74,22 @@ public class Taxon {
         return null;
     }
 
-    /**
-     * get the ID
-     *
-     * @return String, the ID
-     */
     public String getId() {
         return id;
     }
 
-    /**
-     * set the ID
-     *
-     * @param String , the ID
-     */
     public void setId(String id) {
         this.id = id;
     }
 
-    /**
-     * get the statistic values
-     *
-     * @return HashMap<Integer, Float>
-     */
     public HashMap<Integer, Float> getTaxonStatistics() {
         return pathStatistics;
     }
 
-    /**
-     * set the statistic values
-     *
-     * @param HashMap <Integer, Float>
-     */
     public void setTaxonStatistics(HashMap<Integer, Float> taxonStatistics) {
         this.pathStatistics = taxonStatistics;
     }
 
-    /**
-     * update the statistic values
-     *
-     * @param Float , the length of the path
-     */
     public void updatePathStatistics(Float pathLength) {
         float oldNbPath = pathStatistics.get(NB_PATH_IN_KEY);
         float oldSumPathLength = pathStatistics.get(SUM_PATHLENGTHS_IN_KEY);

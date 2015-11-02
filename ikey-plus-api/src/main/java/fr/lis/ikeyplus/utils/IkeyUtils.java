@@ -23,10 +23,6 @@ public class IkeyUtils {
 
     /**
      * This method returns the intersection of two Lists
-     *
-     * @param list1
-     * @param list2
-     * @return List<?>
      */
     public static List<?> intersection(List<?> list1, List<?> list2) {
         List<Object> list = new ArrayList<Object>();
@@ -43,7 +39,7 @@ public class IkeyUtils {
      *
      * @param primaryList  , the list which elements are to be retained
      * @param excludedList , the list which elements shall not remain in the final list
-     * @return List<?>
+     * @return List
      */
     public static List<?> exclusion(List<?> primaryList, List<?> excludedList) {
         List<Object> list = new ArrayList<Object>();
@@ -56,10 +52,6 @@ public class IkeyUtils {
 
     /**
      * This method returns the union of two Lists
-     *
-     * @param list1
-     * @param list2
-     * @return List<?>
      */
     public static List<?> union(List<?> list1, List<?> list2) {
         Set<Object> set = new HashSet<Object>();

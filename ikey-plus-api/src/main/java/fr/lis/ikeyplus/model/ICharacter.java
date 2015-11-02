@@ -10,120 +10,45 @@ import java.util.List;
  */
 public interface ICharacter {
 
-    public String name = null;
-    public String id = null;
-    public float weight = 3;
-    public ICharacter parentCharacter = null;
-    public List<State> inapplicableStates = null;
-    public List<ICharacter> childCharacters = null;
-    public List<String> mediaObjectKeys = null;
+    String name = null;
+    String id = null;
+    float weight = 3;
+    ICharacter parentCharacter = null;
+    List<State> inapplicableStates = null;
+    List<ICharacter> childCharacters = null;
+    List<String> mediaObjectKeys = null;
 
-    public boolean isSupportsCategoricalData();
+    boolean isSupportsCategoricalData();
 
-    /**
-     * getter for name
-     *
-     * @return String, the name
-     */
-    public String getName();
+    String getName();
 
-    /**
-     * setter for name
-     *
-     * @param String , the name
-     */
-    public void setName(String name);
+    void setName(String name);
 
-    /**
-     * getter for ID
-     *
-     * @return String, Character identifier
-     */
-    public String getId();
+    String getId();
 
-    /**
-     * setter for ID
-     *
-     * @param String , Character identifier
-     */
-    public void setId(String id);
+    void setId(String id);
 
-    /**
-     * getter for weight
-     *
-     * @return int, Character weight
-     */
-    public float getWeight();
+    float getWeight();
 
-    /**
-     * setter for weight
-     *
-     * @param int , Character weight
-     */
-    public void setWeight(float weight);
+    void setWeight(float weight);
 
-    /**
-     * get the inapplicable states
-     *
-     * @return List<State>, the list of inapplicable states
-     */
-    public List<State> getInapplicableStates();
+    List<State> getInapplicableStates();
 
-    /**
-     * set the inapplicable states
-     *
-     * @param List <State> , the list of inapplicable states
-     */
-    public void setInapplicableStates(List<State> inapplicableStates);
+    void setInapplicableStates(List<State> inapplicableStates);
 
-    /**
-     * get the parent character
-     *
-     * @return ICharacter, the parent character
-     */
-    public ICharacter getParentCharacter();
+    ICharacter getParentCharacter();
 
-    /**
-     * set the parent character
-     *
-     * @param ICharacter , the parent character
-     */
-    public void setParentCharacter(ICharacter parentCharacter);
+    void setParentCharacter(ICharacter parentCharacter);
 
-    /**
-     * get all child characters
-     *
-     * @return List<ICharacter>, the list of child characters
-     */
-    public List<ICharacter> getChildCharacters();
+    List<ICharacter> getChildCharacters();
 
-    /**
-     * set the child characters
-     *
-     * @param List <ICharacter>, the list of child characters
-     */
-    public void setChildCharacters(List<ICharacter> childCharacters);
+    void setChildCharacters(List<ICharacter> childCharacters);
 
-    /**
-     * get all children in the hierarchies
-     *
-     * @param List <ICharacter>, the list of all child characters
-     */
-    public List<ICharacter> getAllChildren();
+    List<ICharacter> getAllChildren();
 
-    /**
-     * @return
-     */
-    public List<String> getMediaObjectKeys();
+    List<String> getMediaObjectKeys();
 
-    /**
-     * @param mediaObjects
-     */
-    public void setMediaObjectKeys(List<String> mediaObjects);
+    void setMediaObjectKeys(List<String> mediaObjects);
 
-    /**
-     * @param dataset
-     * @return
-     */
-    public String getFirstImage(DataSet dataset);
+    String getFirstImage(DataSet dataset);
 }

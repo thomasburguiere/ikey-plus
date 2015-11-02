@@ -1,15 +1,14 @@
 package fr.lis.ikeyplus.model;
 
+import fr.lis.ikeyplus.utils.IkeyConfig;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import fr.lis.ikeyplus.utils.IkeyConfig;
 
 /**
  * This class represents a Character
  *
  * @author Florian Causse
- * @created 11-05-2011
  */
 public class Character implements ICharacter {
 
@@ -21,22 +20,16 @@ public class Character implements ICharacter {
     private List<ICharacter> childCharacters = null;
     private List<String> mediaObjectKeys = null;
 
-    /**
-     * constructor by default
-     */
     public Character() {
         this(null);
     }
 
-    /**
-     * constructor with name parameter
-     */
     public Character(String name) {
         super();
         this.name = name;
-        this.inapplicableStates = new ArrayList<State>();
-        this.childCharacters = new ArrayList<ICharacter>();
-        this.mediaObjectKeys = new ArrayList<String>();
+        this.inapplicableStates = new ArrayList<>();
+        this.childCharacters = new ArrayList<>();
+        this.mediaObjectKeys = new ArrayList<>();
     }
 
     /* (non-Javadoc)
@@ -96,16 +89,10 @@ public class Character implements ICharacter {
 
     }
 
-    /**
-     * @return the mediaObjectKey
-     */
     public List<String> getMediaObjectKeys() {
         return mediaObjectKeys;
     }
 
-    /**
-     * @param mediaObjectKey the mediaObjectKey to set
-     */
     public void setMediaObjectKeys(List<String> mediaObjectKey) {
         this.mediaObjectKeys = mediaObjectKey;
     }
@@ -173,17 +160,11 @@ public class Character implements ICharacter {
      * @see model.ICharacter#getAllChildren() */
     @Override
     public List<ICharacter> getAllChildren() {
-        List<ICharacter> allChildrenCharacter = new ArrayList<ICharacter>();
+        List<ICharacter> allChildrenCharacter = new ArrayList<>();
         addChildrenToList(allChildrenCharacter, this);
         return allChildrenCharacter;
     }
 
-    /**
-     * add all the child character in a list
-     *
-     * @param allChildrenCharacter , the list of character
-     * @param character            , the current character
-     */
     private void addChildrenToList(List<ICharacter> allChildrenCharacter, ICharacter character) {
         for (ICharacter childCharacter : character.getChildCharacters()) {
             allChildrenCharacter.add(childCharacter);
@@ -191,11 +172,6 @@ public class Character implements ICharacter {
         }
     }
 
-    /**
-     * clone the character
-     *
-     * @return ICharacter, the cloned character
-     */
     public ICharacter clone() {
         ICharacter newCharacter = null;
         if (this.isSupportsCategoricalData()) {
@@ -212,11 +188,6 @@ public class Character implements ICharacter {
         return newCharacter;
     }
 
-    /**
-     * get the string value characterizing the current character
-     *
-     * @return String, the character name
-     */
     public String toString() {
         return this.name;
     }
