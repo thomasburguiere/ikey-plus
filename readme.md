@@ -1,7 +1,8 @@
 Ikey+: Identification key generator
 ===================================
 
-[![Build Status](https://travis-ci.org/thomasburguiere/ikey-plus.svg?branch=master)](https://travis-ci.org/thomasburguiere/ikey-plus) [![codecov.io](https://codecov.io/github/thomasburguiere/ikey-plus/coverage.svg?branch=master)](https://codecov.io/github/thomasburguiere/ikey-plus?branch=master)
+
+
 
 Authors : 
 
@@ -19,8 +20,10 @@ Build
 
 Run `mvn install`
 
-Usage - API
------------
+API
+---
+
+### Simple example
 
 Include the api jar in your app, then:
 
@@ -44,6 +47,19 @@ boolean statisticsEnabled = true or false;
 File resultFile = SingleAccessKeyTreeDumper
 					.dumpFlatHtmlFile("result file header", key, statisticsEnabled, outputFolder);
 ```
+
+### Configuration options
+
+|Option|method in `IkeyConfig.Builder`|
+|------|------------------------------|
+|Output format  |`format(...)`   |
+|Score method|`scoreMethod(...)`|
+
+
+Status
+------
+[![Build Status](https://travis-ci.org/thomasburguiere/ikey-plus.svg?branch=master)](https://travis-ci.org/thomasburguiere/ikey-plus) [![codecov.io](https://codecov.io/github/thomasburguiere/ikey-plus/coverage.svg?branch=master)](https://codecov.io/github/thomasburguiere/ikey-plus?branch=master)
+![codecov.io](https://codecov.io/github/thomasburguiere/ikey-plus/branch.svg?branch=master)
 
 Usage - REST API
 ----------------
