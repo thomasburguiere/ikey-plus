@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 import static junit.framework.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SingleAccessKeyTreeDumperTest {
 
@@ -42,7 +43,7 @@ public class SingleAccessKeyTreeDumperTest {
 
                 byte[] fixtureBytes = Files.readAllBytes(Paths.get("src/test/resources/fixtures/cichorieae_flat.html"));
                 String fixture = new String(fixtureBytes, "UTF-8");
-                assertEquals(fixture, result);
+                assertThat(result).isEqualTo(fixture);
             } catch (Exception e) {
                 e.printStackTrace();
                 throw (e);
