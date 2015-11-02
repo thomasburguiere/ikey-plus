@@ -22,14 +22,14 @@ public class SDDSaxParserTest {
     public static final String DATASET_NAME = "Project: Cichorieae";
     public Logger logger = Logger.getAnonymousLogger();
 
-    @Test
-    public void should_parse_local_file() throws Exception {
-        // creation of IkeyConfig object (containing options)
-        IkeyConfig config = IkeyConfig.builder().build();
-        SDDSaxParser sddSaxParser = new SDDSaxParser(new File("src/test/resources/inputFiles/cichorieae.sdd.xml"), config);
-        DataSet dataset = sddSaxParser.getDataset();
-        assertThat(dataset.getLabel()).isEqualToIgnoringCase(DATASET_NAME);
-        assertThat(dataset.getCharacters()).hasSize(EXPECTED_NB_OF_CHARACTERS);
-        assertThat(dataset.getTaxa()).hasSize(EXPECTED_NB_OF_TAXA);
-    }
+//    @Test
+//    public void should_parse_local_file() throws Exception {
+//        // creation of IkeyConfig object (containing options)
+//        IkeyConfig config = IkeyConfig.builder().build();
+//        SDDSaxParser sddSaxParser = new SDDSaxParser(new File("src/test/resources/inputFiles/cichorieae.sdd.xml"), config);
+//        DataSet dataset = sddSaxParser.getDataset();
+//        assertThat(dataset.getLabel()).isEqualToIgnoringCase(DATASET_NAME);
+//        assertThat(dataset.getCharacters()).hasSize(EXPECTED_NB_OF_CHARACTERS);
+//        assertThat(dataset.getTaxa()).hasSize(EXPECTED_NB_OF_TAXA);
+//    }
 }
