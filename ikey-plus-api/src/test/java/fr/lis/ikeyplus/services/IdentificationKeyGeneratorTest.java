@@ -15,7 +15,7 @@ import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.HEADER;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.OTHER;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.STATISTICS;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.WARNING;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class IdentificationKeyGeneratorTest {
 
@@ -27,9 +27,6 @@ public class IdentificationKeyGeneratorTest {
             .enablePruning()
             .verbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTICS))
         .build();
-
-        // define time before parsing SDD file
-        long beforeTime = System.currentTimeMillis();
 
         SDDSaxParser sddSaxParser;
         try {
@@ -44,7 +41,7 @@ public class IdentificationKeyGeneratorTest {
 
                 byte[] encoded = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta.txt"));
                 String genettaFixture = new String(encoded, "UTF-8");
-                assertEquals(genettaFixture, tree2dump.toString());
+                assertThat(genettaFixture).isEqualTo(tree2dump.toString());
             } catch (Exception e) {
                 e.printStackTrace();
                 throw (e);
@@ -82,7 +79,7 @@ public class IdentificationKeyGeneratorTest {
 
                 byte[] encoded = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta_weights.txt"));
                 String genettaFixture = new String(encoded, "UTF-8");
-                assertEquals(genettaFixture, tree2dump.toString());
+                assertThat(genettaFixture).isEqualTo(tree2dump.toString());
             } catch (Exception e) {
                 e.printStackTrace();
                 throw (e);
@@ -119,7 +116,7 @@ public class IdentificationKeyGeneratorTest {
 
                 byte[] encoded = Files.readAllBytes(Paths.get("src/test/resources/fixtures/cichorieae.txt"));
                 String fixture = new String(encoded, "UTF-8");
-                assertEquals(fixture, tree2dump.toString());
+                assertThat(fixture).isEqualTo(tree2dump.toString());
             } catch (Exception e) {
                 e.printStackTrace();
                 throw (e);
