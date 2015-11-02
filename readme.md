@@ -23,7 +23,7 @@ Usage - API
 Include the api jar in your app, then:
 
 ```java
-// setup generator config with reasonable default values
+// setup generator config with default values
 IkeyConfig config = IkeyConfig.builder().build();
 
 // initialize sdd parser

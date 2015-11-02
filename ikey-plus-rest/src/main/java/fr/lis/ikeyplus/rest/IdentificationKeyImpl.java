@@ -5,6 +5,7 @@ import fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 import fr.lis.ikeyplus.services.IdentificationKeyGenerator;
 import fr.lis.ikeyplus.utils.IkeyConfig;
+import fr.lis.ikeyplus.utils.IkeyConfigBuilder;
 import fr.lis.ikeyplus.utils.IkeyUtils;
 
 import javax.ws.rs.FormParam;
@@ -268,7 +269,7 @@ public class IdentificationKeyImpl {
 
     private IkeyConfig initializeConfig(@FormParam("format") String format, @FormParam("representation") String representation, @FormParam("fewStatesCharacterFirst") String fewStatesCharacterFirst, @FormParam("mergeCharacterStatesIfSameDiscrimination") String mergeCharacterStatesIfSameDiscrimination, @FormParam("pruning") boolean pruning, @FormParam("verbosity") String verbosity, @FormParam("scoreMethod") String scoreMethod, @FormParam("weightContext") String weightContext, @FormParam("weightType") String weightType) {
         IkeyConfig config;
-        IkeyConfig.Builder configBuilder = IkeyConfig.builder();
+        IkeyConfigBuilder configBuilder = IkeyConfig.builder();
         // options initialization
         if (format != null && IkeyConfig.OutputFormat.fromString(format) != null) {
             configBuilder.format(IkeyConfig.OutputFormat.fromString(format));

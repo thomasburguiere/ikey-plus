@@ -1,6 +1,5 @@
 package fr.lis.ikeyplus.utils;
 
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
 
@@ -38,7 +37,7 @@ public class IkeyConfig {
 
     private IkeyConfig() {}
 
-    private IkeyConfig(OutputFormat format,
+    IkeyConfig(OutputFormat format,
                        KeyRepresentation representation,
                        boolean fewStatesCharacterFirst,
                        boolean mergeCharacterStatesIfSameDiscrimination,
@@ -59,83 +58,8 @@ public class IkeyConfig {
         this.weightType = weightType;
     }
 
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public static class Builder {
-        private OutputFormat format = OutputFormat.TXT;
-        private KeyRepresentation representation = KeyRepresentation.TREE;
-        private boolean fewStatesCharacterFirst = false;
-        private boolean mergeCharacterStatesIfSameDiscrimination = false;
-        private boolean pruningEnabled = false;
-        private Set<VerbosityLevel> verbosity = Sets.newHashSet();
-        private ScoreMethod scoreMethod = ScoreMethod.XPER;
-        private WeightContext weightContext = WeightContext.NO_WEIGHT;
-        private WeightType weightType = WeightType.GLOBAL;
-
-        public Builder format(OutputFormat format) {
-            this.format = format;
-            return this;
-        }
-
-        public Builder representation(KeyRepresentation representation) {
-            this.representation = representation;
-            return this;
-        }
-
-        public Builder fewStatesCharacterFirst() {
-            this.fewStatesCharacterFirst = true;
-            return this;
-        }
-
-        public Builder mergeCharacterStatesIfSameDiscrimination(){
-            this.mergeCharacterStatesIfSameDiscrimination = true;
-            return this;
-        }
-
-        public Builder enablePruning(){
-            this.pruningEnabled = true;
-            return this;
-        }
-
-        public Builder scoreMethod(ScoreMethod scoreMethod) {
-            this.scoreMethod = scoreMethod;
-            return this;
-        }
-
-        public Builder weightContext(WeightContext weightContext) {
-            this.weightContext = weightContext;
-            return this;
-        }
-
-        public Builder weightType(WeightType weightType) {
-            this.weightType = weightType;
-            return this;
-        }
-
-        public Builder verbosity(VerbosityLevel verbosityLevel){
-            this.verbosity.add(verbosityLevel);
-            return this;
-        }
-
-        public Builder verbosity(Set<VerbosityLevel> verbosityLevels){
-            this.verbosity.addAll(verbosityLevels);
-            return this;
-        }
-
-        public IkeyConfig build() {
-            return new IkeyConfig(
-                    this.format,
-                    this.representation,
-                    this.fewStatesCharacterFirst,
-                    this.mergeCharacterStatesIfSameDiscrimination,
-                    this.pruningEnabled,
-                    ImmutableSet.copyOf(this.verbosity),
-                    this.scoreMethod,
-                    this.weightContext,
-                    this.weightType);
-        }
+    public static IkeyConfigBuilder builder() {
+        return new IkeyConfigBuilder();
     }
 
 
