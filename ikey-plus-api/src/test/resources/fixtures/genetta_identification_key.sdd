@@ -1,0 +1,1529 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Datasets xmlns="http://rs.tdwg.org/UBIF/2006/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://rs.tdwg.org/UBIF/2006/ http://rs.tdwg.org/UBIF/2006/Schema/1.1/SDD.xsd">
+<TechnicalMetadata created="2015-11-03T18:17:07">
+<Generator name="Identification Key generation WebService" notes="This software is developed and distributed by LIS - Laboratoire Informatique et Systématique (LIS) - Université Pierre et Marie Curie - Paris VI - within the ViBRANT project" version="1.1"/>
+</TechnicalMetadata>
+<Dataset xml:lang="en">
+<Representation>
+<Label>Identification key</Label>
+</Representation>
+<TaxonNames>
+<TaxonName id="t1">
+<Representation>
+<Label>Genetta thierryi</Label>
+</Representation>
+</TaxonName>
+<TaxonName id="t2">
+<Representation>
+<Label>Genetta abyssinica</Label>
+</Representation>
+</TaxonName>
+<TaxonName id="t3">
+<Representation>
+<Label>Genetta johnstoni</Label>
+</Representation>
+</TaxonName>
+<TaxonName id="t4">
+<Representation>
+<Label>Genetta felina</Label>
+</Representation>
+</TaxonName>
+<TaxonName id="t5">
+<Representation>
+<Label>Poiana richardsonii</Label>
+</Representation>
+</TaxonName>
+<TaxonName id="t6">
+<Representation>
+<Label>Poiana leightoni</Label>
+</Representation>
+</TaxonName>
+<TaxonName id="t7">
+<Representation>
+<Label>Genetta piscivora</Label>
+</Representation>
+</TaxonName>
+<TaxonName id="t8">
+<Representation>
+<Label>Genetta servalina</Label>
+</Representation>
+</TaxonName>
+<TaxonName id="t9">
+<Representation>
+<Label>Genetta angolensis</Label>
+</Representation>
+</TaxonName>
+<TaxonName id="t10">
+<Representation>
+<Label>Genetta cristata</Label>
+</Representation>
+</TaxonName>
+<TaxonName id="t11">
+<Representation>
+<Label>Genetta genetta</Label>
+</Representation>
+</TaxonName>
+<TaxonName id="t12">
+<Representation>
+<Label>Genetta victoriae</Label>
+</Representation>
+</TaxonName>
+<TaxonName id="t13">
+<Representation>
+<Label>Genetta pardina</Label>
+</Representation>
+</TaxonName>
+<TaxonName id="t14">
+<Representation>
+<Label>Genetta bourloni</Label>
+</Representation>
+</TaxonName>
+<TaxonName id="t15">
+<Representation>
+<Label>Genetta poensis</Label>
+</Representation>
+</TaxonName>
+<TaxonName id="t16">
+<Representation>
+<Label>Genetta maculata</Label>
+</Representation>
+</TaxonName>
+<TaxonName id="t17">
+<Representation>
+<Label>Genetta "letabae"</Label>
+</Representation>
+</TaxonName>
+<TaxonName id="t18">
+<Representation>
+<Label>Genetta "schoutedeni"</Label>
+</Representation>
+</TaxonName>
+<TaxonName id="t19">
+<Representation>
+<Label>Genetta tigrina</Label>
+</Representation>
+</TaxonName>
+</TaxonNames>
+<IdentificationKeys>
+<IdentificationKey>
+<Representation>
+<Label>Genets</Label>
+</Representation>
+<Question>
+<Text>Rings on tail</Text>
+</Question>
+<Leads>
+<Lead id="lead1">
+<Statement>present</Statement>
+<Question>
+<Text>Relative width of the bright rings over the dark rings (middle of tail, dorsal view)</Text>
+</Question>
+</Lead>
+<Lead id="nil0">
+<Statement>nil</Statement>
+</Lead>
+<Lead>
+<Parent ref="nil0" />
+<Statement>absent</Statement>
+<TaxonName ref="t7"/>
+</Lead>
+<Lead id="lead3">
+<Parent ref="lead1"/>
+<Statement>less than 20 %</Statement>
+<MediaObject ref="m231"/>
+<Question>
+<Text>Interorbital constriction</Text>
+</Question>
+</Lead>
+<Lead id="lead4">
+<Parent ref="lead1"/>
+<Statement>between 50 and 75 %</Statement>
+<MediaObject ref="m232"/>
+<Question>
+<Text>Coat of forefoot</Text>
+</Question>
+</Lead>
+<Lead id="lead5">
+<Parent ref="lead1"/>
+<Statement>ca. 100 %</Statement>
+<MediaObject ref="m233"/>
+<Question>
+<Text>Mid-dorsal line, coloration</Text>
+</Question>
+</Lead>
+<Lead id="lead6">
+<Parent ref="lead1"/>
+<Statement>ca. 200 %</Statement>
+<MediaObject ref="m234"/>
+<Question>
+<Text>Mid-dorsal line, coloration</Text>
+</Question>
+</Lead>
+<Lead id="lead7">
+<Parent ref="lead3"/>
+<Statement>strong (inferior to 1 - 0.12)</Statement>
+<MediaObject ref="m174"/>
+<Question>
+<Text>Longitudinal coalescence of the first row of dorsal spots (contiguous to mid-dorsal line)</Text>
+</Question>
+</Lead>
+<Lead id="lead8">
+<Parent ref="lead3"/>
+<Statement>intermediate (equal to 1 +/- 0.12)</Statement>
+<MediaObject ref="m175"/>
+<Question>
+<Text>Distal part of the tail</Text>
+</Question>
+</Lead>
+<Lead id="nil9">
+<Parent ref="lead3"/>
+<Statement>nil</Statement>
+<MediaObject ref="m176"/>
+</Lead>
+<Lead>
+<Parent ref="nil9" />
+<Statement>weak (superior to 1 + 0.12)</Statement>
+<TaxonName ref="t8"/>
+</Lead>
+<Lead id="nil10">
+<Parent ref="lead4"/>
+<Statement>nil</Statement>
+</Lead>
+<Lead>
+<Parent ref="nil10" />
+<Statement>dark</Statement>
+<TaxonName ref="t10"/>
+</Lead>
+<Lead id="lead11">
+<Parent ref="lead4"/>
+<Statement>same as ground coloration but dark around pads</Statement>
+<Question>
+<Text>Longitudinal coalescence of the first row of dorsal spots (contiguous to mid-dorsal line)</Text>
+</Question>
+</Lead>
+<Lead id="lead12">
+<Parent ref="lead4"/>
+<Statement>same as ground coloration</Statement>
+<Question>
+<Text>Ventral inflation of the caudal entotympanic bone (ceb)</Text>
+</Question>
+</Lead>
+<Lead id="lead13">
+<Parent ref="lead5"/>
+<Statement>longitudinally crossed by a brighter (ground coloration) line</Statement>
+<MediaObject ref="m250"/>
+<Question>
+<Text>Ventral inflation of the caudal entotympanic bone (ceb)</Text>
+</Question>
+</Lead>
+<Lead id="nil14">
+<Parent ref="lead5"/>
+<Statement>nil</Statement>
+<MediaObject ref="m251"/>
+</Lead>
+<Lead>
+<Parent ref="nil14" />
+<Statement>full dark</Statement>
+<TaxonName ref="t11"/>
+</Lead>
+<Lead id="lead15">
+<Parent ref="lead6"/>
+<Statement>longitudinally crossed by a brighter (ground coloration) line</Statement>
+<MediaObject ref="m250"/>
+<Question>
+<Text>Shape of the first dark rings of the tail</Text>
+</Question>
+</Lead>
+<Lead id="nil16">
+<Parent ref="lead6"/>
+<Statement>nil</Statement>
+<MediaObject ref="m251"/>
+</Lead>
+<Lead>
+<Parent ref="nil16" />
+<Statement>full dark</Statement>
+<TaxonName ref="t4"/>
+</Lead>
+<Lead id="nil17">
+<Parent ref="lead7"/>
+<Statement>nil</Statement>
+<MediaObject ref="m242"/>
+</Lead>
+<Lead>
+<Parent ref="nil17" />
+<Statement>absent</Statement>
+<TaxonName ref="t13"/>
+</Lead>
+<Lead id="nil18">
+<Parent ref="lead7"/>
+<Statement>nil</Statement>
+<MediaObject ref="m243"/>
+</Lead>
+<Lead>
+<Parent ref="nil18" />
+<Statement>weak,at the rump (fusion of 2-3 spots)</Statement>
+<TaxonName ref="t12"/>
+</Lead>
+<Lead id="nil19">
+<Parent ref="lead7"/>
+<Statement>nil</Statement>
+<MediaObject ref="m245"/>
+</Lead>
+<Lead>
+<Parent ref="nil19" />
+<Statement>complete, forming a continuous stripe on the whole back</Statement>
+<TaxonName ref="t15"/>
+</Lead>
+<Lead id="nil20">
+<Parent ref="lead8"/>
+<Statement>nil</Statement>
+<MediaObject ref="m237"/>
+</Lead>
+<Lead>
+<Parent ref="nil20" />
+<Statement>alternation of dark and bright rings</Statement>
+<TaxonName ref="t3"/>
+</Lead>
+<Lead id="nil21">
+<Parent ref="lead8"/>
+<Statement>nil</Statement>
+<MediaObject ref="m239"/>
+</Lead>
+<Lead>
+<Parent ref="nil21" />
+<Statement>several bright terminal rings are covered with dark</Statement>
+<TaxonName ref="t14"/>
+</Lead>
+<Lead id="nil22">
+<Parent ref="lead11"/>
+<Statement>nil</Statement>
+<MediaObject ref="m242"/>
+</Lead>
+<Lead>
+<Parent ref="nil22" />
+<Statement>absent</Statement>
+<TaxonName ref="t19"/>
+</Lead>
+<Lead id="nil23">
+<Parent ref="lead11"/>
+<Statement>nil</Statement>
+<MediaObject ref="m244"/>
+</Lead>
+<Lead>
+<Parent ref="nil23" />
+<Statement>important, at the rump (fusion of&amp;gt; 3 spots)</Statement>
+<TaxonName ref="t9"/>
+</Lead>
+<Lead id="nil24">
+<Parent ref="lead12"/>
+<Statement>nil</Statement>
+<MediaObject ref="m180"/>
+</Lead>
+<Lead>
+<Parent ref="nil24" />
+<Statement>strong (twice as much inflated than ectotympanic bone)</Statement>
+<TaxonName ref="t16"/>
+</Lead>
+<Lead>
+<Parent ref="nil24" />
+<Statement>strong (twice as much inflated than ectotympanic bone)</Statement>
+<TaxonName ref="t17"/>
+</Lead>
+<Lead id="nil25">
+<Parent ref="lead12"/>
+<Statement>nil</Statement>
+<MediaObject ref="m181"/>
+</Lead>
+<Lead>
+<Parent ref="nil25" />
+<Statement>very strong (thrice as much inflated than ectotympanic bone)</Statement>
+<TaxonName ref="t18"/>
+</Lead>
+<Lead id="nil26">
+<Parent ref="lead13"/>
+<Statement>nil</Statement>
+<MediaObject ref="m179"/>
+</Lead>
+<Lead>
+<Parent ref="nil26" />
+<Statement>weak (similar level of inflation with ectotympanic bone)</Statement>
+<TaxonName ref="t2"/>
+</Lead>
+<Lead id="nil27">
+<Parent ref="lead13"/>
+<Statement>nil</Statement>
+<MediaObject ref="m180"/>
+</Lead>
+<Lead>
+<Parent ref="nil27" />
+<Statement>strong (twice as much inflated than ectotympanic bone)</Statement>
+<TaxonName ref="t1"/>
+</Lead>
+<Lead id="nil28">
+<Parent ref="lead15"/>
+<Statement>nil</Statement>
+<MediaObject ref="m235"/>
+</Lead>
+<Lead>
+<Parent ref="nil28" />
+<Statement>"chevron"</Statement>
+<TaxonName ref="t6"/>
+</Lead>
+<Lead id="nil29">
+<Parent ref="lead15"/>
+<Statement>nil</Statement>
+<MediaObject ref="m236"/>
+</Lead>
+<Lead>
+<Parent ref="nil29" />
+<Statement>circle</Statement>
+<TaxonName ref="t5"/>
+</Lead>
+</Leads>
+</IdentificationKey>
+</IdentificationKeys>
+<MediaObjects>
+<MediaObject id="m164">
+<Representation>
+<Label>m164</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/1_Crest_large.jpg"/>
+</MediaObject>
+<MediaObject id="m165">
+<Representation>
+<Label>m165</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/1_Crest_elevated.jpg"/>
+</MediaObject>
+<MediaObject id="m166">
+<Representation>
+<Label>m166</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/1_Crest_not_elevated.jpg"/>
+</MediaObject>
+<MediaObject id="m167">
+<Representation>
+<Label>m167</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/1_Crest_large.jpg"/>
+</MediaObject>
+<MediaObject id="m168">
+<Representation>
+<Label>m168</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/1_Crest_elevated.jpg"/>
+</MediaObject>
+<MediaObject id="m169">
+<Representation>
+<Label>m169</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/1_Crest_not_elevated.jpg"/>
+</MediaObject>
+<MediaObject id="m170">
+<Representation>
+<Label>m170</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/2_prmx-frt_absent.jpg"/>
+</MediaObject>
+<MediaObject id="m171">
+<Representation>
+<Label>m171</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/2_prmx-frt_present.jpg"/>
+</MediaObject>
+<MediaObject id="m172">
+<Representation>
+<Label>m172</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/3_Pext_frontal_large.jpg"/>
+</MediaObject>
+<MediaObject id="m173">
+<Representation>
+<Label>m173</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/3_Pext_frontal_moderated.jpg"/>
+</MediaObject>
+<MediaObject id="m174">
+<Representation>
+<Label>m174</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/4_Int1_strong.jpg"/>
+</MediaObject>
+<MediaObject id="m175">
+<Representation>
+<Label>m175</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/4_Int1_intermediate.jpg"/>
+</MediaObject>
+<MediaObject id="m176">
+<Representation>
+<Label>m176</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/4_Int1_weak.jpg"/>
+</MediaObject>
+<MediaObject id="m177">
+<Representation>
+<Label>m177</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/5_Staph_V.jpg"/>
+</MediaObject>
+<MediaObject id="m178">
+<Representation>
+<Label>m178</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/5_Staph_C.jpg"/>
+</MediaObject>
+<MediaObject id="m179">
+<Representation>
+<Label>m179</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/6_ceb_weak.jpg"/>
+</MediaObject>
+<MediaObject id="m180">
+<Representation>
+<Label>m180</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/6_ceb_strong.jpg"/>
+</MediaObject>
+<MediaObject id="m181">
+<Representation>
+<Label>m181</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/6_ceb_vstrong.jpg"/>
+</MediaObject>
+<MediaObject id="m182">
+<Representation>
+<Label>m182</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/8_Mxp_behind.jpg"/>
+</MediaObject>
+<MediaObject id="m183">
+<Representation>
+<Label>m183</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/8_Mxp_same_level.jpg"/>
+</MediaObject>
+<MediaObject id="m184">
+<Representation>
+<Label>m184</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/8_Mxp_forward.jpg"/>
+</MediaObject>
+<MediaObject id="m185">
+<Representation>
+<Label>m185</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/9_dentition_weak1.jpg"/>
+</MediaObject>
+<MediaObject id="m186">
+<Representation>
+<Label>m186</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/9_dentition_weak2.jpg"/>
+</MediaObject>
+<MediaObject id="m187">
+<Representation>
+<Label>m187</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/9_dentition_strong1.jpg"/>
+</MediaObject>
+<MediaObject id="m188">
+<Representation>
+<Label>m188</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/9_dentition_strong2.jpg"/>
+</MediaObject>
+<MediaObject id="m189">
+<Representation>
+<Label>m189</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/10_m2_reduced.jpg"/>
+</MediaObject>
+<MediaObject id="m190">
+<Representation>
+<Label>m190</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/10_m2_developed.jpg"/>
+</MediaObject>
+<MediaObject id="m191">
+<Representation>
+<Label>m191</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/11_M2_absent.jpg"/>
+</MediaObject>
+<MediaObject id="m192">
+<Representation>
+<Label>m192</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/11_M2_developed.jpg"/>
+</MediaObject>
+<MediaObject id="m193">
+<Representation>
+<Label>m193</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/11_M2_residual.jpg"/>
+</MediaObject>
+<MediaObject id="m194">
+<Representation>
+<Label>m194</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/12_mdb_flattened.jpg"/>
+</MediaObject>
+<MediaObject id="m195">
+<Representation>
+<Label>m195</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/12_mdb_normal.jpg"/>
+</MediaObject>
+<MediaObject id="m196">
+<Representation>
+<Label>m196</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/13_m1_tal_weak.jpg"/>
+</MediaObject>
+<MediaObject id="m197">
+<Representation>
+<Label>m197</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/13_m1_tal_normal.jpg"/>
+</MediaObject>
+<MediaObject id="m198">
+<Representation>
+<Label>m198</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/14_pM3_lingcusp_absent.jpg"/>
+</MediaObject>
+<MediaObject id="m199">
+<Representation>
+<Label>m199</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/14_pM3_lingcusp_present.jpg"/>
+</MediaObject>
+<MediaObject id="m200">
+<Representation>
+<Label>m200</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/15_centr_depress_hairless.jpg"/>
+</MediaObject>
+<MediaObject id="m201">
+<Representation>
+<Label>m201</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/15_centr_depress_hairy.jpg"/>
+</MediaObject>
+<MediaObject id="m202">
+<Representation>
+<Label>m202</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/16_tits_1pair.jpg"/>
+</MediaObject>
+<MediaObject id="m203">
+<Representation>
+<Label>m203</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/16_tits_2pairs.jpg"/>
+</MediaObject>
+<MediaObject id="m204">
+<Representation>
+<Label>m204</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/17_cortex_thin.jpg"/>
+</MediaObject>
+<MediaObject id="m205">
+<Representation>
+<Label>m205</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/17_cortex_large.jpg"/>
+</MediaObject>
+<MediaObject id="m206">
+<Representation>
+<Label>m206</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/18_cross_section_oblong.jpg"/>
+</MediaObject>
+<MediaObject id="m207">
+<Representation>
+<Label>m207</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/18_cross_section_rounded.jpg"/>
+</MediaObject>
+<MediaObject id="m208">
+<Representation>
+<Label>m208</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/19_scale_margin_smooth.jpg"/>
+</MediaObject>
+<MediaObject id="m209">
+<Representation>
+<Label>m209</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/19_scale_margin_crenelated.jpg"/>
+</MediaObject>
+<MediaObject id="m210">
+<Representation>
+<Label>m210</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/20_scale_base_triangular.jpg"/>
+</MediaObject>
+<MediaObject id="m211">
+<Representation>
+<Label>m211</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/20_scale_base_rhomboid.jpg"/>
+</MediaObject>
+<MediaObject id="m212">
+<Representation>
+<Label>m212</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/20_scale_base_compressed.jpg"/>
+</MediaObject>
+<MediaObject id="m213">
+<Representation>
+<Label>m213</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/26_nuchal_stripe_absent.jpg"/>
+</MediaObject>
+<MediaObject id="m214">
+<Representation>
+<Label>m214</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/26_nuchal_stripe_present.jpg"/>
+</MediaObject>
+<MediaObject id="m215">
+<Representation>
+<Label>m215</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/28_coat_upper_leg_dark.jpg"/>
+</MediaObject>
+<MediaObject id="m216">
+<Representation>
+<Label>m216</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/28_coat_upper_leg_same.jpg"/>
+</MediaObject>
+<MediaObject id="m217">
+<Representation>
+<Label>m217</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/30_upper_leg_spots_not_merged.jpg"/>
+</MediaObject>
+<MediaObject id="m218">
+<Representation>
+<Label>m218</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/30_upper_leg_spots_merged.jpg"/>
+</MediaObject>
+<MediaObject id="m219">
+<Representation>
+<Label>m219</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/21_midline_absent.jpg"/>
+</MediaObject>
+<MediaObject id="m220">
+<Representation>
+<Label>m220</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/32_coat_up_arm_dark.jpg"/>
+</MediaObject>
+<MediaObject id="m221">
+<Representation>
+<Label>m221</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/32_coat_up_arm_post_dark.jpg"/>
+</MediaObject>
+<MediaObject id="m222">
+<Representation>
+<Label>m222</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/32_coat_up_arm_bright.jpg"/>
+</MediaObject>
+<MediaObject id="m223">
+<Representation>
+<Label>m223</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/33_mid_crest_absent.jpg"/>
+</MediaObject>
+<MediaObject id="m224">
+<Representation>
+<Label>m224</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/33_mid_crest_present.jpg"/>
+</MediaObject>
+<MediaObject id="m225">
+<Representation>
+<Label>m225</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/34_hairs_tail_short.jpg"/>
+</MediaObject>
+<MediaObject id="m226">
+<Representation>
+<Label>m226</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/34_hairs_tail_long.jpg"/>
+</MediaObject>
+<MediaObject id="m227">
+<Representation>
+<Label>m227</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/37_chin_large_dark.jpg"/>
+</MediaObject>
+<MediaObject id="m228">
+<Representation>
+<Label>m228</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/37_chin_thin_dark.jpg"/>
+</MediaObject>
+<MediaObject id="m229">
+<Representation>
+<Label>m229</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/37_chin_bright.jpg"/>
+</MediaObject>
+<MediaObject id="m230">
+<Representation>
+<Label>m230</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/38_nuch_crest_present.jpg"/>
+</MediaObject>
+<MediaObject id="m231">
+<Representation>
+<Label>m231</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/39_width_rings_inf20.jpg"/>
+</MediaObject>
+<MediaObject id="m232">
+<Representation>
+<Label>m232</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/39_width_rings_75.jpg"/>
+</MediaObject>
+<MediaObject id="m233">
+<Representation>
+<Label>m233</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/39_width_rings_100.jpg"/>
+</MediaObject>
+<MediaObject id="m234">
+<Representation>
+<Label>m234</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/39_width_rings_200.jpg"/>
+</MediaObject>
+<MediaObject id="m235">
+<Representation>
+<Label>m235</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/40_tail_ring_chevron.jpg"/>
+</MediaObject>
+<MediaObject id="m236">
+<Representation>
+<Label>m236</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/40_tail_ring_circle.jpg"/>
+</MediaObject>
+<MediaObject id="m237">
+<Representation>
+<Label>m237</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/35_tail_alternation.jpg"/>
+</MediaObject>
+<MediaObject id="m238">
+<Representation>
+<Label>m238</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/35_tail_lbr_dark.jpg"/>
+</MediaObject>
+<MediaObject id="m239">
+<Representation>
+<Label>m239</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/35_tail_half_dark.jpg"/>
+</MediaObject>
+<MediaObject id="m240">
+<Representation>
+<Label>m240</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/25_tail_dirty_stripe_present.jpg"/>
+</MediaObject>
+<MediaObject id="m241">
+<Representation>
+<Label>m241</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/25_tail_dirty_stripe_absent.jpg"/>
+</MediaObject>
+<MediaObject id="m242">
+<Representation>
+<Label>m242</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/23_1st_row_coal_absent.jpg"/>
+</MediaObject>
+<MediaObject id="m243">
+<Representation>
+<Label>m243</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/23_1st_row_coal_low.jpg"/>
+</MediaObject>
+<MediaObject id="m244">
+<Representation>
+<Label>m244</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/23_1st_row_coal_high.jpg"/>
+</MediaObject>
+<MediaObject id="m245">
+<Representation>
+<Label>m245</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/22_midline_crossed.jpg"/>
+</MediaObject>
+<MediaObject id="m246">
+<Representation>
+<Label>m246</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/24_spot_density_low.jpg"/>
+</MediaObject>
+<MediaObject id="m247">
+<Representation>
+<Label>m247</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/24_spot_density_high.jpg"/>
+</MediaObject>
+<MediaObject id="m248">
+<Representation>
+<Label>m248</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/21_midline_not_continuous.jpg"/>
+</MediaObject>
+<MediaObject id="m249">
+<Representation>
+<Label>m249</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/21_midline_continuous.jpg"/>
+</MediaObject>
+<MediaObject id="m250">
+<Representation>
+<Label>m250</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/22_midline_crossed.jpg"/>
+</MediaObject>
+<MediaObject id="m251">
+<Representation>
+<Label>m251</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/21_midline_continuous.jpg"/>
+</MediaObject>
+<MediaObject id="m252">
+<Representation>
+<Label>m252</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genthi_Burkina_Faso.jpg"/>
+</MediaObject>
+<MediaObject id="m253">
+<Representation>
+<Label>m253</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genjoh_Ivory_Coast.jpg"/>
+</MediaObject>
+<MediaObject id="m254">
+<Representation>
+<Label>m254</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genthi_FMNH_42119_(bis).jpg"/>
+</MediaObject>
+<MediaObject id="m255">
+<Representation>
+<Label>m255</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genaby_AMNH_81048.jpg"/>
+</MediaObject>
+<MediaObject id="m256">
+<Representation>
+<Label>m256</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genjoh_MNHN_2003-424.jpg"/>
+</MediaObject>
+<MediaObject id="m257">
+<Representation>
+<Label>m257</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genthi_MNHN_1974-320_(skin1).jpg"/>
+</MediaObject>
+<MediaObject id="m258">
+<Representation>
+<Label>m258</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genaby_NRM_A590069_(mdb).jpg"/>
+</MediaObject>
+<MediaObject id="m259">
+<Representation>
+<Label>m259</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genjohn_MNHN_2000-683_(skull2).jpg"/>
+</MediaObject>
+<MediaObject id="m260">
+<Representation>
+<Label>m260</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genthi_FMNH_42119.jpg"/>
+</MediaObject>
+<MediaObject id="m261">
+<Representation>
+<Label>m261</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genaby_NRM_A590069_(skull2).jpg"/>
+</MediaObject>
+<MediaObject id="m262">
+<Representation>
+<Label>m262</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genjohn_MNHN_2000-683_(skull1).jpg"/>
+</MediaObject>
+<MediaObject id="m263">
+<Representation>
+<Label>m263</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genaby_NRM_A590069_(skull).jpg"/>
+</MediaObject>
+<MediaObject id="m264">
+<Representation>
+<Label>m264</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genjohn_MNHN_2000-683(mdb).jpg"/>
+</MediaObject>
+<MediaObject id="m265">
+<Representation>
+<Label>m265</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genfel_AMNH__116356.jpg"/>
+</MediaObject>
+<MediaObject id="m266">
+<Representation>
+<Label>m266</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Poiric_AMNH_51439_(skull1).jpg"/>
+</MediaObject>
+<MediaObject id="m267">
+<Representation>
+<Label>m267</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Poilei_MNHN_1962-1190.jpg"/>
+</MediaObject>
+<MediaObject id="m268">
+<Representation>
+<Label>m268</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genfel_FMNH_38860_(bis).jpg"/>
+</MediaObject>
+<MediaObject id="m269">
+<Representation>
+<Label>m269</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Poiric_AMNH_51439_(skull2).jpg"/>
+</MediaObject>
+<MediaObject id="m270">
+<Representation>
+<Label>m270</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genfel_Karoo_(South_Africa).jpg"/>
+</MediaObject>
+<MediaObject id="m271">
+<Representation>
+<Label>m271</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Poirich_Gabon.jpg"/>
+</MediaObject>
+<MediaObject id="m272">
+<Representation>
+<Label>m272</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Poiric_MNHN_1976-389_(mdb1).jpg"/>
+</MediaObject>
+<MediaObject id="m273">
+<Representation>
+<Label>m273</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genfel_FMNH_38860.jpg"/>
+</MediaObject>
+<MediaObject id="m274">
+<Representation>
+<Label>m274</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genpis_AMNH__51514_(bis).jpg"/>
+</MediaObject>
+<MediaObject id="m275">
+<Representation>
+<Label>m275</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genpis_AMNH__51514_(skull2).jpg"/>
+</MediaObject>
+<MediaObject id="m276">
+<Representation>
+<Label>m276</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genpis_AMNH_51514_(skull1).jpg"/>
+</MediaObject>
+<MediaObject id="m277">
+<Representation>
+<Label>m277</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genpis_AMNH_51514_(mdb).jpg"/>
+</MediaObject>
+<MediaObject id="m278">
+<Representation>
+<Label>m278</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genpis_AMNH_51514.jpg"/>
+</MediaObject>
+<MediaObject id="m279">
+<Representation>
+<Label>m279</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genser_AMNH_115447.jpg"/>
+</MediaObject>
+<MediaObject id="m280">
+<Representation>
+<Label>m280</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genser_FMNH_73795_(bis).jpg"/>
+</MediaObject>
+<MediaObject id="m281">
+<Representation>
+<Label>m281</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genang_AMNH_80869_(skull1).jpg"/>
+</MediaObject>
+<MediaObject id="m282">
+<Representation>
+<Label>m282</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Gencri_AMNH_170379.jpg"/>
+</MediaObject>
+<MediaObject id="m283">
+<Representation>
+<Label>m283</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genserv_Tanzania.jpg"/>
+</MediaObject>
+<MediaObject id="m284">
+<Representation>
+<Label>m284</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Gengen_AMNH_80740.jpg"/>
+</MediaObject>
+<MediaObject id="m285">
+<Representation>
+<Label>m285</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genang_AMNH_80869_(skull2).jpg"/>
+</MediaObject>
+<MediaObject id="m286">
+<Representation>
+<Label>m286</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genvic_AMNH_51406_(skull1).jpg"/>
+</MediaObject>
+<MediaObject id="m287">
+<Representation>
+<Label>m287</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Gencri_BMNH_50.949_(mdb).jpg"/>
+</MediaObject>
+<MediaObject id="m288">
+<Representation>
+<Label>m288</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genser_FMNH_73795.jpg"/>
+</MediaObject>
+<MediaObject id="m289">
+<Representation>
+<Label>m289</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genetta_genetta_Perpignan.jpg"/>
+</MediaObject>
+<MediaObject id="m290">
+<Representation>
+<Label>m290</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Gencri_BMNH_50.949_(skull2).jpg"/>
+</MediaObject>
+<MediaObject id="m291">
+<Representation>
+<Label>m291</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genang_Mozambique.jpg"/>
+</MediaObject>
+<MediaObject id="m292">
+<Representation>
+<Label>m292</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Gengen_FMNH_83645.jpg"/>
+</MediaObject>
+<MediaObject id="m293">
+<Representation>
+<Label>m293</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genvic_AMNH_51406_(skull2).jpg"/>
+</MediaObject>
+<MediaObject id="m294">
+<Representation>
+<Label>m294</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Gencri_BMNH_50.949_(skull1).jpg"/>
+</MediaObject>
+<MediaObject id="m295">
+<Representation>
+<Label>m295</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genang_Mozambique2.jpg"/>
+</MediaObject>
+<MediaObject id="m296">
+<Representation>
+<Label>m296</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Gengen_FMNH_83645_(bis).jpg"/>
+</MediaObject>
+<MediaObject id="m297">
+<Representation>
+<Label>m297</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genvic_FMNH_34680.jpg"/>
+</MediaObject>
+<MediaObject id="m298">
+<Representation>
+<Label>m298</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Gencri_Heard_&_Van_Rompaey.jpg"/>
+</MediaObject>
+<MediaObject id="m299">
+<Representation>
+<Label>m299</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genpar_MNHN_1977-699_(skull1).jpg"/>
+</MediaObject>
+<MediaObject id="m300">
+<Representation>
+<Label>m300</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genpar_MNHN_1977-699_(skull2).jpg"/>
+</MediaObject>
+<MediaObject id="m301">
+<Representation>
+<Label>m301</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genetta_pardina_Hutterer.jpg"/>
+</MediaObject>
+<MediaObject id="m302">
+<Representation>
+<Label>m302</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genpar_MNHN_1977-707.jpg"/>
+</MediaObject>
+<MediaObject id="m303">
+<Representation>
+<Label>m303</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genbou_Gaubert.jpg"/>
+</MediaObject>
+<MediaObject id="m304">
+<Representation>
+<Label>m304</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genbou_MNHN_2003-426_(skull1).jpg"/>
+</MediaObject>
+<MediaObject id="m305">
+<Representation>
+<Label>m305</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genpoe_AMNH_167490.jpg"/>
+</MediaObject>
+<MediaObject id="m306">
+<Representation>
+<Label>m306</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genbou_MNHN_2003-428.jpg"/>
+</MediaObject>
+<MediaObject id="m307">
+<Representation>
+<Label>m307</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genpoe_MNHN_1894-263_(mdb).jpg"/>
+</MediaObject>
+<MediaObject id="m308">
+<Representation>
+<Label>m308</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genbou_MNHN_2003-426_(skull2).jpg"/>
+</MediaObject>
+<MediaObject id="m309">
+<Representation>
+<Label>m309</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genpoe_MNHN_1894-263_(skull2).jpg"/>
+</MediaObject>
+<MediaObject id="m310">
+<Representation>
+<Label>m310</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genpoe_MNHN_1894-263_(skull1).jpg"/>
+</MediaObject>
+<MediaObject id="m311">
+<Representation>
+<Label>m311</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genpoe_MNHN_1897-508_(up)_1908-58_(down).jpg"/>
+</MediaObject>
+<MediaObject id="m312">
+<Representation>
+<Label>m312</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genmac_FMNH_27022_(bis).jpg"/>
+</MediaObject>
+<MediaObject id="m313">
+<Representation>
+<Label>m313</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genmac_NRM_A580731_(skull)_Natal.jpg"/>
+</MediaObject>
+<MediaObject id="m314">
+<Representation>
+<Label>m314</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Gensch_MRAC_18949_skin_TYPE.jpg"/>
+</MediaObject>
+<MediaObject id="m315">
+<Representation>
+<Label>m315</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Gensch_ZMUC_1137_(bullae).jpg"/>
+</MediaObject>
+<MediaObject id="m316">
+<Representation>
+<Label>m316</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genmac.jpg"/>
+</MediaObject>
+<MediaObject id="m317">
+<Representation>
+<Label>m317</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Gensch_ZMUC_1137_(skull2).jpg"/>
+</MediaObject>
+<MediaObject id="m318">
+<Representation>
+<Label>m318</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genmac_AMNH_116439.jpg"/>
+</MediaObject>
+<MediaObject id="m319">
+<Representation>
+<Label>m319</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Gensch_ZMUC_1137_(skull).jpg"/>
+</MediaObject>
+<MediaObject id="m320">
+<Representation>
+<Label>m320</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Gentig_AMNH_169060_(skull1).jpg"/>
+</MediaObject>
+<MediaObject id="m321">
+<Representation>
+<Label>m321</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genmac_FMNH_27022.jpg"/>
+</MediaObject>
+<MediaObject id="m322">
+<Representation>
+<Label>m322</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Gentig_AMNH_169060_(skull2).jpg"/>
+</MediaObject>
+<MediaObject id="m323">
+<Representation>
+<Label>m323</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Mramba_F.Rovero.jpg"/>
+</MediaObject>
+<MediaObject id="m324">
+<Representation>
+<Label>m324</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Gentig_NRM_A581908_(4).jpg"/>
+</MediaObject>
+<MediaObject id="m325">
+<Representation>
+<Label>m325</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Genmac_NRM_A580731_(skull2)_Natal.jpg"/>
+</MediaObject>
+<MediaObject id="m326">
+<Representation>
+<Label>m326</Label>
+</Representation>
+<Type>Image</Type>
+<Source href="http://lully.snv.jussieu.fr/images_genettas/Gentig_Anvers_Zoo.jpg"/>
+</MediaObject>
+</MediaObjects>
+</Dataset>
+</Datasets>

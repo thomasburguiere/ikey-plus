@@ -1,5 +1,15 @@
 package fr.lis.ikeyplus.IO;
 
+import fr.lis.ikeyplus.model.DataSet;
+import fr.lis.ikeyplus.model.QuantitativeCharacter;
+import fr.lis.ikeyplus.model.QuantitativeMeasure;
+import fr.lis.ikeyplus.model.SingleAccessKeyNode;
+import fr.lis.ikeyplus.model.SingleAccessKeyTree;
+import fr.lis.ikeyplus.model.State;
+import fr.lis.ikeyplus.model.Taxon;
+import fr.lis.ikeyplus.utils.IkeyConfig;
+import fr.lis.ikeyplus.utils.IkeyUtils;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
@@ -23,16 +33,6 @@ import java.util.zip.CheckedOutputStream;
 import java.util.zip.Deflater;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-
-import fr.lis.ikeyplus.model.DataSet;
-import fr.lis.ikeyplus.model.QuantitativeCharacter;
-import fr.lis.ikeyplus.model.QuantitativeMeasure;
-import fr.lis.ikeyplus.model.SingleAccessKeyNode;
-import fr.lis.ikeyplus.model.SingleAccessKeyTree;
-import fr.lis.ikeyplus.model.State;
-import fr.lis.ikeyplus.model.Taxon;
-import fr.lis.ikeyplus.utils.IkeyConfig;
-import fr.lis.ikeyplus.utils.IkeyUtils;
 
 /**
  * This static class generates all outputs format of any SingleAccessKeyTree object
@@ -308,15 +308,13 @@ public abstract class SingleAccessKeyTreeDumper {
 
     // TXT DUMP, TREE
 
-    public static File dumpTxtFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics)
+    public static File dumpTxtFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics, final String generatedFilesFolder)
             throws IOException {
-        String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-                + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-        if (!new File(path).exists()) {
-            new File(path).mkdirs();
+        if (!new File(generatedFilesFolder).exists()) {
+            new File(generatedFilesFolder).mkdirs();
         }
-        File txtFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.TXT, new File(path));
+        File txtFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.TXT, new File(generatedFilesFolder));
 
         FileOutputStream fileOutputStream = new FileOutputStream(txtFile);
         fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
@@ -389,12 +387,10 @@ public abstract class SingleAccessKeyTreeDumper {
 
     // TXT DUMP, FLAT
 
-    public static File dumpFlatTxtFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics)
+    public static File dumpFlatTxtFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics, final String generatedFilesFolder)
             throws IOException {
-        String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-                + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-        File txtFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.TXT, new File(path));
+        File txtFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.TXT, new File(generatedFilesFolder));
 
         FileOutputStream fileOutputStream = new FileOutputStream(txtFile);
         fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
@@ -1286,12 +1282,10 @@ public abstract class SingleAccessKeyTreeDumper {
 
     // WIKI DUMP, TREE
 
-    public static File dumpWikiFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics)
+    public static File dumpWikiFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics, final String generatedFilesFolder)
             throws IOException {
-        String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-                + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-        File wikiFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.WIKI, new File(path));
+        File wikiFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.WIKI, new File(generatedFilesFolder));
 
         FileOutputStream fileOutputStream = new FileOutputStream(wikiFile);
         fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
@@ -1365,12 +1359,10 @@ public abstract class SingleAccessKeyTreeDumper {
 
     // WIKI DUMP, FLAT
 
-    public static File dumpFlatWikiFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics)
+    public static File dumpFlatWikiFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics, final String generatedFilesFolder)
             throws IOException {
-        String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-                + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-        File wikiFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.WIKI, new File(path));
+        File wikiFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.WIKI, new File(generatedFilesFolder));
         BufferedWriter wikiFlatFileWriter = new BufferedWriter(new FileWriter(wikiFile));
 
         if (header != null && !header.equals("")) {
@@ -2025,13 +2017,13 @@ public abstract class SingleAccessKeyTreeDumper {
 
         // create all output formats
         File sddFile = dumpSddFile(tree2dump);
-        File txtFile = dumpTxtFile(header, tree2dump, showStatistics);
-        File flatTxtFile = dumpFlatTxtFile(header, tree2dump, showStatistics);
+        File txtFile = dumpTxtFile(header, tree2dump, showStatistics, generatedFilesFolder);
+        File flatTxtFile = dumpFlatTxtFile(header, tree2dump, showStatistics, generatedFilesFolder);
         File htmlFile = dumpHtmlFile(header, tree2dump, showStatistics, generatedFilesFolder);
         File flatHtmlFile = dumpFlatHtmlFile(header, tree2dump, showStatistics, generatedFilesFolder);
         File interactiveHtmlFile = dumpInteractiveHtmlFile(header, tree2dump, showStatistics);
-        File wikiFile = dumpWikiFile(header, tree2dump, showStatistics);
-        File flatWikiFile = dumpFlatWikiFile(header, tree2dump, showStatistics);
+        File wikiFile = dumpWikiFile(header, tree2dump, showStatistics, generatedFilesFolder);
+        File flatWikiFile = dumpFlatWikiFile(header, tree2dump, showStatistics, generatedFilesFolder);
         File flatSpeciesIDQuestionAnswerWikiFile = dumpFlatSpeciesIDQuestionAnswerWikiFile(header, tree2dump);
         File flatSpeciesIDStatementWikiFile = dumpFlatSpeciesIDStatementWikiFile(header, tree2dump);
         File dotFile = dumpDotFile(header, tree2dump);
@@ -2456,5 +2448,6 @@ public abstract class SingleAccessKeyTreeDumper {
 
         return output.toString();
     }
+
 
 }

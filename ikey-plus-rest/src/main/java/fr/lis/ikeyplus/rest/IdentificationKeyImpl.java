@@ -200,10 +200,10 @@ public class IdentificationKeyImpl {
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.WIKI) {
                         if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
                             resultFile = SingleAccessKeyTreeDumper.dumpFlatWikiFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS));
+                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolder);
                         } else {
                             resultFile = SingleAccessKeyTreeDumper.dumpWikiFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS));
+                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolder);
                         }
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.SPECIES_ID_WIKI_STATEMENT) {
                         resultFile = SingleAccessKeyTreeDumper.dumpFlatSpeciesIDStatementWikiFile(
@@ -224,10 +224,10 @@ public class IdentificationKeyImpl {
                     } else {
                         if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
                             resultFile = SingleAccessKeyTreeDumper.dumpFlatTxtFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS));
+                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolder);
                         } else {
                             resultFile = SingleAccessKeyTreeDumper.dumpTxtFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS));
+                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolder);
                         }
                     }
                 } catch (IOException e) {
