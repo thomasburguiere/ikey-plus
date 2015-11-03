@@ -1,17 +1,5 @@
 package fr.lis.ikeyplus.IO;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import fr.lis.ikeyplus.utils.IkeyConfig;
-import fr.lis.ikeyplus.utils.IkeyUtils;
-import org.xml.sax.Attributes;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.Locator;
-import org.xml.sax.SAXException;
-
 import fr.lis.ikeyplus.model.CategoricalCharacter;
 import fr.lis.ikeyplus.model.CodedDescription;
 import fr.lis.ikeyplus.model.DataSet;
@@ -20,6 +8,17 @@ import fr.lis.ikeyplus.model.QuantitativeCharacter;
 import fr.lis.ikeyplus.model.QuantitativeMeasure;
 import fr.lis.ikeyplus.model.State;
 import fr.lis.ikeyplus.model.Taxon;
+import fr.lis.ikeyplus.utils.IkeyConfig;
+import fr.lis.ikeyplus.utils.IkeyUtils;
+import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This class extends the ContentHandler class, in order to be able to treat each SDD tag and extract data
@@ -28,8 +27,6 @@ import fr.lis.ikeyplus.model.Taxon;
  * @created 18-04-2011
  */
 public class SDDContentHandler implements ContentHandler {
-
-    private Locator locator = null;
 
     // flag to know if we are in or out a tag
     private boolean inDataset = false;
@@ -92,8 +89,8 @@ public class SDDContentHandler implements ContentHandler {
     // current CharacterNode
     private ICharacter currentCharacterNode = null;
     // list of applicable and inapplicable states
-    List<State> currentInapplicableState = null;
-    List<State> currentOnlyApplicableState = null;
+    private List<State> currentInapplicableState = null;
+    private List<State> currentOnlyApplicableState = null;
     // id of current mediaObject
     private String mediaObjectId = null;
     // id of current mediaObject
@@ -146,9 +143,9 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <StateDefinition> in <ConceptStates>
-            else if ("StateDefinition".equals(localName) && inConceptStates) {
-
-            }
+//            else if ("StateDefinition".equals(localName) && inConceptStates) {
+//
+//            }
 
             // <Characters>
             else if ("Characters".equals(localName)) {
@@ -211,9 +208,9 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <ConceptState> in <StateReference>
-            else if ("ConceptState".equals(localName) && inStatesReference) {
+            //else if ("ConceptState".equals(localName) && inStatesReference) {
 
-            }
+            //}
 
             // <CharacterTree>
             else if ("CharacterTree".equals(localName)) {
@@ -297,9 +294,9 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <TaxonName> in <Scope>
-            else if ("TaxonName".equals(localName) && inScope) {
+            //else if ("TaxonName".equals(localName) && inScope) {
 
-            }
+            //}
 
             // <SummaryData>
             else if ("SummaryData".equals(localName)) {
@@ -507,9 +504,9 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <StateDefinition> in <ConceptStates>
-            else if ("StateDefinition".equals(localName) && inConceptStates) {
+            //else if ("StateDefinition".equals(localName) && inConceptStates) {
 
-            }
+            //}
 
             // <Characters>
             else if ("Characters".equals(localName)) {
@@ -550,9 +547,9 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <ConceptState> in <StateReference>
-            else if ("ConceptState".equals(localName) && inStatesReference) {
+            //else if ("ConceptState".equals(localName) && inStatesReference) {
 
-            }
+            //}
 
             // <CharacterTree>
             else if ("CharacterTree".equals(localName)) {
@@ -605,22 +602,21 @@ public class SDDContentHandler implements ContentHandler {
 
             // <State> in <InapplicableIf> in <CharacterTree> &&
             // isFirstCharacterTree
-            else if ("State".equals(localName) && inInapplicableIf && inCharacterTree && isFirstCharacterTree) {
+            //else if ("State".equals(localName) && inInapplicableIf && inCharacterTree && isFirstCharacterTree) {
 
-            }
+            //}
 
             // <State> in <OnlyApplicableIf> in <CharacterTree> &&
             // isFirstCharacterTree
-            else if ("State".equals(localName) && inOnlyApplicableIf && inCharacterTree
-                    && isFirstCharacterTree) {
+            //else if ("State".equals(localName) && inOnlyApplicableIf && inCharacterTree       && isFirstCharacterTree) {
 
-            }
+            //}
 
             // <Character> in <CharNode> in <CharacterTree> &&
             // isFirstCharacterTree
-            else if ("Character".equals(localName) && inCharNode && inCharacterTree && isFirstCharacterTree) {
+            // else if ("Character".equals(localName) && inCharNode && inCharacterTree && isFirstCharacterTree) {
 
-            }
+            //}
 
             // <CodedDescriptions>
             else if ("CodedDescriptions".equals(localName)) {
@@ -640,9 +636,9 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <TaxonName> in <Scope>
-            else if ("TaxonName".equals(localName) && inScope) {
+            //else if ("TaxonName".equals(localName) && inScope) {
 
-            }
+            // }
 
             // <SummaryData>
             else if ("SummaryData".equals(localName)) {
@@ -680,9 +676,9 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <Measure> in <Quantitative>
-            else if ("Measure".equals(localName) && inQuantitative) {
+            //else if ("Measure".equals(localName) && inQuantitative) {
 
-            }
+            //}
 
             // <MeasurementUnit>
             else if ("MeasurementUnit".equals(localName)) {

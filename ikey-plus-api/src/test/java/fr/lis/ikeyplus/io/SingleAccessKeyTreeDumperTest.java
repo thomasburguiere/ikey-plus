@@ -13,7 +13,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
-import static junit.framework.Assert.assertEquals;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SingleAccessKeyTreeDumperTest {
@@ -101,7 +100,7 @@ public class SingleAccessKeyTreeDumperTest {
     }
 
     @BeforeClass
-    public static void setup() {
+    public static void setUp() {
         IkeyConfig.setBundleConfOverridable(ResourceBundle.getBundle("confTest"));
         IkeyConfig.setBundleConf(ResourceBundle.getBundle("confTest"));
 

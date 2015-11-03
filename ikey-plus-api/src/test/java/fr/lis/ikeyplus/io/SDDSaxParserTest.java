@@ -2,7 +2,6 @@ package fr.lis.ikeyplus.IO;
 
 import fr.lis.ikeyplus.model.DataSet;
 import fr.lis.ikeyplus.utils.IkeyConfig;
-import fr.lis.ikeyplus.utils.IkeyConfigBuilder;
 import org.junit.Test;
 
 import java.io.File;

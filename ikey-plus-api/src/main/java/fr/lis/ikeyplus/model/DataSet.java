@@ -89,7 +89,7 @@ public class DataSet {
         for (ICharacter character : characters) {
             if (character instanceof CategoricalCharacter) {
                 for (State stateBis : ((CategoricalCharacter) character).getStates()) {
-                    if (stateBis == state) {
+                    if (stateBis.equals(state)) {
                         return character;
                     }
                 }

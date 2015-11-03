@@ -7,7 +7,7 @@ package fr.lis.ikeyplus.model;
  */
 public class QuantitativeCharacter extends Character {
 
-    String MeasurementUnit = "";
+    private String measurementUnit = "";
 
     public QuantitativeCharacter() {
         this(null);
@@ -19,11 +19,11 @@ public class QuantitativeCharacter extends Character {
     }
 
     public String getMeasurementUnit() {
-        return MeasurementUnit;
+        return measurementUnit;
     }
 
     public void setMeasurementUnit(String measurementUnit) {
-        MeasurementUnit = measurementUnit;
+        this.measurementUnit = measurementUnit;
     }
 
     /* (non-Javadoc)

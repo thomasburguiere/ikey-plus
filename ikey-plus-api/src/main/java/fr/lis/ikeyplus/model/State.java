@@ -1,5 +1,7 @@
 package fr.lis.ikeyplus.model;
 
+import com.google.common.base.Objects;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,5 +68,20 @@ public class State {
 
     public String toString() {
         return name;
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        State that = (State) o;
+
+        return Objects.equal(this.id, that.id) &&
+                Objects.equal(this.name, that.name);
+    }
+
+    @Override
+     public int hashCode() {
+        return Objects.hashCode(id, name);
     }
 }
