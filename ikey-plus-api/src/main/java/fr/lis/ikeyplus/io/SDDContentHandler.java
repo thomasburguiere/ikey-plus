@@ -134,9 +134,8 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <ConceptStates>
-            else if ("ConceptStates".equals(localName)) {
-
-            }
+            //else if ("ConceptStates".equals(localName)) {
+            //}
 
             // <StateDefinition> in <ConceptStates>
 //            else if ("StateDefinition".equals(localName) && inConceptStates) {
@@ -198,9 +197,8 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <StateReference> in <States>
-            else if ("StateReference".equals(localName) && inStates) {
-
-            }
+            //else if ("StateReference".equals(localName) && inStates) {
+            //}
 
             // <ConceptState> in <StateReference>
             //else if ("ConceptState".equals(localName) && inStatesReference) {
@@ -284,8 +282,8 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <Scope>
-            else if ("Scope".equals(localName)) {
-            }
+            //else if ("Scope".equals(localName)) {
+            //}
 
             // <TaxonName> in <Scope>
             //else if ("TaxonName".equals(localName) && inScope) {
@@ -492,9 +490,9 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <ConceptStates>
-            else if ("ConceptStates".equals(localName)) {
+           // else if ("ConceptStates".equals(localName)) {
 
-            }
+            //}
 
             // <StateDefinition> in <ConceptStates>
             //else if ("StateDefinition".equals(localName) && inConceptStates) {
@@ -534,9 +532,9 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <StateReference> in <States>
-            else if ("StateReference".equals(localName) && inStates) {
+          //  else if ("StateReference".equals(localName) && inStates) {
 
-            }
+         //   }
 
             // <ConceptState> in <StateReference>
             //else if ("ConceptState".equals(localName) && inStatesReference) {
@@ -623,8 +621,8 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <Scope>
-            else if ("Scope".equals(localName)) {
-            }
+//            else if ("Scope".equals(localName)) {
+//            }
 
             // <TaxonName> in <Scope>
             //else if ("TaxonName".equals(localName) && inScope) {
