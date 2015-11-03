@@ -311,6 +311,53 @@ public class SingleAccessKeyTreeDumperTest {
         }
     }
 
+    @Test
+    public void should_generate_genetta_with_statistics() throws Exception {
+        String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
+
+        IkeyConfig config = IkeyConfig.builder()
+                .enablePruning()
+                .verbosity(IkeyConfig.VerbosityLevel.HEADER)
+                .verbosity(IkeyConfig.VerbosityLevel.STATISTICS)
+                .representation(IkeyConfig.KeyRepresentation.TREE)
+                .build();
+
+        SDDSaxParser sddSaxParser;
+        try {
+            sddSaxParser = new SDDSaxParser(stringUrl, config);
+
+            IdentificationKeyGenerator identificationKeyGenerator;
+
+            try {
+                identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
+                identificationKeyGenerator.createIdentificationKey();
+                SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+                final boolean statisticsEnabled = config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS);
+                File file = SingleAccessKeyTreeDumper.dumpFlatTxtFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
+                byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
+                String result = new String(resultBytes, "UTF-8");
+                result = result.replaceFirst("created.*\"", "");
+
+
+                byte[] fixtureBytes = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta_flat_stats.txt"));
+                String fixture = new String(fixtureBytes, "UTF-8");
+                fixture = fixture.replaceFirst("created.*\"", "");
+
+                assertThat(result).isEqualTo(fixture);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw (e);
+            }
+
+        } catch (SAXException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
     @BeforeClass
     public static void setUp() {
         IkeyConfig.setBundleConfOverridable(ResourceBundle.getBundle("confTest"));
