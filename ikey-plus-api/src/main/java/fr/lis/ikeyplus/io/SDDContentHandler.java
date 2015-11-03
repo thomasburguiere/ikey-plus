@@ -28,6 +28,7 @@ import java.util.Map;
  */
 public class SDDContentHandler implements ContentHandler {
 
+    private Locator locator = null;
     // flag to know if we are in or out a tag
     private boolean inDataset = false;
     private boolean inRepresentation = false;
