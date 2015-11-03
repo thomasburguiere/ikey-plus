@@ -120,50 +120,50 @@ public class SDDContentHandler implements ContentHandler {
         if (isFirstDataset) {
 
             // if the label is not the dataSet Label
-            if (inDataset && !localName.equals("Representation") && !localName.equals("Label")) {
+            if (inDataset && !"Representation".equals(localName) && !"Label".equals(localName)) {
                 isDataSetLabel = false;
             }
 
             // <Dataset>
-            if (localName.equals("Dataset")) {
+            if ("Dataset".equals(localName)) {
                 inDataset = true;
             }
 
             // <Representation> in <Dataset>
-            else if (localName.equals("Representation") && inDataset) {
+            else if ("Representation".equals(localName) && inDataset) {
                 inRepresentation = true;
             }
 
             // <Label> in <Dataset>
-            else if (localName.equals("Label") && inDataset) {
+            else if ("Label".equals(localName) && inDataset) {
                 buffer = new StringBuffer();
             }
 
             // <ConceptStates>
-            else if (localName.equals("ConceptStates")) {
+            else if ("ConceptStates".equals(localName)) {
                 inConceptStates = true;
 
             }
 
             // <StateDefinition> in <ConceptStates>
-            else if (localName.equals("StateDefinition") && inConceptStates) {
+            else if ("StateDefinition".equals(localName) && inConceptStates) {
 
             }
 
             // <Characters>
-            else if (localName.equals("Characters")) {
+            else if ("Characters".equals(localName)) {
                 inCharacters = true;
             }
 
             // <CategoricalCharacter> in <Characters>
-            else if (localName.equals("CategoricalCharacter") && inCharacters) {
+            else if ("CategoricalCharacter".equals(localName) && inCharacters) {
                 inCategoricalCharacter = true;
                 currentCategoricalCharacter = new CategoricalCharacter();
                 currentCategoricalCharacter.setId(attributes.getValue("id"));
             }
 
             // <MediaObject> in <Representation> in <CategoricalCharacter>
-            else if (localName.equals("MediaObject") && inRepresentation && inCategoricalCharacter
+            else if ("MediaObject".equals(localName) && inRepresentation && inCategoricalCharacter
                     && !inStates) {
                 if (attributes.getValue("ref") != null && currentCategoricalCharacter != null) {
                     currentCategoricalCharacter.getMediaObjectKeys().add(attributes.getValue("ref"));
@@ -171,14 +171,14 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <QuantitativeCharacter> in <Characters>
-            else if (localName.equals("QuantitativeCharacter") && inCharacters) {
+            else if ("QuantitativeCharacter".equals(localName) && inCharacters) {
                 inQuantitativeCharacter = true;
                 currentQuantitativeCharacter = new QuantitativeCharacter();
                 currentQuantitativeCharacter.setId(attributes.getValue("id"));
             }
 
             // <MediaObject> in <Representation> in <QuantitativeCharacter>
-            else if (localName.equals("MediaObject") && inRepresentation && inQuantitativeCharacter
+            else if ("MediaObject".equals(localName) && inRepresentation && inQuantitativeCharacter
                     && !inStates) {
                 if (attributes.getValue("ref") != null && currentQuantitativeCharacter != null) {
                     currentQuantitativeCharacter.getMediaObjectKeys().add(attributes.getValue("ref"));
@@ -186,80 +186,80 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <States>
-            else if (localName.equals("States")) {
+            else if ("States".equals(localName)) {
                 inStates = true;
             }
 
             // <StateDefinition> in <States>
-            else if (localName.equals("StateDefinition") && inStates) {
+            else if ("StateDefinition".equals(localName) && inStates) {
                 inStateDefinition = true;
                 currentState = new State();
                 currentState.setId(attributes.getValue("id"));
             }
 
             // <MediaObject> in <Representation> in <StateDefinition> in <States>
-            else if (localName.equals("MediaObject") && inStateDefinition && inRepresentation && inStates) {
+            else if ("MediaObject".equals(localName) && inStateDefinition && inRepresentation && inStates) {
                 if (attributes.getValue("ref") != null && currentState != null) {
                     currentState.getMediaObjectKeys().add(attributes.getValue("ref"));
                 }
             }
 
             // <StateReference> in <States>
-            else if (localName.equals("StateReference") && inStates) {
+            else if ("StateReference".equals(localName) && inStates) {
                 inStatesReference = true;
 
             }
 
             // <ConceptState> in <StateReference>
-            else if (localName.equals("ConceptState") && inStatesReference) {
+            else if ("ConceptState".equals(localName) && inStatesReference) {
 
             }
 
             // <CharacterTree>
-            else if (localName.equals("CharacterTree")) {
+            else if ("CharacterTree".equals(localName)) {
                 if (isFirstCharacterTree) {
                     inCharacterTree = true;
                 }
             }
 
             // <Nodes>
-            else if (localName.equals("Nodes")) {
+            else if ("Nodes".equals(localName)) {
                 inNodes = true;
             }
 
             // <CharNode> in <Nodes>
-            else if (localName.equals("CharNode") && inNodes) {
+            else if ("CharNode".equals(localName) && inNodes) {
                 inCharNode = true;
                 currentInapplicableState = new ArrayList<State>();
                 currentOnlyApplicableState = new ArrayList<State>();
             }
 
             // <DependencyRules> in <CharNode>
-            else if (localName.equals("DependencyRules") && inCharNode) {
+            else if ("DependencyRules".equals(localName) && inCharNode) {
                 inDependencyRules = true;
             }
 
             // <InapplicableIf> in <DependencyRules>
-            else if (localName.equals("InapplicableIf") && inDependencyRules) {
+            else if ("InapplicableIf".equals(localName) && inDependencyRules) {
                 inInapplicableIf = true;
             }
 
             // <OnlyApplicableIf> in <DependencyRules>
-            else if (localName.equals("OnlyApplicableIf") && inDependencyRules) {
+            else if ("OnlyApplicableIf".equals(localName) && inDependencyRules) {
                 inOnlyApplicableIf = true;
 
             }
 
             // <State> in <InapplicableIf> in <CharacterTree> &&
             // isFirstCharacterTree
-            else if (localName.equals("State") && inInapplicableIf && inCharacterTree && isFirstCharacterTree) {
+            else if ("State".equals(localName) && inInapplicableIf && inCharacterTree && isFirstCharacterTree) {
                 State state = dataSet.getStateById(attributes.getValue("ref"));
                 currentInapplicableState.add(state);
             }
 
             // <State> in <OnlyApplicableIf> in <CharacterTree> &&
             // isFirstCharacterTree
-            else if (localName.equals("State") && inOnlyApplicableIf && inCharacterTree
+            else if ("State".equals(localName) && inOnlyApplicableIf && inCharacterTree
                     && isFirstCharacterTree) {
                 State state = dataSet.getStateById(attributes.getValue("ref"));
                 currentOnlyApplicableState.add(state);
@@ -267,17 +267,17 @@ public class SDDContentHandler implements ContentHandler {
 
             // <Character> in <CharNode> in <CharacterTree> &&
             // isFirstCharacterTree
-            else if (localName.equals("Character") && inCharNode && inCharacterTree && isFirstCharacterTree) {
+            else if ("Character".equals(localName) && inCharNode && inCharacterTree && isFirstCharacterTree) {
                 currentCharacterNode = dataSet.getCharacterById(attributes.getValue("ref"));
             }
 
             // <CodedDescriptions>
-            else if (localName.equals("CodedDescriptions")) {
+            else if ("CodedDescriptions".equals(localName)) {
                 inCodedDescriptions = true;
             }
 
             // <CodedDescription> in <CodedDescriptions>
-            else if (localName.equals("CodedDescription") && inCodedDescriptions) {
+            else if ("CodedDescription".equals(localName) && inCodedDescriptions) {
                 inCodedDescription = true;
                 currentCodedDescription = new CodedDescription();
                 currentCodedDescription.setId(attributes.getValue("id"));
@@ -285,42 +285,42 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <MediaObject> in <CodedDescription> in <CodedDescriptions>
-            else if (localName.equals("MediaObject") && inCodedDescription && inCodedDescriptions) {
+            else if ("MediaObject".equals(localName) && inCodedDescription && inCodedDescriptions) {
                 if (attributes.getValue("ref") != null && currentTaxon != null) {
                     currentTaxon.getMediaObjectKeys().add(attributes.getValue("ref"));
                 }
             }
 
             // <Scope>
-            else if (localName.equals("Scope")) {
+            else if ("Scope".equals(localName)) {
                 inScope = true;
             }
 
             // <TaxonName> in <Scope>
-            else if (localName.equals("TaxonName") && inScope) {
+            else if ("TaxonName".equals(localName) && inScope) {
 
             }
 
             // <SummaryData>
-            else if (localName.equals("SummaryData")) {
+            else if ("SummaryData".equals(localName)) {
                 inSummaryData = true;
             }
 
             // <Categorical> in <SummaryData>
-            else if (localName.equals("Categorical") && inSummaryData) {
+            else if ("Categorical".equals(localName) && inSummaryData) {
                 inCategorical = true;
                 currentCodedDescriptionCharacter = this.dataSet.getCharacterById(attributes.getValue("ref"));
                 currentStatesList = new ArrayList<State>();
             }
 
             // <State> in <Categorical>
-            else if (localName.equals("State") && inCategorical) {
+            else if ("State".equals(localName) && inCategorical) {
                 if (currentStatesList != null)
                     currentStatesList.add(this.dataSet.getStateById(attributes.getValue("ref")));
             }
 
             // <Status> in <Categorical>
-            else if (localName.equals("Status") && inCategorical) {
+            else if ("Status".equals(localName) && inCategorical) {
                 if (attributes.getValue("code") != null
                         && attributes.getValue("code").equals("DataUnavailable")) {
                     dataUnavailableFlag = true;
@@ -328,14 +328,14 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <Quantitative> in <SummaryData>
-            else if (localName.equals("Quantitative") && inSummaryData) {
+            else if ("Quantitative".equals(localName) && inSummaryData) {
                 inQuantitative = true;
                 currentCodedDescriptionCharacter = this.dataSet.getCharacterById(attributes.getValue("ref"));
                 currentQuantitativeMeasure = new QuantitativeMeasure();
             }
 
             // <Measure> in <Quantitative>
-            else if (localName.equals("Measure") && inQuantitative) {
+            else if ("Measure".equals(localName) && inQuantitative) {
                 if (currentQuantitativeMeasure != null) {
                     if (attributes.getValue("type").equals("Min")) {
                         currentQuantitativeMeasure.setMin(Double.valueOf(attributes
@@ -360,7 +360,7 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <Status> in <Quantitative>
-            else if (localName.equals("Status") && inCategorical) {
+            else if ("Status".equals(localName) && inCategorical) {
                 if (attributes.getValue("code") != null
                         && attributes.getValue("code").equals("DataUnavailable")) {
                     dataUnavailableFlag = true;
@@ -368,17 +368,17 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <MeasurementUnit>
-            else if (localName.equals("MeasurementUnit")) {
+            else if ("MeasurementUnit".equals(localName)) {
                 inMeasurementUnit = true;
             }
 
             // <Ratings>
-            else if (localName.equals("Ratings")) {
+            else if ("Ratings".equals(localName)) {
                 inRatings = true;
             }
 
             // <Rating> in <Ratings>
-            else if (localName.equals("Rating") && inRatings) {
+            else if ("Rating".equals(localName) && inRatings) {
                 if (attributes.getValue("context").equals(config.getWeightContext().toString())) {
                     int currentRating = IkeyConfig.WeightValue.fromString(attributes.getValue("rating")).getIntWeight();
                     if (currentCodedDescriptionCharacter != null) {
@@ -402,7 +402,7 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <MediaObject>
-            else if (localName.equals("MediaObject")) {
+            else if ("MediaObject".equals(localName)) {
                 inMediaObject = true;
                 if (attributes.getValue("id") != null) {
                     mediaObjectId = attributes.getValue("id");
@@ -412,12 +412,12 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <Type> in <MediaObject>
-            else if (localName.equals("Type") && inMediaObject) {
+            else if ("Type".equals(localName) && inMediaObject) {
                 buffer = new StringBuffer();
             }
 
             // <Source> in <MediaObject>
-            else if (localName.equals("Source") && inMediaObject && mediaObjectId != null && isImageType) {
+            else if ("Source".equals(localName) && inMediaObject && mediaObjectId != null && isImageType) {
                 if (attributes.getValue("href") != null) {
                     dataSet.getMediaObjects().put(mediaObjectId, attributes.getValue("href"));
                 }
@@ -433,7 +433,7 @@ public class SDDContentHandler implements ContentHandler {
 
         if (isFirstDataset) {
             // <Dataset>
-            if (localName.equals("Dataset")) {
+            if ("Dataset".equals(localName)) {
                 inDataset = false;
                 isFirstDataset = false;
 
@@ -473,12 +473,12 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <Representation> in <Dataset>
-            else if (localName.equals("Representation") && inDataset) {
+            else if ("Representation".equals(localName) && inDataset) {
                 inRepresentation = false;
             }
 
             // <Label> in <Representation> in <Dataset>
-            else if (localName.equals("Label") && inRepresentation && inDataset) {
+            else if ("Label".equals(localName) && inRepresentation && inDataset) {
                 if (inCodedDescription) {
                     currentTaxon.setName(buffer.toString());
                 } else if (inCategoricalCharacter && inStateDefinition) {
@@ -494,79 +494,79 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <Label> in <MeasurementUnit> in <Dataset>
-            else if (localName.equals("Label") && inMeasurementUnit && inDataset) {
+            else if ("Label".equals(localName) && inMeasurementUnit && inDataset) {
                 if (currentQuantitativeCharacter != null) {
                     currentQuantitativeCharacter.setMeasurementUnit(buffer.toString());
                 }
             }
 
             // <ConceptStates>
-            else if (localName.equals("ConceptStates")) {
+            else if ("ConceptStates".equals(localName)) {
                 inConceptStates = false;
 
             }
 
             // <StateDefinition> in <ConceptStates>
-            else if (localName.equals("StateDefinition") && inConceptStates) {
+            else if ("StateDefinition".equals(localName) && inConceptStates) {
 
             }
 
             // <Characters>
-            else if (localName.equals("Characters")) {
+            else if ("Characters".equals(localName)) {
                 inCharacters = false;
             }
 
             // <CategoricalCharacter>
-            else if (localName.equals("CategoricalCharacter") && inCharacters) {
+            else if ("CategoricalCharacter".equals(localName) && inCharacters) {
                 inCategoricalCharacter = false;
                 this.dataSet.getCharacters().add(currentCategoricalCharacter);
                 currentCategoricalCharacter = null;
             }
 
             // <QuantitativeCharacter>
-            else if (localName.equals("QuantitativeCharacter") && inCharacters) {
+            else if ("QuantitativeCharacter".equals(localName) && inCharacters) {
                 inQuantitativeCharacter = false;
                 this.dataSet.getCharacters().add(currentQuantitativeCharacter);
                 currentQuantitativeCharacter = null;
             }
 
             // <States>
-            else if (localName.equals("States")) {
+            else if ("States".equals(localName)) {
                 inStates = false;
 
             }
 
             // <StateDefinition> in <States>
-            else if (localName.equals("StateDefinition") && inStates) {
+            else if ("StateDefinition".equals(localName) && inStates) {
                 inStateDefinition = false;
                 currentCategoricalCharacter.getStates().add(currentState);
                 currentState = null;
             }
 
             // <StateReference> in <States>
-            else if (localName.equals("StateReference") && inStates) {
+            else if ("StateReference".equals(localName) && inStates) {
                 inStatesReference = false;
 
             }
 
             // <ConceptState> in <StateReference>
-            else if (localName.equals("ConceptState") && inStatesReference) {
+            else if ("ConceptState".equals(localName) && inStatesReference) {
 
             }
 
             // <CharacterTree>
-            else if (localName.equals("CharacterTree")) {
+            else if ("CharacterTree".equals(localName)) {
                 isFirstCharacterTree = false;
                 inCharacterTree = false;
             }
 
             // <Nodes>
-            else if (localName.equals("Nodes")) {
+            else if ("Nodes".equals(localName)) {
                 inNodes = false;
             }
 
             // <CharNode> in <Nodes>
-            else if (localName.equals("CharNode") && inNodes) {
+            else if ("CharNode".equals(localName) && inNodes) {
                 inCharNode = false;
                 if (currentInapplicableState.size() > 0) {
                     currentCharacterNode.setParentCharacter(dataSet
@@ -588,69 +588,69 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <DependencyRules> in <CharNode>
-            else if (localName.equals("DependencyRules") && inCharNode) {
+            else if ("DependencyRules".equals(localName) && inCharNode) {
                 inDependencyRules = false;
             }
 
             // <InapplicableIf> in <DependencyRules>
-            else if (localName.equals("InapplicableIf") && inDependencyRules) {
+            else if ("InapplicableIf".equals(localName) && inDependencyRules) {
                 inInapplicableIf = false;
             }
 
             // <OnlyApplicableIf> in <DependencyRules>
-            else if (localName.equals("OnlyApplicableIf") && inDependencyRules) {
+            else if ("OnlyApplicableIf".equals(localName) && inDependencyRules) {
                 inOnlyApplicableIf = false;
 
             }
 
             // <State> in <InapplicableIf> in <CharacterTree> &&
             // isFirstCharacterTree
-            else if (localName.equals("State") && inInapplicableIf && inCharacterTree && isFirstCharacterTree) {
+            else if ("State".equals(localName) && inInapplicableIf && inCharacterTree && isFirstCharacterTree) {
 
             }
 
             // <State> in <OnlyApplicableIf> in <CharacterTree> &&
             // isFirstCharacterTree
-            else if (localName.equals("State") && inOnlyApplicableIf && inCharacterTree
+            else if ("State".equals(localName) && inOnlyApplicableIf && inCharacterTree
                     && isFirstCharacterTree) {
 
             }
 
             // <Character> in <CharNode> in <CharacterTree> &&
             // isFirstCharacterTree
-            else if (localName.equals("Character") && inCharNode && inCharacterTree && isFirstCharacterTree) {
+            else if ("Character".equals(localName) && inCharNode && inCharacterTree && isFirstCharacterTree) {
 
             }
 
             // <CodedDescriptions>
-            else if (localName.equals("CodedDescriptions")) {
+            else if ("CodedDescriptions".equals(localName)) {
                 inCodedDescriptions = false;
             }
 
             // <CodedDescription> in <CodedDescriptions>
-            else if (localName.equals("CodedDescription") && inCodedDescriptions) {
+            else if ("CodedDescription".equals(localName) && inCodedDescriptions) {
                 inCodedDescription = false;
                 this.dataSet.addCodedDescription(currentTaxon, currentCodedDescription);
                 currentTaxon = null;
             }
 
             // <Scope>
-            else if (localName.equals("Scope")) {
+            else if ("Scope".equals(localName)) {
                 inScope = false;
             }
 
             // <TaxonName> in <Scope>
-            else if (localName.equals("TaxonName") && inScope) {
+            else if ("TaxonName".equals(localName) && inScope) {
 
             }
 
             // <SummaryData>
-            else if (localName.equals("SummaryData")) {
+            else if ("SummaryData".equals(localName)) {
                 inSummaryData = false;
             }
 
             // <Categorical> in <SummaryData>
-            else if (localName.equals("Categorical") && inSummaryData) {
+            else if ("Categorical".equals(localName) && inSummaryData) {
                 inCategorical = false;
                 if (dataUnavailableFlag) {
                     currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
@@ -665,7 +665,7 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <Quantitative> in <SummaryData>
-            else if (localName.equals("Quantitative") && inSummaryData) {
+            else if ("Quantitative".equals(localName) && inSummaryData) {
                 inQuantitative = false;
                 if (dataUnavailableFlag) {
                     currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
@@ -680,30 +680,30 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <Measure> in <Quantitative>
-            else if (localName.equals("Measure") && inQuantitative) {
+            else if ("Measure".equals(localName) && inQuantitative) {
 
             }
 
             // <MeasurementUnit>
-            else if (localName.equals("MeasurementUnit")) {
+            else if ("MeasurementUnit".equals(localName)) {
                 inMeasurementUnit = false;
 
             }
 
             // <Ratings>
-            else if (localName.equals("Ratings")) {
+            else if ("Ratings".equals(localName)) {
                 inRatings = false;
             }
 
             // <MediaObject>
-            else if (localName.equals("MediaObject")) {
+            else if ("MediaObject".equals(localName)) {
                 inMediaObject = false;
                 isImageType = false;
                 mediaObjectId = null;
             }
 
             // <Type> in <MediaObject>
-            else if (localName.equals("Type") && inMediaObject && mediaObjectId != null) {
+            else if ("Type".equals(localName) && inMediaObject && mediaObjectId != null) {
                 if (buffer != null && buffer.toString().equalsIgnoreCase("image")) {
                     isImageType = true;
                 } else {
