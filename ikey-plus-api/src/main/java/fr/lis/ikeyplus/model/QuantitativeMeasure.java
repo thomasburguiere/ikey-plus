@@ -17,10 +17,6 @@ public class QuantitativeMeasure {
     private boolean minInclude = true;
     private boolean maxInclude = true;
 
-    public QuantitativeMeasure() {
-
-    }
-
     public Double getMax() {
         return max;
     }

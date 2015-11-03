@@ -17,7 +17,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -73,7 +72,7 @@ public class IdentificationKeyImpl {
         // String containing the name of the result file
         String resultFileName = null;
         // String containing the URL of the result file
-        String resultFileUrl = null;
+        String resultFileUrl;
         String lineReturn = System.getProperty("line.separator");
 
         String generatedFilesFolder = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
@@ -104,7 +103,6 @@ public class IdentificationKeyImpl {
             try {
                 // test if the URL is valid
                 URLConnection urlConnection;
-                InputStream httpStream;
                 try {
                     URL fileURL = new URL(sddURL);
                     // open URL (HTTP query)

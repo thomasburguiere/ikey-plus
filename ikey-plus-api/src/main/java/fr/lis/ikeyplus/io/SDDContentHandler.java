@@ -28,14 +28,11 @@ import java.util.Map;
  */
 public class SDDContentHandler implements ContentHandler {
 
-    private Locator locator = null;
     // flag to know if we are in or out a tag
     private boolean inDataset = false;
     private boolean inRepresentation = false;
-    private boolean inConceptStates = false;
     private boolean inStates = false;
     private boolean inStateDefinition = false;
-    private boolean inStatesReference = false;
     private boolean inNodes = false;
     private boolean inCharNode = false;
     private boolean inDependencyRules = false;
@@ -43,7 +40,6 @@ public class SDDContentHandler implements ContentHandler {
     private boolean inOnlyApplicableIf = false;
     private boolean inCodedDescriptions = false;
     private boolean inCodedDescription = false;
-    private boolean inScope = false;
     private boolean inSummaryData = false;
     private boolean inCategorical = false;
     private boolean inQuantitative = false;
@@ -139,7 +135,6 @@ public class SDDContentHandler implements ContentHandler {
 
             // <ConceptStates>
             else if ("ConceptStates".equals(localName)) {
-                inConceptStates = true;
 
             }
 
@@ -204,7 +199,6 @@ public class SDDContentHandler implements ContentHandler {
 
             // <StateReference> in <States>
             else if ("StateReference".equals(localName) && inStates) {
-                inStatesReference = true;
 
             }
 
@@ -291,7 +285,6 @@ public class SDDContentHandler implements ContentHandler {
 
             // <Scope>
             else if ("Scope".equals(localName)) {
-                inScope = true;
             }
 
             // <TaxonName> in <Scope>
@@ -500,7 +493,6 @@ public class SDDContentHandler implements ContentHandler {
 
             // <ConceptStates>
             else if ("ConceptStates".equals(localName)) {
-                inConceptStates = false;
 
             }
 
@@ -543,7 +535,6 @@ public class SDDContentHandler implements ContentHandler {
 
             // <StateReference> in <States>
             else if ("StateReference".equals(localName) && inStates) {
-                inStatesReference = false;
 
             }
 
@@ -633,7 +624,6 @@ public class SDDContentHandler implements ContentHandler {
 
             // <Scope>
             else if ("Scope".equals(localName)) {
-                inScope = false;
             }
 
             // <TaxonName> in <Scope>
@@ -731,7 +721,6 @@ public class SDDContentHandler implements ContentHandler {
      * @see org.xml.sax.ContentHandler#setDocumentLocator(org.xml.sax.Locator) */
     @Override
     public void setDocumentLocator(Locator locator) {
-        this.locator = locator;
 
     }
 
