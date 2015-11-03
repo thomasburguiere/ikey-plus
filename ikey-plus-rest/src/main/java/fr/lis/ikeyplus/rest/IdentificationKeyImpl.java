@@ -210,12 +210,12 @@ public class IdentificationKeyImpl {
                                 header.toString(), tree2dump);
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.INTERACTIVE_HTML) {
                         resultFile = SingleAccessKeyTreeDumper.dumpInteractiveHtmlFile(header.toString(),
-                                tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS));
+                                tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolder);
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.SPECIES_ID_WIKI_QUESTION_ANSWER) {
                         resultFile = SingleAccessKeyTreeDumper.dumpFlatSpeciesIDQuestionAnswerWikiFile(
                                 header.toString(), tree2dump);
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.DOT) {
-                        resultFile = SingleAccessKeyTreeDumper.dumpDotFile(header.toString(), tree2dump);
+                        resultFile = SingleAccessKeyTreeDumper.dumpDotFile(header.toString(), tree2dump, generatedFilesFolder);
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.SDD) {
                         resultFile = SingleAccessKeyTreeDumper.dumpSddFile(tree2dump);
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.ZIP) {

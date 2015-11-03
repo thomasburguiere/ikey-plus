@@ -1,0 +1,184 @@
+== Identification Key==
+
+<span id="anchor1"></span>1  Rings on tail
+::::::= <span style="color:#fe8a22;">present</span><span style="color: black;"></span> &#8658; [[#anchor2|<span style="color:#67bb1b;"><u>2</u></span>]]
+::::::= <span style="color:#fe8a22;">absent</span><span style="color: black;"></span> &#8658; <span style="color:#67bb1b;">''Genetta piscivora''</span>
+
+<span id="anchor2"></span>2  Relative width of the bright rings over the dark rings (middle of tail, dorsal view)
+::::::= <span style="color:#fe8a22;">less than 20 %</span><span style="color: black;"></span> &#8658; [[#anchor3|<span style="color:#67bb1b;"><u>3</u></span>]]
+::::::= <span style="color:#fe8a22;">between 50 and 75 %</span><span style="color: black;"></span> &#8658; [[#anchor4|<span style="color:#67bb1b;"><u>4</u></span>]]
+::::::= <span style="color:#fe8a22;">ca. 100 %</span><span style="color: black;"></span> &#8658; [[#anchor5|<span style="color:#67bb1b;"><u>5</u></span>]]
+::::::= <span style="color:#fe8a22;">ca. 200 %</span><span style="color: black;"></span> &#8658; [[#anchor6|<span style="color:#67bb1b;"><u>6</u></span>]]
+
+<span id="anchor3"></span>3  Interorbital constriction
+::::::= <span style="color:#fe8a22;">strong (inferior to 1 - 0.12)</span><span style="color: black;"></span> &#8658; [[#anchor7|<span style="color:#67bb1b;"><u>7</u></span>]]
+::::::= <span style="color:#fe8a22;">intermediate (equal to 1 +/- 0.12)</span><span style="color: black;"></span> &#8658; [[#anchor8|<span style="color:#67bb1b;"><u>8</u></span>]]
+::::::= <span style="color:#fe8a22;">weak (superior to 1 + 0.12)</span><span style="color: black;"></span> &#8658; <span style="color:#67bb1b;">''Genetta servalina''</span>
+
+<span id="anchor4"></span>4  Coat of forefoot
+::::::= <span style="color:#fe8a22;">dark</span><span style="color: black;"></span> &#8658; <span style="color:#67bb1b;">''Genetta cristata''</span>
+::::::= <span style="color:#fe8a22;">same as ground coloration but dark around pads</span><span style="color: black;"></span> &#8658; [[#anchor9|<span style="color:#67bb1b;"><u>9</u></span>]]
+::::::= <span style="color:#fe8a22;">same as ground coloration</span><span style="color: black;"></span> &#8658; [[#anchor10|<span style="color:#67bb1b;"><u>10</u></span>]]
+
+<span id="anchor5"></span>5  Mid-dorsal line, coloration
+::::::= <span style="color:#fe8a22;">longitudinally crossed by a brighter (ground coloration) line</span><span style="color: black;"></span> &#8658; [[#anchor11|<span style="color:#67bb1b;"><u>11</u></span>]]
+::::::= <span style="color:#fe8a22;">full dark</span><span style="color: black;"></span> &#8658; <span style="color:#67bb1b;">''Genetta genetta''</span>
+
+<span id="anchor6"></span>6  Mid-dorsal line, coloration
+::::::= <span style="color:#fe8a22;">longitudinally crossed by a brighter (ground coloration) line</span><span style="color: black;"></span> &#8658; [[#anchor12|<span style="color:#67bb1b;"><u>12</u></span>]]
+::::::= <span style="color:#fe8a22;">full dark</span><span style="color: black;"></span> &#8658; <span style="color:#67bb1b;">''Genetta felina''</span>
+
+<span id="anchor7"></span>7  Longitudinal coalescence of the first row of dorsal spots (contiguous to mid-dorsal line)
+::::::= <span style="color:#fe8a22;">absent</span><span style="color: black;"></span> &#8658; <span style="color:#67bb1b;">''Genetta pardina''</span>
+::::::= <span style="color:#fe8a22;">weak,at the rump (fusion of 2-3 spots)</span><span style="color: black;"></span> &#8658; <span style="color:#67bb1b;">''Genetta victoriae''</span>
+::::::= <span style="color:#fe8a22;">complete, forming a continuous stripe on the whole back</span><span style="color: black;"></span> &#8658; <span style="color:#67bb1b;">''Genetta poensis''</span>
+
+<span id="anchor8"></span>8  Distal part of the tail
+::::::= <span style="color:#fe8a22;">alternation of dark and bright rings</span><span style="color: black;"></span> &#8658; <span style="color:#67bb1b;">''Genetta johnstoni''</span>
+::::::= <span style="color:#fe8a22;">several bright terminal rings are covered with dark</span><span style="color: black;"></span> &#8658; <span style="color:#67bb1b;">''Genetta bourloni''</span>
+
+<span id="anchor9"></span>9  Longitudinal coalescence of the first row of dorsal spots (contiguous to mid-dorsal line)
+::::::= <span style="color:#fe8a22;">absent</span><span style="color: black;"></span> &#8658; <span style="color:#67bb1b;">''Genetta tigrina''</span>
+::::::= <span style="color:#fe8a22;">important, at the rump (fusion of> 3 spots)</span><span style="color: black;"></span> &#8658; <span style="color:#67bb1b;">''Genetta angolensis''</span>
+
+<span id="anchor10"></span>10  Ventral inflation of the caudal entotympanic bone (ceb)
+::::::= <span style="color:#fe8a22;">strong (twice as much inflated than ectotympanic bone)</span><span style="color: black;"></span> &#8658; <span style="color:#67bb1b;">''Genetta maculata''</span>, <span style="color:#67bb1b;">''Genetta "letabae"''</span>
+::::::= <span style="color:#fe8a22;">very strong (thrice as much inflated than ectotympanic bone)</span><span style="color: black;"></span> &#8658; <span style="color:#67bb1b;">''Genetta "schoutedeni"''</span>
+
+<span id="anchor11"></span>11  Ventral inflation of the caudal entotympanic bone (ceb)
+::::::= <span style="color:#fe8a22;">weak (similar level of inflation with ectotympanic bone)</span><span style="color: black;"></span> &#8658; <span style="color:#67bb1b;">''Genetta abyssinica''</span>
+::::::= <span style="color:#fe8a22;">strong (twice as much inflated than ectotympanic bone)</span><span style="color: black;"></span> &#8658; <span style="color:#67bb1b;">''Genetta thierryi''</span>
+
+<span id="anchor12"></span>12  Shape of the first dark rings of the tail
+::::::= <span style="color:#fe8a22;">"chevron"</span><span style="color: black;"></span> &#8658; <span style="color:#67bb1b;">''Poiana leightoni''</span>
+::::::= <span style="color:#fe8a22;">circle</span><span style="color: black;"></span> &#8658; <span style="color:#67bb1b;">''Poiana richardsonii''</span>
+
+
+== STATISTICS == 
+{|align="center" style="text-align:center;"
+!Taxon
+!Number of paths leading to taxon
+!Length of the shortest path leading to taxon
+!Average length of paths leading to taxon
+!Length of the longest path leading to taxon
+|-
+|align="left"|Genetta thierryi
+|1
+|4
+|4.0
+|4
+|-
+|align="left"|Genetta abyssinica
+|1
+|4
+|4.0
+|4
+|-
+|align="left"|Genetta johnstoni
+|1
+|4
+|4.0
+|4
+|-
+|align="left"|Genetta felina
+|1
+|3
+|3.0
+|3
+|-
+|align="left"|Poiana richardsonii
+|1
+|4
+|4.0
+|4
+|-
+|align="left"|Poiana leightoni
+|1
+|4
+|4.0
+|4
+|-
+|align="left"|Genetta piscivora
+|1
+|1
+|1.0
+|1
+|-
+|align="left"|Genetta servalina
+|1
+|3
+|3.0
+|3
+|-
+|align="left"|Genetta angolensis
+|1
+|4
+|4.0
+|4
+|-
+|align="left"|Genetta cristata
+|1
+|3
+|3.0
+|3
+|-
+|align="left"|Genetta genetta
+|1
+|3
+|3.0
+|3
+|-
+|align="left"|Genetta victoriae
+|1
+|4
+|4.0
+|4
+|-
+|align="left"|Genetta pardina
+|1
+|4
+|4.0
+|4
+|-
+|align="left"|Genetta bourloni
+|1
+|4
+|4.0
+|4
+|-
+|align="left"|Genetta poensis
+|1
+|4
+|4.0
+|4
+|-
+|align="left"|Genetta maculata
+|1
+|4
+|4.0
+|4
+|-
+|align="left"|Genetta "letabae"
+|1
+|4
+|4.0
+|4
+|-
+|align="left"|Genetta "schoutedeni"
+|1
+|4
+|4.0
+|4
+|-
+|align="left"|Genetta tigrina
+|1
+|4
+|4.0
+|4
+|-
+!align="left"|AVERAGE
+|1.0
+|3.632
+|3.632
+|3.632
+|}

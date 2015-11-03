@@ -4,6 +4,7 @@ import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 import fr.lis.ikeyplus.services.IdentificationKeyGenerator;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
@@ -342,6 +343,185 @@ public class SingleAccessKeyTreeDumperTest {
                 byte[] fixtureBytes = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta_flat_stats.txt"));
                 String fixture = new String(fixtureBytes, "UTF-8");
                 fixture = fixture.replaceFirst("created.*\"", "");
+
+                assertThat(result).isEqualTo(fixture);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw (e);
+            }
+
+        } catch (SAXException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void should_generate_genetta_wiki_with_statistics() throws Exception {
+        String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
+
+        IkeyConfig config = IkeyConfig.builder()
+                .enablePruning()
+                .verbosity(IkeyConfig.VerbosityLevel.HEADER)
+                .verbosity(IkeyConfig.VerbosityLevel.STATISTICS)
+                .representation(IkeyConfig.KeyRepresentation.TREE)
+                .build();
+
+        SDDSaxParser sddSaxParser;
+        try {
+            sddSaxParser = new SDDSaxParser(stringUrl, config);
+
+            IdentificationKeyGenerator identificationKeyGenerator;
+
+            try {
+                identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
+                identificationKeyGenerator.createIdentificationKey();
+                SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+                final boolean statisticsEnabled = config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS);
+                File file = SingleAccessKeyTreeDumper.dumpFlatWikiFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
+                byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
+                String result = new String(resultBytes, "UTF-8");
+
+
+                byte[] fixtureBytes = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta_flat_stats.wiki"));
+                String fixture = new String(fixtureBytes, "UTF-8");
+
+                assertThat(result).isEqualTo(fixture);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw (e);
+            }
+
+        } catch (SAXException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void should_generate_genetta_html_with_statistics() throws Exception {
+        String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
+
+        IkeyConfig config = IkeyConfig.builder()
+                .enablePruning()
+                .verbosity(IkeyConfig.VerbosityLevel.HEADER)
+                .verbosity(IkeyConfig.VerbosityLevel.STATISTICS)
+                .representation(IkeyConfig.KeyRepresentation.TREE)
+                .build();
+
+        SDDSaxParser sddSaxParser;
+        try {
+            sddSaxParser = new SDDSaxParser(stringUrl, config);
+
+            IdentificationKeyGenerator identificationKeyGenerator;
+
+            try {
+                identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
+                identificationKeyGenerator.createIdentificationKey();
+                SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+                final boolean statisticsEnabled = config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS);
+                File file = SingleAccessKeyTreeDumper.dumpFlatHtmlFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
+                byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
+                String result = new String(resultBytes, "UTF-8");
+
+
+                byte[] fixtureBytes = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta_flat_stats.html"));
+                String fixture = new String(fixtureBytes, "UTF-8");
+
+                assertThat(result).isEqualTo(fixture);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw (e);
+            }
+
+        } catch (SAXException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    @Ignore
+    public void should_generate_genetta_interactive_html() throws Exception {
+        String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
+
+        IkeyConfig config = IkeyConfig.builder()
+                .enablePruning()
+                .verbosity(IkeyConfig.VerbosityLevel.HEADER)
+                .representation(IkeyConfig.KeyRepresentation.TREE)
+                .build();
+
+        SDDSaxParser sddSaxParser;
+        try {
+            sddSaxParser = new SDDSaxParser(stringUrl, config);
+
+            IdentificationKeyGenerator identificationKeyGenerator;
+
+            try {
+                identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
+                identificationKeyGenerator.createIdentificationKey();
+                SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+                final boolean statisticsEnabled = config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS);
+                File file = SingleAccessKeyTreeDumper.dumpInteractiveHtmlFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
+                byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
+                String result = new String(resultBytes, "UTF-8");
+
+
+                byte[] fixtureBytes = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta_interactive.html"));
+                String fixture = new String(fixtureBytes, "UTF-8");
+
+                assertThat(result).isEqualTo(fixture);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw (e);
+            }
+
+        } catch (SAXException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    public void should_generate_genetta_dot() throws Exception {
+        String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
+
+        IkeyConfig config = IkeyConfig.builder()
+                .enablePruning()
+                .verbosity(IkeyConfig.VerbosityLevel.HEADER)
+                .representation(IkeyConfig.KeyRepresentation.TREE)
+                .build();
+
+        SDDSaxParser sddSaxParser;
+        try {
+            sddSaxParser = new SDDSaxParser(stringUrl, config);
+
+            IdentificationKeyGenerator identificationKeyGenerator;
+
+            try {
+                identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
+                identificationKeyGenerator.createIdentificationKey();
+                SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+                File file = SingleAccessKeyTreeDumper.dumpDotFile("", tree2dump, generatedFilesFolder);
+                byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
+                String result = new String(resultBytes, "UTF-8").replaceFirst("digraph key_\\d.* ", "");
+
+
+                byte[] fixtureBytes = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta.gv"));
+                String fixture = new String(fixtureBytes, "UTF-8").replaceFirst("digraph key_\\d.* ","");
 
                 assertThat(result).isEqualTo(fixture);
             } catch (Exception e) {

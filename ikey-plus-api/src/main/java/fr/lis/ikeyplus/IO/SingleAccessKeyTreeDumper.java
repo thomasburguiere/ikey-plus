@@ -785,11 +785,9 @@ public abstract class SingleAccessKeyTreeDumper {
      * {@link #generateInteractiveHtmlString}
      */
     public static File dumpInteractiveHtmlFile(String header, SingleAccessKeyTree tree2dump,
-                                               boolean showStatistics) throws IOException {
-        String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-                + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
+                                               boolean showStatistics, String generatedFilesFolder) throws IOException {
 
-        File htmlFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.HTML, new File(path));
+        File htmlFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.HTML, new File(generatedFilesFolder));
         FileOutputStream fileOutputStream = new FileOutputStream(htmlFile);
         fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
         BufferedWriter htmlFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, "UTF-8"));
@@ -1867,14 +1865,12 @@ public abstract class SingleAccessKeyTreeDumper {
      * generates a DOT file (viewable with <a href="http://www.graphviz.org">graphviz</a>) containing the key,
      * by calling {@link #generateDotString}
      */
-    public static File dumpDotFile(String header, SingleAccessKeyTree tree2dump) throws IOException {
-        String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-                + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
+    public static File dumpDotFile(String header, SingleAccessKeyTree tree2dump, String generatedFilesFolder) throws IOException {
 
         header = header.replace(System.getProperty("line.separator"), System.getProperty("line.separator")
                 + "//");
         header = header + System.getProperty("line.separator");
-        File dotFile = File.createTempFile("key_", "." + IkeyUtils.GV, new File(path));
+        File dotFile = File.createTempFile("key_", "." + IkeyUtils.GV, new File(generatedFilesFolder));
 
         FileOutputStream fileOutputStream = new FileOutputStream(dotFile);
         fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
@@ -2021,12 +2017,12 @@ public abstract class SingleAccessKeyTreeDumper {
         File flatTxtFile = dumpFlatTxtFile(header, tree2dump, showStatistics, generatedFilesFolder);
         File htmlFile = dumpHtmlFile(header, tree2dump, showStatistics, generatedFilesFolder);
         File flatHtmlFile = dumpFlatHtmlFile(header, tree2dump, showStatistics, generatedFilesFolder);
-        File interactiveHtmlFile = dumpInteractiveHtmlFile(header, tree2dump, showStatistics);
+        File interactiveHtmlFile = dumpInteractiveHtmlFile(header, tree2dump, showStatistics, generatedFilesFolder);
         File wikiFile = dumpWikiFile(header, tree2dump, showStatistics, generatedFilesFolder);
         File flatWikiFile = dumpFlatWikiFile(header, tree2dump, showStatistics, generatedFilesFolder);
         File flatSpeciesIDQuestionAnswerWikiFile = dumpFlatSpeciesIDQuestionAnswerWikiFile(header, tree2dump);
         File flatSpeciesIDStatementWikiFile = dumpFlatSpeciesIDStatementWikiFile(header, tree2dump);
-        File dotFile = dumpDotFile(header, tree2dump);
+        File dotFile = dumpDotFile(header, tree2dump,  generatedFilesFolder);
 
         // add all output file to the files list
         List<File> filesList = new ArrayList<>();
