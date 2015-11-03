@@ -25,7 +25,7 @@ public class IkeyUtils {
      * This method returns the intersection of two Lists
      */
     public static List<?> intersection(List<?> list1, List<?> list2) {
-        List<Object> list = new ArrayList<Object>();
+        List<Object> list = new ArrayList<>();
         for (Object o : list1) {
             if (list2.contains(o))
                 list.add(o);
@@ -42,7 +42,7 @@ public class IkeyUtils {
      * @return List
      */
     public static List<?> exclusion(List<?> primaryList, List<?> excludedList) {
-        List<Object> list = new ArrayList<Object>();
+        List<Object> list = new ArrayList<>();
         for (Object o : primaryList) {
             if (!excludedList.contains(o))
                 list.add(o);
@@ -54,10 +54,10 @@ public class IkeyUtils {
      * This method returns the union of two Lists
      */
     public static List<?> union(List<?> list1, List<?> list2) {
-        Set<Object> set = new HashSet<Object>();
+        Set<Object> set = new HashSet<>();
         set.addAll(list1);
         set.addAll(list2);
-        return new ArrayList<Object>(set);
+        return new ArrayList<>(set);
     }
 
     /**
@@ -69,7 +69,7 @@ public class IkeyUtils {
      * @return float, the rounded value
      */
     public static float roundFloat(float floatToRound, int roundFactor) {
-        double roundedFloat = 0;
+        double roundedFloat;
         double multiplier = Math.pow((double) 10, (double) roundFactor);
 
         roundedFloat = multiplier * floatToRound;
@@ -87,7 +87,7 @@ public class IkeyUtils {
      * @return double, the rounded value
      */
     public static double roundDouble(double score, int roundFactor) {
-        double roundedDouble = 0;
+        double roundedDouble;
         double multiplier = Math.pow((double) 10, (double) roundFactor);
 
         roundedDouble = multiplier * score;
