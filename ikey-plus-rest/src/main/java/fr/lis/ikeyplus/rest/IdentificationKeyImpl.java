@@ -53,6 +53,7 @@ public class IdentificationKeyImpl {
                 weightContext,
                 weightType);
     }
+
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     public String createIdentificationKey(
@@ -205,15 +206,9 @@ public class IdentificationKeyImpl {
                             resultFile = SingleAccessKeyTreeDumper.dumpWikiFile(header.toString(),
                                     tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolder);
                         }
-                    } else if (config.getFormat() == IkeyConfig.OutputFormat.SPECIES_ID_WIKI_STATEMENT) {
-                        resultFile = SingleAccessKeyTreeDumper.dumpFlatSpeciesIDStatementWikiFile(
-                                header.toString(), tree2dump);
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.INTERACTIVE_HTML) {
                         resultFile = SingleAccessKeyTreeDumper.dumpInteractiveHtmlFile(header.toString(),
                                 tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolder);
-                    } else if (config.getFormat() == IkeyConfig.OutputFormat.SPECIES_ID_WIKI_QUESTION_ANSWER) {
-                        resultFile = SingleAccessKeyTreeDumper.dumpFlatSpeciesIDQuestionAnswerWikiFile(
-                                header.toString(), tree2dump);
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.DOT) {
                         resultFile = SingleAccessKeyTreeDumper.dumpDotFile(header.toString(), tree2dump, generatedFilesFolder);
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.SDD) {

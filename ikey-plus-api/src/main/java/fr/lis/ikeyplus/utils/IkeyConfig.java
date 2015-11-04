@@ -150,8 +150,6 @@ public class IkeyConfig {
         PDF("pdf"),
         SDD("sdd"),
         WIKI("wiki"),
-        SPECIES_ID_WIKI_STATEMENT("speciesidwikistatement"),
-        SPECIES_ID_WIKI_QUESTION_ANSWER("speciesidwikiquestionanswer"),
         DOT("dot"),
         ZIP("zip");
 
