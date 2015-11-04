@@ -6,8 +6,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class IkeyUtils {
+public final class IkeyUtils {
 
+    private IkeyUtils(){
+        // private empty constructor to prevent instantiation
+    }
 
     // static variable
     public static final String UNKNOWN_DATA = "unknownData";

@@ -495,7 +495,7 @@ public abstract class SingleAccessKeyTreeDumper {
                     output.append("  ").append(child.getCharacter().getName()).append(" = ");
                 } else {
                     output.append("    ");
-                    blankCharacterName .setLength(0);
+                    blankCharacterName.setLength(0);
                     for (int i = 0; i < child.getCharacter().getName().length(); i++) {
                         blankCharacterName.append(" ");
                     }
@@ -731,8 +731,9 @@ public abstract class SingleAccessKeyTreeDumper {
                 }
                 output.append("</span>");
             }
-            if (node.hasChild())
+            if (node.hasChild()) {
                 output.append("<ul>");
+            }
             output.append(System.getProperty("line.separator"));
             tabulations = tabulations + "\t";
         }
@@ -753,10 +754,10 @@ public abstract class SingleAccessKeyTreeDumper {
             }
             if (node.getCharacter() != null && node.getCharacterState() != null) {
 
-                if (node.hasChild())
-                    output.append(tabulations).append("</li></ul>\n");
-                else
-                    output.append(tabulations).append("</li>\n");
+                if (node.hasChild()){
+                    output.append(tabulations).append("</li></ul>\n");}
+                else{
+                    output.append(tabulations).append("</li>\n");}
             }
         }
     }
@@ -1036,12 +1037,12 @@ public abstract class SingleAccessKeyTreeDumper {
                 if (nodeChildParentNumberingMap.get(child) != currentParentNumber) {
                     currentParentNumber = nodeChildParentNumberingMap.get(child);
                     output.append("<br/>").append(lineSeparator);
-                    if (currentParentNumber < 10)
-                        output.append("   ");
-                    else if (currentParentNumber < 100)
-                        output.append("  ");
-                    else if (currentParentNumber < 1000)
-                        output.append(" ");
+                    if (currentParentNumber < 10){
+                        output.append("   ");}
+                    else if (currentParentNumber < 100){
+                        output.append("  ");}
+                    else if (currentParentNumber < 1000){
+                        output.append(" ");}
 
                     // close the previous opening <span class="viewNode"> if this is not the first one
                     if (currentParentNumber > 1)
@@ -1169,6 +1170,7 @@ public abstract class SingleAccessKeyTreeDumper {
         // end root node treatment
         visitedNodes.add(rootNode);
 
+        StringBuilder blankCharacterName = new StringBuilder();
         while (!queue.isEmpty()) {
             SingleAccessKeyNode node = queue.remove();
             SingleAccessKeyNode child;
@@ -1213,9 +1215,10 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 } else {
                     output.append("    ");
-                    String blankCharacterName = "";
-                    for (int i = 0; i < child.getCharacter().getName().length(); i++)
-                        blankCharacterName += " ";
+                    blankCharacterName.setLength(0);
+                    for (int i = 0; i < child.getCharacter().getName().length(); i++) {
+                        blankCharacterName.append(" ");
+                    }
                     output.append("  ").append(blankCharacterName);
                 }
                 output.append("<span class=\"statesAndTaxa\">");
