@@ -3,9 +3,9 @@ Ikey+: Identification key generator
 
 [![Build Status](https://travis-ci.org/thomasburguiere/ikey-plus.svg?branch=master)](https://travis-ci.org/thomasburguiere/ikey-plus) [![codecov.io](https://codecov.io/github/thomasburguiere/ikey-plus/coverage.svg?branch=master)](https://codecov.io/github/thomasburguiere/ikey-plus?branch=master) [![Codacy Badge](https://api.codacy.com/project/badge/grade/4d3260ee5aab4f03bd70f643d503bb41)](https://www.codacy.com/app/thomas-burguiere/ikey-plus)
 
-Authors : 
+Authors :
 
-- Florian Causse 
+- Florian Causse
 - Thomas Burguiere (thomas.burguiere@gmail.com)
 
 Disclaimer
@@ -14,10 +14,15 @@ This is a fork of one of the app I worked on during my days at "Laboratoire d'In
 
 Contributions are welcome !
 
-Build
------
 
-Run `mvn install`
+What is this app doing?
+----------------------
+This app generates single access identification keys, using sdd formated file as input.
+
+Building the app
+-----
+To build the app, you will need [Apache Maven](https://maven.apache.org/).
+Once you have maven installed, go to the root of the project, and run `mvn install`.
 
 Usage - API
 -----------
@@ -32,7 +37,7 @@ IkeyConfig config = IkeyConfig.builder().build();
 SDDSaxParser sddSaxParser = new SDDSaxParser(new File("inputFile.sdd"), config);
 
 // initialize key generator
-IdentificationKeyGenerator identificationKeyGenerator = 
+IdentificationKeyGenerator identificationKeyGenerator =
 	new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
 
 // compute and get identification key
@@ -49,7 +54,3 @@ Usage - REST API
 ----------------
 
 Coming soon...
-
-
-
-
