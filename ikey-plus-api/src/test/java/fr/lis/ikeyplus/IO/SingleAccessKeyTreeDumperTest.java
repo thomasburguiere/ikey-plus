@@ -267,6 +267,7 @@ public class SingleAccessKeyTreeDumperTest {
             e.printStackTrace();
         }
     }
+
     @Test
     public void should_generate_genetta_sdd_key() throws Exception {
         String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";

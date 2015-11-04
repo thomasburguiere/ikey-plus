@@ -481,14 +481,15 @@ public abstract class SingleAccessKeyTreeDumper {
                 if (nodeChildParentNumberingMap.get(child) != currentParentNumber) {
                     currentParentNumber = nodeChildParentNumberingMap.get(child);
                     output.append(lineSeparator);
-                    if (currentParentNumber < 10)
+                    if (currentParentNumber < 10) {
                         output.append("   ").append(currentParentNumber);
-                    else if (currentParentNumber < 100)
+                    } else if (currentParentNumber < 100) {
                         output.append("  ").append(currentParentNumber);
-                    else if (currentParentNumber < 1000)
+                    } else if (currentParentNumber < 1000) {
                         output.append(" ").append(currentParentNumber);
-                    else
+                    } else {
                         output.append(currentParentNumber);
+                    }
                     output.append("  ").append(child.getCharacter().getName()).append(" = ");
                 } else {
                     output.append("    ");
@@ -1183,12 +1184,13 @@ public abstract class SingleAccessKeyTreeDumper {
                 if (nodeChildParentNumberingMap.get(child) != currentParentNumber) {
                     currentParentNumber = nodeChildParentNumberingMap.get(child);
                     output.append("<br/>").append(lineSeparator);
-                    if (currentParentNumber < 10)
+                    if (currentParentNumber < 10) {
                         output.append("   ");
-                    else if (currentParentNumber < 100)
+                    } else if (currentParentNumber < 100) {
                         output.append("  ");
-                    else if (currentParentNumber < 1000)
+                    } else if (currentParentNumber < 1000) {
                         output.append(" ");
+                    }
 
                     // close the previous opening <span class="viewNode"> if this is not the first one
                     if (currentParentNumber > 1)
@@ -1914,8 +1916,9 @@ public abstract class SingleAccessKeyTreeDumper {
         for (SingleAccessKeyNode childNode : node.getChildren()) {
             Integer childNumber = nodeBreadthFirstIterationMap.get(childNode);
             nodeChildParentNumberingMap.put(childNumber, parentNumber);
-            if (parentNumber == 1)
+            if (parentNumber == 1) {
                 rootNodeChildrenIntegerList.add(childNumber);
+            }
 
             recursiveDepthFirstIntegerIndex(childNode, nodeBreadthFirstIterationMap,
                     nodeChildParentNumberingMap, rootNodeChildrenIntegerList);

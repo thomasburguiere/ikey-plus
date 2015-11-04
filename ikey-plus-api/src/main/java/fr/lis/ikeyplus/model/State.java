@@ -71,8 +71,12 @@ public class State {
     }
 
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         State that = (State) o;
 
@@ -81,7 +85,7 @@ public class State {
     }
 
     @Override
-     public int hashCode() {
+    public int hashCode() {
         return Objects.hashCode(id, name);
     }
 }
