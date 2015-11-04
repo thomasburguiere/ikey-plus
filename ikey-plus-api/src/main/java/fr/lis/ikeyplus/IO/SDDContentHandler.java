@@ -407,10 +407,9 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <Source> in <MediaObject>
-            else if ("Source".equals(localName) && inMediaObject && mediaObjectId != null && isImageType) {
-                if (attributes.getValue("href") != null) {
-                    dataSet.getMediaObjects().put(mediaObjectId, attributes.getValue("href"));
-                }
+            else if ("Source".equals(localName) && inMediaObject && mediaObjectId != null && isImageType
+                    && attributes.getValue("href") != null) {
+                dataSet.getMediaObjects().put(mediaObjectId, attributes.getValue("href"));
             }
         }
     }

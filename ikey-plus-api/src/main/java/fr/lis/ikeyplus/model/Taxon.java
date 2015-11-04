@@ -59,10 +59,9 @@ public class Taxon {
     }
 
     public String getFirstImage(DataSet dataSet) {
-        if (dataSet != null && mediaObjectKeys != null && mediaObjectKeys.size() > 0) {
-            if (dataSet.getMediaObject(mediaObjectKeys.get(0)).startsWith("http")) {
-                return dataSet.getMediaObject(mediaObjectKeys.get(0));
-            }
+        if (dataSet != null && mediaObjectKeys != null && mediaObjectKeys.size() > 0 &&
+                dataSet.getMediaObject(mediaObjectKeys.get(0)).startsWith("http")) {
+            return dataSet.getMediaObject(mediaObjectKeys.get(0));
         }
         return null;
     }

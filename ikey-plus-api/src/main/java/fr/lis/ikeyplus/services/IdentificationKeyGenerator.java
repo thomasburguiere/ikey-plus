@@ -137,10 +137,9 @@ public class IdentificationKeyGenerator {
                         node.setCharacterState(state);
 
                         // mergeCharacterStatesIfSameDiscrimination option handling
-                        if (config.isMergeCharacterStatesIfSameDiscrimination()) {
-                            if (mergeNodesIfSameDiscrimination(futureChildNodes, node)) {
-                                continue;
-                            }
+                        if (config.isMergeCharacterStatesIfSameDiscrimination()
+                                && mergeNodesIfSameDiscrimination(futureChildNodes, node)) {
+                            continue;
                         }
 
                         // add the current node to the current child nodes list
@@ -262,13 +261,12 @@ public class IdentificationKeyGenerator {
                                                boolean isOptimized) throws Exception {
 
         if (node != null) {
-            if (parentNode != null) {
-                if (parentNode.getChildren().size() == 1
-                        && parentNode.getRemainingTaxa().size() == node.getRemainingTaxa().size()) {
-                    parentNode.getChildren().addAll(node.getChildren());
-                    parentNode.getChildren().remove(node);
-                    isOptimized = true;
-                }
+            if (parentNode != null
+                    && parentNode.getChildren().size() == 1
+                    && parentNode.getRemainingTaxa().size() == node.getRemainingTaxa().size()) {
+                parentNode.getChildren().addAll(node.getChildren());
+                parentNode.getChildren().remove(node);
+                isOptimized = true;
             }
             for (int i = 0; i < node.getChildren().size(); i++) {
                 isOptimized = optimizeSingleAccessKeyTree(node, node.getChildren().get(i), isOptimized);
@@ -369,10 +367,12 @@ public class IdentificationKeyGenerator {
             taxaBefore = 0;
             taxaAfter = 0;
             for (int j = 0; j < allValues.size() / 2; j++) {
-                if (allValues.get(j * 2 + 1) <= threshold){
-                    taxaBefore++;}
-                if (allValues.get(j * 2) >= threshold){
-                    taxaAfter++;}
+                if (allValues.get(j * 2 + 1) <= threshold) {
+                    taxaBefore++;
+                }
+                if (allValues.get(j * 2) >= threshold) {
+                    taxaAfter++;
+                }
             }
             difference = Math.abs(taxaBefore - taxaAfter);
             if (difference < differenceMin) {
@@ -410,10 +410,12 @@ public class IdentificationKeyGenerator {
                         .getCharacterDescription(character)).getCalculateMinimum();
                 Double maxTmp = ((QuantitativeMeasure) dataset.getCodedDescription(taxon)
                         .getCharacterDescription(character)).getCalculateMaximum();
-                if (minTmp != null){
-                    allValues.add(minTmp);}
-                if (maxTmp != null){
-                    allValues.add(maxTmp);}
+                if (minTmp != null) {
+                    allValues.add(minTmp);
+                }
+                if (maxTmp != null) {
+                    allValues.add(maxTmp);
+                }
             }
         }
         return allValues;
@@ -464,8 +466,9 @@ public class IdentificationKeyGenerator {
         } else {
             for (ICharacter childCharacter : characters) {
                 if (scoreMap.get(childCharacter) != null) {
-                    if (max == -1){
-                        max = scoreMap.get(childCharacter);}
+                    if (max == -1) {
+                        max = scoreMap.get(childCharacter);
+                    }
                     if (scoreMap.get(childCharacter) >= max) {
                         // init max score with child score + 0.0001 (to ensure that
                         // the parent score will be better)
@@ -511,8 +514,9 @@ public class IdentificationKeyGenerator {
                         }
 
                     }
-                    if (nWeights > 0){
-                        averageWeight = (weightsSum / nWeights);}
+                    if (nWeights > 0) {
+                        averageWeight = (weightsSum / nWeights);
+                    }
 
                     if (averageWeight > bestWeight) {
                         bestCharacter = character;
@@ -621,72 +625,80 @@ public class IdentificationKeyGenerator {
         for (int i = 0; i < remainingTaxa.size() - 1; i++) {
             for (int j = i + 1; j < remainingTaxa.size(); j++) {
                 if (dataset.getCodedDescription(remainingTaxa.get(i)) != null
-                        && dataset.getCodedDescription(remainingTaxa.get(j)) != null) {
-                    // if the character is applicable for both of these taxa
-                    if (dataset.isApplicable(remainingTaxa.get(i), character)
-                            && dataset.isApplicable(remainingTaxa.get(j), character)) {
+                        && dataset.getCodedDescription(remainingTaxa.get(j)) != null
+                        && dataset.isApplicable(remainingTaxa.get(i), character)
+                        && dataset.isApplicable(remainingTaxa.get(j), character)) {
 
-                        List<State> statesList1 = (List<State>) dataset.getCodedDescription(
-                                remainingTaxa.get(i)).getCharacterDescription(character);
-                        List<State> statesList2 = (List<State>) dataset.getCodedDescription(
-                                remainingTaxa.get(j)).getCharacterDescription(character);
+                    List<State> statesList1 = (List<State>) dataset.getCodedDescription(
+                            remainingTaxa.get(i)).getCharacterDescription(character);
+                    List<State> statesList2 = (List<State>) dataset.getCodedDescription(
+                            remainingTaxa.get(j)).getCharacterDescription(character);
 
-                        // if at least one description is empty for the current character
-                        if ((statesList1 != null && statesList1.size() == 0)
-                                || (statesList2 != null && statesList2.size() == 0)) {
-                            isAlwaysDescribed = false;
-                        }
+                    // if at least one description is empty for the current character
+                    if ((statesList1 != null && statesList1.size() == 0)
+                            || (statesList2 != null && statesList2.size() == 0)) {
+                        isAlwaysDescribed = false;
+                    }
 
-                        // if one description is unknown and the other have 0 state checked
-                        if ((statesList1 == null && statesList2 != null && statesList2.size() == 0)
-                                || (statesList2 == null && statesList1 != null && statesList1.size() == 0)) {
-                            score++;
-                        } else if (statesList1 != null && statesList2 != null) {
+                    // if one description is unknown and the other have 0 state checked
+                    if ((statesList1 == null && statesList2 != null && statesList2.size() == 0)
+                            || (statesList2 == null && statesList1 != null && statesList1.size() == 0)) {
+                        score++;
+                    } else if (statesList1 != null && statesList2 != null) {
 
-                            // nb of common states which are absent
-                            float commonAbsent = 0;
-                            // nb of common states which are present
-                            float commonPresent = 0;
-                            float other = 0;
+                        // nb of common states which are absent
+                        float commonAbsent = 0;
+                        // nb of common states which are present
+                        float commonPresent = 0;
+                        float other = 0;
 
-                            // search common state
-                            for (int k = 0; k < character.getStates().size(); k++) {
-                                State state = character.getStates().get(k);
+                        // search common state
+                        for (int k = 0; k < character.getStates().size(); k++) {
+                            State state = character.getStates().get(k);
 
-                                if (statesList1.contains(state)) {
-                                    if (statesList2.contains(state)) {
-                                        commonPresent++;
-                                    } else {
-                                        other++;
-                                    }
-                                    // !(statesList2.contains(state))
+                            if (statesList1.contains(state)) {
+                                if (statesList2.contains(state)) {
+                                    commonPresent++;
                                 } else {
-                                    if (statesList2.contains(state)) {
-                                        other++;
-                                    } else {
-                                        commonAbsent++;
-                                    }
+                                    other++;
+                                }
+                                // !(statesList2.contains(state))
+                            } else {
+                                if (statesList2.contains(state)) {
+                                    other++;
+                                } else {
+                                    commonAbsent++;
                                 }
                             }
-                            score += applyScoreMethod(commonPresent, commonAbsent, other);
                         }
-                        cpt++;
+                        score += applyScoreMethod(commonPresent, commonAbsent, other);
                     }
+                    cpt++;
                 }
             }
         }
 
-        if (cpt >= 1) {
+        if (cpt >= 1)
+
+        {
             score = score / cpt;
         }
 
         // increasing artificially the score of character containing only described taxa
-        if (isAlwaysDescribed && score > 0) {
+        if (isAlwaysDescribed && score > 0)
+
+        {
             score = (float) ((float) score + (float) 2.0);
         }
 
         // fewStatesCharacterFirst option handling
-        if (config.isFewStatesCharacterFirst() && score > 0 && character.getStates().size() >= 2) {
+        if (config.isFewStatesCharacterFirst() && score > 0 && character.getStates().
+
+                size()
+
+                >= 2)
+
+        {
             // increasing artificially score of character with few states
             float coeff = (float) 1
                     - ((float) character.getStates().size() / (float) maxNbStatesPerCharacter);
@@ -824,8 +836,9 @@ public class IdentificationKeyGenerator {
         int max = 2;
         for (ICharacter ic : dataset.getCharacters()) {
             if (ic instanceof CategoricalCharacter && ((CategoricalCharacter) ic).getStates() != null
-                    && max < ((CategoricalCharacter) ic).getStates().size()){
-                max = ((CategoricalCharacter) ic).getStates().size();}
+                    && max < ((CategoricalCharacter) ic).getStates().size()) {
+                max = ((CategoricalCharacter) ic).getStates().size();
+            }
         }
         return max;
     }
@@ -873,6 +886,7 @@ public class IdentificationKeyGenerator {
     public int getMaxNumStatesPerCharacter() {
         return maxNbStatesPerCharacter;
     }
+
     public void setMaxNumStatesPerCharacter(int maxNumStatesPerCharacter) {
         this.maxNbStatesPerCharacter = maxNumStatesPerCharacter;
     }
