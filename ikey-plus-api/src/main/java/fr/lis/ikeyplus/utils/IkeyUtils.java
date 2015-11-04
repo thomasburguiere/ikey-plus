@@ -8,14 +8,7 @@ import java.util.Set;
 
 public final class IkeyUtils {
 
-    private IkeyUtils(){
-        // private empty constructor to prevent instantiation
-    }
-
-    // static variable
     public static final String UNKNOWN_DATA = "unknownData";
-    public static final String YES = "yes";
-    public static final String NO = "no";
     // file prefix
     public static final String KEY = "key_";
     public static final String ERROR = "error_";
@@ -23,6 +16,10 @@ public final class IkeyUtils {
     public static final String GV = "gv";
     // buffer size
     public static final int BUFFER = 2048;
+
+    private IkeyUtils(){
+        // private empty constructor to prevent instantiation
+    }
 
     /**
      * This method returns the intersection of two Lists
