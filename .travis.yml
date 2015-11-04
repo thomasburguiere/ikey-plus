@@ -4,19 +4,3 @@ before_install:
   - pip install --user codecov
 after_success:
   - codecov
-
-env:
-  global:
-   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
-   #   via the "travis encrypt" command using the project repo's public key
-   - secure: "RMFD8mpz8jvsg9eRpBZSzjMWqci64gI5S2/Svuz7/DbRMZpcD8QvMZLL8ybDDc4wEYeYX7GUKg2RKczd9rMadzpRDMe44Ewk/8vebOIHIvf7vfUP+Z+r0LI1CmF9+bF1amzkiWdmw8OjGvzT0lJ414mMhecNZiSCMNpOYDouB7C1TXgjrEDOpU0cWHD90QbPf/8QKQ+rhMmZFVkB7ZKrQgqH6RqwaBmOs/QOJFTovdvzMZZeJPd5gNwJ9e7KjQqnEi83d7bGRiQUiPQrndKKBxTDFoPIrjnvTiU1E4Yzaha5hiR44tyUpDu4qrO9L9gEwPlcBBR1qHA9lHwoaBqUE/OQaeDxI5eq+GkLqwGwn5kvJCTzNeERbnenjQf3iABNYPMjDpBuZ/jGhUK9wWsNrcTZNg6gbLQDFtJwwp1wD79FtUfByvuhtuqyqf3v7xCOmFYITqopo9Qbg/dt9RHzAP8DfINGAaf+E4aJzv41trzG5HwENUBZOf3ywlzvbOpSO3KogBuH4GgFQbCHFXifFqsdMdlc+n1M4j/wmiI4+qMNIe9221/fxPNNLAwr9vwc/1OK4gMPgllb88xaDhA6EoJC/nsjcZRgCJgTtwFcsc9xsPGXcBxAAAnEbJN5+279iPcE9yHMTBkWpmqdQzArV/U+e4b7hsfxhlu6QkLF5zw="
-
-addons:
-  coverity_scan:
-    project:
-      name: "thomasburguiere/ikey-plus"
-      description: "Build submitted via Travis CI"
-    notification_email: thomas.burguiere@gmail.com
-    build_command_prepend: "mvn clean"
-    build_command:   "mvn package"
-    branch_pattern: coverity_scan
