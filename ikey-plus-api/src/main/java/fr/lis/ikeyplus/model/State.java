@@ -23,7 +23,7 @@ public class State {
     public State(String name) {
         super();
         this.name = name;
-        this.mediaObjectKeys = new ArrayList<String>();
+        this.mediaObjectKeys = new ArrayList<>();
     }
 
     public String getName() {

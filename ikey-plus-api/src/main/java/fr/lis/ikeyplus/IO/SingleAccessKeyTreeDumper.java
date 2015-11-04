@@ -1021,6 +1021,7 @@ public abstract class SingleAccessKeyTreeDumper {
         // end root node treatment
         visitedNodes.add(rootNode);
 
+        StringBuilder blankCharacterName = new StringBuilder();
         while (!queue.isEmpty()) {
             SingleAccessKeyNode node = queue.remove();
             SingleAccessKeyNode child;
@@ -1066,9 +1067,10 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 } else {
                     output.append("    ");
-                    String blankCharacterName = "";
-                    for (int i = 0; i < child.getCharacter().getName().length(); i++)
-                        blankCharacterName += " ";
+                    blankCharacterName.setLength(0);
+                    for (int i = 0; i < child.getCharacter().getName().length(); i++) {
+                        blankCharacterName.append(" ");
+                    }
                     output.append("  ").append(blankCharacterName);
                 }
                 output.append("<span class=\"statesAndTaxa\">");
@@ -1121,8 +1123,9 @@ public abstract class SingleAccessKeyTreeDumper {
                 output.append("<br/>").append(lineSeparator);
 
                 queue.add(child);
-                if (child.hasChild())
+                if (child.hasChild()) {
                     counter++;
+                }
                 // / end child node treatment
 
             }
@@ -1200,8 +1203,9 @@ public abstract class SingleAccessKeyTreeDumper {
                     }
 
                     // close the previous opening <span class="viewNode"> if this is not the first one
-                    if (currentParentNumber > 1)
+                    if (currentParentNumber > 1) {
                         output.append(lineSeparator).append("</span>");
+                    }
                     output.append("<span class=\"viewNode\" id=\"viewNode").append(currentParentNumber).append("\">");
 
                     if (activeLink) {

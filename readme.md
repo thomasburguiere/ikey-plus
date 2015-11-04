@@ -17,7 +17,7 @@ Contributions are welcome !
 
 What is this app doing?
 ----------------------
-This app generates single access identification keys, using sdd formated file as input.
+This app generates [single access identification keys](https://en.wikipedia.org/wiki/Single-access_key), using [SDD](http://wiki.tdwg.org/twiki/bin/view/SDD/Version1dot1) formated file as input.
 
 Building the app
 -----
