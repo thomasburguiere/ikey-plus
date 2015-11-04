@@ -754,10 +754,11 @@ public abstract class SingleAccessKeyTreeDumper {
             }
             if (node.getCharacter() != null && node.getCharacterState() != null) {
 
-                if (node.hasChild()){
-                    output.append(tabulations).append("</li></ul>\n");}
-                else{
-                    output.append(tabulations).append("</li>\n");}
+                if (node.hasChild()) {
+                    output.append(tabulations).append("</li></ul>\n");
+                } else {
+                    output.append(tabulations).append("</li>\n");
+                }
             }
         }
     }
@@ -1037,16 +1038,18 @@ public abstract class SingleAccessKeyTreeDumper {
                 if (nodeChildParentNumberingMap.get(child) != currentParentNumber) {
                     currentParentNumber = nodeChildParentNumberingMap.get(child);
                     output.append("<br/>").append(lineSeparator);
-                    if (currentParentNumber < 10){
-                        output.append("   ");}
-                    else if (currentParentNumber < 100){
-                        output.append("  ");}
-                    else if (currentParentNumber < 1000){
-                        output.append(" ");}
+                    if (currentParentNumber < 10) {
+                        output.append("   ");
+                    } else if (currentParentNumber < 100) {
+                        output.append("  ");
+                    } else if (currentParentNumber < 1000) {
+                        output.append(" ");
+                    }
 
                     // close the previous opening <span class="viewNode"> if this is not the first one
-                    if (currentParentNumber > 1)
+                    if (currentParentNumber > 1) {
                         output.append(lineSeparator).append("</span>");
+                    }
                     output.append("<span class=\"viewNode\" id=\"viewNode").append(currentParentNumber).append("\">");
 
                     if (activeLink) {

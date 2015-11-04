@@ -128,13 +128,11 @@ public class SingleAccessKeyTree {
 
         if (node != null) {
             if (node.getCharacter() != null && node.getCharacterState() != null) {
-                if (!node.hasChild()) {
-                    if (node.getCharacter().isSupportsCategoricalData()
-                            && !((State) node.getCharacterState()).getName().equals(
-                            IkeyConfig.getBundleConfElement("message.notDescribed"))) {
-                        for (Taxon t : node.getRemainingTaxa()) {
-                            t.updatePathStatistics((float) treeDepth);
-                        }
+                if (!node.hasChild() && node.getCharacter().isSupportsCategoricalData()
+                        && !((State) node.getCharacterState()).getName().equals(
+                        IkeyConfig.getBundleConfElement("message.notDescribed"))) {
+                    for (Taxon t : node.getRemainingTaxa()) {
+                        t.updatePathStatistics((float) treeDepth);
                     }
                 }
                 treeDepth++;

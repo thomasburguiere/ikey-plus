@@ -17,7 +17,7 @@ public final class IkeyUtils {
     // buffer size
     public static final int BUFFER = 2048;
 
-    private IkeyUtils(){
+    private IkeyUtils() {
         // private empty constructor to prevent instantiation
     }
 
@@ -27,8 +27,9 @@ public final class IkeyUtils {
     public static List<?> intersection(List<?> list1, List<?> list2) {
         List<Object> list = new ArrayList<>();
         for (Object o : list1) {
-            if (list2.contains(o))
+            if (list2.contains(o)) {
                 list.add(o);
+            }
         }
         return list;
     }
@@ -44,8 +45,9 @@ public final class IkeyUtils {
     public static List<?> exclusion(List<?> primaryList, List<?> excludedList) {
         List<Object> list = new ArrayList<>();
         for (Object o : primaryList) {
-            if (!excludedList.contains(o))
+            if (!excludedList.contains(o)) {
                 list.add(o);
+            }
         }
         return list;
     }

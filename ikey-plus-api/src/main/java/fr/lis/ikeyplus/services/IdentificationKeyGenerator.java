@@ -369,10 +369,10 @@ public class IdentificationKeyGenerator {
             taxaBefore = 0;
             taxaAfter = 0;
             for (int j = 0; j < allValues.size() / 2; j++) {
-                if (allValues.get(j * 2 + 1) <= threshold)
-                    taxaBefore++;
-                if (allValues.get(j * 2) >= threshold)
-                    taxaAfter++;
+                if (allValues.get(j * 2 + 1) <= threshold){
+                    taxaBefore++;}
+                if (allValues.get(j * 2) >= threshold){
+                    taxaAfter++;}
             }
             difference = Math.abs(taxaBefore - taxaAfter);
             if (difference < differenceMin) {
@@ -410,10 +410,10 @@ public class IdentificationKeyGenerator {
                         .getCharacterDescription(character)).getCalculateMinimum();
                 Double maxTmp = ((QuantitativeMeasure) dataset.getCodedDescription(taxon)
                         .getCharacterDescription(character)).getCalculateMaximum();
-                if (minTmp != null)
-                    allValues.add(minTmp);
-                if (maxTmp != null)
-                    allValues.add(maxTmp);
+                if (minTmp != null){
+                    allValues.add(minTmp);}
+                if (maxTmp != null){
+                    allValues.add(maxTmp);}
             }
         }
         return allValues;
@@ -464,8 +464,8 @@ public class IdentificationKeyGenerator {
         } else {
             for (ICharacter childCharacter : characters) {
                 if (scoreMap.get(childCharacter) != null) {
-                    if (max == -1)
-                        max = scoreMap.get(childCharacter);
+                    if (max == -1){
+                        max = scoreMap.get(childCharacter);}
                     if (scoreMap.get(childCharacter) >= max) {
                         // init max score with child score + 0.0001 (to ensure that
                         // the parent score will be better)
@@ -511,8 +511,8 @@ public class IdentificationKeyGenerator {
                         }
 
                     }
-                    if (nWeights > 0)
-                        averageWeight = (weightsSum / nWeights);
+                    if (nWeights > 0){
+                        averageWeight = (weightsSum / nWeights);}
 
                     if (averageWeight > bestWeight) {
                         bestCharacter = character;
@@ -824,8 +824,8 @@ public class IdentificationKeyGenerator {
         int max = 2;
         for (ICharacter ic : dataset.getCharacters()) {
             if (ic instanceof CategoricalCharacter && ((CategoricalCharacter) ic).getStates() != null
-                    && max < ((CategoricalCharacter) ic).getStates().size())
-                max = ((CategoricalCharacter) ic).getStates().size();
+                    && max < ((CategoricalCharacter) ic).getStates().size()){
+                max = ((CategoricalCharacter) ic).getStates().size();}
         }
         return max;
     }

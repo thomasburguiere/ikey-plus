@@ -30,6 +30,7 @@ public class SingleAccessKeyNode {
         this.children = new ArrayList<>();
         this.remainingTaxa = new ArrayList<>();
     }
+
     public ICharacter getCharacter() {
         return character;
     }
@@ -81,8 +82,9 @@ public class SingleAccessKeyNode {
             List<State> states = new ArrayList<>();
             states.add((State) this.getCharacterState());
             for (Object state : this.getOtherCharacterStates()) {
-                if (state instanceof State)
+                if (state instanceof State) {
                     states.add((State) state);
+                }
             }
             return states;
         }

@@ -100,7 +100,7 @@ public class SDDContentHandler implements ContentHandler {
         super();
         this.dataSet = new DataSet();
         this.config = config;
-        this.ratingsCounter = new HashMap<ICharacter, Integer>();
+        this.ratingsCounter = new HashMap<>();
     }
 
     /* (non-Javadoc)
@@ -220,8 +220,8 @@ public class SDDContentHandler implements ContentHandler {
             // <CharNode> in <Nodes>
             else if ("CharNode".equals(localName) && inNodes) {
                 inCharNode = true;
-                currentInapplicableState = new ArrayList<State>();
-                currentOnlyApplicableState = new ArrayList<State>();
+                currentInapplicableState = new ArrayList<>();
+                currentOnlyApplicableState = new ArrayList<>();
             }
 
             // <DependencyRules> in <CharNode>
@@ -299,13 +299,14 @@ public class SDDContentHandler implements ContentHandler {
             else if ("Categorical".equals(localName) && inSummaryData) {
                 inCategorical = true;
                 currentCodedDescriptionCharacter = this.dataSet.getCharacterById(attributes.getValue("ref"));
-                currentStatesList = new ArrayList<State>();
+                currentStatesList = new ArrayList<>();
             }
 
             // <State> in <Categorical>
             else if ("State".equals(localName) && inCategorical) {
-                if (currentStatesList != null)
+                if (currentStatesList != null) {
                     currentStatesList.add(this.dataSet.getStateById(attributes.getValue("ref")));
+                }
             }
 
             // <Status> in <Categorical>
@@ -490,7 +491,7 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <ConceptStates>
-           // else if ("ConceptStates".equals(localName)) {
+            // else if ("ConceptStates".equals(localName)) {
 
             //}
 
@@ -532,9 +533,9 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <StateReference> in <States>
-          //  else if ("StateReference".equals(localName) && inStates) {
+            //  else if ("StateReference".equals(localName) && inStates) {
 
-         //   }
+            //   }
 
             // <ConceptState> in <StateReference>
             //else if ("ConceptState".equals(localName) && inStatesReference) {
@@ -563,7 +564,7 @@ public class SDDContentHandler implements ContentHandler {
                     ICharacter character = dataSet.getCharacterByState(currentOnlyApplicableState.get(0));
                     if (character != null && character instanceof CategoricalCharacter) {
                         currentCharacterNode.setParentCharacter(character);
-                        List<State> tempList = new ArrayList<State>(
+                        List<State> tempList = new ArrayList<>(
                                 ((CategoricalCharacter) character).getStates());
                         tempList.removeAll(currentOnlyApplicableState);
                         currentCharacterNode.getInapplicableStates().addAll(tempList);
