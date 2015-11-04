@@ -296,7 +296,7 @@ public class IkeyConfig {
         return this.errorMessageFile;
     }
 
-    public void setErrorMessageFile(File errorMessageFile) {
+    private void setErrorMessageFile(File errorMessageFile) {
         this.errorMessageFile = errorMessageFile;
     }
 

@@ -53,18 +53,17 @@ public class SchedulerServlet extends GenericServlet {
 
             scheduler.scheduleJob(job, cronTrigger);
 
-        } catch (SchedulerException e) {
+        } catch (SchedulerException | ParseException e) {
             e.printStackTrace();
 
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
 
     }
 
     @Override
-    public void service(ServletRequest serveletRequest, ServletResponse servletResponse)
+    public void service(ServletRequest servletRequest, ServletResponse servletResponse)
             throws ServletException, IOException {
+        // nothing to do here
     }
 
 }

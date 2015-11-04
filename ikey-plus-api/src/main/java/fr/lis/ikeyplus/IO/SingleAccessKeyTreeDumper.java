@@ -163,6 +163,7 @@ public abstract class SingleAccessKeyTreeDumper {
         output.append("<Label>").append(tree2dump.getLabel()).append("</Label>").append(lineSeparator);
         output.append("</Representation>").append(lineSeparator);
 
+        StringBuilder mediaObjectsTags = new StringBuilder();
         while (!queue.isEmpty()) {
             SingleAccessKeyNode node = queue.remove();
             SingleAccessKeyNode child;
@@ -186,7 +187,7 @@ public abstract class SingleAccessKeyTreeDumper {
                 }
 
                 // initiate the mediaObject Tags
-                StringBuilder mediaObjectsTags = new StringBuilder("");
+                mediaObjectsTags.setLength(0);
                 if (child.getCharacter().isSupportsCategoricalData()) {
                     for (String mediaObjectKey : ((State) child.getCharacterState()).getMediaObjectKeys()) {
                         mediaObjectsTags.append("<MediaObject ref=\"").append(mediaObjectKey).append("\"/>").append(lineSeparator);
@@ -464,6 +465,7 @@ public abstract class SingleAccessKeyTreeDumper {
         // end root node treatment
         visitedNodes.add(rootNode);
 
+        StringBuilder blankCharacterName = new StringBuilder();
         while (!queue.isEmpty()) {
             SingleAccessKeyNode node = queue.remove();
             SingleAccessKeyNode child;
@@ -493,7 +495,7 @@ public abstract class SingleAccessKeyTreeDumper {
                     output.append("  ").append(child.getCharacter().getName()).append(" = ");
                 } else {
                     output.append("    ");
-                    StringBuilder blankCharacterName = new StringBuilder();
+                    blankCharacterName .setLength(0);
                     for (int i = 0; i < child.getCharacter().getName().length(); i++) {
                         blankCharacterName.append(" ");
                     }
