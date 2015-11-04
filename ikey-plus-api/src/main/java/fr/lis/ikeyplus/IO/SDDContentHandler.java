@@ -704,7 +704,7 @@ public class SDDContentHandler implements ContentHandler {
      * @see org.xml.sax.ContentHandler#endDocument() */
     @Override
     public void endDocument() throws SAXException {
-
+        // nothing to do here
     }
 
     /* (non-Javadoc)
@@ -712,7 +712,7 @@ public class SDDContentHandler implements ContentHandler {
      * @see org.xml.sax.ContentHandler#endPrefixMapping(java.lang.String) */
     @Override
     public void endPrefixMapping(String prefix) throws SAXException {
-
+        // nothing to do here
     }
 
     /* (non-Javadoc)
@@ -720,7 +720,7 @@ public class SDDContentHandler implements ContentHandler {
      * @see org.xml.sax.ContentHandler#setDocumentLocator(org.xml.sax.Locator) */
     @Override
     public void setDocumentLocator(Locator locator) {
-
+        // nothing to do here
     }
 
     /* (non-Javadoc)
@@ -728,7 +728,7 @@ public class SDDContentHandler implements ContentHandler {
      * @see org.xml.sax.ContentHandler#startDocument() */
     @Override
     public void startDocument() throws SAXException {
-
+        // nothing to do here
     }
 
     /* (non-Javadoc)
@@ -736,7 +736,7 @@ public class SDDContentHandler implements ContentHandler {
      * @see org.xml.sax.ContentHandler#startPrefixMapping(java.lang.String, java.lang.String) */
     @Override
     public void startPrefixMapping(String prefix, String uri) throws SAXException {
-
+        // nothing to do here
     }
 
     /* (non-Javadoc)
@@ -761,7 +761,7 @@ public class SDDContentHandler implements ContentHandler {
      * @see org.xml.sax.ContentHandler#ignorableWhitespace(char[], int, int) */
     @Override
     public void ignorableWhitespace(char[] ch, int start, int length) throws SAXException {
-
+        // nothing to do here
     }
 
     /* (non-Javadoc)
@@ -769,7 +769,7 @@ public class SDDContentHandler implements ContentHandler {
      * @see org.xml.sax.ContentHandler#processingInstruction(java.lang.String, java.lang.String) */
     @Override
     public void processingInstruction(String target, String data) throws SAXException {
-
+        // nothing to do here
     }
 
     /* (non-Javadoc)
@@ -777,7 +777,7 @@ public class SDDContentHandler implements ContentHandler {
      * @see org.xml.sax.ContentHandler#skippedEntity(java.lang.String) */
     @Override
     public void skippedEntity(String name) throws SAXException {
-
+        // nothing to do here
     }
 
     /**
@@ -787,14 +787,5 @@ public class SDDContentHandler implements ContentHandler {
      */
     public DataSet getDataSet() {
         return dataSet;
-    }
-
-    /**
-     * set the current dataSet
-     *
-     * @param DataSet , the current dataSet
-     */
-    public void setDataSet(DataSet dataSet) {
-        this.dataSet = dataSet;
     }
 }
