@@ -59,7 +59,7 @@ public class SingleAccessKeyTreeDumperTest {
     }
 
     @Test
-    public void should_generate_cichorieae_flat_tree_key() throws Exception {
+    public void should_generate_cichorieae_html_tree_key() throws Exception {
         String stringUrl = "src/test/resources/inputFiles/cichorieae.sdd.xml";
 
         IkeyConfig config = IkeyConfig.builder()
