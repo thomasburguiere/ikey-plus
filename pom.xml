@@ -10,6 +10,7 @@
         <module>ikey-plus-rest</module>
     </modules>
 
+    <name>ikey-plus</name>
     <properties>
         <version.junit>4.8.2</version.junit>
         <version.assertj-core>2.1.0</version.assertj-core>

@@ -13,7 +13,7 @@ This is a fork of one of the app I worked on during my days at "Laboratoire d'In
 
 ## What is this app doing?
 
-This app generates [single access identification keys](https://en.wikipedia.org/wiki/Single-access_key), using [SDD](http://wiki.tdwg.org/twiki/bin/view/SDD/Version1dot1) formated file as input.
+This app generates [single access identification keys](https://en.wikipedia.org/wiki/Single-access_key), using [SDD](http://wiki.tdwg.org/twiki/bin/view/SDD/Version1dot1) formatted file as input.
 
 ## Building the app##
 
@@ -30,12 +30,12 @@ Include the api jar in your app, then:
 // setup generator config with default values
 IkeyConfig config = IkeyConfig.builder().build();
 
-// initialize sdd parser
-SDDSaxParser sddSaxParser = new SDDSaxParser(new File("inputFile.sdd"), config);
+// initialize SDD parser
+SDDSaxParser parser = new SDDSaxParser(new File("inputFile.sdd"), config);
 
 // initialize key generator
 IdentificationKeyGenerator identificationKeyGenerator =
-	new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
+	new IdentificationKeyGenerator(parser.getDataset(), config);
 
 // compute and get identification key
 identificationKeyGenerator.createIdentificationKey();
