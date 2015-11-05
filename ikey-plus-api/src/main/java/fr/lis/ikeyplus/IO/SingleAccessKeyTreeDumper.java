@@ -1281,8 +1281,9 @@ public abstract class SingleAccessKeyTreeDumper {
                 output.append("<br/>").append(lineSeparator);
 
                 queue.add(child);
-                if (child.hasChild()){
-                    counter++;}
+                if (child.hasChild()) {
+                    counter++;
+                }
                 // / end child node treatment
 
             }

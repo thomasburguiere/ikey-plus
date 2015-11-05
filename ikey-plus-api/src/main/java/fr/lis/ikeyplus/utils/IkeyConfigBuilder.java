@@ -33,12 +33,12 @@ public class IkeyConfigBuilder {
         return this;
     }
 
-    public IkeyConfigBuilder mergeCharacterStatesIfSameDiscrimination(){
+    public IkeyConfigBuilder mergeCharacterStatesIfSameDiscrimination() {
         this.mergeCharacterStatesIfSameDiscrimination = true;
         return this;
     }
 
-    public IkeyConfigBuilder enablePruning(){
+    public IkeyConfigBuilder enablePruning() {
         this.pruningEnabled = true;
         return this;
     }
@@ -58,12 +58,12 @@ public class IkeyConfigBuilder {
         return this;
     }
 
-    public IkeyConfigBuilder verbosity(IkeyConfig.VerbosityLevel verbosityLevel){
+    public IkeyConfigBuilder verbosity(IkeyConfig.VerbosityLevel verbosityLevel) {
         this.verbosity.add(verbosityLevel);
         return this;
     }
 
-    public IkeyConfigBuilder verbosity(Set<IkeyConfig.VerbosityLevel> verbosityLevels){
+    public IkeyConfigBuilder verbosity(Set<IkeyConfig.VerbosityLevel> verbosityLevels) {
         this.verbosity.addAll(verbosityLevels);
         return this;
     }

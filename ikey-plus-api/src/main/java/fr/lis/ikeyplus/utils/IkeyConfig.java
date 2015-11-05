@@ -35,17 +35,18 @@ public class IkeyConfig {
     private WeightContext weightContext = WeightContext.NO_WEIGHT;
     private WeightType weightType = WeightType.GLOBAL;
 
-    private IkeyConfig() {}
+    private IkeyConfig() {
+    }
 
     IkeyConfig(OutputFormat format,
-                       KeyRepresentation representation,
-                       boolean fewStatesCharacterFirst,
-                       boolean mergeCharacterStatesIfSameDiscrimination,
-                       boolean pruningEnabled,
-                       Set<VerbosityLevel> verbosity,
-                       ScoreMethod scoreMethod,
-                       WeightContext weightContext,
-                       WeightType weightType) {
+               KeyRepresentation representation,
+               boolean fewStatesCharacterFirst,
+               boolean mergeCharacterStatesIfSameDiscrimination,
+               boolean pruningEnabled,
+               Set<VerbosityLevel> verbosity,
+               ScoreMethod scoreMethod,
+               WeightContext weightContext,
+               WeightType weightType) {
 
         this.format = format;
         this.representation = representation;
@@ -255,7 +256,6 @@ public class IkeyConfig {
             return null;
         }
     }
-
 
 
     public static String getBundleConfElement(String key) {

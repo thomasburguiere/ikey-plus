@@ -458,7 +458,6 @@ public class SDDContentHandler implements ContentHandler {
                                 / (float) (this.ratingsCounter.get(character)));
                     }
                 }
-
             }
 
             // <Representation> in <Dataset>
