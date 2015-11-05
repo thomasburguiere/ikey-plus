@@ -1,25 +1,10 @@
 package fr.lis.ikeyplus.services;
 
-import fr.lis.ikeyplus.model.CategoricalCharacter;
-import fr.lis.ikeyplus.model.CodedDescription;
-import fr.lis.ikeyplus.model.DataSet;
-import fr.lis.ikeyplus.model.ICharacter;
-import fr.lis.ikeyplus.model.QuantitativeCharacter;
-import fr.lis.ikeyplus.model.QuantitativeMeasure;
-import fr.lis.ikeyplus.model.SingleAccessKeyNode;
-import fr.lis.ikeyplus.model.SingleAccessKeyTree;
-import fr.lis.ikeyplus.model.State;
-import fr.lis.ikeyplus.model.Taxon;
+import fr.lis.ikeyplus.model.*;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import fr.lis.ikeyplus.utils.IkeyUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This class is the service generating identification keys
@@ -719,68 +704,68 @@ public class IdentificationKeyGenerator {
         for (int i = 0; i < remainingTaxa.size() - 1; i++) {
             for (int j = i + 1; j < remainingTaxa.size(); j++) {
                 if (dataset.getCodedDescription(remainingTaxa.get(i)) != null
-                        && dataset.getCodedDescription(remainingTaxa.get(j)) != null) {
-                    // if the character is applicable for both of these taxa
-                    if (dataset.isApplicable(remainingTaxa.get(i), character)
-                            && dataset.isApplicable(remainingTaxa.get(j), character)) {
-                        // nb of common states which are absent
-                        float commonAbsent = 0;
-                        // nb of common states which are present
-                        float commonPresent = 0;
-                        float other = 0;
-                        QuantitativeMeasure quantitativeMeasure1 = (QuantitativeMeasure) dataset
-                                .getCodedDescription(remainingTaxa.get(i)).getCharacterDescription(character);
-                        QuantitativeMeasure quantitativeMeasure2 = (QuantitativeMeasure) dataset
-                                .getCodedDescription(remainingTaxa.get(j)).getCharacterDescription(character);
+                        && dataset.getCodedDescription(remainingTaxa.get(j)) != null
+                        // if the character is applicable for both of these taxa
+                        && dataset.isApplicable(remainingTaxa.get(i), character)
+                        && dataset.isApplicable(remainingTaxa.get(j), character)) {
+                    // nb of common states which are absent
+                    float commonAbsent = 0;
+                    // nb of common states which are present
+                    float commonPresent = 0;
+                    float other = 0;
+                    QuantitativeMeasure quantitativeMeasure1 = (QuantitativeMeasure) dataset
+                            .getCodedDescription(remainingTaxa.get(i)).getCharacterDescription(character);
+                    QuantitativeMeasure quantitativeMeasure2 = (QuantitativeMeasure) dataset
+                            .getCodedDescription(remainingTaxa.get(j)).getCharacterDescription(character);
 
-                        // if at least one description is empty for the current character
-                        if ((quantitativeMeasure1 != null && quantitativeMeasure1.isNotSpecified())
-                                || (quantitativeMeasure2 != null && quantitativeMeasure2.isNotSpecified())) {
-                            isAlwaysDescribed = false;
-                        }
+                    // if at least one description is empty for the current character
+                    if ((quantitativeMeasure1 != null && quantitativeMeasure1.isNotSpecified())
+                            || (quantitativeMeasure2 != null && quantitativeMeasure2.isNotSpecified())) {
+                        isAlwaysDescribed = false;
+                    }
 
-                        // if one description is unknown and the other have no measure
-                        if ((quantitativeMeasure1 == null && quantitativeMeasure2 != null && quantitativeMeasure2
+                    // if one description is unknown and the other have no measure
+                    if ((quantitativeMeasure1 == null && quantitativeMeasure2 != null && quantitativeMeasure2
+                            .isNotSpecified())
+                            || (quantitativeMeasure2 == null && quantitativeMeasure1 != null && quantitativeMeasure1
+                            .isNotSpecified())) {
+                        score++;
+                        // search common shared values
+                    } else if (quantitativeMeasure1 != null && quantitativeMeasure2 != null) {
+
+                        // if a taxon is described and the other is not, it means that this taxa can be
+                        // discriminated
+                        if ((quantitativeMeasure1.isNotSpecified() && !quantitativeMeasure2
                                 .isNotSpecified())
-                                || (quantitativeMeasure2 == null && quantitativeMeasure1 != null && quantitativeMeasure1
+                                || (quantitativeMeasure2.isNotSpecified() && !quantitativeMeasure1
                                 .isNotSpecified())) {
                             score++;
-                            // search common shared values
-                        } else if (quantitativeMeasure1 != null && quantitativeMeasure2 != null) {
+                        } else {
 
-                            // if a taxon is described and the other is not, it means that this taxa can be
-                            // discriminated
-                            if ((quantitativeMeasure1.isNotSpecified() && !quantitativeMeasure2
-                                    .isNotSpecified())
-                                    || (quantitativeMeasure2.isNotSpecified() && !quantitativeMeasure1
-                                    .isNotSpecified())) {
-                                score++;
-                            } else {
-
-                                // search common state
-                                for (QuantitativeMeasure quantitativeMeasure : QuantitativeIntervals) {
-                                    if (quantitativeMeasure.isInclude(quantitativeMeasure1)) {
-                                        if (quantitativeMeasure.isInclude(quantitativeMeasure2)) {
-                                            commonPresent++;
-                                        } else {
-                                            other++;
-                                        }
+                            // search common state
+                            for (QuantitativeMeasure quantitativeMeasure : QuantitativeIntervals) {
+                                if (quantitativeMeasure.isInclude(quantitativeMeasure1)) {
+                                    if (quantitativeMeasure.isInclude(quantitativeMeasure2)) {
+                                        commonPresent++;
                                     } else {
-                                        if (quantitativeMeasure.isInclude(quantitativeMeasure2)) {
-                                            other++;
-                                        } else {
-                                            commonAbsent++;
-                                        }
+                                        other++;
+                                    }
+                                } else {
+                                    if (quantitativeMeasure.isInclude(quantitativeMeasure2)) {
+                                        other++;
+                                    } else {
+                                        commonAbsent++;
                                     }
                                 }
-                                score += applyScoreMethod(commonPresent, commonAbsent, other);
                             }
+                            score += applyScoreMethod(commonPresent, commonAbsent, other);
                         }
-                        cpt++;
                     }
+                    cpt++;
                 }
             }
         }
+
 
         if (cpt >= 1) {
             score = score / cpt;
