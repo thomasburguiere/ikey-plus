@@ -6,6 +6,8 @@ Authors :
 
 - Florian Causse
 - Thomas Burguiere (thomas.burguiere@gmail.com)
+- Visotheary Ung
+- Régine Vignes-Lebbe
 
 ## Disclaimer ##
 
@@ -13,18 +15,25 @@ This is a fork of one of the app I worked on during my days at "Laboratoire d'In
 
 ## What is this app doing?
 
-This app generates [single access identification keys](https://en.wikipedia.org/wiki/Single-access_key), using [SDD](http://wiki.tdwg.org/twiki/bin/view/SDD/Version1dot1) formatted file as input.
+This app generates [single access identification keys](https://en.wikipedia.org/wiki/Single-access_key), using [SDD](http://wiki.tdwg.org/twiki/bin/view/SDD/Version1dot1) formatted file as input. SDD is an XML standard used in systematic biology to store descriptive data.
+
+If your descriptive data is stored in the delta format you can convert it to sdd using the [deltaToSdd](http://www.identificationkey.fr/deltatosdd/) webservice. If your descriptive data is stored in the Xper2 format you can convert it to sdd using the Xper2 software Export option.
 
 ## Building the app##
+To build the app, you will need [Apache Maven](https://maven.apache.org/). Once you have maven installed, go to the root of the project, and run `mvn install`.
 
-To build the app, you will need [Apache Maven](https://maven.apache.org/).
-Once you have maven installed, go to the root of the project, and run `mvn install`.
+#### Maven dependency
+```xml
+<dependency>
+    <groupId>fr.lis.ikey-plus</groupId>
+    <artifactId>ikey-plus-api</artifactId>
+    <version>${}</version>
+</dependency>
+```
 
 ## Usage ##
 
 ### Java API ###
-
-Include the api jar in your app, then:
 
 ```java
 // setup generator config with default values
