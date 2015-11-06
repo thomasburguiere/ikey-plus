@@ -1,17 +1,19 @@
 # Ikey+: Identification key generator #
 
-[![Build Status](https://travis-ci.org/thomasburguiere/ikey-plus.svg?branch=master)](https://travis-ci.org/thomasburguiere/ikey-plus) [![codecov.io](https://codecov.io/github/thomasburguiere/ikey-plus/coverage.svg?branch=master)](https://codecov.io/github/thomasburguiere/ikey-plus?branch=master) [![Codacy Badge](https://api.codacy.com/project/badge/grade/4d3260ee5aab4f03bd70f643d503bb41)](https://www.codacy.com/app/thomas-burguiere/ikey-plus)
+### Build Status `master` [![Build Status](https://travis-ci.org/thomasburguiere/ikey-plus.svg?branch=master)](https://travis-ci.org/thomasburguiere/ikey-plus) [![codecov.io](https://codecov.io/github/thomasburguiere/ikey-plus/coverage.svg?branch=master)](https://codecov.io/github/thomasburguiere/ikey-plus?branch=master) [![Codacy Badge](https://api.codacy.com/project/badge/grade/4d3260ee5aab4f03bd70f643d503bb41)](https://www.codacy.com/app/thomas-burguiere/ikey-plus)
 
-Authors :
+### Build Status `develop` [![Build Status](https://travis-ci.org/thomasburguiere/ikey-plus.svg?branch=develop)](https://travis-ci.org/thomasburguiere/ikey-plus) [![codecov.io](https://codecov.io/github/thomasburguiere/ikey-plus/coverage.svg?branch=develop)](https://codecov.io/github/thomasburguiere/ikey-plus?branch=master) [![Codacy Badge](https://api.codacy.com/project/badge/grade/4d3260ee5aab4f03bd70f643d503bb41)](https://www.codacy.com/app/thomas-burguiere/ikey-plus)
 
-- Florian Causse
+## Authors :
+
 - Thomas Burguiere (thomas.burguiere@gmail.com)
+- Florian Causse
 - Visotheary Ung
 - Régine Vignes-Lebbe
 
 ## Disclaimer ##
 
-This is a fork of one of the app I worked on during my days at "Laboratoire d'Informatique et Systématique" at Université Pierre et Marie Curie, Paris, France, from 2011 to 2013. The original source code is publicly available [here](https://code.google.com/p/ikey-plus/) and the corresponding publication is available [there](http://sysbio.oxfordjournals.org/content/62/1/157.long). This is still a work in progress on many aspects, the code is a bug-ridden mess, but it does work :).
+This is a fork of one of the app I worked on during my days at [Laboratoire d'Informatique et Systématique](http://www.infosyslab.fr) (LIS) at Université Pierre et Marie Curie, Paris, France, from 2011 to 2013. The original source code is publicly available [here](https://code.google.com/p/ikey-plus/) and the corresponding publication is available [there](http://sysbio.oxfordjournals.org/content/62/1/157.long). This is still a work in progress on many aspects, the code is a bug-ridden mess, but it does work :).
 
 ## What is this app doing?
 
@@ -27,7 +29,7 @@ To build the app, you will need [Apache Maven](https://maven.apache.org/). Once 
 <dependency>
     <groupId>fr.lis.ikey-plus</groupId>
     <artifactId>ikey-plus-api</artifactId>
-    <version>${}</version>
+    <version>1.*</version>
 </dependency>
 ```
 
