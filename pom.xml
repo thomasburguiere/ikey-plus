@@ -4,7 +4,7 @@
     <groupId>fr.lis.ikey-plus</groupId>
     <artifactId>ikey-plus-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <modules>
         <module>ikey-plus-api</module>
         <module>ikey-plus-rest</module>
