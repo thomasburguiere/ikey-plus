@@ -1384,27 +1384,27 @@ public abstract class SingleAccessKeyTreeDumper {
             throws IOException {
 
         File wikiFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.WIKI, new File(generatedFilesFolder));
-        BufferedWriter wikiFlatFileWriter = new BufferedWriter(new FileWriter(wikiFile));
+        try (BufferedWriter wikiFlatFileWriter = new BufferedWriter(new FileWriter(wikiFile))) {
 
-        if (header != null && !header.equals("")) {
-            wikiFlatFileWriter.append("== Info ==");
+            if (header != null && !header.equals("")) {
+                wikiFlatFileWriter.append("== Info ==");
+                wikiFlatFileWriter.newLine();
+                wikiFlatFileWriter.append(header.replaceAll(System.getProperty("line.separator"), "<br>"));
+                wikiFlatFileWriter.newLine();
+            }
+            wikiFlatFileWriter.append("== Identification Key==");
             wikiFlatFileWriter.newLine();
-            wikiFlatFileWriter.append(header.replaceAll(System.getProperty("line.separator"), "<br>"));
-            wikiFlatFileWriter.newLine();
+            // wikiFlatFileWriter.append(" <nowiki>");
+
+            wikiFlatFileWriter.append(generateFlatWikiString(tree2dump));
+
+            if (showStatistics) {
+                tree2dump.gatherTaxonPathStatistics();
+                wikiFlatFileWriter.append(outputTaxonPathStatisticsWiki(tree2dump));
+            }
+
+            // wikiFlatFileWriter.append("</nowiki>");
         }
-        wikiFlatFileWriter.append("== Identification Key==");
-        wikiFlatFileWriter.newLine();
-        // wikiFlatFileWriter.append(" <nowiki>");
-
-        wikiFlatFileWriter.append(generateFlatWikiString(tree2dump));
-
-        if (showStatistics) {
-            tree2dump.gatherTaxonPathStatistics();
-            wikiFlatFileWriter.append(outputTaxonPathStatisticsWiki(tree2dump));
-        }
-
-        // wikiFlatFileWriter.append("</nowiki>");
-        wikiFlatFileWriter.close();
 
         return wikiFile;
     }
@@ -1684,127 +1684,6 @@ public abstract class SingleAccessKeyTreeDumper {
 
     // END DOT DUMP
 
-    // ZIP DUMP
-    public static File dumpZipFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics, String generatedFilesFolder)
-            throws IOException {
-
-        // create all output formats
-        File sddFile = dumpSddFile(tree2dump);
-        File txtFile = dumpTxtFile(header, tree2dump, showStatistics, generatedFilesFolder);
-        File flatTxtFile = dumpFlatTxtFile(header, tree2dump, showStatistics, generatedFilesFolder);
-        File htmlFile = dumpHtmlFile(header, tree2dump, showStatistics, generatedFilesFolder);
-        File flatHtmlFile = dumpFlatHtmlFile(header, tree2dump, showStatistics, generatedFilesFolder);
-        File interactiveHtmlFile = dumpInteractiveHtmlFile(header, tree2dump, showStatistics, generatedFilesFolder);
-        File wikiFile = dumpWikiFile(header, tree2dump, showStatistics, generatedFilesFolder);
-        File flatWikiFile = dumpFlatWikiFile(header, tree2dump, showStatistics, generatedFilesFolder);
-        File dotFile = dumpDotFile(header, tree2dump, generatedFilesFolder);
-
-        // add all output file to the files list
-        List<File> filesList = new ArrayList<>();
-        filesList.add(sddFile);
-        filesList.add(txtFile);
-        filesList.add(flatTxtFile);
-        filesList.add(htmlFile);
-        filesList.add(flatHtmlFile);
-        filesList.add(interactiveHtmlFile);
-        filesList.add(wikiFile);
-        filesList.add(flatWikiFile);
-        filesList.add(dotFile);
-
-        String label = "";
-        if (tree2dump.getLabel() != null) {
-            label = tree2dump.getLabel() + "-";
-        }
-        // create a map matching file to file path
-        Map<File, String> correspondingFilePath = new HashMap<>();
-        correspondingFilePath.put(sddFile, label + "key" + System.getProperty("file.separator") + "flat"
-                + System.getProperty("file.separator") + sddFile.getName());
-        correspondingFilePath.put(txtFile, label + "key" + System.getProperty("file.separator") + "tree"
-                + System.getProperty("file.separator") + txtFile.getName());
-        correspondingFilePath.put(flatTxtFile, label + "key" + System.getProperty("file.separator") + "flat"
-                + System.getProperty("file.separator") + flatTxtFile.getName());
-        correspondingFilePath.put(htmlFile, label + "key" + System.getProperty("file.separator") + "tree"
-                + System.getProperty("file.separator") + htmlFile.getName());
-        correspondingFilePath.put(flatHtmlFile, label + "key" + System.getProperty("file.separator") + "flat"
-                + System.getProperty("file.separator") + flatHtmlFile.getName());
-        correspondingFilePath.put(interactiveHtmlFile, label + "key" + System.getProperty("file.separator")
-                + "flat" + System.getProperty("file.separator") + interactiveHtmlFile.getName());
-        correspondingFilePath.put(wikiFile, label + "key" + System.getProperty("file.separator") + "tree"
-                + System.getProperty("file.separator") + wikiFile.getName());
-        correspondingFilePath.put(flatWikiFile, label + "key" + System.getProperty("file.separator") + "flat"
-                + System.getProperty("file.separator") + flatWikiFile.getName());
-        correspondingFilePath.put(dotFile, label + "key" + System.getProperty("file.separator") + "tree"
-                + System.getProperty("file.separator") + dotFile.getName());
-
-        String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-                + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
-
-        File zipFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.ZIP, new File(path));
-
-        try {
-            // create the writing flow
-            FileOutputStream dest = new FileOutputStream(zipFile);
-
-            // calculate the checksum : Adler32 (faster) or CRC32
-            CheckedOutputStream checksum = new CheckedOutputStream(dest, new Adler32());
-
-            // create the writing buffer
-            BufferedOutputStream buff = new BufferedOutputStream(checksum);
-
-            // create the zip writing flow
-            ZipOutputStream out = new ZipOutputStream(buff);
-
-            // specify the uncompress method
-            out.setMethod(ZipOutputStream.DEFLATED);
-
-            // specify the compress quality
-            out.setLevel(Deflater.BEST_COMPRESSION);
-
-            // Temporary buffer
-            byte data[] = new byte[IkeyUtils.BUFFER];
-
-            // for each file of the list
-            for (File file : filesList) {
-
-                // create the reading flow
-                FileInputStream fi = new FileInputStream(file);
-
-                // creation of a read buffer of the stream
-                BufferedInputStream buffi = new BufferedInputStream(fi, IkeyUtils.BUFFER);
-
-                // create input for this Zip file
-                ZipEntry entry = new ZipEntry(IkeyUtils.unAccent(correspondingFilePath.get(file)));
-
-                // add this entry in the flow of writing the Zip archive
-                out.putNextEntry(entry);
-
-                // writing the package file BUFFER bytes in the flow Writing
-                int count;
-                while ((count = buffi.read(data, 0, IkeyUtils.BUFFER)) != -1) {
-                    out.write(data, 0, count);
-                }
-
-                // close the current entry
-                out.closeEntry();
-
-                // close the flow of reading
-                buffi.close();
-            }
-            // close the flow of writing
-            out.close();
-            buff.close();
-            checksum.close();
-            dest.close();
-
-        } catch (Exception e) {
-            tree2dump.getConfig().setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingFileError"), e);
-            e.printStackTrace();
-        }
-
-        return zipFile;
-    }
-
-    // END ZIP DUMP
 
     // ---------------------- HELPER METHODS ---------------------- //
 

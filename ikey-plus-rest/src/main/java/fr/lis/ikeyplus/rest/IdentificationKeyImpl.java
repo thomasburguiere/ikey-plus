@@ -189,9 +189,6 @@ public class IdentificationKeyImpl {
                         resultFile = SingleAccessKeyTreeDumper.dumpDotFile(header.toString(), tree2dump, generatedKeyFolderPath);
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.SDD) {
                         resultFile = SingleAccessKeyTreeDumper.dumpSddFile(tree2dump);
-                    } else if (config.getFormat() == IkeyConfig.OutputFormat.ZIP) {
-                        resultFile = SingleAccessKeyTreeDumper.dumpZipFile(header.toString(), tree2dump,
-                                config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
                     } else {
                         if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
                             resultFile = SingleAccessKeyTreeDumper.dumpFlatTxtFile(header.toString(),
