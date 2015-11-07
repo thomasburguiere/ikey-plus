@@ -20,6 +20,12 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <configuration>
+                    <warName>ikey-plus</warName>
+                </configuration>
+                <artifactId>maven-war-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
