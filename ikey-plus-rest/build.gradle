@@ -1,11 +1,10 @@
-
 apply plugin: 'war'
 
 description = ''
 dependencies {
-    compile group: 'com.sun.jersey', name: 'jersey-server', version:'1.6'
-    compile group: 'log4j', name: 'log4j', version:'1.2.16'
-    compile group: 'org.quartz-scheduler', name: 'quartz', version:'2.0.0'
-  compile project(':ikey-plus-api')
-    providedCompile group: 'javax.servlet', name: 'servlet-api', version:'2.5'
+    compile group: 'com.sun.jersey', name: 'jersey-server', version: '1.6'
+    compile group: 'log4j', name: 'log4j', version: '1.2.16'
+    compile group: 'org.quartz-scheduler', name: 'quartz', version: '2.0.0'
+    compile project(':ikey-plus-api')
+    providedCompile group: 'javax.servlet', name: 'servlet-api', version: '2.5'
 }
