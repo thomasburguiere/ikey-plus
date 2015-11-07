@@ -1,5 +1,6 @@
 package fr.lis.ikeyplus.utils;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
 
@@ -74,8 +75,8 @@ public class IkeyConfig {
         }
 
         public static Set<VerbosityLevel> fromString(String s) {
-            if (s != null) {
-                Set<VerbosityLevel> verbosity = new HashSet<VerbosityLevel>();
+            if (!Strings.isNullOrEmpty(s)) {
+                Set<VerbosityLevel> verbosity = new HashSet<>();
                 for (VerbosityLevel level : values()) {
                     if (s.toLowerCase().contains(level.toString())) {
                         verbosity.add(level);
@@ -83,7 +84,7 @@ public class IkeyConfig {
                 }
                 return verbosity;
             }
-            return null;
+            return Sets.newHashSet();
         }
 
         VerbosityLevel(String flag) {
@@ -114,7 +115,7 @@ public class IkeyConfig {
                     }
                 }
             }
-            return null;
+            return XPER;
         }
     }
 
@@ -140,7 +141,7 @@ public class IkeyConfig {
                     }
                 }
             }
-            return null;
+            return FLAT;
         }
     }
 
@@ -172,7 +173,7 @@ public class IkeyConfig {
                     }
                 }
             }
-            return null;
+            return TXT;
         }
     }
 
@@ -224,6 +225,17 @@ public class IkeyConfig {
         public String toString() {
             return type;
         }
+
+        public static WeightType fromString(String text) {
+            if (text != null) {
+                for (WeightType entry : values()) {
+                    if (entry.toString().equals(text)) {
+                        return entry;
+                    }
+                }
+            }
+            return GLOBAL;
+        }
     }
 
     public enum WeightContext {
@@ -253,7 +265,7 @@ public class IkeyConfig {
                     }
                 }
             }
-            return null;
+            return NO_WEIGHT;
         }
     }
 
