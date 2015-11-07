@@ -83,149 +83,141 @@ public class IdentificationKeyImpl {
         final String generatedKeyFolderPath = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-//        try {
 
-            // define header string
-            StringBuilder header = new StringBuilder();
+        // define header string
+        StringBuilder header = new StringBuilder();
 
-            config = initializeConfig(
-                    format,
-                    representation, fewStatesCharacterFirst,
-                    mergeCharacterStatesIfSameDiscrimination,
-                    pruning,
-                    verbosity,
-                    scoreMethod,
-                    weightContext,
-                    weightType);
+        config = initializeConfig(
+                format,
+                representation, fewStatesCharacterFirst,
+                mergeCharacterStatesIfSameDiscrimination,
+                pruning,
+                verbosity,
+                scoreMethod,
+                weightContext,
+                weightType);
 
-            long beforeTime = System.currentTimeMillis();
+        long beforeTime = System.currentTimeMillis();
 
-            // call SDD parser
-            SDDSaxParser sddSaxParser;
-            // test if the URL is valid
-            URLConnection urlConnection;
-            try {
-                URL fileURL = new URL(sddURL);
-                // open URL (HTTP query)
-                urlConnection = fileURL.openConnection();
-                // Open data stream
-                urlConnection.getInputStream();
-            } catch (IOException e) {
-                // e.printStackTrace();// TODO log properly
-                final String message = IkeyConfig.getBundleConfElement("message.urlError");
-                config.setErrorMessage(message, e);
-                throw new IkeyException(message, e);
-            }
-            try {
-                sddSaxParser = new SDDSaxParser(sddURL, config);
-                // construct header
-                header.append(lineReturn).append(sddSaxParser.getDataset().getLabel()).append(", ").
-                        append(IkeyConfig.getBundleConfOverridableElement("message.createdBy")).append(lineReturn);
-                header.append(lineReturn).append("Options:");
-                header.append(lineReturn).append("sddURL=").append(sddURL);
-                header.append(lineReturn).append("format=").append(config.getFormat());
-                header.append(lineReturn).append("representation=").append(config.getRepresentation());
-                header.append(lineReturn).append("fewStatesCharacterFirst=").append(config.isFewStatesCharacterFirst());
-                header.append(lineReturn).append("mergeCharacterStatesIfSameDiscrimination=").append(config.isMergeCharacterStatesIfSameDiscrimination());
-                header.append(lineReturn).append("pruning=").append(config.isPruningEnabled());
-                header.append(lineReturn).append("verbosity=").append(config.getVerbosity());
-                header.append(lineReturn).append("scoreMethod=").append(config.getScoreMethod());
-                header.append(lineReturn).append("weightContext=").append(config.getWeightContext());
-                header.append(lineReturn).append("weightType=").append(config.getWeightType());
-                header.append(lineReturn);
-            } catch (IOException | SAXException e) {
-                //e.printStackTrace(); // TODO log properly
-                final String message = IkeyConfig.getBundleConfElement("message.parsingError");
-                config.setErrorMessage(message, e);
-                throw new IkeyException(message, e);
-            }
-            double parseDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
-            beforeTime = System.currentTimeMillis();
-
-            // call identification key service
-            IdentificationKeyGenerator identificationKeyGenerator = null;
-            try {
-                identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(),
-                        config);
-                identificationKeyGenerator.createIdentificationKey();
-            } catch (Throwable t) {
-                t.printStackTrace();
-                config.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingKeyError"), t);
-            }
-
-            double keyCreationDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
+        // call SDD parser
+        SDDSaxParser sddSaxParser;
+        // test if the URL is valid
+        URLConnection urlConnection;
+        try {
+            URL fileURL = new URL(sddURL);
+            // open URL (HTTP query)
+            urlConnection = fileURL.openConnection();
+            // Open data stream
+            urlConnection.getInputStream();
+        } catch (IOException e) {
+            // e.printStackTrace();// TODO log properly
+            final String message = IkeyConfig.getBundleConfElement("message.urlError");
+            config.setErrorMessage(message, e);
+            throw new IkeyException(message, e);
+        }
+        try {
+            sddSaxParser = new SDDSaxParser(sddURL, config);
             // construct header
-            header.append(System.getProperty("line.separator")).append("parseDuration= ").append(parseDuration).append("s");
-            header.append(System.getProperty("line.separator")).append("keyCreationDuration= ").append(keyCreationDuration).append("s");
+            header.append(lineReturn).append(sddSaxParser.getDataset().getLabel()).append(", ").
+                    append(IkeyConfig.getBundleConfOverridableElement("message.createdBy")).append(lineReturn);
+            header.append(lineReturn).append("Options:");
+            header.append(lineReturn).append("sddURL=").append(sddURL);
+            header.append(lineReturn).append("format=").append(config.getFormat());
+            header.append(lineReturn).append("representation=").append(config.getRepresentation());
+            header.append(lineReturn).append("fewStatesCharacterFirst=").append(config.isFewStatesCharacterFirst());
+            header.append(lineReturn).append("mergeCharacterStatesIfSameDiscrimination=").append(config.isMergeCharacterStatesIfSameDiscrimination());
+            header.append(lineReturn).append("pruning=").append(config.isPruningEnabled());
+            header.append(lineReturn).append("verbosity=").append(config.getVerbosity());
+            header.append(lineReturn).append("scoreMethod=").append(config.getScoreMethod());
+            header.append(lineReturn).append("weightContext=").append(config.getWeightContext());
+            header.append(lineReturn).append("weightType=").append(config.getWeightType());
+            header.append(lineReturn);
+        } catch (IOException | SAXException e) {
+            //e.printStackTrace(); // TODO log properly
+            final String message = IkeyConfig.getBundleConfElement("message.parsingError");
+            config.setErrorMessage(message, e);
+            throw new IkeyException(message, e);
+        }
+        double parseDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
+        beforeTime = System.currentTimeMillis();
 
-            File resultFile = null;
+        // call identification key service
+        IdentificationKeyGenerator identificationKeyGenerator = null;
+        try {
+            identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(),
+                    config);
+            identificationKeyGenerator.createIdentificationKey();
+        } catch (Throwable t) {
+            t.printStackTrace();
+            config.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingKeyError"), t);
+        }
 
-            if (identificationKeyGenerator != null
-                    && identificationKeyGenerator.getSingleAccessKeyTree() != null) {
+        double keyCreationDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
+        // construct header
+        header.append(System.getProperty("line.separator")).append("parseDuration= ").append(parseDuration).append("s");
+        header.append(System.getProperty("line.separator")).append("keyCreationDuration= ").append(keyCreationDuration).append("s");
 
-                try {
-                    // creation of the directory containing key files
-                    IkeyUtils.generatedKeyFolderPathIfNeeded();
+        File resultFile = null;
 
-                    SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+        if (identificationKeyGenerator != null
+                && identificationKeyGenerator.getSingleAccessKeyTree() != null) {
 
-                    header.append(System.getProperty("line.separator")).append(System.getProperty("line.separator"));
+            try {
+                // creation of the directory containing key files
+                IkeyUtils.generatedKeyFolderPathIfNeeded();
 
-                    if (!config.getVerbosity().contains(IkeyConfig.VerbosityLevel.HEADER)) {
-                        header.setLength(0);
-                    }
-                    if (config.getFormat() == IkeyConfig.OutputFormat.HTML) {
-                        if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
-                            resultFile = SingleAccessKeyTreeDumper.dumpFlatHtmlFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
-                        } else {
-                            resultFile = SingleAccessKeyTreeDumper.dumpHtmlFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
-                        }
-                    } else if (config.getFormat() == IkeyConfig.OutputFormat.WIKI) {
-                        if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
-                            resultFile = SingleAccessKeyTreeDumper.dumpFlatWikiFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
-                        } else {
-                            resultFile = SingleAccessKeyTreeDumper.dumpWikiFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
-                        }
-                    } else if (config.getFormat() == IkeyConfig.OutputFormat.INTERACTIVE_HTML) {
-                        resultFile = SingleAccessKeyTreeDumper.dumpInteractiveHtmlFile(header.toString(),
+                SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+
+                header.append(System.getProperty("line.separator")).append(System.getProperty("line.separator"));
+
+                if (!config.getVerbosity().contains(IkeyConfig.VerbosityLevel.HEADER)) {
+                    header.setLength(0);
+                }
+                if (config.getFormat() == IkeyConfig.OutputFormat.HTML) {
+                    if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
+                        resultFile = SingleAccessKeyTreeDumper.dumpFlatHtmlFile(header.toString(),
                                 tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
-                    } else if (config.getFormat() == IkeyConfig.OutputFormat.DOT) {
-                        resultFile = SingleAccessKeyTreeDumper.dumpDotFile(header.toString(), tree2dump, generatedKeyFolderPath);
-                    } else if (config.getFormat() == IkeyConfig.OutputFormat.SDD) {
-                        resultFile = SingleAccessKeyTreeDumper.dumpSddFile(tree2dump);
                     } else {
-                        if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
-                            resultFile = SingleAccessKeyTreeDumper.dumpFlatTxtFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
-                        } else {
-                            resultFile = SingleAccessKeyTreeDumper.dumpTxtFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
-                        }
+                        resultFile = SingleAccessKeyTreeDumper.dumpHtmlFile(header.toString(),
+                                tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    config.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingFileError"));
+                } else if (config.getFormat() == IkeyConfig.OutputFormat.WIKI) {
+                    if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
+                        resultFile = SingleAccessKeyTreeDumper.dumpFlatWikiFile(header.toString(),
+                                tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
+                    } else {
+                        resultFile = SingleAccessKeyTreeDumper.dumpWikiFile(header.toString(),
+                                tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
+                    }
+                } else if (config.getFormat() == IkeyConfig.OutputFormat.INTERACTIVE_HTML) {
+                    resultFile = SingleAccessKeyTreeDumper.dumpInteractiveHtmlFile(header.toString(),
+                            tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
+                } else if (config.getFormat() == IkeyConfig.OutputFormat.DOT) {
+                    resultFile = SingleAccessKeyTreeDumper.dumpDotFile(header.toString(), tree2dump, generatedKeyFolderPath);
+                } else if (config.getFormat() == IkeyConfig.OutputFormat.SDD) {
+                    resultFile = SingleAccessKeyTreeDumper.dumpSddFile(tree2dump);
+                } else {
+                    if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
+                        resultFile = SingleAccessKeyTreeDumper.dumpFlatTxtFile(header.toString(),
+                                tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
+                    } else {
+                        resultFile = SingleAccessKeyTreeDumper.dumpTxtFile(header.toString(),
+                                tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
+                    }
                 }
-                // initiate the result file name
-                if (resultFile != null) {
-                    resultFileName = resultFile.getName();
-                }
-
-            } else {
-                config.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingKeyError"));
+            } catch (IOException e) {
+                e.printStackTrace();
+                config.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingFileError"));
+            }
+            // initiate the result file name
+            if (resultFile != null) {
+                resultFileName = resultFile.getName();
             }
 
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            config = IkeyConfig.builder().build();
-//            final String message = IkeyConfig.getBundleConfElement("message.error");
-//            config.setErrorMessage(message, e);
-//            throw new IkeyException(message, e);
-//        }
+        } else {
+            config.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingKeyError"));
+        }
+
 
         // initialize the file name with error file name if exist
         if (config.getErrorMessageFile() != null) {
