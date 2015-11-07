@@ -334,7 +334,7 @@ public class IkeyConfig {
                     .append(IkeyConfig.getBundleConfOverridableElement("email.webmaster"));
             txtFileWriter.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            // e.printStackTrace(); // TODO log properly
         } finally {
             try {
                 Closeables.close(fileOutputStream, true);

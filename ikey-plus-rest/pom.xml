@@ -52,6 +52,22 @@
             <scope>provided</scope>
         </dependency>
 
+
+        <!-- TEST DEPENDENCIES-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
+        <!-- IKEY API -->
         <dependency>
             <groupId>fr.lis.ikey-plus</groupId>
             <artifactId>ikey-plus-api</artifactId>

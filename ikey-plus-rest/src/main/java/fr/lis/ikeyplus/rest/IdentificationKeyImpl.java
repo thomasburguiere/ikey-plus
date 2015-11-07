@@ -6,7 +6,10 @@ import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 import fr.lis.ikeyplus.services.IdentificationKeyGenerator;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import fr.lis.ikeyplus.utils.IkeyConfigBuilder;
+import fr.lis.ikeyplus.utils.IkeyException;
 import fr.lis.ikeyplus.utils.IkeyUtils;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -17,6 +20,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -79,7 +83,7 @@ public class IdentificationKeyImpl {
         final String generatedKeyFolderPath = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-        try {
+//        try {
 
             // define header string
             StringBuilder header = new StringBuilder();
@@ -97,20 +101,22 @@ public class IdentificationKeyImpl {
             long beforeTime = System.currentTimeMillis();
 
             // call SDD parser
-            SDDSaxParser sddSaxParser = null;
+            SDDSaxParser sddSaxParser;
+            // test if the URL is valid
+            URLConnection urlConnection;
             try {
-                // test if the URL is valid
-                URLConnection urlConnection;
-                try {
-                    URL fileURL = new URL(sddURL);
-                    // open URL (HTTP query)
-                    urlConnection = fileURL.openConnection();
-                    // Open data stream
-                    urlConnection.getInputStream();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    config.setErrorMessage(IkeyConfig.getBundleConfElement("message.urlError"), e);
-                }
+                URL fileURL = new URL(sddURL);
+                // open URL (HTTP query)
+                urlConnection = fileURL.openConnection();
+                // Open data stream
+                urlConnection.getInputStream();
+            } catch (IOException e) {
+                // e.printStackTrace();// TODO log properly
+                final String message = IkeyConfig.getBundleConfElement("message.urlError");
+                config.setErrorMessage(message, e);
+                throw new IkeyException(message, e);
+            }
+            try {
                 sddSaxParser = new SDDSaxParser(sddURL, config);
                 // construct header
                 header.append(lineReturn).append(sddSaxParser.getDataset().getLabel()).append(", ").
@@ -127,9 +133,11 @@ public class IdentificationKeyImpl {
                 header.append(lineReturn).append("weightContext=").append(config.getWeightContext());
                 header.append(lineReturn).append("weightType=").append(config.getWeightType());
                 header.append(lineReturn);
-            } catch (Throwable t) {
-                t.printStackTrace();
-                config.setErrorMessage(IkeyConfig.getBundleConfElement("message.parsingError"), t);
+            } catch (IOException | SAXException e) {
+                //e.printStackTrace(); // TODO log properly
+                final String message = IkeyConfig.getBundleConfElement("message.parsingError");
+                config.setErrorMessage(message, e);
+                throw new IkeyException(message, e);
             }
             double parseDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
             beforeTime = System.currentTimeMillis();
@@ -211,11 +219,13 @@ public class IdentificationKeyImpl {
                 config.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingKeyError"));
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            config = IkeyConfig.builder().build();
-            config.setErrorMessage(IkeyConfig.getBundleConfElement("message.error"), e);
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            config = IkeyConfig.builder().build();
+//            final String message = IkeyConfig.getBundleConfElement("message.error");
+//            config.setErrorMessage(message, e);
+//            throw new IkeyException(message, e);
+//        }
 
         // initialize the file name with error file name if exist
         if (config.getErrorMessageFile() != null) {
