@@ -1,0 +1,6 @@
+rootProject.name = 'ikey-plus-parent'
+include ':ikey-plus-api'
+include ':ikey-plus-rest'
+
+project(':ikey-plus-api').projectDir = "$rootDir/ikey-plus-api" as File
+project(':ikey-plus-rest').projectDir = "$rootDir/ikey-plus-rest" as File
