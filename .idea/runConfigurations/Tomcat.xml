@@ -3,7 +3,7 @@
     <option name="OPEN_IN_BROWSER" value="false" />
     <option name="UPDATING_POLICY" value="restart-server" />
     <deployment>
-      <artifact name="ikey-plus-rest:war">
+      <artifact name="ikey-plus-rest:war exploded">
         <settings>
           <option name="CONTEXT_PATH" value="/ikey" />
         </settings>
@@ -68,7 +68,7 @@
     </ConfigurationWrapper>
     <method>
       <option name="BuildArtifacts" enabled="true">
-        <artifact name="ikey-plus-rest:war" />
+        <artifact name="ikey-plus-rest:war exploded" />
       </option>
     </method>
   </configuration>

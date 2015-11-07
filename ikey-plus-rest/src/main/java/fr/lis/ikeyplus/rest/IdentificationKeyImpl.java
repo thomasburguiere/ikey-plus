@@ -72,18 +72,8 @@ public class IdentificationKeyImpl {
 
         // creation of IkeyConfig object (containing options)
         IkeyConfig config;
-        // String containing the name of the result file
-        String resultFileName = null;
         // String containing the URL of the result file
         String resultFileUrl;
-        String lineReturn = System.getProperty("line.separator");
-
-        final String generatedKeyFolderPath = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-                + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
-
-
-        // define header string
-        StringBuilder header = new StringBuilder();
 
         config = initializeConfig(
                 format,
@@ -95,6 +85,22 @@ public class IdentificationKeyImpl {
                 weightContext,
                 weightType);
 
+
+        resultFileUrl = generateKey(sddURL, config);
+
+        return resultFileUrl;
+    }
+
+    private String generateKey(String sddURL, IkeyConfig config) {
+        final String generatedKeyFolderPath = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+                + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
+
+
+        // define header string
+        StringBuilder header = new StringBuilder();
+
+
+        String lineReturn = System.getProperty("line.separator");
         long beforeTime = System.currentTimeMillis();
 
         // call SDD parser
@@ -157,14 +163,16 @@ public class IdentificationKeyImpl {
 
         File resultFile = null;
 
+        // String containing the name of the result file
+        String resultFileName = null;
         if (identificationKeyGenerator != null
                 && identificationKeyGenerator.getSingleAccessKeyTree() != null) {
+            SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 
             try {
                 // creation of the directory containing key files
                 IkeyUtils.generatedKeyFolderPathIfNeeded();
 
-                SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 
                 header.append(System.getProperty("line.separator")).append(System.getProperty("line.separator"));
 
@@ -207,6 +215,7 @@ public class IdentificationKeyImpl {
                 e.printStackTrace();
                 config.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingFileError"));
             }
+
             // initiate the result file name
             if (resultFile != null) {
                 resultFileName = resultFile.getName();
@@ -222,10 +231,8 @@ public class IdentificationKeyImpl {
             resultFileName = config.getErrorMessageFile().getName();
         }
 
-        resultFileUrl = IkeyConfig.getBundleConfOverridableElement("host")
+        return IkeyConfig.getBundleConfOverridableElement("host")
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder") + resultFileName;
-
-        return resultFileUrl;
     }
 
     private IkeyConfig initializeConfig(String format,
