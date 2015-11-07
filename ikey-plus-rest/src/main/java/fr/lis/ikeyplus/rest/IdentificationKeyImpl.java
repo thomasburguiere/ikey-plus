@@ -9,7 +9,6 @@ import fr.lis.ikeyplus.utils.IkeyConfigBuilder;
 import fr.lis.ikeyplus.utils.IkeyException;
 import fr.lis.ikeyplus.utils.IkeyUtils;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -20,7 +19,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 

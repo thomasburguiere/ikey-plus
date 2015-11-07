@@ -23,7 +23,7 @@ public class IdentificationKeyImplTest {
     public static final boolean MERGE_CHARACTER_STATES_IF_SAME_DISCRIMINATION = false;
     public static final boolean PRUNING = false;
     public static final String VALID_SDD_URL = "https://www.dropbox.com/s/lzdkhszlft00u9e/genetta.sdd.xml?dl=1";
-    IdentificationKeyImpl endpoint;
+    private IdentificationKeyImpl endpoint;
 
     @Test
     public void should_throw_exception_for_invalid_url() throws Exception {
