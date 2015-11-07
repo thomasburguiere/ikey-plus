@@ -24,7 +24,6 @@
         <version.maven-compiler-plugin>3.2</version.maven-compiler-plugin>
         <version.maven-war-plugin>2.5</version.maven-war-plugin>
         <version.jacoco-maven-plugin.codecov>0.7.5.201505241946</version.jacoco-maven-plugin.codecov>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <build>
@@ -47,11 +46,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.eluder.coveralls</groupId>
-                <artifactId>coveralls-maven-plugin</artifactId>
-                <version>4.0.0</version>
             </plugin>
 
         </plugins>
