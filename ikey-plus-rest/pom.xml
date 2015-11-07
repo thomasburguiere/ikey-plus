@@ -15,16 +15,18 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>${version.maven-compiler-plugin}</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
                 </configuration>
             </plugin>
             <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${version.maven-war-plugin}</version>
                 <configuration>
                     <warName>ikey-plus</warName>
                 </configuration>
-                <artifactId>maven-war-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
