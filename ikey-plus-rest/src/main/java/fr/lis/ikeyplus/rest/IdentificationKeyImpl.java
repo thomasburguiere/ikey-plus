@@ -260,17 +260,9 @@ public class IdentificationKeyImpl {
         IkeyConfig config;
         IkeyConfigBuilder configBuilder = IkeyConfig.builder();
         // options initialization
-        if (format != null && IkeyConfig.OutputFormat.fromString(format) != null) {
-            configBuilder.format(IkeyConfig.OutputFormat.fromString(format));
-        } else {
-            configBuilder.format(IkeyConfig.OutputFormat.TXT);
-        }
+        configBuilder.format(IkeyConfig.OutputFormat.fromString(format));
 
-        if (representation != null && IkeyConfig.KeyRepresentation.fromString(representation) != null) {
-            configBuilder.representation(IkeyConfig.KeyRepresentation.fromString(representation));
-        } else {
-            configBuilder.representation(IkeyConfig.KeyRepresentation.FLAT);
-        }
+        configBuilder.representation(IkeyConfig.KeyRepresentation.fromString(representation));
         if (fewStatesCharacterFirst) {
             configBuilder.fewStatesCharacterFirst();
         }
@@ -280,18 +272,10 @@ public class IdentificationKeyImpl {
         if (pruning) {
             configBuilder.enablePruning();
         }
-        if (verbosity != null && IkeyConfig.VerbosityLevel.fromString(verbosity) != null) {
-            configBuilder.verbosity(IkeyConfig.VerbosityLevel.fromString(verbosity));
-        }
-        if (scoreMethod != null && IkeyConfig.ScoreMethod.fromString(scoreMethod) != null) {
-            configBuilder.scoreMethod(IkeyConfig.ScoreMethod.fromString(scoreMethod));
-        }
-        if (weightContext != null && IkeyConfig.WeightContext.fromString(weightContext) != null) {
-            configBuilder.weightContext(IkeyConfig.WeightContext.fromString(weightContext));
-        }
-        if (weightType != null && weightType.equalsIgnoreCase(IkeyConfig.WeightType.CONTEXTUAL.toString())) {
-            configBuilder.weightType(IkeyConfig.WeightType.CONTEXTUAL);
-        }
+        configBuilder.verbosity(IkeyConfig.VerbosityLevel.fromString(verbosity));
+        configBuilder.scoreMethod(IkeyConfig.ScoreMethod.fromString(scoreMethod));
+        configBuilder.weightContext(IkeyConfig.WeightContext.fromString(weightContext));
+        configBuilder.weightType(IkeyConfig.WeightType.fromString(weightType));
 
         config = configBuilder.build();
         return config;
