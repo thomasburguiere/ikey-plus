@@ -171,8 +171,8 @@ public class Character implements ICharacter {
         }
     }
 
-    public ICharacter clone() {
-        ICharacter newCharacter = null;
+    public ICharacter shallowCopy() {
+        ICharacter newCharacter;
         if (this.isSupportsCategoricalData()) {
             newCharacter = new CategoricalCharacter();
             ((CategoricalCharacter) newCharacter).setStates(((CategoricalCharacter) this).getStates());

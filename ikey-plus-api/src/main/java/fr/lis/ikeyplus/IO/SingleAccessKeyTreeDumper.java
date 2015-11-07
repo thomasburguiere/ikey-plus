@@ -104,15 +104,15 @@ public abstract class SingleAccessKeyTreeDumper {
             output.append("<MediaObjects>").append(lineSeparator);
 
             // creation of mediaObjects
-            for (String mediaObjectKey : originalDataSet.getMediaObjects().keySet()) {
-                output.append("<MediaObject id=\"").append(mediaObjectKey).append("\">").append(lineSeparator);
+            for (Map.Entry<String, String> mediaObjectKeyEntry : originalDataSet.getMediaObjects().entrySet()) {
+                output.append("<MediaObject id=\"").append(mediaObjectKeyEntry.getKey()).append("\">").append(lineSeparator);
                 output.append("<Representation>").append(lineSeparator);
                 output.append("<Label>");
-                output.append(mediaObjectKey);
+                output.append(mediaObjectKeyEntry.getKey());
                 output.append("</Label>").append(lineSeparator);
                 output.append("</Representation>").append(lineSeparator);
                 output.append("<Type>Image</Type>").append(lineSeparator);
-                output.append("<Source href=\"").append(originalDataSet.getMediaObject(mediaObjectKey)).append("\"/>").append(lineSeparator);
+                output.append("<Source href=\"").append(mediaObjectKeyEntry.getValue()).append("\"/>").append(lineSeparator);
                 output.append("</MediaObject>").append(lineSeparator);
             }
 
@@ -312,9 +312,8 @@ public abstract class SingleAccessKeyTreeDumper {
     public static File dumpTxtFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics, final String generatedFilesFolder)
             throws IOException {
 
-        if (!new File(generatedFilesFolder).exists()) {
-            new File(generatedFilesFolder).mkdirs();
-        }
+
+        IkeyUtils.generatedKeyFolderPathIfNeeded();
         File txtFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.TXT, new File(generatedFilesFolder));
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(txtFile)) {
