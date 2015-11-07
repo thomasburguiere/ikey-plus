@@ -1,5 +1,16 @@
+# maven
 target
+
+# gradle
+build
+classes
+gradle
+gradlew*
+.gradle
+
+# idea
 .idea/*
 !.idea/runConfigurations
+
+# misc
 .settings
-.svn
