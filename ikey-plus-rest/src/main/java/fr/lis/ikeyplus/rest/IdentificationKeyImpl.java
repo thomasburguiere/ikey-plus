@@ -83,18 +83,15 @@ public class IdentificationKeyImpl {
             // define header string
             StringBuilder header = new StringBuilder();
 
-            config = initializeConfig(format, representation, fewStatesCharacterFirst, mergeCharacterStatesIfSameDiscrimination, pruning, verbosity, scoreMethod, weightContext, weightType);
-//			// calculate CPU usage
-//			double usageCPU = 0;
-//			try {
-//				usageCPU = new Sigar().getCpuPerc().getCombined();
-//			} catch (SigarException e) {
-//				e.printStackTrace();
-//				config.setErrorMessage(IkeyConfig.getBundleConfElement("message.cpuUsageError"), e);
-//			}
-
-            // if CPU usage is less than 80%
-//			if (usageCPU < 0.8) {
+            config = initializeConfig(
+                    format,
+                    representation, fewStatesCharacterFirst,
+                    mergeCharacterStatesIfSameDiscrimination,
+                    pruning,
+                    verbosity,
+                    scoreMethod,
+                    weightContext,
+                    weightType);
 
             long beforeTime = System.currentTimeMillis();
 
@@ -109,29 +106,25 @@ public class IdentificationKeyImpl {
                     urlConnection = fileURL.openConnection();
                     // Open data stream
                     urlConnection.getInputStream();
-                } catch (java.net.MalformedURLException e) {
-                    e.printStackTrace();
-                    config.setErrorMessage(IkeyConfig.getBundleConfElement("message.urlError"), e);
                 } catch (IOException e) {
                     e.printStackTrace();
                     config.setErrorMessage(IkeyConfig.getBundleConfElement("message.urlError"), e);
                 }
                 sddSaxParser = new SDDSaxParser(sddURL, config);
                 // construct header
-                header.append(lineReturn + sddSaxParser.getDataset().getLabel() + ", "
-                        + IkeyConfig.getBundleConfOverridableElement("message.createdBy") + lineReturn);
-                header.append(lineReturn + "Options:");
-                header.append(lineReturn + "sddURL=" + sddURL);
-                header.append(lineReturn + "format=" + config.getFormat());
-                header.append(lineReturn + "representation=" + config.getRepresentation());
-                header.append(lineReturn + "fewStatesCharacterFirst=" + config.isFewStatesCharacterFirst());
-                header.append(lineReturn + "mergeCharacterStatesIfSameDiscrimination="
-                        + config.isMergeCharacterStatesIfSameDiscrimination());
-                header.append(lineReturn + "pruning=" + config.isPruningEnabled());
-                header.append(lineReturn + "verbosity=" + config.getVerbosity());
-                header.append(lineReturn + "scoreMethod=" + config.getScoreMethod());
-                header.append(lineReturn + "weightContext=" + config.getWeightContext());
-                header.append(lineReturn + "weightType=" + config.getWeightType());
+                header.append(lineReturn).append(sddSaxParser.getDataset().getLabel()).append(", ").
+                        append(IkeyConfig.getBundleConfOverridableElement("message.createdBy")).append(lineReturn);
+                header.append(lineReturn).append("Options:");
+                header.append(lineReturn).append("sddURL=").append(sddURL);
+                header.append(lineReturn).append("format=").append(config.getFormat());
+                header.append(lineReturn).append("representation=").append(config.getRepresentation());
+                header.append(lineReturn).append("fewStatesCharacterFirst=").append(config.isFewStatesCharacterFirst());
+                header.append(lineReturn).append("mergeCharacterStatesIfSameDiscrimination=").append(config.isMergeCharacterStatesIfSameDiscrimination());
+                header.append(lineReturn).append("pruning=").append(config.isPruningEnabled());
+                header.append(lineReturn).append("verbosity=").append(config.getVerbosity());
+                header.append(lineReturn).append("scoreMethod=").append(config.getScoreMethod());
+                header.append(lineReturn).append("weightContext=").append(config.getWeightContext());
+                header.append(lineReturn).append("weightType=").append(config.getWeightType());
                 header.append(lineReturn);
             } catch (Throwable t) {
                 t.printStackTrace();
@@ -153,9 +146,8 @@ public class IdentificationKeyImpl {
 
             double keyCreationDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
             // construct header
-            header.append(System.getProperty("line.separator") + "parseDuration= " + parseDuration + "s");
-            header.append(System.getProperty("line.separator") + "keyCreationDuration= "
-                    + keyCreationDuration + "s");
+            header.append(System.getProperty("line.separator")).append("parseDuration= ").append(parseDuration).append("s");
+            header.append(System.getProperty("line.separator")).append("keyCreationDuration= ").append(keyCreationDuration).append("s");
 
             File resultFile = null;
 
@@ -225,11 +217,6 @@ public class IdentificationKeyImpl {
             } else {
                 config.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingKeyError"));
             }
-
-            // if CPU usage is more than 80%
-//			} else {
-//				config.setErrorMessage(IkeyConfig.getBundleConfElement("message.serverBusy"));
-//			}
 
         } catch (Exception e) {
             e.printStackTrace();
