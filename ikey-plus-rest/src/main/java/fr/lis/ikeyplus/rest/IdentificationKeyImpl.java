@@ -148,9 +148,7 @@ public class IdentificationKeyImpl {
         // call identification key service
         IdentificationKeyGenerator identificationKeyGenerator = null;
         try {
-            identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(),
-                    config);
-            identificationKeyGenerator.createIdentificationKey();
+            identificationKeyGenerator = new IdentificationKeyGenerator();
         } catch (Throwable t) {
             t.printStackTrace();
             config.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingKeyError"), t);
@@ -165,9 +163,9 @@ public class IdentificationKeyImpl {
 
         // String containing the name of the result file
         String resultFileName = null;
-        if (identificationKeyGenerator != null
-                && identificationKeyGenerator.getSingleAccessKeyTree() != null) {
-            SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+        if (identificationKeyGenerator != null && identificationKeyGenerator.getIdentificationKey(sddSaxParser.getDataset(),
+                config) != null) {
+            SingleAccessKeyTree tree2dump = identificationKeyGenerator.getIdentificationKey(sddSaxParser.getDataset(), config);
 
             try {
                 // creation of the directory containing key files
