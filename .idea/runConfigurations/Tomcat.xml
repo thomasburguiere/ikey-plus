@@ -2,7 +2,7 @@
   <configuration default="false" name="Tomcat" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8" ALTERNATIVE_JRE_ENABLED="false" ALTERNATIVE_JRE_PATH="">
     <option name="UPDATING_POLICY" value="restart-server" />
     <deployment>
-      <artifact name="ikey-plus-rest:war">
+      <artifact name="ikey-plus-rest:war exploded">
         <settings>
           <option name="CONTEXT_PATH" value="/" />
         </settings>
@@ -68,6 +68,7 @@
     <method>
       <option name="BuildArtifacts" enabled="true">
         <artifact name="Gradle : fr.lis.ikey-plus:ikey-plus-rest : ikey-plus-rest-2.0-SNAPSHOT.war (exploded)" />
+        <artifact name="ikey-plus-rest:war exploded" />
       </option>
     </method>
   </configuration>

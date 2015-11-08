@@ -29,15 +29,15 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 */
-subprojects{
+subprojects {
     apply plugin: 'java'
     repositories {
         mavenCentral()
     }
     dependencies {
-        testCompile 'junit:junit:4.12'
-        testCompile 'org.assertj:assertj-core:2.1.0'
-        compile 'com.google.guava:guava:18.0'
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+        testCompile group: 'org.assertj', name: 'assertj-core', version: '2.1.0'
+        compile group: 'com.google.guava', name: 'guava', version: '18.0'
     }
 
     apply plugin: 'jacoco'
