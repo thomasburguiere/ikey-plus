@@ -26,7 +26,7 @@ If your descriptive data is stored in the delta format you can convert it to sdd
 ## Building the app##
 To build and use the app, you will need [Gradle](https://gradle.org). Once you have gradle installed, go to the root of the project, and run `gradle build`.
 
-***Note***: If you are building an old version (v1.0) of the app, you will have to use [Maven](maven.apache.org/) and run '
+***Note***: If you are building an old version (v1.0) of the app, you will have to use [Maven](maven.apache.org/) and run 
 `mvn package`
 
 ## Usage ##
