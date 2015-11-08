@@ -24,16 +24,7 @@ This app generates [single access identification keys](https://en.wikipedia.org/
 If your descriptive data is stored in the delta format you can convert it to sdd using the [deltaToSdd](http://www.identificationkey.fr/deltatosdd/) webservice. If your descriptive data is stored in the Xper2 format you can convert it to sdd using the Xper2 software Export option.
 
 ## Building the app##
-To build and use the app, you will need [Apache Maven](https://maven.apache.org/). Once you have maven installed, go to the root of the project, and run `mvn install`.
-
-#### Maven dependency
-```xml
-<dependency>
-    <groupId>fr.lis.ikey-plus</groupId>
-    <artifactId>ikey-plus-api</artifactId>
-    <version>1.*</version>
-</dependency>
-```
+To build and use the app, you will need [Gradle](https://gradle.org). Once you have gradle installed, go to the root of the project, and run `gradle build`.
 
 ## Usage ##
 
@@ -44,15 +35,14 @@ To build and use the app, you will need [Apache Maven](https://maven.apache.org/
 IkeyConfig config = IkeyConfig.builder().build();
 
 // initialize SDD parser
-SDDSaxParser parser = new SDDSaxParser(new File("inputFile.sdd"), config);
+SDDParser parser = new SDDSaxParser();
 
-// initialize key generator
+DataSet dataset = sddParser.parseDataset(sddURL, config);
+
+// get key
 IdentificationKeyGenerator identificationKeyGenerator =
-	new IdentificationKeyGenerator(parser.getDataset(), config);
+	new IdentificationKeyGeneratorImpl(dataset, config);
 
-// compute and get identification key
-identificationKeyGenerator.createIdentificationKey();
-SingleAccessKeyTree key = identificationKeyGenerator.getSingleAccessKeyTree();
 
 // dump key to a file
 boolean statisticsEnabled = true or false;
