@@ -20,7 +20,7 @@
         <version.jersey-server>1.6</version.jersey-server>
         <version.log4j>1.2.16</version.log4j>
         <version.quartz>2.0.0</version.quartz>
-        <version.servlet-api>2.5</version.servlet-api>
+        <version.servlet-api>3.0.1</version.servlet-api>
         <version.maven-compiler-plugin>3.2</version.maven-compiler-plugin>
         <version.maven-war-plugin>2.5</version.maven-war-plugin>
         <version.jacoco-maven-plugin.codecov>0.7.5.201505241946</version.jacoco-maven-plugin.codecov>
@@ -86,7 +86,7 @@
             <!-- PROVIDED DEPENDENCIES -->
             <dependency>
                 <groupId>javax.servlet</groupId>
-                <artifactId>servlet-api</artifactId>
+                <artifactId>javax.servlet-api</artifactId>
                 <version>${version.servlet-api}</version>
             </dependency>
 
