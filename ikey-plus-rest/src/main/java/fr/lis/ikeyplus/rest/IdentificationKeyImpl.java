@@ -1,7 +1,9 @@
 package fr.lis.ikeyplus.rest;
 
+import fr.lis.ikeyplus.IO.SDDParser;
 import fr.lis.ikeyplus.IO.SDDSaxParser;
 import fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper;
+import fr.lis.ikeyplus.model.DataSet;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 import fr.lis.ikeyplus.services.IdentificationKeyGeneratorImpl;
 import fr.lis.ikeyplus.services.IdentificationKeyGenerator;
@@ -105,7 +107,7 @@ public class IdentificationKeyImpl {
         long beforeTime = System.currentTimeMillis();
 
         // call SDD parser
-        SDDSaxParser sddSaxParser;
+        SDDParser sddParser;
         // test if the URL is valid
         URLConnection urlConnection;
         try {
@@ -120,10 +122,13 @@ public class IdentificationKeyImpl {
             config.setErrorMessage(message, e);
             throw new IkeyException(message, e);
         }
+
+        DataSet dataSet;
         try {
-            sddSaxParser = new SDDSaxParser(sddURL, config);
+            sddParser = new SDDSaxParser();
+            dataSet = sddParser.parseDataset(sddURL, config);
             // construct header
-            header.append(lineReturn).append(sddSaxParser.getDataset().getLabel()).append(", ").
+            header.append(lineReturn).append(dataSet.getLabel()).append(", ").
                     append(IkeyConfig.getBundleConfOverridableElement("message.createdBy")).append(lineReturn);
             header.append(lineReturn).append("Options:");
             header.append(lineReturn).append("sddURL=").append(sddURL);
@@ -164,9 +169,8 @@ public class IdentificationKeyImpl {
 
         // String containing the name of the result file
         String resultFileName = null;
-        if (identificationKeyGenerator != null && identificationKeyGenerator.getIdentificationKey(sddSaxParser.getDataset(),
-                config) != null) {
-            SingleAccessKeyTree tree2dump = identificationKeyGenerator.getIdentificationKey(sddSaxParser.getDataset(), config);
+        if (identificationKeyGenerator != null && identificationKeyGenerator.getIdentificationKey(dataSet, config) != null) {
+            SingleAccessKeyTree tree2dump = identificationKeyGenerator.getIdentificationKey(dataSet, config);
 
             try {
                 // creation of the directory containing key files

@@ -20,15 +20,15 @@ import fr.lis.ikeyplus.utils.IkeyConfig;
  * @author Florian Causse
  * @created 18-04-2011
  */
-public class SDDSaxParser {
+public class SDDSaxParser implements SDDParser {
 
-    // kwnoledge base (call dataset)
-    private DataSet dataset = null;
+    // knowledge base (call dataset)
 
     /**
      * constructor which parses the content of the input file
      */
-    public SDDSaxParser(String uri, IkeyConfig utils) throws SAXException, IOException {
+    @Override
+    public DataSet parseDataset(String uri, IkeyConfig utils) throws SAXException, IOException {
         XMLReader saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
 
         SDDContentHandler handler = new SDDContentHandler(utils);
@@ -43,13 +43,15 @@ public class SDDSaxParser {
         }
 
         saxReader.parse(is);
-        this.setDataset(handler.getDataSet());
+        return handler.getDataSet();
     }
 
     /**
      * constructor which parses the content of the input file
      */
-    public SDDSaxParser(File inputFile, IkeyConfig conf) throws SAXException, IOException {
+    @Override
+    public DataSet parseDataset(File inputFile, IkeyConfig conf) throws SAXException, IOException {
+
         XMLReader saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
 
         SDDContentHandler handler = new SDDContentHandler(conf);
@@ -58,15 +60,7 @@ public class SDDSaxParser {
         InputSource is = new InputSource(new FileInputStream(inputFile));
 
         saxReader.parse(is);
-        this.setDataset(handler.getDataSet());
-    }
-
-    public DataSet getDataset() {
-        return dataset;
-    }
-
-    public void setDataset(DataSet dataset) {
-        this.dataset = dataset;
+        return handler.getDataSet();
     }
 
 }
