@@ -17,12 +17,11 @@ public class SingleAccessKeyNode {
     private String nodeDescription = null;
     private List<Taxon> remainingTaxa = null;
 
-    public SingleAccessKeyNode() throws OutOfMemoryError, Exception {
+    public SingleAccessKeyNode() throws OutOfMemoryError {
         this(null, null);
     }
 
-    public SingleAccessKeyNode(ICharacter character, Object characterState) throws OutOfMemoryError,
-            Exception {
+    public SingleAccessKeyNode(ICharacter character, Object characterState) throws OutOfMemoryError {
         super();
         this.character = character;
         this.characterState = characterState;

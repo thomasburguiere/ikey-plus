@@ -2,6 +2,6 @@ apply plugin: 'war'
 dependencies {
     compile group: 'com.sun.jersey', name: 'jersey-server', version: '1.6'
     compile group: 'org.quartz-scheduler', name: 'quartz', version: '2.0.0'
-    providedCompile group: 'javax.servlet', name: 'servlet-api', version: '2.5'
-    compile project(':ikey-plus-api')
+    providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
+    compile project(':ikey-plus-impl')
 }
