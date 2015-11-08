@@ -8,6 +8,7 @@
     <modules>
         <module>ikey-plus-impl</module>
         <module>ikey-plus-rest</module>
+        <module>ikey-plus-api</module>
     </modules>
 
     <name>ikey-plus</name>
