@@ -29,8 +29,8 @@ public class Worker implements Job {
                 for (String filePath : fileList) {
                     File file2delete = new File(generatedKeyFilesFolder, filePath);
                     // 2592000*1000 is the number of millisecond for 30 days.
-                    long monthMilliseconds = (long) ((long) Long.parseLong(IkeyConfig
-                            .getBundleConfOverridableElement("generatedKeyFiles.delete.period")) * (long) 1000);
+                    long monthMilliseconds = Long.parseLong(IkeyConfig
+                            .getBundleConfOverridableElement("generatedKeyFiles.delete.period")) * (long) 1000;
                     if (file2delete.lastModified() < (new Date().getTime() - monthMilliseconds)) {
                         // delete old files
                         try {

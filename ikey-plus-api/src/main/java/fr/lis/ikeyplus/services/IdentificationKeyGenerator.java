@@ -4,6 +4,7 @@ import fr.lis.ikeyplus.model.*;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import fr.lis.ikeyplus.utils.IkeyUtils;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -211,8 +212,7 @@ public class IdentificationKeyGenerator {
 
             // if taxa are not described and if verbosity string contains correct tag, create a node
             // "Other (not described)"
-            if (config.getVerbosity().contains(IkeyConfig.VerbosityLevel.OTHER) && notDescribedTaxa != null
-                    && notDescribedTaxa.size() > 0) {
+            if (config.getVerbosity().contains(IkeyConfig.VerbosityLevel.OTHER) && notDescribedTaxa.size() > 0) {
                 // init new node
                 SingleAccessKeyNode notDescribedNode = new SingleAccessKeyNode();
                 notDescribedNode.setCharacter(selectedCharacter);
@@ -325,6 +325,16 @@ public class IdentificationKeyGenerator {
         return notDescribedTaxa;
     }
 
+    private static class DoubleComparator implements Comparator<Double>, Serializable {
+
+        private static final long serialVersionUID = -3053308031245292806L;
+
+        @Override
+        public int compare(Double val1, Double val2) {
+            return Double.compare(val1, val2);
+        }
+    }
+
     private List<QuantitativeMeasure> splitQuantitativeCharacter(ICharacter character,
                                                                  List<Taxon> remainingTaxa) throws Exception {
 
@@ -334,12 +344,7 @@ public class IdentificationKeyGenerator {
 
         // get the Min and Max values of all remaining taxa
         List<Double> allValues = getAllNumericalValues(character, remainingTaxa);
-        Collections.sort(allValues, new Comparator<Double>() {
-            @Override
-            public int compare(Double val1, Double val2) {
-                return Double.compare(val1, val2);
-            }
-        });
+        Collections.sort(allValues, new DoubleComparator());
         // determine the best threshold to cut the interval in 2 part
         Double threshold;
         Double bestThreshold = null;
@@ -511,7 +516,7 @@ public class IdentificationKeyGenerator {
                     bestCharacter = character;
                     bestWeight = averageWeight;
                     bestScore = score;
-                } else if (averageWeight == bestWeight && score >= bestScore) {
+                } else if (Objects.equals(averageWeight, bestWeight) && score >= bestScore) {
                     bestScore = score;
                     bestCharacter = character;
                 }
@@ -531,7 +536,7 @@ public class IdentificationKeyGenerator {
                     for (Taxon taxon : remainingTaxa) {
                         CodedDescription currentCodedDescription = dataset.getCodedDescription(taxon);
                         if (currentCodedDescription.getCharacterWeight(character) != null
-                                && currentCodedDescription.getCharacterWeight(character) == bestWeight
+                                && currentCodedDescription.getCharacterWeight(character) == Float.valueOf(bestWeight).intValue()
                                 && score == bestScore
                                 && character.isSupportsCategoricalData()) {
                             // get the number of taxa of all child nodes of the current CategoricalCharacter
