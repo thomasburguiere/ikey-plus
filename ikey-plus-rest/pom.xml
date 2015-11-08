@@ -74,7 +74,7 @@
         <!-- IKEY API -->
         <dependency>
             <groupId>fr.lis.ikey-plus</groupId>
-            <artifactId>ikey-plus-api</artifactId>
+            <artifactId>ikey-plus-impl</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

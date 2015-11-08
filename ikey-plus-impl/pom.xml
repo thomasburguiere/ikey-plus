@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ikey-plus-api</artifactId>
+    <artifactId>ikey-plus-impl</artifactId>
     <build>
         <plugins>
             <plugin>

@@ -13,10 +13,11 @@ import java.util.*;
  * @author Florian Causse
  * @created 18-04-2011
  */
-public class IdentificationKeyGenerator {
+public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerator {
 
+    @Override
     public SingleAccessKeyTree getIdentificationKey(DataSet dataset, IkeyConfig config) throws OutOfMemoryError {
-        SingleAccessKeyTree singleAccessKeyTree = null;
+        SingleAccessKeyTree singleAccessKeyTree;
         singleAccessKeyTree = new SingleAccessKeyTree(config);
         singleAccessKeyTree.setDataSet(dataset);
 

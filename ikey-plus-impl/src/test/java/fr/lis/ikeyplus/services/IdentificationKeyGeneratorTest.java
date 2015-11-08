@@ -32,7 +32,7 @@ public class IdentificationKeyGeneratorTest {
         try {
             sddSaxParser = new SDDSaxParser(stringUrl, config);
 
-            IdentificationKeyGenerator identificationKeyGenerator = new IdentificationKeyGenerator();
+            IdentificationKeyGenerator identificationKeyGenerator = new IdentificationKeyGeneratorImpl();
 
             try {
                 SingleAccessKeyTree tree2dump = identificationKeyGenerator.getIdentificationKey(sddSaxParser.getDataset(), config);
@@ -68,7 +68,7 @@ public class IdentificationKeyGeneratorTest {
         try {
             sddSaxParser = new SDDSaxParser(stringUrl, config);
 
-            IdentificationKeyGenerator identificationKeyGenerator = new IdentificationKeyGenerator();
+            IdentificationKeyGenerator identificationKeyGenerator = new IdentificationKeyGeneratorImpl();
 
             try {
                 SingleAccessKeyTree tree2dump = identificationKeyGenerator.getIdentificationKey(sddSaxParser.getDataset(), config);
@@ -106,7 +106,7 @@ public class IdentificationKeyGeneratorTest {
         try {
             sddSaxParser = new SDDSaxParser(stringUrl, config);
 
-            IdentificationKeyGenerator identificationKeyGenerator = new IdentificationKeyGenerator();
+            IdentificationKeyGenerator identificationKeyGenerator = new IdentificationKeyGeneratorImpl();
 
             try {
                 SingleAccessKeyTree tree2dump = identificationKeyGenerator.getIdentificationKey(sddSaxParser.getDataset(), config);
@@ -144,7 +144,7 @@ public class IdentificationKeyGeneratorTest {
         try {
             sddSaxParser = new SDDSaxParser(stringUrl, config);
 
-            IdentificationKeyGenerator identificationKeyGenerator = new IdentificationKeyGenerator();
+            IdentificationKeyGenerator identificationKeyGenerator = new IdentificationKeyGeneratorImpl();
 
             try {
                 SingleAccessKeyTree tree2dump = identificationKeyGenerator.getIdentificationKey(sddSaxParser.getDataset(), config);
@@ -180,7 +180,7 @@ public class IdentificationKeyGeneratorTest {
         try {
             sddSaxParser = new SDDSaxParser(stringUrl, config);
 
-            IdentificationKeyGenerator identificationKeyGenerator = new IdentificationKeyGenerator();
+            IdentificationKeyGenerator identificationKeyGenerator = new IdentificationKeyGeneratorImpl();
 
             try {
                 SingleAccessKeyTree tree2dump = identificationKeyGenerator.getIdentificationKey(sddSaxParser.getDataset(), config);
