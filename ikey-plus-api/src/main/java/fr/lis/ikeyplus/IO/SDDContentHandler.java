@@ -442,8 +442,8 @@ public class SDDContentHandler implements ContentHandler {
                             // put to null Unknown data
                         } else if (this.dataSet.getCodedDescriptions().get(taxon)
                                 .getCharacterDescription(character) instanceof String
-                                && ((String) this.dataSet.getCodedDescriptions().get(taxon)
-                                .getCharacterDescription(character)).equals(IkeyUtils.UNKNOWN_DATA)) {
+                                && this.dataSet.getCodedDescriptions().get(taxon)
+                                .getCharacterDescription(character).equals(IkeyUtils.UNKNOWN_DATA)) {
                             this.dataSet.getCodedDescriptions().get(taxon)
                                     .addCharacterDescription(character, null);
                         }
@@ -454,7 +454,7 @@ public class SDDContentHandler implements ContentHandler {
                 // useContextualCharacterWeights is not enabled
                 for (ICharacter character : this.dataSet.getCharacters()) {
                     if (this.ratingsCounter.get(character) != null) {
-                        character.setWeight((float) (character.getWeight())
+                        character.setWeight(character.getWeight()
                                 / (float) (this.ratingsCounter.get(character)));
                     }
                 }

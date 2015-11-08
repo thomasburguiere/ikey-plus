@@ -7,10 +7,6 @@
 	<servlet>
 		<servlet-name>Jersey REST Service</servlet-name>
 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-		<init-param>
-			<param-name></param-name>
-			<param-value>IK_WS_REST</param-value>
-		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
@@ -40,7 +36,7 @@
 	<servlet>
 		<display-name>Scheduler Servlet</display-name>
 		<servlet-name>SchedulerServlet</servlet-name>
-		<servlet-class>SchedulerServlet</servlet-class>
+		<servlet-class>fr.lis.ikeyplus.rest.SchedulerServlet</servlet-class>
 		<init-param>
 			<param-name>cronSchedule</param-name>
 			<param-value>18 4 * * * ?</param-value>

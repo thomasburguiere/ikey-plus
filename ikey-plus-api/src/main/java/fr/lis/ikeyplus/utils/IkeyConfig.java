@@ -324,17 +324,17 @@ public class IkeyConfig {
 
             fileOutputStream = new FileOutputStream(erroFile);
             fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
-            BufferedWriter txtFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream,
-                    "UTF-8"));
+            try (BufferedWriter txtFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream,
+                    "UTF-8"))) {
 
-            txtFileWriter.append(this.errorMessage);
-            txtFileWriter.append(lineReturn)
-                    .append(lineReturn)
-                    .append(IkeyConfig.getBundleConfElement("message.webmaster"))
-                    .append(IkeyConfig.getBundleConfOverridableElement("email.webmaster"));
-            txtFileWriter.close();
+                txtFileWriter.append(this.errorMessage);
+                txtFileWriter.append(lineReturn)
+                        .append(lineReturn)
+                        .append(IkeyConfig.getBundleConfElement("message.webmaster"))
+                        .append(IkeyConfig.getBundleConfOverridableElement("email.webmaster"));
+            }
         } catch (IOException e) {
-            e.printStackTrace();
+            // e.printStackTrace(); // TODO log properly
         } finally {
             try {
                 Closeables.close(fileOutputStream, true);

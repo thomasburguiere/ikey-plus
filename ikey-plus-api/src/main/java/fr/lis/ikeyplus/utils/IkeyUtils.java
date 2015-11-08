@@ -1,5 +1,6 @@
 package fr.lis.ikeyplus.utils;
 
+import java.io.File;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -107,5 +108,16 @@ public final class IkeyUtils {
     public static String unAccent(String s) {
         String temp = Normalizer.normalize(s, Normalizer.Form.NFC);
         return temp.replaceAll("[^\\p{ASCII}]", "");
+    }
+
+    public static void generatedKeyFolderPathIfNeeded() {
+        final String generatedKeyFolderPath = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+                + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
+        if (!new File(generatedKeyFolderPath).exists()) {
+            final boolean created = new File(generatedKeyFolderPath).mkdir();
+            if (created) {
+                throw new IllegalStateException("Could not create non-existing " + generatedKeyFolderPath + "!");
+            }
+        }
     }
 }

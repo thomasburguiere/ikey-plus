@@ -4,6 +4,7 @@ import fr.lis.ikeyplus.model.*;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import fr.lis.ikeyplus.utils.IkeyUtils;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -211,8 +212,7 @@ public class IdentificationKeyGenerator {
 
             // if taxa are not described and if verbosity string contains correct tag, create a node
             // "Other (not described)"
-            if (config.getVerbosity().contains(IkeyConfig.VerbosityLevel.OTHER) && notDescribedTaxa != null
-                    && notDescribedTaxa.size() > 0) {
+            if (config.getVerbosity().contains(IkeyConfig.VerbosityLevel.OTHER) && notDescribedTaxa.size() > 0) {
                 // init new node
                 SingleAccessKeyNode notDescribedNode = new SingleAccessKeyNode();
                 notDescribedNode.setCharacter(selectedCharacter);
@@ -325,6 +325,16 @@ public class IdentificationKeyGenerator {
         return notDescribedTaxa;
     }
 
+    private static class DoubleComparator implements Comparator<Double>, Serializable {
+
+        private static final long serialVersionUID = -3053308031245292806L;
+
+        @Override
+        public int compare(Double val1, Double val2) {
+            return Double.compare(val1, val2);
+        }
+    }
+
     private List<QuantitativeMeasure> splitQuantitativeCharacter(ICharacter character,
                                                                  List<Taxon> remainingTaxa) throws Exception {
 
@@ -334,12 +344,7 @@ public class IdentificationKeyGenerator {
 
         // get the Min and Max values of all remaining taxa
         List<Double> allValues = getAllNumericalValues(character, remainingTaxa);
-        Collections.sort(allValues, new Comparator<Double>() {
-            @Override
-            public int compare(Double val1, Double val2) {
-                return Double.compare(val1, val2);
-            }
-        });
+        Collections.sort(allValues, new DoubleComparator());
         // determine the best threshold to cut the interval in 2 part
         Double threshold;
         Double bestThreshold = null;
@@ -430,10 +435,13 @@ public class IdentificationKeyGenerator {
 
     private void considerChildCharacterScore(HashMap<ICharacter, Float> scoreMap,
                                              List<ICharacter> childDependantCharacters) throws Exception {
-        for (ICharacter character : scoreMap.keySet()) {
+        for (Map.Entry<ICharacter, Float> characterScoreEntry : scoreMap.entrySet()) {
+            final ICharacter character = characterScoreEntry.getKey();
+            final Float score = characterScoreEntry.getValue();
+
             if (character.isSupportsCategoricalData() && character.getChildCharacters().size() > 0) {
                 float max = getMaxChildScore(scoreMap, character);
-                if (scoreMap.get(character) < max) {
+                if (score < max) {
                     scoreMap.put(character, max);
                     childDependantCharacters.add(character);
                 }
@@ -481,38 +489,37 @@ public class IdentificationKeyGenerator {
         if (config.getWeightType() == IkeyConfig.WeightType.CONTEXTUAL) {
             float bestWeight = -1;
 
-            for (ICharacter character : charactersScore.keySet()) {
+            for (Map.Entry<ICharacter, Float> characterScoreEntry : charactersScore.entrySet()) {
+                final ICharacter character = characterScoreEntry.getKey();
+                final Float score = characterScoreEntry.getValue();
 
-                if (charactersScore.containsKey(character)) {
-                    int nWeights = 0;
-                    float weightsSum = 0;
-                    float averageWeight = 0;
-                    for (Taxon taxon : remainingTaxa) {
+                int nWeights = 0;
+                float weightsSum = 0;
+                float averageWeight = 0;
+                for (Taxon taxon : remainingTaxa) {
 
-                        CodedDescription currentCodedDescription = dataset.getCodedDescription(taxon);
-                        if (currentCodedDescription.getCharacterWeights().containsKey(character)) {
-                            nWeights++;
-                            weightsSum += currentCodedDescription.getCharacterWeight(character);
-                        } else {
-                            nWeights++;
-                            weightsSum += IkeyConfig.DEFAULT_WEIGHT.getIntWeight();
-                        }
-
-                    }
-                    if (nWeights > 0) {
-                        averageWeight = (weightsSum / nWeights);
+                    CodedDescription currentCodedDescription = dataset.getCodedDescription(taxon);
+                    if (currentCodedDescription.getCharacterWeights().containsKey(character)) {
+                        nWeights++;
+                        weightsSum += currentCodedDescription.getCharacterWeight(character);
+                    } else {
+                        nWeights++;
+                        weightsSum += IkeyConfig.DEFAULT_WEIGHT.getIntWeight();
                     }
 
-                    if (averageWeight > bestWeight) {
-                        bestCharacter = character;
-                        bestWeight = averageWeight;
-                        bestScore = charactersScore.get(character);
-                    } else if (averageWeight == bestWeight && charactersScore.get(character) >= bestScore) {
-                        bestScore = charactersScore.get(character);
-                        bestCharacter = character;
-                    }
+                }
+                if (nWeights > 0) {
+                    averageWeight = (weightsSum / nWeights);
                 }
 
+                if (averageWeight > bestWeight) {
+                    bestCharacter = character;
+                    bestWeight = averageWeight;
+                    bestScore = score;
+                } else if (Objects.equals(averageWeight, bestWeight) && score >= bestScore) {
+                    bestScore = score;
+                    bestCharacter = character;
+                }
             }
 
             charactersScore.remove(bestCharacter);
@@ -522,19 +529,22 @@ public class IdentificationKeyGenerator {
                 int lessTaxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) bestCharacter,
                         remainingTaxa);
 
-                for (ICharacter character : charactersScore.keySet()) {
+                for (Map.Entry<ICharacter, Float> characterScoreEntry : charactersScore.entrySet()) {
+                    final ICharacter character = characterScoreEntry.getKey();
+                    final Float score = characterScoreEntry.getValue();
+
                     for (Taxon taxon : remainingTaxa) {
                         CodedDescription currentCodedDescription = dataset.getCodedDescription(taxon);
                         if (currentCodedDescription.getCharacterWeight(character) != null
-                                && currentCodedDescription.getCharacterWeight(character) == bestWeight
-                                && charactersScore.get(character) == bestScore
+                                && currentCodedDescription.getCharacterWeight(character) == Float.valueOf(bestWeight).intValue()
+                                && score == bestScore
                                 && character.isSupportsCategoricalData()) {
                             // get the number of taxa of all child nodes of the current CategoricalCharacter
                             int currentTaxaNumber = getTaxaNumberForAllStates(
                                     (CategoricalCharacter) character, remainingTaxa);
                             // if the current taxa number is lower than the less taxa number
                             if (currentTaxaNumber < lessTaxaNumber) {
-                                bestScore = charactersScore.get(character);
+                                bestScore = score;
                                 bestCharacter = character;
                                 lessTaxaNumber = currentTaxaNumber;
                             }
@@ -547,18 +557,20 @@ public class IdentificationKeyGenerator {
         } else {
 
             float bestWeight = -1;
-            for (ICharacter character : charactersScore.keySet()) {
 
+            for (Map.Entry<ICharacter, Float> characterScoreEntry : charactersScore.entrySet()) {
+                final ICharacter character = characterScoreEntry.getKey();
+                final Float score = characterScoreEntry.getValue();
                 // if the current character weight is better than the bestWeight
                 if (character.getWeight() > bestWeight) {
                     bestCharacter = character;
                     bestWeight = character.getWeight();
-                    bestScore = charactersScore.get(character);
+                    bestScore = score;
                     // if the current character weight is equal to the bestWeight and the current character
                     // score
                     // is better than the best score
-                } else if (character.getWeight() == bestWeight && charactersScore.get(character) >= bestScore) {
-                    bestScore = charactersScore.get(character);
+                } else if (character.getWeight() == bestWeight && score >= bestScore) {
+                    bestScore = score;
                     bestCharacter = character;
                 }
 
@@ -570,15 +582,19 @@ public class IdentificationKeyGenerator {
             if (charactersScore.containsValue(bestScore) && bestCharacter.isSupportsCategoricalData()) {
                 int lessTaxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) bestCharacter,
                         remainingTaxa);
-                for (ICharacter character : charactersScore.keySet()) {
-                    if (character.getWeight() == bestWeight && charactersScore.get(character) == bestScore
+
+                for (Map.Entry<ICharacter, Float> characterScoreEntry : charactersScore.entrySet()) {
+                    final ICharacter character = characterScoreEntry.getKey();
+                    final Float score = characterScoreEntry.getValue();
+
+                    if (character.getWeight() == bestWeight && score == bestScore
                             && character.isSupportsCategoricalData()) {
                         // get the number of taxa of all child nodes of the current CategoricalCharacter
                         int currentTaxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) character,
                                 remainingTaxa);
                         // if the current taxa number is lower than the less taxa number
                         if (currentTaxaNumber < lessTaxaNumber) {
-                            bestScore = charactersScore.get(character);
+                            bestScore = score;
                             bestCharacter = character;
                             lessTaxaNumber = currentTaxaNumber;
                         }
@@ -809,7 +825,7 @@ public class IdentificationKeyGenerator {
             maxLowerTmp = max1;
         }
 
-        res = new Double((maxLowerTmp - minUpperTmp) / (maxUpperTmp - minLowerTmp)).floatValue();
+        res = Double.valueOf((maxLowerTmp - minUpperTmp) / (maxUpperTmp - minLowerTmp)).floatValue();
 
         if (res < 0) {
             res = 0;
