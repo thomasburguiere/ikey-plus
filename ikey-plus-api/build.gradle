@@ -1,0 +1,3 @@
+dependencies {
+    compile group: 'xerces', name: 'xercesImpl', version: '2.9.1'
+}
