@@ -32,7 +32,7 @@ import java.net.URLConnection;
  * @created 06-04-2011
  */
 @Path("/identificationKey")
-public class IdentificationKeyImpl {
+public class IdentificationKeyResource {
 
     @GET
     public String getIdentificationKey(

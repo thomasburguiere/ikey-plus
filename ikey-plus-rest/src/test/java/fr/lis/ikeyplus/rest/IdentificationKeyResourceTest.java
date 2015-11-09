@@ -6,7 +6,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-public class IdentificationKeyImplTest {
+public class IdentificationKeyResourceTest {
 
     public static final String INVALID_SDD_URL = "https://www.dropbox.com/s/umglan4vsvpg96s/doc_xper_2.3_core_en.tex?dl=1";
     @Rule
@@ -23,7 +23,7 @@ public class IdentificationKeyImplTest {
     public static final boolean MERGE_CHARACTER_STATES_IF_SAME_DISCRIMINATION = false;
     public static final boolean PRUNING = false;
     public static final String VALID_SDD_URL = "https://www.dropbox.com/s/lzdkhszlft00u9e/genetta.sdd.xml?dl=1";
-    private IdentificationKeyImpl endpoint;
+    private IdentificationKeyResource endpoint;
 
     @Test
     public void should_throw_exception_for_invalid_url() throws Exception {
@@ -65,7 +65,7 @@ public class IdentificationKeyImplTest {
 
     @Before
     public void setUp() {
-        endpoint = new IdentificationKeyImpl();
+        endpoint = new IdentificationKeyResource();
     }
 
 }
