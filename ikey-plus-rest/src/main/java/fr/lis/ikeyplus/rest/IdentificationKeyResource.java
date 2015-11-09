@@ -13,6 +13,7 @@ import fr.lis.ikeyplus.utils.IkeyException;
 import fr.lis.ikeyplus.utils.IkeyUtils;
 import org.xml.sax.SAXException;
 
+import javax.inject.Inject;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -33,6 +34,20 @@ import java.net.URLConnection;
  */
 @Path("/identificationKey")
 public class IdentificationKeyResource {
+
+    private SDDParser sddParser;
+    private IdentificationKeyGenerator identificationKeyGenerator;
+
+    public IdentificationKeyResource(){
+
+    }
+
+    @Inject
+    public IdentificationKeyResource(SDDParser sddParser, IdentificationKeyGenerator identificationKeyGenerator) {
+        this.sddParser = sddParser;
+        this.identificationKeyGenerator = identificationKeyGenerator;
+    }
+
 
     @GET
     public String getIdentificationKey(
@@ -107,7 +122,6 @@ public class IdentificationKeyResource {
         long beforeTime = System.currentTimeMillis();
 
         // call SDD parser
-        SDDParser sddParser;
         // test if the URL is valid
         URLConnection urlConnection;
         try {
@@ -125,7 +139,6 @@ public class IdentificationKeyResource {
 
         DataSet dataSet;
         try {
-            sddParser = new SDDSaxParser();
             dataSet = sddParser.parseDataset(sddURL, config);
             // construct header
             header.append(lineReturn).append(dataSet.getLabel()).append(", ").
@@ -150,15 +163,6 @@ public class IdentificationKeyResource {
         }
         double parseDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
         beforeTime = System.currentTimeMillis();
-
-        // call identification key service
-        IdentificationKeyGenerator identificationKeyGenerator = null;
-        try {
-            identificationKeyGenerator = new IdentificationKeyGeneratorImpl();
-        } catch (Throwable t) {
-            t.printStackTrace();
-            config.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingKeyError"), t);
-        }
 
         double keyCreationDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
         // construct header
