@@ -21,7 +21,7 @@ This is a fork of one of the app I worked on during my days at [Laboratoire d'In
 
 This app generates [single access identification keys](https://en.wikipedia.org/wiki/Single-access_key), using [SDD](http://wiki.tdwg.org/twiki/bin/view/SDD/Version1dot1) formatted file as input. SDD is an XML standard used in systematic biology to store descriptive data.
 
-If your descriptive data is stored in the delta format you can convert it to sdd using the [deltaToSdd](http://www.identificationkey.fr/deltatosdd/) webservice. If your descriptive data is stored in the Xper2 format you can convert it to sdd using the Xper2 software Export option.
+If your descriptive data is stored in the [delta](http://delta-intkey.com/www/overview.htm) format you can convert it to sdd using the [deltaToSdd](http://www.identificationkey.fr/deltatosdd/) webservice.
 
 ## Building the app##
 To build and use the app, you will need [Gradle](https://gradle.org). Once you have gradle installed, go to the root of the project, and run `gradle build`.
