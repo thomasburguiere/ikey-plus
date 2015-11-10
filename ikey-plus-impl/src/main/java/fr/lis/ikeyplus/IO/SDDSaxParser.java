@@ -14,12 +14,18 @@ import org.xml.sax.helpers.XMLReaderFactory;
 import fr.lis.ikeyplus.model.DataSet;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 
+import javax.inject.Singleton;
+import javax.ws.rs.Path;
+
 /**
  * This class starts the parsing of a SDD file
  *
  * @author Florian Causse
  * @created 18-04-2011
  */
+
+@Singleton
+@Path("sdd-parsing-service")
 public class SDDSaxParser implements SDDParser {
 
     // knowledge base (call dataset)

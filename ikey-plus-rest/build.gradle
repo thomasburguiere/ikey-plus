@@ -4,4 +4,5 @@ dependencies {
     compile group: 'org.quartz-scheduler', name: 'quartz', version: '2.0.0'
     providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
     compile project(':ikey-plus-impl')
+    compile 'org.apache.openwebbeans:openwebbeans-web:1.6.2'
 }
