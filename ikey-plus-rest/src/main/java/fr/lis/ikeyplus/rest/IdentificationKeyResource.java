@@ -152,13 +152,7 @@ public class IdentificationKeyResource {
         beforeTime = System.currentTimeMillis();
 
         // call identification key service
-        IdentificationKeyGenerator identificationKeyGenerator = null;
-        try {
-            identificationKeyGenerator = new IdentificationKeyGeneratorImpl();
-        } catch (Throwable t) {
-            t.printStackTrace();
-            config.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingKeyError"), t);
-        }
+        IdentificationKeyGenerator identificationKeyGenerator = new IdentificationKeyGeneratorImpl();
 
         double keyCreationDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
         // construct header
@@ -169,8 +163,8 @@ public class IdentificationKeyResource {
 
         // String containing the name of the result file
         String resultFileName = null;
-        if (identificationKeyGenerator != null && identificationKeyGenerator.getIdentificationKey(dataSet, config) != null) {
-            SingleAccessKeyTree tree2dump = identificationKeyGenerator.getIdentificationKey(dataSet, config);
+        final SingleAccessKeyTree key = identificationKeyGenerator.getIdentificationKey(dataSet, config);
+        if (key != null) {
 
             try {
                 // creation of the directory containing key files
@@ -185,33 +179,33 @@ public class IdentificationKeyResource {
                 if (config.getFormat() == IkeyConfig.OutputFormat.HTML) {
                     if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
                         resultFile = SingleAccessKeyTreeDumper.dumpFlatHtmlFile(header.toString(),
-                                tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
+                                key, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
                     } else {
                         resultFile = SingleAccessKeyTreeDumper.dumpHtmlFile(header.toString(),
-                                tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
+                                key, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
                     }
                 } else if (config.getFormat() == IkeyConfig.OutputFormat.WIKI) {
                     if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
                         resultFile = SingleAccessKeyTreeDumper.dumpFlatWikiFile(header.toString(),
-                                tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
+                                key, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
                     } else {
                         resultFile = SingleAccessKeyTreeDumper.dumpWikiFile(header.toString(),
-                                tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
+                                key, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
                     }
                 } else if (config.getFormat() == IkeyConfig.OutputFormat.INTERACTIVE_HTML) {
                     resultFile = SingleAccessKeyTreeDumper.dumpInteractiveHtmlFile(header.toString(),
-                            tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
+                            key, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
                 } else if (config.getFormat() == IkeyConfig.OutputFormat.DOT) {
-                    resultFile = SingleAccessKeyTreeDumper.dumpDotFile(header.toString(), tree2dump, generatedKeyFolderPath);
+                    resultFile = SingleAccessKeyTreeDumper.dumpDotFile(header.toString(), key, generatedKeyFolderPath);
                 } else if (config.getFormat() == IkeyConfig.OutputFormat.SDD) {
-                    resultFile = SingleAccessKeyTreeDumper.dumpSddFile(tree2dump);
+                    resultFile = SingleAccessKeyTreeDumper.dumpSddFile(key);
                 } else {
                     if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
                         resultFile = SingleAccessKeyTreeDumper.dumpFlatTxtFile(header.toString(),
-                                tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
+                                key, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
                     } else {
                         resultFile = SingleAccessKeyTreeDumper.dumpTxtFile(header.toString(),
-                                tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
+                                key, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedKeyFolderPath);
                     }
                 }
             } catch (IOException e) {

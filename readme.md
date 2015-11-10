@@ -39,13 +39,11 @@ IkeyConfig config = IkeyConfig.builder().build();
 
 // initialize SDD parser
 SDDParser parser = new SDDSaxParser();
-
 DataSet dataset = sddParser.parseDataset(sddURL, config);
 
 // get key
-IdentificationKeyGenerator identificationKeyGenerator =
-	new IdentificationKeyGeneratorImpl(dataset, config);
-
+IdentificationKeyGenerator generator = new IdentificationKeyGeneratorImpl();
+SingleAccessKeyTree key = generator.getIdentificationKey(dataset, config);
 
 // dump key to a file
 boolean statisticsEnabled = true or false;
