@@ -1,4 +1,0 @@
-rootProject.name = 'ikey-plus'
-include 'ikey-plus-api'
-include 'ikey-plus-rest'
-include 'ikey-plus-impl'

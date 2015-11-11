@@ -1,5 +1,7 @@
 package fr.lis.ikeyplus.rest;
 
+import fr.lis.ikeyplus.IO.SDDSaxParser;
+import fr.lis.ikeyplus.services.IdentificationKeyGeneratorImpl;
 import fr.lis.ikeyplus.utils.IkeyException;
 import org.junit.Before;
 import org.junit.Rule;
@@ -65,7 +67,7 @@ public class IdentificationKeyResourceTest {
 
     @Before
     public void setUp() {
-        endpoint = new IdentificationKeyResource();
+        endpoint = new IdentificationKeyResource(new SDDSaxParser(), new IdentificationKeyGeneratorImpl());
     }
 
 }

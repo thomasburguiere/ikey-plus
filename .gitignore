@@ -4,13 +4,16 @@ target
 # gradle
 build
 classes
+out
 gradle
 gradlew*
 .gradle
 
 # idea
 .idea/*
+*.iml
 !.idea/runConfigurations
 
 # misc
 .settings
+out

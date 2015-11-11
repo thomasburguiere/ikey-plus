@@ -14,12 +14,14 @@ import org.xml.sax.helpers.XMLReaderFactory;
 import fr.lis.ikeyplus.model.DataSet;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 
+
 /**
  * This class starts the parsing of a SDD file
  *
  * @author Florian Causse
  * @created 18-04-2011
  */
+
 public class SDDSaxParser implements SDDParser {
 
     // knowledge base (call dataset)

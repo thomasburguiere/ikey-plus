@@ -26,8 +26,9 @@
         <version.maven-war-plugin>2.5</version.maven-war-plugin>
         <version.jacoco-maven-plugin.codecov>0.7.5.201505241946</version.jacoco-maven-plugin.codecov>
         <version.mockito>1.10.19</version.mockito>
-    </properties>
+        <version.tomee-jaxrs>1.7.2</version.tomee-jaxrs>
 
+    </properties>
     <build>
         <plugins>
             <plugin>
@@ -59,6 +60,12 @@
                 <groupId>xerces</groupId>
                 <artifactId>xercesImpl</artifactId>
                 <version>${version.xercesImpl}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.openejb</groupId>
+                <artifactId>tomee-jaxrs</artifactId>
+                <version>${version.tomee-jaxrs}</version>
             </dependency>
 
             <dependency>
