@@ -4,8 +4,6 @@ import fr.lis.ikeyplus.model.*;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import fr.lis.ikeyplus.utils.IkeyUtils;
 
-import javax.inject.Singleton;
-import javax.ws.rs.Path;
 import java.io.Serializable;
 import java.util.*;
 
@@ -15,8 +13,6 @@ import java.util.*;
  * @author Florian Causse
  * @created 18-04-2011
  */
-@Singleton
-@Path("identificationkey-generation-service")
 public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerator {
 
     @Override

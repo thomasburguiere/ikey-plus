@@ -4,21 +4,6 @@
 		 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		 id="WebApp_ID" version="2.5">
 	<display-name>IK_WS_REST</display-name>
-	<servlet>
-		<servlet-name>Jersey REST Service</servlet-name>
-		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
-		<!-- Register resources and providers under com.vogella.jersey.first package. -->
-		<init-param>
-			<param-name>jersey.config.server.provider.packages</param-name>
-			<param-value>fr.lis.ikeyplus.rest</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Jersey REST Service</servlet-name>
-		<url-pattern>/*</url-pattern>
-	</servlet-mapping>
-
 
 	<servlet>
 		<display-name>Quartz Initializer Servlet</display-name>
@@ -48,7 +33,4 @@
 		</init-param>
 		<load-on-startup>2</load-on-startup>
 	</servlet>
-	<!--<listener>-->
-		<!--<listener-class>org.apache.webbeans.servlet.WebBeansConfigurationListener</listener-class>-->
-	<!--</listener>-->
 </web-app>
