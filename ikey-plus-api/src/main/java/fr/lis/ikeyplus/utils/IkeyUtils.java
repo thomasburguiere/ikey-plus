@@ -114,8 +114,8 @@ public final class IkeyUtils {
         final String generatedKeyFolderPath = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
         if (!new File(generatedKeyFolderPath).exists()) {
-            final boolean created = new File(generatedKeyFolderPath).mkdir();
-            if (created) {
+            final boolean created = new File(generatedKeyFolderPath).mkdirs();
+            if (!created) {
                 throw new IllegalStateException("Could not create non-existing " + generatedKeyFolderPath + "!");
             }
         }
