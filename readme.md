@@ -24,10 +24,8 @@ This app generates [single access identification keys](https://en.wikipedia.org/
 If your descriptive data is stored in the delta format you can convert it to sdd using the [deltaToSdd](http://www.identificationkey.fr/deltatosdd/) webservice. If your descriptive data is stored in the Xper2 format you can convert it to sdd using the Xper2 software Export option.
 
 ## Building the app##
-To build and use the app, you will need [Gradle](https://gradle.org). Once you have gradle installed, go to the root of the project, and run `gradle build`.
+To build and use the app, you will need [Apache Maven](https://maven.apache.org/). Once you have maven installed, go to the root of the project, and run `mvn package`.
 
-***Note***: If you are building an old version (v1.0) of the app, you will have to use [Maven](maven.apache.org/) and run 
-`mvn package`
 
 ## Usage ##
 
