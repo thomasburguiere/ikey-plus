@@ -9,9 +9,9 @@
 ## Authors :
 
 - Thomas Burguiere (thomas.burguiere@gmail.com)
-- Florian Causse
-- Visotheary Ung
-- Régine Vignes-Lebbe
+- Florian Causse (florian.causse@upmc.fr)
+- Visotheary Ung (visotheary.riviere_ung@upmc.fr)
+- Régine Vignes-Lebbe (regine.vignes_lebbe@upmc.fr)
 
 ## Disclaimer ##
 
