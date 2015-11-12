@@ -75,9 +75,17 @@
         <!-- IKEY API -->
         <dependency>
             <groupId>fr.lis.ikey-plus</groupId>
-            <artifactId>ikey-plus-impl</artifactId>
+            <artifactId>ikey-plus-api</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>fr.lis.ikey-plus</groupId>
+            <artifactId>ikey-plus-impl</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
     </dependencies>
 
 </project>

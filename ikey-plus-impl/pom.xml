@@ -43,6 +43,8 @@
             <artifactId>assertj-core</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- IKEY API -->
         <dependency>
             <groupId>fr.lis.ikey-plus</groupId>
             <artifactId>ikey-plus-api</artifactId>
