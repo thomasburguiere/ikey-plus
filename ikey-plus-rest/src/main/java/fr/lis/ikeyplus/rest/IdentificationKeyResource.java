@@ -21,6 +21,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.io.File;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -36,7 +37,7 @@ public class IdentificationKeyResource {
     private SDDParser sddParser;
     private IdentificationKeyGenerator identificationKeyGenerator;
 
-    public IdentificationKeyResource(){
+    public IdentificationKeyResource() {
 
     }
 
@@ -128,6 +129,10 @@ public class IdentificationKeyResource {
             urlConnection = fileURL.openConnection();
             // Open data stream
             urlConnection.getInputStream();
+        } catch (ConnectException e) {
+            final String message = IkeyConfig.getBundleConfElement("message.url.connectionError") + " " + sddURL;
+            config.setErrorMessage(message, e);
+            throw new IkeyException(message, e);
         } catch (IOException e) {
             // e.printStackTrace();// TODO log properly
             final String message = IkeyConfig.getBundleConfElement("message.urlError");
