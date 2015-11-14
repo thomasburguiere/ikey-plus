@@ -54,19 +54,20 @@ public class SingleAccessKeyTree {
 
         if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
             if (node.getCharacterState() instanceof QuantitativeMeasure) {
-                output.append(tabulations
-                        + firstNumbering
-                        + "."
-                        + secondNumbering
-                        + ") "
-                        + node.getCharacter().getName()
-                        + " | "
-                        + ((QuantitativeMeasure) node.getCharacterState())
+                output.append(tabulations)
+                        .append(firstNumbering)
+                        .append( ".")
+                        .append( secondNumbering)
+                        .append( ") ")
+                        .append( node.getCharacter().getName())
+                        .append( " | ")
+                        .append( (((QuantitativeMeasure) node.getCharacterState()))
                         .toStringInterval(((QuantitativeCharacter) node.getCharacter())
                                 .getMeasurementUnit()));
             } else {
-                output.append(tabulations + firstNumbering + "." + secondNumbering + ") "
-                        + node.getCharacter().getName() + " | " + node.getStringStates());
+                output.append(tabulations).append(firstNumbering).append(".")
+                        .append(secondNumbering).append(") ").append(node.getCharacter()
+                        .getName()).append(" | ").append(node.getStringStates());
             }
             output.append(nodeDescriptionAnalysis(node));
             if (node.getChildren().size() == 0) {
@@ -80,7 +81,7 @@ public class SingleAccessKeyTree {
                     firstLoop = false;
                 }
             } else {
-                output.append(" (items=" + node.getRemainingTaxa().size() + ")");
+                output.append(" (items=").append(node.getRemainingTaxa().size()).append(")");
             }
             tabulations = tabulations + "\t";
         }

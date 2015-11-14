@@ -81,34 +81,6 @@ public final class IkeyUtils {
         return (float) roundedFloat;
     }
 
-    /**
-     * This method round a double value
-     *
-     * @param score       the double number that will be rounded
-     * @param roundFactor the power of 10 used to round the float, e.g. if roundFactor = 3, the float number will be
-     *                    rounded with 10^3 as a multiplier
-     * @return double, the rounded value
-     */
-    public static double roundDouble(double score, int roundFactor) {
-        double roundedDouble;
-        double multiplier = Math.pow((double) 10, (double) roundFactor);
-
-        roundedDouble = multiplier * score;
-        roundedDouble = (int) (roundedDouble + .5);
-        roundedDouble /= multiplier;
-        return (float) roundedDouble;
-    }
-
-    /**
-     * This method delete accent containing in a string
-     *
-     * @param s , the string candidate to delete accents
-     * @return String, the string without accents
-     */
-    public static String unAccent(String s) {
-        String temp = Normalizer.normalize(s, Normalizer.Form.NFC);
-        return temp.replaceAll("[^\\p{ASCII}]", "");
-    }
 
     public static void generatedKeyFolderPathIfNeeded() {
         final String generatedKeyFolderPath = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")

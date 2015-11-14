@@ -54,21 +54,10 @@ public class Taxon {
         return mediaObjectKeys;
     }
 
-    public void setMediaObjectKeys(List<String> mediaObjectKeys) {
-        this.mediaObjectKeys = mediaObjectKeys;
-    }
-
     public String getFirstImage(DataSet dataSet) {
         if (dataSet != null && mediaObjectKeys != null && mediaObjectKeys.size() > 0 &&
                 dataSet.getMediaObject(mediaObjectKeys.get(0)).startsWith("http")) {
             return dataSet.getMediaObject(mediaObjectKeys.get(0));
-        }
-        return null;
-    }
-
-    public String getFirstImageKey() {
-        if (mediaObjectKeys.size() > 0) {
-            return mediaObjectKeys.get(0);
         }
         return null;
     }
@@ -83,10 +72,6 @@ public class Taxon {
 
     public HashMap<Integer, Float> getTaxonStatistics() {
         return pathStatistics;
-    }
-
-    public void setTaxonStatistics(HashMap<Integer, Float> taxonStatistics) {
-        this.pathStatistics = taxonStatistics;
     }
 
     public void updatePathStatistics(Float pathLength) {

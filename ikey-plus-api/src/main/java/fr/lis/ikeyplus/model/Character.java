@@ -171,22 +171,6 @@ public class Character implements ICharacter {
         }
     }
 
-    public ICharacter shallowCopy() {
-        ICharacter newCharacter;
-        if (this.isSupportsCategoricalData()) {
-            newCharacter = new CategoricalCharacter();
-            ((CategoricalCharacter) newCharacter).setStates(((CategoricalCharacter) this).getStates());
-        } else {
-            newCharacter = new QuantitativeCharacter();
-        }
-        newCharacter.setChildCharacters(this.getChildCharacters());
-        newCharacter.setId(this.getId());
-        newCharacter.setInapplicableStates(this.getInapplicableStates());
-        newCharacter.setName(this.getName());
-        newCharacter.setParentCharacter(this.getParentCharacter());
-        return newCharacter;
-    }
-
     public String toString() {
         return this.name;
     }

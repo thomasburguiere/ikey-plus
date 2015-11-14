@@ -152,8 +152,7 @@ public class IkeyConfig {
         PDF("pdf"),
         SDD("sdd"),
         WIKI("wiki"),
-        DOT("dot"),
-        ZIP("zip");
+        DOT("dot");
 
         private final String format;
 
