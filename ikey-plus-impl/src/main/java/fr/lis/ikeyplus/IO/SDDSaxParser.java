@@ -36,7 +36,7 @@ public class SDDSaxParser implements SDDParser {
         SDDContentHandler handler = new SDDContentHandler(utils);
         saxReader.setContentHandler(handler);
 
-        InputSource is = null;
+        InputSource is;
         try {
             URL url = new URL(uri);
             is = new InputSource(url.openStream());

@@ -691,14 +691,14 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
 
         // increasing artificially the score of character containing only described taxa
         if (isAlwaysDescribed && score > 0) {
-            score = (float) ((float) score + (float) 2.0);
+            score = score + (float) 2.0;
         }
         // fewStatesCharacterFirst option handling
         if (config.isFewStatesCharacterFirst() && score > 0 && character.getStates().size() >= 2) {
             // increasing artificially score of character with few states
             float coeff = (float) 1
                     - ((float) character.getStates().size() / (float) maxNbStatesPerCharacter);
-            score = (float) (score + coeff);
+            score = score + coeff;
         }
 
         return score;
@@ -788,47 +788,16 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
 
         // increasing artificially the score of character containing only described taxa
         if (!alreadyUsedCharacter.contains(character) && isAlwaysDescribed && score > 0) {
-            score = (float) ((float) score + (float) 2.0);
+            score = score + (float) 2.0;
         }
 
         // fewStatesCharacterFirst option handling
         if (config.isFewStatesCharacterFirst() && score > 0) {
             // increasing artificially the score of character with few states
             float coeff = (float) 1 - ((float) 2 / (float) maxNbStatesPerCharacter);
-            score = (float) (score + coeff);
+            score = score + coeff;
         }
         return score;
-    }
-
-    public static float calculCommonPercentage(double min1, double max1, double min2, double max2) {
-        double minLowerTmp;
-        double maxUpperTmp;
-        double minUpperTmp;
-        double maxLowerTmp;
-        float res;
-
-        if (min1 <= min2) {
-            minLowerTmp = min1;
-            minUpperTmp = min2;
-        } else {
-            minLowerTmp = min2;
-            minUpperTmp = min1;
-        }
-
-        if (max1 >= max2) {
-            maxUpperTmp = max1;
-            maxLowerTmp = max2;
-        } else {
-            maxUpperTmp = max2;
-            maxLowerTmp = max1;
-        }
-
-        res = Double.valueOf((maxLowerTmp - minUpperTmp) / (maxUpperTmp - minLowerTmp)).floatValue();
-
-        if (res < 0) {
-            res = 0;
-        }
-        return res;
     }
 
     private int calculateMaxNbStatesPerCharacter(DataSet dataset) {
