@@ -583,7 +583,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 while ((bytesRead = bin.read(contents)) != -1) {
 
-                    strFileContents = new String(contents, 0, bytesRead);
+                    strFileContents = new String(contents, 0, bytesRead, Charset.forName("UTF-8"));
                     slk.append(strFileContents);
                 }
             }
@@ -606,7 +606,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 while ((bytesRead = bin.read(contents)) != -1) {
 
-                    strFileContents = new String(contents, 0, bytesRead);
+                    strFileContents = new String(contents, 0, bytesRead, Charset.forName("UTF-8"));
                     slk.append(strFileContents);
                 }
             }
@@ -829,7 +829,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 while ((bytesRead = bin.read(contents)) != -1) {
 
-                    strFileContents = new String(contents, 0, bytesRead);
+                    strFileContents = new String(contents, 0, bytesRead, Charset.forName("UTF-8"));
                     slk.append(strFileContents);
                 }
             }
@@ -852,7 +852,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 while ((bytesRead = bin.read(contents)) != -1) {
 
-                    strFileContents = new String(contents, 0, bytesRead);
+                    strFileContents = new String(contents, 0, bytesRead, Charset.forName("UTF-8"));
                     slk.append(strFileContents);
                 }
             }
@@ -916,7 +916,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 while ((bytesRead = bin.read(contents)) != -1) {
 
-                    strFileContents = new String(contents, 0, bytesRead);
+                    strFileContents = new String(contents, 0, bytesRead, Charset.forName("UTF-8"));
                     slk.append(strFileContents);
                 }
             }
@@ -939,7 +939,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 while ((bytesRead = bin.read(contents)) != -1) {
 
-                    strFileContents = new String(contents, 0, bytesRead);
+                    strFileContents = new String(contents, 0, bytesRead, Charset.forName("UTF-8"));
                     slk.append(strFileContents);
                 }
             }
