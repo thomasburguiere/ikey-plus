@@ -1378,26 +1378,29 @@ public abstract class SingleAccessKeyTreeDumper {
             throws IOException {
 
         File wikiFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.WIKI, new File(generatedFilesFolder));
-        try (BufferedWriter wikiFlatFileWriter = new BufferedWriter(new FileWriter(wikiFile))) {
 
-            if (header != null && !header.equals("")) {
-                wikiFlatFileWriter.append("== Info ==");
+        try (FileOutputStream fileOutputStream = new FileOutputStream(wikiFile)) {
+            fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
+            try (BufferedWriter wikiFlatFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, "UTF-8"))) {
+                if (header != null && !header.equals("")) {
+                    wikiFlatFileWriter.append("== Info ==");
+                    wikiFlatFileWriter.newLine();
+                    wikiFlatFileWriter.append(header.replaceAll(System.getProperty("line.separator"), "<br>"));
+                    wikiFlatFileWriter.newLine();
+                }
+                wikiFlatFileWriter.append("== Identification Key==");
                 wikiFlatFileWriter.newLine();
-                wikiFlatFileWriter.append(header.replaceAll(System.getProperty("line.separator"), "<br>"));
-                wikiFlatFileWriter.newLine();
+                // wikiFlatFileWriter.append(" <nowiki>");
+
+                wikiFlatFileWriter.append(generateFlatWikiString(tree2dump));
+
+                if (showStatistics) {
+                    tree2dump.gatherTaxonPathStatistics();
+                    wikiFlatFileWriter.append(outputTaxonPathStatisticsWiki(tree2dump));
+                }
+
+                // wikiFlatFileWriter.append("</nowiki>");
             }
-            wikiFlatFileWriter.append("== Identification Key==");
-            wikiFlatFileWriter.newLine();
-            // wikiFlatFileWriter.append(" <nowiki>");
-
-            wikiFlatFileWriter.append(generateFlatWikiString(tree2dump));
-
-            if (showStatistics) {
-                tree2dump.gatherTaxonPathStatistics();
-                wikiFlatFileWriter.append(outputTaxonPathStatisticsWiki(tree2dump));
-            }
-
-            // wikiFlatFileWriter.append("</nowiki>");
         }
 
         return wikiFile;
