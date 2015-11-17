@@ -1380,7 +1380,6 @@ public abstract class SingleAccessKeyTreeDumper {
         File wikiFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.WIKI, new File(generatedFilesFolder));
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(wikiFile)) {
-            fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
             try (BufferedWriter wikiFlatFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, "UTF-8"))) {
                 if (header != null && !header.equals("")) {
                     wikiFlatFileWriter.append("== Info ==");
