@@ -1,7 +1,6 @@
 package fr.lis.ikeyplus.utils;
 
 import java.io.File;
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

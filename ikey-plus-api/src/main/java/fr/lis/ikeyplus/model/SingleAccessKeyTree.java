@@ -56,14 +56,14 @@ public class SingleAccessKeyTree {
             if (node.getCharacterState() instanceof QuantitativeMeasure) {
                 output.append(tabulations)
                         .append(firstNumbering)
-                        .append( ".")
-                        .append( secondNumbering)
-                        .append( ") ")
-                        .append( node.getCharacter().getName())
-                        .append( " | ")
-                        .append( (((QuantitativeMeasure) node.getCharacterState()))
-                        .toStringInterval(((QuantitativeCharacter) node.getCharacter())
-                                .getMeasurementUnit()));
+                        .append(".")
+                        .append(secondNumbering)
+                        .append(") ")
+                        .append(node.getCharacter().getName())
+                        .append(" | ")
+                        .append((((QuantitativeMeasure) node.getCharacterState()))
+                                .toStringInterval(((QuantitativeCharacter) node.getCharacter())
+                                        .getMeasurementUnit()));
             } else {
                 output.append(tabulations).append(firstNumbering).append(".")
                         .append(secondNumbering).append(") ").append(node.getCharacter()

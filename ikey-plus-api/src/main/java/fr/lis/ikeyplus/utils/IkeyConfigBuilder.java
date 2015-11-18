@@ -16,7 +16,8 @@ public class IkeyConfigBuilder {
     private IkeyConfig.WeightContext weightContext = IkeyConfig.WeightContext.NO_WEIGHT;
     private IkeyConfig.WeightType weightType = IkeyConfig.WeightType.GLOBAL;
 
-    IkeyConfigBuilder(){}
+    IkeyConfigBuilder() {
+    }
 
     public IkeyConfigBuilder format(IkeyConfig.OutputFormat format) {
         this.format = format;
