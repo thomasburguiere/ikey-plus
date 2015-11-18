@@ -1,8 +1,8 @@
 package fr.lis.ikeyplus.IO;
 
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
-import fr.lis.ikeyplus.services.IdentificationKeyGeneratorImpl;
 import fr.lis.ikeyplus.services.IdentificationKeyGenerator;
+import fr.lis.ikeyplus.services.IdentificationKeyGeneratorImpl;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
