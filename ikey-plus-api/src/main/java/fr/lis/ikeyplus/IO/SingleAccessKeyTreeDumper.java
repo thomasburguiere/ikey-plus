@@ -10,14 +10,13 @@ import fr.lis.ikeyplus.model.Taxon;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import fr.lis.ikeyplus.utils.IkeyUtils;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -168,8 +167,8 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 // / child node treatment
 
-                if (nodeChildParentNumberingMap.get(Integer.valueOf(counter)) != currentParentNumber) {
-                    currentParentNumber = nodeChildParentNumberingMap.get(Integer.valueOf(counter));
+                if (nodeChildParentNumberingMap.get(counter) != currentParentNumber) {
+                    currentParentNumber = nodeChildParentNumberingMap.get(counter);
                 }
 
                 if (counter == 2) {// first child node of the root node
@@ -188,7 +187,7 @@ public abstract class SingleAccessKeyTreeDumper {
                 }
 
                 // other child nodes of the root node
-                if (rootNodeChildrenIntegerList.contains(Integer.valueOf(counter))) {
+                if (rootNodeChildrenIntegerList.contains(counter)) {
                     if (child.hasChild()) {
                         output.append("<Lead id=\"lead").append(counter - 1).append("\">").append(lineSeparator);
                         output.append("<Statement>").append(child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
@@ -1542,8 +1541,8 @@ public abstract class SingleAccessKeyTreeDumper {
                 // / child node treatment
 
                 // displaying the parent node number
-                if (nodeChildParentNumberingMap.get(Integer.valueOf(counter)) != currentParentNumber) {
-                    currentParentNumber = nodeChildParentNumberingMap.get(Integer.valueOf(counter));
+                if (nodeChildParentNumberingMap.get(counter) != currentParentNumber) {
+                    currentParentNumber = nodeChildParentNumberingMap.get(counter);
                 }
                 output.append(lineSeparator);
                 output.append(currentParentNumber).append(" -> ");
@@ -1906,21 +1905,16 @@ public abstract class SingleAccessKeyTreeDumper {
         return output.toString();
     }
 
-    private static String readStream(InputStream javascriptInputStream) throws IOException {
-        StringBuilder stringBuilder = new StringBuilder("");
-        try (BufferedInputStream bin = new BufferedInputStream(javascriptInputStream)) {
-            // create a byte array
-            byte[] contents = new byte[1024];
-
-            int bytesRead;
-            String strFileContents;
-
-            while ((bytesRead = bin.read(contents)) != -1) {
-
-                strFileContents = new String(contents, 0, bytesRead, Charset.forName("UTF-8"));
-                stringBuilder.append(strFileContents);
-            }
+    private static String readStream(InputStream is) throws IOException {
+        byte[] buffer = new byte[4096];
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        //
+        //some setup code
+        //
+        while (is.available() > 0) {
+            int len = is.read(buffer);
+            out.write(buffer, 0, len);
         }
-        return stringBuilder.toString();
+        return out.toString("UTF-8");
     }
 }
