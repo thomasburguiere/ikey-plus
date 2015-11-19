@@ -573,20 +573,7 @@ public abstract class SingleAccessKeyTreeDumper {
         InputStream cssInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(IkeyConfig
                 .getBundleConfElement("resources.CSSName"));
         if (cssInputStream != null) {
-            try (BufferedInputStream bin = new BufferedInputStream(cssInputStream)) {
-
-                // create a byte array
-                byte[] contents = new byte[1024];
-
-                int bytesRead;
-                String strFileContents;
-
-                while ((bytesRead = bin.read(contents)) != -1) {
-
-                    strFileContents = new String(contents, 0, bytesRead, Charset.forName("UTF-8"));
-                    slk.append(strFileContents);
-                }
-            }
+            slk.append(readStream(cssInputStream));
         }
 
         slk.append("</style>").append(lineSep);
@@ -596,20 +583,7 @@ public abstract class SingleAccessKeyTreeDumper {
         InputStream javascriptInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(IkeyConfig
                 .getBundleConfElement("resources.JSName"));
         if (javascriptInputStream != null) {
-            try (BufferedInputStream bin = new BufferedInputStream(javascriptInputStream)) {
-
-                // create a byte array
-                byte[] contents = new byte[1024];
-
-                int bytesRead;
-                String strFileContents;
-
-                while ((bytesRead = bin.read(contents)) != -1) {
-
-                    strFileContents = new String(contents, 0, bytesRead, Charset.forName("UTF-8"));
-                    slk.append(strFileContents);
-                }
-            }
+            slk.append(readStream(javascriptInputStream));
         }
 
         slk.append("</script>").append(lineSep);
@@ -819,20 +793,7 @@ public abstract class SingleAccessKeyTreeDumper {
         InputStream cssInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(IkeyConfig
                 .getBundleConfElement("resources.CSSName"));
         if (cssInputStream != null) {
-            try (BufferedInputStream bin = new BufferedInputStream(cssInputStream)) {
-
-                // create a byte array
-                byte[] contents = new byte[1024];
-
-                int bytesRead;
-                String strFileContents;
-
-                while ((bytesRead = bin.read(contents)) != -1) {
-
-                    strFileContents = new String(contents, 0, bytesRead, Charset.forName("UTF-8"));
-                    slk.append(strFileContents);
-                }
-            }
+            slk.append(readStream(cssInputStream));
         }
 
         slk.append("</style>").append(lineSep);
@@ -842,20 +803,7 @@ public abstract class SingleAccessKeyTreeDumper {
         InputStream javascriptInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(IkeyConfig
                 .getBundleConfElement("resources.JSName"));
         if (javascriptInputStream != null) {
-            try (BufferedInputStream bin = new BufferedInputStream(javascriptInputStream)) {
-
-                // create a byte array
-                byte[] contents = new byte[1024];
-
-                int bytesRead;
-                String strFileContents;
-
-                while ((bytesRead = bin.read(contents)) != -1) {
-
-                    strFileContents = new String(contents, 0, bytesRead, Charset.forName("UTF-8"));
-                    slk.append(strFileContents);
-                }
-            }
+            slk.append(readStream(javascriptInputStream));
         }
 
         slk.append("</script>").append(lineSep);
@@ -906,20 +854,7 @@ public abstract class SingleAccessKeyTreeDumper {
         InputStream cssInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(IkeyConfig
                 .getBundleConfElement("resources.CSSName"));
         if (cssInputStream != null) {
-            try (BufferedInputStream bin = new BufferedInputStream(cssInputStream)) {
-
-                // create a byte array
-                byte[] contents = new byte[1024];
-
-                int bytesRead;
-                String strFileContents;
-
-                while ((bytesRead = bin.read(contents)) != -1) {
-
-                    strFileContents = new String(contents, 0, bytesRead, Charset.forName("UTF-8"));
-                    slk.append(strFileContents);
-                }
-            }
+            slk.append(readStream(cssInputStream));
         }
 
         slk.append("</style>").append(lineSep);
@@ -929,20 +864,7 @@ public abstract class SingleAccessKeyTreeDumper {
         InputStream javascriptInputStream = SingleAccessKeyTreeDumper.class.getResourceAsStream(IkeyConfig
                 .getBundleConfElement("resources.JSName"));
         if (javascriptInputStream != null) {
-            try (BufferedInputStream bin = new BufferedInputStream(javascriptInputStream)) {
-
-                // create a byte array
-                byte[] contents = new byte[1024];
-
-                int bytesRead;
-                String strFileContents;
-
-                while ((bytesRead = bin.read(contents)) != -1) {
-
-                    strFileContents = new String(contents, 0, bytesRead, Charset.forName("UTF-8"));
-                    slk.append(strFileContents);
-                }
-            }
+            slk.append(readStream(javascriptInputStream));
         }
 
         slk.append("</script>").append(lineSep);
@@ -1984,5 +1906,21 @@ public abstract class SingleAccessKeyTreeDumper {
         return output.toString();
     }
 
+    private static String readStream(InputStream javascriptInputStream) throws IOException {
+        StringBuilder stringBuilder = new StringBuilder("");
+        try (BufferedInputStream bin = new BufferedInputStream(javascriptInputStream)) {
+            // create a byte array
+            byte[] contents = new byte[1024];
 
+            int bytesRead;
+            String strFileContents;
+
+            while ((bytesRead = bin.read(contents)) != -1) {
+
+                strFileContents = new String(contents, 0, bytesRead, Charset.forName("UTF-8"));
+                stringBuilder.append(strFileContents);
+            }
+        }
+        return stringBuilder.toString();
+    }
 }
