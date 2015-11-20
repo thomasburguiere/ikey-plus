@@ -19,6 +19,7 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -92,7 +93,7 @@ public abstract class SingleAccessKeyTreeDumper {
         multipleTraversalToSddString(tree2dump.getRoot(), output, lineSeparator, tree2dump);
         output.append("</IdentificationKeys>").append(lineSeparator);
 
-        if (originalDataSet.getMediaObjects().keySet().size() > 0) {
+        if (!originalDataSet.getMediaObjects().keySet().isEmpty()) {
             output.append("<MediaObjects>").append(lineSeparator);
 
             // creation of mediaObjects
@@ -142,7 +143,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
         // // THIRD TRAVERSAL, breadth-first ////
         Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        Collection<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
         counter = 1;
         int currentParentNumber = -1;
         queue.add(rootNode);
@@ -160,7 +161,7 @@ public abstract class SingleAccessKeyTreeDumper {
             SingleAccessKeyNode node = queue.remove();
             SingleAccessKeyNode child;
 
-            while (IkeyUtils.exclusion(node.getChildren(), visitedNodes).size() > 0
+            while (!IkeyUtils.exclusion(node.getChildren(), visitedNodes).isEmpty()
                     && (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
                     .get(0)) != null) {
                 visitedNodes.add(child);
@@ -396,7 +397,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
         // // third traversal, breadth-first ////
         Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        Collection<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
         queue.clear();
         visitedNodes.clear();
@@ -416,7 +417,7 @@ public abstract class SingleAccessKeyTreeDumper {
             SingleAccessKeyNode node = queue.remove();
             SingleAccessKeyNode child;
 
-            while (IkeyUtils.exclusion(node.getChildren(), visitedNodes).size() > 0
+            while (!IkeyUtils.exclusion(node.getChildren(), visitedNodes).isEmpty()
                     && (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
                     .get(0)) != null
                 // && child.getCharacter() != null && child.getCharacterState() != null
@@ -459,7 +460,7 @@ public abstract class SingleAccessKeyTreeDumper {
                 output.append(tree2dump.nodeDescriptionAnalysis(child));
 
                 // displaying the child node number if it has children nodes, displaying the taxa otherwise
-                if (child.getChildren().size() == 0) {
+                if (child.getChildren().isEmpty()) {
                     output.append(" -> ");
                     output.append(child.getNodeTaxaLabel());
                 } else {
@@ -579,8 +580,8 @@ public abstract class SingleAccessKeyTreeDumper {
         if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
 
             if (displayCharacterName) {
-                String characterNameContent = node.getCharacter().getName().replaceAll("\\<", "&lt;")
-                        .replaceAll("\\>", "&gt;");
+                String characterNameContent = node.getCharacter().getName().replaceAll("<", "&lt;")
+                        .replaceAll(">", "&gt;");
                 characterName.append("<span class='character'>").append(firstNumbering).append(") ").
                         append("<b>").append(characterNameContent).append("</b>").append("</span>");
 
@@ -621,7 +622,7 @@ public abstract class SingleAccessKeyTreeDumper {
             } else {
                 state.append(node.getStringStates());
             }
-            String regexed = state.toString().replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;");
+            String regexed = state.toString().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
             state.setLength(0);
             state.append("<span class='state'>").append(firstNumbering).append(".").append(secondNumbering).append(") ").append(regexed).append("</span>")
                     .append("<span class=\"warning\">").append(tree2dump.nodeDescriptionAnalysis(node)).append("</span>");
@@ -879,7 +880,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
         // // third traversal, breadth-first ////
         Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        Collection<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
         counter = 1;
         int currentParentNumber = -1;
@@ -896,7 +897,7 @@ public abstract class SingleAccessKeyTreeDumper {
             SingleAccessKeyNode node = queue.remove();
             SingleAccessKeyNode child;
 
-            while (IkeyUtils.exclusion(node.getChildren(), visitedNodes).size() > 0
+            while (!IkeyUtils.exclusion(node.getChildren(), visitedNodes).isEmpty()
                     && (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
                     .get(0)) != null
                 // && child.getCharacter() != null && child.getCharacterState() != null
@@ -959,7 +960,7 @@ public abstract class SingleAccessKeyTreeDumper {
                 output.append("<span class=\"warning\">").append(tree2dump.nodeDescriptionAnalysis(child)).append("</span>");
 
                 // displaying the child node number if it has children nodes, displaying the taxa otherwise
-                if (child.getChildren().size() == 0) {
+                if (child.getChildren().isEmpty()) {
                     output.append(" =&gt; <span class=\"taxa\">");
                     boolean firstLoop = true;
                     for (Taxon taxon : child.getRemainingTaxa()) {
@@ -1034,7 +1035,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
         // // third traversal, breadth-first ////
         Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        Collection<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
         counter = 1;
         int currentParentNumber = -1;
@@ -1051,7 +1052,7 @@ public abstract class SingleAccessKeyTreeDumper {
             SingleAccessKeyNode node = queue.remove();
             SingleAccessKeyNode child;
 
-            while (IkeyUtils.exclusion(node.getChildren(), visitedNodes).size() > 0
+            while (!IkeyUtils.exclusion(node.getChildren(), visitedNodes).isEmpty()
                     && (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
                     .get(0)) != null
                 // && child.getCharacter() != null && child.getCharacterState() != null
@@ -1114,7 +1115,7 @@ public abstract class SingleAccessKeyTreeDumper {
                 output.append("<span class=\"warning\">").append(tree2dump.nodeDescriptionAnalysis(child)).append("</span>");
 
                 // displaying the child node number if it has children nodes, displaying the taxa otherwise
-                if (child.getChildren().size() == 0) {
+                if (child.getChildren().isEmpty()) {
                     output.append(" => <span class=\"taxa\">");
                     boolean firstLoop = true;
                     for (Taxon taxon : child.getRemainingTaxa()) {
@@ -1175,7 +1176,7 @@ public abstract class SingleAccessKeyTreeDumper {
             fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
             try (BufferedWriter wikiFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, "UTF-8"))) {
 
-                if (header != null && !header.equals("")) {
+                if (header != null && !"".equals(header)) {
                     wikiFileWriter.append("== Info ==");
                     wikiFileWriter.newLine();
                     wikiFileWriter.append(header.replaceAll(System.getProperty("line.separator"), "<br>"));
@@ -1212,7 +1213,7 @@ public abstract class SingleAccessKeyTreeDumper {
                 output.append(tabulations).append(firstNumbering).append(".").append(secondNumbering).append(") ").append("<span style=\"color:#333\">").append(node.getCharacter().getName()).append("</span> | ").append("<span style=\"color:#fe8a22\">").append(node.getStringStates()).append("</span>");
             }
             output.append(tree2dump.nodeDescriptionAnalysis(node));
-            if (node.getChildren().size() == 0) {
+            if (node.getChildren().isEmpty()) {
                 output.append(" -> ");
                 boolean firstLoop = true;
                 for (Taxon taxon : node.getRemainingTaxa()) {
@@ -1249,7 +1250,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(wikiFile)) {
             try (BufferedWriter wikiFlatFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, "UTF-8"))) {
-                if (header != null && !header.equals("")) {
+                if (header != null && !"".equals(header)) {
                     wikiFlatFileWriter.append("== Info ==");
                     wikiFlatFileWriter.newLine();
                     wikiFlatFileWriter.append(header.replaceAll(System.getProperty("line.separator"), "<br>"));
@@ -1312,7 +1313,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
         // // third traversal, breadth-first ////
         Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        Collection<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
         counter = 1;
         int currentParentNumber = -1;
@@ -1328,7 +1329,7 @@ public abstract class SingleAccessKeyTreeDumper {
             SingleAccessKeyNode node = queue.remove();
             SingleAccessKeyNode child;
 
-            while (IkeyUtils.exclusion(node.getChildren(), visitedNodes).size() > 0
+            while (!IkeyUtils.exclusion(node.getChildren(), visitedNodes).isEmpty()
                     && (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
                     .get(0)) != null) {
                 visitedNodes.add(child);
@@ -1362,7 +1363,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 // displaying the child node number if it has children nodes, displaying the taxa otherwise
                 output.append(" &#8658; "); // arrow
-                if (child.getChildren().size() == 0) {
+                if (child.getChildren().isEmpty()) {
 
                     boolean firstLoop = true;
                     for (Taxon taxon : child.getRemainingTaxa()) {
@@ -1463,7 +1464,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
         // // third traversal, breadth-first ////
         Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        Collection<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
         counter = 1;
         int currentParentNumber = -1;
@@ -1479,7 +1480,7 @@ public abstract class SingleAccessKeyTreeDumper {
             SingleAccessKeyNode node = queue.remove();
             SingleAccessKeyNode child;
 
-            while (IkeyUtils.exclusion(node.getChildren(), visitedNodes).size() > 0
+            while (!IkeyUtils.exclusion(node.getChildren(), visitedNodes).isEmpty()
                     && (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
                     .get(0)) != null
                 // && child.getCharacter() != null && child.getCharacterState() != null
@@ -1510,7 +1511,7 @@ public abstract class SingleAccessKeyTreeDumper {
                 output.append("\"]");
                 output.append(";").append(lineSeparator);
 
-                if (child.getChildren().size() == 0) {
+                if (child.getChildren().isEmpty()) {
                     // if the child node has no children nodes, displaying the parent node character and the
                     // child node remaining taxa
                     output.append(currentParentNumber).append(" [label=\"").append(child.getCharacter().getName()).append("\"];");
@@ -1552,7 +1553,7 @@ public abstract class SingleAccessKeyTreeDumper {
     private static void iterativeBreadthFirstSkipChildlessNodes(SingleAccessKeyNode rootNode,
                                                                 Map<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap, int counter) {
         Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        Collection<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
         queue.add(rootNode);
 
@@ -1568,7 +1569,7 @@ public abstract class SingleAccessKeyTreeDumper {
             SingleAccessKeyNode child;
 
             // exclusion(node.getChildren(), visitedNodes) is the list of unvisited children nodes of the
-            while (IkeyUtils.exclusion(node.getChildren(), visitedNodes).size() > 0
+            while (!IkeyUtils.exclusion(node.getChildren(), visitedNodes).isEmpty()
                     && (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
                     .get(0)) != null) {
                 visitedNodes.add(child);
@@ -1594,7 +1595,7 @@ public abstract class SingleAccessKeyTreeDumper {
     private static void iterativeBreadthFirst(SingleAccessKeyNode rootNode,
                                               Map<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap, int counter) {
         Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        Collection<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
         queue.add(rootNode);
 
@@ -1610,7 +1611,7 @@ public abstract class SingleAccessKeyTreeDumper {
             SingleAccessKeyNode child;
 
             // exclusion(node.getChildren(), visitedNodes) is the list of unvisited children nodes of the
-            while (IkeyUtils.exclusion(node.getChildren(), visitedNodes).size() > 0
+            while (!IkeyUtils.exclusion(node.getChildren(), visitedNodes).isEmpty()
                     && (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
                     .get(0)) != null) {
                 visitedNodes.add(child);

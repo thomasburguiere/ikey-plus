@@ -19,7 +19,6 @@
     <envs />
     <patterns>
       <pattern testClass="fr.lis.ikeyplus.utils.IkeyConfigTest" />
-      <pattern testClass="fr.lis.ikeyplus.IO.SDDSaxParserTest" />
       <pattern testClass="fr.lis.ikeyplus.services.IdentificationKeyGeneratorTest" />
       <pattern testClass="fr.lis.ikeyplus.utils" />
       <pattern testClass="fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumperTest" />
