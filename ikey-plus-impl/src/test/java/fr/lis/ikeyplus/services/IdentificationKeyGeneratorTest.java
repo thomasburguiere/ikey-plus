@@ -110,26 +110,4 @@ public class IdentificationKeyGeneratorTest {
         assertThat(genettaFixture).isEqualTo(tree2dump.toString());
     }
 
-    @Test
-    public void should_generate_cichorieae_identification_key_with_default_options() throws Exception {
-        String stringUrl = "src/test/resources/inputFiles/cichorieae.sdd.xml";
-
-        IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
-                .verbosity(Sets.newHashSet(HEADER, WARNING, STATISTICS))
-                .build();
-
-        SDDParser sddParser;
-        sddParser = new SDDSaxParser();
-
-        IdentificationKeyGenerator identificationKeyGenerator = new IdentificationKeyGeneratorImpl();
-
-        SingleAccessKeyTree tree2dump = identificationKeyGenerator.getIdentificationKey(sddParser.parseDataset(stringUrl, config), config);
-
-
-        byte[] encoded = Files.readAllBytes(Paths.get("src/test/resources/fixtures/cichorieae.txt"));
-        String fixture = new String(encoded, "UTF-8");
-        assertThat(fixture).isEqualTo(tree2dump.toString());
-    }
-
 }
