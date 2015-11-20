@@ -46,10 +46,6 @@ public class State {
         return mediaObjectKeys;
     }
 
-    public void setMediaObjectKeys(List<String> mediaObjectKeys) {
-        this.mediaObjectKeys = mediaObjectKeys;
-    }
-
     public String getFirstImage(DataSet dataSet) {
         if (dataSet != null && mediaObjectKeys != null && mediaObjectKeys.size() > 0) {
             if (dataSet.getMediaObject(mediaObjectKeys.get(0)).startsWith("http")) {

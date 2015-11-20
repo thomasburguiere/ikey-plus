@@ -50,7 +50,7 @@ public abstract class SingleAccessKeyTreeDumper {
         return sddFile;
     }
 
-    private static String generateSddString(SingleAccessKeyTree tree2dump) {
+    private static CharSequence generateSddString(SingleAccessKeyTree tree2dump) {
         StringBuffer output = new StringBuffer();
         String lineSeparator = System.getProperty("line.separator");
 
@@ -142,7 +142,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
         // // THIRD TRAVERSAL, breadth-first ////
         Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
         counter = 1;
         int currentParentNumber = -1;
         queue.add(rootNode);
@@ -201,22 +201,6 @@ public abstract class SingleAccessKeyTreeDumper {
                         output.append("</Lead>").append(lineSeparator);
                     } else {
 
-                        // output.append("<Lead>" + lineSeparator);
-                        // output.append("<Statement>"
-                        // + child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
-                        // .replace("&", "&amp;") + lineSeparator);
-                        // output.append("</Statement>");
-                        // output.append(mediaObjectsTags);
-                        // for (Taxon t : child.getRemainingTaxa()) {
-                        // output.append("<TaxonName ref=\"" + t.getId() + "\"/>" + lineSeparator);
-                        // break;
-                        // /* taxonCounter++; output.append("<Label>");
-                        // * output.append(t.getName().replace(">", "&gt;").replace("<", "&lt;")
-                        // * .replace("&", "&amp;")); output.append("</Label>" + lineSeparator);
-                        // * output.append("</TaxonName>" + lineSeparator); */
-                        // }
-                        // output.append("</Lead>" + lineSeparator);
-
                         output.append("<Lead id=\"nil0\">").append(lineSeparator);
                         output.append("<Statement>nil</Statement>").append(lineSeparator);
                         output.append(mediaObjectsTags.toString());
@@ -248,23 +232,6 @@ public abstract class SingleAccessKeyTreeDumper {
                         output.append("</Lead>").append(lineSeparator);
 
                     } else {
-                        // output.append("<Lead>" + lineSeparator);
-                        // output.append("<Parent ref=\"lead" + (currentParentNumber - 1) + "\"/>"
-                        // + lineSeparator);
-                        // output.append("<Statement>"
-                        // + child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
-                        // .replace("&", "&amp;"));
-                        // output.append("</Statement>" + lineSeparator);
-                        // output.append(mediaObjectsTags);
-                        // for (Taxon t : child.getRemainingTaxa()) {
-                        // output.append("<TaxonName ref=\"" + t.getId() + "\"/>" + lineSeparator);
-                        // break;
-                        // /* taxonCounter++; output.append("<Label>");
-                        // * output.append(t.getName().replace(">", "&gt;").replace("<", "&lt;")
-                        // * .replace("&", "&amp;")); output.append("</Label>" + lineSeparator);
-                        // * output.append("</TaxonName>" + lineSeparator); */
-                        // }
-                        // output.append("</Lead>" + lineSeparator);
 
                         output.append("<Lead id=\"nil").append(counter - 1).append("\">").append(lineSeparator);
                         output.append("<Parent ref=\"lead").append(currentParentNumber - 1).append("\"/>").append(lineSeparator);
@@ -328,7 +295,7 @@ public abstract class SingleAccessKeyTreeDumper {
         return txtFile;
     }
 
-    private static String generateTreeString(SingleAccessKeyTree tree2dump) {
+    private static CharSequence generateTreeString(SingleAccessKeyTree tree2dump) {
         StringBuffer output = new StringBuffer();
         recursiveToString(tree2dump.getRoot(), output, System.getProperty("line.separator"), 0, 0, tree2dump);
 
@@ -396,7 +363,7 @@ public abstract class SingleAccessKeyTreeDumper {
      * generates a flat representation of a key, in a String object, by calling the
      * {@link #multipleTraversalToString} helper method
      */
-    private static String generateFlatString(SingleAccessKeyTree tree2dump) {
+    private static CharSequence generateFlatString(SingleAccessKeyTree tree2dump) {
         StringBuffer output = new StringBuffer();
         multipleTraversalToString(tree2dump.getRoot(), output, System.getProperty("line.separator"),
                 tree2dump);
@@ -429,7 +396,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
         // // third traversal, breadth-first ////
         Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
         queue.clear();
         visitedNodes.clear();
@@ -536,8 +503,8 @@ public abstract class SingleAccessKeyTreeDumper {
         return htmlFile;
     }
 
-    private static String generateHtmlString(String header, SingleAccessKeyTree tree2dump,
-                                             boolean showStatistics) throws IOException {
+    private static CharSequence generateHtmlString(String header, SingleAccessKeyTree tree2dump,
+                                                   boolean showStatistics) throws IOException {
         String lineSep = System.getProperty("line.separator");
         StringBuilder slk = new StringBuilder();
 
@@ -755,8 +722,8 @@ public abstract class SingleAccessKeyTreeDumper {
 
     }
 
-    private static String generateFlatHtmlString(String header, SingleAccessKeyTree tree2dump,
-                                                 boolean showStatistics) throws IOException {
+    private static CharSequence generateFlatHtmlString(String header, SingleAccessKeyTree tree2dump,
+                                                       boolean showStatistics) throws IOException {
 
         StringBuffer output = new StringBuffer();
         String lineSep = System.getProperty("line.separator");
@@ -812,8 +779,8 @@ public abstract class SingleAccessKeyTreeDumper {
         return slk.toString();
     }
 
-    private static String generateInteractiveHtmlString(String header, SingleAccessKeyTree tree2dump,
-                                                        boolean showStatistics) throws IOException {
+    private static CharSequence generateInteractiveHtmlString(String header, SingleAccessKeyTree tree2dump,
+                                                              boolean showStatistics) throws IOException {
 
         StringBuffer output = new StringBuffer();
         String lineSep = System.getProperty("line.separator");
@@ -912,7 +879,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
         // // third traversal, breadth-first ////
         Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
         counter = 1;
         int currentParentNumber = -1;
@@ -1067,7 +1034,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
         // // third traversal, breadth-first ////
         Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
         counter = 1;
         int currentParentNumber = -1;
@@ -1223,7 +1190,7 @@ public abstract class SingleAccessKeyTreeDumper {
         return wikiFile;
     }
 
-    private static String generateTreeWiki(SingleAccessKeyTree tree2dump, boolean showStatistics) {
+    private static CharSequence generateTreeWiki(SingleAccessKeyTree tree2dump, boolean showStatistics) {
         StringBuffer output = new StringBuffer();
         recursiveToWiki(tree2dump.getRoot(), output, "", 0, 0, tree2dump);
         if (showStatistics) {
@@ -1310,7 +1277,7 @@ public abstract class SingleAccessKeyTreeDumper {
      * generates a flat, wiki-formatted, String representation of a key, in a String object, by calling the
      * {@link #multipleTraversalToWikiString} helper method
      */
-    private static String generateFlatWikiString(SingleAccessKeyTree tree2dump) {
+    private static CharSequence generateFlatWikiString(SingleAccessKeyTree tree2dump) {
         StringBuffer output = new StringBuffer();
         multipleTraversalToWikiString(tree2dump.getRoot(), output, System.getProperty("line.separator"),
                 tree2dump);
@@ -1345,7 +1312,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
         // // third traversal, breadth-first ////
         Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
         counter = 1;
         int currentParentNumber = -1;
@@ -1462,7 +1429,7 @@ public abstract class SingleAccessKeyTreeDumper {
      * generates a DOT-formatted String representation of the key, by calling
      * {@link #multipleTraversalToDotString}
      */
-    private static String generateDotString(SingleAccessKeyTree tree2dump) {
+    private static CharSequence generateDotString(SingleAccessKeyTree tree2dump) {
         StringBuffer output = new StringBuffer();
         multipleTraversalToDotString(tree2dump.getRoot(), output, System.getProperty("line.separator"),
                 tree2dump);
@@ -1496,7 +1463,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
         // // third traversal, breadth-first ////
         Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
         counter = 1;
         int currentParentNumber = -1;
@@ -1583,9 +1550,9 @@ public abstract class SingleAccessKeyTreeDumper {
      * breadth-first incremented number (only if the traversed node has at least 1 child node)
      */
     private static void iterativeBreadthFirstSkipChildlessNodes(SingleAccessKeyNode rootNode,
-                                                                HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap, int counter) {
+                                                                Map<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap, int counter) {
         Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
         queue.add(rootNode);
 
@@ -1625,9 +1592,9 @@ public abstract class SingleAccessKeyTreeDumper {
      * breadth-first incremented number
      */
     private static void iterativeBreadthFirst(SingleAccessKeyNode rootNode,
-                                              HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap, int counter) {
+                                              Map<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap, int counter) {
         Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
         queue.add(rootNode);
 
@@ -1728,7 +1695,7 @@ public abstract class SingleAccessKeyTreeDumper {
      * Output method that loops over the list of taxa contained in the Dataset, and outputs basic path
      * statistics for each Taxon, in a plain-text representation
      */
-    private static String outputTaxonPathStatisticsString(SingleAccessKeyTree tree2dump) {
+    private static CharSequence outputTaxonPathStatisticsString(SingleAccessKeyTree tree2dump) {
         String lineSeparator = System.getProperty("line.separator");
         StringBuilder output = new StringBuilder(0);
 

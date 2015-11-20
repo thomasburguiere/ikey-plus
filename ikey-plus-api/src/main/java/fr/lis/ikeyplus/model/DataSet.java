@@ -18,9 +18,9 @@ public class DataSet {
     private Map<String, String> mediaObjects = null;
 
     public DataSet() {
-        characters = new ArrayList<ICharacter>();
-        codedDescriptions = new LinkedHashMap<Taxon, CodedDescription>();
-        mediaObjects = new LinkedHashMap<String, String>();
+        characters = new ArrayList<>();
+        codedDescriptions = new LinkedHashMap<>();
+        mediaObjects = new LinkedHashMap<>();
     }
 
     public List<ICharacter> getCharacters() {
@@ -52,7 +52,7 @@ public class DataSet {
     }
 
     public List<Taxon> getTaxa() {
-        return new ArrayList<Taxon>(this.codedDescriptions.keySet());
+        return new ArrayList<>(this.codedDescriptions.keySet());
     }
 
     public String getLabel() {
@@ -113,7 +113,7 @@ public class DataSet {
     public boolean isApplicable(Taxon taxon, ICharacter character) {
         if (character.getParentCharacter() != null && isApplicable(taxon, character.getParentCharacter())) {
             List<State> inapplicableStates = character.getInapplicableStates();
-            List<State> states = (List<State>) this.getCodedDescription(taxon).getCharacterDescription(
+            Iterable<State> states = (List<State>) this.getCodedDescription(taxon).getCharacterDescription(
                     character.getParentCharacter());
 
             // if the parent character is not described return true
@@ -141,10 +141,10 @@ public class DataSet {
      *
      * @return List<ICharacter>, the list of inapplicable character and all its sons
      */
-    public List<ICharacter> getInapplicableCharacters(List<ICharacter> newRemainingCharacters,
+    public List<ICharacter> getInapplicableCharacters(Iterable<ICharacter> newRemainingCharacters,
                                                       ICharacter selectedCharacter, State state) {
 
-        List<ICharacter> inapplicableCharacter = new ArrayList<ICharacter>();
+        List<ICharacter> inapplicableCharacter = new ArrayList<>();
 
         for (ICharacter character : newRemainingCharacters) {
             if (character.getInapplicableStates().contains(state)) {

@@ -8,7 +8,6 @@ import java.util.List;
  * This class represents a taxon
  *
  * @author Florian Causse
- * @created 06-04-2011
  */
 public class Taxon {
 

@@ -3,6 +3,7 @@ package fr.lis.ikeyplus.utils;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
+import java.util.Collection;
 import java.util.Set;
 
 public class IkeyConfigBuilder {
@@ -64,7 +65,7 @@ public class IkeyConfigBuilder {
         return this;
     }
 
-    public IkeyConfigBuilder verbosity(Set<IkeyConfig.VerbosityLevel> verbosityLevels) {
+    public IkeyConfigBuilder verbosity(Collection<IkeyConfig.VerbosityLevel> verbosityLevels) {
         this.verbosity.addAll(verbosityLevels);
         return this;
     }

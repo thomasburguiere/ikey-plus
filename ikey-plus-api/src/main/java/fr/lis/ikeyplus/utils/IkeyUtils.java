@@ -2,6 +2,7 @@ package fr.lis.ikeyplus.utils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,7 +25,7 @@ public final class IkeyUtils {
     /**
      * This method returns the intersection of two Lists
      */
-    public static List<?> intersection(List<?> list1, List<?> list2) {
+    public static List<?> intersection(Iterable<?> list1, Collection<?> list2) {
         List<Object> list = new ArrayList<>();
         for (Object o : list1) {
             if (list2.contains(o)) {
@@ -42,7 +43,7 @@ public final class IkeyUtils {
      * @param excludedList , the list which elements shall not remain in the final list
      * @return List
      */
-    public static List<?> exclusion(List<?> primaryList, List<?> excludedList) {
+    public static List<?> exclusion(Iterable<?> primaryList, Collection<?> excludedList) {
         List<Object> list = new ArrayList<>();
         for (Object o : primaryList) {
             if (!excludedList.contains(o)) {
@@ -55,7 +56,7 @@ public final class IkeyUtils {
     /**
      * This method returns the union of two Lists
      */
-    public static List<?> union(List<?> list1, List<?> list2) {
+    public static List<?> union(Collection<?> list1, Collection<?> list2) {
         Set<Object> set = new HashSet<>();
         set.addAll(list1);
         set.addAll(list2);
