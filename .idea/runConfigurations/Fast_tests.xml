@@ -1,0 +1,30 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Fast tests" type="JUnit" factoryName="JUnit">
+    <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+    <module name="ikey-plus-impl" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <option name="PACKAGE_NAME" />
+    <option name="MAIN_CLASS_NAME" value="" />
+    <option name="METHOD_NAME" value="" />
+    <option name="TEST_OBJECT" value="pattern" />
+    <option name="VM_PARAMETERS" value="-ea" />
+    <option name="PARAMETERS" value="" />
+    <option name="WORKING_DIRECTORY" value="file://$MODULE_DIR$" />
+    <option name="ENV_VARIABLES" />
+    <option name="PASS_PARENT_ENVS" value="true" />
+    <option name="TEST_SEARCH_SCOPE">
+      <value defaultName="singleModule" />
+    </option>
+    <envs />
+    <patterns>
+      <pattern testClass="fr.lis.ikeyplus.utils.IkeyConfigTest" />
+      <pattern testClass="fr.lis.ikeyplus.IO.SDDSaxParserTest" />
+      <pattern testClass="fr.lis.ikeyplus.services.IdentificationKeyGeneratorTest" />
+      <pattern testClass="fr.lis.ikeyplus.utils" />
+      <pattern testClass="fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumperTest" />
+      <pattern testClass="fr.lis.ikeyplus.utils.IkeyUtilsTest" />
+    </patterns>
+    <method />
+  </configuration>
+</component>
