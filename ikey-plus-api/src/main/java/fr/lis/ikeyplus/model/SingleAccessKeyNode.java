@@ -62,6 +62,30 @@ public class SingleAccessKeyNode {
         return getStatesToString(" OR ");
     }
 
+    public String getNodeLabel(){
+        final StringBuilder output = new StringBuilder();
+        if (getChildren().size() == 0) {
+            output.append(" -> ");
+            output.append(getNodeTaxaLabel());
+        } else {
+            output.append(" (items=").append(getRemainingTaxa().size()).append(")");
+        }
+        return output.toString();
+    }
+
+    public String getNodeTaxaLabel() {
+        boolean firstLoop = true;
+        final StringBuilder output = new StringBuilder();
+        for (Taxon taxon : getRemainingTaxa()) {
+            if (!firstLoop) {
+                output.append(", ");
+            }
+            output.append(taxon.getName());
+            firstLoop = false;
+        }
+        return output.toString();
+    }
+
     public String getStatesToString(String separator) {
 
         StringBuilder result = new StringBuilder("");

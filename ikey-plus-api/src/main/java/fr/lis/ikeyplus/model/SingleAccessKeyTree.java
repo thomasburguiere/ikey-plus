@@ -70,19 +70,7 @@ public class SingleAccessKeyTree {
                         .getName()).append(" | ").append(node.getStringStates());
             }
             output.append(nodeDescriptionAnalysis(node));
-            if (node.getChildren().size() == 0) {
-                output.append(" -> ");
-                boolean firstLoop = true;
-                for (Taxon taxon : node.getRemainingTaxa()) {
-                    if (!firstLoop) {
-                        output.append(", ");
-                    }
-                    output.append(taxon.getName());
-                    firstLoop = false;
-                }
-            } else {
-                output.append(" (items=").append(node.getRemainingTaxa().size()).append(")");
-            }
+            output.append(node.getNodeLabel());
             tabulations = tabulations + "\t";
         }
         firstNumbering++;

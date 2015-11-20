@@ -351,19 +351,7 @@ public abstract class SingleAccessKeyTreeDumper {
                 output.append(tabulations).append(firstNumbering).append(".").append(secondNumbering).append(") ").append(node.getCharacter().getName()).append(" | ").append(node.getStringStates());
             }
             output.append(tree2dump.nodeDescriptionAnalysis(node));
-            if (node.getChildren().size() == 0) {
-                output.append(" -> ");
-                boolean firstLoop = true;
-                for (Taxon taxon : node.getRemainingTaxa()) {
-                    if (!firstLoop) {
-                        output.append(", ");
-                    }
-                    output.append(taxon.getName());
-                    firstLoop = false;
-                }
-            } else {
-                output.append(" (items=").append(node.getRemainingTaxa().size()).append(")");
-            }
+            output.append(node.getNodeLabel());
             tabulations = tabulations + "\t";
         }
         firstNumbering++;
@@ -506,14 +494,7 @@ public abstract class SingleAccessKeyTreeDumper {
                 // displaying the child node number if it has children nodes, displaying the taxa otherwise
                 if (child.getChildren().size() == 0) {
                     output.append(" -> ");
-                    boolean firstLoop = true;
-                    for (Taxon taxon : child.getRemainingTaxa()) {
-                        if (!firstLoop) {
-                            output.append(", ");
-                        }
-                        output.append(taxon.getName());
-                        firstLoop = false;
-                    }
+                    output.append(child.getNodeTaxaLabel());
                 } else {
                     output.append(" -> ").append(counter);
                 }
@@ -1569,14 +1550,7 @@ public abstract class SingleAccessKeyTreeDumper {
                     output.append(lineSeparator);
 
                     output.append(counter).append(" [label=\"");
-                    boolean firstLoop = true;
-                    for (Taxon taxon : child.getRemainingTaxa()) {
-                        if (!firstLoop) {
-                            output.append(", ");
-                        }
-                        output.append(taxon.getName());
-                        firstLoop = false;
-                    }
+                    output.append(child.getNodeTaxaLabel());
                     output.append("\",shape=box]");
                     output.append(";");
                 } else {
