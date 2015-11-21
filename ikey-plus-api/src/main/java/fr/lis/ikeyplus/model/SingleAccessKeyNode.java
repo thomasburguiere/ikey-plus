@@ -64,11 +64,11 @@ public class SingleAccessKeyNode {
 
     public String getNodeLabel(){
         final StringBuilder output = new StringBuilder();
-        if (getChildren().size() == 0) {
+        if (children.size() == 0) {
             output.append(" -> ");
             output.append(getNodeTaxaLabel());
         } else {
-            output.append(" (items=").append(getRemainingTaxa().size()).append(")");
+            output.append(" (items=").append(remainingTaxa.size()).append(")");
         }
         return output.toString();
     }
@@ -76,7 +76,7 @@ public class SingleAccessKeyNode {
     public String getNodeTaxaLabel() {
         boolean firstLoop = true;
         final StringBuilder output = new StringBuilder();
-        for (Taxon taxon : getRemainingTaxa()) {
+        for (Taxon taxon : remainingTaxa) {
             if (!firstLoop) {
                 output.append(", ");
             }
@@ -89,9 +89,9 @@ public class SingleAccessKeyNode {
     public String getStatesToString(String separator) {
 
         StringBuilder result = new StringBuilder("");
-        if (this.getCharacterState() instanceof State) {
-            result.append(((State) this.getCharacterState()).getName());
-            for (Object state : this.getOtherCharacterStates()) {
+        if (characterState instanceof State) {
+            result.append(((State) characterState).getName());
+            for (Object state : otherCharacterStates) {
                 if (state instanceof State) {
                     result.append(separator).append(((State) state).getName());
                 }
@@ -103,8 +103,8 @@ public class SingleAccessKeyNode {
     public List<State> getStates() {
         if (this.characterState instanceof State) {
             List<State> states = new ArrayList<>();
-            states.add((State) this.getCharacterState());
-            for (Object state : this.getOtherCharacterStates()) {
+            states.add((State) characterState);
+            for (Object state : otherCharacterStates) {
                 if (state instanceof State) {
                     states.add((State) state);
                 }
@@ -155,11 +155,11 @@ public class SingleAccessKeyNode {
     }
 
     public boolean isChildrenContainsImages(DataSet dataSet) {
-        for (SingleAccessKeyNode childNode : this.getChildren()) {
-            if (childNode.getCharacter().isSupportsCategoricalData()
-                    && ((State) childNode.getCharacterState()).getFirstImageKey() != null
-                    && dataSet.getMediaObject(((State) childNode.getCharacterState()).getFirstImageKey()) != null
-                    && dataSet.getMediaObject(((State) childNode.getCharacterState()).getFirstImageKey())
+        for (SingleAccessKeyNode childNode : children) {
+            if (childNode.character.isSupportsCategoricalData()
+                    && ((State) childNode.characterState).getFirstImageKey() != null
+                    && dataSet.getMediaObject(((State) childNode.characterState).getFirstImageKey()) != null
+                    && dataSet.getMediaObject(((State) childNode.characterState).getFirstImageKey())
                     .startsWith("http")) {
                 return true;
             }

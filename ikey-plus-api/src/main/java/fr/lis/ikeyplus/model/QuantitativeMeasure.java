@@ -91,13 +91,13 @@ public class QuantitativeMeasure {
         String start;
         String end;
 
-        if (isMinInclude()) {
+        if (minInclude) {
             start = "[";
         } else {
             start = "]";
         }
 
-        if (isMaxInclude()) {
+        if (maxInclude) {
             end = "]";
         } else {
             end = "[";

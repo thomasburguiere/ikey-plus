@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+@SuppressWarnings("ALL")
 public class IkeyConfig {
 
     private String errorMessage = null;
@@ -290,16 +291,16 @@ public class IkeyConfig {
     }
 
     public void setErrorMessage(String msg) {
-        if (getErrorMessage() == null) {
+        if (this.errorMessage == null) {
             errorMessage = msg;
-            setErrorMessageFile(createErrorFile());
+            this.errorMessageFile = createErrorFile();
         }
     }
 
     public void setErrorMessage(String msg, Throwable t) {
-        if (getErrorMessage() == null) {
+        if (this.errorMessage == null) {
             errorMessage = msg + ": " + t.getMessage();
-            setErrorMessageFile(createErrorFile());
+            this.errorMessageFile = createErrorFile();
         }
     }
 
