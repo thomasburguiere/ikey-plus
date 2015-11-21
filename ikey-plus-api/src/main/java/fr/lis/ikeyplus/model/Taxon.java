@@ -14,8 +14,8 @@ public class Taxon {
     public static final int NB_PATH_IN_KEY = 0;
     public static final int SHORTEST_PATH_IN_KEY = 1;
     public static final int LONGEST_PATH_IN_KEY = 2;
-    public static final int AVERAGE_PATHLENGTH_IN_KEY = 3;
-    private static final int SUM_PATHLENGTHS_IN_KEY = 4;
+    public static final int AVERAGE_PATH_LENGTH_IN_KEY = 3;
+    private static final int SUM_PATH_LENGTHS_IN_KEY = 4;
 
     private String id;
     private String name = null;
@@ -36,8 +36,8 @@ public class Taxon {
         taxonStatistics.put(NB_PATH_IN_KEY, (float) 0);
         taxonStatistics.put(SHORTEST_PATH_IN_KEY, (float) 0);
         taxonStatistics.put(LONGEST_PATH_IN_KEY, (float) 0);
-        taxonStatistics.put(AVERAGE_PATHLENGTH_IN_KEY, (float) 0);
-        taxonStatistics.put(SUM_PATHLENGTHS_IN_KEY, (float) 0);
+        taxonStatistics.put(AVERAGE_PATH_LENGTH_IN_KEY, (float) 0);
+        taxonStatistics.put(SUM_PATH_LENGTHS_IN_KEY, (float) 0);
 
     }
 
@@ -75,15 +75,15 @@ public class Taxon {
 
     public void updatePathStatistics(Float pathLength) {
         float oldNbPath = taxonStatistics.get(NB_PATH_IN_KEY);
-        float oldSumPathLength = taxonStatistics.get(SUM_PATHLENGTHS_IN_KEY);
+        float oldSumPathLength = taxonStatistics.get(SUM_PATH_LENGTHS_IN_KEY);
 
         float newNbPath = oldNbPath + 1;
         float newSumPathLength = oldSumPathLength + pathLength;
         float newAveragePathLength = newSumPathLength / newNbPath;
 
-        taxonStatistics.put(AVERAGE_PATHLENGTH_IN_KEY, newAveragePathLength);
+        taxonStatistics.put(AVERAGE_PATH_LENGTH_IN_KEY, newAveragePathLength);
         taxonStatistics.put(NB_PATH_IN_KEY, newNbPath);
-        taxonStatistics.put(SUM_PATHLENGTHS_IN_KEY, newSumPathLength);
+        taxonStatistics.put(SUM_PATH_LENGTHS_IN_KEY, newSumPathLength);
 
         if (taxonStatistics.get(SHORTEST_PATH_IN_KEY) == 0) {
             taxonStatistics.put(SHORTEST_PATH_IN_KEY, pathLength);

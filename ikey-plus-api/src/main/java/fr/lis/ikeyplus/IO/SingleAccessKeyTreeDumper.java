@@ -124,7 +124,7 @@ public abstract class SingleAccessKeyTreeDumper {
      * <tt>nodeBreadthFirstIterationMap</tt>) that associates each node with an arbitrary Integer. The second
      * traversal is a depth-first traversal, in order to associate (in another HashMap :
      * <tt>nodeChildParentNumberingMap</tt>), for each node, the node number and the number of its parent
-     * node. Finally, the last traversal is another breadh-first traversal that generates the flat key String
+     * node. Finally, the last traversal is another breadth-first traversal that generates the flat key String
      */
     private static void multipleTraversalToSddString(SingleAccessKeyNode rootNode, StringBuffer output,
                                                      String lineSeparator, SingleAccessKeyTree tree2dump) {
@@ -375,11 +375,11 @@ public abstract class SingleAccessKeyTreeDumper {
 
     /**
      * This methods outputs the {@link SingleAccessKeyTree} as a flat character String. In order to do this,
-     * the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first traversal is a breadth-first traversal,
+     * the <tt>SingleAccessKeyTree</tt> is traversed 3 times. The first traversal is a breadth-first traversal,
      * in order to generate an HashMap (<tt>nodeBreadthFirstIterationMap</tt>) that associates each node with
      * an arbitrary Integer. The second traversal is a depth-first traversal, in order to associate (in
      * another HashMap : <tt>nodeChildParentNumberingMap</tt>), for each node, the node number and the number
-     * of its parent node. Finally, the last traversal is another breadh-first traversal that generates the
+     * of its parent node. Finally, the last traversal is another breadth-first traversal that generates the
      * flat key String
      */
     private static void multipleTraversalToString(SingleAccessKeyNode rootNode, StringBuffer output,
@@ -853,17 +853,17 @@ public abstract class SingleAccessKeyTreeDumper {
 
     /**
      * This methods outputs the {@link SingleAccessKeyTree} as a flat HTML-formatted String. In order to do
-     * this, the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first traversal is a breadth-first
+     * this, the <tt>SingleAccessKeyTree</tt> is traversed 3 times. The first traversal is a breadth-first
      * traversal, in order to generate an HashMap ( <tt>nodeBreadthFirstIterationMap</tt>) that associates
      * each node with an arbitrary Integer. The second traversal is a depth-first traversal, in order to
      * associate (in another HashMap : <tt>nodeChildParentNumberingMap</tt>), for each node, the node number
-     * and the number of its parent node. Finally, the last traversal is another breadh-first traversal that
+     * and the number of its parent node. Finally, the last traversal is another breadth-first traversal that
      * generates the flat key String
      */
     private static void multipleTraversalToHTMLString(SingleAccessKeyNode rootNode, StringBuffer output,
                                                       String lineSeparator, SingleAccessKeyTree tree2dump) {
 
-        String marging = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp"
+        String margin = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp"
                 + ";&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 
         // // first traversal, breadth-first ////
@@ -948,12 +948,12 @@ public abstract class SingleAccessKeyTreeDumper {
                 String mediaKey = "";
                 // displaying the child node character state
                 if (child.getCharacterState() instanceof QuantitativeMeasure) {
-                    output.append("<span class=\"state\"" + "\">").append(marging).append(((QuantitativeMeasure) child.getCharacterState())
+                    output.append("<span class=\"state\"" + "\">").append(margin).append(((QuantitativeMeasure) child.getCharacterState())
                             .toStringInterval(((QuantitativeCharacter) child.getCharacter())
                                     .getMeasurementUnit())).append("</span>");
                 } else {
                     mediaKey = ((State) child.getCharacterState()).getFirstImageKey();
-                    output.append("<span class=\"state\" id=\"state_").append(mediaKey).append("\" >").append(marging).append(child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")).append("</span>");
+                    output.append("<span class=\"state\" id=\"state_").append(mediaKey).append("\" >").append(margin).append(child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")).append("</span>");
 
                 }
                 output.append("<span class=\"warning\">").append(tree2dump.nodeDescriptionAnalysis(child)).append("</span>");
@@ -1003,17 +1003,17 @@ public abstract class SingleAccessKeyTreeDumper {
 
     /**
      * This methods outputs the {@link SingleAccessKeyTree} as a flat, interactive HTML-formatted String. In
-     * order to do this, the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first traversal is a
+     * order to do this, the <tt>SingleAccessKeyTree</tt> is traversed 3 times. The first traversal is a
      * breadth-first traversal, in order to generate an HashMap ( <tt>nodeBreadthFirstIterationMap</tt>) that
      * associates each node with an arbitrary Integer. The second traversal is a depth-first traversal, in
      * order to associate (in another HashMap : <tt>nodeChildParentNumberingMap</tt>), for each node, the node
-     * number and the number of its parent node. Finally, the last traversal is another breadh-first traversal
+     * number and the number of its parent node. Finally, the last traversal is another breadth-first traversal
      * that generates the flat key String
      */
     private static void multipleTraversalToInteractiveHTMLString(SingleAccessKeyNode rootNode,
                                                                  StringBuffer output, String lineSeparator, SingleAccessKeyTree tree2dump) {
 
-        String marging = "<br/>&nbsp;&nbsp;&nbsp;";
+        String margin = "<br/>&nbsp;&nbsp;&nbsp;";
 
         // // first traversal, breadth-first ////
         HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<>();
@@ -1097,12 +1097,12 @@ public abstract class SingleAccessKeyTreeDumper {
                 String mediaKey = "";
                 // displaying the child node character state
                 if (child.getCharacterState() instanceof QuantitativeMeasure) {
-                    output.append("<span class=\"state\"" + "\">").append(marging).append(((QuantitativeMeasure) child.getCharacterState())
+                    output.append("<span class=\"state\"" + "\">").append(margin).append(((QuantitativeMeasure) child.getCharacterState())
                             .toStringInterval(((QuantitativeCharacter) child.getCharacter())
                                     .getMeasurementUnit())).append("</span>");
                 } else {
                     mediaKey = ((State) child.getCharacterState()).getFirstImageKey();
-                    output.append("<span class=\"state\" id=\"state_").append(mediaKey).append("\" >").append(marging).append(child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")).append("</span>");
+                    output.append("<span class=\"state\" id=\"state_").append(mediaKey).append("\" >").append(margin).append(child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")).append("</span>");
 
                 }
                 output.append("<span class=\"warning\">").append(tree2dump.nodeDescriptionAnalysis(child)).append("</span>");
@@ -1277,12 +1277,12 @@ public abstract class SingleAccessKeyTreeDumper {
 
     /**
      * This methods outputs the {@link SingleAccessKeyTree} as a flat wiki-formatted String, with mediawiki
-     * hyperlinks. In order to do this, the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first
+     * hyperlinks. In order to do this, the <tt>SingleAccessKeyTree</tt> is traversed 3 times. The first
      * traversal is a breadth-first traversal, in order to generate an HashMap (
      * <tt>nodeBreadthFirstIterationMap</tt>) that associates each node with an arbitrary Integer. The second
      * traversal is a depth-first traversal, in order to associate (in another HashMap :
      * <tt>nodeChildParentNumberingMap</tt>), for each node, the node number and the number of its parent
-     * node. Finally, the last traversal is another breadh-first traversal that generates the flat key String
+     * node. Finally, the last traversal is another breadth-first traversal that generates the flat key String
      */
     private static void multipleTraversalToWikiString(SingleAccessKeyNode rootNode, StringBuffer output,
                                                       String lineSeparator, SingleAccessKeyTree tree2dump) {
@@ -1428,11 +1428,11 @@ public abstract class SingleAccessKeyTreeDumper {
 
     /**
      * This methods outputs the {@link SingleAccessKeyTree} as a DOT-formatted String. In order to do this,
-     * the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first traversal is a breadth-first traversal,
+     * the <tt>SingleAccessKeyTree</tt> is traversed 3 times. The first traversal is a breadth-first traversal,
      * in order to generate an HashMap (<tt>nodeBreadthFirstIterationMap</tt>) that associates each node with
      * an arbitrary Integer. The second traversal is a depth-first traversal, in order to associate (in
      * another HashMap : <tt>nodeChildParentNumberingMap</tt>), for each node, the node number and the number
-     * of its parent node. Finally, the last traversal is another breadh-first traversal that generates the
+     * of its parent node. Finally, the last traversal is another breadth-first traversal that generates the
      * flat key String
      */
     private static void multipleTraversalToDotString(SingleAccessKeyNode rootNode, StringBuffer output,
@@ -1703,13 +1703,13 @@ public abstract class SingleAccessKeyTreeDumper {
         output.append(lineSeparator);
         for (Taxon t : ds.getTaxa()) {
 
-            output.append(t.getName()).append("\t").append(t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY).intValue()).append("\t").append(t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY).intValue()).append("\t").append(IkeyUtils.roundFloat(t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY), 3)).append("\t").append(t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY).intValue());
+            output.append(t.getName()).append("\t").append(t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY).intValue()).append("\t").append(t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY).intValue()).append("\t").append(IkeyUtils.roundFloat(t.getTaxonStatistics().get(Taxon.AVERAGE_PATH_LENGTH_IN_KEY), 3)).append("\t").append(t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY).intValue());
 
             if (t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY) > 0) {
                 sumNbPath += t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY);
                 sumMinPathLength += t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY);
                 sumMaxPathLength += t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY);
-                sumAvgPathLength += t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY);
+                sumAvgPathLength += t.getTaxonStatistics().get(Taxon.AVERAGE_PATH_LENGTH_IN_KEY);
                 c++;
                 output.append(lineSeparator);
             }
@@ -1761,13 +1761,13 @@ public abstract class SingleAccessKeyTreeDumper {
             } else {
                 output.append("<tr>").append(lineSeparator);
             }
-            output.append("<td>").append(escapeHTMLSpecialCharacters(t.getName())).append("</td><td>").append(t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY).intValue()).append("</td><td>").append(t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY).intValue()).append("</td><td>").append(IkeyUtils.roundFloat(t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY), 3)).append("</td><td>").append(t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY).intValue()).append("</td>");
+            output.append("<td>").append(escapeHTMLSpecialCharacters(t.getName())).append("</td><td>").append(t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY).intValue()).append("</td><td>").append(t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY).intValue()).append("</td><td>").append(IkeyUtils.roundFloat(t.getTaxonStatistics().get(Taxon.AVERAGE_PATH_LENGTH_IN_KEY), 3)).append("</td><td>").append(t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY).intValue()).append("</td>");
 
             if (t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY) > 0) {
                 sumNbPath += t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY);
                 sumMinPathLength += t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY);
                 sumMaxPathLength += t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY);
-                sumAvgPathLength += t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY);
+                sumAvgPathLength += t.getTaxonStatistics().get(Taxon.AVERAGE_PATH_LENGTH_IN_KEY);
                 c++;
             }
             i++;
@@ -1813,13 +1813,13 @@ public abstract class SingleAccessKeyTreeDumper {
         output.append("|-").append(lineSeparator);
 
         for (Taxon t : ds.getTaxa()) {
-            output.append("|align=\"left\"|").append(t.getName()).append(lineSeparator).append("|").append(t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY).intValue()).append(lineSeparator).append("|").append(t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY).intValue()).append(lineSeparator).append("|").append(IkeyUtils.roundFloat(t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY), 3)).append(lineSeparator).append("|").append(t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY).intValue()).append(lineSeparator).append("|-").append(lineSeparator);
+            output.append("|align=\"left\"|").append(t.getName()).append(lineSeparator).append("|").append(t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY).intValue()).append(lineSeparator).append("|").append(t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY).intValue()).append(lineSeparator).append("|").append(IkeyUtils.roundFloat(t.getTaxonStatistics().get(Taxon.AVERAGE_PATH_LENGTH_IN_KEY), 3)).append(lineSeparator).append("|").append(t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY).intValue()).append(lineSeparator).append("|-").append(lineSeparator);
 
             if (t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY) > 0) {
                 sumNbPath += t.getTaxonStatistics().get(Taxon.NB_PATH_IN_KEY);
                 sumMinPathLength += t.getTaxonStatistics().get(Taxon.SHORTEST_PATH_IN_KEY);
                 sumMaxPathLength += t.getTaxonStatistics().get(Taxon.LONGEST_PATH_IN_KEY);
-                sumAvgPathLength += t.getTaxonStatistics().get(Taxon.AVERAGE_PATHLENGTH_IN_KEY);
+                sumAvgPathLength += t.getTaxonStatistics().get(Taxon.AVERAGE_PATH_LENGTH_IN_KEY);
                 c++;
             }
         }
