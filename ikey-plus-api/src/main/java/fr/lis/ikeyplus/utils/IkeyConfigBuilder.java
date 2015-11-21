@@ -61,26 +61,26 @@ public class IkeyConfigBuilder {
     }
 
     public IkeyConfigBuilder verbosity(IkeyConfig.VerbosityLevel verbosityLevel) {
-        this.verbosity.add(verbosityLevel);
+        verbosity.add(verbosityLevel);
         return this;
     }
 
     public IkeyConfigBuilder verbosity(Collection<IkeyConfig.VerbosityLevel> verbosityLevels) {
-        this.verbosity.addAll(verbosityLevels);
+        verbosity.addAll(verbosityLevels);
         return this;
     }
 
     public IkeyConfig build() {
         return new IkeyConfig(
-                this.format,
-                this.representation,
-                this.fewStatesCharacterFirst,
-                this.mergeCharacterStatesIfSameDiscrimination,
-                this.pruningEnabled,
-                ImmutableSet.copyOf(this.verbosity),
-                this.scoreMethod,
-                this.weightContext,
-                this.weightType);
+                format,
+                representation,
+                fewStatesCharacterFirst,
+                mergeCharacterStatesIfSameDiscrimination,
+                pruningEnabled,
+                ImmutableSet.copyOf(verbosity),
+                scoreMethod,
+                weightContext,
+                weightType);
     }
 
 }
