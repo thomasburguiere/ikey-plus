@@ -86,14 +86,14 @@ public class SingleAccessKeyNode {
         return output.toString();
     }
 
-    public String getStatesToString(String separator) {
+    public String getStatesToString() {
 
         StringBuilder result = new StringBuilder("");
         if (characterState instanceof State) {
             result.append(((State) characterState).getName());
             for (Object state : otherCharacterStates) {
                 if (state instanceof State) {
-                    result.append(separator).append(((State) state).getName());
+                    result.append(" OR ").append(((State) state).getName());
                 }
             }
         }

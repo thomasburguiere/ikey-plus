@@ -26,11 +26,4 @@ public class QuantitativeCharacter extends Character {
         this.measurementUnit = measurementUnit;
     }
 
-    /* (non-Javadoc)
-     *
-     * @see model.Character#isSupportsCategoricalData() */
-    @Override
-    public boolean isSupportsCategoricalData() {
-        return false;
-    }
 }

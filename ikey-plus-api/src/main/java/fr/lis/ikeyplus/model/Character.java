@@ -21,11 +21,6 @@ public class Character implements ICharacter {
     private List<String> mediaObjectKeys = null;
 
     public Character() {
-        this(null);
-    }
-
-    public Character(String name) {
-        super();
         this.name = null;
         this.inapplicableStates = new ArrayList<>();
         this.childCharacters = new ArrayList<>();
