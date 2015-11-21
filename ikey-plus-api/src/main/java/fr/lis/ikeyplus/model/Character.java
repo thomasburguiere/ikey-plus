@@ -26,7 +26,7 @@ public class Character implements ICharacter {
 
     public Character(String name) {
         super();
-        this.name = name;
+        this.name = null;
         this.inapplicableStates = new ArrayList<>();
         this.childCharacters = new ArrayList<>();
         this.mediaObjectKeys = new ArrayList<>();
@@ -77,7 +77,7 @@ public class Character implements ICharacter {
      * @see model.ICharacter#getweight() */
     @Override
     public float getWeight() {
-        return this.weight;
+        return weight;
     }
 
     /* (non-Javadoc)
@@ -143,7 +143,7 @@ public class Character implements ICharacter {
      * @see model.ICharacter#getChildCharacters() */
     @Override
     public List<ICharacter> getChildCharacters() {
-        return this.childCharacters;
+        return childCharacters;
     }
 
     /* (non-Javadoc)
@@ -172,6 +172,6 @@ public class Character implements ICharacter {
     }
 
     public String toString() {
-        return this.name;
+        return name;
     }
 }

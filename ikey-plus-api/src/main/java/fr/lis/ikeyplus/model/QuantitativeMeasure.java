@@ -102,7 +102,7 @@ public class QuantitativeMeasure {
         } else {
             end = "[";
         }
-        return start + this.getCalculateMinimum() + ", " + this.getCalculateMaximum() + end;
+        return start + getCalculateMinimum() + ", " + getCalculateMaximum() + end;
     }
 
     public String toStringInterval(String unit) {
@@ -142,22 +142,18 @@ public class QuantitativeMeasure {
         if (quantitativeMeasure == null) {
             return true;
             // if both taxa are described
-        } else if (!this.isNotSpecified() && !quantitativeMeasure.isNotSpecified()) {
+        } else if (!isNotSpecified() && !quantitativeMeasure.isNotSpecified()) {
             // if the max value of the current interval is include
-            if (this.maxInclude) {
-                if ((quantitativeMeasure.getCalculateMinimum() >= this.getCalculateMinimum() && quantitativeMeasure.getCalculateMinimum() <= this
-                        .getCalculateMaximum())
-                        || (quantitativeMeasure.getCalculateMaximum() >= this
-                        .getCalculateMinimum() && quantitativeMeasure
-                        .getCalculateMaximum() <= this.getCalculateMaximum())) {
+            if (maxInclude) {
+                if ((quantitativeMeasure.getCalculateMinimum() >= getCalculateMinimum() && quantitativeMeasure.getCalculateMinimum() <= getCalculateMaximum())
+                        || (quantitativeMeasure.getCalculateMaximum() >= getCalculateMinimum() && quantitativeMeasure
+                        .getCalculateMaximum() <= getCalculateMaximum())) {
                     return true;
                 }
             } else {
-                if ((quantitativeMeasure.getCalculateMinimum() >= this.getCalculateMinimum() && quantitativeMeasure.getCalculateMinimum() < this
-                        .getCalculateMaximum())
-                        || (quantitativeMeasure.getCalculateMaximum() >= this
-                        .getCalculateMinimum() && quantitativeMeasure
-                        .getCalculateMaximum() < this.getCalculateMaximum())) {
+                if ((quantitativeMeasure.getCalculateMinimum() >= getCalculateMinimum() && quantitativeMeasure.getCalculateMinimum() < getCalculateMaximum())
+                        || (quantitativeMeasure.getCalculateMaximum() >= getCalculateMinimum() && quantitativeMeasure
+                        .getCalculateMaximum() < getCalculateMaximum())) {
                     return true;
                 }
             }
@@ -166,7 +162,7 @@ public class QuantitativeMeasure {
     }
 
     public boolean isNotSpecified() {
-        return this.getCalculateMinimum() == null || this.getCalculateMaximum() == null;
+        return getCalculateMinimum() == null || getCalculateMaximum() == null;
 
     }
 

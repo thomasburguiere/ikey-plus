@@ -55,11 +55,11 @@ public class SingleAccessKeyNode {
     }
 
     public void addOtherCharacterStates(Object otherCharacterState) {
-        this.otherCharacterStates.add(otherCharacterState);
+        otherCharacterStates.add(otherCharacterState);
     }
 
     public String getStringStates() {
-        return getStatesToString(" OR ");
+        return getStatesToString();
     }
 
     public String getNodeLabel(){
@@ -101,7 +101,7 @@ public class SingleAccessKeyNode {
     }
 
     public List<State> getStates() {
-        if (this.characterState instanceof State) {
+        if (characterState instanceof State) {
             List<State> states = new ArrayList<>();
             states.add((State) characterState);
             for (Object state : otherCharacterStates) {
@@ -123,7 +123,7 @@ public class SingleAccessKeyNode {
     }
 
     public void addChild(SingleAccessKeyNode singleAccessKeyNode) {
-        this.children.add(singleAccessKeyNode);
+        children.add(singleAccessKeyNode);
     }
 
     public List<Taxon> getRemainingTaxa() {

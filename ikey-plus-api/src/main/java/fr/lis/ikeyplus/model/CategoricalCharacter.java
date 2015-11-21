@@ -18,7 +18,7 @@ public class CategoricalCharacter extends Character {
 
     public CategoricalCharacter(String name) {
         super();
-        this.setName(name);
+        setName(name);
         this.states = new ArrayList<>();
     }
 

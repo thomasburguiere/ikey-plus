@@ -15,7 +15,7 @@ public class QuantitativeCharacter extends Character {
 
     public QuantitativeCharacter(String name) {
         super();
-        this.setName(name);
+        setName(name);
     }
 
     public String getMeasurementUnit() {
