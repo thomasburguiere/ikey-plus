@@ -46,14 +46,6 @@ public class SingleAccessKeyNode {
         this.characterState = characterState;
     }
 
-    public List<Object> getOtherCharacterStates() {
-        return otherCharacterStates;
-    }
-
-    public void setOtherCharacterStates(List<Object> otherCharacterStates) {
-        this.otherCharacterStates = otherCharacterStates;
-    }
-
     public void addOtherCharacterStates(Object otherCharacterState) {
         otherCharacterStates.add(otherCharacterState);
     }
@@ -86,7 +78,7 @@ public class SingleAccessKeyNode {
         return output.toString();
     }
 
-    public String getStatesToString() {
+    private String getStatesToString() {
 
         StringBuilder result = new StringBuilder("");
         if (characterState instanceof State) {
@@ -100,26 +92,8 @@ public class SingleAccessKeyNode {
         return result.toString();
     }
 
-    public List<State> getStates() {
-        if (characterState instanceof State) {
-            List<State> states = new ArrayList<>();
-            states.add((State) characterState);
-            for (Object state : otherCharacterStates) {
-                if (state instanceof State) {
-                    states.add((State) state);
-                }
-            }
-            return states;
-        }
-        return null;
-    }
-
     public List<SingleAccessKeyNode> getChildren() {
         return children;
-    }
-
-    public void setChildren(List<SingleAccessKeyNode> children) {
-        this.children = children;
     }
 
     public void addChild(SingleAccessKeyNode singleAccessKeyNode) {
@@ -136,10 +110,6 @@ public class SingleAccessKeyNode {
 
     public boolean hasChild() {
         return children.size() > 0;
-    }
-
-    public boolean isEmpty() {
-        return character == null || characterState == null;
     }
 
     public String getNodeDescription() {

@@ -20,20 +20,8 @@ public class CodedDescription {
         this.characterWeights = new LinkedHashMap<>();
     }
 
-    public Map<ICharacter, Object> getDescription() {
-        return description;
-    }
-
-    public void setDescription(Map<ICharacter, Object> description) {
-        this.description = description;
-    }
-
     public Map<ICharacter, Integer> getCharacterWeights() {
         return characterWeights;
-    }
-
-    public void setCharacterWeights(Map<ICharacter, Integer> characterWeights) {
-        this.characterWeights = characterWeights;
     }
 
     public Integer getCharacterWeight(ICharacter character) {
@@ -44,24 +32,12 @@ public class CodedDescription {
         characterWeights.put(character, weight);
     }
 
-    public void removeCharacterWeight(ICharacter character) {
-        characterWeights.remove(character);
-    }
-
     public Object getCharacterDescription(ICharacter character) {
         return description.get(character);
     }
 
     public void addCharacterDescription(ICharacter character, Object characterDescription) {
         description.put(character, characterDescription);
-    }
-
-    public void removeCharacterDescription(ICharacter character) {
-        description.remove(character);
-    }
-
-    public String getId() {
-        return id;
     }
 
     public void setId(String id) {

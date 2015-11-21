@@ -27,16 +27,8 @@ public class DataSet {
         return characters;
     }
 
-    public void setCharacters(List<ICharacter> characters) {
-        this.characters = characters;
-    }
-
     public Map<Taxon, CodedDescription> getCodedDescriptions() {
         return codedDescriptions;
-    }
-
-    public void setCodedDescriptions(Map<Taxon, CodedDescription> codedDescriptions) {
-        this.codedDescriptions = codedDescriptions;
     }
 
     public CodedDescription getCodedDescription(Taxon taxon) {
@@ -45,10 +37,6 @@ public class DataSet {
 
     public void addCodedDescription(Taxon taxon, CodedDescription codedDescription) {
         codedDescriptions.put(taxon, codedDescription);
-    }
-
-    public void removeCodedDescription(Taxon taxon) {
-        codedDescriptions.remove(taxon);
     }
 
     public List<Taxon> getTaxa() {
@@ -102,10 +90,6 @@ public class DataSet {
         return mediaObjects;
     }
 
-    public void setMediaObjects(Map<String, String> mediaObjects) {
-        this.mediaObjects = mediaObjects;
-    }
-
     public String getMediaObject(String key) {
         return mediaObjects.get(key);
     }
@@ -142,7 +126,7 @@ public class DataSet {
      * @return List<ICharacter>, the list of inapplicable character and all its sons
      */
     public List<ICharacter> getInapplicableCharacters(Iterable<ICharacter> newRemainingCharacters,
-                                                      ICharacter selectedCharacter, State state) {
+                                                      State state) {
 
         List<ICharacter> inapplicableCharacter = new ArrayList<>();
 

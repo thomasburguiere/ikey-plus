@@ -45,10 +45,6 @@ public class SingleAccessKeyTree {
         this.dataSet = dataSet;
     }
 
-    public IkeyConfig getConfig() {
-        return config;
-    }
-
     private void recursiveToString(SingleAccessKeyNode node, StringBuffer output, String tabulations,
                                    int firstNumbering, int secondNumbering) {
 

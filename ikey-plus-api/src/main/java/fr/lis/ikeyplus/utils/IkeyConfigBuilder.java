@@ -12,7 +12,7 @@ public class IkeyConfigBuilder {
     private boolean fewStatesCharacterFirst = false;
     private boolean mergeCharacterStatesIfSameDiscrimination = false;
     private boolean pruningEnabled = false;
-    private Set<IkeyConfig.VerbosityLevel> verbosity = Sets.newHashSet();
+    private final Set<IkeyConfig.VerbosityLevel> verbosity = Sets.newHashSet();
     private IkeyConfig.ScoreMethod scoreMethod = IkeyConfig.ScoreMethod.XPER;
     private IkeyConfig.WeightContext weightContext = IkeyConfig.WeightContext.NO_WEIGHT;
     private IkeyConfig.WeightType weightType = IkeyConfig.WeightType.GLOBAL;

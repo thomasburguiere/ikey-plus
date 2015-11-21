@@ -133,7 +133,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
 
                         // get inapplicable characters
                         List<ICharacter> inapplicableCharacters = dataset.getInapplicableCharacters(
-                                newRemainingCharacters, selectedCharacter, state);
+                                newRemainingCharacters, state);
                         // remove inapplicable character and its sons from the remaining characters list
                         newRemainingCharacters.removeAll(inapplicableCharacters);
 

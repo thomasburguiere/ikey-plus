@@ -14,7 +14,7 @@ public class Character implements ICharacter {
 
     private String name = null;
     private String id = null;
-    public float weight = IkeyConfig.DEFAULT_WEIGHT.getIntWeight();
+    private float weight = IkeyConfig.DEFAULT_WEIGHT.getIntWeight();
     private ICharacter parentCharacter = null;
     private List<State> inapplicableStates = null;
     private List<ICharacter> childCharacters = null;
@@ -84,6 +84,7 @@ public class Character implements ICharacter {
 
     }
 
+    @Override
     public List<String> getMediaObjectKeys() {
         return mediaObjectKeys;
     }
@@ -111,7 +112,6 @@ public class Character implements ICharacter {
     /* (non-Javadoc)
      *
      * @see model.ICharacter#setInapplicableStates(java.util.List) */
-    @Override
     public void setInapplicableStates(List<State> inapplicableStates) {
         this.inapplicableStates = inapplicableStates;
     }
@@ -144,7 +144,6 @@ public class Character implements ICharacter {
     /* (non-Javadoc)
      *
      * @see model.ICharacter#setChildCharacters(java.util.List) */
-    @Override
     public void setChildCharacters(List<ICharacter> childCharacters) {
         this.childCharacters = childCharacters;
     }

@@ -15,8 +15,6 @@ public final class IkeyUtils {
     public static final String ERROR = "error_";
     // specific file extension
     public static final String GV = "gv";
-    // buffer size
-    public static final int BUFFER = 2048;
 
     private IkeyUtils() {
         // private empty constructor to prevent instantiation

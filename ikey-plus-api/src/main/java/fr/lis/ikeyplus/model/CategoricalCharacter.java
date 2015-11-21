@@ -26,10 +26,6 @@ public class CategoricalCharacter extends Character {
         return states;
     }
 
-    public void setStates(List<State> states) {
-        this.states = states;
-    }
-
     /* (non-Javadoc)
      *
      * @see model.Character#isSupportsCategoricalData() */

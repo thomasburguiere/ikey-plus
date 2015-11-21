@@ -17,64 +17,28 @@ public class QuantitativeMeasure {
     private boolean minInclude = true;
     private boolean maxInclude = true;
 
-    public Double getMax() {
-        return max;
-    }
-
     public void setMax(Double max) {
         this.max = max;
-    }
-
-    public Double getMean() {
-        return mean;
     }
 
     public void setMean(Double mean) {
         this.mean = mean;
     }
 
-    public Double getMin() {
-        return min;
-    }
-
     public void setMin(Double min) {
         this.min = min;
-    }
-
-    public Double getSD() {
-        return sd;
     }
 
     public void setSD(Double sd) {
         this.sd = sd;
     }
 
-    public Double getUMethLower() {
-        return uMethLower;
-    }
-
     public void setUMethLower(Double uMethLower) {
         this.uMethLower = uMethLower;
     }
 
-    public Double getUMethUpper() {
-        return uMethUpper;
-    }
-
     public void setUMethUpper(Double uMethUpper) {
         this.uMethUpper = uMethUpper;
-    }
-
-    public boolean isMinInclude() {
-        return minInclude;
-    }
-
-    public void setMinInclude(boolean minInclude) {
-        this.minInclude = minInclude;
-    }
-
-    public boolean isMaxInclude() {
-        return maxInclude;
     }
 
     public void setMaxInclude(boolean maxInclude) {
@@ -87,7 +51,7 @@ public class QuantitativeMeasure {
                 + "  UMethUpper=" + uMethUpper;
     }
 
-    public String toStringInterval() {
+    private String toStringInterval() {
         String start;
         String end;
 

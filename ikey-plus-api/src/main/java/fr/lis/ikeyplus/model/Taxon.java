@@ -15,12 +15,12 @@ public class Taxon {
     public static final int SHORTEST_PATH_IN_KEY = 1;
     public static final int LONGEST_PATH_IN_KEY = 2;
     public static final int AVERAGE_PATHLENGTH_IN_KEY = 3;
-    public static final int SUM_PATHLENGTHS_IN_KEY = 4;
+    private static final int SUM_PATHLENGTHS_IN_KEY = 4;
 
     private String id;
     private String name = null;
     private List<String> mediaObjectKeys = null;
-    private HashMap<Integer, Float> taxonStatistics;
+    private final HashMap<Integer, Float> taxonStatistics;
 
     public Taxon() {
         this(null);
