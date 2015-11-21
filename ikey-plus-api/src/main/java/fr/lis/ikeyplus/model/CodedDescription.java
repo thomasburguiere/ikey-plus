@@ -11,7 +11,6 @@ import java.util.Map;
  */
 public class CodedDescription {
 
-    private String id = null;
     private Map<ICharacter, Object> description = null;
     private Map<ICharacter, Integer> characterWeights = null;
 
@@ -40,7 +39,4 @@ public class CodedDescription {
         description.put(character, characterDescription);
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 }

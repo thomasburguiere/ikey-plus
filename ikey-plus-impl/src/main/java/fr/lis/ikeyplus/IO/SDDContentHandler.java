@@ -270,7 +270,6 @@ public class SDDContentHandler implements ContentHandler {
             else if ("CodedDescription".equals(localName) && inCodedDescriptions) {
                 inCodedDescription = true;
                 currentCodedDescription = new CodedDescription();
-                currentCodedDescription.setId(attributes.getValue("id"));
                 currentTaxon = new Taxon();
             }
 
