@@ -118,7 +118,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
     /**
      * This methods outputs the {@link SingleAccessKeyTree} as a flat SDD-formatted String that complies with
-     * the SDD format . In order to do this, the <tt>SingleAccesKeyTree</tt> is traversed 3 times. The first
+     * the SDD format . In order to do this, the <tt>SingleAccessKeyTree</tt> is traversed 3 times. The first
      * traversal is a breadth-first traversal, in order to generate an HashMap (
      * <tt>nodeBreadthFirstIterationMap</tt>) that associates each node with an arbitrary Integer. The second
      * traversal is a depth-first traversal, in order to associate (in another HashMap :
@@ -763,7 +763,7 @@ public abstract class SingleAccessKeyTreeDumper {
         slk.append(header.replaceAll(System.getProperty("line.separator"), "<br/>"));
 
         multipleTraversalToHTMLString(tree2dump.getRoot(), output, System.getProperty("line.separator"),
-                true, tree2dump);
+                tree2dump);
 
         slk.append(output.toString());
 
@@ -834,7 +834,7 @@ public abstract class SingleAccessKeyTreeDumper {
         slk.append("<br/>");
 
         multipleTraversalToInteractiveHTMLString(tree2dump.getRoot(), output,
-                System.getProperty("line.separator"), true, tree2dump);
+                System.getProperty("line.separator"), tree2dump);
 
         slk.append(output.toString());
 
@@ -860,7 +860,7 @@ public abstract class SingleAccessKeyTreeDumper {
      * generates the flat key String
      */
     private static void multipleTraversalToHTMLString(SingleAccessKeyNode rootNode, StringBuffer output,
-                                                      String lineSeparator, boolean activeLink, SingleAccessKeyTree tree2dump) {
+                                                      String lineSeparator, SingleAccessKeyTree tree2dump) {
 
         String marging = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp"
                 + ";&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -924,9 +924,7 @@ public abstract class SingleAccessKeyTreeDumper {
                     }
                     output.append("<span class=\"viewNode\" id=\"viewNode").append(currentParentNumber).append("\">");
 
-                    if (activeLink) {
-                        output.append("<a name=\"anchor").append(currentParentNumber).append("\"></a>");
-                    }
+                    output.append("<a name=\"anchor").append(currentParentNumber).append("\"></a>");
                     output.append("<strong>").append(currentParentNumber).append("</strong>");
 
                     String htmlImageLink = "";
@@ -977,11 +975,7 @@ public abstract class SingleAccessKeyTreeDumper {
                     }
                     output.append("</span>");
                 } else {
-                    if (activeLink) {
-                        output.append(" =&gt; <a href=\"#anchor").append(counter).append("\">").append(counter).append("</a>");
-                    } else {
-                        output.append(" =&gt; ").append(counter);
-                    }
+                    output.append(" =&gt; <a href=\"#anchor").append(counter).append("\">").append(counter).append("</a>");
 
                 }
                 output.append("</span>"); // closes the opening <span class="statesAndTaxa">
@@ -1016,7 +1010,7 @@ public abstract class SingleAccessKeyTreeDumper {
      * that generates the flat key String
      */
     private static void multipleTraversalToInteractiveHTMLString(SingleAccessKeyNode rootNode,
-                                                                 StringBuffer output, String lineSeparator, boolean activeLink, SingleAccessKeyTree tree2dump) {
+                                                                 StringBuffer output, String lineSeparator, SingleAccessKeyTree tree2dump) {
 
         String marging = "<br/>&nbsp;&nbsp;&nbsp;";
 
@@ -1079,9 +1073,7 @@ public abstract class SingleAccessKeyTreeDumper {
                     }
                     output.append("<span class=\"viewNode\" id=\"viewNode").append(currentParentNumber).append("\">");
 
-                    if (activeLink) {
-                        output.append("<a name=\"anchor").append(currentParentNumber).append("\"></a>");
-                    }
+                    output.append("<a name=\"anchor").append(currentParentNumber).append("\"></a>");
                     output.append("<strong>").append(currentParentNumber).append("</strong>");
 
                     String htmlImageLink = "";
@@ -1132,11 +1124,7 @@ public abstract class SingleAccessKeyTreeDumper {
                     }
                     output.append("</span>");
                 } else {
-                    if (activeLink) {
-                        output.append(" => <input class=\"nextNodeButton\" type=\"button\" value=\"next step\" onClick=\'goToViewNode(").append(counter).append(")\' />");
-                    } else {
-                        output.append(" => ").append(counter);
-                    }
+                    output.append(" => <input class=\"nextNodeButton\" type=\"button\" value=\"next step\" onClick=\'goToViewNode(").append(counter).append(")\' />");
 
                 }
                 output.append("</span>"); // closes the opening <span class="statesAndTaxa">
