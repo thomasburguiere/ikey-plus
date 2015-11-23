@@ -7,8 +7,11 @@
  * # MainCtrl
  * Controller of the webappApp
  */
-    .controller('MainController', function () {
 angular.module('ikey')
+    .controller('MainController', function ($http) {
+        var isServiceOnline = $http({url: 'http://localhost:8080/ikey-rest/', method:'GET'}).then(function(result){
+            console.log(result);
+        });
         this.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
