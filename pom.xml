@@ -9,6 +9,7 @@
         <module>ikey-plus-impl</module>
         <module>ikey-plus-rest</module>
         <module>ikey-plus-api</module>
+        <module>ikey-plus-web</module>
     </modules>
 
     <name>ikey-plus</name>
@@ -23,7 +24,7 @@
         <version.quartz>2.0.0</version.quartz>
         <version.servlet-api>3.0.1</version.servlet-api>
         <version.maven-compiler-plugin>3.2</version.maven-compiler-plugin>
-        <version.maven-war-plugin>2.5</version.maven-war-plugin>
+        <version.maven-war-plugin>2.6</version.maven-war-plugin>
         <version.jacoco-maven-plugin.codecov>0.7.5.201505241946</version.jacoco-maven-plugin.codecov>
         <version.mockito>1.10.19</version.mockito>
         <version.tomee-jaxrs>1.7.2</version.tomee-jaxrs>
