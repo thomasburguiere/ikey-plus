@@ -7,8 +7,8 @@
  * # MainCtrl
  * Controller of the webappApp
  */
-angular.module('webappApp')
-    .controller('MainCtrl', function () {
+    .controller('MainController', function () {
+angular.module('ikey')
         this.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
