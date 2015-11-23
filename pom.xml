@@ -29,6 +29,7 @@
         <version.mockito>1.10.19</version.mockito>
         <version.tomee-jaxrs>1.7.2</version.tomee-jaxrs>
 
+        <catalina.version>7.0.62</catalina.version>
     </properties>
     <build>
         <plugins>
@@ -76,11 +77,6 @@
             </dependency>
 
             <dependency>
-                <groupId>com.sun.jersey</groupId>
-                <artifactId>jersey-server</artifactId>
-                <version>${version.jersey-server}</version>
-            </dependency>
-            <dependency>
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
                 <version>${version.log4j}</version>
@@ -90,6 +86,12 @@
                 <groupId>org.quartz-scheduler</groupId>
                 <artifactId>quartz</artifactId>
                 <version>${version.quartz}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-catalina</artifactId>
+                <version>${catalina.version}</version>
             </dependency>
 
             <!-- PROVIDED DEPENDENCIES -->
