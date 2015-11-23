@@ -1,10 +1,15 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="TomEE" type="TomeeConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="TomEE 7.0.62" ALTERNATIVE_JRE_ENABLED="false">
-    <option name="UPDATING_POLICY" value="restart-server" />
+  <configuration default="false" name="TomEE Full" type="TomeeConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="TomEE 7.0.62" ALTERNATIVE_JRE_ENABLED="false">
+    <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/ikey-web" />
     <deployment>
       <artifact name="ikey-plus-rest:war exploded">
         <settings>
-          <option name="CONTEXT_PATH" value="/ikey" />
+          <option name="CONTEXT_PATH" value="/ikey-rest" />
+        </settings>
+      </artifact>
+      <artifact name="ikey-plus-web:war exploded">
+        <settings>
+          <option name="CONTEXT_PATH" value="/ikey-web" />
         </settings>
       </artifact>
     </deployment>
@@ -68,6 +73,7 @@
     <method>
       <option name="BuildArtifacts" enabled="true">
         <artifact name="ikey-plus-rest:war exploded" />
+        <artifact name="ikey-plus-web:war exploded" />
       </option>
     </method>
   </configuration>
