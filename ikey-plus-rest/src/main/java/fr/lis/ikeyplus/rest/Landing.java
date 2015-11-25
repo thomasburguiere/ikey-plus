@@ -10,7 +10,7 @@ public class Landing {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public IkeyInfo helloWorld(){
+    public IkeyInfo status(){
         return new IkeyInfo("2.0-SNAPSHOT");
     }
 }
