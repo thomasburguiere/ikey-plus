@@ -8,19 +8,14 @@
  * Controller of the webappApp
  */
 angular.module('ikey')
-    .controller('MainController', function ($http) {
-        $http({url: 'http://localhost:8080/ikey-rest/', method: 'GET'}).then(
-            function (result) {
-                vm.serviceInfo = {version: result.data.version, status: (result.status === 200) ? 'online' : 'offline'};
-            },
-            function () { // error
-                vm.serviceInfo = {version: 'unknown', status: 'offline'};
-            });
+    .controller('MainController', ['SystemInfoService', function (SystemInfoService) {
         var vm = this;
-        //vm.
+        SystemInfoService.getServiceInfo().promise.then(function(serviceInfo){
+            vm.serviceInfo = serviceInfo;
+        });
         vm.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
             'Karma'
         ];
-    });
+    }]);

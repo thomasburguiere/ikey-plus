@@ -1,9 +1,8 @@
 <div class="jumbotron">
-    <h1>'Allo, 'Allo!</h1>
+    <h1>Ikey+</h1>
 
     <p class="lead">
-        <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-        Always a pleasure scaffolding your apps.
+        Single access key generator
     </p>
 
     <p><a class="btn btn-lg btn-success" ng-href="#/">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
@@ -31,6 +30,6 @@
 <div>
     <ul>
         <li>Service status: {{main.serviceInfo.status}}</li>
-        <li>Service version: {{main.serviceInfo.version}}</li>
+        <li ng-show="main.serviceInfo.version !== 'unknown'">Service version: {{main.serviceInfo.version}}</li>
     </ul>
 </div>
