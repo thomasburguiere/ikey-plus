@@ -10,7 +10,7 @@
 angular.module('ikey')
     .controller('MainController', ['SystemInfoService', function (SystemInfoService) {
         var vm = this;
-        SystemInfoService.getServiceInfo().promise.then(function(serviceInfo){
+        SystemInfoService.getServiceInfo().then(function(serviceInfo){
             vm.serviceInfo = serviceInfo;
         });
         vm.awesomeThings = [
