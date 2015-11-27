@@ -4,8 +4,13 @@
     <p class="lead">
         Single access key generator
     </p>
+    <form name="sddForm">
+        <input type="file" ngf-select ng-model="sddFile" name="sddFile" required>
 
-    <p><a class="btn btn-lg btn-success" ng-href="#/">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
+        {{sddFile.size}}
+        <button class="btn btn-lg btn-success" type="submit"
+                ng-click="main.submit(sddFile)">submit</button>
+    </form>
 </div>
 
 <div class="row marketing">
