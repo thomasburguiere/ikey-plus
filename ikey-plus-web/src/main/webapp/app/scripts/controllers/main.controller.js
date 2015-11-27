@@ -1,12 +1,5 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name webappApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the webappApp
- */
 angular.module('ikey')
     .controller('MainController', ['SystemInfoResource', 'Upload', 'settings',
         function (SystemInfoResource, Upload, settings) {
