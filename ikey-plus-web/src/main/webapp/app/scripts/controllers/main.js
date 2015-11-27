@@ -8,9 +8,9 @@
  * Controller of the webappApp
  */
 angular.module('ikey')
-    .controller('MainController', ['SystemInfoService', function (SystemInfoService) {
+    .controller('MainController', ['SystemInfoResource', function (SystemInfoResource) {
         var vm = this;
-        SystemInfoService.getServiceInfo().promise.then(function(serviceInfo){
+        SystemInfoResource.getServiceInfo().promise.then(function(serviceInfo){
             vm.serviceInfo = serviceInfo;
         });
         vm.awesomeThings = [

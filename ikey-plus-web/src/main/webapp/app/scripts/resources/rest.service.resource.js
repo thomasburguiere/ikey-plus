@@ -1,6 +1,6 @@
 'use strict';
 angular.module('ikey')
-    .service('SystemInfoService', ['$http', '$q', function ($http, $q) {
+    .service('SystemInfoResource', ['$http', '$q', function ($http, $q) {
         this.getServiceInfo = function () {
 
             var deferred = $q.defer();
