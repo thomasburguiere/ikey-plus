@@ -4,7 +4,7 @@ angular.module('ikey')
     .controller('MainController', ['SystemInfoResource', 'Upload', 'settings',
         function (SystemInfoResource, Upload, settings) {
             var vm = this;
-            SystemInfoResource.getServiceInfo().promise.then(function (serviceInfo) {
+            SystemInfoResource.getServiceInfo().then(function (serviceInfo) {
                 vm.serviceInfo = serviceInfo;
             });
 

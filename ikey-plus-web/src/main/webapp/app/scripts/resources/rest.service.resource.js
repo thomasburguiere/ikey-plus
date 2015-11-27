@@ -19,7 +19,7 @@ angular.module('ikey')
                             status: 'offline'
                         });
                     });
-                return deferred;
+                return deferred.promise;
             }
         };
 
