@@ -7,24 +7,31 @@ describe('Controller: MainController', function () {
 
     var controller,
         scope,
-        SystemInfoService = {
-            getServiceInfo: function(){}
+        SystemInfoServiceMock = {
+            getServiceInfo: function () {
+                var defer = $q.defer();
+                defer.resolve({
+                    version: 'dummyVersion',
+                    status: 'dummyStatus'
+                });
+                return defer.promise;
+            }
         },
         $rootScope,
         $q,
         $httpBackend;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, _$rootScope_, _$q_,_SystemInfoService_, _$httpBackend_) {
+    beforeEach(inject(function ($controller, _$rootScope_, _$q_, _$httpBackend_) {
         $rootScope = _$rootScope_;
         $httpBackend = _$httpBackend_;
         $q = _$q_;
         scope = $rootScope.$new();
         controller = $controller('MainController', {
-            $scope: scope
+            $scope: scope,
             // place here mocked dependencies
+            SystemInfoService: SystemInfoServiceMock
         });
-        SystemInfoService = _SystemInfoService_;
     }));
 
     it('should attach a list of awesomeThings to the scope', function () {
@@ -33,24 +40,11 @@ describe('Controller: MainController', function () {
 
 
     it('should attach serviceInfo to the scope', function () {
-        // given
-        spyOn(SystemInfoService, 'getServiceInfo').and.callFake(function () {
-            var defer = $q.defer();
-            defer.resolve({
-                version: 'dummyVersion',
-                status: 'dummyStatus'
-            });
-            return defer.promise;
-        });
-        $httpBackend.expectGET('http://localhost:8080/ikey-rest/').respond({
-            minDownload: 8000,
-            minUpload: 600
-        });
-
         //when
         $rootScope.$apply();
 
         //then
         expect(controller.serviceInfo).toBeDefined();
+        expect(controller.serviceInfo.version).toBe('dummyVersion');
     });
 });
