@@ -39,7 +39,7 @@ describe('Controller: MainController', function () {
     });
 
 
-    it('should attach serviceInfo to the scope', function () {
+    it('should call ServiceInfoResource to set serviceInfo on the scope', function () {
         //when
         $rootScope.$apply();
 
