@@ -23,7 +23,29 @@
                 </configuration>
             </plugin>
 
+            <!-- clear webapp folder -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>${version.maven-antrun-plugin}</version>
+                <executions>
+                    <execution>
+                        <id>clean-webapp</id>
+                        <phase>post-clean</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <delete dir="src/main/webapp/"/>
+                            </tasks>
 
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- build app in 'frontendDevelopment/dist' folder-->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -71,12 +93,35 @@
                             <executable>grunt</executable>
                         </configuration>
                     </execution>
-
                 </executions>
+            </plugin>
 
-
+            <!-- copy content of frontendDevelopment/dist to webapp -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>src/main/webapp</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/frontendDevelopment/dist</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
 
     </build>
+    <properties>
+        <version.maven-antrun-plugin>1.3</version.maven-antrun-plugin>
+    </properties>
 </project>
