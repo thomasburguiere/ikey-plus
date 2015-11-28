@@ -10,10 +10,12 @@ import org.junit.Test;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import static fr.lis.ikeyplus.utils.IkeyConfig.ScoreMethod.*;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.HEADER;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.OTHER;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.STATISTICS;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.WARNING;
+import static fr.lis.ikeyplus.utils.IkeyConfig.WeightContext.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class IdentificationKeyGeneratorTest {
@@ -46,7 +48,7 @@ public class IdentificationKeyGeneratorTest {
         IkeyConfig config = IkeyConfig.builder()
                 .enablePruning()
                 .verbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTICS))
-                .weightContext(IkeyConfig.WeightContext.OBSERVATION_CONVENIENCE)
+                .weightContext(OBSERVATION_CONVENIENCE)
                 .build();
 
         SDDParser sddParser;
@@ -70,7 +72,7 @@ public class IdentificationKeyGeneratorTest {
         IkeyConfig config = IkeyConfig.builder()
                 .enablePruning()
                 .verbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTICS))
-                .scoreMethod(IkeyConfig.ScoreMethod.JACCARD)
+                .scoreMethod(JACCARD)
                 .build();
 
         SDDParser sddParser;
@@ -94,7 +96,7 @@ public class IdentificationKeyGeneratorTest {
         IkeyConfig config = IkeyConfig.builder()
                 .enablePruning()
                 .verbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTICS))
-                .scoreMethod(IkeyConfig.ScoreMethod.SOKAL_AND_MICHENER)
+                .scoreMethod(SOKAL_AND_MICHENER)
                 .build();
 
         SDDParser sddParser;

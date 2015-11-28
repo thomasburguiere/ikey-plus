@@ -1,6 +1,10 @@
 package fr.lis.ikeyplus.utils;
 
 import com.google.common.collect.Sets;
+import fr.lis.ikeyplus.utils.IkeyConfig.KeyRepresentation;
+import fr.lis.ikeyplus.utils.IkeyConfig.OutputFormat;
+import fr.lis.ikeyplus.utils.IkeyConfig.ScoreMethod;
+import fr.lis.ikeyplus.utils.IkeyConfig.WeightType;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -9,11 +13,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
-import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.HEADER;
-import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.OTHER;
-import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.STATISTICS;
-import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.WARNING;
-import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.fromString;
+import static fr.lis.ikeyplus.utils.IkeyConfig.KeyRepresentation.*;
+import static fr.lis.ikeyplus.utils.IkeyConfig.OutputFormat.*;
+import static fr.lis.ikeyplus.utils.IkeyConfig.ScoreMethod.*;
+import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.*;
+import static fr.lis.ikeyplus.utils.IkeyConfig.WeightType.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class IkeyConfigTest {
@@ -23,7 +27,7 @@ public class IkeyConfigTest {
 
     @Test
     public void should_parse_verbosity() {
-        assertThat(fromString("hows")).containsOnly(HEADER, OTHER, WARNING, STATISTICS);
+        assertThat(IkeyConfig.VerbosityLevel.fromString("hows")).containsOnly(HEADER, OTHER, WARNING, STATISTICS);
     }
 
     @Test
@@ -56,52 +60,52 @@ public class IkeyConfigTest {
 
     @Test
     public void should_create_format_from_string() {
-        assertThat(IkeyConfig.OutputFormat.fromString("dot")).isEqualTo(IkeyConfig.OutputFormat.DOT);
-        assertThat(IkeyConfig.OutputFormat.fromString("pdf")).isEqualTo(IkeyConfig.OutputFormat.PDF);
-        assertThat(IkeyConfig.OutputFormat.fromString("html")).isEqualTo(IkeyConfig.OutputFormat.HTML);
-        assertThat(IkeyConfig.OutputFormat.fromString("interactivehtml")).isEqualTo(IkeyConfig.OutputFormat.INTERACTIVE_HTML);
-        assertThat(IkeyConfig.OutputFormat.fromString("sdd")).isEqualTo(IkeyConfig.OutputFormat.SDD);
-        assertThat(IkeyConfig.OutputFormat.fromString("wiki")).isEqualTo(IkeyConfig.OutputFormat.WIKI);
-        assertThat(IkeyConfig.OutputFormat.fromString("txt")).isEqualTo(IkeyConfig.OutputFormat.TXT);
+        assertThat(OutputFormat.fromString("dot")).isEqualTo(DOT);
+        assertThat(OutputFormat.fromString("pdf")).isEqualTo(PDF);
+        assertThat(OutputFormat.fromString("html")).isEqualTo(HTML);
+        assertThat(OutputFormat.fromString("interactivehtml")).isEqualTo(INTERACTIVE_HTML);
+        assertThat(OutputFormat.fromString("sdd")).isEqualTo(SDD);
+        assertThat(OutputFormat.fromString("wiki")).isEqualTo(WIKI);
+        assertThat(OutputFormat.fromString("txt")).isEqualTo(TXT);
     }
 
     @Test
     public void should_default_format_from_string_to_txt() {
-        assertThat(IkeyConfig.OutputFormat.fromString("aaaa")).isEqualTo(IkeyConfig.OutputFormat.TXT);
+        assertThat(OutputFormat.fromString("aaaa")).isEqualTo(TXT);
     }
 
     @Test
     public void should_create_ScoreMethod_from_string() {
-        assertThat(IkeyConfig.ScoreMethod.fromString("xPer")).isEqualTo(IkeyConfig.ScoreMethod.XPER);
-        assertThat(IkeyConfig.ScoreMethod.fromString("jaccard")).isEqualTo(IkeyConfig.ScoreMethod.JACCARD);
-        assertThat(IkeyConfig.ScoreMethod.fromString("sokalAndMichener")).isEqualTo(IkeyConfig.ScoreMethod.SOKAL_AND_MICHENER);
+        assertThat(ScoreMethod.fromString("xPer")).isEqualTo(XPER);
+        assertThat(ScoreMethod.fromString("jaccard")).isEqualTo(JACCARD);
+        assertThat(ScoreMethod.fromString("sokalAndMichener")).isEqualTo(SOKAL_AND_MICHENER);
     }
 
     @Test
     public void should_default_ScoreMethod_from_string_to_xper() {
-        assertThat(IkeyConfig.ScoreMethod.fromString("anything")).isEqualTo(IkeyConfig.ScoreMethod.XPER);
+        assertThat(ScoreMethod.fromString("anything")).isEqualTo(XPER);
     }
 
     @Test
     public void should_create_weightType_from_string() {
-        assertThat(IkeyConfig.WeightType.fromString("global")).isEqualTo(IkeyConfig.WeightType.GLOBAL);
-        assertThat(IkeyConfig.WeightType.fromString("contextual")).isEqualTo(IkeyConfig.WeightType.CONTEXTUAL);
+        assertThat(WeightType.fromString("global")).isEqualTo(GLOBAL);
+        assertThat(WeightType.fromString("contextual")).isEqualTo(CONTEXTUAL);
     }
 
     @Test
     public void should_default_weightType_from_string_to_global() {
-        assertThat(IkeyConfig.WeightType.fromString("anything")).isEqualTo(IkeyConfig.WeightType.GLOBAL);
+        assertThat(WeightType.fromString("anything")).isEqualTo(GLOBAL);
     }
 
     @Test
     public void should_create_keyRepresentation_from_string() {
-        assertThat(IkeyConfig.KeyRepresentation.fromString("tree")).isEqualTo(IkeyConfig.KeyRepresentation.TREE);
-        assertThat(IkeyConfig.KeyRepresentation.fromString("flat")).isEqualTo(IkeyConfig.KeyRepresentation.FLAT);
+        assertThat(KeyRepresentation.fromString("tree")).isEqualTo(TREE);
+        assertThat(KeyRepresentation.fromString("flat")).isEqualTo(FLAT);
     }
 
     @Test
     public void should_default_keyRepresentation_from_string_to_flat() {
-        assertThat(IkeyConfig.KeyRepresentation.fromString("anything")).isEqualTo(IkeyConfig.KeyRepresentation.FLAT);
+        assertThat(KeyRepresentation.fromString("anything")).isEqualTo(FLAT);
     }
     @BeforeClass
     public static void setUp() {

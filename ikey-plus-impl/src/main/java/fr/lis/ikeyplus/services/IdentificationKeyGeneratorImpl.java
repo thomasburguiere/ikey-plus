@@ -2,10 +2,13 @@ package fr.lis.ikeyplus.services;
 
 import fr.lis.ikeyplus.model.*;
 import fr.lis.ikeyplus.utils.IkeyConfig;
+import fr.lis.ikeyplus.utils.IkeyConfig.ScoreMethod;
 import fr.lis.ikeyplus.utils.IkeyUtils;
 
 import java.io.Serializable;
 import java.util.*;
+
+import static fr.lis.ikeyplus.utils.IkeyConfig.ScoreMethod.*;
 
 /**
  * This class is the service generating identification keys
@@ -60,7 +63,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
             ICharacter selectedCharacter = bestCharacter(charactersScore, remainingTaxa, config, dataset);
 
             // delete characters if score method is not Xper and score = 0
-            if (config.getScoreMethod() != IkeyConfig.ScoreMethod.XPER) {
+            if (config.getScoreMethod() != XPER) {
                 for (Map.Entry<ICharacter, Float> entry : charactersScore.entrySet()) {
                     if (entry.getValue() <= 0) {
                         remainingCharacters.removeAll(entry.getKey().getAllChildren());
@@ -816,13 +819,13 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
         float out;
 
         // Sokal & Michener method
-        if (config.getScoreMethod() == IkeyConfig.ScoreMethod.SOKAL_AND_MICHENER) {
+        if (config.getScoreMethod() == SOKAL_AND_MICHENER) {
             out = 1 - ((commonPresent + commonAbsent) / (commonPresent + commonAbsent + other));
             // round to 10^-3
             out = IkeyUtils.roundFloat(out, 3);
         }
         // Jaccard Method
-        else if (config.getScoreMethod() == IkeyConfig.ScoreMethod.JACCARD) {
+        else if (config.getScoreMethod() == JACCARD) {
             try {
                 // case where description are empty
                 out = 1 - (commonPresent / (commonPresent + other));
