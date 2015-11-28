@@ -297,21 +297,21 @@ public class SDDContentHandler implements ContentHandler {
             // <Categorical> in <SummaryData>
             else if ("Categorical".equals(localName) && inSummaryData) {
                 inCategorical = true;
-                currentCodedDescriptionCharacter = this.dataSet.getCharacterById(attributes.getValue("ref"));
+                currentCodedDescriptionCharacter = dataSet.getCharacterById(attributes.getValue("ref"));
                 currentStatesList = new ArrayList<>();
             }
 
             // <State> in <Categorical>
             else if ("State".equals(localName) && inCategorical) {
                 if (currentStatesList != null) {
-                    currentStatesList.add(this.dataSet.getStateById(attributes.getValue("ref")));
+                    currentStatesList.add(dataSet.getStateById(attributes.getValue("ref")));
                 }
             }
 
             // <Status> in <Categorical>
             else if ("Status".equals(localName) && inCategorical) {
                 if (attributes.getValue("code") != null
-                        && attributes.getValue("code").equals("DataUnavailable")) {
+                        && "DataUnavailable".equals(attributes.getValue("code"))) {
                     dataUnavailableFlag = true;
                 }
             }
@@ -319,29 +319,29 @@ public class SDDContentHandler implements ContentHandler {
             // <Quantitative> in <SummaryData>
             else if ("Quantitative".equals(localName) && inSummaryData) {
                 inQuantitative = true;
-                currentCodedDescriptionCharacter = this.dataSet.getCharacterById(attributes.getValue("ref"));
+                currentCodedDescriptionCharacter = dataSet.getCharacterById(attributes.getValue("ref"));
                 currentQuantitativeMeasure = new QuantitativeMeasure();
             }
 
             // <Measure> in <Quantitative>
             else if ("Measure".equals(localName) && inQuantitative) {
                 if (currentQuantitativeMeasure != null) {
-                    if (attributes.getValue("type").equals("Min")) {
+                    if ("Min".equals(attributes.getValue("type"))) {
                         currentQuantitativeMeasure.setMin(Double.valueOf(attributes
                                 .getValue("value")));
-                    } else if (attributes.getValue("type").equals("Max")) {
+                    } else if ("Max".equals(attributes.getValue("type"))) {
                         currentQuantitativeMeasure.setMax(Double.valueOf(attributes
                                 .getValue("value")));
-                    } else if (attributes.getValue("type").equals("Mean")) {
+                    } else if ("Mean".equals(attributes.getValue("type"))) {
                         currentQuantitativeMeasure.setMean(Double.valueOf(attributes
                                 .getValue("value")));
-                    } else if (attributes.getValue("type").equals("SD")) {
+                    } else if ("SD".equals(attributes.getValue("type"))) {
                         currentQuantitativeMeasure.setSD(Double.valueOf(attributes
                                 .getValue("value")));
-                    } else if (attributes.getValue("type").equals("UMethLower")) {
+                    } else if ("UMethLower".equals(attributes.getValue("type"))) {
                         currentQuantitativeMeasure.setUMethLower(Double.valueOf(attributes
                                 .getValue("value")));
-                    } else if (attributes.getValue("type").equals("UMethUpper")) {
+                    } else if ("UMethUpper".equals(attributes.getValue("type"))) {
                         currentQuantitativeMeasure.setUMethUpper(Double.valueOf(attributes
                                 .getValue("value")));
                     }
@@ -351,7 +351,7 @@ public class SDDContentHandler implements ContentHandler {
             // <Status> in <Quantitative>
             else if ("Status".equals(localName) && inCategorical) {
                 if (attributes.getValue("code") != null
-                        && attributes.getValue("code").equals("DataUnavailable")) {
+                        && "DataUnavailable".equals(attributes.getValue("code"))) {
                     dataUnavailableFlag = true;
                 }
             }
@@ -371,15 +371,15 @@ public class SDDContentHandler implements ContentHandler {
                 if (attributes.getValue("context").equals(config.getWeightContext().toString())) {
                     int currentRating = IkeyConfig.WeightValue.fromString(attributes.getValue("rating")).getIntWeight();
                     if (currentCodedDescriptionCharacter != null) {
-                        if (this.ratingsCounter.get(currentCodedDescriptionCharacter) == null) {
-                            this.ratingsCounter.put(currentCodedDescriptionCharacter, 0);
+                        if (ratingsCounter.get(currentCodedDescriptionCharacter) == null) {
+                            ratingsCounter.put(currentCodedDescriptionCharacter, 0);
                             currentCodedDescriptionCharacter.setWeight(0);
                         }
 
                         currentCodedDescriptionCharacter.setWeight(currentCodedDescriptionCharacter
                                 .getWeight() + currentRating);
-                        this.ratingsCounter.put(currentCodedDescriptionCharacter,
-                                this.ratingsCounter.get(currentCodedDescriptionCharacter) + 1);
+                        ratingsCounter.put(currentCodedDescriptionCharacter,
+                                ratingsCounter.get(currentCodedDescriptionCharacter) + 1);
 
                         if (config.getWeightType() == IkeyConfig.WeightType.CONTEXTUAL) {
                             currentCodedDescription.addCharacterWeight(currentCodedDescriptionCharacter,
@@ -428,22 +428,22 @@ public class SDDContentHandler implements ContentHandler {
                 // null description will be considered as unknown data. Empty states list or
                 // QuantitativeMeasure
                 // will be considered as not specified (not described).
-                for (Taxon taxon : this.dataSet.getCodedDescriptions().keySet()) {
-                    for (ICharacter character : this.dataSet.getCharacters()) {
-                        if (this.dataSet.getCodedDescriptions().get(taxon).getCharacterDescription(character) == null) {
+                for (Taxon taxon : dataSet.getCodedDescriptions().keySet()) {
+                    for (ICharacter character : dataSet.getCharacters()) {
+                        if (dataSet.getCodedDescriptions().get(taxon).getCharacterDescription(character) == null) {
                             if (character.isSupportsCategoricalData()) {
-                                this.dataSet.getCodedDescriptions().get(taxon)
+                                dataSet.getCodedDescriptions().get(taxon)
                                         .addCharacterDescription(character, new ArrayList<State>());
                             } else {
-                                this.dataSet.getCodedDescriptions().get(taxon)
+                                dataSet.getCodedDescriptions().get(taxon)
                                         .addCharacterDescription(character, new QuantitativeMeasure());
                             }
                             // put to null Unknown data
-                        } else if (this.dataSet.getCodedDescriptions().get(taxon)
+                        } else if (dataSet.getCodedDescriptions().get(taxon)
                                 .getCharacterDescription(character) instanceof String
-                                && this.dataSet.getCodedDescriptions().get(taxon)
+                                && dataSet.getCodedDescriptions().get(taxon)
                                 .getCharacterDescription(character).equals(IkeyUtils.UNKNOWN_DATA)) {
-                            this.dataSet.getCodedDescriptions().get(taxon)
+                            dataSet.getCodedDescriptions().get(taxon)
                                     .addCharacterDescription(character, null);
                         }
                     }
@@ -451,10 +451,10 @@ public class SDDContentHandler implements ContentHandler {
 
                 // update (average) the weight for all characters if the parameter
                 // useContextualCharacterWeights is not enabled
-                for (ICharacter character : this.dataSet.getCharacters()) {
-                    if (this.ratingsCounter.get(character) != null) {
+                for (ICharacter character : dataSet.getCharacters()) {
+                    if (ratingsCounter.get(character) != null) {
                         character.setWeight(character.getWeight()
-                                / (float) (this.ratingsCounter.get(character)));
+                                / (float) (ratingsCounter.get(character)));
                     }
                 }
             }
@@ -475,7 +475,7 @@ public class SDDContentHandler implements ContentHandler {
                 } else if (inQuantitativeCharacter) {
                     currentQuantitativeCharacter.setName(buffer.toString());
                 } else if (isDataSetLabel) {
-                    this.dataSet.setLabel(buffer.toString());
+                    dataSet.setLabel(buffer.toString());
                     isDataSetLabel = false;
                 }
             }
@@ -505,14 +505,14 @@ public class SDDContentHandler implements ContentHandler {
             // <CategoricalCharacter>
             else if ("CategoricalCharacter".equals(localName) && inCharacters) {
                 inCategoricalCharacter = false;
-                this.dataSet.getCharacters().add(currentCategoricalCharacter);
+                dataSet.getCharacters().add(currentCategoricalCharacter);
                 currentCategoricalCharacter = null;
             }
 
             // <QuantitativeCharacter>
             else if ("QuantitativeCharacter".equals(localName) && inCharacters) {
                 inQuantitativeCharacter = false;
-                this.dataSet.getCharacters().add(currentQuantitativeCharacter);
+                dataSet.getCharacters().add(currentQuantitativeCharacter);
                 currentQuantitativeCharacter = null;
             }
 
@@ -553,13 +553,13 @@ public class SDDContentHandler implements ContentHandler {
             // <CharNode> in <Nodes>
             else if ("CharNode".equals(localName) && inNodes) {
                 inCharNode = false;
-                if (currentInapplicableState.size() > 0) {
+                if (!currentInapplicableState.isEmpty()) {
                     currentCharacterNode.setParentCharacter(dataSet
                             .getCharacterByState(currentInapplicableState.get(0)));
                     currentCharacterNode.getInapplicableStates().addAll(currentInapplicableState);
-                } else if (currentOnlyApplicableState.size() > 0) {
+                } else if (!currentOnlyApplicableState.isEmpty()) {
                     ICharacter character = dataSet.getCharacterByState(currentOnlyApplicableState.get(0));
-                    if (character != null && character instanceof CategoricalCharacter) {
+                    if (character instanceof CategoricalCharacter) {
                         currentCharacterNode.setParentCharacter(character);
                         List<State> tempList = new ArrayList<>(
                                 ((CategoricalCharacter) character).getStates());
@@ -614,7 +614,7 @@ public class SDDContentHandler implements ContentHandler {
             // <CodedDescription> in <CodedDescriptions>
             else if ("CodedDescription".equals(localName) && inCodedDescriptions) {
                 inCodedDescription = false;
-                this.dataSet.addCodedDescription(currentTaxon, currentCodedDescription);
+                dataSet.addCodedDescription(currentTaxon, currentCodedDescription);
                 currentTaxon = null;
             }
 
@@ -687,11 +687,7 @@ public class SDDContentHandler implements ContentHandler {
 
             // <Type> in <MediaObject>
             else if ("Type".equals(localName) && inMediaObject && mediaObjectId != null) {
-                if (buffer != null && buffer.toString().equalsIgnoreCase("image")) {
-                    isImageType = true;
-                } else {
-                    isImageType = false;
-                }
+                isImageType = buffer != null && "image".equalsIgnoreCase(buffer.toString());
             }
         }
     }
@@ -748,8 +744,8 @@ public class SDDContentHandler implements ContentHandler {
         // indentation characters.
         data = data.replaceAll("\n", " ");
         data = data.replaceAll("[\\s]+", " ");
-        if (this.buffer != null) {
-            this.buffer.append(data);
+        if (buffer != null) {
+            buffer.append(data);
         }
     }
 
