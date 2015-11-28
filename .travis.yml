@@ -3,6 +3,5 @@ language: java
 before_install:
   - pip install --user codecov
   - npm install -g bower
-  - bower install
 after_success:
   - codecov
