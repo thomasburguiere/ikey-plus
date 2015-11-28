@@ -73,6 +73,9 @@
     <method>
       <option name="BuildArtifacts" enabled="true">
         <artifact name="ikey-plus-rest:war exploded" />
+      </option>
+      <option name="Maven.BeforeRunTask" enabled="true" file="$PROJECT_DIR$/pom.xml" goal="process-sources" />
+      <option name="BuildArtifacts" enabled="true">
         <artifact name="ikey-plus-web:war exploded" />
       </option>
     </method>
