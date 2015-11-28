@@ -33,6 +33,7 @@
         <version.servlet-api>3.0.1</version.servlet-api>
         <cxf.version>2.6.16</cxf.version>
         <catalina.version>7.0.62</catalina.version>
+        <version.exec-maven-plugin>1.4.0</version.exec-maven-plugin>
     </properties>
     <build>
         <plugins>
