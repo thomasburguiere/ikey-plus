@@ -7,6 +7,12 @@ module.exports = function (config) {
     'use strict';
 
     config.set({
+        preprocessors: {
+            // source files, that you wanna generate coverage for
+            // do not include tests or libraries
+            // (these files will be instrumented by Istanbul)
+            'src/*.js': ['coverage']
+        },
         // enable / disable watching file and executing tests whenever any file changes
         autoWatch: true,
 
@@ -43,7 +49,7 @@ module.exports = function (config) {
         exclude: [],
 
         // web server port
-        port: 8080,
+        port: 9876,
 
         // Start these browsers, currently available:
         // - Chrome
@@ -60,7 +66,8 @@ module.exports = function (config) {
         // Which plugins to enable
         plugins: [
             "karma-chrome-launcher",
-            "karma-jasmine"
+            "karma-jasmine",
+            "karma-coverage"
         ],
 
         // Continuous Integration mode

@@ -84,6 +84,11 @@ module.exports = function (grunt) {
                     },
                     middleware: function (connect) {
                         return [
+                            function(req, res, next) {
+                                res.setHeader('Access-Control-Allow-Origin', '*');
+                                res.setHeader('Access-Control-Allow-Methods', '*');
+                                next();
+                            },
                             connect.static('.tmp'),
                             connect().use(
                                 '/bower_components',
