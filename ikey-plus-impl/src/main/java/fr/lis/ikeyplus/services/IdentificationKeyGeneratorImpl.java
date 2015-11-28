@@ -416,7 +416,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
                                                     DataSet dataset,
                                                     IkeyConfig config,
                                                     int maxNbStatesPerCharacter) {
-        LinkedHashMap<ICharacter, Float> scoreMap = new LinkedHashMap<>();
+        HashMap<ICharacter, Float> scoreMap = new LinkedHashMap<>();
         for (ICharacter character : characters) {
             if (character.isSupportsCategoricalData()) {
                 scoreMap.put(character,

@@ -33,7 +33,7 @@ import java.util.Queue;
  * @author Thomas Burguiere
  */
 public abstract class SingleAccessKeyTreeDumper {
-    public static final byte[] BOM  = new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF};
+    private static final byte[] BOM  = new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF};
 
     // SDD DUMP
 
