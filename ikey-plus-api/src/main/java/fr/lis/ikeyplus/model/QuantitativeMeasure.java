@@ -14,7 +14,7 @@ public class QuantitativeMeasure {
     private Double uMethLower = null;
     private Double uMethUpper = null;
 
-    private boolean minInclude = true;
+    private final boolean minInclude = true;
     private boolean maxInclude = true;
 
     public void setMax(Double max) {
@@ -69,9 +69,10 @@ public class QuantitativeMeasure {
         return start + getCalculateMinimum() + ", " + getCalculateMaximum() + end;
     }
 
+    @SuppressWarnings("LiteralAsArgToStringEquals")
     public String toStringInterval(String unit) {
 
-        if (unit != null && !unit.equals("")) {
+        if (unit != null && !"".equals(unit)) {
             return toStringInterval() + " (" + unit + ")";
         }
         return toStringInterval();

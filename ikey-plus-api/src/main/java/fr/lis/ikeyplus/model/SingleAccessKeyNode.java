@@ -56,7 +56,7 @@ public class SingleAccessKeyNode {
 
     public String getNodeLabel(){
         final StringBuilder output = new StringBuilder();
-        if (children.size() == 0) {
+        if (children.isEmpty()) {
             output.append(" -> ");
             output.append(getNodeTaxaLabel());
         } else {
@@ -109,7 +109,7 @@ public class SingleAccessKeyNode {
     }
 
     public boolean hasChild() {
-        return children.size() > 0;
+        return !children.isEmpty();
     }
 
     public String getNodeDescription() {

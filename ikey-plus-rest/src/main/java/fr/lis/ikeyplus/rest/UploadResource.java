@@ -1,5 +1,6 @@
 package fr.lis.ikeyplus.rest;
 
+import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 import org.apache.cxf.message.Attachment;
 
 import javax.ws.rs.Consumes;
@@ -18,8 +19,7 @@ public class UploadResource {
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(TEXT_PLAIN)
-    public String upload(
-            List<Attachment> atts) {
+    public String upload(MultipartBody body) {
         return "works";
     }
 }

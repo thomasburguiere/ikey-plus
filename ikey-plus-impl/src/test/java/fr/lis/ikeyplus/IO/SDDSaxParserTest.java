@@ -18,8 +18,7 @@ public class SDDSaxParserTest {
 
     private static final int EXPECTED_NB_OF_CHARACTERS = 303;
     private static final int EXPECTED_NB_OF_TAXA = 144;
-    public static final String DATASET_NAME = "Project: Cichorieae";
-    public Logger logger = Logger.getAnonymousLogger();
+    private static final String DATASET_NAME = "Project: Cichorieae";
 
     @Test
     public void should_parse_local_file() throws Exception {

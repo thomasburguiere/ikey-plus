@@ -47,7 +47,7 @@ public class State {
     }
 
     public String getFirstImage(DataSet dataSet) {
-        if (dataSet != null && mediaObjectKeys != null && mediaObjectKeys.size() > 0) {
+        if (dataSet != null && mediaObjectKeys != null && !mediaObjectKeys.isEmpty()) {
             if (dataSet.getMediaObject(mediaObjectKeys.get(0)).startsWith("http")) {
                 return dataSet.getMediaObject(mediaObjectKeys.get(0));
             }
@@ -56,7 +56,7 @@ public class State {
     }
 
     public String getFirstImageKey() {
-        if (mediaObjectKeys.size() > 0) {
+        if (!mediaObjectKeys.isEmpty()) {
             return mediaObjectKeys.get(0);
         }
         return null;

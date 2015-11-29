@@ -15,7 +15,7 @@ import java.util.Date;
  *
  * @author Thomas burguiere
  */
-public class Worker implements Job {
+class Worker implements Job {
 
     public void execute(JobExecutionContext context) throws JobExecutionException {
 

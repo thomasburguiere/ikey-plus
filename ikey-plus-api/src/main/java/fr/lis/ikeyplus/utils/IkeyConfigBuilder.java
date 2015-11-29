@@ -20,9 +20,8 @@ public class IkeyConfigBuilder {
     IkeyConfigBuilder() {
     }
 
-    public IkeyConfigBuilder format(IkeyConfig.OutputFormat format) {
+    public void format(IkeyConfig.OutputFormat format) {
         this.format = format;
-        return this;
     }
 
     public IkeyConfigBuilder representation(IkeyConfig.KeyRepresentation representation) {
@@ -30,14 +29,12 @@ public class IkeyConfigBuilder {
         return this;
     }
 
-    public IkeyConfigBuilder fewStatesCharacterFirst() {
+    public void fewStatesCharacterFirst() {
         this.fewStatesCharacterFirst = true;
-        return this;
     }
 
-    public IkeyConfigBuilder mergeCharacterStatesIfSameDiscrimination() {
+    public void mergeCharacterStatesIfSameDiscrimination() {
         this.mergeCharacterStatesIfSameDiscrimination = true;
-        return this;
     }
 
     public IkeyConfigBuilder enablePruning() {
@@ -55,9 +52,8 @@ public class IkeyConfigBuilder {
         return this;
     }
 
-    public IkeyConfigBuilder weightType(IkeyConfig.WeightType weightType) {
+    public void weightType(IkeyConfig.WeightType weightType) {
         this.weightType = weightType;
-        return this;
     }
 
     public IkeyConfigBuilder verbosity(IkeyConfig.VerbosityLevel verbosityLevel) {

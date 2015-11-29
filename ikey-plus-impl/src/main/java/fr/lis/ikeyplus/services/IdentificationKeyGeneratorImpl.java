@@ -52,7 +52,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
                                                    DataSet dataset,
                                                    int maxNbStatesPerCharacter) {
 
-        if (remainingCharacters.size() > 0 && remainingTaxa.size() > 1) {
+        if (!remainingCharacters.isEmpty() && remainingTaxa.size() > 1) {
 
             // get the list of characters which discriminant power depends on the child character
             List<ICharacter> childDependantCharacters = new ArrayList<>();
@@ -108,7 +108,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
                             ((CategoricalCharacter) selectedCharacter), state, dataset);
 
                     // test if we have to stop the branch or continue
-                    if (newRemainingTaxa.size() > 0) {
+                    if (!newRemainingTaxa.isEmpty()) {
 
                         // init new node
                         SingleAccessKeyNode node = new SingleAccessKeyNode();
@@ -166,7 +166,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
                             ((QuantitativeCharacter) selectedCharacter), quantitativeMeasure, dataset);
 
                     // test if we have to stop the branch or continue
-                    if (newRemainingTaxa.size() > 0) {
+                    if (!newRemainingTaxa.isEmpty()) {
 
                         // init new node
                         SingleAccessKeyNode node = new SingleAccessKeyNode();
@@ -206,7 +206,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
 
             // if taxa are not described and if verbosity string contains correct tag, create a node
             // "Other (not described)"
-            if (config.getVerbosity().contains(IkeyConfig.VerbosityLevel.OTHER) && notDescribedTaxa.size() > 0) {
+            if (config.getVerbosity().contains(IkeyConfig.VerbosityLevel.OTHER) && !notDescribedTaxa.isEmpty()) {
                 // init new node
                 SingleAccessKeyNode notDescribedNode = new SingleAccessKeyNode();
                 notDescribedNode.setCharacter(selectedCharacter);
@@ -266,7 +266,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
         // current state
         for (Taxon taxon : remainingTaxa) {
             if (dataset.getCodedDescription(taxon).getCharacterDescription(character) == null
-                    || ((List<State>) dataset.getCodedDescription(taxon).getCharacterDescription(character))
+                    || ((Collection<State>) dataset.getCodedDescription(taxon).getCharacterDescription(character))
                     .contains(state)) {
                 newRemainingTaxa.add(taxon);
             }
@@ -301,8 +301,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
         // init not described taxa list with taxa without description
         for (Taxon taxon : remainingTaxa) {
             if (dataset.getCodedDescription(taxon).getCharacterDescription(character) != null
-                    && ((List<State>) dataset.getCodedDescription(taxon).getCharacterDescription(character))
-                    .size() == 0) {
+                    && ((Collection<State>) dataset.getCodedDescription(taxon).getCharacterDescription(character)).isEmpty()) {
                 notDescribedTaxa.add(taxon);
             }
         }
@@ -444,7 +443,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
             final ICharacter character = characterScoreEntry.getKey();
             final Float score = characterScoreEntry.getValue();
 
-            if (character.isSupportsCategoricalData() && character.getChildCharacters().size() > 0) {
+            if (character.isSupportsCategoricalData() && !character.getChildCharacters().isEmpty()) {
                 float max = getMaxChildScore(scoreMap, character);
                 if (score < max) {
                     scoreMap.put(character, max);
@@ -616,7 +615,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
         int taxaNumber = 0;
         for (Taxon taxon : remainingTaxa) {
             if (dataset.getCodedDescription(taxon).getCharacterDescription(character) != null) {
-                taxaNumber += ((List<State>) dataset.getCodedDescription(taxon).getCharacterDescription(
+                taxaNumber += ((Collection<State>) dataset.getCodedDescription(taxon).getCharacterDescription(
                         character)).size();
             }
         }
@@ -645,14 +644,14 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
                             remainingTaxa.get(j)).getCharacterDescription(character);
 
                     // if at least one description is empty for the current character
-                    if ((statesList1 != null && statesList1.size() == 0)
-                            || (statesList2 != null && statesList2.size() == 0)) {
+                    if ((statesList1 != null && statesList1.isEmpty())
+                            || (statesList2 != null && statesList2.isEmpty())) {
                         isAlwaysDescribed = false;
                     }
 
                     // if one description is unknown and the other have 0 state checked
-                    if ((statesList1 == null && statesList2 != null && statesList2.size() == 0)
-                            || (statesList2 == null && statesList1 != null && statesList1.size() == 0)) {
+                    if ((statesList1 == null && statesList2 != null && statesList2.isEmpty())
+                            || (statesList2 == null && statesList1 != null && statesList1.isEmpty())) {
                         score++;
                     } else if (statesList1 != null && statesList2 != null) {
 

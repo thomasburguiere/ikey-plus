@@ -94,7 +94,7 @@ public class Character implements ICharacter {
     }
 
     public String getFirstImage(DataSet dataset) {
-        if (dataset != null && mediaObjectKeys != null && mediaObjectKeys.size() > 0
+        if (dataset != null && mediaObjectKeys != null && !mediaObjectKeys.isEmpty()
                 && dataset.getMediaObject(mediaObjectKeys.get(0)).startsWith("http")) {
             return dataset.getMediaObject(mediaObjectKeys.get(0));
         }

@@ -22,8 +22,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class IkeyConfigTest {
 
-    public static final String ERROR_MESSAGE = "Caralho Fehler";
-    public static final String EXCEPTION_MESSAGE = "kurwa";
+    private static final String ERROR_MESSAGE = "Caralho Fehler";
+    private static final String EXCEPTION_MESSAGE = "kurwa";
 
     @Test
     public void should_parse_verbosity() {

@@ -19,7 +19,7 @@ public class SingleAccessKeyTree {
         this(null, config);
     }
 
-    public SingleAccessKeyTree(SingleAccessKeyNode root, IkeyConfig utils) {
+    private SingleAccessKeyTree(SingleAccessKeyNode root, IkeyConfig utils) {
         super();
         this.root = root;
         this.config = utils;
@@ -94,7 +94,7 @@ public class SingleAccessKeyTree {
      * requires it to be displayed. Returns an empty String otherwise.
      */
     public String nodeDescriptionAnalysis(SingleAccessKeyNode node) {
-        if (node.getNodeDescription() != null && node.getNodeDescription().trim().length() > 0
+        if (node.getNodeDescription() != null && !node.getNodeDescription().trim().isEmpty()
                 && config.getVerbosity().contains(IkeyConfig.VerbosityLevel.WARNING)) {
             return " (" + node.getNodeDescription() + ")";
         }

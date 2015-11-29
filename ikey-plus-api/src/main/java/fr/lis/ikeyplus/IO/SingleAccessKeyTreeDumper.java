@@ -34,6 +34,7 @@ import java.util.Queue;
  */
 public abstract class SingleAccessKeyTreeDumper {
     private static final byte[] BOM  = new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF};
+    public static final int INITIAL_BUFFER_CAPACITY = 4096;
 
     // SDD DUMP
 
@@ -1837,7 +1838,7 @@ public abstract class SingleAccessKeyTreeDumper {
     }
 
     private static String readStream(InputStream is) throws IOException {
-        byte[] buffer = new byte[4096];
+        byte[] buffer = new byte[INITIAL_BUFFER_CAPACITY];
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         //
         //some setup code
