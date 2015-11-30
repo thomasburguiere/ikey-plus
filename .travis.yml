@@ -5,3 +5,8 @@ before_install:
   - npm install -g bower
 after_success:
   - codecov
+
+cache:
+  directories:
+    - $HOME/.npm
+    - $HOME/.m2
