@@ -34,7 +34,7 @@ import java.util.Queue;
  */
 public abstract class SingleAccessKeyTreeDumper {
     private static final byte[] BOM  = new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF};
-    public static final int INITIAL_BUFFER_CAPACITY = 4096;
+    private static final int INITIAL_BUFFER_CAPACITY = 4096;
 
     // SDD DUMP
 

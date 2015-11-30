@@ -17,6 +17,7 @@ import java.util.Date;
  */
 class Worker implements Job {
 
+    @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
 
         String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
