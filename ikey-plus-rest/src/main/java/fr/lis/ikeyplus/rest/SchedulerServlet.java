@@ -40,7 +40,7 @@ public class SchedulerServlet extends GenericServlet {
 
             // Get Servlet Context
             ServletContext servletContext = getServletContext();
-            // Get Schedule Factory from servlet sontext
+            // Get Schedule Factory from servlet context
             SchedulerFactory schedulerFactory = (SchedulerFactory) servletContext
                     .getAttribute(QuartzInitializerServlet.QUARTZ_FACTORY_KEY);
 

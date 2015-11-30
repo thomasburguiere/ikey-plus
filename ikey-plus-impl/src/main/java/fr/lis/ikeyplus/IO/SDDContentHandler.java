@@ -62,7 +62,7 @@ public class SDDContentHandler implements ContentHandler {
     private boolean isFirstCharacterTree = true;
     // buffer to collect text value
     private StringBuffer buffer = null;
-    // kwnoledge base
+    // knowledge base
     private DataSet dataSet = null;
     // IkeyConfig object
     private IkeyConfig config = null;

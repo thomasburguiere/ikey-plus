@@ -412,7 +412,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
     }
 
     private Map<ICharacter, Float> charactersScores(List<ICharacter> characters,
-                                                    List<Taxon> remaningTaxa,
+                                                    List<Taxon> remainingTaxa,
                                                     List<ICharacter> childDependantCharacters,
                                                     List<ICharacter> alreadyUsedCharacter,
                                                     DataSet dataset,
@@ -422,11 +422,11 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
         for (ICharacter character : characters) {
             if (character.isSupportsCategoricalData()) {
                 scoreMap.put(character,
-                        categoricalCharacterScore((CategoricalCharacter) character, remaningTaxa, dataset, config, maxNbStatesPerCharacter));
+                        categoricalCharacterScore((CategoricalCharacter) character, remainingTaxa, dataset, config, maxNbStatesPerCharacter));
             } else {
                 scoreMap.put(
                         character,
-                        quantitativeCharacterScore((QuantitativeCharacter) character, remaningTaxa,
+                        quantitativeCharacterScore((QuantitativeCharacter) character, remainingTaxa,
                                 alreadyUsedCharacter, dataset, config, maxNbStatesPerCharacter));
             }
         }
