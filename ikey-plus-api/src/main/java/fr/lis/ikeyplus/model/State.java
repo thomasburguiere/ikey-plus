@@ -3,6 +3,7 @@ package fr.lis.ikeyplus.model;
 import com.google.common.base.Objects;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -42,7 +43,7 @@ public class State {
         this.id = id;
     }
 
-    public List<String> getMediaObjectKeys() {
+    public Collection<String> getMediaObjectKeys() {
         return mediaObjectKeys;
     }
 

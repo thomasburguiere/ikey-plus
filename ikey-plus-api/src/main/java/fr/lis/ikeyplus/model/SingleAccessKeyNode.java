@@ -1,6 +1,7 @@
 package fr.lis.ikeyplus.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -100,7 +101,7 @@ public class SingleAccessKeyNode {
         children.add(singleAccessKeyNode);
     }
 
-    public List<Taxon> getRemainingTaxa() {
+    public Collection<Taxon> getRemainingTaxa() {
         return remainingTaxa;
     }
 

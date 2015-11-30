@@ -16,6 +16,7 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -561,7 +562,7 @@ public class SDDContentHandler implements ContentHandler {
                     ICharacter character = dataSet.getCharacterByState(currentOnlyApplicableState.get(0));
                     if (character instanceof CategoricalCharacter) {
                         currentCharacterNode.setParentCharacter(character);
-                        List<State> tempList = new ArrayList<>(
+                        Collection<State> tempList = new ArrayList<>(
                                 ((CategoricalCharacter) character).getStates());
                         tempList.removeAll(currentOnlyApplicableState);
                         currentCharacterNode.getInapplicableStates().addAll(tempList);

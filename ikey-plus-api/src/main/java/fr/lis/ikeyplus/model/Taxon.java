@@ -1,6 +1,7 @@
 package fr.lis.ikeyplus.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class Taxon {
         this.name = name;
     }
 
-    public List<String> getMediaObjectKeys() {
+    public Collection<String> getMediaObjectKeys() {
         return mediaObjectKeys;
     }
 

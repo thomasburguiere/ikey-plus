@@ -220,7 +220,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
         }
     }
 
-    private boolean mergeNodesIfSameDiscrimination(List<SingleAccessKeyNode> futureChildNodes,
+    private boolean mergeNodesIfSameDiscrimination(Iterable<SingleAccessKeyNode> futureChildNodes,
                                                    SingleAccessKeyNode node) {
 
         for (SingleAccessKeyNode futureChildNode : futureChildNodes) {
@@ -255,8 +255,8 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
         return isOptimized;
     }
 
-    private List<Taxon> getRemainingTaxa(List<Taxon> remainingTaxa,
-                                         CategoricalCharacter character,
+    private List<Taxon> getRemainingTaxa(Iterable<Taxon> remainingTaxa,
+                                         ICharacter character,
                                          State state,
                                          DataSet dataset) {
 
@@ -274,8 +274,8 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
         return newRemainingTaxa;
     }
 
-    private List<Taxon> getRemainingTaxa(List<Taxon> remainingTaxa,
-                                         QuantitativeCharacter character,
+    private List<Taxon> getRemainingTaxa(Iterable<Taxon> remainingTaxa,
+                                         ICharacter character,
                                          QuantitativeMeasure quantitativeMeasure,
                                          DataSet dataset) {
 
@@ -292,7 +292,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
         return newRemainingTaxa;
     }
 
-    private List<Taxon> getNotDescribedTaxa(List<Taxon> remainingTaxa,
+    private List<Taxon> getNotDescribedTaxa(Iterable<Taxon> remainingTaxa,
                                             CategoricalCharacter character,
                                             DataSet dataset) {
 
@@ -308,7 +308,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
         return notDescribedTaxa;
     }
 
-    private List<Taxon> getNotDescribedTaxa(List<Taxon> remainingTaxa,
+    private List<Taxon> getNotDescribedTaxa(Iterable<Taxon> remainingTaxa,
                                             QuantitativeCharacter character,
                                             DataSet dataset) {
 
@@ -388,7 +388,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
         return quantitativeMeasures;
     }
 
-    private List<Double> getAllNumericalValues(ICharacter character, List<Taxon> remainingTaxa, DataSet dataset) {
+    private List<Double> getAllNumericalValues(ICharacter character, Iterable<Taxon> remainingTaxa, DataSet dataset) {
 
         List<Double> allValues = new ArrayList<>();
 
@@ -411,7 +411,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
         return allValues;
     }
 
-    private Map<ICharacter, Float> charactersScores(List<ICharacter> characters,
+    private Map<ICharacter, Float> charactersScores(Iterable<ICharacter> characters,
                                                     List<Taxon> remainingTaxa,
                                                     List<ICharacter> childDependantCharacters,
                                                     List<ICharacter> alreadyUsedCharacter,
@@ -438,7 +438,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
     }
 
     private void considerChildCharacterScore(HashMap<ICharacter, Float> scoreMap,
-                                             List<ICharacter> childDependantCharacters) {
+                                             Collection<ICharacter> childDependantCharacters) {
         for (Map.Entry<ICharacter, Float> characterScoreEntry : scoreMap.entrySet()) {
             final ICharacter character = characterScoreEntry.getKey();
             final Float score = characterScoreEntry.getValue();
@@ -611,7 +611,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
         return bestCharacter;
     }
 
-    private int getTaxaNumberForAllStates(CategoricalCharacter character, List<Taxon> remainingTaxa, DataSet dataset) {
+    private int getTaxaNumberForAllStates(ICharacter character, Iterable<Taxon> remainingTaxa, DataSet dataset) {
         int taxaNumber = 0;
         for (Taxon taxon : remainingTaxa) {
             if (dataset.getCodedDescription(taxon).getCharacterDescription(character) != null) {
@@ -638,9 +638,9 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
                         && dataset.isApplicable(remainingTaxa.get(i), character)
                         && dataset.isApplicable(remainingTaxa.get(j), character)) {
 
-                    List<State> statesList1 = (List<State>) dataset.getCodedDescription(
+                    Collection<State> statesList1 = (List<State>) dataset.getCodedDescription(
                             remainingTaxa.get(i)).getCharacterDescription(character);
-                    List<State> statesList2 = (List<State>) dataset.getCodedDescription(
+                    Collection<State> statesList2 = (List<State>) dataset.getCodedDescription(
                             remainingTaxa.get(j)).getCharacterDescription(character);
 
                     // if at least one description is empty for the current character
@@ -706,9 +706,9 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
         return score;
     }
 
-    private float quantitativeCharacterScore(QuantitativeCharacter character,
+    private float quantitativeCharacterScore(ICharacter character,
                                              List<Taxon> remainingTaxa,
-                                             List<ICharacter> alreadyUsedCharacter,
+                                             Collection<ICharacter> alreadyUsedCharacter,
                                              DataSet dataset,
                                              IkeyConfig config,
                                              int maxNbStatesPerCharacter) {
