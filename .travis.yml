@@ -3,6 +3,7 @@ language: java
 before_install:
   - pip install --user codecov
   - npm install -g bower
+  - npm install grunt-cli -g
 after_success:
   - codecov
 
