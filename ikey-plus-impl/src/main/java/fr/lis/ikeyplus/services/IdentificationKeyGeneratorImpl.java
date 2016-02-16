@@ -105,7 +105,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
 
                 for (State state : ((CategoricalCharacter) selectedCharacter).getStates()) {
                     List<Taxon> newRemainingTaxa = getRemainingTaxa(remainingTaxa,
-                            ((CategoricalCharacter) selectedCharacter), state, dataset);
+                            selectedCharacter, state, dataset);
 
                     // test if we have to stop the branch or continue
                     if (!newRemainingTaxa.isEmpty()) {
@@ -163,7 +163,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
 
                 for (QuantitativeMeasure quantitativeMeasure : quantitativeMeasures) {
                     List<Taxon> newRemainingTaxa = getRemainingTaxa(remainingTaxa,
-                            ((QuantitativeCharacter) selectedCharacter), quantitativeMeasure, dataset);
+                            selectedCharacter, quantitativeMeasure, dataset);
 
                     // test if we have to stop the branch or continue
                     if (!newRemainingTaxa.isEmpty()) {
@@ -426,7 +426,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
             } else {
                 scoreMap.put(
                         character,
-                        quantitativeCharacterScore((QuantitativeCharacter) character, remainingTaxa,
+                        quantitativeCharacterScore(character, remainingTaxa,
                                 alreadyUsedCharacter, dataset, config, maxNbStatesPerCharacter));
             }
         }
@@ -531,7 +531,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
 
             // if the set of scores contains at least one score similar to the best score
             if (charactersScore.containsValue(bestScore) && bestCharacter.isSupportsCategoricalData()) {
-                int lessTaxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) bestCharacter,
+                int lessTaxaNumber = getTaxaNumberForAllStates(bestCharacter,
                         remainingTaxa, dataset);
 
                 for (Map.Entry<ICharacter, Float> characterScoreEntry : charactersScore.entrySet()) {
@@ -546,7 +546,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
                                 && character.isSupportsCategoricalData()) {
                             // get the number of taxa of all child nodes of the current CategoricalCharacter
                             int currentTaxaNumber = getTaxaNumberForAllStates(
-                                    (CategoricalCharacter) character, remainingTaxa, dataset);
+                                    character, remainingTaxa, dataset);
                             // if the current taxa number is lower than the less taxa number
                             if (currentTaxaNumber < lessTaxaNumber) {
                                 bestScore = score;
@@ -585,7 +585,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
 
             // if the set of scores contains at least one score similar to the best score
             if (charactersScore.containsValue(bestScore) && bestCharacter.isSupportsCategoricalData()) {
-                int lessTaxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) bestCharacter,
+                int lessTaxaNumber = getTaxaNumberForAllStates(bestCharacter,
                         remainingTaxa, dataset);
 
                 for (Map.Entry<ICharacter, Float> characterScoreEntry : charactersScore.entrySet()) {
@@ -595,7 +595,7 @@ public class IdentificationKeyGeneratorImpl implements IdentificationKeyGenerato
                     if (character.getWeight() == bestWeight && score == bestScore
                             && character.isSupportsCategoricalData()) {
                         // get the number of taxa of all child nodes of the current CategoricalCharacter
-                        int currentTaxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) character,
+                        int currentTaxaNumber = getTaxaNumberForAllStates(character,
                                 remainingTaxa, dataset);
                         // if the current taxa number is lower than the less taxa number
                         if (currentTaxaNumber < lessTaxaNumber) {
