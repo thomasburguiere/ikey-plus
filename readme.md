@@ -51,7 +51,7 @@ File resultFile = SingleAccessKeyTreeDumper
 
 ### REST API ##
 
-Coming soon...
+Documentation coming soon...
 
 ## Contributing ##
 Feel free to contribute. If you don't know how, code [coverage](https://codecov.io/github/thomasburguiere/ikey-plus?branch=master) and code [quality](https://www.codacy.com/app/thomas-burguiere/ikey-plus/dashboard) can always be improved.
