@@ -13,7 +13,7 @@
 - Visotheary Ung (visotheary.riviere_ung@upmc.fr)
 - Régine Vignes-Lebbe (regine.vignes_lebbe@upmc.fr)
 
-## Disclaimer ##
+## Disclaimer
 
 This is a fork of one of the app I worked on during my days at [Laboratoire d'Informatique et Systématique](http://www.infosyslab.fr) (LIS) at Université Pierre et Marie Curie, Paris, France, from 2011 to 2013. The original source code is publicly available [here](https://code.google.com/p/ikey-plus/) and the corresponding publication is available [there](http://sysbio.oxfordjournals.org/content/62/1/157.long). This is still a work in progress on many aspects, the code is a bug-ridden mess, but it does work :).
 
@@ -23,13 +23,13 @@ This app generates [single access identification keys](https://en.wikipedia.org/
 
 If your descriptive data is stored in the [delta](http://delta-intkey.com/www/overview.htm) format you can convert it to sdd using the [deltaToSdd](http://www.identificationkey.fr/deltatosdd/) webservice.
 
-## Building the app##
+## Building the ap
 To build and use the app, you will need [Apache Maven](https://maven.apache.org/). Once you have maven installed, go to the root of the project, and run `mvn package`.
 
 
-## Usage ##
+## Usage
 
-### Java API ###
+### Java API
 
 ```java
 // setup generator config with default values
@@ -49,9 +49,9 @@ File resultFile = SingleAccessKeyTreeDumper
 					.dumpFlatHtmlFile("result file header", key, statisticsEnabled, outputFolder);
 ```
 
-### REST API ##
+### REST API
 
 Documentation coming soon...
 
-## Contributing ##
+## Contributing
 Feel free to contribute. If you don't know how, code [coverage](https://codecov.io/github/thomasburguiere/ikey-plus?branch=master) and code [quality](https://www.codacy.com/app/thomas-burguiere/ikey-plus/dashboard) can always be improved.
