@@ -32,7 +32,7 @@ public class IdentificationKeyGenerator {
     public void createIdentificationKey() throws OutOfMemoryError, Exception {
 
         this.singleAccessKeyTree = new SingleAccessKeyTree(config);
-        this.singleAccessKeyTree.setDataSet(dataset);
+        singleAccessKeyTree.setDataSet(dataset);
 
         // init maxNumStatesPerCharacter
         this.maxNbStatesPerCharacter = calculateMaxNbStatesPerCharacter();
@@ -40,7 +40,7 @@ public class IdentificationKeyGenerator {
         // init root node
         final SingleAccessKeyNode rootNode = new SingleAccessKeyNode();
         rootNode.setRemainingTaxa(dataset.getTaxa());
-        this.singleAccessKeyTree.setRoot(rootNode);
+        singleAccessKeyTree.setRoot(rootNode);
 
         // calculate next node
         calculateSingleAccessKeyNodeChild(rootNode, dataset.getCharacters(),
@@ -49,7 +49,7 @@ public class IdentificationKeyGenerator {
         // delete useless nodes
         boolean isOptimized = true;
         while (isOptimized) {
-            isOptimized = optimizeSingleAccessKeyTree(null, this.singleAccessKeyTree.getRoot(), false);
+            isOptimized = optimizeSingleAccessKeyTree(null, singleAccessKeyTree.getRoot(), false);
         }
     }
 

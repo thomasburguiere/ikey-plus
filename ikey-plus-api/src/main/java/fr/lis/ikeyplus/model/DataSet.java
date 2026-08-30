@@ -52,7 +52,7 @@ public class DataSet {
     }
 
     public List<Taxon> getTaxa() {
-        return new ArrayList<Taxon>(this.codedDescriptions.keySet());
+        return new ArrayList<Taxon>(codedDescriptions.keySet());
     }
 
     public String getLabel() {
@@ -113,7 +113,7 @@ public class DataSet {
     public boolean isApplicable(final Taxon taxon, final ICharacter character) {
         if (character.getParentCharacter() != null && isApplicable(taxon, character.getParentCharacter())) {
             final List<State> inapplicableStates = character.getInapplicableStates();
-            final List<State> states = (List<State>) this.getCodedDescription(taxon).getCharacterDescription(
+            final List<State> states = (List<State>) getCodedDescription(taxon).getCharacterDescription(
                     character.getParentCharacter());
 
             // if the parent character is not described return true

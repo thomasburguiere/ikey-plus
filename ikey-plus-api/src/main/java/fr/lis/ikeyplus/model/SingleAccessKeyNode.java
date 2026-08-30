@@ -56,7 +56,7 @@ public class SingleAccessKeyNode {
     }
 
     public void addOtherCharacterStates(final Object otherCharacterState) {
-        this.otherCharacterStates.add(otherCharacterState);
+        otherCharacterStates.add(otherCharacterState);
     }
 
     public String getStringStates() {
@@ -66,9 +66,9 @@ public class SingleAccessKeyNode {
     public String getStatesToString(final String separator) {
 
         final StringBuilder result = new StringBuilder("");
-        if (this.getCharacterState() instanceof State) {
-            result.append(((State) this.getCharacterState()).getName());
-            for (final Object state : this.getOtherCharacterStates()) {
+        if (getCharacterState() instanceof State) {
+            result.append(((State) getCharacterState()).getName());
+            for (final Object state : getOtherCharacterStates()) {
                 if (state instanceof State) {
                     result.append(separator).append(((State) state).getName());
                 }
@@ -78,10 +78,10 @@ public class SingleAccessKeyNode {
     }
 
     public List<State> getStates() {
-        if (this.characterState instanceof State) {
+        if (characterState instanceof State) {
             final List<State> states = new ArrayList<>();
-            states.add((State) this.getCharacterState());
-            for (final Object state : this.getOtherCharacterStates()) {
+            states.add((State) getCharacterState());
+            for (final Object state : getOtherCharacterStates()) {
                 if (state instanceof State) {
                     states.add((State) state);
                 }
@@ -100,7 +100,7 @@ public class SingleAccessKeyNode {
     }
 
     public void addChild(final SingleAccessKeyNode singleAccessKeyNode) {
-        this.children.add(singleAccessKeyNode);
+        children.add(singleAccessKeyNode);
     }
 
     public List<Taxon> getRemainingTaxa() {
@@ -132,7 +132,7 @@ public class SingleAccessKeyNode {
     }
 
     public boolean isChildrenContainsImages(final DataSet dataSet) {
-        for (final SingleAccessKeyNode childNode : this.getChildren()) {
+        for (final SingleAccessKeyNode childNode : getChildren()) {
             if (childNode.getCharacter().isSupportsCategoricalData()
                     && ((State) childNode.getCharacterState()).getFirstImageKey() != null
                     && dataSet.getMediaObject(((State) childNode.getCharacterState()).getFirstImageKey()) != null

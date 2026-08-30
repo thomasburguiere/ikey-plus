@@ -80,8 +80,8 @@ public class State {
 
         final State that = (State) o;
 
-        return Objects.equal(this.id, that.id) &&
-                Objects.equal(this.name, that.name);
+        return Objects.equal(id, that.id) &&
+                Objects.equal(name, that.name);
     }
 
     @Override

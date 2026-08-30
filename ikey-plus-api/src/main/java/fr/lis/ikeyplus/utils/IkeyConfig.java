@@ -275,7 +275,7 @@ public class IkeyConfig {
     }
 
     public String getErrorMessage() {
-        return this.errorMessage;
+        return errorMessage;
     }
 
     public void setErrorMessage(final String msg) {
@@ -293,7 +293,7 @@ public class IkeyConfig {
     }
 
     public File getErrorMessageFile() {
-        return this.errorMessageFile;
+        return errorMessageFile;
     }
 
     private void setErrorMessageFile(final File errorMessageFile) {
@@ -315,7 +315,7 @@ public class IkeyConfig {
             final BufferedWriter txtFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream,
                     "UTF-8"));
 
-            txtFileWriter.append(this.errorMessage);
+            txtFileWriter.append(errorMessage);
             txtFileWriter.append(lineReturn)
                     .append(lineReturn)
                     .append(IkeyConfig.getBundleConfElement("message.webmaster"))

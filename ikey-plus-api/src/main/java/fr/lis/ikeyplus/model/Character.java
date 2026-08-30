@@ -77,7 +77,7 @@ public class Character implements ICharacter {
      * @see model.ICharacter#getweight() */
     @Override
     public float getWeight() {
-        return this.weight;
+        return weight;
     }
 
     /* (non-Javadoc)
@@ -143,7 +143,7 @@ public class Character implements ICharacter {
      * @see model.ICharacter#getChildCharacters() */
     @Override
     public List<ICharacter> getChildCharacters() {
-        return this.childCharacters;
+        return childCharacters;
     }
 
     /* (non-Javadoc)
@@ -173,21 +173,21 @@ public class Character implements ICharacter {
 
     public ICharacter clone() {
         ICharacter newCharacter = null;
-        if (this.isSupportsCategoricalData()) {
+        if (isSupportsCategoricalData()) {
             newCharacter = new CategoricalCharacter();
             ((CategoricalCharacter) newCharacter).setStates(((CategoricalCharacter) this).getStates());
         } else {
             newCharacter = new QuantitativeCharacter();
         }
-        newCharacter.setChildCharacters(this.getChildCharacters());
-        newCharacter.setId(this.getId());
-        newCharacter.setInapplicableStates(this.getInapplicableStates());
-        newCharacter.setName(this.getName());
-        newCharacter.setParentCharacter(this.getParentCharacter());
+        newCharacter.setChildCharacters(getChildCharacters());
+        newCharacter.setId(getId());
+        newCharacter.setInapplicableStates(getInapplicableStates());
+        newCharacter.setName(getName());
+        newCharacter.setParentCharacter(getParentCharacter());
         return newCharacter;
     }
 
     public String toString() {
-        return this.name;
+        return name;
     }
 }

@@ -43,7 +43,7 @@ public class SDDSaxParser {
         }
 
         saxReader.parse(is);
-        this.setDataset(handler.getDataSet());
+        setDataset(handler.getDataSet());
     }
 
     /**
@@ -58,7 +58,7 @@ public class SDDSaxParser {
         final InputSource is = new InputSource(new FileInputStream(inputFile));
 
         saxReader.parse(is);
-        this.setDataset(handler.getDataSet());
+        setDataset(handler.getDataSet());
     }
 
     public DataSet getDataset() {
