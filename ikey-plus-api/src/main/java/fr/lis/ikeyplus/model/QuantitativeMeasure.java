@@ -21,7 +21,7 @@ public class QuantitativeMeasure {
         return max;
     }
 
-    public void setMax(Double max) {
+    public void setMax(final Double max) {
         this.max = max;
     }
 
@@ -29,7 +29,7 @@ public class QuantitativeMeasure {
         return mean;
     }
 
-    public void setMean(Double mean) {
+    public void setMean(final Double mean) {
         this.mean = mean;
     }
 
@@ -37,7 +37,7 @@ public class QuantitativeMeasure {
         return min;
     }
 
-    public void setMin(Double min) {
+    public void setMin(final Double min) {
         this.min = min;
     }
 
@@ -45,7 +45,7 @@ public class QuantitativeMeasure {
         return sd;
     }
 
-    public void setSD(Double sd) {
+    public void setSD(final Double sd) {
         this.sd = sd;
     }
 
@@ -53,7 +53,7 @@ public class QuantitativeMeasure {
         return uMethLower;
     }
 
-    public void setUMethLower(Double uMethLower) {
+    public void setUMethLower(final Double uMethLower) {
         this.uMethLower = uMethLower;
     }
 
@@ -61,7 +61,7 @@ public class QuantitativeMeasure {
         return uMethUpper;
     }
 
-    public void setUMethUpper(Double uMethUpper) {
+    public void setUMethUpper(final Double uMethUpper) {
         this.uMethUpper = uMethUpper;
     }
 
@@ -69,7 +69,7 @@ public class QuantitativeMeasure {
         return minInclude;
     }
 
-    public void setMinInclude(boolean minInclude) {
+    public void setMinInclude(final boolean minInclude) {
         this.minInclude = minInclude;
     }
 
@@ -77,7 +77,7 @@ public class QuantitativeMeasure {
         return maxInclude;
     }
 
-    public void setMaxInclude(boolean maxInclude) {
+    public void setMaxInclude(final boolean maxInclude) {
         this.maxInclude = maxInclude;
     }
 
@@ -88,8 +88,8 @@ public class QuantitativeMeasure {
     }
 
     public String toStringInterval() {
-        String start;
-        String end;
+        final String start;
+        final String end;
 
         if (isMinInclude()) {
             start = "[";
@@ -105,7 +105,7 @@ public class QuantitativeMeasure {
         return start + this.getCalculateMinimum() + ", " + this.getCalculateMaximum() + end;
     }
 
-    public String toStringInterval(String unit) {
+    public String toStringInterval(final String unit) {
 
         if (unit != null && !unit.equals("")) {
             return toStringInterval() + " (" + unit + ")";
@@ -137,7 +137,7 @@ public class QuantitativeMeasure {
         }
     }
 
-    public boolean isInclude(QuantitativeMeasure quantitativeMeasure) {
+    public boolean isInclude(final QuantitativeMeasure quantitativeMeasure) {
 
         if (quantitativeMeasure == null) {
             return true;

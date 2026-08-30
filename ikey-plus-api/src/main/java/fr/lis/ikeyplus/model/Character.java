@@ -24,7 +24,7 @@ public class Character implements ICharacter {
         this(null);
     }
 
-    public Character(String name) {
+    public Character(final String name) {
         super();
         this.name = name;
         this.inapplicableStates = new ArrayList<>();
@@ -52,7 +52,7 @@ public class Character implements ICharacter {
      *
      * @see model.ICharacter#setId(java.lang.String) */
     @Override
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -68,7 +68,7 @@ public class Character implements ICharacter {
      *
      * @see model.ICharacter#setName(java.lang.String) */
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -84,7 +84,7 @@ public class Character implements ICharacter {
      *
      * @see model.ICharacter#setWeight(int) */
     @Override
-    public void setWeight(float weight) {
+    public void setWeight(final float weight) {
         this.weight = weight;
 
     }
@@ -93,11 +93,11 @@ public class Character implements ICharacter {
         return mediaObjectKeys;
     }
 
-    public void setMediaObjectKeys(List<String> mediaObjectKey) {
+    public void setMediaObjectKeys(final List<String> mediaObjectKey) {
         this.mediaObjectKeys = mediaObjectKey;
     }
 
-    public String getFirstImage(DataSet dataset) {
+    public String getFirstImage(final DataSet dataset) {
         if (dataset != null && mediaObjectKeys != null && mediaObjectKeys.size() > 0
                 && dataset.getMediaObject(mediaObjectKeys.get(0)).startsWith("http")) {
             return dataset.getMediaObject(mediaObjectKeys.get(0));
@@ -117,7 +117,7 @@ public class Character implements ICharacter {
      *
      * @see model.ICharacter#setInapplicableStates(java.util.List) */
     @Override
-    public void setInapplicableStates(List<State> inapplicableStates) {
+    public void setInapplicableStates(final List<State> inapplicableStates) {
         this.inapplicableStates = inapplicableStates;
     }
 
@@ -133,7 +133,7 @@ public class Character implements ICharacter {
      *
      * @see model.ICharacter#setParentCharacter(model.ICharacter) */
     @Override
-    public void setParentCharacter(ICharacter parentCharacter) {
+    public void setParentCharacter(final ICharacter parentCharacter) {
         this.parentCharacter = parentCharacter;
         this.parentCharacter.getChildCharacters().add(this);
     }
@@ -150,7 +150,7 @@ public class Character implements ICharacter {
      *
      * @see model.ICharacter#setChildCharacters(java.util.List) */
     @Override
-    public void setChildCharacters(List<ICharacter> childCharacters) {
+    public void setChildCharacters(final List<ICharacter> childCharacters) {
         this.childCharacters = childCharacters;
     }
 
@@ -159,13 +159,13 @@ public class Character implements ICharacter {
      * @see model.ICharacter#getAllChildren() */
     @Override
     public List<ICharacter> getAllChildren() {
-        List<ICharacter> allChildrenCharacter = new ArrayList<>();
+        final List<ICharacter> allChildrenCharacter = new ArrayList<>();
         addChildrenToList(allChildrenCharacter, this);
         return allChildrenCharacter;
     }
 
-    private void addChildrenToList(List<ICharacter> allChildrenCharacter, ICharacter character) {
-        for (ICharacter childCharacter : character.getChildCharacters()) {
+    private void addChildrenToList(final List<ICharacter> allChildrenCharacter, final ICharacter character) {
+        for (final ICharacter childCharacter : character.getChildCharacters()) {
             allChildrenCharacter.add(childCharacter);
             addChildrenToList(allChildrenCharacter, childCharacter);
         }

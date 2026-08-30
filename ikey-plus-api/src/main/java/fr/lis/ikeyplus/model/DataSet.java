@@ -27,7 +27,7 @@ public class DataSet {
         return characters;
     }
 
-    public void setCharacters(List<ICharacter> characters) {
+    public void setCharacters(final List<ICharacter> characters) {
         this.characters = characters;
     }
 
@@ -35,19 +35,19 @@ public class DataSet {
         return codedDescriptions;
     }
 
-    public void setCodedDescriptions(Map<Taxon, CodedDescription> codedDescriptions) {
+    public void setCodedDescriptions(final Map<Taxon, CodedDescription> codedDescriptions) {
         this.codedDescriptions = codedDescriptions;
     }
 
-    public CodedDescription getCodedDescription(Taxon taxon) {
+    public CodedDescription getCodedDescription(final Taxon taxon) {
         return codedDescriptions.get(taxon);
     }
 
-    public void addCodedDescription(Taxon taxon, CodedDescription codedDescription) {
+    public void addCodedDescription(final Taxon taxon, final CodedDescription codedDescription) {
         codedDescriptions.put(taxon, codedDescription);
     }
 
-    public void removeCodedDescription(Taxon taxon) {
+    public void removeCodedDescription(final Taxon taxon) {
         codedDescriptions.remove(taxon);
     }
 
@@ -59,12 +59,12 @@ public class DataSet {
         return label;
     }
 
-    public void setLabel(String label) {
+    public void setLabel(final String label) {
         this.label = label;
     }
 
-    public ICharacter getCharacterById(String id) {
-        for (ICharacter character : characters) {
+    public ICharacter getCharacterById(final String id) {
+        for (final ICharacter character : characters) {
             if (character.getId().equals(id)) {
                 return character;
             }
@@ -72,10 +72,10 @@ public class DataSet {
         return null;
     }
 
-    public State getStateById(String id) {
-        for (ICharacter character : characters) {
+    public State getStateById(final String id) {
+        for (final ICharacter character : characters) {
             if (character instanceof CategoricalCharacter) {
-                for (State state : ((CategoricalCharacter) character).getStates()) {
+                for (final State state : ((CategoricalCharacter) character).getStates()) {
                     if (state.getId().equals(id)) {
                         return state;
                     }
@@ -85,10 +85,10 @@ public class DataSet {
         return null;
     }
 
-    public ICharacter getCharacterByState(State state) {
-        for (ICharacter character : characters) {
+    public ICharacter getCharacterByState(final State state) {
+        for (final ICharacter character : characters) {
             if (character instanceof CategoricalCharacter) {
-                for (State stateBis : ((CategoricalCharacter) character).getStates()) {
+                for (final State stateBis : ((CategoricalCharacter) character).getStates()) {
                     if (stateBis.equals(state)) {
                         return character;
                     }
@@ -102,18 +102,18 @@ public class DataSet {
         return mediaObjects;
     }
 
-    public void setMediaObjects(Map<String, String> mediaObjects) {
+    public void setMediaObjects(final Map<String, String> mediaObjects) {
         this.mediaObjects = mediaObjects;
     }
 
-    public String getMediaObject(String key) {
+    public String getMediaObject(final String key) {
         return mediaObjects.get(key);
     }
 
-    public boolean isApplicable(Taxon taxon, ICharacter character) {
+    public boolean isApplicable(final Taxon taxon, final ICharacter character) {
         if (character.getParentCharacter() != null && isApplicable(taxon, character.getParentCharacter())) {
-            List<State> inapplicableStates = character.getInapplicableStates();
-            List<State> states = (List<State>) this.getCodedDescription(taxon).getCharacterDescription(
+            final List<State> inapplicableStates = character.getInapplicableStates();
+            final List<State> states = (List<State>) this.getCodedDescription(taxon).getCharacterDescription(
                     character.getParentCharacter());
 
             // if the parent character is not described return true
@@ -121,13 +121,13 @@ public class DataSet {
                 return true;
             }
             // if one checked state is applicable
-            for (State state : states) {
+            for (final State state : states) {
                 if (!inapplicableStates.contains(state)) {
                     return true;
                 }
             }
             // if one checked state is inapplicable
-            for (State state : states) {
+            for (final State state : states) {
                 if (inapplicableStates.contains(state)) {
                     return false;
                 }
@@ -141,12 +141,12 @@ public class DataSet {
      *
      * @return List<ICharacter>, the list of inapplicable character and all its sons
      */
-    public List<ICharacter> getInapplicableCharacters(List<ICharacter> newRemainingCharacters,
-                                                      ICharacter selectedCharacter, State state) {
+    public List<ICharacter> getInapplicableCharacters(final List<ICharacter> newRemainingCharacters,
+                                                      final ICharacter selectedCharacter, final State state) {
 
-        List<ICharacter> inapplicableCharacter = new ArrayList<ICharacter>();
+        final List<ICharacter> inapplicableCharacter = new ArrayList<ICharacter>();
 
-        for (ICharacter character : newRemainingCharacters) {
+        for (final ICharacter character : newRemainingCharacters) {
             if (character.getInapplicableStates().contains(state)) {
                 inapplicableCharacter.add(character);
                 inapplicableCharacter.addAll(character.getAllChildren());

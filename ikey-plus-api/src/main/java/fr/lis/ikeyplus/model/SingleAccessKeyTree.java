@@ -15,11 +15,11 @@ public class SingleAccessKeyTree {
     // the config object (containing options)
     private IkeyConfig config = null;
 
-    public SingleAccessKeyTree(IkeyConfig config) {
+    public SingleAccessKeyTree(final IkeyConfig config) {
         this(null, config);
     }
 
-    public SingleAccessKeyTree(SingleAccessKeyNode root, IkeyConfig utils) {
+    public SingleAccessKeyTree(final SingleAccessKeyNode root, final IkeyConfig utils) {
         super();
         this.root = root;
         this.config = utils;
@@ -29,7 +29,7 @@ public class SingleAccessKeyTree {
         return root;
     }
 
-    public void setRoot(SingleAccessKeyNode root) {
+    public void setRoot(final SingleAccessKeyNode root) {
         this.root = root;
     }
 
@@ -41,7 +41,7 @@ public class SingleAccessKeyTree {
         return dataSet;
     }
 
-    public void setDataSet(DataSet dataSet) {
+    public void setDataSet(final DataSet dataSet) {
         this.dataSet = dataSet;
     }
 
@@ -49,7 +49,7 @@ public class SingleAccessKeyTree {
         return config;
     }
 
-    private void recursiveToString(SingleAccessKeyNode node, StringBuffer output, String tabulations,
+    private void recursiveToString(final SingleAccessKeyNode node, final StringBuffer output, String tabulations,
                                    int firstNumbering, int secondNumbering) {
 
         if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
@@ -72,7 +72,7 @@ public class SingleAccessKeyTree {
             if (node.getChildren().size() == 0) {
                 output.append(" -> ");
                 boolean firstLoop = true;
-                for (Taxon taxon : node.getRemainingTaxa()) {
+                for (final Taxon taxon : node.getRemainingTaxa()) {
                     if (!firstLoop) {
                         output.append(", ");
                     }
@@ -87,7 +87,7 @@ public class SingleAccessKeyTree {
         firstNumbering++;
         secondNumbering = 0;
         if (node != null) {
-            for (SingleAccessKeyNode childNode : node.getChildren()) {
+            for (final SingleAccessKeyNode childNode : node.getChildren()) {
                 secondNumbering++;
                 recursiveToString(childNode, output, tabulations, firstNumbering, secondNumbering);
             }
@@ -99,7 +99,7 @@ public class SingleAccessKeyTree {
      * @see java.lang.Object#toString() */
     @Override
     public String toString() {
-        StringBuffer output = new StringBuffer();
+        final StringBuffer output = new StringBuffer();
         recursiveToString(root, output, System.getProperty("line.separator"), 0, 0);
         return output.toString();
     }
@@ -108,7 +108,7 @@ public class SingleAccessKeyTree {
      * Analyses the node description and returns it if it is not an empty string, and if the verbose level
      * requires it to be displayed. Returns an empty String otherwise.
      */
-    public String nodeDescriptionAnalysis(SingleAccessKeyNode node) {
+    public String nodeDescriptionAnalysis(final SingleAccessKeyNode node) {
         if (node.getNodeDescription() != null && node.getNodeDescription().trim().length() > 0
                 && config.getVerbosity().contains(IkeyConfig.VerbosityLevel.WARNING)) {
             return " (" + node.getNodeDescription() + ")";
@@ -124,20 +124,20 @@ public class SingleAccessKeyTree {
      * This traverses the SingleAccessKeyTree depth-first, and updates the path length statistics for each
      * taxon present in a terminal node
      */
-    private void recursiveTaxonPathStatistics(SingleAccessKeyNode node, int treeDepth) {
+    private void recursiveTaxonPathStatistics(final SingleAccessKeyNode node, int treeDepth) {
 
         if (node != null) {
             if (node.getCharacter() != null && node.getCharacterState() != null) {
                 if (!node.hasChild() && node.getCharacter().isSupportsCategoricalData()
                         && !((State) node.getCharacterState()).getName().equals(
                         IkeyConfig.getBundleConfElement("message.notDescribed"))) {
-                    for (Taxon t : node.getRemainingTaxa()) {
+                    for (final Taxon t : node.getRemainingTaxa()) {
                         t.updatePathStatistics((float) treeDepth);
                     }
                 }
                 treeDepth++;
             }
-            for (SingleAccessKeyNode childNode : node.getChildren()) {
+            for (final SingleAccessKeyNode childNode : node.getChildren()) {
                 recursiveTaxonPathStatistics(childNode, treeDepth);
             }
         }

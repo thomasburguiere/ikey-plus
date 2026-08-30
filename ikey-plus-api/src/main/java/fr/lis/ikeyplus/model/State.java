@@ -20,7 +20,7 @@ public class State {
         this(null);
     }
 
-    public State(String name) {
+    public State(final String name) {
         super();
         this.name = name;
         this.mediaObjectKeys = new ArrayList<>();
@@ -30,7 +30,7 @@ public class State {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -38,7 +38,7 @@ public class State {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -46,11 +46,11 @@ public class State {
         return mediaObjectKeys;
     }
 
-    public void setMediaObjectKeys(List<String> mediaObjectKeys) {
+    public void setMediaObjectKeys(final List<String> mediaObjectKeys) {
         this.mediaObjectKeys = mediaObjectKeys;
     }
 
-    public String getFirstImage(DataSet dataSet) {
+    public String getFirstImage(final DataSet dataSet) {
         if (dataSet != null && mediaObjectKeys != null && mediaObjectKeys.size() > 0) {
             if (dataSet.getMediaObject(mediaObjectKeys.get(0)).startsWith("http")) {
                 return dataSet.getMediaObject(mediaObjectKeys.get(0));
@@ -70,7 +70,7 @@ public class State {
         return name;
     }
 
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -78,7 +78,7 @@ public class State {
             return false;
         }
 
-        State that = (State) o;
+        final State that = (State) o;
 
         return Objects.equal(this.id, that.id) &&
                 Objects.equal(this.name, that.name);

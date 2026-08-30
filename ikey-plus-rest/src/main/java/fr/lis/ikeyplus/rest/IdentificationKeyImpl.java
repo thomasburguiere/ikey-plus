@@ -30,16 +30,16 @@ public class IdentificationKeyImpl {
 
     @GET
     public String getIdentificationKey(
-            @QueryParam("sddURL") String sddURL,
-            @QueryParam("format") String format,
-            @QueryParam("representation") String representation,
-            @QueryParam("fewStatesCharacterFirst") boolean fewStatesCharacterFirst,
-            @QueryParam("mergeCharacterStatesIfSameDiscrimination") boolean mergeCharacterStatesIfSameDiscrimination,
-            @QueryParam("pruning") boolean pruning,
-            @QueryParam("verbosity") String verbosity,
-            @QueryParam("scoreMethod") String scoreMethod,
-            @QueryParam("weightContext") String weightContext,
-            @QueryParam("weightType") String weightType) {
+            @QueryParam("sddURL") final String sddURL,
+            @QueryParam("format") final String format,
+            @QueryParam("representation") final String representation,
+            @QueryParam("fewStatesCharacterFirst") final boolean fewStatesCharacterFirst,
+            @QueryParam("mergeCharacterStatesIfSameDiscrimination") final boolean mergeCharacterStatesIfSameDiscrimination,
+            @QueryParam("pruning") final boolean pruning,
+            @QueryParam("verbosity") final String verbosity,
+            @QueryParam("scoreMethod") final String scoreMethod,
+            @QueryParam("weightContext") final String weightContext,
+            @QueryParam("weightType") final String weightType) {
         return createIdentificationKey(
                 sddURL,
                 format,
@@ -56,32 +56,32 @@ public class IdentificationKeyImpl {
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     public String createIdentificationKey(
-            @FormParam("sddURL") String sddURL,
-            @FormParam("format") String format,
-            @FormParam("representation") String representation,
-            @FormParam("fewStatesCharacterFirst") boolean fewStatesCharacterFirst,
-            @FormParam("mergeCharacterStatesIfSameDiscrimination") boolean mergeCharacterStatesIfSameDiscrimination,
-            @FormParam("pruning") boolean pruning,
-            @FormParam("verbosity") String verbosity,
-            @FormParam("scoreMethod") String scoreMethod,
-            @FormParam("weightContext") String weightContext,
-            @FormParam("weightType") String weightType) {
+            @FormParam("sddURL") final String sddURL,
+            @FormParam("format") final String format,
+            @FormParam("representation") final String representation,
+            @FormParam("fewStatesCharacterFirst") final boolean fewStatesCharacterFirst,
+            @FormParam("mergeCharacterStatesIfSameDiscrimination") final boolean mergeCharacterStatesIfSameDiscrimination,
+            @FormParam("pruning") final boolean pruning,
+            @FormParam("verbosity") final String verbosity,
+            @FormParam("scoreMethod") final String scoreMethod,
+            @FormParam("weightContext") final String weightContext,
+            @FormParam("weightType") final String weightType) {
 
         // creation of IkeyConfig object (containing options)
         IkeyConfig config;
         // String containing the name of the result file
         String resultFileName = null;
         // String containing the URL of the result file
-        String resultFileUrl;
-        String lineReturn = System.getProperty("line.separator");
+        final String resultFileUrl;
+        final String lineReturn = System.getProperty("line.separator");
 
-        String generatedFilesFolder = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+        final String generatedFilesFolder = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
         try {
 
             // define header string
-            StringBuilder header = new StringBuilder();
+            final StringBuilder header = new StringBuilder();
 
             config = initializeConfig(format, representation, fewStatesCharacterFirst, mergeCharacterStatesIfSameDiscrimination, pruning, verbosity, scoreMethod, weightContext, weightType);
 //			// calculate CPU usage
@@ -102,17 +102,17 @@ public class IdentificationKeyImpl {
             SDDSaxParser sddSaxParser = null;
             try {
                 // test if the URL is valid
-                URLConnection urlConnection;
+                final URLConnection urlConnection;
                 try {
-                    URL fileURL = new URL(sddURL);
+                    final URL fileURL = new URL(sddURL);
                     // open URL (HTTP query)
                     urlConnection = fileURL.openConnection();
                     // Open data stream
                     urlConnection.getInputStream();
-                } catch (java.net.MalformedURLException e) {
+                } catch (final java.net.MalformedURLException e) {
                     e.printStackTrace();
                     config.setErrorMessage(IkeyConfig.getBundleConfElement("message.urlError"), e);
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     e.printStackTrace();
                     config.setErrorMessage(IkeyConfig.getBundleConfElement("message.urlError"), e);
                 }
@@ -133,11 +133,11 @@ public class IdentificationKeyImpl {
                 header.append(lineReturn + "weightContext=" + config.getWeightContext());
                 header.append(lineReturn + "weightType=" + config.getWeightType());
                 header.append(lineReturn);
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 t.printStackTrace();
                 config.setErrorMessage(IkeyConfig.getBundleConfElement("message.parsingError"), t);
             }
-            double parseDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
+            final double parseDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
             beforeTime = System.currentTimeMillis();
 
             // call identification key service
@@ -146,12 +146,12 @@ public class IdentificationKeyImpl {
                 identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(),
                         config);
                 identificationKeyGenerator.createIdentificationKey();
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 t.printStackTrace();
                 config.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingKeyError"), t);
             }
 
-            double keyCreationDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
+            final double keyCreationDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
             // construct header
             header.append(System.getProperty("line.separator") + "parseDuration= " + parseDuration + "s");
             header.append(System.getProperty("line.separator") + "keyCreationDuration= "
@@ -171,7 +171,7 @@ public class IdentificationKeyImpl {
                                 .mkdir();
                     }
 
-                    SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+                    final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 
                     header.append(System.getProperty("line.separator")).append(System.getProperty("line.separator"));
 
@@ -213,7 +213,7 @@ public class IdentificationKeyImpl {
                                     tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolder);
                         }
                     }
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     e.printStackTrace();
                     config.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingFileError"));
                 }
@@ -231,7 +231,7 @@ public class IdentificationKeyImpl {
 //				config.setErrorMessage(IkeyConfig.getBundleConfElement("message.serverBusy"));
 //			}
 
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
             config = IkeyConfig.builder().build();
             config.setErrorMessage(IkeyConfig.getBundleConfElement("message.error"), e);
@@ -248,17 +248,17 @@ public class IdentificationKeyImpl {
         return resultFileUrl;
     }
 
-    private IkeyConfig initializeConfig(String format,
-                                        String representation,
-                                        boolean fewStatesCharacterFirst,
-                                        boolean mergeCharacterStatesIfSameDiscrimination,
-                                        boolean pruning,
-                                        String verbosity,
-                                        String scoreMethod,
-                                        String weightContext,
-                                        String weightType) {
-        IkeyConfig config;
-        IkeyConfigBuilder configBuilder = IkeyConfig.builder();
+    private IkeyConfig initializeConfig(final String format,
+                                        final String representation,
+                                        final boolean fewStatesCharacterFirst,
+                                        final boolean mergeCharacterStatesIfSameDiscrimination,
+                                        final boolean pruning,
+                                        final String verbosity,
+                                        final String scoreMethod,
+                                        final String weightContext,
+                                        final String weightType) {
+        final IkeyConfig config;
+        final IkeyConfigBuilder configBuilder = IkeyConfig.builder();
         // options initialization
         if (format != null && IkeyConfig.OutputFormat.fromString(format) != null) {
             configBuilder.format(IkeyConfig.OutputFormat.fromString(format));

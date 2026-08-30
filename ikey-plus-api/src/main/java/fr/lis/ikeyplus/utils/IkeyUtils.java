@@ -24,9 +24,9 @@ public final class IkeyUtils {
     /**
      * This method returns the intersection of two Lists
      */
-    public static List<?> intersection(List<?> list1, List<?> list2) {
-        List<Object> list = new ArrayList<>();
-        for (Object o : list1) {
+    public static List<?> intersection(final List<?> list1, final List<?> list2) {
+        final List<Object> list = new ArrayList<>();
+        for (final Object o : list1) {
             if (list2.contains(o)) {
                 list.add(o);
             }
@@ -42,9 +42,9 @@ public final class IkeyUtils {
      * @param excludedList , the list which elements shall not remain in the final list
      * @return List
      */
-    public static List<?> exclusion(List<?> primaryList, List<?> excludedList) {
-        List<Object> list = new ArrayList<>();
-        for (Object o : primaryList) {
+    public static List<?> exclusion(final List<?> primaryList, final List<?> excludedList) {
+        final List<Object> list = new ArrayList<>();
+        for (final Object o : primaryList) {
             if (!excludedList.contains(o)) {
                 list.add(o);
             }
@@ -55,8 +55,8 @@ public final class IkeyUtils {
     /**
      * This method returns the union of two Lists
      */
-    public static List<?> union(List<?> list1, List<?> list2) {
-        Set<Object> set = new HashSet<>();
+    public static List<?> union(final List<?> list1, final List<?> list2) {
+        final Set<Object> set = new HashSet<>();
         set.addAll(list1);
         set.addAll(list2);
         return new ArrayList<>(set);
@@ -70,9 +70,9 @@ public final class IkeyUtils {
      *                     rounded with 10^3 as a multiplier
      * @return float, the rounded value
      */
-    public static float roundFloat(float floatToRound, int roundFactor) {
+    public static float roundFloat(final float floatToRound, final int roundFactor) {
         double roundedFloat;
-        double multiplier = Math.pow((double) 10, (double) roundFactor);
+        final double multiplier = Math.pow((double) 10, (double) roundFactor);
 
         roundedFloat = multiplier * floatToRound;
         roundedFloat = (int) (roundedFloat + .5);
@@ -88,9 +88,9 @@ public final class IkeyUtils {
      *                    rounded with 10^3 as a multiplier
      * @return double, the rounded value
      */
-    public static double roundDouble(double score, int roundFactor) {
+    public static double roundDouble(final double score, final int roundFactor) {
         double roundedDouble;
-        double multiplier = Math.pow((double) 10, (double) roundFactor);
+        final double multiplier = Math.pow((double) 10, (double) roundFactor);
 
         roundedDouble = multiplier * score;
         roundedDouble = (int) (roundedDouble + .5);
@@ -104,8 +104,8 @@ public final class IkeyUtils {
      * @param s , the string candidate to delete accents
      * @return String, the string without accents
      */
-    public static String unAccent(String s) {
-        String temp = Normalizer.normalize(s, Normalizer.Form.NFC);
+    public static String unAccent(final String s) {
+        final String temp = Normalizer.normalize(s, Normalizer.Form.NFC);
         return temp.replaceAll("[^\\p{ASCII}]", "");
     }
 }

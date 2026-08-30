@@ -30,30 +30,30 @@ public class SchedulerServlet extends GenericServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
-    public void init(ServletConfig servletConfig) throws ServletException {
+    public void init(final ServletConfig servletConfig) throws ServletException {
         super.init(servletConfig);
 
         try {
 
-            String cronSchedule = getInitParameter("cronSchedule");
+            final String cronSchedule = getInitParameter("cronSchedule");
             System.out.println(cronSchedule);
 
             // Get Servlet Context
-            ServletContext servletContext = getServletContext();
+            final ServletContext servletContext = getServletContext();
             // Get Schedule Factory from servlet sontext
-            SchedulerFactory schedulerFactory = (SchedulerFactory) servletContext
+            final SchedulerFactory schedulerFactory = (SchedulerFactory) servletContext
                     .getAttribute(QuartzInitializerServlet.QUARTZ_FACTORY_KEY);
 
-            Scheduler scheduler = schedulerFactory.getScheduler();
+            final Scheduler scheduler = schedulerFactory.getScheduler();
 
-            JobDetail job = newJob(Worker.class).withIdentity("deleteJob", "deleteGroup").build();
+            final JobDetail job = newJob(Worker.class).withIdentity("deleteJob", "deleteGroup").build();
 
-            CronTrigger cronTrigger = newTrigger().withIdentity("cronTrigger", "triggerGroup")
+            final CronTrigger cronTrigger = newTrigger().withIdentity("cronTrigger", "triggerGroup")
                     .withSchedule(cronSchedule(cronSchedule)).startNow().build();
 
             scheduler.scheduleJob(job, cronTrigger);
 
-        } catch (SchedulerException | ParseException e) {
+        } catch (final SchedulerException | ParseException e) {
             e.printStackTrace();
 
         }
@@ -61,7 +61,7 @@ public class SchedulerServlet extends GenericServlet {
     }
 
     @Override
-    public void service(ServletRequest servletRequest, ServletResponse servletResponse)
+    public void service(final ServletRequest servletRequest, final ServletResponse servletResponse)
             throws ServletException, IOException {
         // nothing to do here
     }

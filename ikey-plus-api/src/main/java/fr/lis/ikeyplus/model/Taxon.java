@@ -27,7 +27,7 @@ public class Taxon {
         this(null);
     }
 
-    public Taxon(String name) {
+    public Taxon(final String name) {
         super();
         this.name = name;
         mediaObjectKeys = new ArrayList<>();
@@ -46,7 +46,7 @@ public class Taxon {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -54,11 +54,11 @@ public class Taxon {
         return mediaObjectKeys;
     }
 
-    public void setMediaObjectKeys(List<String> mediaObjectKeys) {
+    public void setMediaObjectKeys(final List<String> mediaObjectKeys) {
         this.mediaObjectKeys = mediaObjectKeys;
     }
 
-    public String getFirstImage(DataSet dataSet) {
+    public String getFirstImage(final DataSet dataSet) {
         if (dataSet != null && mediaObjectKeys != null && mediaObjectKeys.size() > 0 &&
                 dataSet.getMediaObject(mediaObjectKeys.get(0)).startsWith("http")) {
             return dataSet.getMediaObject(mediaObjectKeys.get(0));
@@ -77,7 +77,7 @@ public class Taxon {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -85,17 +85,17 @@ public class Taxon {
         return pathStatistics;
     }
 
-    public void setTaxonStatistics(HashMap<Integer, Float> taxonStatistics) {
+    public void setTaxonStatistics(final HashMap<Integer, Float> taxonStatistics) {
         this.pathStatistics = taxonStatistics;
     }
 
-    public void updatePathStatistics(Float pathLength) {
-        float oldNbPath = pathStatistics.get(NB_PATH_IN_KEY);
-        float oldSumPathLength = pathStatistics.get(SUM_PATHLENGTHS_IN_KEY);
+    public void updatePathStatistics(final Float pathLength) {
+        final float oldNbPath = pathStatistics.get(NB_PATH_IN_KEY);
+        final float oldSumPathLength = pathStatistics.get(SUM_PATHLENGTHS_IN_KEY);
 
-        float newNbPath = oldNbPath + 1;
-        float newSumPathLength = oldSumPathLength + pathLength;
-        float newAveragePathLength = newSumPathLength / newNbPath;
+        final float newNbPath = oldNbPath + 1;
+        final float newSumPathLength = oldSumPathLength + pathLength;
+        final float newAveragePathLength = newSumPathLength / newNbPath;
 
         pathStatistics.put(AVERAGE_PATHLENGTH_IN_KEY, newAveragePathLength);
         pathStatistics.put(NB_PATH_IN_KEY, newNbPath);

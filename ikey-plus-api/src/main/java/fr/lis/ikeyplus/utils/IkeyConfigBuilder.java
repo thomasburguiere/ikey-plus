@@ -18,12 +18,12 @@ public class IkeyConfigBuilder {
 
     IkeyConfigBuilder(){}
 
-    public IkeyConfigBuilder format(IkeyConfig.OutputFormat format) {
+    public IkeyConfigBuilder format(final IkeyConfig.OutputFormat format) {
         this.format = format;
         return this;
     }
 
-    public IkeyConfigBuilder representation(IkeyConfig.KeyRepresentation representation) {
+    public IkeyConfigBuilder representation(final IkeyConfig.KeyRepresentation representation) {
         this.representation = representation;
         return this;
     }
@@ -43,27 +43,27 @@ public class IkeyConfigBuilder {
         return this;
     }
 
-    public IkeyConfigBuilder scoreMethod(IkeyConfig.ScoreMethod scoreMethod) {
+    public IkeyConfigBuilder scoreMethod(final IkeyConfig.ScoreMethod scoreMethod) {
         this.scoreMethod = scoreMethod;
         return this;
     }
 
-    public IkeyConfigBuilder weightContext(IkeyConfig.WeightContext weightContext) {
+    public IkeyConfigBuilder weightContext(final IkeyConfig.WeightContext weightContext) {
         this.weightContext = weightContext;
         return this;
     }
 
-    public IkeyConfigBuilder weightType(IkeyConfig.WeightType weightType) {
+    public IkeyConfigBuilder weightType(final IkeyConfig.WeightType weightType) {
         this.weightType = weightType;
         return this;
     }
 
-    public IkeyConfigBuilder verbosity(IkeyConfig.VerbosityLevel verbosityLevel) {
+    public IkeyConfigBuilder verbosity(final IkeyConfig.VerbosityLevel verbosityLevel) {
         this.verbosity.add(verbosityLevel);
         return this;
     }
 
-    public IkeyConfigBuilder verbosity(Set<IkeyConfig.VerbosityLevel> verbosityLevels) {
+    public IkeyConfigBuilder verbosity(final Set<IkeyConfig.VerbosityLevel> verbosityLevels) {
         this.verbosity.addAll(verbosityLevels);
         return this;
     }

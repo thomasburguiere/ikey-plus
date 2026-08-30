@@ -96,7 +96,7 @@ public class SDDContentHandler implements ContentHandler {
     /**
      * Default constructor
      */
-    public SDDContentHandler(IkeyConfig config) {
+    public SDDContentHandler(final IkeyConfig config) {
         super();
         this.dataSet = new DataSet();
         this.config = config;
@@ -108,7 +108,7 @@ public class SDDContentHandler implements ContentHandler {
      * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String, java.lang.String,
      * org.xml.sax.Attributes) */
     @Override
-    public void startElement(String nameSpaceURI, String localName, String rawName, Attributes attributes)
+    public void startElement(final String nameSpaceURI, final String localName, final String rawName, final Attributes attributes)
             throws SAXException {
 
         if (isFirstDataset) {
@@ -243,7 +243,7 @@ public class SDDContentHandler implements ContentHandler {
             // <State> in <InapplicableIf> in <CharacterTree> &&
             // isFirstCharacterTree
             else if ("State".equals(localName) && inInapplicableIf && inCharacterTree && isFirstCharacterTree) {
-                State state = dataSet.getStateById(attributes.getValue("ref"));
+                final State state = dataSet.getStateById(attributes.getValue("ref"));
                 currentInapplicableState.add(state);
             }
 
@@ -251,7 +251,7 @@ public class SDDContentHandler implements ContentHandler {
             // isFirstCharacterTree
             else if ("State".equals(localName) && inOnlyApplicableIf && inCharacterTree
                     && isFirstCharacterTree) {
-                State state = dataSet.getStateById(attributes.getValue("ref"));
+                final State state = dataSet.getStateById(attributes.getValue("ref"));
                 currentOnlyApplicableState.add(state);
             }
 
@@ -370,7 +370,7 @@ public class SDDContentHandler implements ContentHandler {
             // <Rating> in <Ratings>
             else if ("Rating".equals(localName) && inRatings) {
                 if (attributes.getValue("context").equals(config.getWeightContext().toString())) {
-                    int currentRating = IkeyConfig.WeightValue.fromString(attributes.getValue("rating")).getIntWeight();
+                    final int currentRating = IkeyConfig.WeightValue.fromString(attributes.getValue("rating")).getIntWeight();
                     if (currentCodedDescriptionCharacter != null) {
                         if (this.ratingsCounter.get(currentCodedDescriptionCharacter) == null) {
                             this.ratingsCounter.put(currentCodedDescriptionCharacter, 0);
@@ -418,7 +418,7 @@ public class SDDContentHandler implements ContentHandler {
      *
      * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String, java.lang.String) */
     @Override
-    public void endElement(String nameSpaceURI, String localName, String rawName) throws SAXException {
+    public void endElement(final String nameSpaceURI, final String localName, final String rawName) throws SAXException {
 
         if (isFirstDataset) {
             // <Dataset>
@@ -429,8 +429,8 @@ public class SDDContentHandler implements ContentHandler {
                 // null description will be considered as unknown data. Empty states list or
                 // QuantitativeMeasure
                 // will be considered as not specified (not described).
-                for (Taxon taxon : this.dataSet.getCodedDescriptions().keySet()) {
-                    for (ICharacter character : this.dataSet.getCharacters()) {
+                for (final Taxon taxon : this.dataSet.getCodedDescriptions().keySet()) {
+                    for (final ICharacter character : this.dataSet.getCharacters()) {
                         if (this.dataSet.getCodedDescriptions().get(taxon).getCharacterDescription(character) == null) {
                             if (character.isSupportsCategoricalData()) {
                                 this.dataSet.getCodedDescriptions().get(taxon)
@@ -452,7 +452,7 @@ public class SDDContentHandler implements ContentHandler {
 
                 // update (average) the weight for all characters if the parameter
                 // useContextualCharacterWeights is not enabled
-                for (ICharacter character : this.dataSet.getCharacters()) {
+                for (final ICharacter character : this.dataSet.getCharacters()) {
                     if (this.ratingsCounter.get(character) != null) {
                         character.setWeight((float) (character.getWeight())
                                 / (float) (this.ratingsCounter.get(character)));
@@ -559,10 +559,10 @@ public class SDDContentHandler implements ContentHandler {
                             .getCharacterByState(currentInapplicableState.get(0)));
                     currentCharacterNode.getInapplicableStates().addAll(currentInapplicableState);
                 } else if (currentOnlyApplicableState.size() > 0) {
-                    ICharacter character = dataSet.getCharacterByState(currentOnlyApplicableState.get(0));
+                    final ICharacter character = dataSet.getCharacterByState(currentOnlyApplicableState.get(0));
                     if (character != null && character instanceof CategoricalCharacter) {
                         currentCharacterNode.setParentCharacter(character);
-                        List<State> tempList = new ArrayList<>(
+                        final List<State> tempList = new ArrayList<>(
                                 ((CategoricalCharacter) character).getStates());
                         tempList.removeAll(currentOnlyApplicableState);
                         currentCharacterNode.getInapplicableStates().addAll(tempList);
@@ -709,7 +709,7 @@ public class SDDContentHandler implements ContentHandler {
      *
      * @see org.xml.sax.ContentHandler#endPrefixMapping(java.lang.String) */
     @Override
-    public void endPrefixMapping(String prefix) throws SAXException {
+    public void endPrefixMapping(final String prefix) throws SAXException {
         // nothing to do here
     }
 
@@ -717,7 +717,7 @@ public class SDDContentHandler implements ContentHandler {
      *
      * @see org.xml.sax.ContentHandler#setDocumentLocator(org.xml.sax.Locator) */
     @Override
-    public void setDocumentLocator(Locator locator) {
+    public void setDocumentLocator(final Locator locator) {
         // nothing to do here
     }
 
@@ -733,7 +733,7 @@ public class SDDContentHandler implements ContentHandler {
      *
      * @see org.xml.sax.ContentHandler#startPrefixMapping(java.lang.String, java.lang.String) */
     @Override
-    public void startPrefixMapping(String prefix, String uri) throws SAXException {
+    public void startPrefixMapping(final String prefix, final String uri) throws SAXException {
         // nothing to do here
     }
 
@@ -741,7 +741,7 @@ public class SDDContentHandler implements ContentHandler {
      *
      * @see org.xml.sax.ContentHandler#characters(char[], int, int) */
     @Override
-    public void characters(char[] ch, int start, int length) throws SAXException {
+    public void characters(final char[] ch, final int start, final int length) throws SAXException {
         String data = new String(ch, start, length);
 
         data = data.replaceAll("\t", " "); // replace all the \t character by
@@ -758,7 +758,7 @@ public class SDDContentHandler implements ContentHandler {
      *
      * @see org.xml.sax.ContentHandler#ignorableWhitespace(char[], int, int) */
     @Override
-    public void ignorableWhitespace(char[] ch, int start, int length) throws SAXException {
+    public void ignorableWhitespace(final char[] ch, final int start, final int length) throws SAXException {
         // nothing to do here
     }
 
@@ -766,7 +766,7 @@ public class SDDContentHandler implements ContentHandler {
      *
      * @see org.xml.sax.ContentHandler#processingInstruction(java.lang.String, java.lang.String) */
     @Override
-    public void processingInstruction(String target, String data) throws SAXException {
+    public void processingInstruction(final String target, final String data) throws SAXException {
         // nothing to do here
     }
 
@@ -774,7 +774,7 @@ public class SDDContentHandler implements ContentHandler {
      *
      * @see org.xml.sax.ContentHandler#skippedEntity(java.lang.String) */
     @Override
-    public void skippedEntity(String name) throws SAXException {
+    public void skippedEntity(final String name) throws SAXException {
         // nothing to do here
     }
 

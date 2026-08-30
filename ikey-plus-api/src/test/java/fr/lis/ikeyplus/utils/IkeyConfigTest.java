@@ -24,7 +24,7 @@ public class IkeyConfigTest {
 
     @Test
     public void should_have_non_duplicate_verbosity_levels() {
-        IkeyConfig config = IkeyConfig.builder().verbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTICS)).verbosity(HEADER).build();
+        final IkeyConfig config = IkeyConfig.builder().verbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTICS)).verbosity(HEADER).build();
         assertThat(config.getVerbosity()).containsOnly(HEADER, OTHER, WARNING, STATISTICS);
     }
 
@@ -34,8 +34,8 @@ public class IkeyConfigTest {
         ikeyConfig.setErrorMessage(ERROR_MESSAGE);
         ikeyConfig.createErrorFile();
         final File errorMessageFile = ikeyConfig.getErrorMessageFile();
-        byte[] resultBytes = Files.readAllBytes(Paths.get(errorMessageFile.toURI()));
-        String result = new String(resultBytes, "UTF-8");
+        final byte[] resultBytes = Files.readAllBytes(Paths.get(errorMessageFile.toURI()));
+        final String result = new String(resultBytes, "UTF-8");
         assertThat(result).contains(ERROR_MESSAGE);
     }
 
@@ -45,8 +45,8 @@ public class IkeyConfigTest {
         ikeyConfig.setErrorMessage(ERROR_MESSAGE, new IllegalStateException(EXCEPTION_MESSAGE));
         ikeyConfig.createErrorFile();
         final File errorMessageFile = ikeyConfig.getErrorMessageFile();
-        byte[] resultBytes = Files.readAllBytes(Paths.get(errorMessageFile.toURI()));
-        String result = new String(resultBytes, "UTF-8");
+        final byte[] resultBytes = Files.readAllBytes(Paths.get(errorMessageFile.toURI()));
+        final String result = new String(resultBytes, "UTF-8");
         assertThat(result).contains(ERROR_MESSAGE+": " +EXCEPTION_MESSAGE );
     }
 
