@@ -150,7 +150,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
         // // THIRD TRAVERSAL, breadth-first ////
         final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        final ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
         counter = 1;
         int currentParentNumber = -1;
         queue.add(rootNode);
@@ -450,7 +450,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
         // // third traversal, breadth-first ////
         final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        final ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
         queue.clear();
         visitedNodes.clear();
@@ -1010,7 +1010,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
         // // third traversal, breadth-first ////
         final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        final ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
         counter = 1;
         int currentParentNumber = -1;
@@ -1165,7 +1165,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
         // // third traversal, breadth-first ////
         final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        final ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
         counter = 1;
         int currentParentNumber = -1;
@@ -1442,7 +1442,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
         // // third traversal, breadth-first ////
         final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        final ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
         counter = 1;
         int currentParentNumber = -1;
@@ -1592,7 +1592,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
         // // third traversal, breadth-first ////
         final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        final ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
         counter = 1;
         int currentParentNumber = -1;
@@ -1807,9 +1807,9 @@ public abstract class SingleAccessKeyTreeDumper {
      * breadth-first incremented number (only if the traversed node has at least 1 child node)
      */
     private static void iterativeBreadthFirstSkipChildlessNodes(final SingleAccessKeyNode rootNode,
-                                                                final HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap, int counter) {
+                                                                final Map<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap, int counter) {
         final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        final ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
         queue.add(rootNode);
 
@@ -1849,9 +1849,9 @@ public abstract class SingleAccessKeyTreeDumper {
      * breadth-first incremented number
      */
     private static void iterativeBreadthFirst(final SingleAccessKeyNode rootNode,
-                                              final HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap, int counter) {
+                                              final Map<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap, int counter) {
         final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        final ArrayList<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
         queue.add(rootNode);
 

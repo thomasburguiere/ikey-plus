@@ -260,7 +260,7 @@ public class IdentificationKeyGenerator {
         return isOptimized;
     }
 
-    private List<Taxon> getRemainingTaxa(final List<Taxon> remainingTaxa, final CategoricalCharacter character,
+    private List<Taxon> getRemainingTaxa(final List<Taxon> remainingTaxa, final ICharacter character,
                                          final State state) throws Exception {
 
         final List<Taxon> newRemainingTaxa = new ArrayList<>();
@@ -269,7 +269,7 @@ public class IdentificationKeyGenerator {
         // current state
         for (final Taxon taxon : remainingTaxa) {
             if (dataset.getCodedDescription(taxon).getCharacterDescription(character) == null
-                    || ((List<State>) dataset.getCodedDescription(taxon).getCharacterDescription(character))
+                    || ((Collection<State>) dataset.getCodedDescription(taxon).getCharacterDescription(character))
                     .contains(state)) {
                 newRemainingTaxa.add(taxon);
             }
@@ -277,7 +277,7 @@ public class IdentificationKeyGenerator {
         return newRemainingTaxa;
     }
 
-    private List<Taxon> getRemainingTaxa(final List<Taxon> remainingTaxa, final QuantitativeCharacter character,
+    private List<Taxon> getRemainingTaxa(final List<Taxon> remainingTaxa, final ICharacter character,
                                          final QuantitativeMeasure quantitativeMeasure) throws Exception {
 
         final List<Taxon> newRemainingTaxa = new ArrayList<>();
@@ -301,7 +301,7 @@ public class IdentificationKeyGenerator {
         // init not described taxa list with taxa without description
         for (final Taxon taxon : remainingTaxa) {
             if (dataset.getCodedDescription(taxon).getCharacterDescription(character) != null
-                    && ((List<State>) dataset.getCodedDescription(taxon).getCharacterDescription(character))
+                    && ((Collection<State>) dataset.getCodedDescription(taxon).getCharacterDescription(character))
                     .size() == 0) {
                 notDescribedTaxa.add(taxon);
             }
@@ -590,11 +590,11 @@ public class IdentificationKeyGenerator {
         return bestCharacter;
     }
 
-    private int getTaxaNumberForAllStates(final CategoricalCharacter character, final List<Taxon> remainingTaxa) {
+    private int getTaxaNumberForAllStates(final ICharacter character, final List<Taxon> remainingTaxa) {
         int taxaNumber = 0;
         for (final Taxon taxon : remainingTaxa) {
             if (dataset.getCodedDescription(taxon).getCharacterDescription(character) != null) {
-                taxaNumber += ((List<State>) dataset.getCodedDescription(taxon).getCharacterDescription(
+                taxaNumber += ((Collection<State>) dataset.getCodedDescription(taxon).getCharacterDescription(
                         character)).size();
             }
         }
@@ -693,7 +693,7 @@ public class IdentificationKeyGenerator {
         return score;
     }
 
-    private float quantitativeCharacterScore(final QuantitativeCharacter character, final List<Taxon> remainingTaxa,
+    private float quantitativeCharacterScore(final ICharacter character, final List<Taxon> remainingTaxa,
                                              final List<ICharacter> alreadyUsedCharacter) throws Exception {
         int cpt = 0;
         float score = 0;
