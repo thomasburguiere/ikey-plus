@@ -309,7 +309,11 @@ public abstract class SingleAccessKeyTreeDumper {
 
     // TXT DUMP, TREE
 
-    public static File dumpTxtFile(String header, SingleAccessKeyTree tree2dump, boolean showStatistics, final String generatedFilesFolder)
+    public static File dumpTxtFile(
+            String header,
+            final SingleAccessKeyTree tree2dump,
+            final boolean showStatistics,
+            final String generatedFilesFolder)
             throws IOException {
 
         if (!new File(generatedFilesFolder).exists()) {
