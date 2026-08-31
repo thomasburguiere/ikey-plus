@@ -5,14 +5,9 @@ import fr.lis.ikeyplus.IO.SDDSaxParser;
 import fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 import fr.lis.ikeyplus.utils.IkeyConfigBuilder;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 import static fr.lis.ikeyplus.utils.IkeyConfig.ScoreMethod.XPER;
@@ -24,10 +19,7 @@ import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.WARNING;
 import static fr.lis.ikeyplus.utils.IkeyConfig.WeightContext.COST_EFFECTIVENESS;
 import static fr.lis.ikeyplus.utils.IkeyConfig.WeightType.GLOBAL;
 import static fr.lis.ikeyplus.utils.IkeyConfig.builder;
-import static fr.lis.ikeyplus.utils.IkeyConfig.getBundleConfElement;
 import static fr.lis.ikeyplus.utils.IkeyConfig.getBundleConfOverridableElement;
-import static fr.lis.ikeyplus.utils.IkeyConfig.setBundleConf;
-import static fr.lis.ikeyplus.utils.IkeyConfig.setBundleConfOverridable;
 
 /**
  * This class allows to test the TEXT output of IdentificationKeyGenerator service
