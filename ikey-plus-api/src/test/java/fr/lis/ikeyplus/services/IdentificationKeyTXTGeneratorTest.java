@@ -1,6 +1,5 @@
 package fr.lis.ikeyplus.services;
 
-import com.google.common.collect.Sets;
 import fr.lis.ikeyplus.IO.SDDSaxParser;
 import fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
@@ -9,6 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.File;
+import java.util.Set;
 
 import static fr.lis.ikeyplus.utils.IkeyConfig.ScoreMethod.XPER;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel;
@@ -48,7 +48,7 @@ public class IdentificationKeyTXTGeneratorTest {
         // creation of IkeyConfig object (containing options)
         final IkeyConfigBuilder configBuilder = builder();
 
-        configBuilder.verbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTICS));
+        configBuilder.verbosity(Set.of(HEADER, OTHER, WARNING, STATISTICS));
         configBuilder.scoreMethod(XPER);
         configBuilder.weightContext(COST_EFFECTIVENESS);
         configBuilder.weightType(GLOBAL);

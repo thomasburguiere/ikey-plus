@@ -1,8 +1,6 @@
 package fr.lis.ikeyplus.utils;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
-
+import java.util.HashSet;
 import java.util.Set;
 
 public class IkeyConfigBuilder {
@@ -11,7 +9,7 @@ public class IkeyConfigBuilder {
     private boolean fewStatesCharacterFirst = false;
     private boolean mergeCharacterStatesIfSameDiscrimination = false;
     private boolean pruningEnabled = false;
-    private final Set<IkeyConfig.VerbosityLevel> verbosity = Sets.newHashSet();
+    private final Set<IkeyConfig.VerbosityLevel> verbosity = new HashSet<>();
     private IkeyConfig.ScoreMethod scoreMethod = IkeyConfig.ScoreMethod.XPER;
     private IkeyConfig.WeightContext weightContext = IkeyConfig.WeightContext.NO_WEIGHT;
     private IkeyConfig.WeightType weightType = IkeyConfig.WeightType.GLOBAL;
@@ -75,7 +73,7 @@ public class IkeyConfigBuilder {
                 fewStatesCharacterFirst,
                 mergeCharacterStatesIfSameDiscrimination,
                 pruningEnabled,
-                ImmutableSet.copyOf(verbosity),
+                verbosity,
                 scoreMethod,
                 weightContext,
                 weightType);

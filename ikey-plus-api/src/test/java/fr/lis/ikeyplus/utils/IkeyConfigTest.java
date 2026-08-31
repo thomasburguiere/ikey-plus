@@ -1,6 +1,5 @@
 package fr.lis.ikeyplus.utils;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.HEADER;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.OTHER;
@@ -29,7 +29,7 @@ public class IkeyConfigTest {
 
     @Test
     public void should_have_non_duplicate_verbosity_levels() {
-        final IkeyConfig config = IkeyConfig.builder().verbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTICS)).verbosity(HEADER).build();
+        final IkeyConfig config = IkeyConfig.builder().verbosity(Set.of(HEADER, OTHER, WARNING, STATISTICS)).verbosity(HEADER).build();
         assertThat(config.getVerbosity()).containsOnly(HEADER, OTHER, WARNING, STATISTICS);
     }
 

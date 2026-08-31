@@ -1,6 +1,5 @@
 package fr.lis.ikeyplus.services;
 
-import com.google.common.collect.Sets;
 import fr.lis.ikeyplus.IO.SDDSaxParser;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 import fr.lis.ikeyplus.utils.IkeyConfig;
@@ -9,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Set;
 
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.HEADER;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.OTHER;
@@ -24,7 +24,7 @@ public class IdentificationKeyGeneratorTest {
 
         final IkeyConfig config = IkeyConfig.builder()
                 .enablePruning()
-                .verbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTICS))
+                .verbosity(Set.of(HEADER, OTHER, WARNING, STATISTICS))
                 .build();
 
         final SDDSaxParser sddSaxParser;
@@ -47,7 +47,7 @@ public class IdentificationKeyGeneratorTest {
 
         final IkeyConfig config = IkeyConfig.builder()
                 .enablePruning()
-                .verbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTICS))
+                .verbosity(Set.of(HEADER, OTHER, WARNING, STATISTICS))
                 .weightContext(IkeyConfig.WeightContext.OBSERVATION_CONVENIENCE)
                 .build();
 
@@ -72,7 +72,7 @@ public class IdentificationKeyGeneratorTest {
 
         final IkeyConfig config = IkeyConfig.builder()
                 .enablePruning()
-                .verbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTICS))
+                .verbosity(Set.of(HEADER, OTHER, WARNING, STATISTICS))
                 .scoreMethod(IkeyConfig.ScoreMethod.JACCARD)
                 .build();
 
@@ -97,7 +97,7 @@ public class IdentificationKeyGeneratorTest {
 
         final IkeyConfig config = IkeyConfig.builder()
                 .enablePruning()
-                .verbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTICS))
+                .verbosity(Set.of(HEADER, OTHER, WARNING, STATISTICS))
                 .scoreMethod(IkeyConfig.ScoreMethod.SOKAL_AND_MICHENER)
                 .build();
 
@@ -121,7 +121,7 @@ public class IdentificationKeyGeneratorTest {
 
         final IkeyConfig config = IkeyConfig.builder()
                 .enablePruning()
-                .verbosity(Sets.newHashSet(HEADER, WARNING, STATISTICS))
+                .verbosity(Set.of(HEADER, WARNING, STATISTICS))
                 .build();
 
         final SDDSaxParser sddSaxParser;
