@@ -3,9 +3,9 @@ package fr.lis.ikeyplus.IO;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 import fr.lis.ikeyplus.services.IdentificationKeyGenerator;
 import fr.lis.ikeyplus.utils.IkeyConfig;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.xml.sax.SAXException;
 
 import java.io.File;
@@ -451,7 +451,7 @@ public class SingleAccessKeyTreeDumperTest {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void should_generate_genetta_interactive_html() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
@@ -539,7 +539,7 @@ public class SingleAccessKeyTreeDumperTest {
         }
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         IkeyConfig.setBundleConfOverridable(ResourceBundle.getBundle("confTest"));
         IkeyConfig.setBundleConf(ResourceBundle.getBundle("confTest"));
