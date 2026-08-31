@@ -14,7 +14,7 @@
     <properties>
         <version.assertj-core>2.9.1</version.assertj-core>
         <version.xercesImpl>2.9.1</version.xercesImpl>
-        <version.guava>18.0</version.guava>
+        <version.guava>33.7.1-jre</version.guava>
         <version.commons-io>2.4</version.commons-io>
         <version.jersey-server>1.6</version.jersey-server>
         <version.log4j>1.2.16</version.log4j>
