@@ -1,9 +1,8 @@
 package fr.lis.ikeyplus.model;
 
-import com.google.common.base.Objects;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class represents a state of categorical character
@@ -80,12 +79,12 @@ public class State {
 
         final State that = (State) o;
 
-        return Objects.equal(id, that.id) &&
-                Objects.equal(name, that.name);
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, name);
+        return Objects.hashCode(id) + Objects.hashCode(name);
     }
 }
