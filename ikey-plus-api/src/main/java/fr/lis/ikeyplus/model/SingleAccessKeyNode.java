@@ -21,8 +21,7 @@ public class SingleAccessKeyNode {
         this(null, null);
     }
 
-    public SingleAccessKeyNode(final ICharacter character, final Object characterState) throws OutOfMemoryError,
-            Exception {
+    public SingleAccessKeyNode(final ICharacter character, final Object characterState) throws OutOfMemoryError {
         super();
         this.character = character;
         this.characterState = characterState;
@@ -65,10 +64,10 @@ public class SingleAccessKeyNode {
 
     public String getStatesToString(final String separator) {
 
-        final StringBuilder result = new StringBuilder("");
-        if (getCharacterState() instanceof State) {
-            result.append(((State) getCharacterState()).getName());
-            for (final Object state : getOtherCharacterStates()) {
+        final StringBuilder result = new StringBuilder();
+        if (characterState instanceof State) {
+            result.append(((State) characterState).getName());
+            for (final Object state : otherCharacterStates) {
                 if (state instanceof State) {
                     result.append(separator).append(((State) state).getName());
                 }
@@ -80,8 +79,8 @@ public class SingleAccessKeyNode {
     public List<State> getStates() {
         if (characterState instanceof State) {
             final List<State> states = new ArrayList<>();
-            states.add((State) getCharacterState());
-            for (final Object state : getOtherCharacterStates()) {
+            states.add((State) characterState);
+            for (final Object state : otherCharacterStates) {
                 if (state instanceof State) {
                     states.add((State) state);
                 }
@@ -112,7 +111,7 @@ public class SingleAccessKeyNode {
     }
 
     public boolean hasChild() {
-        return children.size() > 0;
+        return !children.isEmpty();
     }
 
     public boolean isEmpty() {
@@ -132,11 +131,11 @@ public class SingleAccessKeyNode {
     }
 
     public boolean isChildrenContainsImages(final DataSet dataSet) {
-        for (final SingleAccessKeyNode childNode : getChildren()) {
-            if (childNode.getCharacter().isSupportsCategoricalData()
-                    && ((State) childNode.getCharacterState()).getFirstImageKey() != null
-                    && dataSet.getMediaObject(((State) childNode.getCharacterState()).getFirstImageKey()) != null
-                    && dataSet.getMediaObject(((State) childNode.getCharacterState()).getFirstImageKey())
+        for (final SingleAccessKeyNode childNode : children) {
+            if (childNode.character.isSupportsCategoricalData()
+                    && ((State) childNode.characterState).getFirstImageKey() != null
+                    && dataSet.getMediaObject(((State) childNode.characterState).getFirstImageKey()) != null
+                    && dataSet.getMediaObject(((State) childNode.characterState).getFirstImageKey())
                     .startsWith("http")) {
                 return true;
             }

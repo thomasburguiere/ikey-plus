@@ -89,16 +89,19 @@ public class Character implements ICharacter {
 
     }
 
+    @Override
     public List<String> getMediaObjectKeys() {
         return mediaObjectKeys;
     }
 
+    @Override
     public void setMediaObjectKeys(final List<String> mediaObjectKey) {
         this.mediaObjectKeys = mediaObjectKey;
     }
 
+    @Override
     public String getFirstImage(final DataSet dataset) {
-        if (dataset != null && mediaObjectKeys != null && mediaObjectKeys.size() > 0
+        if (dataset != null && mediaObjectKeys != null && !mediaObjectKeys.isEmpty()
                 && dataset.getMediaObject(mediaObjectKeys.get(0)).startsWith("http")) {
             return dataset.getMediaObject(mediaObjectKeys.get(0));
         }
@@ -171,6 +174,7 @@ public class Character implements ICharacter {
         }
     }
 
+    @Override
     public ICharacter clone() {
         ICharacter newCharacter = null;
         if (isSupportsCategoricalData()) {

@@ -54,22 +54,14 @@ public class SingleAccessKeyTree {
 
         if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
             if (node.getCharacterState() instanceof QuantitativeMeasure) {
-                output.append(tabulations
-                        + firstNumbering
-                        + "."
-                        + secondNumbering
-                        + ") "
-                        + node.getCharacter().getName()
-                        + " | "
-                        + ((QuantitativeMeasure) node.getCharacterState())
+                output.append(tabulations).append(firstNumbering).append(".").append(secondNumbering).append(") ").append(node.getCharacter().getName()).append(" | ").append(((QuantitativeMeasure) node.getCharacterState())
                         .toStringInterval(((QuantitativeCharacter) node.getCharacter())
                                 .getMeasurementUnit()));
             } else {
-                output.append(tabulations + firstNumbering + "." + secondNumbering + ") "
-                        + node.getCharacter().getName() + " | " + node.getStringStates());
+                output.append(tabulations).append(firstNumbering).append(".").append(secondNumbering).append(") ").append(node.getCharacter().getName()).append(" | ").append(node.getStringStates());
             }
             output.append(nodeDescriptionAnalysis(node));
-            if (node.getChildren().size() == 0) {
+            if (node.getChildren().isEmpty()) {
                 output.append(" -> ");
                 boolean firstLoop = true;
                 for (final Taxon taxon : node.getRemainingTaxa()) {
@@ -80,7 +72,7 @@ public class SingleAccessKeyTree {
                     firstLoop = false;
                 }
             } else {
-                output.append(" (items=" + node.getRemainingTaxa().size() + ")");
+                output.append(" (items=").append(node.getRemainingTaxa().size()).append(")");
             }
             tabulations = tabulations + "\t";
         }
@@ -109,7 +101,7 @@ public class SingleAccessKeyTree {
      * requires it to be displayed. Returns an empty String otherwise.
      */
     public String nodeDescriptionAnalysis(final SingleAccessKeyNode node) {
-        if (node.getNodeDescription() != null && node.getNodeDescription().trim().length() > 0
+        if (node.getNodeDescription() != null && !node.getNodeDescription().trim().isEmpty()
                 && config.getVerbosity().contains(IkeyConfig.VerbosityLevel.WARNING)) {
             return " (" + node.getNodeDescription() + ")";
         }

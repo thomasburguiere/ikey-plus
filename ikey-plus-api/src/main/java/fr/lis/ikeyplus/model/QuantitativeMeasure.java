@@ -91,13 +91,13 @@ public class QuantitativeMeasure {
         final String start;
         final String end;
 
-        if (isMinInclude()) {
+        if (minInclude) {
             start = "[";
         } else {
             start = "]";
         }
 
-        if (isMaxInclude()) {
+        if (maxInclude) {
             end = "]";
         } else {
             end = "[";
@@ -145,17 +145,13 @@ public class QuantitativeMeasure {
         } else if (!isNotSpecified() && !quantitativeMeasure.isNotSpecified()) {
             // if the max value of the current interval is include
             if (maxInclude) {
-                if ((quantitativeMeasure.getCalculateMinimum() >= getCalculateMinimum() && quantitativeMeasure.getCalculateMinimum() <= getCalculateMaximum())
+                return (quantitativeMeasure.getCalculateMinimum() >= getCalculateMinimum() && quantitativeMeasure.getCalculateMinimum() <= getCalculateMaximum())
                         || (quantitativeMeasure.getCalculateMaximum() >= getCalculateMinimum() && quantitativeMeasure
-                        .getCalculateMaximum() <= getCalculateMaximum())) {
-                    return true;
-                }
+                        .getCalculateMaximum() <= getCalculateMaximum());
             } else {
-                if ((quantitativeMeasure.getCalculateMinimum() >= getCalculateMinimum() && quantitativeMeasure.getCalculateMinimum() < getCalculateMaximum())
+                return (quantitativeMeasure.getCalculateMinimum() >= getCalculateMinimum() && quantitativeMeasure.getCalculateMinimum() < getCalculateMaximum())
                         || (quantitativeMeasure.getCalculateMaximum() >= getCalculateMinimum() && quantitativeMeasure
-                        .getCalculateMaximum() < getCalculateMaximum())) {
-                    return true;
-                }
+                        .getCalculateMaximum() < getCalculateMaximum());
             }
         }
         return false;

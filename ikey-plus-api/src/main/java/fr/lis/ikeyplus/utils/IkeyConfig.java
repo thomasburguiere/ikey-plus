@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -313,7 +314,7 @@ public class IkeyConfig {
             fileOutputStream = new FileOutputStream(erroFile);
             fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
             final BufferedWriter txtFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream,
-                    "UTF-8"));
+                    StandardCharsets.UTF_8));
 
             txtFileWriter.append(errorMessage);
             txtFileWriter.append(lineReturn)

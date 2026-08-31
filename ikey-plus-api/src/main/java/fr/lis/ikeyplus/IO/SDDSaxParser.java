@@ -22,7 +22,7 @@ import fr.lis.ikeyplus.utils.IkeyConfig;
  */
 public class SDDSaxParser {
 
-    // kwnoledge base (call dataset)
+    // knowledge base (call dataset)
     private DataSet dataset = null;
 
     /**
@@ -43,7 +43,7 @@ public class SDDSaxParser {
         }
 
         saxReader.parse(is);
-        setDataset(handler.getDataSet());
+        dataset = handler.getDataSet();
     }
 
     /**
@@ -58,7 +58,7 @@ public class SDDSaxParser {
         final InputSource is = new InputSource(new FileInputStream(inputFile));
 
         saxReader.parse(is);
-        setDataset(handler.getDataSet());
+        dataset = handler.getDataSet();
     }
 
     public DataSet getDataset() {
