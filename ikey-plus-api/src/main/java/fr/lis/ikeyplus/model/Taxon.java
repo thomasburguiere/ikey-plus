@@ -19,8 +19,8 @@ public class Taxon {
     public static final int SUM_PATHLENGTHS_IN_KEY = 4;
 
     private String id;
-    private String name = null;
-    private List<String> mediaObjectKeys = null;
+    private String name;
+    private List<String> mediaObjectKeys;
     private HashMap<Integer, Float> pathStatistics;
 
     public Taxon() {
@@ -60,15 +60,15 @@ public class Taxon {
 
     public String getFirstImage(final DataSet dataSet) {
         if (dataSet != null && mediaObjectKeys != null && !mediaObjectKeys.isEmpty() &&
-                dataSet.getMediaObject(mediaObjectKeys.get(0)).startsWith("http")) {
-            return dataSet.getMediaObject(mediaObjectKeys.get(0));
+                dataSet.getMediaObject(mediaObjectKeys.getFirst()).startsWith("http")) {
+            return dataSet.getMediaObject(mediaObjectKeys.getFirst());
         }
         return null;
     }
 
     public String getFirstImageKey() {
         if (!mediaObjectKeys.isEmpty()) {
-            return mediaObjectKeys.get(0);
+            return mediaObjectKeys.getFirst();
         }
         return null;
     }

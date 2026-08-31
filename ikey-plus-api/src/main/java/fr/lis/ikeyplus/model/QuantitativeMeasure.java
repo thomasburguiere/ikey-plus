@@ -107,7 +107,7 @@ public class QuantitativeMeasure {
 
     public String toStringInterval(final String unit) {
 
-        if (unit != null && !unit.equals("")) {
+        if (unit != null && !unit.isEmpty()) {
             return toStringInterval() + " (" + unit + ")";
         }
         return toStringInterval();
@@ -143,7 +143,7 @@ public class QuantitativeMeasure {
             return true;
             // if both taxa are described
         } else if (!isNotSpecified() && !quantitativeMeasure.isNotSpecified()) {
-            // if the max value of the current interval is include
+            // if the max value of the current interval is included
             if (maxInclude) {
                 return (quantitativeMeasure.getCalculateMinimum() >= getCalculateMinimum() && quantitativeMeasure.getCalculateMinimum() <= getCalculateMaximum())
                         || (quantitativeMeasure.getCalculateMaximum() >= getCalculateMinimum() && quantitativeMeasure

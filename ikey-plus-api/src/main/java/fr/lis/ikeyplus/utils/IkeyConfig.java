@@ -277,16 +277,16 @@ public class IkeyConfig {
     }
 
     public void setErrorMessage(final String msg) {
-        if (getErrorMessage() == null) {
+        if (errorMessage == null) {
             errorMessage = msg;
-            setErrorMessageFile(createErrorFile());
+            errorMessageFile = createErrorFile();
         }
     }
 
     public void setErrorMessage(final String msg, final Throwable t) {
-        if (getErrorMessage() == null) {
+        if (errorMessage == null) {
             errorMessage = msg + ": " + t.getMessage();
-            setErrorMessageFile(createErrorFile());
+            errorMessageFile = createErrorFile();
         }
     }
 
@@ -302,7 +302,7 @@ public class IkeyConfig {
         final String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-        final String lineReturn = System.getProperty("line.separator");
+        final String lineReturn = System.lineSeparator();
         File erroFile = null;
         FileOutputStream fileOutputStream = null;
         try {

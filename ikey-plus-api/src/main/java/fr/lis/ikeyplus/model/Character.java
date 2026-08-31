@@ -12,13 +12,13 @@ import java.util.List;
  */
 public class Character implements ICharacter {
 
-    private String name = null;
+    private String name;
     private String id = null;
     public float weight = IkeyConfig.DEFAULT_WEIGHT.getIntWeight();
     private ICharacter parentCharacter = null;
-    private List<State> inapplicableStates = null;
-    private List<ICharacter> childCharacters = null;
-    private List<String> mediaObjectKeys = null;
+    private List<State> inapplicableStates;
+    private List<ICharacter> childCharacters;
+    private List<String> mediaObjectKeys;
 
     public Character() {
         this(null);
@@ -102,8 +102,8 @@ public class Character implements ICharacter {
     @Override
     public String getFirstImage(final DataSet dataset) {
         if (dataset != null && mediaObjectKeys != null && !mediaObjectKeys.isEmpty()
-                && dataset.getMediaObject(mediaObjectKeys.get(0)).startsWith("http")) {
-            return dataset.getMediaObject(mediaObjectKeys.get(0));
+                && dataset.getMediaObject(mediaObjectKeys.getFirst()).startsWith("http")) {
+            return dataset.getMediaObject(mediaObjectKeys.getFirst());
         }
         return null;
     }
@@ -176,18 +176,18 @@ public class Character implements ICharacter {
 
     @Override
     public ICharacter clone() {
-        ICharacter newCharacter = null;
+        ICharacter newCharacter;
         if (isSupportsCategoricalData()) {
             newCharacter = new CategoricalCharacter();
             ((CategoricalCharacter) newCharacter).setStates(((CategoricalCharacter) this).getStates());
         } else {
             newCharacter = new QuantitativeCharacter();
         }
-        newCharacter.setChildCharacters(getChildCharacters());
-        newCharacter.setId(getId());
-        newCharacter.setInapplicableStates(getInapplicableStates());
-        newCharacter.setName(getName());
-        newCharacter.setParentCharacter(getParentCharacter());
+        newCharacter.setChildCharacters(childCharacters);
+        newCharacter.setId(id);
+        newCharacter.setInapplicableStates(inapplicableStates);
+        newCharacter.setName(name);
+        newCharacter.setParentCharacter(parentCharacter);
         return newCharacter;
     }
 

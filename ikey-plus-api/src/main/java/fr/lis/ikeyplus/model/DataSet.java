@@ -12,10 +12,10 @@ import java.util.Map;
  */
 public class DataSet {
 
-    private List<ICharacter> characters = null;
-    private Map<Taxon, CodedDescription> codedDescriptions = null;
+    private List<ICharacter> characters;
+    private Map<Taxon, CodedDescription> codedDescriptions;
     private String label = null;
-    private Map<String, String> mediaObjects = null;
+    private Map<String, String> mediaObjects;
 
     public DataSet() {
         characters = new ArrayList<ICharacter>();
@@ -141,8 +141,8 @@ public class DataSet {
      *
      * @return List<ICharacter>, the list of inapplicable character and all its sons
      */
-    public List<ICharacter> getInapplicableCharacters(final List<ICharacter> newRemainingCharacters,
-                                                      final ICharacter selectedCharacter, final State state) {
+    public static List<ICharacter> getInapplicableCharacters(final List<ICharacter> newRemainingCharacters,
+                                                             final ICharacter selectedCharacter, final State state) {
 
         final List<ICharacter> inapplicableCharacter = new ArrayList<ICharacter>();
 

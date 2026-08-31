@@ -10,12 +10,12 @@ import java.util.List;
  */
 public class SingleAccessKeyNode {
 
-    private ICharacter character = null;
-    private Object characterState = null;
-    private List<Object> otherCharacterStates = null;
-    private List<SingleAccessKeyNode> children = null;
+    private ICharacter character;
+    private Object characterState;
+    private List<Object> otherCharacterStates;
+    private List<SingleAccessKeyNode> children;
     private String nodeDescription = null;
-    private List<Taxon> remainingTaxa = null;
+    private List<Taxon> remainingTaxa;
 
     public SingleAccessKeyNode() throws OutOfMemoryError, Exception {
         this(null, null);

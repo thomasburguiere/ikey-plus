@@ -30,7 +30,7 @@ public class IdentificationKeyGeneratorTest {
         final SDDSaxParser sddSaxParser;
         sddSaxParser = new SDDSaxParser(stringUrl, config);
 
-        IdentificationKeyGenerator identificationKeyGenerator = null;
+        IdentificationKeyGenerator identificationKeyGenerator;
 
         identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
         identificationKeyGenerator.createIdentificationKey();
@@ -54,7 +54,7 @@ public class IdentificationKeyGeneratorTest {
         final SDDSaxParser sddSaxParser;
         sddSaxParser = new SDDSaxParser(stringUrl, config);
 
-        IdentificationKeyGenerator identificationKeyGenerator = null;
+        IdentificationKeyGenerator identificationKeyGenerator;
 
         identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
         identificationKeyGenerator.createIdentificationKey();
@@ -79,7 +79,7 @@ public class IdentificationKeyGeneratorTest {
         final SDDSaxParser sddSaxParser;
         sddSaxParser = new SDDSaxParser(stringUrl, config);
 
-        IdentificationKeyGenerator identificationKeyGenerator = null;
+        IdentificationKeyGenerator identificationKeyGenerator;
 
         identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
         identificationKeyGenerator.createIdentificationKey();
@@ -104,7 +104,7 @@ public class IdentificationKeyGeneratorTest {
         final SDDSaxParser sddSaxParser;
         sddSaxParser = new SDDSaxParser(stringUrl, config);
 
-        IdentificationKeyGenerator identificationKeyGenerator = null;
+        IdentificationKeyGenerator identificationKeyGenerator;
 
         identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
         identificationKeyGenerator.createIdentificationKey();
@@ -127,7 +127,7 @@ public class IdentificationKeyGeneratorTest {
         final SDDSaxParser sddSaxParser;
         sddSaxParser = new SDDSaxParser(stringUrl, config);
 
-        IdentificationKeyGenerator identificationKeyGenerator = null;
+        IdentificationKeyGenerator identificationKeyGenerator;
 
         identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
         identificationKeyGenerator.createIdentificationKey();
