@@ -5,11 +5,16 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
-import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.*;
+import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.HEADER;
+import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.OTHER;
+import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.STATISTICS;
+import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.WARNING;
+import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.fromString;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class IkeyConfigTest {
@@ -35,7 +40,7 @@ public class IkeyConfigTest {
         ikeyConfig.createErrorFile();
         final File errorMessageFile = ikeyConfig.getErrorMessageFile();
         final byte[] resultBytes = Files.readAllBytes(Paths.get(errorMessageFile.toURI()));
-        final String result = new String(resultBytes, "UTF-8");
+        final String result = new String(resultBytes, StandardCharsets.UTF_8);
         assertThat(result).contains(ERROR_MESSAGE);
     }
 
@@ -46,7 +51,7 @@ public class IkeyConfigTest {
         ikeyConfig.createErrorFile();
         final File errorMessageFile = ikeyConfig.getErrorMessageFile();
         final byte[] resultBytes = Files.readAllBytes(Paths.get(errorMessageFile.toURI()));
-        final String result = new String(resultBytes, "UTF-8");
+        final String result = new String(resultBytes, StandardCharsets.UTF_8);
         assertThat(result).contains(ERROR_MESSAGE+": " +EXCEPTION_MESSAGE );
     }
 

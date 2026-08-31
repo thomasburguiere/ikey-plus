@@ -5,7 +5,6 @@ import fr.lis.ikeyplus.utils.IkeyConfig;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.util.logging.Logger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,7 +18,6 @@ public class SDDSaxParserTest {
     private static final int EXPECTED_NB_OF_CHARACTERS = 303;
     private static final int EXPECTED_NB_OF_TAXA = 144;
     public static final String DATASET_NAME = "Project: Cichorieae";
-    public Logger logger = Logger.getAnonymousLogger();
 
     @Test
     public void should_parse_local_file() throws Exception {

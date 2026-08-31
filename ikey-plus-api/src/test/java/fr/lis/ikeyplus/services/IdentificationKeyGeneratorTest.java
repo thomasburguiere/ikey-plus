@@ -5,9 +5,8 @@ import fr.lis.ikeyplus.IO.SDDSaxParser;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import org.junit.jupiter.api.Test;
-import org.xml.sax.SAXException;
 
-import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -23,37 +22,23 @@ public class IdentificationKeyGeneratorTest {
     public void should_generate_genetta_identification_key_with_default_options() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
-        final IkeyConfig config  = IkeyConfig.builder()
-            .enablePruning()
-            .verbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTICS))
-        .build();
+        final IkeyConfig config = IkeyConfig.builder()
+                .enablePruning()
+                .verbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTICS))
+                .build();
 
         final SDDSaxParser sddSaxParser;
-        try {
-            sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(stringUrl, config);
 
-            IdentificationKeyGenerator identificationKeyGenerator = null;
+        IdentificationKeyGenerator identificationKeyGenerator = null;
 
-            try {
-                identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
-                identificationKeyGenerator.createIdentificationKey();
-                final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
+        identificationKeyGenerator.createIdentificationKey();
+        final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 
-                final byte[] encoded = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta.txt"));
-                final String genettaFixture = new String(encoded, "UTF-8");
-                assertThat(genettaFixture).isEqualTo(tree2dump.toString());
-            } catch (final Exception e) {
-                e.printStackTrace();
-                throw (e);
-            }
-
-        } catch (final SAXException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (final IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        final byte[] encoded = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta.txt"));
+        final String genettaFixture = new String(encoded, StandardCharsets.UTF_8);
+        assertThat(genettaFixture).isEqualTo(tree2dump.toString());
     }
 
     @Test
@@ -61,39 +46,24 @@ public class IdentificationKeyGeneratorTest {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
         final IkeyConfig config = IkeyConfig.builder()
-            .enablePruning()
-            .verbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTICS))
-            .weightContext(IkeyConfig.WeightContext.OBSERVATION_CONVENIENCE)
-        .build();
+                .enablePruning()
+                .verbosity(Sets.newHashSet(HEADER, OTHER, WARNING, STATISTICS))
+                .weightContext(IkeyConfig.WeightContext.OBSERVATION_CONVENIENCE)
+                .build();
 
         final SDDSaxParser sddSaxParser;
-        try {
-            sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(stringUrl, config);
 
-            IdentificationKeyGenerator identificationKeyGenerator = null;
+        IdentificationKeyGenerator identificationKeyGenerator = null;
 
-            try {
-                identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
-                identificationKeyGenerator.createIdentificationKey();
-                final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
+        identificationKeyGenerator.createIdentificationKey();
+        final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 
-                final byte[] encoded = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta_weights.txt"));
-                final String genettaFixture = new String(encoded, "UTF-8");
-                assertThat(genettaFixture).isEqualTo(tree2dump.toString());
-            } catch (final Exception e) {
-                e.printStackTrace();
-                throw (e);
-            }
-
-        } catch (final SAXException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (final IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        final byte[] encoded = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta_weights.txt"));
+        final String genettaFixture = new String(encoded, StandardCharsets.UTF_8);
+        assertThat(genettaFixture).isEqualTo(tree2dump.toString());
     }
-
 
 
     @Test
@@ -107,33 +77,18 @@ public class IdentificationKeyGeneratorTest {
                 .build();
 
         final SDDSaxParser sddSaxParser;
-        try {
-            sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(stringUrl, config);
 
-            IdentificationKeyGenerator identificationKeyGenerator = null;
+        IdentificationKeyGenerator identificationKeyGenerator = null;
 
-            try {
-                identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
-                identificationKeyGenerator.createIdentificationKey();
-                final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
+        identificationKeyGenerator.createIdentificationKey();
+        final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 
-                final byte[] encoded = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta_jaccard.txt"));
-                final String genettaFixture = new String(encoded, "UTF-8");
-                assertThat(genettaFixture).isEqualTo(tree2dump.toString());
-            } catch (final Exception e) {
-                e.printStackTrace();
-                throw (e);
-            }
-
-        } catch (final SAXException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (final IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        final byte[] encoded = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta_jaccard.txt"));
+        final String genettaFixture = new String(encoded, StandardCharsets.UTF_8);
+        assertThat(genettaFixture).isEqualTo(tree2dump.toString());
     }
-
 
 
     @Test
@@ -147,31 +102,17 @@ public class IdentificationKeyGeneratorTest {
                 .build();
 
         final SDDSaxParser sddSaxParser;
-        try {
-            sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(stringUrl, config);
 
-            IdentificationKeyGenerator identificationKeyGenerator = null;
+        IdentificationKeyGenerator identificationKeyGenerator = null;
 
-            try {
-                identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
-                identificationKeyGenerator.createIdentificationKey();
-                final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
+        identificationKeyGenerator.createIdentificationKey();
+        final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 
-                final byte[] encoded = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta_sokal_michener.txt"));
-                final String genettaFixture = new String(encoded, "UTF-8");
-                assertThat(genettaFixture).isEqualTo(tree2dump.toString());
-            } catch (final Exception e) {
-                e.printStackTrace();
-                throw (e);
-            }
-
-        } catch (final SAXException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (final IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        final byte[] encoded = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta_sokal_michener.txt"));
+        final String genettaFixture = new String(encoded, StandardCharsets.UTF_8);
+        assertThat(genettaFixture).isEqualTo(tree2dump.toString());
     }
 
     @Test
@@ -179,36 +120,22 @@ public class IdentificationKeyGeneratorTest {
         final String stringUrl = "src/test/resources/inputFiles/cichorieae.sdd.xml";
 
         final IkeyConfig config = IkeyConfig.builder()
-            .enablePruning()
-            .verbosity(Sets.newHashSet(HEADER, WARNING, STATISTICS))
-        .build();
+                .enablePruning()
+                .verbosity(Sets.newHashSet(HEADER, WARNING, STATISTICS))
+                .build();
 
         final SDDSaxParser sddSaxParser;
-        try {
-            sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(stringUrl, config);
 
-            IdentificationKeyGenerator identificationKeyGenerator = null;
+        IdentificationKeyGenerator identificationKeyGenerator = null;
 
-            try {
-                identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
-                identificationKeyGenerator.createIdentificationKey();
-                final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
+        identificationKeyGenerator.createIdentificationKey();
+        final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 
-                final byte[] encoded = Files.readAllBytes(Paths.get("src/test/resources/fixtures/cichorieae.txt"));
-                final String fixture = new String(encoded, "UTF-8");
-                assertThat(fixture).isEqualTo(tree2dump.toString());
-            } catch (final Exception e) {
-                e.printStackTrace();
-                throw (e);
-            }
-
-        } catch (final SAXException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (final IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        final byte[] encoded = Files.readAllBytes(Paths.get("src/test/resources/fixtures/cichorieae.txt"));
+        final String fixture = new String(encoded, StandardCharsets.UTF_8);
+        assertThat(fixture).isEqualTo(tree2dump.toString());
     }
 
 }
