@@ -96,7 +96,7 @@ public class SDDContentHandler implements ContentHandler {
     /**
      * Default constructor
      */
-    public SDDContentHandler(IkeyConfig config) {
+    public SDDContentHandler(final IkeyConfig config) {
         super();
         this.dataSet = new DataSet();
         this.config = config;
@@ -108,8 +108,7 @@ public class SDDContentHandler implements ContentHandler {
      * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String, java.lang.String,
      * org.xml.sax.Attributes) */
     @Override
-    public void startElement(String nameSpaceURI, String localName, String rawName, Attributes attributes)
-            throws SAXException {
+    public void startElement(final String nameSpaceURI, final String localName, final String rawName, final Attributes attributes) {
 
         if (isFirstDataset) {
 
@@ -243,7 +242,7 @@ public class SDDContentHandler implements ContentHandler {
             // <State> in <InapplicableIf> in <CharacterTree> &&
             // isFirstCharacterTree
             else if ("State".equals(localName) && inInapplicableIf && inCharacterTree && isFirstCharacterTree) {
-                State state = dataSet.getStateById(attributes.getValue("ref"));
+                final State state = dataSet.getStateById(attributes.getValue("ref"));
                 currentInapplicableState.add(state);
             }
 
@@ -251,7 +250,7 @@ public class SDDContentHandler implements ContentHandler {
             // isFirstCharacterTree
             else if ("State".equals(localName) && inOnlyApplicableIf && inCharacterTree
                     && isFirstCharacterTree) {
-                State state = dataSet.getStateById(attributes.getValue("ref"));
+                final State state = dataSet.getStateById(attributes.getValue("ref"));
                 currentOnlyApplicableState.add(state);
             }
 
@@ -298,14 +297,14 @@ public class SDDContentHandler implements ContentHandler {
             // <Categorical> in <SummaryData>
             else if ("Categorical".equals(localName) && inSummaryData) {
                 inCategorical = true;
-                currentCodedDescriptionCharacter = this.dataSet.getCharacterById(attributes.getValue("ref"));
+                currentCodedDescriptionCharacter = dataSet.getCharacterById(attributes.getValue("ref"));
                 currentStatesList = new ArrayList<>();
             }
 
             // <State> in <Categorical>
             else if ("State".equals(localName) && inCategorical) {
                 if (currentStatesList != null) {
-                    currentStatesList.add(this.dataSet.getStateById(attributes.getValue("ref")));
+                    currentStatesList.add(dataSet.getStateById(attributes.getValue("ref")));
                 }
             }
 
@@ -320,7 +319,7 @@ public class SDDContentHandler implements ContentHandler {
             // <Quantitative> in <SummaryData>
             else if ("Quantitative".equals(localName) && inSummaryData) {
                 inQuantitative = true;
-                currentCodedDescriptionCharacter = this.dataSet.getCharacterById(attributes.getValue("ref"));
+                currentCodedDescriptionCharacter = dataSet.getCharacterById(attributes.getValue("ref"));
                 currentQuantitativeMeasure = new QuantitativeMeasure();
             }
 
@@ -370,17 +369,17 @@ public class SDDContentHandler implements ContentHandler {
             // <Rating> in <Ratings>
             else if ("Rating".equals(localName) && inRatings) {
                 if (attributes.getValue("context").equals(config.getWeightContext().toString())) {
-                    int currentRating = IkeyConfig.WeightValue.fromString(attributes.getValue("rating")).getIntWeight();
+                    final int currentRating = IkeyConfig.WeightValue.fromString(attributes.getValue("rating")).getIntWeight();
                     if (currentCodedDescriptionCharacter != null) {
-                        if (this.ratingsCounter.get(currentCodedDescriptionCharacter) == null) {
-                            this.ratingsCounter.put(currentCodedDescriptionCharacter, 0);
+                        if (ratingsCounter.get(currentCodedDescriptionCharacter) == null) {
+                            ratingsCounter.put(currentCodedDescriptionCharacter, 0);
                             currentCodedDescriptionCharacter.setWeight(0);
                         }
 
                         currentCodedDescriptionCharacter.setWeight(currentCodedDescriptionCharacter
                                 .getWeight() + currentRating);
-                        this.ratingsCounter.put(currentCodedDescriptionCharacter,
-                                this.ratingsCounter.get(currentCodedDescriptionCharacter) + 1);
+                        ratingsCounter.put(currentCodedDescriptionCharacter,
+                                ratingsCounter.get(currentCodedDescriptionCharacter) + 1);
 
                         if (config.getWeightType() == IkeyConfig.WeightType.CONTEXTUAL) {
                             currentCodedDescription.addCharacterWeight(currentCodedDescriptionCharacter,
@@ -418,7 +417,7 @@ public class SDDContentHandler implements ContentHandler {
      *
      * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String, java.lang.String) */
     @Override
-    public void endElement(String nameSpaceURI, String localName, String rawName) throws SAXException {
+    public void endElement(final String nameSpaceURI, final String localName, final String rawName) {
 
         if (isFirstDataset) {
             // <Dataset>
@@ -429,22 +428,22 @@ public class SDDContentHandler implements ContentHandler {
                 // null description will be considered as unknown data. Empty states list or
                 // QuantitativeMeasure
                 // will be considered as not specified (not described).
-                for (Taxon taxon : this.dataSet.getCodedDescriptions().keySet()) {
-                    for (ICharacter character : this.dataSet.getCharacters()) {
-                        if (this.dataSet.getCodedDescriptions().get(taxon).getCharacterDescription(character) == null) {
+                for (final Taxon taxon : dataSet.getCodedDescriptions().keySet()) {
+                    for (final ICharacter character : dataSet.getCharacters()) {
+                        if (dataSet.getCodedDescriptions().get(taxon).getCharacterDescription(character) == null) {
                             if (character.isSupportsCategoricalData()) {
-                                this.dataSet.getCodedDescriptions().get(taxon)
+                                dataSet.getCodedDescriptions().get(taxon)
                                         .addCharacterDescription(character, new ArrayList<State>());
                             } else {
-                                this.dataSet.getCodedDescriptions().get(taxon)
+                                dataSet.getCodedDescriptions().get(taxon)
                                         .addCharacterDescription(character, new QuantitativeMeasure());
                             }
                             // put to null Unknown data
-                        } else if (this.dataSet.getCodedDescriptions().get(taxon)
+                        } else if (dataSet.getCodedDescriptions().get(taxon)
                                 .getCharacterDescription(character) instanceof String
-                                && ((String) this.dataSet.getCodedDescriptions().get(taxon)
+                                && ((String) dataSet.getCodedDescriptions().get(taxon)
                                 .getCharacterDescription(character)).equals(IkeyUtils.UNKNOWN_DATA)) {
-                            this.dataSet.getCodedDescriptions().get(taxon)
+                            dataSet.getCodedDescriptions().get(taxon)
                                     .addCharacterDescription(character, null);
                         }
                     }
@@ -452,10 +451,10 @@ public class SDDContentHandler implements ContentHandler {
 
                 // update (average) the weight for all characters if the parameter
                 // useContextualCharacterWeights is not enabled
-                for (ICharacter character : this.dataSet.getCharacters()) {
-                    if (this.ratingsCounter.get(character) != null) {
+                for (final ICharacter character : dataSet.getCharacters()) {
+                    if (ratingsCounter.get(character) != null) {
                         character.setWeight((float) (character.getWeight())
-                                / (float) (this.ratingsCounter.get(character)));
+                                / (float) (ratingsCounter.get(character)));
                     }
                 }
             }
@@ -476,7 +475,7 @@ public class SDDContentHandler implements ContentHandler {
                 } else if (inQuantitativeCharacter) {
                     currentQuantitativeCharacter.setName(buffer.toString());
                 } else if (isDataSetLabel) {
-                    this.dataSet.setLabel(buffer.toString());
+                    dataSet.setLabel(buffer.toString());
                     isDataSetLabel = false;
                 }
             }
@@ -506,14 +505,14 @@ public class SDDContentHandler implements ContentHandler {
             // <CategoricalCharacter>
             else if ("CategoricalCharacter".equals(localName) && inCharacters) {
                 inCategoricalCharacter = false;
-                this.dataSet.getCharacters().add(currentCategoricalCharacter);
+                dataSet.getCharacters().add(currentCategoricalCharacter);
                 currentCategoricalCharacter = null;
             }
 
             // <QuantitativeCharacter>
             else if ("QuantitativeCharacter".equals(localName) && inCharacters) {
                 inQuantitativeCharacter = false;
-                this.dataSet.getCharacters().add(currentQuantitativeCharacter);
+                dataSet.getCharacters().add(currentQuantitativeCharacter);
                 currentQuantitativeCharacter = null;
             }
 
@@ -554,15 +553,15 @@ public class SDDContentHandler implements ContentHandler {
             // <CharNode> in <Nodes>
             else if ("CharNode".equals(localName) && inNodes) {
                 inCharNode = false;
-                if (currentInapplicableState.size() > 0) {
+                if (!currentInapplicableState.isEmpty()) {
                     currentCharacterNode.setParentCharacter(dataSet
                             .getCharacterByState(currentInapplicableState.get(0)));
                     currentCharacterNode.getInapplicableStates().addAll(currentInapplicableState);
-                } else if (currentOnlyApplicableState.size() > 0) {
-                    ICharacter character = dataSet.getCharacterByState(currentOnlyApplicableState.get(0));
+                } else if (!currentOnlyApplicableState.isEmpty()) {
+                    final ICharacter character = dataSet.getCharacterByState(currentOnlyApplicableState.get(0));
                     if (character != null && character instanceof CategoricalCharacter) {
                         currentCharacterNode.setParentCharacter(character);
-                        List<State> tempList = new ArrayList<>(
+                        final List<State> tempList = new ArrayList<>(
                                 ((CategoricalCharacter) character).getStates());
                         tempList.removeAll(currentOnlyApplicableState);
                         currentCharacterNode.getInapplicableStates().addAll(tempList);
@@ -615,7 +614,7 @@ public class SDDContentHandler implements ContentHandler {
             // <CodedDescription> in <CodedDescriptions>
             else if ("CodedDescription".equals(localName) && inCodedDescriptions) {
                 inCodedDescription = false;
-                this.dataSet.addCodedDescription(currentTaxon, currentCodedDescription);
+                dataSet.addCodedDescription(currentTaxon, currentCodedDescription);
                 currentTaxon = null;
             }
 
@@ -688,11 +687,7 @@ public class SDDContentHandler implements ContentHandler {
 
             // <Type> in <MediaObject>
             else if ("Type".equals(localName) && inMediaObject && mediaObjectId != null) {
-                if (buffer != null && buffer.toString().equalsIgnoreCase("image")) {
-                    isImageType = true;
-                } else {
-                    isImageType = false;
-                }
+                isImageType = buffer != null && buffer.toString().equalsIgnoreCase("image");
             }
         }
     }
@@ -701,7 +696,7 @@ public class SDDContentHandler implements ContentHandler {
      *
      * @see org.xml.sax.ContentHandler#endDocument() */
     @Override
-    public void endDocument() throws SAXException {
+    public void endDocument() {
         // nothing to do here
     }
 
@@ -709,7 +704,7 @@ public class SDDContentHandler implements ContentHandler {
      *
      * @see org.xml.sax.ContentHandler#endPrefixMapping(java.lang.String) */
     @Override
-    public void endPrefixMapping(String prefix) throws SAXException {
+    public void endPrefixMapping(final String prefix) {
         // nothing to do here
     }
 
@@ -717,7 +712,7 @@ public class SDDContentHandler implements ContentHandler {
      *
      * @see org.xml.sax.ContentHandler#setDocumentLocator(org.xml.sax.Locator) */
     @Override
-    public void setDocumentLocator(Locator locator) {
+    public void setDocumentLocator(final Locator locator) {
         // nothing to do here
     }
 
@@ -725,7 +720,7 @@ public class SDDContentHandler implements ContentHandler {
      *
      * @see org.xml.sax.ContentHandler#startDocument() */
     @Override
-    public void startDocument() throws SAXException {
+    public void startDocument() {
         // nothing to do here
     }
 
@@ -733,7 +728,7 @@ public class SDDContentHandler implements ContentHandler {
      *
      * @see org.xml.sax.ContentHandler#startPrefixMapping(java.lang.String, java.lang.String) */
     @Override
-    public void startPrefixMapping(String prefix, String uri) throws SAXException {
+    public void startPrefixMapping(final String prefix, final String uri) {
         // nothing to do here
     }
 
@@ -741,7 +736,7 @@ public class SDDContentHandler implements ContentHandler {
      *
      * @see org.xml.sax.ContentHandler#characters(char[], int, int) */
     @Override
-    public void characters(char[] ch, int start, int length) throws SAXException {
+    public void characters(final char[] ch, final int start, final int length) {
         String data = new String(ch, start, length);
 
         data = data.replaceAll("\t", " "); // replace all the \t character by
@@ -749,8 +744,8 @@ public class SDDContentHandler implements ContentHandler {
         // indentation characters.
         data = data.replaceAll("\n", " ");
         data = data.replaceAll("[\\s]+", " ");
-        if (this.buffer != null) {
-            this.buffer.append(data);
+        if (buffer != null) {
+            buffer.append(data);
         }
     }
 
@@ -758,7 +753,7 @@ public class SDDContentHandler implements ContentHandler {
      *
      * @see org.xml.sax.ContentHandler#ignorableWhitespace(char[], int, int) */
     @Override
-    public void ignorableWhitespace(char[] ch, int start, int length) throws SAXException {
+    public void ignorableWhitespace(final char[] ch, final int start, final int length) {
         // nothing to do here
     }
 
@@ -766,7 +761,7 @@ public class SDDContentHandler implements ContentHandler {
      *
      * @see org.xml.sax.ContentHandler#processingInstruction(java.lang.String, java.lang.String) */
     @Override
-    public void processingInstruction(String target, String data) throws SAXException {
+    public void processingInstruction(final String target, final String data) {
         // nothing to do here
     }
 
@@ -774,7 +769,7 @@ public class SDDContentHandler implements ContentHandler {
      *
      * @see org.xml.sax.ContentHandler#skippedEntity(java.lang.String) */
     @Override
-    public void skippedEntity(String name) throws SAXException {
+    public void skippedEntity(final String name) {
         // nothing to do here
     }
 

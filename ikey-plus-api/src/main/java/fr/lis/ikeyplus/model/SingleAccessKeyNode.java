@@ -21,8 +21,7 @@ public class SingleAccessKeyNode {
         this(null, null);
     }
 
-    public SingleAccessKeyNode(ICharacter character, Object characterState) throws OutOfMemoryError,
-            Exception {
+    public SingleAccessKeyNode(final ICharacter character, final Object characterState) throws OutOfMemoryError {
         super();
         this.character = character;
         this.characterState = characterState;
@@ -35,7 +34,7 @@ public class SingleAccessKeyNode {
         return character;
     }
 
-    public void setCharacter(ICharacter character) {
+    public void setCharacter(final ICharacter character) {
         this.character = character;
     }
 
@@ -43,7 +42,7 @@ public class SingleAccessKeyNode {
         return characterState;
     }
 
-    public void setCharacterState(Object characterState) {
+    public void setCharacterState(final Object characterState) {
         this.characterState = characterState;
     }
 
@@ -51,24 +50,24 @@ public class SingleAccessKeyNode {
         return otherCharacterStates;
     }
 
-    public void setOtherCharacterStates(List<Object> otherCharacterStates) {
+    public void setOtherCharacterStates(final List<Object> otherCharacterStates) {
         this.otherCharacterStates = otherCharacterStates;
     }
 
-    public void addOtherCharacterStates(Object otherCharacterState) {
-        this.otherCharacterStates.add(otherCharacterState);
+    public void addOtherCharacterStates(final Object otherCharacterState) {
+        otherCharacterStates.add(otherCharacterState);
     }
 
     public String getStringStates() {
         return getStatesToString(" OR ");
     }
 
-    public String getStatesToString(String separator) {
+    public String getStatesToString(final String separator) {
 
-        StringBuilder result = new StringBuilder("");
-        if (this.getCharacterState() instanceof State) {
-            result.append(((State) this.getCharacterState()).getName());
-            for (Object state : this.getOtherCharacterStates()) {
+        final StringBuilder result = new StringBuilder();
+        if (characterState instanceof State) {
+            result.append(((State) characterState).getName());
+            for (final Object state : otherCharacterStates) {
                 if (state instanceof State) {
                     result.append(separator).append(((State) state).getName());
                 }
@@ -78,10 +77,10 @@ public class SingleAccessKeyNode {
     }
 
     public List<State> getStates() {
-        if (this.characterState instanceof State) {
-            List<State> states = new ArrayList<>();
-            states.add((State) this.getCharacterState());
-            for (Object state : this.getOtherCharacterStates()) {
+        if (characterState instanceof State) {
+            final List<State> states = new ArrayList<>();
+            states.add((State) characterState);
+            for (final Object state : otherCharacterStates) {
                 if (state instanceof State) {
                     states.add((State) state);
                 }
@@ -95,24 +94,24 @@ public class SingleAccessKeyNode {
         return children;
     }
 
-    public void setChildren(List<SingleAccessKeyNode> children) {
+    public void setChildren(final List<SingleAccessKeyNode> children) {
         this.children = children;
     }
 
-    public void addChild(SingleAccessKeyNode singleAccessKeyNode) {
-        this.children.add(singleAccessKeyNode);
+    public void addChild(final SingleAccessKeyNode singleAccessKeyNode) {
+        children.add(singleAccessKeyNode);
     }
 
     public List<Taxon> getRemainingTaxa() {
         return remainingTaxa;
     }
 
-    public void setRemainingTaxa(List<Taxon> remainingTaxa) {
+    public void setRemainingTaxa(final List<Taxon> remainingTaxa) {
         this.remainingTaxa = remainingTaxa;
     }
 
     public boolean hasChild() {
-        return children.size() > 0;
+        return !children.isEmpty();
     }
 
     public boolean isEmpty() {
@@ -123,7 +122,7 @@ public class SingleAccessKeyNode {
         return nodeDescription;
     }
 
-    public void setNodeDescription(String nodeDescription) {
+    public void setNodeDescription(final String nodeDescription) {
         this.nodeDescription = nodeDescription;
     }
 
@@ -131,12 +130,12 @@ public class SingleAccessKeyNode {
         return character.toString() + " --> " + characterState.toString();
     }
 
-    public boolean isChildrenContainsImages(DataSet dataSet) {
-        for (SingleAccessKeyNode childNode : this.getChildren()) {
-            if (childNode.getCharacter().isSupportsCategoricalData()
-                    && ((State) childNode.getCharacterState()).getFirstImageKey() != null
-                    && dataSet.getMediaObject(((State) childNode.getCharacterState()).getFirstImageKey()) != null
-                    && dataSet.getMediaObject(((State) childNode.getCharacterState()).getFirstImageKey())
+    public boolean isChildrenContainsImages(final DataSet dataSet) {
+        for (final SingleAccessKeyNode childNode : children) {
+            if (childNode.character.isSupportsCategoricalData()
+                    && ((State) childNode.characterState).getFirstImageKey() != null
+                    && dataSet.getMediaObject(((State) childNode.characterState).getFirstImageKey()) != null
+                    && dataSet.getMediaObject(((State) childNode.characterState).getFirstImageKey())
                     .startsWith("http")) {
                 return true;
             }

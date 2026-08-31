@@ -16,9 +16,9 @@ public class CategoricalCharacter extends Character {
         this(null);
     }
 
-    public CategoricalCharacter(String name) {
+    public CategoricalCharacter(final String name) {
         super();
-        this.setName(name);
+        setName(name);
         this.states = new ArrayList<State>();
     }
 
@@ -26,7 +26,7 @@ public class CategoricalCharacter extends Character {
         return states;
     }
 
-    public void setStates(List<State> states) {
+    public void setStates(final List<State> states) {
         this.states = states;
     }
 

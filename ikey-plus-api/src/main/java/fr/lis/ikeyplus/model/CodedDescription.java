@@ -24,7 +24,7 @@ public class CodedDescription {
         return description;
     }
 
-    public void setDescription(Map<ICharacter, Object> description) {
+    public void setDescription(final Map<ICharacter, Object> description) {
         this.description = description;
     }
 
@@ -32,31 +32,31 @@ public class CodedDescription {
         return characterWeights;
     }
 
-    public void setCharacterWeights(Map<ICharacter, Integer> characterWeights) {
+    public void setCharacterWeights(final Map<ICharacter, Integer> characterWeights) {
         this.characterWeights = characterWeights;
     }
 
-    public Integer getCharacterWeight(ICharacter character) {
+    public Integer getCharacterWeight(final ICharacter character) {
         return characterWeights.get(character);
     }
 
-    public void addCharacterWeight(ICharacter character, Integer weight) {
+    public void addCharacterWeight(final ICharacter character, final Integer weight) {
         characterWeights.put(character, weight);
     }
 
-    public void removeCharacterWeight(ICharacter character) {
+    public void removeCharacterWeight(final ICharacter character) {
         characterWeights.remove(character);
     }
 
-    public Object getCharacterDescription(ICharacter character) {
+    public Object getCharacterDescription(final ICharacter character) {
         return description.get(character);
     }
 
-    public void addCharacterDescription(ICharacter character, Object characterDescription) {
+    public void addCharacterDescription(final ICharacter character, final Object characterDescription) {
         description.put(character, characterDescription);
     }
 
-    public void removeCharacterDescription(ICharacter character) {
+    public void removeCharacterDescription(final ICharacter character) {
         description.remove(character);
     }
 
@@ -64,7 +64,7 @@ public class CodedDescription {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 }

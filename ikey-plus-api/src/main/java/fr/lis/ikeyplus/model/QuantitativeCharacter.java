@@ -13,16 +13,16 @@ public class QuantitativeCharacter extends Character {
         this(null);
     }
 
-    public QuantitativeCharacter(String name) {
+    public QuantitativeCharacter(final String name) {
         super();
-        this.setName(name);
+        setName(name);
     }
 
     public String getMeasurementUnit() {
         return measurementUnit;
     }
 
-    public void setMeasurementUnit(String measurementUnit) {
+    public void setMeasurementUnit(final String measurementUnit) {
         this.measurementUnit = measurementUnit;
     }
 

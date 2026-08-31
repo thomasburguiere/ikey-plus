@@ -5,12 +5,10 @@ import fr.lis.ikeyplus.IO.SDDSaxParser;
 import fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 import fr.lis.ikeyplus.utils.IkeyConfigBuilder;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.File;
-import java.util.logging.Logger;
 
 import static fr.lis.ikeyplus.utils.IkeyConfig.ScoreMethod.XPER;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel;

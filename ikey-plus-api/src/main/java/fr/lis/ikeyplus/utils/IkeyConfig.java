@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -38,15 +39,15 @@ public class IkeyConfig {
     private IkeyConfig() {
     }
 
-    IkeyConfig(OutputFormat format,
-               KeyRepresentation representation,
-               boolean fewStatesCharacterFirst,
-               boolean mergeCharacterStatesIfSameDiscrimination,
-               boolean pruningEnabled,
-               Set<VerbosityLevel> verbosity,
-               ScoreMethod scoreMethod,
-               WeightContext weightContext,
-               WeightType weightType) {
+    IkeyConfig(final OutputFormat format,
+               final KeyRepresentation representation,
+               final boolean fewStatesCharacterFirst,
+               final boolean mergeCharacterStatesIfSameDiscrimination,
+               final boolean pruningEnabled,
+               final Set<VerbosityLevel> verbosity,
+               final ScoreMethod scoreMethod,
+               final WeightContext weightContext,
+               final WeightType weightType) {
 
         this.format = format;
         this.representation = representation;
@@ -73,10 +74,10 @@ public class IkeyConfig {
             return flag;
         }
 
-        public static Set<VerbosityLevel> fromString(String s) {
+        public static Set<VerbosityLevel> fromString(final String s) {
             if (s != null) {
-                Set<VerbosityLevel> verbosity = new HashSet<VerbosityLevel>();
-                for (VerbosityLevel level : values()) {
+                final Set<VerbosityLevel> verbosity = new HashSet<VerbosityLevel>();
+                for (final VerbosityLevel level : values()) {
                     if (s.toLowerCase().contains(level.toString())) {
                         verbosity.add(level);
                     }
@@ -86,7 +87,7 @@ public class IkeyConfig {
             return null;
         }
 
-        VerbosityLevel(String flag) {
+        VerbosityLevel(final String flag) {
             this.flag = flag;
         }
     }
@@ -102,13 +103,13 @@ public class IkeyConfig {
             return method;
         }
 
-        ScoreMethod(String method) {
+        ScoreMethod(final String method) {
             this.method = method;
         }
 
-        public static ScoreMethod fromString(String text) {
+        public static ScoreMethod fromString(final String text) {
             if (text != null) {
-                for (ScoreMethod entry : values()) {
+                for (final ScoreMethod entry : values()) {
                     if (entry.toString().equals(text)) {
                         return entry;
                     }
@@ -124,7 +125,7 @@ public class IkeyConfig {
 
         private final String representation;
 
-        KeyRepresentation(String representation) {
+        KeyRepresentation(final String representation) {
             this.representation = representation;
         }
 
@@ -132,9 +133,9 @@ public class IkeyConfig {
             return representation;
         }
 
-        public static KeyRepresentation fromString(String text) {
+        public static KeyRepresentation fromString(final String text) {
             if (text != null) {
-                for (KeyRepresentation entry : values()) {
+                for (final KeyRepresentation entry : values()) {
                     if (entry.toString().equals(text)) {
                         return entry;
                     }
@@ -156,7 +157,7 @@ public class IkeyConfig {
 
         private final String format;
 
-        OutputFormat(String format) {
+        OutputFormat(final String format) {
             this.format = format;
         }
 
@@ -164,9 +165,9 @@ public class IkeyConfig {
             return format;
         }
 
-        public static OutputFormat fromString(String text) {
+        public static OutputFormat fromString(final String text) {
             if (text != null) {
-                for (OutputFormat entry : values()) {
+                for (final OutputFormat entry : values()) {
                     if (entry.toString().equals(text)) {
                         return entry;
                     }
@@ -194,14 +195,14 @@ public class IkeyConfig {
             return intWeight;
         }
 
-        WeightValue(String description, int intWeight) {
+        WeightValue(final String description, final int intWeight) {
             this.description = description;
             this.intWeight = intWeight;
         }
 
-        public static WeightValue fromString(String text) {
+        public static WeightValue fromString(final String text) {
             if (text != null) {
-                for (WeightValue entry : values()) {
+                for (final WeightValue entry : values()) {
                     if (entry.toString().equals(text)) {
                         return entry;
                     }
@@ -217,7 +218,7 @@ public class IkeyConfig {
 
         private final String type;
 
-        WeightType(String type) {
+        WeightType(final String type) {
             this.type = type;
         }
 
@@ -237,7 +238,7 @@ public class IkeyConfig {
 
         private final String contextType;
 
-        WeightContext(String contextType) {
+        WeightContext(final String contextType) {
             this.contextType = contextType;
         }
 
@@ -245,9 +246,9 @@ public class IkeyConfig {
             return contextType;
         }
 
-        public static WeightContext fromString(String text) {
+        public static WeightContext fromString(final String text) {
             if (text != null) {
-                for (WeightContext entry : values()) {
+                for (final WeightContext entry : values()) {
                     if (entry.toString().equals(text)) {
                         return entry;
                     }
@@ -258,34 +259,34 @@ public class IkeyConfig {
     }
 
 
-    public static String getBundleConfElement(String key) {
+    public static String getBundleConfElement(final String key) {
         return IkeyConfig.bundleConf.getString(key);
     }
 
-    public static String getBundleConfOverridableElement(String key) {
+    public static String getBundleConfOverridableElement(final String key) {
         return IkeyConfig.bundleConfOverridable.getString(key);
     }
 
-    public static void setBundleConf(ResourceBundle bundleConf) {
+    public static void setBundleConf(final ResourceBundle bundleConf) {
         IkeyConfig.bundleConf = bundleConf;
     }
 
-    public static void setBundleConfOverridable(ResourceBundle bundleConfOverridable) {
+    public static void setBundleConfOverridable(final ResourceBundle bundleConfOverridable) {
         IkeyConfig.bundleConfOverridable = bundleConfOverridable;
     }
 
     public String getErrorMessage() {
-        return this.errorMessage;
+        return errorMessage;
     }
 
-    public void setErrorMessage(String msg) {
+    public void setErrorMessage(final String msg) {
         if (getErrorMessage() == null) {
             errorMessage = msg;
             setErrorMessageFile(createErrorFile());
         }
     }
 
-    public void setErrorMessage(String msg, Throwable t) {
+    public void setErrorMessage(final String msg, final Throwable t) {
         if (getErrorMessage() == null) {
             errorMessage = msg + ": " + t.getMessage();
             setErrorMessageFile(createErrorFile());
@@ -293,18 +294,18 @@ public class IkeyConfig {
     }
 
     public File getErrorMessageFile() {
-        return this.errorMessageFile;
+        return errorMessageFile;
     }
 
-    private void setErrorMessageFile(File errorMessageFile) {
+    private void setErrorMessageFile(final File errorMessageFile) {
         this.errorMessageFile = errorMessageFile;
     }
 
     public File createErrorFile() {
-        String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
+        final String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-        String lineReturn = System.getProperty("line.separator");
+        final String lineReturn = System.getProperty("line.separator");
         File erroFile = null;
         FileOutputStream fileOutputStream = null;
         try {
@@ -312,21 +313,21 @@ public class IkeyConfig {
 
             fileOutputStream = new FileOutputStream(erroFile);
             fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
-            BufferedWriter txtFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream,
-                    "UTF-8"));
+            final BufferedWriter txtFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream,
+                    StandardCharsets.UTF_8));
 
-            txtFileWriter.append(this.errorMessage);
+            txtFileWriter.append(errorMessage);
             txtFileWriter.append(lineReturn)
                     .append(lineReturn)
                     .append(IkeyConfig.getBundleConfElement("message.webmaster"))
                     .append(IkeyConfig.getBundleConfOverridableElement("email.webmaster"));
             txtFileWriter.close();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         } finally {
             try {
                 Closeables.close(fileOutputStream, true);
-            } catch (IOException ignored) {
+            } catch (final IOException ignored) {
             }
         }
         return erroFile;

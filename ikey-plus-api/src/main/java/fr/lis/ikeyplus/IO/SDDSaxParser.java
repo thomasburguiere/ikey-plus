@@ -22,50 +22,50 @@ import fr.lis.ikeyplus.utils.IkeyConfig;
  */
 public class SDDSaxParser {
 
-    // kwnoledge base (call dataset)
+    // knowledge base (call dataset)
     private DataSet dataset = null;
 
     /**
      * constructor which parses the content of the input file
      */
-    public SDDSaxParser(String uri, IkeyConfig utils) throws SAXException, IOException {
-        XMLReader saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
+    public SDDSaxParser(final String uri, final IkeyConfig utils) throws SAXException, IOException {
+        final XMLReader saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
 
-        SDDContentHandler handler = new SDDContentHandler(utils);
+        final SDDContentHandler handler = new SDDContentHandler(utils);
         saxReader.setContentHandler(handler);
 
         InputSource is = null;
         try {
-            URL url = new URL(uri);
+            final URL url = new URL(uri);
             is = new InputSource(url.openStream());
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             is = new InputSource(new FileInputStream(new File(uri)));
         }
 
         saxReader.parse(is);
-        this.setDataset(handler.getDataSet());
+        dataset = handler.getDataSet();
     }
 
     /**
      * constructor which parses the content of the input file
      */
-    public SDDSaxParser(File inputFile, IkeyConfig conf) throws SAXException, IOException {
-        XMLReader saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
+    public SDDSaxParser(final File inputFile, final IkeyConfig conf) throws SAXException, IOException {
+        final XMLReader saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
 
-        SDDContentHandler handler = new SDDContentHandler(conf);
+        final SDDContentHandler handler = new SDDContentHandler(conf);
         saxReader.setContentHandler(handler);
 
-        InputSource is = new InputSource(new FileInputStream(inputFile));
+        final InputSource is = new InputSource(new FileInputStream(inputFile));
 
         saxReader.parse(is);
-        this.setDataset(handler.getDataSet());
+        dataset = handler.getDataSet();
     }
 
     public DataSet getDataset() {
         return dataset;
     }
 
-    public void setDataset(DataSet dataset) {
+    public void setDataset(final DataSet dataset) {
         this.dataset = dataset;
     }
 
