@@ -10,10 +10,10 @@ import fr.lis.ikeyplus.utils.IkeyConfig;
  */
 public class SingleAccessKeyTree {
 
-    private SingleAccessKeyNode root = null;
+    private SingleAccessKeyNode root;
     private DataSet dataSet = null;
     // the config object (containing options)
-    private IkeyConfig config = null;
+    private IkeyConfig config;
 
     public SingleAccessKeyTree(final IkeyConfig config) {
         this(null, config);

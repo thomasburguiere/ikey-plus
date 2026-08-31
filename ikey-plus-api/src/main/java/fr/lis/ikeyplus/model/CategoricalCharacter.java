@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class CategoricalCharacter extends Character {
 
-    private List<State> states = null;
+    private List<State> states;
 
     public CategoricalCharacter() {
         this(null);

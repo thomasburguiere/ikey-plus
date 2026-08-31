@@ -12,8 +12,8 @@ import java.util.Map;
 public class CodedDescription {
 
     private String id = null;
-    private Map<ICharacter, Object> description = null;
-    private Map<ICharacter, Integer> characterWeights = null;
+    private Map<ICharacter, Object> description;
+    private Map<ICharacter, Integer> characterWeights;
 
     public CodedDescription() {
         this.description = new LinkedHashMap<>();

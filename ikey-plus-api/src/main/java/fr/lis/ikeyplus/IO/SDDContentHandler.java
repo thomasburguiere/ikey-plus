@@ -63,9 +63,9 @@ public class SDDContentHandler implements ContentHandler {
     // buffer to collect text value
     private StringBuffer buffer = null;
     // kwnoledge base
-    private DataSet dataSet = null;
+    private DataSet dataSet;
     // IkeyConfig object
-    private IkeyConfig config = null;
+    private IkeyConfig config;
     // current quantitative character
     private CategoricalCharacter currentCategoricalCharacter = null;
     // current quantitative character
@@ -91,7 +91,7 @@ public class SDDContentHandler implements ContentHandler {
     // id of current mediaObject
     private String mediaObjectId = null;
     // id of current mediaObject
-    private Map<ICharacter, Integer> ratingsCounter = null;
+    private Map<ICharacter, Integer> ratingsCounter;
 
     /**
      * Default constructor
@@ -555,10 +555,10 @@ public class SDDContentHandler implements ContentHandler {
                 inCharNode = false;
                 if (!currentInapplicableState.isEmpty()) {
                     currentCharacterNode.setParentCharacter(dataSet
-                            .getCharacterByState(currentInapplicableState.get(0)));
+                            .getCharacterByState(currentInapplicableState.getFirst()));
                     currentCharacterNode.getInapplicableStates().addAll(currentInapplicableState);
                 } else if (!currentOnlyApplicableState.isEmpty()) {
-                    final ICharacter character = dataSet.getCharacterByState(currentOnlyApplicableState.get(0));
+                    final ICharacter character = dataSet.getCharacterByState(currentOnlyApplicableState.getFirst());
                     if (character != null && character instanceof CategoricalCharacter) {
                         currentCharacterNode.setParentCharacter(character);
                         final List<State> tempList = new ArrayList<>(

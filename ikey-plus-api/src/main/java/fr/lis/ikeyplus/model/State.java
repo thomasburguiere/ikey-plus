@@ -12,8 +12,8 @@ import java.util.Objects;
 public class State {
 
     private String id = null;
-    private String name = null;
-    private List<String> mediaObjectKeys = null;
+    private String name;
+    private List<String> mediaObjectKeys;
 
     public State() {
         this(null);
@@ -51,8 +51,8 @@ public class State {
 
     public String getFirstImage(final DataSet dataSet) {
         if (dataSet != null && mediaObjectKeys != null && !mediaObjectKeys.isEmpty()) {
-            if (dataSet.getMediaObject(mediaObjectKeys.get(0)).startsWith("http")) {
-                return dataSet.getMediaObject(mediaObjectKeys.get(0));
+            if (dataSet.getMediaObject(mediaObjectKeys.getFirst()).startsWith("http")) {
+                return dataSet.getMediaObject(mediaObjectKeys.getFirst());
             }
         }
         return null;
@@ -60,7 +60,7 @@ public class State {
 
     public String getFirstImageKey() {
         if (!mediaObjectKeys.isEmpty()) {
-            return mediaObjectKeys.get(0);
+            return mediaObjectKeys.getFirst();
         }
         return null;
     }

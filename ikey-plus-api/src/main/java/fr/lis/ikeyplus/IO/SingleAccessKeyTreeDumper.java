@@ -1304,7 +1304,7 @@ public abstract class SingleAccessKeyTreeDumper {
         fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
         final BufferedWriter wikiFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, StandardCharsets.UTF_8));
 
-        if (header != null && !header.equals("")) {
+        if (header != null && !header.isEmpty()) {
             wikiFileWriter.append("== Info ==");
             wikiFileWriter.newLine();
             wikiFileWriter.append(header.replaceAll(System.lineSeparator(), "<br>"));
@@ -1378,7 +1378,7 @@ public abstract class SingleAccessKeyTreeDumper {
         final File wikiFile = File.createTempFile(IkeyUtils.KEY, "." + IkeyConfig.OutputFormat.WIKI, new File(generatedFilesFolder));
         final BufferedWriter wikiFlatFileWriter = new BufferedWriter(new FileWriter(wikiFile));
 
-        if (header != null && !header.equals("")) {
+        if (header != null && !header.isEmpty()) {
             wikiFlatFileWriter.append("== Info ==");
             wikiFlatFileWriter.newLine();
             wikiFlatFileWriter.append(header.replaceAll(System.lineSeparator(), "<br>"));

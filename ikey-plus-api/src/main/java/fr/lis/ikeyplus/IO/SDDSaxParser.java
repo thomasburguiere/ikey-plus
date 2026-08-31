@@ -23,7 +23,7 @@ import fr.lis.ikeyplus.utils.IkeyConfig;
 public class SDDSaxParser {
 
     // knowledge base (call dataset)
-    private DataSet dataset = null;
+    private DataSet dataset;
 
     /**
      * constructor which parses the content of the input file
@@ -34,7 +34,7 @@ public class SDDSaxParser {
         final SDDContentHandler handler = new SDDContentHandler(utils);
         saxReader.setContentHandler(handler);
 
-        InputSource is = null;
+        InputSource is;
         try {
             final URL url = new URL(uri);
             is = new InputSource(url.openStream());
