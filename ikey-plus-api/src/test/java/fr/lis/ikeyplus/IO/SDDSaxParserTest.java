@@ -2,7 +2,7 @@ package fr.lis.ikeyplus.IO;
 
 import fr.lis.ikeyplus.model.DataSet;
 import fr.lis.ikeyplus.utils.IkeyConfig;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.logging.Logger;

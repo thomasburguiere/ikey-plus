@@ -1,8 +1,8 @@
 package fr.lis.ikeyplus.utils;
 
 import com.google.common.collect.Sets;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -51,7 +51,7 @@ public class IkeyConfigTest {
     }
 
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         IkeyConfig.setBundleConfOverridable(ResourceBundle.getBundle("confTest"));
         IkeyConfig.setBundleConf(ResourceBundle.getBundle("confTest"));
