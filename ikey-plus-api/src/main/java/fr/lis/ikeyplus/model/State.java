@@ -1,9 +1,8 @@
 package fr.lis.ikeyplus.model;
 
-import com.google.common.base.Objects;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class represents a state of categorical character
@@ -13,8 +12,8 @@ import java.util.List;
 public class State {
 
     private String id = null;
-    private String name = null;
-    private List<String> mediaObjectKeys = null;
+    private String name;
+    private List<String> mediaObjectKeys;
 
     public State() {
         this(null);
@@ -52,8 +51,8 @@ public class State {
 
     public String getFirstImage(final DataSet dataSet) {
         if (dataSet != null && mediaObjectKeys != null && !mediaObjectKeys.isEmpty()) {
-            if (dataSet.getMediaObject(mediaObjectKeys.get(0)).startsWith("http")) {
-                return dataSet.getMediaObject(mediaObjectKeys.get(0));
+            if (dataSet.getMediaObject(mediaObjectKeys.getFirst()).startsWith("http")) {
+                return dataSet.getMediaObject(mediaObjectKeys.getFirst());
             }
         }
         return null;
@@ -61,7 +60,7 @@ public class State {
 
     public String getFirstImageKey() {
         if (!mediaObjectKeys.isEmpty()) {
-            return mediaObjectKeys.get(0);
+            return mediaObjectKeys.getFirst();
         }
         return null;
     }
@@ -80,12 +79,12 @@ public class State {
 
         final State that = (State) o;
 
-        return Objects.equal(id, that.id) &&
-                Objects.equal(name, that.name);
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, name);
+        return Objects.hashCode(id) + Objects.hashCode(name);
     }
 }

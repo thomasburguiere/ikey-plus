@@ -1,8 +1,5 @@
 package fr.lis.ikeyplus.utils;
 
-import com.google.common.collect.Sets;
-import com.google.common.io.Closeables;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,7 +28,7 @@ public class IkeyConfig {
     private boolean fewStatesCharacterFirst = false;
     private boolean mergeCharacterStatesIfSameDiscrimination = false;
     private boolean pruningEnabled = false;
-    private Set<VerbosityLevel> verbosity = Sets.newHashSet();
+    private Set<VerbosityLevel> verbosity = new HashSet<>();
     private ScoreMethod scoreMethod = ScoreMethod.XPER;
     private WeightContext weightContext = WeightContext.NO_WEIGHT;
     private WeightType weightType = WeightType.GLOBAL;
@@ -280,16 +277,16 @@ public class IkeyConfig {
     }
 
     public void setErrorMessage(final String msg) {
-        if (getErrorMessage() == null) {
+        if (errorMessage == null) {
             errorMessage = msg;
-            setErrorMessageFile(createErrorFile());
+            errorMessageFile = createErrorFile();
         }
     }
 
     public void setErrorMessage(final String msg, final Throwable t) {
-        if (getErrorMessage() == null) {
+        if (errorMessage == null) {
             errorMessage = msg + ": " + t.getMessage();
-            setErrorMessageFile(createErrorFile());
+            errorMessageFile = createErrorFile();
         }
     }
 
@@ -305,7 +302,7 @@ public class IkeyConfig {
         final String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
-        final String lineReturn = System.getProperty("line.separator");
+        final String lineReturn = System.lineSeparator();
         File erroFile = null;
         FileOutputStream fileOutputStream = null;
         try {
@@ -326,7 +323,9 @@ public class IkeyConfig {
             e.printStackTrace();
         } finally {
             try {
-                Closeables.close(fileOutputStream, true);
+                if (fileOutputStream != null) {
+                    fileOutputStream.close();
+                }
             } catch (final IOException ignored) {
             }
         }

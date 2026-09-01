@@ -17,9 +17,9 @@ public class IdentificationKeyGenerator {
     // the Identification Key
     private SingleAccessKeyTree singleAccessKeyTree = null;
     // the knowledge base
-    private DataSet dataset = null;
+    private DataSet dataset;
     // the config object (containing options)
-    private IkeyConfig config = null;
+    private IkeyConfig config;
     // the maximum number of states per character
     private int maxNbStatesPerCharacter;
 
@@ -140,7 +140,7 @@ public class IdentificationKeyGenerator {
                         newRemainingCharacters.remove(selectedCharacter);
 
                         // get inapplicable characters
-                        final List<ICharacter> inapplicableCharacters = dataset.getInapplicableCharacters(
+                        final List<ICharacter> inapplicableCharacters = DataSet.getInapplicableCharacters(
                                 newRemainingCharacters, selectedCharacter, state);
                         // remove inapplicable character and its sons from the remaining characters list
                         newRemainingCharacters.removeAll(inapplicableCharacters);
@@ -364,11 +364,11 @@ public class IdentificationKeyGenerator {
 
         // split the interval in 2 part
         if (allValues.size() > 2 && bestThreshold != null) {
-            quantitativeMeasure1.setMin(allValues.get(0));
+            quantitativeMeasure1.setMin(allValues.getFirst());
             quantitativeMeasure1.setMax(bestThreshold);
             quantitativeMeasure1.setMaxInclude(false);
             quantitativeMeasure2.setMin(bestThreshold);
-            quantitativeMeasure2.setMax(allValues.get(allValues.size() - 1));
+            quantitativeMeasure2.setMax(allValues.getLast());
         }
 
         // add the 2 new interval to the list
