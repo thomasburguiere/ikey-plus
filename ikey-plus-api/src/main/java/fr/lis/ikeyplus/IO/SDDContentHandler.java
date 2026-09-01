@@ -63,9 +63,9 @@ public class SDDContentHandler implements ContentHandler {
     // buffer to collect text value
     private StringBuffer buffer = null;
     // kwnoledge base
-    private DataSet dataSet;
+    private final DataSet dataSet;
     // IkeyConfig object
-    private IkeyConfig config;
+    private final IkeyConfig config;
     // current quantitative character
     private CategoricalCharacter currentCategoricalCharacter = null;
     // current quantitative character
@@ -441,8 +441,8 @@ public class SDDContentHandler implements ContentHandler {
                             // put to null Unknown data
                         } else if (dataSet.getCodedDescriptions().get(taxon)
                                 .getCharacterDescription(character) instanceof String
-                                && ((String) dataSet.getCodedDescriptions().get(taxon)
-                                .getCharacterDescription(character)).equals(IkeyUtils.UNKNOWN_DATA)) {
+                                && dataSet.getCodedDescriptions().get(taxon)
+                                .getCharacterDescription(character).equals(IkeyUtils.UNKNOWN_DATA)) {
                             dataSet.getCodedDescriptions().get(taxon)
                                     .addCharacterDescription(character, null);
                         }
@@ -453,7 +453,7 @@ public class SDDContentHandler implements ContentHandler {
                 // useContextualCharacterWeights is not enabled
                 for (final ICharacter character : dataSet.getCharacters()) {
                     if (ratingsCounter.get(character) != null) {
-                        character.setWeight((float) (character.getWeight())
+                        character.setWeight(character.getWeight()
                                 / (float) (ratingsCounter.get(character)));
                     }
                 }
