@@ -1,10 +1,25 @@
 package fr.lis.ikeyplus.services;
 
-import fr.lis.ikeyplus.model.*;
+import fr.lis.ikeyplus.model.CategoricalCharacter;
+import fr.lis.ikeyplus.model.CodedDescription;
+import fr.lis.ikeyplus.model.DataSet;
+import fr.lis.ikeyplus.model.ICharacter;
+import fr.lis.ikeyplus.model.QuantitativeCharacter;
+import fr.lis.ikeyplus.model.QuantitativeMeasure;
+import fr.lis.ikeyplus.model.SingleAccessKeyNode;
+import fr.lis.ikeyplus.model.SingleAccessKeyTree;
+import fr.lis.ikeyplus.model.State;
+import fr.lis.ikeyplus.model.Taxon;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import fr.lis.ikeyplus.utils.IkeyUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This class is the service generating identification keys
@@ -108,9 +123,10 @@ public class IdentificationKeyGenerator {
                 // create a child nodes list for mergeCharacterStatesIfSameDiscrimination option
                 final List<SingleAccessKeyNode> futureChildNodes = new ArrayList<>();
 
-                for (final State state : ((CategoricalCharacter) selectedCharacter).getStates()) {
+                final CategoricalCharacter catCharCast = (CategoricalCharacter) selectedCharacter;
+                for (final State state : catCharCast.getStates()) {
                     final List<Taxon> newRemainingTaxa = getRemainingTaxa(remainingTaxa,
-                            selectedCharacter, state);
+                            catCharCast, state);
 
                     // test if we have to stop the branch or continue
                     if (!newRemainingTaxa.isEmpty()) {
@@ -163,12 +179,13 @@ public class IdentificationKeyGenerator {
 
                 // add the selected character to the already used characters list
                 alreadyUsedCharacter.add(selectedCharacter);
+                final QuantitativeCharacter quantCharCast = (QuantitativeCharacter) selectedCharacter;
                 final List<QuantitativeMeasure> quantitativeMeasures = splitQuantitativeCharacter(
-                        selectedCharacter, remainingTaxa);
+                        quantCharCast, remainingTaxa);
 
                 for (final QuantitativeMeasure quantitativeMeasure : quantitativeMeasures) {
                     final List<Taxon> newRemainingTaxa = getRemainingTaxa(remainingTaxa,
-                            selectedCharacter, quantitativeMeasure);
+                            quantCharCast, quantitativeMeasure);
 
                     // test if we have to stop the branch or continue
                     if (!newRemainingTaxa.isEmpty()) {
@@ -259,16 +276,19 @@ public class IdentificationKeyGenerator {
         return isOptimized;
     }
 
-    private List<Taxon> getRemainingTaxa(final List<Taxon> remainingTaxa, final ICharacter character,
-                                         final State state) {
+    private List<Taxon> getRemainingTaxa(
+            final List<Taxon> remainingTaxa,
+            final CategoricalCharacter character,
+            final State state
+    ) {
 
         final List<Taxon> newRemainingTaxa = new ArrayList<>();
 
         // init new remaining taxa list with taxa description matching the
         // current state
         for (final Taxon taxon : remainingTaxa) {
-            if (dataset.getCodedDescription(taxon).getCharacterDescription(character) == null
-                    || ((Collection<State>) dataset.getCodedDescription(taxon).getCharacterDescription(character))
+            if (dataset.getCodedDescription(taxon).isUnknownDescription(character)
+                    || dataset.getCodedDescription(taxon).getCategoricalCharacterDescription(character)
                     .contains(state)) {
                 newRemainingTaxa.add(taxon);
             }
@@ -276,7 +296,7 @@ public class IdentificationKeyGenerator {
         return newRemainingTaxa;
     }
 
-    private List<Taxon> getRemainingTaxa(final List<Taxon> remainingTaxa, final ICharacter character,
+    private List<Taxon> getRemainingTaxa(final List<Taxon> remainingTaxa, final QuantitativeCharacter character,
                                          final QuantitativeMeasure quantitativeMeasure) {
 
         final List<Taxon> newRemainingTaxa = new ArrayList<>();
@@ -284,8 +304,8 @@ public class IdentificationKeyGenerator {
         // init new remaining taxa list with taxa description matching the
         // current state
         for (final Taxon taxon : remainingTaxa) {
-            if (quantitativeMeasure.isInclude(((QuantitativeMeasure) dataset.getCodedDescription(taxon)
-                    .getCharacterDescription(character)))) {
+            if (quantitativeMeasure.isInclude(dataset.getCodedDescription(taxon)
+                    .getQuantitativeCharacterDescription(character))) {
                 newRemainingTaxa.add(taxon);
             }
         }
@@ -298,8 +318,8 @@ public class IdentificationKeyGenerator {
 
         // init not described taxa list with taxa without description
         for (final Taxon taxon : remainingTaxa) {
-            if (dataset.getCodedDescription(taxon).getCharacterDescription(character) != null
-                    && ((Collection<State>) dataset.getCodedDescription(taxon).getCharacterDescription(character)).isEmpty()) {
+            if (!dataset.getCodedDescription(taxon).isUnknownDescription(character)
+                    && dataset.getCodedDescription(taxon).getCategoricalCharacterDescription(character).isEmpty()) {
                 notDescribedTaxa.add(taxon);
             }
         }
@@ -312,16 +332,16 @@ public class IdentificationKeyGenerator {
 
         // init not described taxa list with taxa without description
         for (final Taxon taxon : remainingTaxa) {
-            if (dataset.getCodedDescription(taxon).getCharacterDescription(character) != null
-                    && ((QuantitativeMeasure) dataset.getCodedDescription(taxon).getCharacterDescription(
-                    character)).isNotSpecified()) {
+            if (!dataset.getCodedDescription(taxon).isUnknownDescription(character)
+                    && dataset.getCodedDescription(taxon).getQuantitativeCharacterDescription(
+                    character).isNotSpecified()) {
                 notDescribedTaxa.add(taxon);
             }
         }
         return notDescribedTaxa;
     }
 
-    private List<QuantitativeMeasure> splitQuantitativeCharacter(final ICharacter character,
+    private List<QuantitativeMeasure> splitQuantitativeCharacter(final QuantitativeCharacter character,
                                                                  final List<Taxon> remainingTaxa) throws Exception {
 
         final List<QuantitativeMeasure> quantitativeMeasures = new ArrayList<>();
@@ -378,18 +398,18 @@ public class IdentificationKeyGenerator {
         return quantitativeMeasures;
     }
 
-    private List<Double> getAllNumericalValues(final ICharacter character, final List<Taxon> remainingTaxa) {
+    private List<Double> getAllNumericalValues(final QuantitativeCharacter character, final List<Taxon> remainingTaxa) {
 
         final List<Double> allValues = new ArrayList<>();
 
         for (final Taxon taxon : remainingTaxa) {
-            if (dataset.getCodedDescription(taxon).getCharacterDescription(character) != null
-                    && dataset.getCodedDescription(taxon).getCharacterDescription(character) instanceof QuantitativeMeasure) {
+            if (!dataset.getCodedDescription(taxon).isUnknownDescription(character)
+                    && dataset.getCodedDescription(taxon).getQuantitativeCharacterDescription(character) != null) {
 
-                final Double minTmp = ((QuantitativeMeasure) dataset.getCodedDescription(taxon)
-                        .getCharacterDescription(character)).getCalculateMinimum();
-                final Double maxTmp = ((QuantitativeMeasure) dataset.getCodedDescription(taxon)
-                        .getCharacterDescription(character)).getCalculateMaximum();
+                final Double minTmp = dataset.getCodedDescription(taxon)
+                        .getQuantitativeCharacterDescription(character).getCalculateMinimum();
+                final Double maxTmp = dataset.getCodedDescription(taxon)
+                        .getQuantitativeCharacterDescription(character).getCalculateMaximum();
                 if (minTmp != null) {
                     allValues.add(minTmp);
                 }
@@ -512,7 +532,7 @@ public class IdentificationKeyGenerator {
 
             // if the set of scores contains at least one score similar to the best score
             if (charactersScore.containsValue(bestScore) && bestCharacter.isSupportsCategoricalData()) {
-                int lessTaxaNumber = getTaxaNumberForAllStates(bestCharacter,
+                int lessTaxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) bestCharacter,
                         remainingTaxa);
 
                 for (final ICharacter character : charactersScore.keySet()) {
@@ -524,7 +544,7 @@ public class IdentificationKeyGenerator {
                                 && character.isSupportsCategoricalData()) {
                             // get the number of taxa of all child nodes of the current CategoricalCharacter
                             final int currentTaxaNumber = getTaxaNumberForAllStates(
-                                    character, remainingTaxa);
+                                    (CategoricalCharacter) character, remainingTaxa);
                             // if the current taxa number is lower than the less taxa number
                             if (currentTaxaNumber < lessTaxaNumber) {
                                 bestScore = charactersScore.get(character);
@@ -561,13 +581,13 @@ public class IdentificationKeyGenerator {
 
             // if the set of scores contains at least one score similar to the best score
             if (charactersScore.containsValue(bestScore) && bestCharacter.isSupportsCategoricalData()) {
-                int lessTaxaNumber = getTaxaNumberForAllStates(bestCharacter,
+                int lessTaxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) bestCharacter,
                         remainingTaxa);
                 for (final ICharacter character : charactersScore.keySet()) {
                     if (character.getWeight() == bestWeight && charactersScore.get(character) == bestScore
                             && character.isSupportsCategoricalData()) {
                         // get the number of taxa of all child nodes of the current CategoricalCharacter
-                        final int currentTaxaNumber = getTaxaNumberForAllStates(character,
+                        final int currentTaxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) character,
                                 remainingTaxa);
                         // if the current taxa number is lower than the less taxa number
                         if (currentTaxaNumber < lessTaxaNumber) {
@@ -583,12 +603,12 @@ public class IdentificationKeyGenerator {
         return bestCharacter;
     }
 
-    private int getTaxaNumberForAllStates(final ICharacter character, final List<Taxon> remainingTaxa) {
+    private int getTaxaNumberForAllStates(final CategoricalCharacter character, final List<Taxon> remainingTaxa) {
         int taxaNumber = 0;
         for (final Taxon taxon : remainingTaxa) {
-            if (dataset.getCodedDescription(taxon).getCharacterDescription(character) != null) {
-                taxaNumber += ((Collection<State>) dataset.getCodedDescription(taxon).getCharacterDescription(
-                        character)).size();
+            if (!dataset.getCodedDescription(taxon).isUnknownDescription(character)) {
+                taxaNumber += dataset.getCodedDescription(taxon).getCategoricalCharacterDescription(
+                        character).size();
             }
         }
         return taxaNumber;
@@ -606,22 +626,27 @@ public class IdentificationKeyGenerator {
                         && dataset.isApplicable(remainingTaxa.get(i), character)
                         && dataset.isApplicable(remainingTaxa.get(j), character)) {
 
-                    final List<State> statesList1 = (List<State>) dataset.getCodedDescription(
-                            remainingTaxa.get(i)).getCharacterDescription(character);
-                    final List<State> statesList2 = (List<State>) dataset.getCodedDescription(
-                            remainingTaxa.get(j)).getCharacterDescription(character);
+                    final boolean desc1Unknown = dataset.getCodedDescription(remainingTaxa.get(i))
+                            .isUnknownDescription(character);
+                    final boolean desc2Unknown = dataset.getCodedDescription(remainingTaxa.get(j))
+                            .isUnknownDescription(character);
+
+                    final List<State> statesList1 = dataset.getCodedDescription(
+                            remainingTaxa.get(i)).getCategoricalCharacterDescription(character);
+                    final List<State> statesList2 = dataset.getCodedDescription(
+                            remainingTaxa.get(j)).getCategoricalCharacterDescription(character);
 
                     // if at least one description is empty for the current character
-                    if ((statesList1 != null && statesList1.isEmpty())
-                            || (statesList2 != null && statesList2.isEmpty())) {
+                    if ((!desc1Unknown && statesList1.isEmpty())
+                            || (!desc2Unknown && statesList2.isEmpty())) {
                         isAlwaysDescribed = false;
                     }
 
                     // if one description is unknown and the other have 0 state checked
-                    if ((statesList1 == null && statesList2 != null && statesList2.isEmpty())
-                            || (statesList2 == null && statesList1 != null && statesList1.isEmpty())) {
+                    if ((desc1Unknown && !desc2Unknown && statesList2.isEmpty())
+                            || (desc2Unknown && !desc1Unknown && statesList1.isEmpty())) {
                         score++;
-                    } else if (statesList1 != null && statesList2 != null) {
+                    } else if (!desc1Unknown && !desc2Unknown) {
 
                         // nb of common states which are absent
                         float commonAbsent = 0;
@@ -655,16 +680,12 @@ public class IdentificationKeyGenerator {
             }
         }
 
-        if (cpt >= 1)
-
-        {
+        if (cpt >= 1) {
             score = score / cpt;
         }
 
         // increasing artificially the score of character containing only described taxa
-        if (isAlwaysDescribed && score > 0)
-
-        {
+        if (isAlwaysDescribed && score > 0) {
             score = score + (float) 2.0;
         }
 
@@ -673,9 +694,7 @@ public class IdentificationKeyGenerator {
 
                 size()
 
-                >= 2)
-
-        {
+                >= 2) {
             // increasing artificially score of character with few states
             final float coeff = (float) 1
                     - ((float) character.getStates().size() / (float) maxNbStatesPerCharacter);
@@ -685,7 +704,7 @@ public class IdentificationKeyGenerator {
         return score;
     }
 
-    private float quantitativeCharacterScore(final ICharacter character, final List<Taxon> remainingTaxa,
+    private float quantitativeCharacterScore(final QuantitativeCharacter character, final List<Taxon> remainingTaxa,
                                              final List<ICharacter> alreadyUsedCharacter) throws Exception {
         int cpt = 0;
         float score = 0;
@@ -705,25 +724,31 @@ public class IdentificationKeyGenerator {
                     // nb of common states which are present
                     float commonPresent = 0;
                     float other = 0;
-                    final QuantitativeMeasure quantitativeMeasure1 = (QuantitativeMeasure) dataset
-                            .getCodedDescription(remainingTaxa.get(i)).getCharacterDescription(character);
-                    final QuantitativeMeasure quantitativeMeasure2 = (QuantitativeMeasure) dataset
-                            .getCodedDescription(remainingTaxa.get(j)).getCharacterDescription(character);
+
+                    final boolean desc1Unknown = dataset.getCodedDescription(remainingTaxa.get(i))
+                            .isUnknownDescription(character);
+                    final boolean desc2Unknown = dataset.getCodedDescription(remainingTaxa.get(j))
+                            .isUnknownDescription(character);
+                    final QuantitativeMeasure quantitativeMeasure1 = dataset
+                            .getCodedDescription(remainingTaxa.get(i))
+                            .getQuantitativeCharacterDescription(character);
+                    final QuantitativeMeasure quantitativeMeasure2 = dataset
+                            .getCodedDescription(remainingTaxa.get(j))
+                            .getQuantitativeCharacterDescription(character);
 
                     // if at least one description is empty for the current character
-                    if ((quantitativeMeasure1 != null && quantitativeMeasure1.isNotSpecified())
-                            || (quantitativeMeasure2 != null && quantitativeMeasure2.isNotSpecified())) {
+                    if ((!desc1Unknown && quantitativeMeasure1.isNotSpecified())
+                            || (!desc2Unknown && quantitativeMeasure2.isNotSpecified())) {
                         isAlwaysDescribed = false;
                     }
 
                     // if one description is unknown and the other have no measure
-                    if ((quantitativeMeasure1 == null && quantitativeMeasure2 != null && quantitativeMeasure2
-                            .isNotSpecified())
-                            || (quantitativeMeasure2 == null && quantitativeMeasure1 != null && quantitativeMeasure1
-                            .isNotSpecified())) {
+                    if ((desc1Unknown && !desc2Unknown && quantitativeMeasure2.isNotSpecified())
+                            || (desc2Unknown && !desc1Unknown && quantitativeMeasure1.isNotSpecified())
+                    ) {
                         score++;
                         // search common shared values
-                    } else if (quantitativeMeasure1 != null && quantitativeMeasure2 != null) {
+                    } else if (!desc1Unknown && !desc2Unknown) {
 
                         // if a taxon is described and the other is not, it means that this taxa can be
                         // discriminated
