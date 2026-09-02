@@ -8,7 +8,7 @@ import java.util.Set;
 
 public final class IkeyUtils {
 
-    public static final String UNKNOWN_DATA = "unknownData";
+//    public static final String UNKNOWN_DATA = "unknownData";
     // file prefix
     public static final String KEY = "key_";
     public static final String ERROR = "error_";

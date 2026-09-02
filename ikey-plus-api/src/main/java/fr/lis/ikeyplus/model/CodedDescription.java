@@ -1,6 +1,7 @@
 package fr.lis.ikeyplus.model;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,20 +13,16 @@ import java.util.Map;
 public class CodedDescription {
 
     private String id = null;
-    private Map<ICharacter, Object> description;
+    private final Map<CategoricalCharacter, List<State>> categoricalDescription;
+    private final Map<QuantitativeCharacter, QuantitativeMeasure> quantitativeDescription;
+    private final Map<ICharacter, Boolean> unknownData;
     private Map<ICharacter, Integer> characterWeights;
 
     public CodedDescription() {
-        this.description = new LinkedHashMap<>();
+        this.categoricalDescription = new LinkedHashMap<>();
+        this.quantitativeDescription = new LinkedHashMap<>();
+        this.unknownData = new LinkedHashMap<>();
         this.characterWeights = new LinkedHashMap<>();
-    }
-
-    public Map<ICharacter, Object> getDescription() {
-        return description;
-    }
-
-    public void setDescription(final Map<ICharacter, Object> description) {
-        this.description = description;
     }
 
     public Map<ICharacter, Integer> getCharacterWeights() {
@@ -48,16 +45,33 @@ public class CodedDescription {
         characterWeights.remove(character);
     }
 
-    public Object getCharacterDescription(final ICharacter character) {
-        return description.get(character);
+    public boolean existsDescription(final ICharacter character) {
+        return categoricalDescription.get(character) != null || quantitativeDescription.get(character) != null;
     }
 
-    public void addCharacterDescription(final ICharacter character, final Object characterDescription) {
-        description.put(character, characterDescription);
+    public void addCategoricalCharacterDescription(final CategoricalCharacter character, final List<State> characterDescription) {
+        categoricalDescription.put(character, characterDescription);
     }
 
-    public void removeCharacterDescription(final ICharacter character) {
-        description.remove(character);
+    public void addQuantitativeCharacterDescription(final QuantitativeCharacter character, final QuantitativeMeasure characterDescription) {
+        quantitativeDescription.put(character, characterDescription);
+    }
+
+    public List<State> getCategoricalCharacterDescription(final CategoricalCharacter character) {
+        return categoricalDescription.get(character);
+    }
+
+    public QuantitativeMeasure getQuantitativeCharacterDescription(final QuantitativeCharacter character) {
+        return quantitativeDescription.get(character);
+    }
+
+    public void setUnknownDescription(final ICharacter character) {
+        unknownData.put(character, true);
+    }
+
+    public boolean isUnknownDescription(final ICharacter character) {
+        final var res = unknownData.get(character);
+        return res != null && res;
     }
 
     public String getId() {
