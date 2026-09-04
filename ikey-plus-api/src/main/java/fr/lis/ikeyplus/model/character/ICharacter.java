@@ -1,4 +1,7 @@
-package fr.lis.ikeyplus.model;
+package fr.lis.ikeyplus.model.character;
+
+import fr.lis.ikeyplus.model.DataSet;
+import fr.lis.ikeyplus.model.State;
 
 import java.util.List;
 

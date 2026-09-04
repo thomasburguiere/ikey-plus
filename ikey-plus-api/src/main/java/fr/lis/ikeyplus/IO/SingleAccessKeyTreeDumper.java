@@ -1,7 +1,7 @@
 package fr.lis.ikeyplus.IO;
 
 import fr.lis.ikeyplus.model.DataSet;
-import fr.lis.ikeyplus.model.QuantitativeCharacter;
+import fr.lis.ikeyplus.model.character.QuantitativeCharacter;
 import fr.lis.ikeyplus.model.QuantitativeMeasure;
 import fr.lis.ikeyplus.model.SingleAccessKeyNode;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;

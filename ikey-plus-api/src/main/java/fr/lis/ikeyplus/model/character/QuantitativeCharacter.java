@@ -1,4 +1,4 @@
-package fr.lis.ikeyplus.model;
+package fr.lis.ikeyplus.model.character;
 
 /**
  * This class represents a Character of type quantitative

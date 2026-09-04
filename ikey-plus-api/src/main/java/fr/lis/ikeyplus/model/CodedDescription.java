@@ -1,5 +1,9 @@
 package fr.lis.ikeyplus.model;
 
+import fr.lis.ikeyplus.model.character.CategoricalCharacter;
+import fr.lis.ikeyplus.model.character.ICharacter;
+import fr.lis.ikeyplus.model.character.QuantitativeCharacter;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

@@ -1,10 +1,10 @@
 package fr.lis.ikeyplus.services;
 
-import fr.lis.ikeyplus.model.CategoricalCharacter;
+import fr.lis.ikeyplus.model.character.CategoricalCharacter;
 import fr.lis.ikeyplus.model.CodedDescription;
 import fr.lis.ikeyplus.model.DataSet;
-import fr.lis.ikeyplus.model.ICharacter;
-import fr.lis.ikeyplus.model.QuantitativeCharacter;
+import fr.lis.ikeyplus.model.character.ICharacter;
+import fr.lis.ikeyplus.model.character.QuantitativeCharacter;
 import fr.lis.ikeyplus.model.QuantitativeMeasure;
 import fr.lis.ikeyplus.model.SingleAccessKeyNode;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
@@ -14,8 +14,6 @@ import fr.lis.ikeyplus.utils.IkeyConfig;
 import fr.lis.ikeyplus.utils.IkeyUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
