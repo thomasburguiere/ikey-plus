@@ -62,7 +62,7 @@ public class SDDContentHandler implements ContentHandler {
     private boolean isFirstCharacterTree = true;
     // buffer to collect text value
     private StringBuffer buffer = null;
-    // kwnoledge base
+    // knowledge base
     private final DataSet dataSet;
     // IkeyConfig object
     private final IkeyConfig config;
@@ -97,7 +97,6 @@ public class SDDContentHandler implements ContentHandler {
      * Default constructor
      */
     public SDDContentHandler(final IkeyConfig config) {
-        super();
         this.dataSet = new DataSet();
         this.config = config;
         this.ratingsCounter = new HashMap<>();

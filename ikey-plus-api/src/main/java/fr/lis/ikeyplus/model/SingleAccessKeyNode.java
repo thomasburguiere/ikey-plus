@@ -22,7 +22,6 @@ public class SingleAccessKeyNode {
     }
 
     public SingleAccessKeyNode(final ICharacter character, final Object characterState) throws OutOfMemoryError {
-        super();
         this.character = character;
         this.characterState = characterState;
         this.otherCharacterStates = new ArrayList<>();

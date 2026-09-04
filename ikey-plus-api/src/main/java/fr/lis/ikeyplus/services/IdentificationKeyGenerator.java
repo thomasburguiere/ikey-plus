@@ -24,7 +24,6 @@ public class IdentificationKeyGenerator {
     private int maxNbStatesPerCharacter;
 
     public IdentificationKeyGenerator(final DataSet dataset, final IkeyConfig config) {
-        super();
         this.dataset = dataset;
         this.config = config;
     }
