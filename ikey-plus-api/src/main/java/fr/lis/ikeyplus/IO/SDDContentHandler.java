@@ -60,10 +60,10 @@ public class SDDContentHandler implements ContentHandler {
     private boolean isFirstCharacterTree = true;
     // buffer to collect text value
     private StringBuffer buffer = null;
-    // kwnoledge base
-    private DataSet dataSet;
+    // knowledge base
+    private final DataSet dataSet;
     // IkeyConfig object
-    private IkeyConfig config;
+    private final IkeyConfig config;
     // current quantitative character
     private CategoricalCharacter currentCategoricalCharacter = null;
     // current quantitative character
@@ -95,7 +95,6 @@ public class SDDContentHandler implements ContentHandler {
      * Default constructor
      */
     public SDDContentHandler(final IkeyConfig config) {
-        super();
         this.dataSet = new DataSet();
         this.config = config;
         this.ratingsCounter = new HashMap<>();
@@ -438,7 +437,6 @@ public class SDDContentHandler implements ContentHandler {
                                         new QuantitativeMeasure()
                                 );
                             }
-                            // put to null Unknown data
                         }
                     }
                 }
@@ -447,7 +445,8 @@ public class SDDContentHandler implements ContentHandler {
                 // useContextualCharacterWeights is not enabled
                 for (final ICharacter character : dataSet.getCharacters()) {
                     if (ratingsCounter.get(character) != null) {
-                        character.setWeight(character.getWeight() / (float) (ratingsCounter.get(character)));
+                        character.setWeight(character.getWeight()
+                                / (float) (ratingsCounter.get(character)));
                     }
                 }
             }

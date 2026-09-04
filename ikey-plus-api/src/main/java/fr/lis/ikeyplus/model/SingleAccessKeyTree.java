@@ -20,7 +20,6 @@ public class SingleAccessKeyTree {
     }
 
     public SingleAccessKeyTree(final SingleAccessKeyNode root, final IkeyConfig utils) {
-        super();
         this.root = root;
         this.config = utils;
     }

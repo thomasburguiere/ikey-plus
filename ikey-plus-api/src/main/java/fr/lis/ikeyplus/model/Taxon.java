@@ -28,7 +28,6 @@ public class Taxon {
     }
 
     public Taxon(final String name) {
-        super();
         this.name = name;
         mediaObjectKeys = new ArrayList<>();
 

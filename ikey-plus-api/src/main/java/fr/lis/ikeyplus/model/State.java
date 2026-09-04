@@ -20,7 +20,6 @@ public class State {
     }
 
     public State(final String name) {
-        super();
         this.name = name;
         this.mediaObjectKeys = new ArrayList<>();
     }
