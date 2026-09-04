@@ -18,7 +18,7 @@
         <version.commons-io>2.4</version.commons-io>
         <version.jersey-server>1.6</version.jersey-server>
         <version.log4j>1.2.17</version.log4j>
-        <version.quartz>2.0.0</version.quartz>
+        <version.quartz>2.5.2</version.quartz>
         <version.servlet-api>2.5</version.servlet-api>
     </properties>
 
