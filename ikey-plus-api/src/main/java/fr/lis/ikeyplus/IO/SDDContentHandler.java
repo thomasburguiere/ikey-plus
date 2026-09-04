@@ -9,11 +9,9 @@ import fr.lis.ikeyplus.model.QuantitativeMeasure;
 import fr.lis.ikeyplus.model.State;
 import fr.lis.ikeyplus.model.Taxon;
 import fr.lis.ikeyplus.utils.IkeyConfig;
-import fr.lis.ikeyplus.utils.IkeyUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
-import org.xml.sax.SAXException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -348,7 +346,7 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <Status> in <Quantitative>
-            else if ("Status".equals(localName) && inCategorical) {
+            else if ("Status".equals(localName) && inQuantitative) {
                 if (attributes.getValue("code") != null
                         && attributes.getValue("code").equals("DataUnavailable")) {
                     dataUnavailableFlag = true;
@@ -424,26 +422,21 @@ public class SDDContentHandler implements ContentHandler {
                 inDataset = false;
                 isFirstDataset = false;
 
-                // null description will be considered as unknown data. Empty states list or
-                // QuantitativeMeasure
-                // will be considered as not specified (not described).
+                // missing description will be initialized to empty state list or empty quant measure
                 for (final Taxon taxon : dataSet.getCodedDescriptions().keySet()) {
                     for (final ICharacter character : dataSet.getCharacters()) {
-                        if (dataSet.getCodedDescriptions().get(taxon).getCharacterDescription(character) == null) {
+                        if (!dataSet.getCodedDescriptions().get(taxon).existsDescription(character)) {
                             if (character.isSupportsCategoricalData()) {
-                                dataSet.getCodedDescriptions().get(taxon)
-                                        .addCharacterDescription(character, new ArrayList<State>());
+                                dataSet.getCodedDescriptions().get(taxon).addCategoricalCharacterDescription(
+                                        (CategoricalCharacter) character,
+                                        new ArrayList<>()
+                                );
                             } else {
-                                dataSet.getCodedDescriptions().get(taxon)
-                                        .addCharacterDescription(character, new QuantitativeMeasure());
+                                dataSet.getCodedDescriptions().get(taxon).addQuantitativeCharacterDescription(
+                                        (QuantitativeCharacter) character,
+                                        new QuantitativeMeasure()
+                                );
                             }
-                            // put to null Unknown data
-                        } else if (dataSet.getCodedDescriptions().get(taxon)
-                                .getCharacterDescription(character) instanceof String
-                                && dataSet.getCodedDescriptions().get(taxon)
-                                .getCharacterDescription(character).equals(IkeyUtils.UNKNOWN_DATA)) {
-                            dataSet.getCodedDescriptions().get(taxon)
-                                    .addCharacterDescription(character, null);
                         }
                     }
                 }
@@ -635,11 +628,12 @@ public class SDDContentHandler implements ContentHandler {
             else if ("Categorical".equals(localName) && inSummaryData) {
                 inCategorical = false;
                 if (dataUnavailableFlag) {
-                    currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
-                            IkeyUtils.UNKNOWN_DATA);
+                    currentCodedDescription.setUnknownDescription(currentCodedDescriptionCharacter);
                 } else {
-                    currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
-                            currentStatesList);
+                    currentCodedDescription.addCategoricalCharacterDescription(
+                            (CategoricalCharacter) currentCodedDescriptionCharacter,
+                            currentStatesList
+                    );
                 }
                 currentCodedDescriptionCharacter = null;
                 currentStatesList = null;
@@ -650,11 +644,12 @@ public class SDDContentHandler implements ContentHandler {
             else if ("Quantitative".equals(localName) && inSummaryData) {
                 inQuantitative = false;
                 if (dataUnavailableFlag) {
-                    currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
-                            IkeyUtils.UNKNOWN_DATA);
+                    currentCodedDescription.setUnknownDescription(currentCodedDescriptionCharacter);
                 } else {
-                    currentCodedDescription.addCharacterDescription(currentCodedDescriptionCharacter,
-                            currentQuantitativeMeasure);
+                    currentCodedDescription.addQuantitativeCharacterDescription(
+                            (QuantitativeCharacter) currentCodedDescriptionCharacter,
+                            currentQuantitativeMeasure
+                    );
                 }
                 currentCodedDescriptionCharacter = null;
                 currentQuantitativeMeasure = null;
