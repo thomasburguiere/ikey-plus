@@ -190,7 +190,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 // initiate the mediaObject Tags
                 mediaObjectsTags.setLength(0);
-                if (child.getCharacter().isSupportsCategoricalData()) {
+                if (child.getCharacter().isCategorical()) {
                     for (final String mediaObjectKey : ((State) child.getCharacterState()).getMediaObjectKeys()) {
                         mediaObjectsTags.append("<MediaObject ref=\"").append(mediaObjectKey).append("\"/>").append(lineSeparator);
                     }
@@ -679,7 +679,7 @@ public abstract class SingleAccessKeyTreeDumper {
                     final StringBuilder javascriptUrlImageTab = new StringBuilder("new Array(");
                     boolean firstLoop = true;
                     for (final SingleAccessKeyNode childNode : parentNode.getChildren()) {
-                        if (childNode.getCharacter().isSupportsCategoricalData()) {
+                        if (childNode.getCharacter().isCategorical()) {
                             if (!firstLoop) {
                                 javascriptStateNameTab.append(", ");
                                 javascriptUrlImageTab.append(", ");
@@ -1113,7 +1113,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 }
                 output.append("</span>"); // closes the opening <span class="statesAndTaxa">
-                if (child.getCharacter().isSupportsCategoricalData()) {
+                if (child.getCharacter().isCategorical()) {
                     output.append("<span class=\"stateImageURL\" id=\"stateImageURL_").append(mediaKey).append("\">");
                     output.append(((State) child.getCharacterState()).getFirstImage(tree2dump.getDataSet()) != null ? ((State) child
                             .getCharacterState()).getFirstImage(tree2dump.getDataSet()) : "");
@@ -1268,7 +1268,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 }
                 output.append("</span>"); // closes the opening <span class="statesAndTaxa">
-                if (child.getCharacter().isSupportsCategoricalData()) {
+                if (child.getCharacter().isCategorical()) {
                     output.append("<br/><span class=\"stateImageURLandContainer\" id=\"stateImageURLandContainer").append(counter).append("\" >");
                     output.append("<span class=\"stateImageURL\" id=\"stateImageURL_").append(mediaKey).append("\">");
                     output.append(((State) child.getCharacterState()).getFirstImage(tree2dump.getDataSet()) != null ? ((State) child

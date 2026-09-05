@@ -426,7 +426,7 @@ public class SDDContentHandler implements ContentHandler {
                 for (final Taxon taxon : dataSet.getCodedDescriptions().keySet()) {
                     for (final ICharacter character : dataSet.getCharacters()) {
                         if (!dataSet.getCodedDescriptions().get(taxon).existsDescription(character)) {
-                            if (character.isSupportsCategoricalData()) {
+                            if (character.isCategorical()) {
                                 dataSet.getCodedDescriptions().get(taxon).addCategoricalCharacterDescription(
                                         (CategoricalCharacter) character,
                                         new ArrayList<>()

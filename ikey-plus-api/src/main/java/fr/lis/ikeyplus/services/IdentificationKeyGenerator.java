@@ -94,7 +94,7 @@ public class IdentificationKeyGenerator {
 
             // get not described taxa
             final List<Taxon> notDescribedTaxa;
-            if (selectedCharacter.isSupportsCategoricalData()) {
+            if (selectedCharacter.isCategorical()) {
                 notDescribedTaxa = getNotDescribedTaxa(remainingTaxa,
                         ((CategoricalCharacter) selectedCharacter));
                 // delete not described taxa from the remaining taxa list
@@ -118,7 +118,7 @@ public class IdentificationKeyGenerator {
             // + selectedCharacter.getName() + System.getProperty("line.separator"));
 
             // if the character is categorical
-            if (selectedCharacter.isSupportsCategoricalData()) {
+            if (selectedCharacter.isCategorical()) {
 
                 // create a child nodes list for mergeCharacterStatesIfSameDiscrimination option
                 final List<SingleAccessKeyNode> futureChildNodes = new ArrayList<>();
@@ -435,7 +435,7 @@ public class IdentificationKeyGenerator {
             throws Exception {
         final HashMap<ICharacter, Float> scoreMap = new LinkedHashMap<>();
         for (final ICharacter character : characters) {
-            if (character.isSupportsCategoricalData()) {
+            if (character.isCategorical()) {
                 scoreMap.put(character,
                         categoricalCharacterScore((CategoricalCharacter) character, remaningTaxa));
             } else {
@@ -458,7 +458,7 @@ public class IdentificationKeyGenerator {
     ) {
         for (final Map.Entry<ICharacter, Float> entry : scoreMap.entrySet()) {
             final ICharacter character = entry.getKey();
-            if (character.isSupportsCategoricalData() && !character.getChildCharacters().isEmpty()) {
+            if (character.isCategorical() && !character.getChildCharacters().isEmpty()) {
                 final float max = getMaxChildScore(scoreMap, character);
                 if (entry.getValue() < max) {
                     scoreMap.put(character, max);
@@ -544,7 +544,7 @@ public class IdentificationKeyGenerator {
             charactersScore.remove(bestCharacter);
 
             // if the set of scores contains at least one score similar to the best score
-            if (charactersScore.containsValue(bestScore) && bestCharacter.isSupportsCategoricalData()) {
+            if (charactersScore.containsValue(bestScore) && bestCharacter.isCategorical()) {
                 int lessTaxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) bestCharacter,
                         remainingTaxa);
 
@@ -555,7 +555,7 @@ public class IdentificationKeyGenerator {
                         if (currentCodedDescription.getCharacterWeight(character) != null
                                 && currentCodedDescription.getCharacterWeight(character) == bestWeight
                                 && entry.getValue() == bestScore
-                                && character.isSupportsCategoricalData()) {
+                                && character.isCategorical()) {
                             // get the number of taxa of all child nodes of the current CategoricalCharacter
                             final int currentTaxaNumber = getTaxaNumberForAllStates(
                                     (CategoricalCharacter) character, remainingTaxa);
@@ -595,13 +595,13 @@ public class IdentificationKeyGenerator {
             charactersScore.remove(bestCharacter);
 
             // if the set of scores contains at least one score similar to the best score
-            if (charactersScore.containsValue(bestScore) && bestCharacter.isSupportsCategoricalData()) {
+            if (charactersScore.containsValue(bestScore) && bestCharacter.isCategorical()) {
                 int lessTaxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) bestCharacter,
                         remainingTaxa);
                 for (final Map.Entry<ICharacter, Float> entry : charactersScore.entrySet()) {
                     final ICharacter character = entry.getKey();
                     if (character.getWeight() == bestWeight && entry.getValue() == bestScore
-                            && character.isSupportsCategoricalData()) {
+                            && character.isCategorical()) {
                         // get the number of taxa of all child nodes of the current CategoricalCharacter
                         final int currentTaxaNumber = getTaxaNumberForAllStates((CategoricalCharacter) character,
                                 remainingTaxa);

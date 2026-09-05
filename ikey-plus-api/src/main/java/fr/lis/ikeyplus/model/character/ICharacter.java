@@ -13,15 +13,7 @@ import java.util.List;
  */
 public interface ICharacter {
 
-    String name = null;
-    String id = null;
-    float weight = 3;
-    ICharacter parentCharacter = null;
-    List<State> inapplicableStates = null;
-    List<ICharacter> childCharacters = null;
-    List<String> mediaObjectKeys = null;
-
-    boolean isSupportsCategoricalData();
+    boolean isCategorical();
 
     String getName();
 
@@ -54,4 +46,6 @@ public interface ICharacter {
     void setMediaObjectKeys(List<String> mediaObjects);
 
     String getFirstImage(DataSet dataset);
+
+    boolean isQuantitative();
 }

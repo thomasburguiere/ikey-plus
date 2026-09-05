@@ -12,11 +12,11 @@ import java.util.List;
  *
  * @author Florian Causse
  */
-public class Character implements ICharacter {
+public abstract class Character implements ICharacter {
 
     private String name;
     private String id = null;
-    public float weight = IkeyConfig.DEFAULT_WEIGHT.getIntWeight();
+    private float weight = IkeyConfig.DEFAULT_WEIGHT.getIntWeight();
     private ICharacter parentCharacter = null;
     private List<State> inapplicableStates;
     private List<ICharacter> childCharacters;
@@ -34,57 +34,31 @@ public class Character implements ICharacter {
         this.mediaObjectKeys = new ArrayList<>();
     }
 
-    /* (non-Javadoc)
-     *
-     * @see model.ICharacter#isSupportsCategoricalData() */
-    @Override
-    public boolean isSupportsCategoricalData() {
-        return false;
-    }
-
-    /* (non-Javadoc)
-     *
-     * @see model.ICharacter#getId() */
     @Override
     public String getId() {
         return id;
     }
 
-    /* (non-Javadoc)
-     *
-     * @see model.ICharacter#setId(java.lang.String) */
     @Override
     public void setId(final String id) {
         this.id = id;
     }
 
-    /* (non-Javadoc)
-     *
-     * @see model.ICharacter#getName() */
     @Override
     public String getName() {
         return name;
     }
 
-    /* (non-Javadoc)
-     *
-     * @see model.ICharacter#setName(java.lang.String) */
     @Override
     public void setName(final String name) {
         this.name = name;
     }
 
-    /* (non-Javadoc)
-     *
-     * @see model.ICharacter#getweight() */
     @Override
     public float getWeight() {
         return weight;
     }
 
-    /* (non-Javadoc)
-     *
-     * @see model.ICharacter#setWeight(int) */
     @Override
     public void setWeight(final float weight) {
         this.weight = weight;
@@ -110,58 +84,37 @@ public class Character implements ICharacter {
         return null;
     }
 
-    /* (non-Javadoc)
-     *
-     * @see model.ICharacter#getInapplicableStates() */
     @Override
     public List<State> getInapplicableStates() {
         return inapplicableStates;
     }
 
-    /* (non-Javadoc)
-     *
-     * @see model.ICharacter#setInapplicableStates(java.util.List) */
     @Override
     public void setInapplicableStates(final List<State> inapplicableStates) {
         this.inapplicableStates = inapplicableStates;
     }
 
-    /* (non-Javadoc)
-     *
-     * @see model.ICharacter#getParentCharacter() */
     @Override
     public ICharacter getParentCharacter() {
         return parentCharacter;
     }
 
-    /* (non-Javadoc)
-     *
-     * @see model.ICharacter#setParentCharacter(model.ICharacter) */
     @Override
     public void setParentCharacter(final ICharacter parentCharacter) {
         this.parentCharacter = parentCharacter;
         this.parentCharacter.getChildCharacters().add(this);
     }
 
-    /* (non-Javadoc)
-     *
-     * @see model.ICharacter#getChildCharacters() */
     @Override
     public List<ICharacter> getChildCharacters() {
         return childCharacters;
     }
 
-    /* (non-Javadoc)
-     *
-     * @see model.ICharacter#setChildCharacters(java.util.List) */
     @Override
     public void setChildCharacters(final List<ICharacter> childCharacters) {
         this.childCharacters = childCharacters;
     }
 
-    /* (non-Javadoc)
-     *
-     * @see model.ICharacter#getAllChildren() */
     @Override
     public List<ICharacter> getAllChildren() {
         final List<ICharacter> allChildrenCharacter = new ArrayList<>();
@@ -174,23 +127,6 @@ public class Character implements ICharacter {
             allChildrenCharacter.add(childCharacter);
             addChildrenToList(allChildrenCharacter, childCharacter);
         }
-    }
-
-    @Override
-    public ICharacter clone() {
-        ICharacter newCharacter;
-        if (isSupportsCategoricalData()) {
-            newCharacter = new CategoricalCharacter();
-            ((CategoricalCharacter) newCharacter).setStates(((CategoricalCharacter) this).getStates());
-        } else {
-            newCharacter = new QuantitativeCharacter();
-        }
-        newCharacter.setChildCharacters(childCharacters);
-        newCharacter.setId(id);
-        newCharacter.setInapplicableStates(inapplicableStates);
-        newCharacter.setName(name);
-        newCharacter.setParentCharacter(parentCharacter);
-        return newCharacter;
     }
 
     public String toString() {
