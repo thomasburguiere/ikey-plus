@@ -11,7 +11,7 @@ import java.util.Objects;
  *
  * @author Florian Causse
  */
-public class State {
+public class State implements CharacterState {
 
     private String id = null;
     private String name;

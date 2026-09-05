@@ -3,8 +3,10 @@ package fr.lis.ikeyplus.IO;
 import fr.lis.ikeyplus.model.DataSet;
 import fr.lis.ikeyplus.model.character.QuantitativeCharacter;
 import fr.lis.ikeyplus.model.description.QuantitativeMeasure;
-import fr.lis.ikeyplus.model.SingleAccessKeyNode;
-import fr.lis.ikeyplus.model.SingleAccessKeyTree;
+import fr.lis.ikeyplus.model.key.CategoricalNode;
+import fr.lis.ikeyplus.model.key.QuantitativeNode;
+import fr.lis.ikeyplus.model.key.SingleAccessKeyNode;
+import fr.lis.ikeyplus.model.key.SingleAccessKeyTree;
 import fr.lis.ikeyplus.model.description.State;
 import fr.lis.ikeyplus.model.Taxon;
 import fr.lis.ikeyplus.utils.IkeyConfig;
@@ -189,8 +191,8 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 // initiate the mediaObject Tags
                 mediaObjectsTags.setLength(0);
-                if (child.getCharacter().isCategorical()) {
-                    for (final String mediaObjectKey : ((State) child.getCharacterState()).getMediaObjectKeys()) {
+                if (child instanceof final CategoricalNode catNode) {
+                    for (final String mediaObjectKey : catNode.getSelectedState().getMediaObjectKeys()) {
                         mediaObjectsTags.append("<MediaObject ref=\"").append(mediaObjectKey).append("\"/>").append(lineSeparator);
                     }
                 }
@@ -353,12 +355,11 @@ public abstract class SingleAccessKeyTreeDumper {
                                           int firstNumbering, int secondNumbering, final SingleAccessKeyTree tree2dump) {
 
         if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
-            if (node.getCharacterState() instanceof QuantitativeMeasure) {
+            if (node instanceof final QuantitativeNode quantNode) {
                 output.append(tabulations).append(firstNumbering).append(".").append(secondNumbering).append(") ").append(node.getCharacter().getName()).append(" | ").append(((QuantitativeMeasure) node.getCharacterState())
-                        .toStringInterval(((QuantitativeCharacter) node.getCharacter())
-                                .getMeasurementUnit()));
-            } else {
-                output.append(tabulations).append(firstNumbering).append(".").append(secondNumbering).append(") ").append(node.getCharacter().getName()).append(" | ").append(node.getStringStates());
+                        .toStringInterval(quantNode.getQuantitativeCharacter().getMeasurementUnit()));
+            } else if(node instanceof final CategoricalNode catNode){
+                output.append(tabulations).append(firstNumbering).append(".").append(secondNumbering).append(") ").append(node.getCharacter().getName()).append(" | ").append(catNode.getStringStates());
             }
             output.append(tree2dump.nodeDescriptionAnalysis(node));
             if (node.getChildren().isEmpty()) {
@@ -1066,12 +1067,12 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 String mediaKey = "";
                 // displaying the child node character state
-                if (child.getCharacterState() instanceof QuantitativeMeasure) {
-                    output.append("<span class=\"state\"" + "\">").append(marging).append(((QuantitativeMeasure) child.getCharacterState())
+                if (child instanceof final QuantitativeNode quantNode) {
+                    output.append("<span class=\"state\"" + "\">").append(marging).append(quantNode.getMeasure()
                             .toStringInterval(((QuantitativeCharacter) child.getCharacter())
                                     .getMeasurementUnit())).append("</span>");
-                } else {
-                    mediaKey = ((State) child.getCharacterState()).getFirstImageKey();
+                } else if( child instanceof final CategoricalNode catNode){
+                    mediaKey = catNode.getSelectedState().getFirstImageKey();
                     output.append("<span class=\"state\" id=\"state_").append(mediaKey).append("\" >").append(marging).append(child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")).append("</span>");
 
                 }
@@ -1103,10 +1104,9 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 }
                 output.append("</span>"); // closes the opening <span class="statesAndTaxa">
-                if (child.getCharacter().isCategorical()) {
+                if (child instanceof final CategoricalNode catNode) {
                     output.append("<span class=\"stateImageURL\" id=\"stateImageURL_").append(mediaKey).append("\">");
-                    output.append(((State) child.getCharacterState()).getFirstImage(tree2dump.getDataSet()) != null ? ((State) child
-                            .getCharacterState()).getFirstImage(tree2dump.getDataSet()) : "");
+                    output.append(catNode.getSelectedState().getFirstImage(tree2dump.getDataSet()) != null ? catNode.getSelectedState().getFirstImage(tree2dump.getDataSet()) : "");
                     output.append("</span>");
                 }
                 output.append("<br/>").append(lineSeparator);

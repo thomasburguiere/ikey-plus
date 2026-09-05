@@ -1,5 +1,7 @@
-package fr.lis.ikeyplus.model;
+package fr.lis.ikeyplus.model.key;
 
+import fr.lis.ikeyplus.model.DataSet;
+import fr.lis.ikeyplus.model.Taxon;
 import fr.lis.ikeyplus.model.character.QuantitativeCharacter;
 import fr.lis.ikeyplus.model.description.QuantitativeMeasure;
 import fr.lis.ikeyplus.model.description.State;
@@ -51,8 +53,13 @@ public class SingleAccessKeyTree {
         return config;
     }
 
-    private void recursiveToString(final SingleAccessKeyNode node, final StringBuffer output, String tabulations,
-                                   int firstNumbering, int secondNumbering) {
+    private void recursiveToString(
+            final SingleAccessKeyNode node,
+            final StringBuffer output,
+            String tabulations,
+            int firstNumbering,
+            int secondNumbering
+    ) {
 
         if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
             if (node.getCharacterState() instanceof QuantitativeMeasure) {
@@ -94,7 +101,7 @@ public class SingleAccessKeyTree {
     @Override
     public String toString() {
         final StringBuffer output = new StringBuffer();
-        recursiveToString(root, output, System.getProperty("line.separator"), 0, 0);
+        recursiveToString(root, output, System.lineSeparator(), 0, 0);
         return output.toString();
     }
 

@@ -5,7 +5,7 @@ package fr.lis.ikeyplus.model.description;
  *
  * @author Florian Causse
  */
-public class QuantitativeMeasure {
+public class QuantitativeMeasure implements CharacterState {
 
     private Double max = null;
     private Double mean = null;

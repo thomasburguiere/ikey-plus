@@ -1,7 +1,7 @@
 package fr.lis.ikeyplus.services;
 
 import fr.lis.ikeyplus.IO.SDDSaxParser;
-import fr.lis.ikeyplus.model.SingleAccessKeyTree;
+import fr.lis.ikeyplus.model.key.SingleAccessKeyTree;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import org.junit.jupiter.api.Test;
 

@@ -2,6 +2,7 @@ package fr.lis.ikeyplus.model;
 
 import fr.lis.ikeyplus.model.character.CategoricalCharacter;
 import fr.lis.ikeyplus.model.character.ICharacter;
+import fr.lis.ikeyplus.model.description.CodedDescription;
 import fr.lis.ikeyplus.model.description.State;
 
 import java.util.ArrayList;
@@ -22,9 +23,9 @@ public class DataSet {
     private Map<String, String> mediaObjects;
 
     public DataSet() {
-        characters = new ArrayList<ICharacter>();
-        codedDescriptions = new LinkedHashMap<Taxon, CodedDescription>();
-        mediaObjects = new LinkedHashMap<String, String>();
+        characters = new ArrayList<>();
+        codedDescriptions = new LinkedHashMap<>();
+        mediaObjects = new LinkedHashMap<>();
     }
 
     public List<ICharacter> getCharacters() {
@@ -56,7 +57,7 @@ public class DataSet {
     }
 
     public List<Taxon> getTaxa() {
-        return new ArrayList<Taxon>(codedDescriptions.keySet());
+        return new ArrayList<>(codedDescriptions.keySet());
     }
 
     public String getLabel() {
@@ -148,7 +149,7 @@ public class DataSet {
     public static List<ICharacter> getInapplicableCharacters(final List<ICharacter> newRemainingCharacters,
                                                              final ICharacter selectedCharacter, final State state) {
 
-        final List<ICharacter> inapplicableCharacter = new ArrayList<ICharacter>();
+        final List<ICharacter> inapplicableCharacter = new ArrayList<>();
 
         for (final ICharacter character : newRemainingCharacters) {
             if (character.getInapplicableStates().contains(state)) {
