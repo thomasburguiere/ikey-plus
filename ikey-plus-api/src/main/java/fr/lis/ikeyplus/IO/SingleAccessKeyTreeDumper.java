@@ -153,7 +153,6 @@ public abstract class SingleAccessKeyTreeDumper {
         // // THIRD TRAVERSAL, breadth-first ////
         final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
         final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
-        counter = 1;
         int currentParentNumber = -1;
         queue.add(rootNode);
 
@@ -177,8 +176,8 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 // / child node treatment
 
-                if (nodeChildParentNumberingMap.get(Integer.valueOf(counter)) != currentParentNumber) {
-                    currentParentNumber = nodeChildParentNumberingMap.get(Integer.valueOf(counter));
+                if (nodeChildParentNumberingMap.get(counter) != currentParentNumber) {
+                    currentParentNumber = nodeChildParentNumberingMap.get(counter);
                 }
 
                 if (counter == 2) {// first child node of the root node
@@ -197,7 +196,7 @@ public abstract class SingleAccessKeyTreeDumper {
                 }
 
                 // other child nodes of the root node
-                if (rootNodeChildrenIntegerList.contains(Integer.valueOf(counter))) {
+                if (rootNodeChildrenIntegerList.contains(counter)) {
                     if (child.hasChild()) {
                         output.append("<Lead id=\"lead").append(counter - 1).append("\">").append(lineSeparator);
                         output.append("<Statement>").append(child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
@@ -455,10 +454,6 @@ public abstract class SingleAccessKeyTreeDumper {
         final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
         final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
-        queue.clear();
-        visitedNodes.clear();
-
-        counter = 1;
         int currentParentNumber = -1;
         queue.add(rootNode);
 
@@ -499,9 +494,7 @@ public abstract class SingleAccessKeyTreeDumper {
                 } else {
                     output.append("    ");
                     blankCharacterName.setLength(0);
-                    for (int i = 0; i < child.getCharacter().getName().length(); i++) {
-                        blankCharacterName.append(" ");
-                    }
+                    blankCharacterName.repeat(" ", child.getCharacter().getName().length());
                     output.append("  ").append(blankCharacterName).append(" = ");
                 }
 
@@ -667,8 +660,8 @@ public abstract class SingleAccessKeyTreeDumper {
         if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
 
             if (displayCharacterName) {
-                final String characterNameContent = node.getCharacter().getName().replaceAll("\\<", "&lt;")
-                        .replaceAll("\\>", "&gt;");
+                final String characterNameContent = node.getCharacter().getName().replace("<", "&lt;")
+                        .replace(">", "&gt;");
                 characterName.append("<span class='character'>").append(firstNumbering).append(") ").
                         append("<b>").append(characterNameContent).append("</b>").append("</span>");
 
@@ -684,8 +677,8 @@ public abstract class SingleAccessKeyTreeDumper {
                                 javascriptStateNameTab.append(", ");
                                 javascriptUrlImageTab.append(", ");
                             }
-                            javascriptStateNameTab.append("\"").append(((State) childNode.getCharacterState()).getName().replaceAll("\"", "")
-                                    .replaceAll("'", " ")).append("\"");
+                            javascriptStateNameTab.append("\"").append(((State) childNode.getCharacterState()).getName().replace("\"", "")
+                                    .replace("'", " ")).append("\"");
                             javascriptUrlImageTab.append("\"").append(((State) childNode.getCharacterState()).getFirstImage(tree2dump
                                     .getDataSet())).append("\"");
                             firstLoop = false;
@@ -695,7 +688,7 @@ public abstract class SingleAccessKeyTreeDumper {
                     javascriptUrlImageTab.append(")");
 
                     htmlImageLink = " <a class='stateImageLink' onClick='newStateImagesWindowTree(\""
-                            + node.getCharacter().getName().replaceAll("\"", "").replaceAll("'", " ")
+                            + node.getCharacter().getName().replace("\"", "").replace("'", " ")
                             + "\", " + javascriptStateNameTab + ", " + javascriptUrlImageTab
                             + ");' >(<strong>?</strong>)</a>";
                 }
@@ -709,7 +702,7 @@ public abstract class SingleAccessKeyTreeDumper {
             } else {
                 state.append(node.getStringStates());
             }
-            final String regexed = state.toString().replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;");
+            final String regexed = state.toString().replace("<", "&lt;").replace(">", "&gt;");
             state.setLength(0);
             state.append("<span class='state'>").append(firstNumbering).append(".").append(secondNumbering).append(") ").append(regexed).append("</span>")
                     .append("<span class=\"warning\">").append(tree2dump.nodeDescriptionAnalysis(node)).append("</span>");
@@ -1010,7 +1003,6 @@ public abstract class SingleAccessKeyTreeDumper {
         final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
         final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
-        counter = 1;
         int currentParentNumber = -1;
         queue.add(rootNode);
 
@@ -1067,9 +1059,7 @@ public abstract class SingleAccessKeyTreeDumper {
                 } else {
                     output.append("    ");
                     blankCharacterName.setLength(0);
-                    for (int i = 0; i < child.getCharacter().getName().length(); i++) {
-                        blankCharacterName.append(" ");
-                    }
+                    blankCharacterName.repeat(" ", child.getCharacter().getName().length());
                     output.append("  ").append(blankCharacterName);
                 }
                 output.append("<span class=\"statesAndTaxa\">");
@@ -1165,7 +1155,6 @@ public abstract class SingleAccessKeyTreeDumper {
         final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
         final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
-        counter = 1;
         int currentParentNumber = -1;
         queue.add(rootNode);
 
@@ -1222,9 +1211,7 @@ public abstract class SingleAccessKeyTreeDumper {
                 } else {
                     output.append("    ");
                     blankCharacterName.setLength(0);
-                    for (int i = 0; i < child.getCharacter().getName().length(); i++) {
-                        blankCharacterName.append(" ");
-                    }
+                    blankCharacterName.repeat(" ", child.getCharacter().getName().length());
                     output.append("  ").append(blankCharacterName);
                 }
                 output.append("<span class=\"statesAndTaxa\">");
@@ -1442,7 +1429,6 @@ public abstract class SingleAccessKeyTreeDumper {
         final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
         final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
-        counter = 1;
         int currentParentNumber = -1;
         queue.add(rootNode);
 
@@ -1592,7 +1578,6 @@ public abstract class SingleAccessKeyTreeDumper {
         final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
         final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
 
-        counter = 1;
         int currentParentNumber = -1;
         queue.add(rootNode);
 
@@ -1616,8 +1601,8 @@ public abstract class SingleAccessKeyTreeDumper {
                 // / child node treatment
 
                 // displaying the parent node number
-                if (nodeChildParentNumberingMap.get(Integer.valueOf(counter)) != currentParentNumber) {
-                    currentParentNumber = nodeChildParentNumberingMap.get(Integer.valueOf(counter));
+                if (nodeChildParentNumberingMap.get(counter) != currentParentNumber) {
+                    currentParentNumber = nodeChildParentNumberingMap.get(counter);
                 }
                 output.append(lineSeparator);
                 output.append(currentParentNumber).append(" -> ");
