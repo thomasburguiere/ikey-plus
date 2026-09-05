@@ -426,14 +426,14 @@ public class SDDContentHandler implements ContentHandler {
                 for (final Taxon taxon : dataSet.getCodedDescriptions().keySet()) {
                     for (final ICharacter character : dataSet.getCharacters()) {
                         if (!dataSet.getCodedDescriptions().get(taxon).existsDescription(character)) {
-                            if (character.isCategorical()) {
+                            if (character instanceof final CategoricalCharacter cast) {
                                 dataSet.getCodedDescriptions().get(taxon).addCategoricalCharacterDescription(
-                                        (CategoricalCharacter) character,
+                                        cast,
                                         new ArrayList<>()
                                 );
-                            } else {
+                            } else if (character instanceof final QuantitativeCharacter cast) {
                                 dataSet.getCodedDescriptions().get(taxon).addQuantitativeCharacterDescription(
-                                        (QuantitativeCharacter) character,
+                                        cast,
                                         new QuantitativeMeasure()
                                 );
                             }
