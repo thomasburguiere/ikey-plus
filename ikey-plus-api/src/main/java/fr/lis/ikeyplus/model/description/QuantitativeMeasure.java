@@ -1,4 +1,4 @@
-package fr.lis.ikeyplus.model;
+package fr.lis.ikeyplus.model.description;
 
 /**
  * This class represents a quantitative measure

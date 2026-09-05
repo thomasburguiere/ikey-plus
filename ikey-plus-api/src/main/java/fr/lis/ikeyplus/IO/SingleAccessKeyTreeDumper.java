@@ -2,10 +2,10 @@ package fr.lis.ikeyplus.IO;
 
 import fr.lis.ikeyplus.model.DataSet;
 import fr.lis.ikeyplus.model.character.QuantitativeCharacter;
-import fr.lis.ikeyplus.model.QuantitativeMeasure;
+import fr.lis.ikeyplus.model.description.QuantitativeMeasure;
 import fr.lis.ikeyplus.model.SingleAccessKeyNode;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
-import fr.lis.ikeyplus.model.State;
+import fr.lis.ikeyplus.model.description.State;
 import fr.lis.ikeyplus.model.Taxon;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import fr.lis.ikeyplus.utils.IkeyUtils;

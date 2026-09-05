@@ -3,6 +3,8 @@ package fr.lis.ikeyplus.model;
 import fr.lis.ikeyplus.model.character.CategoricalCharacter;
 import fr.lis.ikeyplus.model.character.ICharacter;
 import fr.lis.ikeyplus.model.character.QuantitativeCharacter;
+import fr.lis.ikeyplus.model.description.QuantitativeMeasure;
+import fr.lis.ikeyplus.model.description.State;
 
 import java.util.LinkedHashMap;
 import java.util.List;

@@ -1,6 +1,8 @@
 package fr.lis.ikeyplus.model;
 
 import fr.lis.ikeyplus.model.character.QuantitativeCharacter;
+import fr.lis.ikeyplus.model.description.QuantitativeMeasure;
+import fr.lis.ikeyplus.model.description.State;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 
 /**

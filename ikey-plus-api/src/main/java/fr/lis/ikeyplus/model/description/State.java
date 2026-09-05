@@ -1,4 +1,6 @@
-package fr.lis.ikeyplus.model;
+package fr.lis.ikeyplus.model.description;
+
+import fr.lis.ikeyplus.model.DataSet;
 
 import java.util.ArrayList;
 import java.util.List;
