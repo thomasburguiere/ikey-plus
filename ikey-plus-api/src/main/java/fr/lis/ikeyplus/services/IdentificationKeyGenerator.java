@@ -14,7 +14,9 @@ import fr.lis.ikeyplus.utils.IkeyConfig;
 import fr.lis.ikeyplus.utils.IkeyUtils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +67,10 @@ public class IdentificationKeyGenerator {
         }
     }
 
+    private static <T> boolean containsAll(final Collection<T> coll, final Collection<T> toCheck) {
+        return new HashSet<>(coll).containsAll(toCheck);
+    }
+
     private void calculateSingleAccessKeyNodeChild(
             final SingleAccessKeyNode parentNode,
             final List<ICharacter> remainingCharacters,
@@ -93,13 +99,13 @@ public class IdentificationKeyGenerator {
             }
 
             // get not described taxa
-            final List<Taxon> notDescribedTaxa;
+            List<Taxon> notDescribedTaxa = new ArrayList<>();
             if (selectedCharacter.isCategorical()) {
                 notDescribedTaxa = getNotDescribedTaxa(remainingTaxa,
                         ((CategoricalCharacter) selectedCharacter));
                 // delete not described taxa from the remaining taxa list
                 remainingTaxa.removeAll(notDescribedTaxa);
-            } else {
+            } else if (selectedCharacter.isQuantitative()) {
                 notDescribedTaxa = getNotDescribedTaxa(remainingTaxa,
                         ((QuantitativeCharacter) selectedCharacter));
                 // delete not described taxa from the remaining taxa list
@@ -118,12 +124,11 @@ public class IdentificationKeyGenerator {
             // + selectedCharacter.getName() + System.getProperty("line.separator"));
 
             // if the character is categorical
-            if (selectedCharacter.isCategorical()) {
+            if (selectedCharacter instanceof final CategoricalCharacter catCharCast) {
 
                 // create a child nodes list for mergeCharacterStatesIfSameDiscrimination option
                 final List<SingleAccessKeyNode> futureChildNodes = new ArrayList<>();
 
-                final CategoricalCharacter catCharCast = (CategoricalCharacter) selectedCharacter;
                 for (final State state : catCharCast.getStates()) {
                     final List<Taxon> newRemainingTaxa = getRemainingTaxa(remainingTaxa,
                             catCharCast, state);
@@ -162,8 +167,8 @@ public class IdentificationKeyGenerator {
                         newRemainingCharacters.removeAll(inapplicableCharacters);
 
                         // pruning option handling
-                        if (config.isPruningEnabled() && remainingTaxa.containsAll(newRemainingTaxa)
-                                && newRemainingTaxa.containsAll(remainingTaxa)
+                        if (config.isPruningEnabled() && containsAll(remainingTaxa, newRemainingTaxa)
+                                && containsAll(newRemainingTaxa, remainingTaxa)
                                 && !childDependantCharacters.contains(selectedCharacter)) {
                             node.setNodeDescription(IkeyConfig.getBundleConfElement("message.warning.pruning"));
                         } else {
@@ -175,11 +180,10 @@ public class IdentificationKeyGenerator {
                 }
 
                 // if the character is numerical
-            } else {
+            } else if(selectedCharacter instanceof final QuantitativeCharacter quantCharCast){
 
                 // add the selected character to the already used characters list
                 alreadyUsedCharacter.add(selectedCharacter);
-                final QuantitativeCharacter quantCharCast = (QuantitativeCharacter) selectedCharacter;
                 final List<QuantitativeMeasure> quantitativeMeasures = splitQuantitativeCharacter(
                         quantCharCast, remainingTaxa);
 
@@ -204,8 +208,8 @@ public class IdentificationKeyGenerator {
                                 remainingCharacters);
 
                         // pruning option handling
-                        if (config.isPruningEnabled() && remainingTaxa.containsAll(newRemainingTaxa)
-                                && newRemainingTaxa.containsAll(remainingTaxa)
+                        if (config.isPruningEnabled() && containsAll(remainingTaxa, newRemainingTaxa)
+                                && containsAll(newRemainingTaxa, remainingTaxa)
                                 && !childDependantCharacters.contains(selectedCharacter)) {
                             node.setNodeDescription(IkeyConfig.getBundleConfElement("message.warning.pruning"));
                         } else {
@@ -249,8 +253,8 @@ public class IdentificationKeyGenerator {
 
         for (final SingleAccessKeyNode futureChildNode : futureChildNodes) {
             if (node.getRemainingTaxa().size() > 1
-                    && futureChildNode.getRemainingTaxa().containsAll(node.getRemainingTaxa())
-                    || (futureChildNode.getRemainingTaxa().size() > 1 && node.getRemainingTaxa().containsAll(
+                    && containsAll(futureChildNode.getRemainingTaxa(), node.getRemainingTaxa())
+                    || (futureChildNode.getRemainingTaxa().size() > 1 && containsAll(node.getRemainingTaxa(),
                     futureChildNode.getRemainingTaxa()))) {
                 futureChildNode.addOtherCharacterStates(node.getCharacterState());
                 return true;
@@ -352,7 +356,7 @@ public class IdentificationKeyGenerator {
     private List<QuantitativeMeasure> splitQuantitativeCharacter(
             final QuantitativeCharacter character,
             final List<Taxon> remainingTaxa
-    ) throws Exception {
+    ) {
 
         final List<QuantitativeMeasure> quantitativeMeasures = new ArrayList<>();
         final QuantitativeMeasure quantitativeMeasure1 = new QuantitativeMeasure();
@@ -428,20 +432,20 @@ public class IdentificationKeyGenerator {
 
     private Map<ICharacter, Float> charactersScores(
             final List<ICharacter> characters,
-            final List<Taxon> remaningTaxa,
+            final List<Taxon> remainingTaxa,
             final List<ICharacter> childDependantCharacters,
             final List<ICharacter> alreadyUsedCharacter
     )
             throws Exception {
         final HashMap<ICharacter, Float> scoreMap = new LinkedHashMap<>();
         for (final ICharacter character : characters) {
-            if (character.isCategorical()) {
+            if (character instanceof CategoricalCharacter) {
                 scoreMap.put(character,
-                        categoricalCharacterScore((CategoricalCharacter) character, remaningTaxa));
+                        categoricalCharacterScore((CategoricalCharacter) character, remainingTaxa));
             } else {
                 scoreMap.put(
                         character,
-                        quantitativeCharacterScore((QuantitativeCharacter) character, remaningTaxa,
+                        quantitativeCharacterScore((QuantitativeCharacter) character, remainingTaxa,
                                 alreadyUsedCharacter));
             }
         }
@@ -471,8 +475,7 @@ public class IdentificationKeyGenerator {
     private float getMaxChildScore(final HashMap<ICharacter, Float> scoreMap, final ICharacter character) {
         final List<ICharacter> characters = character.getAllChildren();
         float max = -1;
-        if (character.getParentCharacter() != null
-                && scoreMap.containsKey(character.getParentCharacter())) {
+        if (character.getParentCharacter() != null && scoreMap.containsKey(character.getParentCharacter())) {
             max = -1;
         } else {
             for (final ICharacter childCharacter : characters) {
