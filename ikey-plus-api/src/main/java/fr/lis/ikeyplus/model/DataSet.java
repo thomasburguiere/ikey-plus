@@ -1,5 +1,8 @@
 package fr.lis.ikeyplus.model;
 
+import fr.lis.ikeyplus.model.character.CategoricalCharacter;
+import fr.lis.ikeyplus.model.character.ICharacter;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;

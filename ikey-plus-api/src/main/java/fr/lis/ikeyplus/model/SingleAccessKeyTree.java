@@ -1,5 +1,6 @@
 package fr.lis.ikeyplus.model;
 
+import fr.lis.ikeyplus.model.character.QuantitativeCharacter;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 
 /**
@@ -119,7 +120,7 @@ public class SingleAccessKeyTree {
 
         if (node != null) {
             if (node.getCharacter() != null && node.getCharacterState() != null) {
-                if (!node.hasChild() && node.getCharacter().isSupportsCategoricalData()
+                if (!node.hasChild() && node.getCharacter().isCategorical()
                         && !((State) node.getCharacterState()).getName().equals(
                         IkeyConfig.getBundleConfElement("message.notDescribed"))) {
                     for (final Taxon t : node.getRemainingTaxa()) {

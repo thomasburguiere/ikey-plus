@@ -1,4 +1,4 @@
-package fr.lis.ikeyplus.model;
+package fr.lis.ikeyplus.model.character;
 
 /**
  * This class represents a Character of type quantitative
@@ -26,11 +26,13 @@ public class QuantitativeCharacter extends Character {
         this.measurementUnit = measurementUnit;
     }
 
-    /* (non-Javadoc)
-     *
-     * @see model.Character#isSupportsCategoricalData() */
     @Override
-    public boolean isSupportsCategoricalData() {
+    public boolean isCategorical() {
         return false;
+    }
+
+    @Override
+    public boolean isQuantitative() {
+        return true;
     }
 }

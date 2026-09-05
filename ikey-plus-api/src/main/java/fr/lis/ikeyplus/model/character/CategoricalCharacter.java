@@ -1,4 +1,6 @@
-package fr.lis.ikeyplus.model;
+package fr.lis.ikeyplus.model.character;
+
+import fr.lis.ikeyplus.model.State;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +32,13 @@ public class CategoricalCharacter extends Character {
         this.states = states;
     }
 
-    /* (non-Javadoc)
-     *
-     * @see model.Character#isSupportsCategoricalData() */
     @Override
-    public boolean isSupportsCategoricalData() {
+    public boolean isCategorical() {
         return true;
+    }
+
+    @Override
+    public boolean isQuantitative() {
+        return false;
     }
 }

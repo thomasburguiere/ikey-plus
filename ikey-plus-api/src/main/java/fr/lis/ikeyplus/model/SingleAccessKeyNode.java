@@ -1,5 +1,7 @@
 package fr.lis.ikeyplus.model;
 
+import fr.lis.ikeyplus.model.character.ICharacter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,7 +133,7 @@ public class SingleAccessKeyNode {
 
     public boolean isChildrenContainsImages(final DataSet dataSet) {
         for (final SingleAccessKeyNode childNode : children) {
-            if (childNode.character.isSupportsCategoricalData()
+            if (childNode.character.isCategorical()
                     && ((State) childNode.characterState).getFirstImageKey() != null
                     && dataSet.getMediaObject(((State) childNode.characterState).getFirstImageKey()) != null
                     && dataSet.getMediaObject(((State) childNode.characterState).getFirstImageKey())

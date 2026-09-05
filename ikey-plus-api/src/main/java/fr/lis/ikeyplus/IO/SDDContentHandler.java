@@ -1,10 +1,10 @@
 package fr.lis.ikeyplus.IO;
 
-import fr.lis.ikeyplus.model.CategoricalCharacter;
+import fr.lis.ikeyplus.model.character.CategoricalCharacter;
 import fr.lis.ikeyplus.model.CodedDescription;
 import fr.lis.ikeyplus.model.DataSet;
-import fr.lis.ikeyplus.model.ICharacter;
-import fr.lis.ikeyplus.model.QuantitativeCharacter;
+import fr.lis.ikeyplus.model.character.ICharacter;
+import fr.lis.ikeyplus.model.character.QuantitativeCharacter;
 import fr.lis.ikeyplus.model.QuantitativeMeasure;
 import fr.lis.ikeyplus.model.State;
 import fr.lis.ikeyplus.model.Taxon;
@@ -426,7 +426,7 @@ public class SDDContentHandler implements ContentHandler {
                 for (final Taxon taxon : dataSet.getCodedDescriptions().keySet()) {
                     for (final ICharacter character : dataSet.getCharacters()) {
                         if (!dataSet.getCodedDescriptions().get(taxon).existsDescription(character)) {
-                            if (character.isSupportsCategoricalData()) {
+                            if (character.isCategorical()) {
                                 dataSet.getCodedDescriptions().get(taxon).addCategoricalCharacterDescription(
                                         (CategoricalCharacter) character,
                                         new ArrayList<>()
