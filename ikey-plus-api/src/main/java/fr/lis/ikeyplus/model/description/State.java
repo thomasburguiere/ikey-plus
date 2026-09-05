@@ -1,4 +1,6 @@
-package fr.lis.ikeyplus.model;
+package fr.lis.ikeyplus.model.description;
+
+import fr.lis.ikeyplus.model.DataSet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +11,7 @@ import java.util.Objects;
  *
  * @author Florian Causse
  */
-public class State {
+public class State implements CharacterState {
 
     private String id = null;
     private String name;

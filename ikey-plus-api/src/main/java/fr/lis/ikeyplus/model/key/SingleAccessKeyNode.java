@@ -1,6 +1,10 @@
-package fr.lis.ikeyplus.model;
+package fr.lis.ikeyplus.model.key;
 
+import fr.lis.ikeyplus.model.DataSet;
+import fr.lis.ikeyplus.model.Taxon;
 import fr.lis.ikeyplus.model.character.ICharacter;
+import fr.lis.ikeyplus.model.description.CharacterState;
+import fr.lis.ikeyplus.model.description.State;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +17,8 @@ import java.util.List;
 public class SingleAccessKeyNode {
 
     private ICharacter character;
-    private Object characterState;
-    private List<Object> otherCharacterStates;
+    private CharacterState characterState;
+    private List<CharacterState> otherCharacterStates;
     private List<SingleAccessKeyNode> children;
     private String nodeDescription = null;
     private List<Taxon> remainingTaxa;
@@ -23,7 +27,7 @@ public class SingleAccessKeyNode {
         this(null, null);
     }
 
-    public SingleAccessKeyNode(final ICharacter character, final Object characterState) throws OutOfMemoryError {
+    public SingleAccessKeyNode(final ICharacter character, final CharacterState characterState) throws OutOfMemoryError {
         this.character = character;
         this.characterState = characterState;
         this.otherCharacterStates = new ArrayList<>();
@@ -39,42 +43,12 @@ public class SingleAccessKeyNode {
         this.character = character;
     }
 
-    public Object getCharacterState() {
+    public CharacterState getCharacterState() {
         return characterState;
     }
 
-    public void setCharacterState(final Object characterState) {
+    public void setCharacterState(final CharacterState characterState) {
         this.characterState = characterState;
-    }
-
-    public List<Object> getOtherCharacterStates() {
-        return otherCharacterStates;
-    }
-
-    public void setOtherCharacterStates(final List<Object> otherCharacterStates) {
-        this.otherCharacterStates = otherCharacterStates;
-    }
-
-    public void addOtherCharacterStates(final Object otherCharacterState) {
-        otherCharacterStates.add(otherCharacterState);
-    }
-
-    public String getStringStates() {
-        return getStatesToString(" OR ");
-    }
-
-    public String getStatesToString(final String separator) {
-
-        final StringBuilder result = new StringBuilder();
-        if (characterState instanceof State) {
-            result.append(((State) characterState).getName());
-            for (final Object state : otherCharacterStates) {
-                if (state instanceof State) {
-                    result.append(separator).append(((State) state).getName());
-                }
-            }
-        }
-        return result.toString();
     }
 
     public List<State> getStates() {
@@ -133,15 +107,19 @@ public class SingleAccessKeyNode {
 
     public boolean isChildrenContainsImages(final DataSet dataSet) {
         for (final SingleAccessKeyNode childNode : children) {
-            if (childNode.character.isCategorical()
-                    && ((State) childNode.characterState).getFirstImageKey() != null
-                    && dataSet.getMediaObject(((State) childNode.characterState).getFirstImageKey()) != null
-                    && dataSet.getMediaObject(((State) childNode.characterState).getFirstImageKey())
+            if (childNode instanceof final CategoricalNode catNode
+                    && catNode.getSelectedState().getFirstImageKey() != null
+                    && dataSet.getMediaObject(catNode.getSelectedState().getFirstImageKey()) != null
+                    && dataSet.getMediaObject(catNode.getSelectedState().getFirstImageKey())
                     .startsWith("http")) {
                 return true;
             }
         }
         return false;
+    }
+
+    public String getStringStates() {
+        return "";
     }
 
 }
