@@ -162,7 +162,7 @@ public class IdentificationKeyGenerator {
 
                         // get inapplicable characters
                         final List<ICharacter> inapplicableCharacters = DataSet.getInapplicableCharacters(
-                                newRemainingCharacters, selectedCharacter, state);
+                                newRemainingCharacters, state);
                         // remove inapplicable character and its sons from the remaining characters list
                         newRemainingCharacters.removeAll(inapplicableCharacters);
 

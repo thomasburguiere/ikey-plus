@@ -18,9 +18,9 @@ import java.util.Map;
 public class DataSet {
 
     private List<ICharacter> characters;
-    private Map<Taxon, CodedDescription> codedDescriptions;
+    private final Map<Taxon, CodedDescription> codedDescriptions;
     private String label = null;
-    private Map<String, String> mediaObjects;
+    private final Map<String, String> mediaObjects;
 
     public DataSet() {
         characters = new ArrayList<>();
@@ -40,20 +40,12 @@ public class DataSet {
         return codedDescriptions;
     }
 
-    public void setCodedDescriptions(final Map<Taxon, CodedDescription> codedDescriptions) {
-        this.codedDescriptions = codedDescriptions;
-    }
-
     public CodedDescription getCodedDescription(final Taxon taxon) {
         return codedDescriptions.get(taxon);
     }
 
     public void addCodedDescription(final Taxon taxon, final CodedDescription codedDescription) {
         codedDescriptions.put(taxon, codedDescription);
-    }
-
-    public void removeCodedDescription(final Taxon taxon) {
-        codedDescriptions.remove(taxon);
     }
 
     public List<Taxon> getTaxa() {
@@ -79,8 +71,8 @@ public class DataSet {
 
     public State getStateById(final String id) {
         for (final ICharacter character : characters) {
-            if (character instanceof CategoricalCharacter) {
-                for (final State state : ((CategoricalCharacter) character).getStates()) {
+            if (character instanceof final CategoricalCharacter catChar) {
+                for (final State state : catChar.getStates()) {
                     if (state.getId().equals(id)) {
                         return state;
                     }
@@ -92,8 +84,8 @@ public class DataSet {
 
     public ICharacter getCharacterByState(final State state) {
         for (final ICharacter character : characters) {
-            if (character instanceof CategoricalCharacter) {
-                for (final State stateBis : ((CategoricalCharacter) character).getStates()) {
+            if (character instanceof final CategoricalCharacter catChar) {
+                for (final State stateBis : catChar.getStates()) {
                     if (stateBis.equals(state)) {
                         return character;
                     }
@@ -105,10 +97,6 @@ public class DataSet {
 
     public Map<String, String> getMediaObjects() {
         return mediaObjects;
-    }
-
-    public void setMediaObjects(final Map<String, String> mediaObjects) {
-        this.mediaObjects = mediaObjects;
     }
 
     public String getMediaObject(final String key) {
@@ -146,8 +134,10 @@ public class DataSet {
      *
      * @return List<ICharacter>, the list of inapplicable character and all its sons
      */
-    public static List<ICharacter> getInapplicableCharacters(final List<ICharacter> newRemainingCharacters,
-                                                             final ICharacter selectedCharacter, final State state) {
+    public static List<ICharacter> getInapplicableCharacters(
+            final List<ICharacter> newRemainingCharacters,
+            final State state
+    ) {
 
         final List<ICharacter> inapplicableCharacter = new ArrayList<>();
 
