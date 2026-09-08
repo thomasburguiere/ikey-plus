@@ -3,7 +3,9 @@ package fr.lis.ikeyplus.IO;
 import fr.lis.ikeyplus.model.DataSet;
 import fr.lis.ikeyplus.model.character.QuantitativeCharacter;
 import fr.lis.ikeyplus.model.description.QuantitativeMeasure;
+import fr.lis.ikeyplus.model.key.BaseNode;
 import fr.lis.ikeyplus.model.key.CategoricalNode;
+import fr.lis.ikeyplus.model.key.CharacterNode;
 import fr.lis.ikeyplus.model.key.QuantitativeNode;
 import fr.lis.ikeyplus.model.key.SingleAccessKeyNode;
 import fr.lis.ikeyplus.model.key.SingleAccessKeyTree;
@@ -153,8 +155,8 @@ public abstract class SingleAccessKeyTreeDumper {
         // // END SECOND TRAVERSAL, depth-first ////
 
         // // THIRD TRAVERSAL, breadth-first ////
-        final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        final Queue<BaseNode> queue = new LinkedList<>();
+        final List<BaseNode> visitedNodes = new ArrayList<>();
         int currentParentNumber = -1;
         queue.add(rootNode);
 
@@ -168,11 +170,11 @@ public abstract class SingleAccessKeyTreeDumper {
 
         final StringBuilder mediaObjectsTags = new StringBuilder();
         while (!queue.isEmpty()) {
-            final SingleAccessKeyNode node = queue.remove();
-            SingleAccessKeyNode child;
+            final BaseNode node = queue.remove();
+            CharacterNode child;
 
             while (!IkeyUtils.exclusion(node.getChildren(), visitedNodes).isEmpty()
-                    && (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
+                    && (child = (CharacterNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
                     .getFirst()) != null) {
                 visitedNodes.add(child);
 
@@ -199,14 +201,14 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 // other child nodes of the root node
                 if (rootNodeChildrenIntegerList.contains(counter)) {
-                    if (child.hasChild()) {
+                    if (child.hasChild() && child instanceof CharacterNode charNode) {
                         output.append("<Lead id=\"lead").append(counter - 1).append("\">").append(lineSeparator);
                         output.append("<Statement>").append(child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
                                 .replace("&", "&amp;"));
                         output.append("</Statement>").append(lineSeparator);
                         output.append(mediaObjectsTags);
                         output.append("<Question>").append(lineSeparator);
-                        output.append("<Text>").append(child.getChildren().getFirst().getCharacter().getName().replace(">", "&gt;")
+                        output.append("<Text>").append(charNode.getCharNodeChildren().getFirst().getCharacter().getName().replace(">", "&gt;")
                                 .replace("<", "&lt;").replace("&", "&amp;")).append("</Text>").append(lineSeparator);
                         output.append("</Question>").append(lineSeparator);
                         output.append("</Lead>").append(lineSeparator);
@@ -245,7 +247,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
                     }
                 } else {
-                    if (child.hasChild()) {
+                    if (child.hasChild() && child.getChildren().getFirst() instanceof final CharacterNode charNode) {
                         output.append("<Lead id=\"lead").append(counter - 1).append("\">").append(lineSeparator);
                         output.append("<Parent ref=\"lead").append(currentParentNumber - 1).append("\"/>").append(lineSeparator);
                         output.append("<Statement>").append(child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
@@ -253,7 +255,7 @@ public abstract class SingleAccessKeyTreeDumper {
                         output.append("</Statement>").append(lineSeparator);
                         output.append(mediaObjectsTags);
                         output.append("<Question>").append(lineSeparator);
-                        output.append("<Text>").append(child.getChildren().getFirst().getCharacter().getName().replace(">", "&gt;")
+                        output.append("<Text>").append(charNode.getCharacter().getName().replace(">", "&gt;")
                                 .replace("<", "&lt;").replace("&", "&amp;")).append("</Text>").append(lineSeparator);
                         output.append("</Question>").append(lineSeparator);
                         output.append("</Lead>").append(lineSeparator);
@@ -351,7 +353,7 @@ public abstract class SingleAccessKeyTreeDumper {
      * This method recursively traverses the SingleAccessKeyTree depth-first, in order to generate a character
      * string that contains a tree-oriented representation of the key
      */
-    private static void recursiveToString(final SingleAccessKeyNode node, final StringBuffer output, String tabulations,
+    private static void recursiveToString(final BaseNode node, final StringBuffer output, String tabulations,
                                           int firstNumbering, int secondNumbering, final SingleAccessKeyTree tree2dump) {
 
         if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
@@ -380,7 +382,7 @@ public abstract class SingleAccessKeyTreeDumper {
         firstNumbering++;
         secondNumbering = 0;
         if (node != null) {
-            for (final SingleAccessKeyNode childNode : node.getChildren()) {
+            for (final BaseNode childNode : node.getChildren()) {
                 secondNumbering++;
                 recursiveToString(childNode, output, tabulations, firstNumbering, secondNumbering, tree2dump);
             }
@@ -668,7 +670,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 // create link to display states images
                 String htmlImageLink = "";
-                if (parentNode.isChildrenContainsImages(tree2dump.getDataSet())) {
+                if (parentNode.childrenContainsImages(tree2dump.getDataSet())) {
                     final StringBuilder javascriptStateNameTab = new StringBuilder("new Array(");
                     final StringBuilder javascriptUrlImageTab = new StringBuilder("new Array(");
                     boolean firstLoop = true;
@@ -1051,7 +1053,7 @@ public abstract class SingleAccessKeyTreeDumper {
                     output.append("<strong>").append(currentParentNumber).append("</strong>");
 
                     String htmlImageLink = "";
-                    if (node.isChildrenContainsImages(tree2dump.getDataSet())) {
+                    if (node.childrenContainsImages(tree2dump.getDataSet())) {
                         htmlImageLink = "<a class='stateImageLink' onClick='newStateImagesWindow("
                                 + currentParentNumber + ");' >(<strong>?</strong>)</a>";
                     }

@@ -7,6 +7,7 @@ import fr.lis.ikeyplus.model.DataSet;
 import fr.lis.ikeyplus.model.character.ICharacter;
 import fr.lis.ikeyplus.model.character.QuantitativeCharacter;
 import fr.lis.ikeyplus.model.description.QuantitativeMeasure;
+import fr.lis.ikeyplus.model.key.CharacterNode;
 import fr.lis.ikeyplus.model.key.QuantitativeNode;
 import fr.lis.ikeyplus.model.key.SingleAccessKeyNode;
 import fr.lis.ikeyplus.model.key.SingleAccessKeyTree;
@@ -74,7 +75,7 @@ public class IdentificationKeyGenerator {
     }
 
     private void calculateSingleAccessKeyNodeChild(
-            final SingleAccessKeyNode parentNode,
+            final CharacterNode parentNode,
             final List<ICharacter> remainingCharacters,
             final List<Taxon> remainingTaxa,
             final List<ICharacter> alreadyUsedCharacter
@@ -232,11 +233,12 @@ public class IdentificationKeyGenerator {
             // "Other (not described)"
             if (config.getVerbosity().contains(IkeyConfig.VerbosityLevel.OTHER) && !notDescribedTaxa.isEmpty()) {
                 // init new node
-                final SingleAccessKeyNode notDescribedNode = new SingleAccessKeyNode();
-                notDescribedNode.setCharacter(selectedCharacter);
-                notDescribedNode.setRemainingTaxa(notDescribedTaxa);
-                notDescribedNode.setCharacterState(new State(IkeyConfig
+                final CharacterNode notDescribedNode = new CategoricalNode((CategoricalCharacter) selectedCharacter, new State(IkeyConfig
                         .getBundleConfElement("message.notDescribed")));
+//                notDescribedNode.setCharacter(selectedCharacter);
+                notDescribedNode.setRemainingTaxa(notDescribedTaxa);
+//                notDescribedNode.setCharacterState(new State(IkeyConfig
+//                        .getBundleConfElement("message.notDescribed")));
 
                 // put new node as child of parentNode
                 parentNode.addChild(notDescribedNode);

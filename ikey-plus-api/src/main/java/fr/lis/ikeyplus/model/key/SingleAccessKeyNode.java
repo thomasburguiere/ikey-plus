@@ -65,7 +65,7 @@ public class SingleAccessKeyNode {
         return null;
     }
 
-    public List<SingleAccessKeyNode> getChildren() {
+    public List<CharacterNode> getChildren() {
         return children;
     }
 

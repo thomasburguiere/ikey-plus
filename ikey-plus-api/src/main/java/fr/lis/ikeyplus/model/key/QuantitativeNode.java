@@ -4,7 +4,7 @@ import fr.lis.ikeyplus.model.character.QuantitativeCharacter;
 import fr.lis.ikeyplus.model.description.CharacterState;
 import fr.lis.ikeyplus.model.description.QuantitativeMeasure;
 
-public class QuantitativeNode extends SingleAccessKeyNode {
+public final class QuantitativeNode extends SingleAccessKeyNode implements CharacterNode {
 
     private QuantitativeCharacter quantitativeCharacter;
     private QuantitativeMeasure measure;
