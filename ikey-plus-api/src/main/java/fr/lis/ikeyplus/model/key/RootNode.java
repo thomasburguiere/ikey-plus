@@ -10,6 +10,10 @@ public final class RootNode implements BaseNode {
     private final List<CharacterNode> children;
     private List<Taxon> remainingTaxa;
 
+    public RootNode(){
+        this(new ArrayList<>());
+    }
+
     public RootNode(final List<CharacterNode> children) {
         this.children = children;
         this.remainingTaxa = new ArrayList<>();
@@ -33,5 +37,10 @@ public final class RootNode implements BaseNode {
     @Override
     public boolean hasChild() {
         return false;
+    }
+
+    @Override
+    public void addChild(CharacterNode node) {
+        this.children.add(node);
     }
 }

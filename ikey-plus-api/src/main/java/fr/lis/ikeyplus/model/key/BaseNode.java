@@ -17,4 +17,16 @@ public sealed interface BaseNode permits CharacterNode, RootNode {
 
     void addChild(CharacterNode node);
 
+    default boolean childrenContainImages(final DataSet dataSet) {
+        for (final BaseNode childNode : getChildren()) {
+            if (childNode instanceof final CategoricalNode catNode
+                    && catNode.getSelectedState().getFirstImageKey() != null
+                    && dataSet.getMediaObject(catNode.getSelectedState().getFirstImageKey()) != null
+                    && dataSet.getMediaObject(catNode.getSelectedState().getFirstImageKey())
+                    .startsWith("http")) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

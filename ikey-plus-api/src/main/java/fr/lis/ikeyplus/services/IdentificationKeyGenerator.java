@@ -1,5 +1,6 @@
 package fr.lis.ikeyplus.services;
 
+import fr.lis.ikeyplus.model.key.BaseNode;
 import fr.lis.ikeyplus.model.key.CategoricalNode;
 import fr.lis.ikeyplus.model.character.CategoricalCharacter;
 import fr.lis.ikeyplus.model.description.CodedDescription;
@@ -9,7 +10,7 @@ import fr.lis.ikeyplus.model.character.QuantitativeCharacter;
 import fr.lis.ikeyplus.model.description.QuantitativeMeasure;
 import fr.lis.ikeyplus.model.key.CharacterNode;
 import fr.lis.ikeyplus.model.key.QuantitativeNode;
-import fr.lis.ikeyplus.model.key.SingleAccessKeyNode;
+import fr.lis.ikeyplus.model.key.RootNode;
 import fr.lis.ikeyplus.model.key.SingleAccessKeyTree;
 import fr.lis.ikeyplus.model.description.State;
 import fr.lis.ikeyplus.model.Taxon;
@@ -55,7 +56,7 @@ public class IdentificationKeyGenerator {
         this.maxNbStatesPerCharacter = calculateMaxNbStatesPerCharacter();
 
         // init root node
-        final SingleAccessKeyNode rootNode = new SingleAccessKeyNode();
+        final RootNode rootNode = new RootNode();
         rootNode.setRemainingTaxa(dataset.getTaxa());
         singleAccessKeyTree.setRoot(rootNode);
 
@@ -75,7 +76,7 @@ public class IdentificationKeyGenerator {
     }
 
     private void calculateSingleAccessKeyNodeChild(
-            final CharacterNode parentNode,
+            final BaseNode parentNode,
             final List<ICharacter> remainingCharacters,
             final List<Taxon> remainingTaxa,
             final List<ICharacter> alreadyUsedCharacter
@@ -265,8 +266,8 @@ public class IdentificationKeyGenerator {
     }
 
     public boolean optimizeSingleAccessKeyTree(
-            final SingleAccessKeyNode parentNode,
-            final SingleAccessKeyNode node,
+            final BaseNode parentNode,
+            final BaseNode node,
             boolean isOptimized
     ) {
 

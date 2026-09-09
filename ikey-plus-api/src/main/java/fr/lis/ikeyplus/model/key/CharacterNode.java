@@ -5,19 +5,23 @@ import fr.lis.ikeyplus.model.description.CharacterState;
 
 import java.util.List;
 
-public sealed interface CharacterNode extends BaseNode permits QuantitativeNode, CategoricalNode {
+public abstract sealed class CharacterNode implements BaseNode permits QuantitativeNode, CategoricalNode {
 
-    ICharacter getCharacter();
+    private String nodeDescription;
 
-//    void setCharacter(ICharacter character);
+    public abstract ICharacter getCharacter();
 
-    CharacterState getCharacterState();
+    public abstract CharacterState getCharacterState();
 
-//    void setCharacterState(CharacterState characterState);
-
-    default String getStringStates() {
+    public String getStringStates() {
         return "";
     }
 
-    void setNodeDescription(String description);
+    public String getNodeDescription () {
+        return this.nodeDescription;
+    }
+
+    public void setNodeDescription(String description) {
+        this.nodeDescription = description;
+    }
 }

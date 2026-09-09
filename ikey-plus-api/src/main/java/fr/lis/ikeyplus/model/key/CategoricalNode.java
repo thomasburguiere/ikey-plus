@@ -9,16 +9,20 @@ import fr.lis.ikeyplus.model.description.State;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class CategoricalNode implements CharacterNode {
+public final class CategoricalNode extends CharacterNode {
 
     private final CategoricalCharacter character;
     private final State selectedState;
     private final List<State> otherCharacterStates = new ArrayList<>();
+    private final List<Taxon> remainingTaxa = new ArrayList<>();
+    private String nodeDescription = null;
+    private List<CharacterNode> children;
 
     public CategoricalNode(final CategoricalCharacter character, final State selectedState) throws OutOfMemoryError, Exception {
 //        super(character, selectedState);
         this.character = character;
         this.selectedState = selectedState;
+        children = new ArrayList<>();
     }
 
     public State getSelectedState() {
@@ -33,12 +37,17 @@ public final class CategoricalNode implements CharacterNode {
 
     @Override
     public CharacterState getCharacterState() {
-        return null;
+        return selectedState;
     }
 
     @Override
     public String getStringStates() {
         return getStatesToString(" OR ");
+    }
+
+    @Override
+    public void setNodeDescription(final String description) {
+        nodeDescription = description;
     }
 
     public String getStatesToString(final String separator) {
@@ -57,21 +66,27 @@ public final class CategoricalNode implements CharacterNode {
 
     @Override
     public List<CharacterNode> getChildren() {
-        return List.of();
+        return children;
     }
 
     @Override
     public List<Taxon> getRemainingTaxa() {
-        return List.of();
+        return remainingTaxa;
     }
 
     @Override
-    public void setRemainingTaxa(List<Taxon> taxa) {
-
+    public void setRemainingTaxa(final List<Taxon> taxa) {
+        remainingTaxa.clear();
+        remainingTaxa.addAll(taxa);
     }
 
     @Override
     public boolean hasChild() {
-        return false;
+        return !children.isEmpty();
+    }
+
+    @Override
+    public void addChild(final CharacterNode node) {
+        this.children.add(node);
     }
 }
