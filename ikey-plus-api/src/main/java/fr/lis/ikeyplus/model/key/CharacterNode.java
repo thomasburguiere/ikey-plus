@@ -3,9 +3,7 @@ package fr.lis.ikeyplus.model.key;
 import fr.lis.ikeyplus.model.character.ICharacter;
 import fr.lis.ikeyplus.model.description.CharacterState;
 
-import java.util.List;
-
-public abstract sealed class CharacterNode implements BaseNode permits QuantitativeNode, CategoricalNode {
+public abstract sealed class CharacterNode implements BaseNode permits CategoricalNode, UndescribedHoldingNode, QuantitativeNode {
 
     private String nodeDescription;
 
@@ -18,10 +16,10 @@ public abstract sealed class CharacterNode implements BaseNode permits Quantitat
     }
 
     public String getNodeDescription () {
-        return this.nodeDescription;
+        return nodeDescription;
     }
 
-    public void setNodeDescription(String description) {
+    public void setNodeDescription(final String description) {
         this.nodeDescription = description;
     }
 }

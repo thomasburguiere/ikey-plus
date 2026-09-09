@@ -61,7 +61,7 @@ public class SingleAccessKeyTree {
             int secondNumbering
     ) {
 
-        if (node != null && node instanceof final CharacterNode charNode && charNode.getCharacter() != null && charNode.getCharacterState() != null) {
+        if (node instanceof final CharacterNode charNode && charNode.getCharacter() != null && charNode.getCharacterState() != null) {
             if (charNode.getCharacterState() instanceof QuantitativeMeasure) {
                 output.append(tabulations).append(firstNumbering).append(".").append(secondNumbering).append(") ").append(charNode.getCharacter().getName()).append(" | ").append(((QuantitativeMeasure) charNode.getCharacterState())
                         .toStringInterval(((QuantitativeCharacter) charNode.getCharacter())

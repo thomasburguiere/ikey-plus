@@ -8,7 +8,7 @@ import fr.lis.ikeyplus.model.DataSet;
 import fr.lis.ikeyplus.model.character.ICharacter;
 import fr.lis.ikeyplus.model.character.QuantitativeCharacter;
 import fr.lis.ikeyplus.model.description.QuantitativeMeasure;
-import fr.lis.ikeyplus.model.key.CharacterNode;
+import fr.lis.ikeyplus.model.key.UndescribedHoldingNode;
 import fr.lis.ikeyplus.model.key.QuantitativeNode;
 import fr.lis.ikeyplus.model.key.RootNode;
 import fr.lis.ikeyplus.model.key.SingleAccessKeyTree;
@@ -233,16 +233,28 @@ public class IdentificationKeyGenerator {
             // if taxa are not described and if verbosity string contains correct tag, create a node
             // "Other (not described)"
             if (config.getVerbosity().contains(IkeyConfig.VerbosityLevel.OTHER) && !notDescribedTaxa.isEmpty()) {
-                // init new node
-                final CharacterNode notDescribedNode = new CategoricalNode((CategoricalCharacter) selectedCharacter, new State(IkeyConfig
-                        .getBundleConfElement("message.notDescribed")));
-//                notDescribedNode.setCharacter(selectedCharacter);
+                /*
+                final SingleAccessKeyNode notDescribedNode = new SingleAccessKeyNode();
+                notDescribedNode.setCharacter(selectedCharacter);
                 notDescribedNode.setRemainingTaxa(notDescribedTaxa);
+                notDescribedNode.setCharacterState(new State(IkeyConfig.getBundleConfElement("message.notDescribed")));
+                * */
+
+
+                final UndescribedHoldingNode undescribedNode = new UndescribedHoldingNode(selectedCharacter, new State(IkeyConfig
+                        .getBundleConfElement("message.notDescribed")));
+                undescribedNode.setRemainingTaxa(notDescribedTaxa);
+
+                // init new node
+//                final CharacterNode notDescribedNode = new CategoricalNode((CategoricalCharacter) selectedCharacter, new State(IkeyConfig
+//                        .getBundleConfElement("message.notDescribed")));
+//                notDescribedNode.setCharacter(selectedCharacter);
+//                notDescribedNode.setRemainingTaxa(notDescribedTaxa);
 //                notDescribedNode.setCharacterState(new State(IkeyConfig
 //                        .getBundleConfElement("message.notDescribed")));
 
                 // put new node as child of parentNode
-                parentNode.addChild(notDescribedNode);
+                parentNode.addChild(undescribedNode);
             }
         }
     }
