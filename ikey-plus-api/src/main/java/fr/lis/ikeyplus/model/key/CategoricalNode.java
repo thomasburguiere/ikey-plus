@@ -16,7 +16,7 @@ public final class CategoricalNode extends CharacterNode {
     private final List<State> otherCharacterStates = new ArrayList<>();
     private final List<Taxon> remainingTaxa = new ArrayList<>();
     private String nodeDescription = null;
-    private List<CharacterNode> children;
+    private final List<CharacterNode> children;
 
     public CategoricalNode(final CategoricalCharacter character, final State selectedState) throws OutOfMemoryError, Exception {
 //        super(character, selectedState);
@@ -88,5 +88,17 @@ public final class CategoricalNode extends CharacterNode {
     @Override
     public void addChild(final CharacterNode node) {
         this.children.add(node);
+    }
+
+    @Override
+    public String toString() {
+        return "CategoricalNode{" +
+                "character=" + character +
+                ", selectedState=" + selectedState +
+                ", otherCharacterStates=" + otherCharacterStates +
+                ", remainingTaxa=" + remainingTaxa.size() +
+                ", nodeDescription='" + nodeDescription + '\'' +
+                ", children=" + children.size() +
+                '}';
     }
 }

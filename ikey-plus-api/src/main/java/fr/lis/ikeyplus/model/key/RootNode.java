@@ -43,4 +43,12 @@ public final class RootNode implements BaseNode {
     public void addChild(CharacterNode node) {
         this.children.add(node);
     }
+
+    @Override
+    public String toString() {
+        return "RootNode{" +
+                "children=" + children.size() +
+                ", remainingTaxa=" + remainingTaxa.size() +
+                '}';
+    }
 }

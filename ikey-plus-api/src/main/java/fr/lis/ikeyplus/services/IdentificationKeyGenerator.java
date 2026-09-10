@@ -141,20 +141,20 @@ public class IdentificationKeyGenerator {
                     if (!newRemainingTaxa.isEmpty()) {
 
                         // init new node
-                        final CategoricalNode catNote = new CategoricalNode(catCharCast, state);
-                        catNote.setRemainingTaxa(newRemainingTaxa);
+                        final CategoricalNode catNode = new CategoricalNode(catCharCast, state);
+                        catNode.setRemainingTaxa(newRemainingTaxa);
 
                         // mergeCharacterStatesIfSameDiscrimination option handling
                         if (config.isMergeCharacterStatesIfSameDiscrimination()
-                                && mergeNodesIfSameDiscrimination(futureChildNodes, catNote)) {
+                                && mergeNodesIfSameDiscrimination(futureChildNodes, catNode)) {
                             continue;
                         }
 
                         // add the current node to the current child nodes list
-                        futureChildNodes.add(catNote);
+                        futureChildNodes.add(catNode);
 
                         // put new node as child of parentNode
-                        parentNode.addChild(catNote);
+                        parentNode.addChild(catNode);
 
                         // create new remaining characters list
                         final List<ICharacter> newRemainingCharacters = new ArrayList<>(
@@ -172,10 +172,10 @@ public class IdentificationKeyGenerator {
                         if (config.isPruningEnabled() && containsAll(remainingTaxa, newRemainingTaxa)
                                 && containsAll(newRemainingTaxa, remainingTaxa)
                                 && !childDependantCharacters.contains(selectedCharacter)) {
-                            catNote.setNodeDescription(IkeyConfig.getBundleConfElement("message.warning.pruning"));
+                            catNode.setNodeDescription(IkeyConfig.getBundleConfElement("message.warning.pruning"));
                         } else {
                             // calculate next node
-                            calculateSingleAccessKeyNodeChild(catNote, newRemainingCharacters, newRemainingTaxa,
+                            calculateSingleAccessKeyNodeChild(catNode, newRemainingCharacters, newRemainingTaxa,
                                     new ArrayList<>(alreadyUsedCharacter));
                         }
                     }

@@ -6,22 +6,26 @@ import fr.lis.ikeyplus.model.character.QuantitativeCharacter;
 import fr.lis.ikeyplus.model.description.CharacterState;
 import fr.lis.ikeyplus.model.description.QuantitativeMeasure;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class QuantitativeNode extends CharacterNode {
 
     private QuantitativeCharacter quantitativeCharacter;
     private QuantitativeMeasure measure;
+    private final List<CharacterNode> children;
+    private final List<Taxon> remainingTaxa = new ArrayList<>();
 
     public QuantitativeNode(final QuantitativeCharacter quantitativeCharacter, final QuantitativeMeasure measure) throws OutOfMemoryError, Exception {
 //        super.setCharacter(quantitativeCharacter);
         this.quantitativeCharacter = quantitativeCharacter;
         this.measure = measure;
+        children = new ArrayList<>();
     }
 
     @Override
     public ICharacter getCharacter() {
-        return null;
+        return quantitativeCharacter;
     }
 
     @Override
@@ -37,28 +41,40 @@ public final class QuantitativeNode extends CharacterNode {
         return measure;
     }
 
+
     @Override
     public List<CharacterNode> getChildren() {
-        return List.of();
+        return children;
     }
 
     @Override
     public List<Taxon> getRemainingTaxa() {
-        return List.of();
+        return remainingTaxa;
     }
 
     @Override
-    public void setRemainingTaxa(List<Taxon> taxa) {
-
+    public void setRemainingTaxa(final List<Taxon> taxa) {
+        remainingTaxa.clear();
+        remainingTaxa.addAll(taxa);
     }
 
     @Override
     public boolean hasChild() {
-        return false;
+        return !children.isEmpty();
     }
 
     @Override
-    public void addChild(CharacterNode node) {
+    public void addChild(final CharacterNode node) {
+        this.children.add(node);
+    }
 
+    @Override
+    public String toString() {
+        return "QuantitativeNode{" +
+                "character=" + quantitativeCharacter +
+                ", measure=" + measure +
+                ", children=" + children.size() +
+                ", remainingTaxa=" + remainingTaxa.size() +
+                '}';
     }
 }
