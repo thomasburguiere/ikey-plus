@@ -1,4 +1,4 @@
-package fr.lis.ikeyplus.model;
+package fr.lis.ikeyplus.model.description;
 
 import fr.lis.ikeyplus.model.character.CategoricalCharacter;
 import fr.lis.ikeyplus.model.character.ICharacter;

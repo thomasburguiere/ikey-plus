@@ -1,14 +1,18 @@
 package fr.lis.ikeyplus.services;
 
+import fr.lis.ikeyplus.model.key.BaseNode;
+import fr.lis.ikeyplus.model.key.CategoricalNode;
 import fr.lis.ikeyplus.model.character.CategoricalCharacter;
-import fr.lis.ikeyplus.model.CodedDescription;
+import fr.lis.ikeyplus.model.description.CodedDescription;
 import fr.lis.ikeyplus.model.DataSet;
 import fr.lis.ikeyplus.model.character.ICharacter;
 import fr.lis.ikeyplus.model.character.QuantitativeCharacter;
-import fr.lis.ikeyplus.model.QuantitativeMeasure;
-import fr.lis.ikeyplus.model.SingleAccessKeyNode;
-import fr.lis.ikeyplus.model.SingleAccessKeyTree;
-import fr.lis.ikeyplus.model.State;
+import fr.lis.ikeyplus.model.description.QuantitativeMeasure;
+import fr.lis.ikeyplus.model.key.UndescribedHoldingNode;
+import fr.lis.ikeyplus.model.key.QuantitativeNode;
+import fr.lis.ikeyplus.model.key.RootNode;
+import fr.lis.ikeyplus.model.key.SingleAccessKeyTree;
+import fr.lis.ikeyplus.model.description.State;
 import fr.lis.ikeyplus.model.Taxon;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import fr.lis.ikeyplus.utils.IkeyUtils;
@@ -52,7 +56,7 @@ public class IdentificationKeyGenerator {
         this.maxNbStatesPerCharacter = calculateMaxNbStatesPerCharacter();
 
         // init root node
-        final SingleAccessKeyNode rootNode = new SingleAccessKeyNode();
+        final RootNode rootNode = new RootNode();
         rootNode.setRemainingTaxa(dataset.getTaxa());
         singleAccessKeyTree.setRoot(rootNode);
 
@@ -72,7 +76,7 @@ public class IdentificationKeyGenerator {
     }
 
     private void calculateSingleAccessKeyNodeChild(
-            final SingleAccessKeyNode parentNode,
+            final BaseNode parentNode,
             final List<ICharacter> remainingCharacters,
             final List<Taxon> remainingTaxa,
             final List<ICharacter> alreadyUsedCharacter
@@ -127,7 +131,7 @@ public class IdentificationKeyGenerator {
             if (selectedCharacter instanceof final CategoricalCharacter catCharCast) {
 
                 // create a child nodes list for mergeCharacterStatesIfSameDiscrimination option
-                final List<SingleAccessKeyNode> futureChildNodes = new ArrayList<>();
+                final List<CategoricalNode> futureChildNodes = new ArrayList<>();
 
                 for (final State state : catCharCast.getStates()) {
                     final List<Taxon> newRemainingTaxa = getRemainingTaxa(remainingTaxa,
@@ -137,22 +141,20 @@ public class IdentificationKeyGenerator {
                     if (!newRemainingTaxa.isEmpty()) {
 
                         // init new node
-                        final SingleAccessKeyNode node = new SingleAccessKeyNode();
-                        node.setCharacter(selectedCharacter);
-                        node.setRemainingTaxa(newRemainingTaxa);
-                        node.setCharacterState(state);
+                        final CategoricalNode catNode = new CategoricalNode(catCharCast, state);
+                        catNode.setRemainingTaxa(newRemainingTaxa);
 
                         // mergeCharacterStatesIfSameDiscrimination option handling
                         if (config.isMergeCharacterStatesIfSameDiscrimination()
-                                && mergeNodesIfSameDiscrimination(futureChildNodes, node)) {
+                                && mergeNodesIfSameDiscrimination(futureChildNodes, catNode)) {
                             continue;
                         }
 
                         // add the current node to the current child nodes list
-                        futureChildNodes.add(node);
+                        futureChildNodes.add(catNode);
 
                         // put new node as child of parentNode
-                        parentNode.addChild(node);
+                        parentNode.addChild(catNode);
 
                         // create new remaining characters list
                         final List<ICharacter> newRemainingCharacters = new ArrayList<>(
@@ -162,7 +164,7 @@ public class IdentificationKeyGenerator {
 
                         // get inapplicable characters
                         final List<ICharacter> inapplicableCharacters = DataSet.getInapplicableCharacters(
-                                newRemainingCharacters, selectedCharacter, state);
+                                newRemainingCharacters, state);
                         // remove inapplicable character and its sons from the remaining characters list
                         newRemainingCharacters.removeAll(inapplicableCharacters);
 
@@ -170,10 +172,10 @@ public class IdentificationKeyGenerator {
                         if (config.isPruningEnabled() && containsAll(remainingTaxa, newRemainingTaxa)
                                 && containsAll(newRemainingTaxa, remainingTaxa)
                                 && !childDependantCharacters.contains(selectedCharacter)) {
-                            node.setNodeDescription(IkeyConfig.getBundleConfElement("message.warning.pruning"));
+                            catNode.setNodeDescription(IkeyConfig.getBundleConfElement("message.warning.pruning"));
                         } else {
                             // calculate next node
-                            calculateSingleAccessKeyNodeChild(node, newRemainingCharacters, newRemainingTaxa,
+                            calculateSingleAccessKeyNodeChild(catNode, newRemainingCharacters, newRemainingTaxa,
                                     new ArrayList<>(alreadyUsedCharacter));
                         }
                     }
@@ -195,10 +197,8 @@ public class IdentificationKeyGenerator {
                     if (!newRemainingTaxa.isEmpty()) {
 
                         // init new node
-                        final SingleAccessKeyNode node = new SingleAccessKeyNode();
-                        node.setCharacter(selectedCharacter);
+                        final QuantitativeNode node = new QuantitativeNode(quantCharCast, quantitativeMeasure);
                         node.setRemainingTaxa(newRemainingTaxa);
-                        node.setCharacterState(quantitativeMeasure);
 
                         // put new node as child of parentNode
                         parentNode.addChild(node);
@@ -233,30 +233,43 @@ public class IdentificationKeyGenerator {
             // if taxa are not described and if verbosity string contains correct tag, create a node
             // "Other (not described)"
             if (config.getVerbosity().contains(IkeyConfig.VerbosityLevel.OTHER) && !notDescribedTaxa.isEmpty()) {
-                // init new node
+                /*
                 final SingleAccessKeyNode notDescribedNode = new SingleAccessKeyNode();
                 notDescribedNode.setCharacter(selectedCharacter);
                 notDescribedNode.setRemainingTaxa(notDescribedTaxa);
-                notDescribedNode.setCharacterState(new State(IkeyConfig
+                notDescribedNode.setCharacterState(new State(IkeyConfig.getBundleConfElement("message.notDescribed")));
+                * */
+
+
+                final UndescribedHoldingNode undescribedNode = new UndescribedHoldingNode(selectedCharacter, new State(IkeyConfig
                         .getBundleConfElement("message.notDescribed")));
+                undescribedNode.setRemainingTaxa(notDescribedTaxa);
+
+                // init new node
+//                final CharacterNode notDescribedNode = new CategoricalNode((CategoricalCharacter) selectedCharacter, new State(IkeyConfig
+//                        .getBundleConfElement("message.notDescribed")));
+//                notDescribedNode.setCharacter(selectedCharacter);
+//                notDescribedNode.setRemainingTaxa(notDescribedTaxa);
+//                notDescribedNode.setCharacterState(new State(IkeyConfig
+//                        .getBundleConfElement("message.notDescribed")));
 
                 // put new node as child of parentNode
-                parentNode.addChild(notDescribedNode);
+                parentNode.addChild(undescribedNode);
             }
         }
     }
 
     private boolean mergeNodesIfSameDiscrimination(
-            final List<SingleAccessKeyNode> futureChildNodes,
-            final SingleAccessKeyNode node
+            final List<CategoricalNode> futureChildNodes,
+            final CategoricalNode node
     ) {
 
-        for (final SingleAccessKeyNode futureChildNode : futureChildNodes) {
+        for (final CategoricalNode futureChildNode : futureChildNodes) {
             if (node.getRemainingTaxa().size() > 1
                     && containsAll(futureChildNode.getRemainingTaxa(), node.getRemainingTaxa())
                     || (futureChildNode.getRemainingTaxa().size() > 1 && containsAll(node.getRemainingTaxa(),
                     futureChildNode.getRemainingTaxa()))) {
-                futureChildNode.addOtherCharacterStates(node.getCharacterState());
+                futureChildNode.addOtherCharacterStates(node.getSelectedState());
                 return true;
             }
 
@@ -265,8 +278,8 @@ public class IdentificationKeyGenerator {
     }
 
     public boolean optimizeSingleAccessKeyTree(
-            final SingleAccessKeyNode parentNode,
-            final SingleAccessKeyNode node,
+            final BaseNode parentNode,
+            final BaseNode node,
             boolean isOptimized
     ) {
 

@@ -1,11 +1,11 @@
-package fr.lis.ikeyplus.model;
+package fr.lis.ikeyplus.model.description;
 
 /**
  * This class represents a quantitative measure
  *
  * @author Florian Causse
  */
-public class QuantitativeMeasure {
+public class QuantitativeMeasure implements CharacterState {
 
     private Double max = null;
     private Double mean = null;
