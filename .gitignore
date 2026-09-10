@@ -1,5 +1,9 @@
 target
 .idea/*
 !.idea/runConfigurations
+*.iml
 .settings
 .svn
+.gradle/
+build
+buildSrc
