@@ -1,2 +1,4 @@
 [tools]
+gradle = "latest"
+java = "26"
 maven = "latest"
