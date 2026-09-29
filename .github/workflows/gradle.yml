@@ -29,7 +29,5 @@ jobs:
           cache: maven
       - name: Setup Gradle (cache read-only)
         uses: gradle/actions/setup-gradle@v6.3.0
-        with:
-          cache-read-only: true    # only read from cache, don't overwrite
       - name: Gradle check
-        run: ./gradlew check
+        run: ./gradlew check --no-daemon --no-watch-fs
