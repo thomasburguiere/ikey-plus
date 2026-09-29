@@ -8,18 +8,9 @@ plugins {
 
 dependencies {
     api(libs.xerces.xercesimpl)
-//    testImplementation(libs.org.junit.jupiter.junit.jupiter)
-//    testImplementation(libs.org.junit.jupiter.junit.jupiter.api)
-//    testImplementation(libs.org.junit.jupiter.junit.jupiter.params)
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.10.2")
     testImplementation(libs.org.assertj.assertj.core)
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-}
-
-tasks.named<Test>("test") {
-    // Use JUnit Platform for unit tests.
-    useJUnitPlatform()
+    testImplementation(libs.org.junit.jupiter.junit.jupiter)
+    testRuntimeOnly(libs.org.junit.platform.junit.platform.launcher)
 }
 
 description = "ikey-plus-api"
