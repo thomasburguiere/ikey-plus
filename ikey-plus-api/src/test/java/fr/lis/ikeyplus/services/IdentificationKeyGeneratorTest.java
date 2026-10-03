@@ -1,7 +1,7 @@
 package fr.lis.ikeyplus.services;
 
 import fr.lis.ikeyplus.IO.SDDSaxParser;
-import fr.lis.ikeyplus.model.SingleAccessKeyTree;
+import fr.lis.ikeyplus.model.key.SingleAccessKeyTree;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +30,7 @@ public class IdentificationKeyGeneratorTest {
         final SDDSaxParser sddSaxParser;
         sddSaxParser = new SDDSaxParser(stringUrl, config);
 
-        IdentificationKeyGenerator identificationKeyGenerator;
+        final IdentificationKeyGenerator identificationKeyGenerator;
 
         identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
         identificationKeyGenerator.createIdentificationKey();
@@ -54,7 +54,7 @@ public class IdentificationKeyGeneratorTest {
         final SDDSaxParser sddSaxParser;
         sddSaxParser = new SDDSaxParser(stringUrl, config);
 
-        IdentificationKeyGenerator identificationKeyGenerator;
+        final IdentificationKeyGenerator identificationKeyGenerator;
 
         identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
         identificationKeyGenerator.createIdentificationKey();
@@ -79,7 +79,7 @@ public class IdentificationKeyGeneratorTest {
         final SDDSaxParser sddSaxParser;
         sddSaxParser = new SDDSaxParser(stringUrl, config);
 
-        IdentificationKeyGenerator identificationKeyGenerator;
+        final IdentificationKeyGenerator identificationKeyGenerator;
 
         identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
         identificationKeyGenerator.createIdentificationKey();
@@ -104,7 +104,7 @@ public class IdentificationKeyGeneratorTest {
         final SDDSaxParser sddSaxParser;
         sddSaxParser = new SDDSaxParser(stringUrl, config);
 
-        IdentificationKeyGenerator identificationKeyGenerator;
+        final IdentificationKeyGenerator identificationKeyGenerator;
 
         identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
         identificationKeyGenerator.createIdentificationKey();
@@ -127,7 +127,7 @@ public class IdentificationKeyGeneratorTest {
         final SDDSaxParser sddSaxParser;
         sddSaxParser = new SDDSaxParser(stringUrl, config);
 
-        IdentificationKeyGenerator identificationKeyGenerator;
+        final IdentificationKeyGenerator identificationKeyGenerator;
 
         identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
         identificationKeyGenerator.createIdentificationKey();
@@ -135,7 +135,7 @@ public class IdentificationKeyGeneratorTest {
 
         final byte[] encoded = Files.readAllBytes(Paths.get("src/test/resources/fixtures/cichorieae.txt"));
         final String fixture = new String(encoded, StandardCharsets.UTF_8);
-        assertThat(fixture).isEqualTo(tree2dump.toString());
+        assertThat(tree2dump.toString()).isEqualTo(fixture);
     }
 
     @Test
@@ -150,7 +150,7 @@ public class IdentificationKeyGeneratorTest {
         final SDDSaxParser sddSaxParser;
         sddSaxParser = new SDDSaxParser(stringUrl, config);
 
-        IdentificationKeyGenerator identificationKeyGenerator;
+        final IdentificationKeyGenerator identificationKeyGenerator;
 
         identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
         identificationKeyGenerator.createIdentificationKey();
@@ -158,7 +158,7 @@ public class IdentificationKeyGeneratorTest {
 
         final byte[] encoded = Files.readAllBytes(Paths.get("src/test/resources/fixtures/milichia_with_other.txt"));
         final String fixture = new String(encoded, StandardCharsets.UTF_8);
-        assertThat(fixture).isEqualTo(tree2dump.toString());
+        assertThat(tree2dump.toString()).isEqualTo(fixture);
     }
 
     @Test
@@ -173,7 +173,7 @@ public class IdentificationKeyGeneratorTest {
         final SDDSaxParser sddSaxParser;
         sddSaxParser = new SDDSaxParser(stringUrl, config);
 
-        IdentificationKeyGenerator identificationKeyGenerator;
+        final IdentificationKeyGenerator identificationKeyGenerator;
 
         identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
         identificationKeyGenerator.createIdentificationKey();
@@ -181,7 +181,7 @@ public class IdentificationKeyGeneratorTest {
 
         final byte[] encoded = Files.readAllBytes(Paths.get("src/test/resources/fixtures/testSDD_with_other.txt"));
         final String fixture = new String(encoded, StandardCharsets.UTF_8);
-        assertThat(fixture).isEqualTo(tree2dump.toString());
+        assertThat(tree2dump.toString()).isEqualTo(fixture);
     }
 
 }

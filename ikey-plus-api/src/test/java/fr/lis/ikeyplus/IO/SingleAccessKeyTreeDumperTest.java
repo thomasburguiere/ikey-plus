@@ -1,6 +1,6 @@
 package fr.lis.ikeyplus.IO;
 
-import fr.lis.ikeyplus.model.SingleAccessKeyTree;
+import fr.lis.ikeyplus.model.key.SingleAccessKeyTree;
 import fr.lis.ikeyplus.services.IdentificationKeyGenerator;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import org.junit.jupiter.api.BeforeAll;
