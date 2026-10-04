@@ -1,7 +1,7 @@
 package fr.lis.ikeyplus.model.character;
 
 import fr.lis.ikeyplus.model.DataSet;
-import fr.lis.ikeyplus.model.State;
+import fr.lis.ikeyplus.model.description.State;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 
 import java.util.ArrayList;

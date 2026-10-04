@@ -2,10 +2,15 @@ package fr.lis.ikeyplus.IO;
 
 import fr.lis.ikeyplus.model.DataSet;
 import fr.lis.ikeyplus.model.character.QuantitativeCharacter;
-import fr.lis.ikeyplus.model.QuantitativeMeasure;
-import fr.lis.ikeyplus.model.SingleAccessKeyNode;
-import fr.lis.ikeyplus.model.SingleAccessKeyTree;
-import fr.lis.ikeyplus.model.State;
+import fr.lis.ikeyplus.model.description.QuantitativeMeasure;
+import fr.lis.ikeyplus.model.key.BaseNode;
+import fr.lis.ikeyplus.model.key.CategoricalNode;
+import fr.lis.ikeyplus.model.key.CharacterNode;
+import fr.lis.ikeyplus.model.key.QuantitativeNode;
+import fr.lis.ikeyplus.model.key.RootNode;
+//import fr.lis.ikeyplus.model.key.SingleAccessKeyNode;
+import fr.lis.ikeyplus.model.key.SingleAccessKeyTree;
+import fr.lis.ikeyplus.model.description.State;
 import fr.lis.ikeyplus.model.Taxon;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import fr.lis.ikeyplus.utils.IkeyUtils;
@@ -134,11 +139,15 @@ public abstract class SingleAccessKeyTreeDumper {
      * <tt>nodeChildParentNumberingMap</tt>), for each node, the node number and the number of its parent
      * node. Finally, the last traversal is another breadh-first traversal that generates the flat key String
      */
-    private static void multipleTraversalToSddString(final SingleAccessKeyNode rootNode, final StringBuffer output,
-                                                     final String lineSeparator, final SingleAccessKeyTree tree2dump) {
+    private static void multipleTraversalToSddString(
+            final RootNode rootNode,
+            final StringBuffer output,
+            final String lineSeparator,
+            final SingleAccessKeyTree tree2dump
+    ) {
 
         // // FIRST TRAVERSAL, breadth-first ////
-        final HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<>();
+        final HashMap<BaseNode, Integer> nodeBreadthFirstIterationMap = new HashMap<>();
         int counter = 1;
         iterativeBreadthFirst(rootNode, nodeBreadthFirstIterationMap, counter);
         // // END FIRST TRAVERSAL, breadth-first ////
@@ -151,8 +160,8 @@ public abstract class SingleAccessKeyTreeDumper {
         // // END SECOND TRAVERSAL, depth-first ////
 
         // // THIRD TRAVERSAL, breadth-first ////
-        final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        final Queue<BaseNode> queue = new LinkedList<>();
+        final List<BaseNode> visitedNodes = new ArrayList<>();
         int currentParentNumber = -1;
         queue.add(rootNode);
 
@@ -166,11 +175,11 @@ public abstract class SingleAccessKeyTreeDumper {
 
         final StringBuilder mediaObjectsTags = new StringBuilder();
         while (!queue.isEmpty()) {
-            final SingleAccessKeyNode node = queue.remove();
-            SingleAccessKeyNode child;
+            final BaseNode node = queue.remove();
+            CharacterNode child;
 
             while (!IkeyUtils.exclusion(node.getChildren(), visitedNodes).isEmpty()
-                    && (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
+                    && (child = (CharacterNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
                     .getFirst()) != null) {
                 visitedNodes.add(child);
 
@@ -189,22 +198,22 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 // initiate the mediaObject Tags
                 mediaObjectsTags.setLength(0);
-                if (child.getCharacter().isCategorical()) {
-                    for (final String mediaObjectKey : ((State) child.getCharacterState()).getMediaObjectKeys()) {
+                if (child instanceof final CategoricalNode catNode) {
+                    for (final String mediaObjectKey : catNode.getSelectedState().getMediaObjectKeys()) {
                         mediaObjectsTags.append("<MediaObject ref=\"").append(mediaObjectKey).append("\"/>").append(lineSeparator);
                     }
                 }
 
                 // other child nodes of the root node
                 if (rootNodeChildrenIntegerList.contains(counter)) {
-                    if (child.hasChild()) {
+                    if (child.hasChild() && child instanceof final CharacterNode charNode) {
                         output.append("<Lead id=\"lead").append(counter - 1).append("\">").append(lineSeparator);
                         output.append("<Statement>").append(child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
                                 .replace("&", "&amp;"));
                         output.append("</Statement>").append(lineSeparator);
                         output.append(mediaObjectsTags);
                         output.append("<Question>").append(lineSeparator);
-                        output.append("<Text>").append(child.getChildren().getFirst().getCharacter().getName().replace(">", "&gt;")
+                        output.append("<Text>").append(charNode.getChildren().getFirst().getCharacter().getName().replace(">", "&gt;")
                                 .replace("<", "&lt;").replace("&", "&amp;")).append("</Text>").append(lineSeparator);
                         output.append("</Question>").append(lineSeparator);
                         output.append("</Lead>").append(lineSeparator);
@@ -243,7 +252,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
                     }
                 } else {
-                    if (child.hasChild()) {
+                    if (child.hasChild() && child.getChildren().getFirst() instanceof final CharacterNode charNode) {
                         output.append("<Lead id=\"lead").append(counter - 1).append("\">").append(lineSeparator);
                         output.append("<Parent ref=\"lead").append(currentParentNumber - 1).append("\"/>").append(lineSeparator);
                         output.append("<Statement>").append(child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")
@@ -251,7 +260,7 @@ public abstract class SingleAccessKeyTreeDumper {
                         output.append("</Statement>").append(lineSeparator);
                         output.append(mediaObjectsTags);
                         output.append("<Question>").append(lineSeparator);
-                        output.append("<Text>").append(child.getChildren().getFirst().getCharacter().getName().replace(">", "&gt;")
+                        output.append("<Text>").append(charNode.getCharacter().getName().replace(">", "&gt;")
                                 .replace("<", "&lt;").replace("&", "&amp;")).append("</Text>").append(lineSeparator);
                         output.append("</Question>").append(lineSeparator);
                         output.append("</Lead>").append(lineSeparator);
@@ -311,7 +320,7 @@ public abstract class SingleAccessKeyTreeDumper {
     // TXT DUMP, TREE
 
     public static File dumpTxtFile(String header, final SingleAccessKeyTree tree2dump, final boolean showStatistics,
-            final String generatedFilesFolder)
+                                   final String generatedFilesFolder)
             throws IOException {
 
         if (!new File(generatedFilesFolder).exists()) {
@@ -349,18 +358,17 @@ public abstract class SingleAccessKeyTreeDumper {
      * This method recursively traverses the SingleAccessKeyTree depth-first, in order to generate a character
      * string that contains a tree-oriented representation of the key
      */
-    private static void recursiveToString(final SingleAccessKeyNode node, final StringBuffer output, String tabulations,
+    private static void recursiveToString(final BaseNode node, final StringBuffer output, String tabulations,
                                           int firstNumbering, int secondNumbering, final SingleAccessKeyTree tree2dump) {
 
-        if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
-            if (node.getCharacterState() instanceof QuantitativeMeasure) {
-                output.append(tabulations).append(firstNumbering).append(".").append(secondNumbering).append(") ").append(node.getCharacter().getName()).append(" | ").append(((QuantitativeMeasure) node.getCharacterState())
-                        .toStringInterval(((QuantitativeCharacter) node.getCharacter())
-                                .getMeasurementUnit()));
-            } else {
-                output.append(tabulations).append(firstNumbering).append(".").append(secondNumbering).append(") ").append(node.getCharacter().getName()).append(" | ").append(node.getStringStates());
+        if (node != null && node instanceof final CharacterNode charNode && charNode.getCharacter() != null && charNode.getCharacterState() != null) {
+            if (charNode instanceof final QuantitativeNode quantNode) {
+                output.append(tabulations).append(firstNumbering).append(".").append(secondNumbering).append(") ").append(charNode.getCharacter().getName()).append(" | ").append(((QuantitativeMeasure) charNode.getCharacterState())
+                        .toStringInterval(quantNode.getQuantitativeCharacter().getMeasurementUnit()));
+            } else if (charNode instanceof final CategoricalNode catNode) {
+                output.append(tabulations).append(firstNumbering).append(".").append(secondNumbering).append(") ").append(charNode.getCharacter().getName()).append(" | ").append(catNode.getStringStates());
             }
-            output.append(tree2dump.nodeDescriptionAnalysis(node));
+            output.append(tree2dump.nodeDescriptionAnalysis(charNode));
             if (node.getChildren().isEmpty()) {
                 output.append(" -> ");
                 boolean firstLoop = true;
@@ -379,7 +387,7 @@ public abstract class SingleAccessKeyTreeDumper {
         firstNumbering++;
         secondNumbering = 0;
         if (node != null) {
-            for (final SingleAccessKeyNode childNode : node.getChildren()) {
+            for (final BaseNode childNode : node.getChildren()) {
                 secondNumbering++;
                 recursiveToString(childNode, output, tabulations, firstNumbering, secondNumbering, tree2dump);
             }
@@ -436,23 +444,23 @@ public abstract class SingleAccessKeyTreeDumper {
      * of its parent node. Finally, the last traversal is another breadh-first traversal that generates the
      * flat key String
      */
-    private static void multipleTraversalToString(final SingleAccessKeyNode rootNode, final StringBuffer output,
+    private static void multipleTraversalToString(final RootNode rootNode, final StringBuffer output,
                                                   final String lineSeparator, final SingleAccessKeyTree tree2dump) {
 
         // // first traversal, breadth-first ////
-        final HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<>();
+        final HashMap<BaseNode, Integer> nodeBreadthFirstIterationMap = new HashMap<>();
         int counter = 1;
         iterativeBreadthFirstSkipChildlessNodes(rootNode, nodeBreadthFirstIterationMap, counter);
         // // end first traversal, breadth-first ////
 
         // // second traversal, depth-first ////
-        final HashMap<SingleAccessKeyNode, Integer> nodeChildParentNumberingMap = new HashMap<>();
+        final HashMap<BaseNode, Integer> nodeChildParentNumberingMap = new HashMap<>();
         recursiveDepthFirstNodeIndex(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
         // // end second traversal, depth-first ////
 
         // // third traversal, breadth-first ////
-        final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        final Queue<BaseNode> queue = new LinkedList<>();
+        final List<BaseNode> visitedNodes = new ArrayList<>();
 
         int currentParentNumber = -1;
         queue.add(rootNode);
@@ -465,14 +473,14 @@ public abstract class SingleAccessKeyTreeDumper {
 
         final StringBuilder blankCharacterName = new StringBuilder();
         while (!queue.isEmpty()) {
-            final SingleAccessKeyNode node = queue.remove();
-            SingleAccessKeyNode child;
+            final BaseNode node = queue.remove();
+            CharacterNode child;
 
             while (!IkeyUtils.exclusion(node.getChildren(), visitedNodes).isEmpty()
-                    && (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
+                    && (child = (CharacterNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
                     .getFirst()) != null
                 // && child.getCharacter() != null && child.getCharacterState() != null
-                    ) {
+            ) {
                 visitedNodes.add(child);
 
                 // / child node treatment
@@ -526,7 +534,7 @@ public abstract class SingleAccessKeyTreeDumper {
                 output.append(lineSeparator);
 
                 queue.add(child);
-                if (child.hasChild()){
+                if (child.hasChild()) {
                     counter++;
                 }
                 // / end child node treatment
@@ -652,26 +660,33 @@ public abstract class SingleAccessKeyTreeDumper {
      * recursively traverses (depth-first) the SingleAccessKeyTree, and returns an HTML representation of this
      * SingleAccessKeyTree in an unordered list (&lt;ul&gt;)
      */
-    private static void recursiveToHTMLString(final SingleAccessKeyNode node, final SingleAccessKeyNode parentNode,
-                                              final StringBuilder output, String tabulations, final boolean displayCharacterName, int firstNumbering,
-                                              int secondNumbering, final SingleAccessKeyTree tree2dump) {
+    private static void recursiveToHTMLString(
+            final BaseNode node,
+            final BaseNode parentNode,
+            final StringBuilder output,
+            String tabulations,
+            final boolean displayCharacterName,
+            int firstNumbering,
+            int secondNumbering,
+            final SingleAccessKeyTree tree2dump
+    ) {
         final StringBuilder characterName = new StringBuilder();
         final StringBuilder state = new StringBuilder();
-        if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
+        if (node instanceof final CharacterNode charNode && charNode.getCharacter() != null && charNode.getCharacterState() != null) {
 
             if (displayCharacterName) {
-                final String characterNameContent = node.getCharacter().getName().replace("<", "&lt;")
+                final String characterNameContent = charNode.getCharacter().getName().replace("<", "&lt;")
                         .replace(">", "&gt;");
                 characterName.append("<span class='character'>").append(firstNumbering).append(") ").
                         append("<b>").append(characterNameContent).append("</b>").append("</span>");
 
                 // create link to display states images
                 String htmlImageLink = "";
-                if (parentNode.isChildrenContainsImages(tree2dump.getDataSet())) {
+                if (parentNode.childrenContainImages(tree2dump.getDataSet())) {
                     final StringBuilder javascriptStateNameTab = new StringBuilder("new Array(");
                     final StringBuilder javascriptUrlImageTab = new StringBuilder("new Array(");
                     boolean firstLoop = true;
-                    for (final SingleAccessKeyNode childNode : parentNode.getChildren()) {
+                    for (final CharacterNode childNode : parentNode.getChildren()) {
                         if (childNode.getCharacter().isCategorical()) {
                             if (!firstLoop) {
                                 javascriptStateNameTab.append(", ");
@@ -688,7 +703,7 @@ public abstract class SingleAccessKeyTreeDumper {
                     javascriptUrlImageTab.append(")");
 
                     htmlImageLink = " <a class='stateImageLink' onClick='newStateImagesWindowTree(\""
-                            + node.getCharacter().getName().replace("\"", "").replace("'", " ")
+                            + charNode.getCharacter().getName().replace("\"", "").replace("'", " ")
                             + "\", " + javascriptStateNameTab + ", " + javascriptUrlImageTab
                             + ");' >(<strong>?</strong>)</a>";
                 }
@@ -696,16 +711,16 @@ public abstract class SingleAccessKeyTreeDumper {
                 output.append(tabulations).append("\t<li>").append(characterName).append(htmlImageLink).append("</li>");
             }
 
-            if (node.getCharacterState() instanceof QuantitativeMeasure) {
-                state.append(((QuantitativeMeasure) node.getCharacterState())
-                        .toStringInterval(((QuantitativeCharacter) node.getCharacter()).getMeasurementUnit()));
+            if (charNode.getCharacterState() instanceof QuantitativeMeasure) {
+                state.append(((QuantitativeMeasure) charNode.getCharacterState())
+                        .toStringInterval(((QuantitativeCharacter) charNode.getCharacter()).getMeasurementUnit()));
             } else {
-                state.append(node.getStringStates());
+                state.append(charNode.getStringStates());
             }
             final String regexed = state.toString().replace("<", "&lt;").replace(">", "&gt;");
             state.setLength(0);
             state.append("<span class='state'>").append(firstNumbering).append(".").append(secondNumbering).append(") ").append(regexed).append("</span>")
-                    .append("<span class=\"warning\">").append(tree2dump.nodeDescriptionAnalysis(node)).append("</span>");
+                    .append("<span class=\"warning\">").append(tree2dump.nodeDescriptionAnalysis(charNode)).append("</span>");
 
             output.append("\n").append(tabulations).append("\t<li>");
 
@@ -738,13 +753,13 @@ public abstract class SingleAccessKeyTreeDumper {
         secondNumbering = 0;
         boolean firstLoop = true;
         if (node != null) {
-            for (final SingleAccessKeyNode childNode : node.getChildren()) {
+            for (final CharacterNode childNode : node.getChildren()) {
                 secondNumbering++;
                 recursiveToHTMLString(childNode, node, output, tabulations, firstLoop, firstNumbering,
                         secondNumbering, tree2dump);
                 firstLoop = false;
             }
-            if (node.getCharacter() != null && node.getCharacterState() != null) {
+            if (node instanceof final CharacterNode charNode && charNode.getCharacter() != null && charNode.getCharacterState() != null) {
 
                 if (node.hasChild()) {
                     output.append(tabulations).append("</li></ul>\n");
@@ -877,8 +892,11 @@ public abstract class SingleAccessKeyTreeDumper {
         return slk.toString();
     }
 
-    private static String generateInteractiveHtmlString(final String header, final SingleAccessKeyTree tree2dump,
-                                                        final boolean showStatistics) throws IOException {
+    private static String generateInteractiveHtmlString(
+            final String header,
+            final SingleAccessKeyTree tree2dump,
+            final boolean showStatistics
+    ) throws IOException {
 
         final StringBuffer output = new StringBuffer();
         final String lineSep = System.lineSeparator();
@@ -980,14 +998,14 @@ public abstract class SingleAccessKeyTreeDumper {
      * and the number of its parent node. Finally, the last traversal is another breadh-first traversal that
      * generates the flat key String
      */
-    private static void multipleTraversalToHTMLString(final SingleAccessKeyNode rootNode, final StringBuffer output,
+    private static void multipleTraversalToHTMLString(final RootNode rootNode, final StringBuffer output,
                                                       final String lineSeparator, final boolean activeLink, final SingleAccessKeyTree tree2dump) {
 
         final String marging = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp"
                 + ";&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 
         // // first traversal, breadth-first ////
-        final HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<>();
+        final HashMap<BaseNode, Integer> nodeBreadthFirstIterationMap = new HashMap<>();
 
         int counter = 1;
         iterativeBreadthFirstSkipChildlessNodes(rootNode, nodeBreadthFirstIterationMap, counter);
@@ -995,13 +1013,13 @@ public abstract class SingleAccessKeyTreeDumper {
         // // end first traversal, breadth-first ////
 
         // // second traversal, depth-first ////
-        final HashMap<SingleAccessKeyNode, Integer> nodeChildParentNumberingMap = new HashMap<>();
+        final HashMap<BaseNode, Integer> nodeChildParentNumberingMap = new HashMap<>();
         recursiveDepthFirstNodeIndex(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
         // // end second traversal, depth-first ////
 
         // // third traversal, breadth-first ////
-        final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        final Queue<BaseNode> queue = new LinkedList<>();
+        final List<BaseNode> visitedNodes = new ArrayList<>();
 
         int currentParentNumber = -1;
         queue.add(rootNode);
@@ -1014,14 +1032,14 @@ public abstract class SingleAccessKeyTreeDumper {
 
         final StringBuilder blankCharacterName = new StringBuilder();
         while (!queue.isEmpty()) {
-            final SingleAccessKeyNode node = queue.remove();
-            SingleAccessKeyNode child;
+            final BaseNode node = queue.remove();
+            CharacterNode child;
 
             while (!IkeyUtils.exclusion(node.getChildren(), visitedNodes).isEmpty()
-                    && (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
+                    && (child = (CharacterNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
                     .getFirst()) != null
                 // && child.getCharacter() != null && child.getCharacterState() != null
-                    ) {
+            ) {
                 visitedNodes.add(child);
 
                 // / child node treatment
@@ -1050,7 +1068,7 @@ public abstract class SingleAccessKeyTreeDumper {
                     output.append("<strong>").append(currentParentNumber).append("</strong>");
 
                     String htmlImageLink = "";
-                    if (node.isChildrenContainsImages(tree2dump.getDataSet())) {
+                    if (node.childrenContainImages(tree2dump.getDataSet())) {
                         htmlImageLink = "<a class='stateImageLink' onClick='newStateImagesWindow("
                                 + currentParentNumber + ");' >(<strong>?</strong>)</a>";
                     }
@@ -1066,12 +1084,12 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 String mediaKey = "";
                 // displaying the child node character state
-                if (child.getCharacterState() instanceof QuantitativeMeasure) {
-                    output.append("<span class=\"state\"" + "\">").append(marging).append(((QuantitativeMeasure) child.getCharacterState())
+                if (child instanceof final QuantitativeNode quantNode) {
+                    output.append("<span class=\"state\"" + "\">").append(marging).append(quantNode.getMeasure()
                             .toStringInterval(((QuantitativeCharacter) child.getCharacter())
                                     .getMeasurementUnit())).append("</span>");
-                } else {
-                    mediaKey = ((State) child.getCharacterState()).getFirstImageKey();
+                } else if (child instanceof final CategoricalNode catNode) {
+                    mediaKey = catNode.getSelectedState().getFirstImageKey();
                     output.append("<span class=\"state\" id=\"state_").append(mediaKey).append("\" >").append(marging).append(child.getStringStates().replace(">", "&gt;").replace("<", "&lt;")).append("</span>");
 
                 }
@@ -1103,10 +1121,9 @@ public abstract class SingleAccessKeyTreeDumper {
 
                 }
                 output.append("</span>"); // closes the opening <span class="statesAndTaxa">
-                if (child.getCharacter().isCategorical()) {
+                if (child instanceof final CategoricalNode catNode) {
                     output.append("<span class=\"stateImageURL\" id=\"stateImageURL_").append(mediaKey).append("\">");
-                    output.append(((State) child.getCharacterState()).getFirstImage(tree2dump.getDataSet()) != null ? ((State) child
-                            .getCharacterState()).getFirstImage(tree2dump.getDataSet()) : "");
+                    output.append(catNode.getSelectedState().getFirstImage(tree2dump.getDataSet()) != null ? catNode.getSelectedState().getFirstImage(tree2dump.getDataSet()) : "");
                     output.append("</span>");
                 }
                 output.append("<br/>").append(lineSeparator);
@@ -1133,13 +1150,18 @@ public abstract class SingleAccessKeyTreeDumper {
      * number and the number of its parent node. Finally, the last traversal is another breadh-first traversal
      * that generates the flat key String
      */
-    private static void multipleTraversalToInteractiveHTMLString(final SingleAccessKeyNode rootNode,
-                                                                 final StringBuffer output, final String lineSeparator, final boolean activeLink, final SingleAccessKeyTree tree2dump) {
+    private static void multipleTraversalToInteractiveHTMLString(
+            final RootNode rootNode,
+            final StringBuffer output,
+            final String lineSeparator,
+            final boolean activeLink,
+            final SingleAccessKeyTree tree2dump
+    ) {
 
         final String marging = "<br/>&nbsp;&nbsp;&nbsp;";
 
         // // first traversal, breadth-first ////
-        final HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<>();
+        final HashMap<BaseNode, Integer> nodeBreadthFirstIterationMap = new HashMap<>();
 
         int counter = 1;
         iterativeBreadthFirstSkipChildlessNodes(rootNode, nodeBreadthFirstIterationMap, counter);
@@ -1147,13 +1169,13 @@ public abstract class SingleAccessKeyTreeDumper {
         // // end first traversal, breadth-first ////
 
         // // second traversal, depth-first ////
-        final HashMap<SingleAccessKeyNode, Integer> nodeChildParentNumberingMap = new HashMap<>();
+        final HashMap<BaseNode, Integer> nodeChildParentNumberingMap = new HashMap<>();
         recursiveDepthFirstNodeIndex(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
         // // end second traversal, depth-first ////
 
         // // third traversal, breadth-first ////
-        final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        final Queue<BaseNode> queue = new LinkedList<>();
+        final List<BaseNode> visitedNodes = new ArrayList<>();
 
         int currentParentNumber = -1;
         queue.add(rootNode);
@@ -1166,14 +1188,14 @@ public abstract class SingleAccessKeyTreeDumper {
 
         final StringBuilder blankCharacterName = new StringBuilder();
         while (!queue.isEmpty()) {
-            final SingleAccessKeyNode node = queue.remove();
-            SingleAccessKeyNode child;
+            final BaseNode node = queue.remove();
+            CharacterNode child;
 
             while (!IkeyUtils.exclusion(node.getChildren(), visitedNodes).isEmpty()
-                    && (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
+                    && (child = (CharacterNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
                     .getFirst()) != null
                 // && child.getCharacter() != null && child.getCharacterState() != null
-                    ) {
+            ) {
                 visitedNodes.add(child);
 
                 // / child node treatment
@@ -1317,18 +1339,24 @@ public abstract class SingleAccessKeyTreeDumper {
         return output.toString();
     }
 
-    private static void recursiveToWiki(final SingleAccessKeyNode node, final StringBuffer output, String tabulations,
-                                        int firstNumbering, int secondNumbering, final SingleAccessKeyTree tree2dump) {
+    private static void recursiveToWiki(
+            final BaseNode node,
+            final StringBuffer output,
+            String tabulations,
+            int firstNumbering,
+            int secondNumbering,
+            final SingleAccessKeyTree tree2dump
+    ) {
 
-        if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
-            if (node.getCharacterState() instanceof QuantitativeMeasure) {
-                output.append(tabulations).append(firstNumbering).append(".").append(secondNumbering).append(") ").append("<span style=\"color:#333\">").append(node.getCharacter().getName()).append("</span> | ").append("<span style=\"color:#fe8a22\">").append(((QuantitativeMeasure) node.getCharacterState())
-                        .toStringInterval(((QuantitativeCharacter) node.getCharacter())
+        if (node instanceof final CharacterNode charNode && charNode.getCharacter() != null && charNode.getCharacterState() != null) {
+            if (charNode.getCharacterState() instanceof QuantitativeMeasure) {
+                output.append(tabulations).append(firstNumbering).append(".").append(secondNumbering).append(") ").append("<span style=\"color:#333\">").append(charNode.getCharacter().getName()).append("</span> | ").append("<span style=\"color:#fe8a22\">").append(((QuantitativeMeasure) charNode.getCharacterState())
+                        .toStringInterval(((QuantitativeCharacter) charNode.getCharacter())
                                 .getMeasurementUnit())).append("</span>");
             } else {
-                output.append(tabulations).append(firstNumbering).append(".").append(secondNumbering).append(") ").append("<span style=\"color:#333\">").append(node.getCharacter().getName()).append("</span> | ").append("<span style=\"color:#fe8a22\">").append(node.getStringStates()).append("</span>");
+                output.append(tabulations).append(firstNumbering).append(".").append(secondNumbering).append(") ").append("<span style=\"color:#333\">").append(charNode.getCharacter().getName()).append("</span> | ").append("<span style=\"color:#fe8a22\">").append(charNode.getStringStates()).append("</span>");
             }
-            output.append(tree2dump.nodeDescriptionAnalysis(node));
+            output.append(tree2dump.nodeDescriptionAnalysis(charNode));
             if (node.getChildren().isEmpty()) {
                 output.append(" -> ");
                 boolean firstLoop = true;
@@ -1348,7 +1376,7 @@ public abstract class SingleAccessKeyTreeDumper {
         firstNumbering++;
         secondNumbering = 0;
         if (node != null) {
-            for (final SingleAccessKeyNode childNode : node.getChildren()) {
+            for (final CharacterNode childNode : node.getChildren()) {
                 secondNumbering++;
                 recursiveToWiki(childNode, output, tabulations, firstNumbering, secondNumbering, tree2dump);
             }
@@ -1409,11 +1437,15 @@ public abstract class SingleAccessKeyTreeDumper {
      * <tt>nodeChildParentNumberingMap</tt>), for each node, the node number and the number of its parent
      * node. Finally, the last traversal is another breadh-first traversal that generates the flat key String
      */
-    private static void multipleTraversalToWikiString(final SingleAccessKeyNode rootNode, final StringBuffer output,
-                                                      final String lineSeparator, final SingleAccessKeyTree tree2dump) {
+    private static void multipleTraversalToWikiString(
+            final RootNode rootNode,
+            final StringBuffer output,
+            final String lineSeparator,
+            final SingleAccessKeyTree tree2dump
+    ) {
 
         // // first traversal, breadth-first ////
-        final HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<>();
+        final HashMap<BaseNode, Integer> nodeBreadthFirstIterationMap = new HashMap<>();
         int counter = 1;
 
         iterativeBreadthFirstSkipChildlessNodes(rootNode, nodeBreadthFirstIterationMap, counter);
@@ -1421,13 +1453,13 @@ public abstract class SingleAccessKeyTreeDumper {
         // // end first traversal, breadth-first ////
 
         // // second traversal, depth-first ////
-        final HashMap<SingleAccessKeyNode, Integer> nodeChildParentNumberingMap = new HashMap<>();
+        final HashMap<BaseNode, Integer> nodeChildParentNumberingMap = new HashMap<>();
         recursiveDepthFirstNodeIndex(rootNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
         // // end second traversal, depth-first ////
 
         // // third traversal, breadth-first ////
-        final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        final Queue<BaseNode> queue = new LinkedList<>();
+        final List<BaseNode> visitedNodes = new ArrayList<>();
 
         int currentParentNumber = -1;
         queue.add(rootNode);
@@ -1439,11 +1471,11 @@ public abstract class SingleAccessKeyTreeDumper {
         visitedNodes.add(rootNode);
 
         while (!queue.isEmpty()) {
-            final SingleAccessKeyNode node = queue.remove();
-            SingleAccessKeyNode child;
+            final BaseNode node = queue.remove();
+            CharacterNode child;
 
             while (!IkeyUtils.exclusion(node.getChildren(), visitedNodes).isEmpty()
-                    && (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
+                    && (child = (CharacterNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
                     .getFirst()) != null) {
                 visitedNodes.add(child);
 
@@ -1558,11 +1590,15 @@ public abstract class SingleAccessKeyTreeDumper {
      * of its parent node. Finally, the last traversal is another breadh-first traversal that generates the
      * flat key String
      */
-    private static void multipleTraversalToDotString(final SingleAccessKeyNode rootNode, final StringBuffer output,
-                                                     final String lineSeparator, final SingleAccessKeyTree tree2dump) {
+    private static void multipleTraversalToDotString(
+            final RootNode rootNode,
+            final StringBuffer output,
+            final String lineSeparator,
+            final SingleAccessKeyTree tree2dump
+    ) {
 
         // // first traversal, breadth-first ////
-        final HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap = new HashMap<>();
+        final HashMap<BaseNode, Integer> nodeBreadthFirstIterationMap = new HashMap<>();
 
         int counter = 1;
         iterativeBreadthFirst(rootNode, nodeBreadthFirstIterationMap, counter);
@@ -1575,8 +1611,8 @@ public abstract class SingleAccessKeyTreeDumper {
         // // end second traversal, depth-first ////
 
         // // third traversal, breadth-first ////
-        final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+        final Queue<BaseNode> queue = new LinkedList<>();
+        final List<BaseNode> visitedNodes = new ArrayList<>();
 
         int currentParentNumber = -1;
         queue.add(rootNode);
@@ -1588,14 +1624,14 @@ public abstract class SingleAccessKeyTreeDumper {
         visitedNodes.add(rootNode);
 
         while (!queue.isEmpty()) {
-            final SingleAccessKeyNode node = queue.remove();
-            SingleAccessKeyNode child;
+            final BaseNode node = queue.remove();
+            CharacterNode child;
 
             while (!IkeyUtils.exclusion(node.getChildren(), visitedNodes).isEmpty()
-                    && (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
+                    && (child = (CharacterNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
                     .getFirst()) != null
                 // && child.getCharacter() != null && child.getCharacterState() != null
-                    ) {
+            ) {
                 visitedNodes.add(child);
 
                 // / child node treatment
@@ -1789,10 +1825,10 @@ public abstract class SingleAccessKeyTreeDumper {
      * methods in order to generate the nodeBreadthFirstIterationMap HashMap, that associates each node with a
      * breadth-first incremented number (only if the traversed node has at least 1 child node)
      */
-    private static void iterativeBreadthFirstSkipChildlessNodes(final SingleAccessKeyNode rootNode,
-                                                                final Map<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap, int counter) {
-        final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+    private static void iterativeBreadthFirstSkipChildlessNodes(final BaseNode rootNode,
+                                                                final Map<BaseNode, Integer> nodeBreadthFirstIterationMap, int counter) {
+        final Queue<BaseNode> queue = new LinkedList<>();
+        final List<BaseNode> visitedNodes = new ArrayList<>();
 
         queue.add(rootNode);
 
@@ -1804,12 +1840,12 @@ public abstract class SingleAccessKeyTreeDumper {
         visitedNodes.add(rootNode);
 
         while (!queue.isEmpty()) {
-            final SingleAccessKeyNode node = queue.remove();
-            SingleAccessKeyNode child;
+            final BaseNode node = queue.remove();
+            CharacterNode child;
 
             // exclusion(node.getChildren(), visitedNodes) is the list of unvisited children nodes of the
             while (!IkeyUtils.exclusion(node.getChildren(), visitedNodes).isEmpty()
-                    && (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
+                    && (child = (CharacterNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
                     .getFirst()) != null) {
                 visitedNodes.add(child);
 
@@ -1831,10 +1867,13 @@ public abstract class SingleAccessKeyTreeDumper {
      * methods in order to generate the nodeBreadthFirstIterationMap HashMap, that associates each node with a
      * breadth-first incremented number
      */
-    private static void iterativeBreadthFirst(final SingleAccessKeyNode rootNode,
-                                              final Map<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap, int counter) {
-        final Queue<SingleAccessKeyNode> queue = new LinkedList<>();
-        final List<SingleAccessKeyNode> visitedNodes = new ArrayList<>();
+    private static void iterativeBreadthFirst(
+            final RootNode rootNode,
+            final Map<BaseNode, Integer> nodeBreadthFirstIterationMap,
+            int counter
+    ) {
+        final Queue<BaseNode> queue = new LinkedList<>();
+        final List<BaseNode> visitedNodes = new ArrayList<>();
 
         queue.add(rootNode);
 
@@ -1846,12 +1885,12 @@ public abstract class SingleAccessKeyTreeDumper {
         visitedNodes.add(rootNode);
 
         while (!queue.isEmpty()) {
-            final SingleAccessKeyNode node = queue.remove();
-            SingleAccessKeyNode child;
+            final BaseNode node = queue.remove();
+            CharacterNode child;
 
             // exclusion(node.getChildren(), visitedNodes) is the list of unvisited children nodes of the
             while (!IkeyUtils.exclusion(node.getChildren(), visitedNodes).isEmpty()
-                    && (child = (SingleAccessKeyNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
+                    && (child = (CharacterNode) IkeyUtils.exclusion(node.getChildren(), visitedNodes)
                     .getFirst()) != null) {
                 visitedNodes.add(child);
 
@@ -1871,12 +1910,14 @@ public abstract class SingleAccessKeyTreeDumper {
      * methods in order to generate the nodeChildParentNumberingMap HashMap, that associates a child node
      * number with the number of its parent node
      */
-    private static void recursiveDepthFirstIntegerIndex(final SingleAccessKeyNode node,
-                                                        final HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap,
-                                                        final HashMap<Integer, Integer> nodeChildParentNumberingMap) {
+    private static void recursiveDepthFirstIntegerIndex(
+            final BaseNode node,
+            final HashMap<BaseNode, Integer> nodeBreadthFirstIterationMap,
+            final HashMap<Integer, Integer> nodeChildParentNumberingMap
+    ) {
 
         final Integer parentNumber = nodeBreadthFirstIterationMap.get(node);
-        for (final SingleAccessKeyNode childNode : node.getChildren()) {
+        for (final CharacterNode childNode : node.getChildren()) {
             final Integer childNumber = nodeBreadthFirstIterationMap.get(childNode);
             nodeChildParentNumberingMap.put(childNumber, parentNumber);
             recursiveDepthFirstIntegerIndex(childNode, nodeBreadthFirstIterationMap,
@@ -1889,12 +1930,12 @@ public abstract class SingleAccessKeyTreeDumper {
      * methods in order to generate the nodeChildParentNumberingMap HashMap, that associates a child node
      * number with the number of its parent node
      */
-    private static void recursiveDepthFirstNodeIndex(final SingleAccessKeyNode node,
-                                                     final HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap,
-                                                     final HashMap<SingleAccessKeyNode, Integer> nodeChildParentNumberingMap) {
+    private static void recursiveDepthFirstNodeIndex(final BaseNode node,
+                                                     final HashMap<BaseNode, Integer> nodeBreadthFirstIterationMap,
+                                                     final HashMap<BaseNode, Integer> nodeChildParentNumberingMap) {
 
         final Integer parentNumber = nodeBreadthFirstIterationMap.get(node);
-        for (final SingleAccessKeyNode childNode : node.getChildren()) {
+        for (final CharacterNode childNode : node.getChildren()) {
             nodeChildParentNumberingMap.put(childNode, parentNumber);
             recursiveDepthFirstNodeIndex(childNode, nodeBreadthFirstIterationMap, nodeChildParentNumberingMap);
         }
@@ -1906,12 +1947,12 @@ public abstract class SingleAccessKeyTreeDumper {
      * number with the number of its parent node, and to generate the rootNodeChildrenIntegerList List, that
      * contains the node numbers of the children of the root nodes.
      */
-    private static void recursiveDepthFirstIntegerIndex(final SingleAccessKeyNode node,
-                                                        final HashMap<SingleAccessKeyNode, Integer> nodeBreadthFirstIterationMap,
+    private static void recursiveDepthFirstIntegerIndex(final BaseNode node,
+                                                        final HashMap<BaseNode, Integer> nodeBreadthFirstIterationMap,
                                                         final HashMap<Integer, Integer> nodeChildParentNumberingMap, final List<Integer> rootNodeChildrenIntegerList) {
 
         final Integer parentNumber = nodeBreadthFirstIterationMap.get(node);
-        for (final SingleAccessKeyNode childNode : node.getChildren()) {
+        for (final CharacterNode childNode : node.getChildren()) {
             final Integer childNumber = nodeBreadthFirstIterationMap.get(childNode);
             nodeChildParentNumberingMap.put(childNumber, parentNumber);
             if (parentNumber == 1) {

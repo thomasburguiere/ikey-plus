@@ -2,7 +2,7 @@ package fr.lis.ikeyplus.rest;
 
 import fr.lis.ikeyplus.IO.SDDSaxParser;
 import fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper;
-import fr.lis.ikeyplus.model.SingleAccessKeyTree;
+import fr.lis.ikeyplus.model.key.SingleAccessKeyTree;
 import fr.lis.ikeyplus.services.IdentificationKeyGenerator;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import fr.lis.ikeyplus.utils.IkeyConfigBuilder;
