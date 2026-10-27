@@ -138,4 +138,50 @@ public class IdentificationKeyGeneratorTest {
         assertThat(fixture).isEqualTo(tree2dump.toString());
     }
 
+    @Test
+    public void should_generate_milichia_key_with_other_node_for_undescribed_taxa() throws Exception {
+        final String stringUrl = "src/test/resources/inputFiles/milichia_revision-sdd.xml";
+
+        final IkeyConfig config = IkeyConfig.builder()
+                .enablePruning()
+                .verbosity(Set.of(HEADER, WARNING, STATISTICS, OTHER))
+                .build();
+
+        final SDDSaxParser sddSaxParser;
+        sddSaxParser = new SDDSaxParser(stringUrl, config);
+
+        IdentificationKeyGenerator identificationKeyGenerator;
+
+        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
+        identificationKeyGenerator.createIdentificationKey();
+        final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+
+        final byte[] encoded = Files.readAllBytes(Paths.get("src/test/resources/fixtures/milichia_with_other.txt"));
+        final String fixture = new String(encoded, StandardCharsets.UTF_8);
+        assertThat(fixture).isEqualTo(tree2dump.toString());
+    }
+
+    @Test
+    public void should_generate_tree_key_with_other_node_for_undescribed_taxa() throws Exception {
+        final String stringUrl = "src/test/resources/inputFiles/testSDD.xml";
+
+        final IkeyConfig config = IkeyConfig.builder()
+                .enablePruning()
+                .verbosity(Set.of(HEADER, WARNING, OTHER))
+                .build();
+
+        final SDDSaxParser sddSaxParser;
+        sddSaxParser = new SDDSaxParser(stringUrl, config);
+
+        IdentificationKeyGenerator identificationKeyGenerator;
+
+        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
+        identificationKeyGenerator.createIdentificationKey();
+        final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+
+        final byte[] encoded = Files.readAllBytes(Paths.get("src/test/resources/fixtures/testSDD_with_other.txt"));
+        final String fixture = new String(encoded, StandardCharsets.UTF_8);
+        assertThat(fixture).isEqualTo(tree2dump.toString());
+    }
+
 }

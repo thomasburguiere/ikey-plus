@@ -53,9 +53,8 @@ public class SchedulerServlet extends GenericServlet {
 
             scheduler.scheduleJob(job, cronTrigger);
 
-        } catch (final SchedulerException | ParseException e) {
+        } catch (final SchedulerException e) {
             e.printStackTrace();
-
         }
 
     }

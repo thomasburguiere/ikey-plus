@@ -1,0 +1,82 @@
+
+1.1) Male frons narrowest at | parallel (items=3)
+	2.1) Interfrontal setulae | anteriormost if only slighly different from posterior if -> Milichia brevirostris
+	2.2) Interfrontal setulae | anteriormost if longer and much stronger than other if -> Milichia angustifrons
+	2.3) Interfrontal setulae | anteriormost and posteriormostif enlarged -> Milichia canariensis
+1.2) Male frons narrowest at | tip of ocellar triangle (items=10)
+	2.1) Male frontal setae [number] | two -> Enigmilichia dimorphica
+	2.2) Male frontal setae [number] | zero (items=4)
+		3.1) black spot at apex of subcosta [presence] | absent (items=2)
+			4.1) Prsc [length] | less than 0.8x dc length -> Milichia sp. 8
+			4.2) Prsc [length] | about as long as dc -> Milichia argyrata
+		3.2) black spot at apex of subcosta [presence] | weak -> Milichia angustifrons
+		3.3) black spot at apex of subcosta [presence] | present -> Milichia brevirostris
+	2.3) Male frontal setae [number] | three (items=2)
+		3.1) black spot at apex of subcosta [presence] | absent -> Milichia sylvicola
+		3.2) black spot at apex of subcosta [presence] | weak -> Milichia savannaticola
+	2.4) Male frontal setae [number] | four (items=1)
+		3.1) T3+4 lateral crease [presence] | absent (Warning: child node not displayed due to pruning option) -> Milichia fumicostata
+		3.2) T3+4 lateral crease [presence] | Other (not described) -> Milichia distinctipennis
+	2.5) Male frontal setae [number] | zero but 3-5 thinner setae -> Milichia speciosa
+1.3) Male frons narrowest at | posterior frontal seta (items=4)
+	2.1) Proclinate setula between supra-antennal seta and eye margin [presence] | absent (items=2)
+		3.1) Male frontal setae [number] | two -> Milichia ludens
+		3.2) Male frontal setae [number] | zero -> Milichia angustifrons
+	2.2) Proclinate setula between supra-antennal seta and eye margin [presence] | present (items=2)
+		3.1) black spot at apex of subcosta [presence] | absent -> Milichia sp. 9
+		3.2) black spot at apex of subcosta [presence] | present -> Milichia brevirostris
+1.4) Male frons narrowest at | anterior orbital seta (items=10)
+	2.1) black spot at apex of subcosta [presence] | absent (items=4)
+		3.1) postocellar setae [inclination] | strongly converging (items=3)
+			4.1) Proclinate setula between supra-antennal seta and eye margin [presence] | absent -> Milichia sp. 2 (Kenya)
+			4.2) Proclinate setula between supra-antennal seta and eye margin [presence] | present (items=0)
+				5.1) Male frontal setae [inclination] | Other (not described) -> Milichia mixta, Milichia sp. 9
+		3.2) postocellar setae [inclination] | very slightly diverging -> Milichia sylvicola
+	2.2) black spot at apex of subcosta [presence] | weak (items=2)
+		3.1) Male halter [color] | black knob, black stem -> Milichia angustifrons
+		3.2) Male halter [color] | black knob, yellowish stem -> Milichia proectes
+	2.3) black spot at apex of subcosta [presence] | present (items=5)
+		3.1) Head and thorax setulae [length] | short (items=4)
+			4.1) Proclinate setula between supra-antennal seta and eye margin [presence] | absent -> Milichia proectes
+			4.2) Proclinate setula between supra-antennal seta and eye margin [presence] | present (items=1)
+				5.1) Basisternum [shape] | G (Warning: child node not displayed due to pruning option) -> Milichia brevirostris
+				5.2) Basisternum [shape] | Other (not described) -> Milichia brevifacialis, Milichia ilaroensis
+		3.2) Head and thorax setulae [length] | elongate -> Milichia decora
+1.5) Male frons narrowest at | antenna base (items=4)
+	2.1) black spot at apex of subcosta [presence] | absent -> Milichia superba
+	2.2) black spot at apex of subcosta [presence] | weak (items=0)
+		3.1) Male frontal setae [inclination] | Other (not described) -> Milichia angustifrons, Milichia sp. 10
+	2.3) black spot at apex of subcosta [presence] | present -> Milichia brevirostris
+1.6) Male frons narrowest at | middle of frons (items=10)
+	2.1) black spot at apex of subcosta [presence] | absent (items=2)
+		3.1) Prsc [length] | less than 0.8x dc length -> Milichia sp. 9
+		3.2) Prsc [length] | about as long as dc -> Milichia apicalis
+	2.2) black spot at apex of subcosta [presence] | weak (items=4)
+		3.1) Interfrontal setulae | anteriormost if only slighly different from posterior if (items=2)
+			4.1) Male halter [color] | black knob, black stem -> Milichia sp. 3 (nr. gigantea)
+			4.2) Male halter [color] | black knob, yellowish stem -> Milichia proectes
+		3.2) Interfrontal setulae | anteriormost if longer and much stronger than other if -> Milichia angustifrons
+		3.3) Interfrontal setulae | anteriormost and posteriormostif enlarged -> Milichia sp. 1 (Cape)
+	2.3) black spot at apex of subcosta [presence] | present (items=5)
+		3.1) apical scutellar setae [direction] | posterad (items=3)
+			4.1) Proclinate setula between supra-antennal seta and eye margin [presence] | absent (items=2)
+				5.1) Arista pubescence [length] | shorter than base of arista wide -> Milichia cornesi
+				5.2) Arista pubescence [length] | 1-2x width of base of arista -> Milichia proectes
+			4.2) Proclinate setula between supra-antennal seta and eye margin [presence] | present -> Milichia brevirostris
+		3.2) apical scutellar setae [direction] | dorsad -> Milichia myrmecophila
+		3.3) apical scutellar setae [direction] | 45 up -> Milichia formicophila
+1.7) Male frons narrowest at | anterior third of frons (items=7)
+	2.1) black spot at apex of subcosta [presence] | absent (items=2)
+		3.1) T2 anterolateral corner [setation] | 2-3 lines of setae -> Milichia sp. 7 (blue)
+		3.2) T2 anterolateral corner [setation] | more than 3 lines of setae -> Milichia sp. 11
+	2.2) black spot at apex of subcosta [presence] | weak (items=3)
+		3.1) Prsc [length] | less than 0.8x dc length -> Milichia sp. 13
+		3.2) Prsc [length] | about as long as dc (items=1)
+			4.1) Seta on subepandrial plate | absent (Warning: child node not displayed due to pruning option) -> Milichia pubescens
+			4.2) Seta on subepandrial plate | Other (not described) -> Milichia angustifrons
+	2.3) black spot at apex of subcosta [presence] | present (items=3)
+		3.1) T2 anterolateral corner [setation] | more than 3 lines of setae (items=2)
+			4.1) Prsc [length] | less than 0.8x dc length -> Milichia sp. 13
+			4.2) Prsc [length] | about as long as dc -> Milichia brevirostris
+		3.2) T2 anterolateral corner [setation] | without setae, only short setulae -> Milichia sp. 6 (face)
+1.8) Male frons narrowest at | Other (not described) -> Milichia albomaculata, Milichia argyratoides, Milichia dectes, Milichia farquharsoni, Milichia gigantea, Milichia integra, Milichia minuta, Milichia nitida, Milichia orientalis, Milichia patrizii, Milichia piscivora, Milichia posticata, Milichia prosaetes, Milichia pseudoludens, Milichia seguyi, Milichia sinaiensis, Milichia sp. 12, Milichia sp. 14, Milichia sp. 15, Milichia sp. 4 (nr. farquharsoni), Milichia sp. 5 (Gorilla)

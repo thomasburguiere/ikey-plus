@@ -1,0 +1,71 @@
+
+1.1) Feuille simple ou composée | simple (items=31)
+	2.1) Nervation | nervation pennée (nervure primaire unique prolongeant le pétiole) (items=21)
+		3.1) Nervation secondaire - contact avec le bord de la feuille | nevures secondaires atteignant le bord dela feuille (items=12)
+			4.1) Descriptor num | [0.034, 19.0[ (mm) (items=5)
+				5.1) Copie de Apex du limbe (extrémité distale de feuilles ou folioles) | pointu (items=4)
+					6.1) Pilosité du pétiole | Absente (items=3)
+						7.1) Orientation des nervures secondaires | plus ou moins rectilignes vers le bord dela feuille -> Bouleau, Chataignier
+						7.2) Orientation des nervures secondaires | recourbées vers l'apex de la feuille -> Cornouiller
+					6.2) Pilosité du pétiole | Présente -> Noisetier
+				5.2) Copie de Apex du limbe (extrémité distale de feuilles ou folioles) | arrondi -> Chêne
+			4.2) Descriptor num | [19.0, 44.0] (mm) (items=7)
+				5.1) Découpe du limbe (des feuilles ou folioles) | limbe entier (items=5)
+					6.1) Pilosité du pétiole | Absente (items=4)
+						7.1) Descriptor num | [20.0, 32.0[ (mm) -> Orme, Savonnier
+						7.2) Descriptor num | [32.0, 44.0] (mm) -> Savonnier, Tilleul, Charme
+					6.2) Pilosité du pétiole | Présente -> Noisetier
+				5.2) Découpe du limbe (des feuilles ou folioles) | limbe lobé (items=2)
+					6.1) Pétiole | présence de nectaires sur le pétiole -> Abricotier
+					6.2) Pétiole | absence de nectaires sur le pétiole -> Alisier
+		3.2) Nervation secondaire - contact avec le bord de la feuille | nervures secondaires bouclées-fermées (items=10)
+			4.1) Descriptor num | [0.034, 23.0[ (mm) (items=5)
+				5.1) Orientation des nervures secondaires | plus ou moins rectilignes vers le bord dela feuille -> Bourdaine, Laurier cerise
+				5.2) Orientation des nervures secondaires | recourbées vers l'apex de la feuille (items=4)
+					6.1) Pétiole | absence de nectaires sur le pétiole (items=1)
+						7.1) Nombres de nervures primaires des nervations palmées2 | Other (not described) -> Bourdaine, Cornouiller, Peuplier
+			4.2) Descriptor num | [23.0, 38.0] (mm) (items=6)
+				5.1) Copie de Apex du limbe (extrémité distale de feuilles ou folioles) | pointu (items=5)
+					6.1) Pétiole | présence de nectaires sur le pétiole -> Prunus
+					6.2) Pétiole | absence de nectaires sur le pétiole (items=4)
+						7.1) Orientation des nervures secondaires | plus ou moins rectilignes vers le bord dela feuille -> Saule, Sophora
+						7.2) Orientation des nervures secondaires | recourbées vers l'apex de la feuille -> Peuplier, Saule, Sureau
+				5.2) Copie de Apex du limbe (extrémité distale de feuilles ou folioles) | tronqué droit ou échancré -> Tulipier
+	2.2) Nervation | nervation pédalée (trois nervures dont les deux extérieures bifurquées) -> Platane
+	2.3) Nervation | nervation palmée (plusieurs nervures primaires partent du même point) (items=9)
+		3.1) Découpe du limbe (des feuilles ou folioles) | limbe entier (items=5)
+			4.1) Copie de Apex du limbe (extrémité distale de feuilles ou folioles) | pointu (items=2)
+				5.1) Orientation des nervures secondaires | plus ou moins rectilignes vers le bord dela feuille -> Marronnier
+				5.2) Orientation des nervures secondaires | recourbées vers l'apex de la feuille -> Micocoulier
+			4.2) Copie de Apex du limbe (extrémité distale de feuilles ou folioles) | arrondi (items=3)
+				5.1) Pétiole | absence de nectaires sur le pétiole (items=2)
+					6.1) Nombres de nervures primaires des nervations palmées2 | [3.0, 6.0] (mm) (Warning: child node not displayed due to pruning option) -> Cytise, Copie de Arbre de Judée
+					6.2) Nombres de nervures primaires des nervations palmées2 | Other (not described) -> Arbre de Judée
+			4.3) Copie de Apex du limbe (extrémité distale de feuilles ou folioles) | tronqué droit ou échancré (items=2)
+				5.1) Pétiole | absence de nectaires sur le pétiole -> Copie de Arbre de Judée
+		3.2) Découpe du limbe (des feuilles ou folioles) | limbe lobé (items=4)
+			4.1) Copie de Apex du limbe (extrémité distale de feuilles ou folioles) | pointu (items=2)
+				5.1) Forme des sinus (espace entre les lobes) | sinus à angle aigu -> Erable sycomore
+				5.2) Forme des sinus (espace entre les lobes) | sinus en forme de dépression arrondie -> Erable plane
+			4.2) Copie de Apex du limbe (extrémité distale de feuilles ou folioles) | arrondi (items=2)
+				5.1) Pétiole | présence de nectaires sur le pétiole -> Erable champêtre
+				5.2) Pétiole | absence de nectaires sur le pétiole -> Erable de Montpellier, Erable champêtre
+	2.4) Nervation | nervation dichotome (se divisant en deuxplusieurs fois) -> Ginkgo
+1.2) Feuille simple ou composée | composée de plusieurs folioles (items=7)
+	2.1) Copie de Apex du limbe (extrémité distale de feuilles ou folioles) | pointu (items=4)
+		3.1) Nervation secondaire - contact avec le bord de la feuille | nevures secondaires atteignant le bord dela feuille (items=2)
+			4.1) Forme générale des folioles | Ovale (largeur la plus grande dansla moitié inférieure) -> Savonnier
+			4.2) Forme générale des folioles | Obovale (largeur la plus grande dans la moitié supérieure) -> Marronnier
+		3.2) Nervation secondaire - contact avec le bord de la feuille | nervures secondaires bouclées-fermées (items=2)
+			4.1) Orientation des nervures secondaires | plus ou moins rectilignes vers le bord dela feuille -> Sophora
+			4.2) Orientation des nervures secondaires | recourbées vers l'apex de la feuille -> Sureau
+	2.2) Copie de Apex du limbe (extrémité distale de feuilles ou folioles) | arrondi -> Cytise
+	2.3) Copie de Apex du limbe (extrémité distale de feuilles ou folioles) | tronqué droit ou échancré (items=2)
+		3.1) Disposition des folioles | pennée (items=2)
+			4.1) Forme générale des folioles | Ovale (largeur la plus grande dansla moitié inférieure) (Warning: child node not displayed due to pruning option) -> Aulne, Copie de Aulne
+			4.2) Forme générale des folioles | Elliptique (largeur la plus grande au mieu) (Warning: child node not displayed due to pruning option) -> Aulne, Copie de Aulne
+			4.3) Forme générale des folioles | Obovale (largeur la plus grande dans la moitié supérieure) (Warning: child node not displayed due to pruning option) -> Aulne, Copie de Aulne
+		3.2) Disposition des folioles | palmée (items=2)
+			4.1) Forme générale des folioles | Ovale (largeur la plus grande dansla moitié inférieure) (Warning: child node not displayed due to pruning option) -> Aulne, Copie de Aulne
+			4.2) Forme générale des folioles | Elliptique (largeur la plus grande au mieu) (Warning: child node not displayed due to pruning option) -> Aulne, Copie de Aulne
+			4.3) Forme générale des folioles | Obovale (largeur la plus grande dans la moitié supérieure) (Warning: child node not displayed due to pruning option) -> Aulne, Copie de Aulne

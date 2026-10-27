@@ -89,7 +89,7 @@ public class SDDContentHandler implements ContentHandler {
     // id of current mediaObject
     private String mediaObjectId = null;
     // id of current mediaObject
-    private Map<ICharacter, Integer> ratingsCounter;
+    private final Map<ICharacter, Integer> ratingsCounter;
 
     /**
      * Default constructor
@@ -426,14 +426,14 @@ public class SDDContentHandler implements ContentHandler {
                 for (final Taxon taxon : dataSet.getCodedDescriptions().keySet()) {
                     for (final ICharacter character : dataSet.getCharacters()) {
                         if (!dataSet.getCodedDescriptions().get(taxon).existsDescription(character)) {
-                            if (character.isCategorical()) {
+                            if (character instanceof final CategoricalCharacter cast) {
                                 dataSet.getCodedDescriptions().get(taxon).addCategoricalCharacterDescription(
-                                        (CategoricalCharacter) character,
+                                        cast,
                                         new ArrayList<>()
                                 );
-                            } else {
+                            } else if (character instanceof final QuantitativeCharacter cast) {
                                 dataSet.getCodedDescriptions().get(taxon).addQuantitativeCharacterDescription(
-                                        (QuantitativeCharacter) character,
+                                        cast,
                                         new QuantitativeMeasure()
                                 );
                             }
@@ -551,10 +551,9 @@ public class SDDContentHandler implements ContentHandler {
                     currentCharacterNode.getInapplicableStates().addAll(currentInapplicableState);
                 } else if (!currentOnlyApplicableState.isEmpty()) {
                     final ICharacter character = dataSet.getCharacterByState(currentOnlyApplicableState.getFirst());
-                    if (character != null && character instanceof CategoricalCharacter) {
+                    if (character instanceof final CategoricalCharacter cast) {
                         currentCharacterNode.setParentCharacter(character);
-                        final List<State> tempList = new ArrayList<>(
-                                ((CategoricalCharacter) character).getStates());
+                        final List<State> tempList = new ArrayList<>(cast.getStates());
                         tempList.removeAll(currentOnlyApplicableState);
                         currentCharacterNode.getInapplicableStates().addAll(tempList);
                     }
