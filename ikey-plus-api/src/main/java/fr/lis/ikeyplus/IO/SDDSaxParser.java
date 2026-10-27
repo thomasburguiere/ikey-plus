@@ -39,7 +39,7 @@ public class SDDSaxParser {
             final URL url = new URL(uri);
             is = new InputSource(url.openStream());
         } catch (final MalformedURLException e) {
-            is = new InputSource(new FileInputStream(new File(uri)));
+            is = new InputSource(new FileInputStream(uri));
         }
 
         saxReader.parse(is);

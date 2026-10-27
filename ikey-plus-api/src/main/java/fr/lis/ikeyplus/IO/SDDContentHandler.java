@@ -89,7 +89,7 @@ public class SDDContentHandler implements ContentHandler {
     // id of current mediaObject
     private String mediaObjectId = null;
     // id of current mediaObject
-    private Map<ICharacter, Integer> ratingsCounter;
+    private final Map<ICharacter, Integer> ratingsCounter;
 
     /**
      * Default constructor
@@ -551,10 +551,10 @@ public class SDDContentHandler implements ContentHandler {
                     currentCharacterNode.getInapplicableStates().addAll(currentInapplicableState);
                 } else if (!currentOnlyApplicableState.isEmpty()) {
                     final ICharacter character = dataSet.getCharacterByState(currentOnlyApplicableState.getFirst());
-                    if (character != null && character instanceof CategoricalCharacter) {
+                    if (character instanceof final CategoricalCharacter cast) {
                         currentCharacterNode.setParentCharacter(character);
                         final List<State> tempList = new ArrayList<>(
-                                ((CategoricalCharacter) character).getStates());
+                                cast.getStates());
                         tempList.removeAll(currentOnlyApplicableState);
                         currentCharacterNode.getInapplicableStates().addAll(tempList);
                     }
