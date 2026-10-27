@@ -73,10 +73,11 @@ public class IdentificationKeyImpl {
         String resultFileName = null;
         // String containing the URL of the result file
         final String resultFileUrl;
-        final String lineReturn = System.getProperty("line.separator");
+        final String lineSeparator = System.lineSeparator();
 
-        final String generatedFilesFolder = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-                + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
+        final String prefix = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix");
+        final String generatedFilesFolder = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
+        final String generatedFilesFolderWithPrefix = prefix + generatedFilesFolder;
 
         try {
 
@@ -109,31 +110,26 @@ public class IdentificationKeyImpl {
                     urlConnection = fileURL.openConnection();
                     // Open data stream
                     urlConnection.getInputStream();
-                } catch (final java.net.MalformedURLException e) {
-                    e.printStackTrace();
-                    config.setErrorMessage(IkeyConfig.getBundleConfElement("message.urlError"), e);
                 } catch (final IOException e) {
                     e.printStackTrace();
                     config.setErrorMessage(IkeyConfig.getBundleConfElement("message.urlError"), e);
                 }
                 sddSaxParser = new SDDSaxParser(sddURL, config);
                 // construct header
-                header.append(lineReturn + sddSaxParser.getDataset().getLabel() + ", "
-                        + IkeyConfig.getBundleConfOverridableElement("message.createdBy") + lineReturn);
-                header.append(lineReturn + "Options:");
-                header.append(lineReturn + "sddURL=" + sddURL);
-                header.append(lineReturn + "format=" + config.getFormat());
-                header.append(lineReturn + "representation=" + config.getRepresentation());
-                header.append(lineReturn + "fewStatesCharacterFirst=" + config.isFewStatesCharacterFirst());
-                header.append(lineReturn + "mergeCharacterStatesIfSameDiscrimination="
-                        + config.isMergeCharacterStatesIfSameDiscrimination());
-                header.append(lineReturn + "pruning=" + config.isPruningEnabled());
-                header.append(lineReturn + "verbosity=" + config.getVerbosity());
-                header.append(lineReturn + "scoreMethod=" + config.getScoreMethod());
-                header.append(lineReturn + "weightContext=" + config.getWeightContext());
-                header.append(lineReturn + "weightType=" + config.getWeightType());
-                header.append(lineReturn);
-            } catch (final Throwable t) {
+                header.append(lineSeparator).append(sddSaxParser.getDataset().getLabel()).append(", ").append(IkeyConfig.getBundleConfOverridableElement("message.createdBy")).append(lineSeparator);
+                header.append(lineSeparator).append("Options:");
+                header.append(lineSeparator).append("sddURL=").append(sddURL);
+                header.append(lineSeparator).append("format=").append(config.getFormat());
+                header.append(lineSeparator).append("representation=").append(config.getRepresentation());
+                header.append(lineSeparator).append("fewStatesCharacterFirst=").append(config.isFewStatesCharacterFirst());
+                header.append(lineSeparator).append("mergeCharacterStatesIfSameDiscrimination=").append(config.isMergeCharacterStatesIfSameDiscrimination());
+                header.append(lineSeparator).append("pruning=").append(config.isPruningEnabled());
+                header.append(lineSeparator).append("verbosity=").append(config.getVerbosity());
+                header.append(lineSeparator).append("scoreMethod=").append(config.getScoreMethod());
+                header.append(lineSeparator).append("weightContext=").append(config.getWeightContext());
+                header.append(lineSeparator).append("weightType=").append(config.getWeightType());
+                header.append(lineSeparator);
+            } catch (final Exception t) {
                 t.printStackTrace();
                 config.setErrorMessage(IkeyConfig.getBundleConfElement("message.parsingError"), t);
             }
@@ -153,9 +149,8 @@ public class IdentificationKeyImpl {
 
             final double keyCreationDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
             // construct header
-            header.append(System.getProperty("line.separator") + "parseDuration= " + parseDuration + "s");
-            header.append(System.getProperty("line.separator") + "keyCreationDuration= "
-                    + keyCreationDuration + "s");
+            header.append(lineSeparator).append("parseDuration= ").append(parseDuration).append("s");
+            header.append(lineSeparator).append("keyCreationDuration= ").append(keyCreationDuration).append("s");
 
             File resultFile = null;
 
@@ -164,16 +159,14 @@ public class IdentificationKeyImpl {
 
                 try {
                     // creation of the directory containing key files
-                    if (!new File(IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-                            + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder")).exists()) {
-                        new File(IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-                                + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder"))
-                                .mkdir();
+                    if (!new File(prefix
+                            + generatedFilesFolder).exists()) {
+                        new File(prefix + generatedFilesFolder).mkdir();
                     }
 
                     final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 
-                    header.append(System.getProperty("line.separator")).append(System.getProperty("line.separator"));
+                    header.append(lineSeparator).append(lineSeparator);
 
                     if (!config.getVerbosity().contains(IkeyConfig.VerbosityLevel.HEADER)) {
                         header.setLength(0);
@@ -181,36 +174,36 @@ public class IdentificationKeyImpl {
                     if (config.getFormat() == IkeyConfig.OutputFormat.HTML) {
                         if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
                             resultFile = SingleAccessKeyTreeDumper.dumpFlatHtmlFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolder);
+                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
                         } else {
                             resultFile = SingleAccessKeyTreeDumper.dumpHtmlFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolder);
+                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
                         }
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.WIKI) {
                         if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
                             resultFile = SingleAccessKeyTreeDumper.dumpFlatWikiFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolder);
+                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
                         } else {
                             resultFile = SingleAccessKeyTreeDumper.dumpWikiFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolder);
+                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
                         }
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.INTERACTIVE_HTML) {
                         resultFile = SingleAccessKeyTreeDumper.dumpInteractiveHtmlFile(header.toString(),
-                                tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolder);
+                                tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.DOT) {
-                        resultFile = SingleAccessKeyTreeDumper.dumpDotFile(header.toString(), tree2dump, generatedFilesFolder);
+                        resultFile = SingleAccessKeyTreeDumper.dumpDotFile(header.toString(), tree2dump, generatedFilesFolderWithPrefix);
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.SDD) {
                         resultFile = SingleAccessKeyTreeDumper.dumpSddFile(tree2dump);
                     } else if (config.getFormat() == IkeyConfig.OutputFormat.ZIP) {
                         resultFile = SingleAccessKeyTreeDumper.dumpZipFile(header.toString(), tree2dump,
-                                config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolder);
+                                config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
                     } else {
                         if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
                             resultFile = SingleAccessKeyTreeDumper.dumpFlatTxtFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolder);
+                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
                         } else {
                             resultFile = SingleAccessKeyTreeDumper.dumpTxtFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolder);
+                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
                         }
                     }
                 } catch (final IOException e) {
@@ -243,7 +236,7 @@ public class IdentificationKeyImpl {
         }
 
         resultFileUrl = IkeyConfig.getBundleConfOverridableElement("host")
-                + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder") + resultFileName;
+                + generatedFilesFolder + resultFileName;
 
         return resultFileUrl;
     }
