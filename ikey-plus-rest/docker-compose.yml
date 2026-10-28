@@ -1,0 +1,7 @@
+services:
+  test-files:
+    image: nginx:alpine
+    ports:
+     - "10080:80"
+    volumes:
+      - ../ikey-plus-api/src/test/resources/inputFiles:/usr/share/nginx/html:ro
