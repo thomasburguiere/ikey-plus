@@ -60,7 +60,7 @@ public abstract class SingleAccessKeyTreeDumper {
         return sddFile;
     }
 
-    private static String generateSddString(final SingleAccessKeyTree tree2dump) {
+    public static String generateSddString(final SingleAccessKeyTree tree2dump) {
         final StringBuffer output = new StringBuffer();
         final String lineSeparator = System.lineSeparator();
 
@@ -338,7 +338,7 @@ public abstract class SingleAccessKeyTreeDumper {
         return txtFile;
     }
 
-    private static String generateTreeString(final SingleAccessKeyTree tree2dump) {
+    public static String generateTreeString(final SingleAccessKeyTree tree2dump) {
         final StringBuffer output = new StringBuffer();
         recursiveToString(tree2dump.getRoot(), output, System.lineSeparator(), 0, 0, tree2dump);
 
@@ -419,7 +419,7 @@ public abstract class SingleAccessKeyTreeDumper {
      * generates a flat representation of a key, in a String object, by calling the
      * {@link #multipleTraversalToString} helper method
      */
-    private static String generateFlatString(final SingleAccessKeyTree tree2dump) {
+    public static String generateFlatString(final SingleAccessKeyTree tree2dump) {
         final StringBuffer output = new StringBuffer();
         multipleTraversalToString(tree2dump.getRoot(), output, System.lineSeparator(),
                 tree2dump);
@@ -560,8 +560,8 @@ public abstract class SingleAccessKeyTreeDumper {
         return htmlFile;
     }
 
-    private static String generateHtmlString(final String header, final SingleAccessKeyTree tree2dump,
-                                             final boolean showStatistics) throws IOException {
+    public static String generateHtmlString(final String header, final SingleAccessKeyTree tree2dump,
+                                            final boolean showStatistics) throws IOException {
         final String lineSep = System.lineSeparator();
         final StringBuilder slk = new StringBuilder();
 
@@ -796,7 +796,7 @@ public abstract class SingleAccessKeyTreeDumper {
 
     }
 
-    private static String generateFlatHtmlString(final String header, final SingleAccessKeyTree tree2dump,
+    public static String generateFlatHtmlString(final String header, final SingleAccessKeyTree tree2dump,
                                                  final boolean showStatistics) throws IOException {
 
         final StringBuffer output = new StringBuffer();
@@ -877,8 +877,8 @@ public abstract class SingleAccessKeyTreeDumper {
         return slk.toString();
     }
 
-    private static String generateInteractiveHtmlString(final String header, final SingleAccessKeyTree tree2dump,
-                                                        final boolean showStatistics) throws IOException {
+    public static String generateInteractiveHtmlString(final String header, final SingleAccessKeyTree tree2dump,
+                                                       final boolean showStatistics) throws IOException {
 
         final StringBuffer output = new StringBuffer();
         final String lineSep = System.lineSeparator();
@@ -1307,7 +1307,7 @@ public abstract class SingleAccessKeyTreeDumper {
         return wikiFile;
     }
 
-    private static String generateTreeWiki(final SingleAccessKeyTree tree2dump, final boolean showStatistics) {
+    public static String generateTreeWiki(final SingleAccessKeyTree tree2dump, final boolean showStatistics) {
         final StringBuffer output = new StringBuffer();
         recursiveToWiki(tree2dump.getRoot(), output, "", 0, 0, tree2dump);
         if (showStatistics) {
@@ -1392,7 +1392,7 @@ public abstract class SingleAccessKeyTreeDumper {
      * generates a flat, wiki-formatted, String representation of a key, in a String object, by calling the
      * {@link #multipleTraversalToWikiString} helper method
      */
-    private static String generateFlatWikiString(final SingleAccessKeyTree tree2dump) {
+    public static String generateFlatWikiString(final SingleAccessKeyTree tree2dump) {
         final StringBuffer output = new StringBuffer();
         multipleTraversalToWikiString(tree2dump.getRoot(), output, System.lineSeparator(),
                 tree2dump);
@@ -1542,7 +1542,7 @@ public abstract class SingleAccessKeyTreeDumper {
      * generates a DOT-formatted String representation of the key, by calling
      * {@link #multipleTraversalToDotString}
      */
-    private static String generateDotString(final SingleAccessKeyTree tree2dump) {
+    public static String generateDotString(final SingleAccessKeyTree tree2dump) {
         final StringBuffer output = new StringBuffer();
         multipleTraversalToDotString(tree2dump.getRoot(), output, System.lineSeparator(),
                 tree2dump);

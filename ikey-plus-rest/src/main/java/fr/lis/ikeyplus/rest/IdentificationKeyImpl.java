@@ -241,15 +241,15 @@ public class IdentificationKeyImpl {
         return resultFileUrl;
     }
 
-    private IkeyConfig initializeConfig(final String format,
-                                        final String representation,
-                                        final boolean fewStatesCharacterFirst,
-                                        final boolean mergeCharacterStatesIfSameDiscrimination,
-                                        final boolean pruning,
-                                        final String verbosity,
-                                        final String scoreMethod,
-                                        final String weightContext,
-                                        final String weightType) {
+    public IkeyConfig initializeConfig(final String format,
+                                       final String representation,
+                                       final boolean fewStatesCharacterFirst,
+                                       final boolean mergeCharacterStatesIfSameDiscrimination,
+                                       final boolean pruning,
+                                       final String verbosity,
+                                       final String scoreMethod,
+                                       final String weightContext,
+                                       final String weightType) {
         final IkeyConfig config;
         final IkeyConfigBuilder configBuilder = IkeyConfig.builder();
         // options initialization
