@@ -7,13 +7,6 @@ import fr.lis.ikeyplus.services.IdentificationKeyGenerator;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import fr.lis.ikeyplus.utils.IkeyConfigBuilder;
 
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -25,21 +18,19 @@ import java.net.URLConnection;
  * @author Florian Causse
  * @created 06-04-2011
  */
-@Path("/identificationKey")
 public class IdentificationKeyImpl {
 
-    @GET
     public String getIdentificationKey(
-            @QueryParam("sddURL") final String sddURL,
-            @QueryParam("format") final String format,
-            @QueryParam("representation") final String representation,
-            @QueryParam("fewStatesCharacterFirst") final boolean fewStatesCharacterFirst,
-            @QueryParam("mergeCharacterStatesIfSameDiscrimination") final boolean mergeCharacterStatesIfSameDiscrimination,
-            @QueryParam("pruning") final boolean pruning,
-            @QueryParam("verbosity") final String verbosity,
-            @QueryParam("scoreMethod") final String scoreMethod,
-            @QueryParam("weightContext") final String weightContext,
-            @QueryParam("weightType") final String weightType) {
+            final String sddURL,
+            final String format,
+            final String representation,
+            final boolean fewStatesCharacterFirst,
+            final boolean mergeCharacterStatesIfSameDiscrimination,
+            final boolean pruning,
+            final String verbosity,
+            final String scoreMethod,
+            final String weightContext,
+            final String weightType) {
         return createIdentificationKey(
                 sddURL,
                 format,
@@ -53,19 +44,17 @@ public class IdentificationKeyImpl {
                 weightType);
     }
 
-    @POST
-    @Produces(MediaType.TEXT_PLAIN)
     public String createIdentificationKey(
-            @FormParam("sddURL") final String sddURL,
-            @FormParam("format") final String format,
-            @FormParam("representation") final String representation,
-            @FormParam("fewStatesCharacterFirst") final boolean fewStatesCharacterFirst,
-            @FormParam("mergeCharacterStatesIfSameDiscrimination") final boolean mergeCharacterStatesIfSameDiscrimination,
-            @FormParam("pruning") final boolean pruning,
-            @FormParam("verbosity") final String verbosity,
-            @FormParam("scoreMethod") final String scoreMethod,
-            @FormParam("weightContext") final String weightContext,
-            @FormParam("weightType") final String weightType) {
+            final String sddURL,
+            final String format,
+            final String representation,
+            final boolean fewStatesCharacterFirst,
+            final boolean mergeCharacterStatesIfSameDiscrimination,
+            final boolean pruning,
+            final String verbosity,
+            final String scoreMethod,
+            final String weightContext,
+            final String weightType) {
 
         // creation of IkeyConfig object (containing options)
         IkeyConfig config;
