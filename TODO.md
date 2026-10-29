@@ -4,20 +4,20 @@ Follow-ups from the review of the Javalin migration (`refactor/rest-with-javalin
 
 ## Security / must fix
 
-- [ ] **Restrict `sddURL` to `http`/`https`**
-  - Today, `Application.handleGetKey` passes the raw query param to `new SDDSaxParser(sddURL, config)`.
-  - If `new URL(uri)` throws `MalformedURLException`, `SDDSaxParser` falls back to `new FileInputStream(uri)`. So `?sddURL=/etc/passwd` (or any server path) gets opened.
-  - `file:///...` URLs pass `new URL(...)`, so they're read too.
-  - Fix: parse with `URI.create(sddURL)`, require the `http`/`https` scheme, and optionally check the host against an allow-list (config/env var). That also blocks SSRF to internal hosts such as `169.254.169.254` and `localhost`.
+- [x] **Restrict `sddURL` to `http`/`https`**
+  - [x] Today, `Application.handleGet`Key` passes the raw query param to `new SDDSaxParser(sddURL, config)`.
+  - [x] If `new URL(uri)` throws `MalformedURLException`, `SDDSaxParser` falls back to `new FileInputStream(uri)`. So `?sddURL=/etc/passwd` (or any server path) gets opened.
+  - [x] `file:///...` URLs pass `new URL(...)`, so they're read too.
+  - [x] Fix: parse with `URI.create(sddURL)`, require the `http`/`https` scheme, and optionally check the host against an allow-list (config/env var). That also blocks SSRF to internal hosts such as `169.254.169.254` and `localhost`.
 
-- [ ] **Add an `InputStream`-based `SDDSaxParser` constructor**
-  - The REST layer should open the connection itself, with timeouts and a size limit (see below), and hand the stream to the parser.
-  - Keep the `String`/`File` constructors for the CLI and tests, but the REST path must never reach the `FileInputStream` fallback.
+- [x] **Add an `InputStream`-based `SDDSaxParser` constructor**
+  - [x] The REST layer should open the connection itself, with timeouts and a size limit (see below), and hand the stream to the parser.
+  - [x] Keep the `String`/`File` constructors for the CLI and tests, but the REST path must never reach the `FileInputStream` fallback.
 
-- [ ] **Disable XXE in `SDDSaxParser`**
+- [x] **Disable XXE in `SDDSaxParser`**
   - Both constructors create `org.apache.xerces.parsers.SAXParser` with default features, so external entities and DTDs are resolved.
   - A crafted SDD with `<!DOCTYPE x [<!ENTITY e SYSTEM "file:///etc/passwd">]>` can inject local files or internal URLs into labels/descriptions. Those then show up in the generated key.
-  - Set, in a shared helper used by both constructors:
+  - [x] Set, in a shared helper used by both constructors:
     ```java
     saxReader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
     // if DOCTYPEs must be tolerated instead:
@@ -26,7 +26,7 @@ Follow-ups from the review of the Javalin migration (`refactor/rest-with-javalin
     saxReader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
     ```
   - Check that real SDD files (test fixtures) don't rely on a DOCTYPE before choosing `disallow-doctype-decl`.
-  - `XMLReaderFactory` is deprecated; consider `SAXParserFactory.newInstance()` + `setNamespaceAware(true)` while touching this.
+  - [x] `XMLReaderFactory` is deprecated; consider `SAXParserFactory.newInstance()` + `setNamespaceAware(true)` while touching this.
 
 - [x] **Return 400 when `sddURL` is missing**
   - Right now `null` goes into `new URL(null)`, which throws `MalformedURLException`. Then `new FileInputStream(null)` throws `NullPointerException`, and the client gets a 500.

@@ -5,6 +5,7 @@ import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileInputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -28,7 +29,7 @@ public class IdentificationKeyGeneratorTest {
                 .build();
 
         final SDDSaxParser sddSaxParser;
-        sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(new FileInputStream(stringUrl), config);
 
         IdentificationKeyGenerator identificationKeyGenerator;
 
@@ -52,7 +53,7 @@ public class IdentificationKeyGeneratorTest {
                 .build();
 
         final SDDSaxParser sddSaxParser;
-        sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(new FileInputStream(stringUrl), config);
 
         IdentificationKeyGenerator identificationKeyGenerator;
 
@@ -77,7 +78,7 @@ public class IdentificationKeyGeneratorTest {
                 .build();
 
         final SDDSaxParser sddSaxParser;
-        sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(new FileInputStream(stringUrl), config);
 
         IdentificationKeyGenerator identificationKeyGenerator;
 
@@ -102,7 +103,7 @@ public class IdentificationKeyGeneratorTest {
                 .build();
 
         final SDDSaxParser sddSaxParser;
-        sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(new FileInputStream(stringUrl), config);
 
         IdentificationKeyGenerator identificationKeyGenerator;
 
@@ -125,7 +126,7 @@ public class IdentificationKeyGeneratorTest {
                 .build();
 
         final SDDSaxParser sddSaxParser;
-        sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(new FileInputStream(stringUrl), config);
 
         IdentificationKeyGenerator identificationKeyGenerator;
 
@@ -148,7 +149,7 @@ public class IdentificationKeyGeneratorTest {
                 .build();
 
         final SDDSaxParser sddSaxParser;
-        sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(new FileInputStream(stringUrl), config);
 
         IdentificationKeyGenerator identificationKeyGenerator;
 
@@ -171,7 +172,7 @@ public class IdentificationKeyGeneratorTest {
                 .build();
 
         final SDDSaxParser sddSaxParser;
-        sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(new FileInputStream(stringUrl), config);
 
         IdentificationKeyGenerator identificationKeyGenerator;
 

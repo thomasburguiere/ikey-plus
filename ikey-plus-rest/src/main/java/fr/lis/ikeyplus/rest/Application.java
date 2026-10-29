@@ -8,6 +8,7 @@ public class Application {
         Javalin.create(config -> {
             config.routes.get("/health", ctx -> ctx.result("ok"));
             config.routes.get("/identification-key", RestHandler::handleGetKey);
+            ExceptionMapper.mapExceptions(config);
         }).start(8080);
     }
 

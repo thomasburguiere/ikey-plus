@@ -8,13 +8,13 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 public class SingleAccessKeyTreeDumperTest {
 
     private static String generatedFilesFolder;
@@ -26,7 +26,7 @@ public class SingleAccessKeyTreeDumperTest {
         final IkeyConfig config = IkeyConfig.builder().enablePruning().verbosity(IkeyConfig.VerbosityLevel.HEADER).build();
 
         final SDDSaxParser sddSaxParser;
-        sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(new FileInputStream(stringUrl), config);
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
@@ -42,7 +42,6 @@ public class SingleAccessKeyTreeDumperTest {
         final String fixture = new String(fixtureBytes, StandardCharsets.UTF_8);
         assertThat(result).isEqualTo(fixture);
     }
-
     @Test
     public void should_generate_cichorieae_html_tree_key() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/cichorieae.sdd.xml";
@@ -54,7 +53,7 @@ public class SingleAccessKeyTreeDumperTest {
                 .build();
 
         final SDDSaxParser sddSaxParser;
-        sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(new FileInputStream(stringUrl), config);
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
@@ -70,7 +69,6 @@ public class SingleAccessKeyTreeDumperTest {
         final String fixture = new String(fixtureBytes, StandardCharsets.UTF_8);
         assertThat(result).isEqualTo(fixture);
     }
-
     @Test
     public void should_generate_genetta_flat_txt_key() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
@@ -82,7 +80,7 @@ public class SingleAccessKeyTreeDumperTest {
                 .build();
 
         final SDDSaxParser sddSaxParser;
-        sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(new FileInputStream(stringUrl), config);
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
@@ -98,7 +96,6 @@ public class SingleAccessKeyTreeDumperTest {
         final String fixture = new String(fixtureBytes, StandardCharsets.UTF_8);
         assertThat(result).isEqualTo(fixture);
     }
-
     @Test
     public void should_generate_genetta_tree_txt_key() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
@@ -110,7 +107,7 @@ public class SingleAccessKeyTreeDumperTest {
                 .build();
 
         final SDDSaxParser sddSaxParser;
-        sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(new FileInputStream(stringUrl), config);
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
@@ -126,7 +123,6 @@ public class SingleAccessKeyTreeDumperTest {
         final String fixture = new String(fixtureBytes, StandardCharsets.UTF_8);
         assertThat(result).isEqualTo(fixture);
     }
-
     @Test
     public void should_generate_genetta_tree_wiki_key() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
@@ -138,7 +134,7 @@ public class SingleAccessKeyTreeDumperTest {
                 .build();
 
         final SDDSaxParser sddSaxParser;
-        sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(new FileInputStream(stringUrl), config);
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
@@ -154,7 +150,6 @@ public class SingleAccessKeyTreeDumperTest {
         final String fixture = new String(fixtureBytes, StandardCharsets.UTF_8);
         assertThat(result).isEqualTo(fixture);
     }
-
     @Test
     public void should_generate_genetta_flat_wiki_key() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
@@ -166,7 +161,7 @@ public class SingleAccessKeyTreeDumperTest {
                 .build();
 
         final SDDSaxParser sddSaxParser;
-        sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(new FileInputStream(stringUrl), config);
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
@@ -182,7 +177,6 @@ public class SingleAccessKeyTreeDumperTest {
         final String fixture = new String(fixtureBytes, StandardCharsets.UTF_8);
         assertThat(result).isEqualTo(fixture);
     }
-
     @Test
     public void should_generate_genetta_sdd_key() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
@@ -194,7 +188,7 @@ public class SingleAccessKeyTreeDumperTest {
                 .build();
 
         final SDDSaxParser sddSaxParser;
-        sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(new FileInputStream(stringUrl), config);
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
@@ -226,7 +220,7 @@ public class SingleAccessKeyTreeDumperTest {
                 .build();
 
         final SDDSaxParser sddSaxParser;
-        sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(new FileInputStream(stringUrl), config);
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
@@ -259,7 +253,7 @@ public class SingleAccessKeyTreeDumperTest {
                 .build();
 
         final SDDSaxParser sddSaxParser;
-        sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(new FileInputStream(stringUrl), config);
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
@@ -291,7 +285,7 @@ public class SingleAccessKeyTreeDumperTest {
                 .build();
 
         final SDDSaxParser sddSaxParser;
-        sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(new FileInputStream(stringUrl), config);
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
@@ -322,7 +316,7 @@ public class SingleAccessKeyTreeDumperTest {
                 .build();
 
         final SDDSaxParser sddSaxParser;
-        sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(new FileInputStream(stringUrl), config);
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
@@ -342,7 +336,6 @@ public class SingleAccessKeyTreeDumperTest {
 
     }
 
-
     @Test
     public void should_generate_genetta_dot() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
@@ -354,7 +347,7 @@ public class SingleAccessKeyTreeDumperTest {
                 .build();
 
         final SDDSaxParser sddSaxParser;
-        sddSaxParser = new SDDSaxParser(stringUrl, config);
+        sddSaxParser = new SDDSaxParser(new FileInputStream(stringUrl), config);
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 

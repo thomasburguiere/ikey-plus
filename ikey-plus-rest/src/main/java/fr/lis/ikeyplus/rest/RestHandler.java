@@ -7,6 +7,12 @@ import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HttpResponseException;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.List;
+
 import static fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper.generateDotString;
 import static fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper.generateFlatHtmlString;
 import static fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper.generateFlatString;
@@ -26,12 +32,10 @@ public class RestHandler {
     private static final String CONTENT_TYPE_TXT = "text/plain";
 
     private static final IdentificationKeyImpl ik = new IdentificationKeyImpl();
+
     static void handleGetKey(final Context ctx) throws Exception {
         final String sddURL = ctx.queryParam("sddURL");
-        if (sddURL == null) {
-            throw new BadRequestResponse("sddURL is not valid" + sddURL);
-        }
-
+        validateSddUrl(sddURL);
 
         final String format = ctx.queryParam("format");
         final String representation = ctx.queryParam("representation");
@@ -53,8 +57,8 @@ public class RestHandler {
                 weightContext,
                 weightType);
 
-        final var sddSaxParser = new SDDSaxParser(sddURL, config);
-
+        final var validatedSddUrl = validateSddUrl(sddURL);
+        final var sddSaxParser = new SDDSaxParser(validatedSddUrl.openStream(), config);
 
         // call identification key service
         final IdentificationKeyGenerator identificationKeyGenerator =
@@ -91,4 +95,21 @@ public class RestHandler {
                     throw new HttpResponseException(NOT_IMPLEMENTED.getCode(), "format not currently supported");
         }
     }
+
+    static URL validateSddUrl(final String sddUrl) {
+        if (sddUrl == null) {
+            throw new BadRequestResponse("sddUrl cannot be null");
+        }
+        final URL url;
+        try {
+            final URI uri = URI.create(sddUrl);
+            url = uri.toURL();
+        } catch (IllegalArgumentException| MalformedURLException _) {
+            throw new BadRequestResponse("sddUrl is malformed");
+        }
+        if (!List.of("http", "https").contains(url.getProtocol())) {
+            throw new BadRequestResponse("sddUrl protocol should be http or https");
+        }
+        return url;
+     }
 }

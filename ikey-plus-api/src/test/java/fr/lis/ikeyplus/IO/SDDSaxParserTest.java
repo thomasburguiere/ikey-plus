@@ -5,6 +5,7 @@ import fr.lis.ikeyplus.utils.IkeyConfig;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.FileInputStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,7 +24,7 @@ public class SDDSaxParserTest {
     public void should_parse_local_file() throws Exception {
         // creation of IkeyConfig object (containing options)
         final IkeyConfig config = IkeyConfig.builder().build();
-        final SDDSaxParser sddSaxParser = new SDDSaxParser(new File("src/test/resources/inputFiles/cichorieae.sdd.xml"), config);
+        final SDDSaxParser sddSaxParser = new SDDSaxParser(new FileInputStream("src/test/resources/inputFiles/cichorieae.sdd.xml"), config);
         final DataSet dataset = sddSaxParser.getDataset();
         assertThat(dataset.getLabel()).isEqualToIgnoringCase(DATASET_NAME);
         assertThat(dataset.getCharacters()).hasSize(EXPECTED_NB_OF_CHARACTERS);
