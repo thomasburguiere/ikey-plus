@@ -8,6 +8,7 @@ import fr.lis.ikeyplus.utils.IkeyConfig;
 import fr.lis.ikeyplus.utils.IkeyConfigBuilder;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -103,7 +104,7 @@ public class IdentificationKeyImpl {
                     e.printStackTrace();
                     config.setErrorMessage(IkeyConfig.getBundleConfElement("message.urlError"), e);
                 }
-                sddSaxParser = new SDDSaxParser(sddURL, config);
+                sddSaxParser = new SDDSaxParser(new FileInputStream(sddURL), config);
                 // construct header
                 header.append(lineSeparator).append(sddSaxParser.getDataset().getLabel()).append(", ").append(IkeyConfig.getBundleConfOverridableElement("message.createdBy")).append(lineSeparator);
                 header.append(lineSeparator).append("Options:");

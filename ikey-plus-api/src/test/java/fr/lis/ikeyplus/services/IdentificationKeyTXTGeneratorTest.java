@@ -8,6 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.Set;
 
 import static fr.lis.ikeyplus.utils.IkeyConfig.ScoreMethod.XPER;
@@ -61,7 +62,7 @@ public class IdentificationKeyTXTGeneratorTest {
         final StringBuilder header = new StringBuilder();
 
         // options
-        final SDDSaxParser sddSaxParser = new SDDSaxParser(new File(testFileUrl), config);
+        final SDDSaxParser sddSaxParser = new SDDSaxParser(new FileInputStream(testFileUrl), config);
         // construct header
         header.append(System.lineSeparator()).append(sddSaxParser.getDataset().getLabel()).append(", ").append(getBundleConfOverridableElement("message.createdBy")).append(System.lineSeparator());
         header.append(System.lineSeparator()).append("Options:");

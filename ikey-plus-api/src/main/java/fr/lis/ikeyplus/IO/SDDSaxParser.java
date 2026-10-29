@@ -3,6 +3,7 @@ package fr.lis.ikeyplus.IO;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -14,9 +15,10 @@ import org.xml.sax.helpers.XMLReaderFactory;
 import fr.lis.ikeyplus.model.DataSet;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
+
 /**
- * This class starts the parsing of a SDD file
- *
  * @author Florian Causse
  * @created 18-04-2011
  */
@@ -25,40 +27,31 @@ public class SDDSaxParser {
     // knowledge base (call dataset)
     private DataSet dataset;
 
-    /**
-     * constructor which parses the content of the input file
-     */
-    public SDDSaxParser(final String uri, final IkeyConfig utils) throws SAXException, IOException {
-        final XMLReader saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
+    public SDDSaxParser(final InputStream in, final IkeyConfig config) throws SAXException, IOException, ParserConfigurationException {
+        final var readerAndHandler = initXmlReaderAndSddContentHandler(config);
 
-        final SDDContentHandler handler = new SDDContentHandler(utils);
-        saxReader.setContentHandler(handler);
+        final InputSource is = new InputSource(in);
+        readerAndHandler.reader.parse(is);
 
-        InputSource is;
-        try {
-            final URL url = new URL(uri);
-            is = new InputSource(url.openStream());
-        } catch (final MalformedURLException e) {
-            is = new InputSource(new FileInputStream(uri));
-        }
-
-        saxReader.parse(is);
-        dataset = handler.getDataSet();
+        dataset = readerAndHandler.handler.getDataSet();
     }
 
-    /**
-     * constructor which parses the content of the input file
-     */
-    public SDDSaxParser(final File inputFile, final IkeyConfig conf) throws SAXException, IOException {
-        final XMLReader saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
+    private record ReaderAndHandler(XMLReader reader, SDDContentHandler handler) {
+    }
 
-        final SDDContentHandler handler = new SDDContentHandler(conf);
-        saxReader.setContentHandler(handler);
+    private static ReaderAndHandler initXmlReaderAndSddContentHandler(final IkeyConfig ikeyConfig) throws SAXException, ParserConfigurationException {
 
-        final InputSource is = new InputSource(new FileInputStream(inputFile));
+        final SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+        saxParserFactory.setNamespaceAware(true);
 
-        saxReader.parse(is);
-        dataset = handler.getDataSet();
+        final XMLReader xmlReader = saxParserFactory.newSAXParser().getXMLReader();
+
+        final SDDContentHandler handler = new SDDContentHandler(ikeyConfig);
+        xmlReader.setContentHandler(handler);
+
+        xmlReader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+
+        return new ReaderAndHandler(xmlReader, handler);
     }
 
     public DataSet getDataset() {
