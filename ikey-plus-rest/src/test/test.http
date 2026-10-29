@@ -1,0 +1,6 @@
+@sddUrl=http://localhost:10080/genetta.sdd.xml
+@format=interactivehtml
+GET http://localhost:8080/identification-key?sddURL={{sddUrl}}&format={{format}}
+
+### healtcheck
+GET http://localhost:8080/health
