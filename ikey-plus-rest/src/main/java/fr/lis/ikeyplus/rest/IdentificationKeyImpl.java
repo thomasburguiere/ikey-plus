@@ -231,7 +231,7 @@ public class IdentificationKeyImpl {
         return resultFileUrl;
     }
 
-    public IkeyConfig initializeConfig(final String format,
+    public static IkeyConfig initializeConfig(final String format,
                                        final String representation,
                                        final boolean fewStatesCharacterFirst,
                                        final boolean mergeCharacterStatesIfSameDiscrimination,
