@@ -3,15 +3,20 @@ package fr.lis.ikeyplus.rest;
 import fr.lis.ikeyplus.IO.SDDSaxParser;
 import fr.lis.ikeyplus.services.IdentificationKeyGenerator;
 import fr.lis.ikeyplus.utils.IkeyConfig;
+import fr.lis.ikeyplus.utils.IkeyConfig.OutputFormat;
 import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HttpResponseException;
+import io.javalin.validation.ValidationError;
+import io.javalin.validation.Validator;
+import kotlin.jvm.functions.Function1;
 
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 
 import static fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper.generateDotString;
 import static fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper.generateFlatHtmlString;
@@ -47,15 +52,7 @@ public class RestHandler {
         final String weightContext = ctx.queryParam("weightContext");
         final String weightType = ctx.queryParam("weightType");
 
-        final IkeyConfig config = ik.initializeConfig(format,
-                representation,
-                fewStatesCharacterFirst,
-                mergeCharacterStatesIfSameDiscrimination,
-                pruning,
-                verbosity,
-                scoreMethod,
-                weightContext,
-                weightType);
+        final IkeyConfig config = initializeConfig(ctx);
 
         final var validatedSddUrl = validateSddUrl(sddURL);
         final var sddSaxParser = new SDDSaxParser(validatedSddUrl.openStream(), config);
@@ -96,6 +93,18 @@ public class RestHandler {
         }
     }
 
+    static <T> T getParamOrThrow(final Context ctx, final String name, final Class<T> clazz, T fallback) {
+        final Validator<T> tValidator = ctx.queryParamAsClass(name, clazz);
+        if(!tValidator.hasValue()) return fallback;
+        return tValidator
+                .getOrThrow(_ -> new BadRequestResponse());
+    }
+
+    static IkeyConfig initializeConfig(final Context ctx) {
+        final OutputFormat format = getParamOrThrow(ctx, "format", OutputFormat.class, OutputFormat.TXT);
+        return null;
+    }
+
     static URL validateSddUrl(final String sddUrl) {
         if (sddUrl == null) {
             throw new BadRequestResponse("sddUrl cannot be null");
@@ -104,12 +113,12 @@ public class RestHandler {
         try {
             final URI uri = URI.create(sddUrl);
             url = uri.toURL();
-        } catch (IllegalArgumentException| MalformedURLException _) {
+        } catch (IllegalArgumentException | MalformedURLException _) {
             throw new BadRequestResponse("sddUrl is malformed");
         }
         if (!List.of("http", "https").contains(url.getProtocol())) {
             throw new BadRequestResponse("sddUrl protocol should be http or https");
         }
         return url;
-     }
+    }
 }
