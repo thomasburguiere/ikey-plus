@@ -6,9 +6,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
+
+import static java.util.stream.Collectors.toSet;
 
 public class IkeyConfig {
 
@@ -67,25 +70,28 @@ public class IkeyConfig {
 
         private final String flag;
 
+        @Override
         public String toString() {
             return flag;
         }
 
         public static Set<VerbosityLevel> fromString(final String s) {
             if (s != null) {
-                final Set<VerbosityLevel> verbosity = new HashSet<VerbosityLevel>();
-                for (final VerbosityLevel level : values()) {
-                    if (s.toLowerCase().contains(level.toString())) {
-                        verbosity.add(level);
-                    }
-                }
-                return verbosity;
+                return Arrays.stream(values())
+                        .filter(level -> s.toLowerCase().contains(level.toString()))
+                        .collect(toSet());
             }
-            return null;
+            return Set.of();
         }
 
         VerbosityLevel(final String flag) {
             this.flag = flag;
+        }
+    }
+
+    public record Verbosity(Set<VerbosityLevel> levels) {
+        public static Verbosity getDefault() {
+            return new Verbosity(Set.of());
         }
     }
 
@@ -96,6 +102,7 @@ public class IkeyConfig {
 
         private final String method;
 
+        @Override
         public String toString() {
             return method;
         }
@@ -107,7 +114,7 @@ public class IkeyConfig {
         public static ScoreMethod fromString(final String text) {
             if (text != null) {
                 for (final ScoreMethod entry : values()) {
-                    if (entry.toString().equals(text)) {
+                    if (entry.toString().equalsIgnoreCase(text)) {
                         return entry;
                     }
                 }
@@ -126,6 +133,7 @@ public class IkeyConfig {
             this.representation = representation;
         }
 
+        @Override
         public String toString() {
             return representation;
         }
@@ -133,7 +141,7 @@ public class IkeyConfig {
         public static KeyRepresentation fromString(final String text) {
             if (text != null) {
                 for (final KeyRepresentation entry : values()) {
-                    if (entry.toString().equals(text)) {
+                    if (entry.toString().equalsIgnoreCase(text)) {
                         return entry;
                     }
                 }
@@ -158,6 +166,7 @@ public class IkeyConfig {
             this.format = format;
         }
 
+        @Override
         public String toString() {
             return format;
         }
@@ -165,7 +174,7 @@ public class IkeyConfig {
         public static OutputFormat fromString(final String text) {
             if (text != null) {
                 for (final OutputFormat entry : values()) {
-                    if (entry.toString().equals(text)) {
+                    if (entry.toString().equalsIgnoreCase(text)) {
                         return entry;
                     }
                 }
@@ -184,6 +193,7 @@ public class IkeyConfig {
         private final String description;
         private final int intWeight;
 
+        @Override
         public String toString() {
             return description;
         }
@@ -200,7 +210,7 @@ public class IkeyConfig {
         public static WeightValue fromString(final String text) {
             if (text != null) {
                 for (final WeightValue entry : values()) {
-                    if (entry.toString().equals(text)) {
+                    if (entry.toString().equalsIgnoreCase(text)) {
                         return entry;
                     }
                 }
@@ -219,8 +229,20 @@ public class IkeyConfig {
             this.type = type;
         }
 
+        @Override
         public String toString() {
             return type;
+        }
+
+        public static WeightType fromString(final String s) {
+            if (s != null) {
+                for (final WeightType entry : values()) {
+                    if (entry.toString().equalsIgnoreCase(s)) {
+                        return entry;
+                    }
+                }
+            }
+            return null;
         }
     }
 
@@ -239,6 +261,7 @@ public class IkeyConfig {
             this.contextType = contextType;
         }
 
+        @Override
         public String toString() {
             return contextType;
         }
@@ -246,7 +269,7 @@ public class IkeyConfig {
         public static WeightContext fromString(final String text) {
             if (text != null) {
                 for (final WeightContext entry : values()) {
-                    if (entry.toString().equals(text)) {
+                    if (entry.toString().equalsIgnoreCase(text)) {
                         return entry;
                     }
                 }
@@ -326,7 +349,7 @@ public class IkeyConfig {
                 if (fileOutputStream != null) {
                     fileOutputStream.close();
                 }
-            } catch (final IOException ignored) {
+            } catch (final IOException _) {
             }
         }
         return erroFile;
@@ -361,7 +384,6 @@ public class IkeyConfig {
     public ScoreMethod getScoreMethod() {
         return scoreMethod;
     }
-
 
     public WeightContext getWeightContext() {
         return weightContext;

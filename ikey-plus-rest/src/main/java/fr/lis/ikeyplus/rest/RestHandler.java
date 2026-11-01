@@ -3,13 +3,17 @@ package fr.lis.ikeyplus.rest;
 import fr.lis.ikeyplus.IO.SDDSaxParser;
 import fr.lis.ikeyplus.services.IdentificationKeyGenerator;
 import fr.lis.ikeyplus.utils.IkeyConfig;
+import fr.lis.ikeyplus.utils.IkeyConfig.KeyRepresentation;
+import fr.lis.ikeyplus.utils.IkeyConfig.OutputFormat;
+import fr.lis.ikeyplus.utils.IkeyConfig.ScoreMethod;
+import fr.lis.ikeyplus.utils.IkeyConfig.Verbosity;
 import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HttpResponseException;
+import io.javalin.validation.Validator;
 
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 
@@ -22,10 +26,10 @@ import static fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper.generateInteractiveHt
 import static fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper.generateSddString;
 import static fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper.generateTreeString;
 import static fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper.generateTreeWiki;
+import static fr.lis.ikeyplus.utils.IkeyConfig.KeyRepresentation.TREE;
 import static fr.lis.ikeyplus.utils.IkeyConfig.ScoreMethod.XPER;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.STATISTICS;
 import static io.javalin.http.HttpStatus.NOT_IMPLEMENTED;
-import static java.util.Optional.ofNullable;
 
 public class RestHandler {
     private static final String CONTENT_TYPE_XML = "text/xml";
@@ -37,25 +41,7 @@ public class RestHandler {
         final String sddURL = ctx.queryParam("sddURL");
         validateSddUrl(sddURL);
 
-        final String format = ctx.queryParam("format");
-        final String representation = ctx.queryParam("representation");
-        final boolean fewStatesCharacterFirst = "true".equals(ctx.queryParam("fewStatesCharacterFirst"));
-        final boolean mergeCharacterStatesIfSameDiscrimination = "true".equals(ctx.queryParam("mergeCharacterStatesIfSameDiscrimination"));
-        final boolean pruning = "true".equals(ctx.queryParam("pruning"));
-        final String verbosity = ctx.queryParam("verbosity");
-        final String scoreMethod = ofNullable(ctx.queryParam("scoreMethod")).orElse(XPER.name());
-        final String weightContext = ctx.queryParam("weightContext");
-        final String weightType = ctx.queryParam("weightType");
-
-        final IkeyConfig config = ik.initializeConfig(format,
-                representation,
-                fewStatesCharacterFirst,
-                mergeCharacterStatesIfSameDiscrimination,
-                pruning,
-                verbosity,
-                scoreMethod,
-                weightContext,
-                weightType);
+        final IkeyConfig config = initializeConfig(ctx);
 
         final var validatedSddUrl = validateSddUrl(sddURL);
         final var sddSaxParser = new SDDSaxParser(validatedSddUrl.openStream(), config);
@@ -96,6 +82,26 @@ public class RestHandler {
         }
     }
 
+    static <T> T getParamOrThrow(final Context ctx, final String name, final Class<T> clazz, final T fallback) {
+        final Validator<T> tValidator = ctx.queryParamAsClass(name, clazz);
+        if (!tValidator.hasValue()) {
+            return fallback;
+        }
+        return tValidator.getOrThrow(_ -> new BadRequestResponse());
+    }
+
+    static IkeyConfig initializeConfig(final Context ctx) {
+        return IkeyConfig.builder()
+                .format(getParamOrThrow(ctx, "format", OutputFormat.class, OutputFormat.TXT))
+                .representation(getParamOrThrow(ctx, "keyRepresentation", KeyRepresentation.class, TREE))
+                .fewStatesCharacterFirst(getParamOrThrow(ctx, "fewStatesCharacterFirst", Boolean.class, false))
+                .mergeCharacterStatesIfSameDiscrimination(getParamOrThrow(ctx, "mergeCharacterStatesIfSameDiscrimination", Boolean.class, false))
+                .enablePruning(getParamOrThrow(ctx, "enablePruning", Boolean.class, false))
+                .verbosity(getParamOrThrow(ctx, "verbosity", Verbosity.class, Verbosity.getDefault()).levels())
+                .scoreMethod(getParamOrThrow(ctx, "scoreMethod", ScoreMethod.class, XPER))
+                .build();
+    }
+
     static URL validateSddUrl(final String sddUrl) {
         if (sddUrl == null) {
             throw new BadRequestResponse("sddUrl cannot be null");
@@ -104,12 +110,12 @@ public class RestHandler {
         try {
             final URI uri = URI.create(sddUrl);
             url = uri.toURL();
-        } catch (IllegalArgumentException| MalformedURLException _) {
+        } catch (IllegalArgumentException | MalformedURLException _) {
             throw new BadRequestResponse("sddUrl is malformed");
         }
         if (!List.of("http", "https").contains(url.getProtocol())) {
             throw new BadRequestResponse("sddUrl protocol should be http or https");
         }
         return url;
-     }
+    }
 }

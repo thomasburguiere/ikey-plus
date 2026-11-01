@@ -13,6 +13,16 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import static fr.lis.ikeyplus.utils.IkeyConfig.KeyRepresentation;
+import static fr.lis.ikeyplus.utils.IkeyConfig.OutputFormat;
+import static fr.lis.ikeyplus.utils.IkeyConfig.ScoreMethod;
+import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel;
+import static fr.lis.ikeyplus.utils.IkeyConfig.WeightContext;
+import static fr.lis.ikeyplus.utils.IkeyConfig.WeightType;
+import static fr.lis.ikeyplus.utils.IkeyConfig.builder;
+import static fr.lis.ikeyplus.utils.IkeyConfig.getBundleConfElement;
+import static fr.lis.ikeyplus.utils.IkeyConfig.getBundleConfOverridableElement;
+
 /**
  * Identification key webservice using REST protocol
  *
@@ -65,8 +75,8 @@ public class IdentificationKeyImpl {
         final String resultFileUrl;
         final String lineSeparator = System.lineSeparator();
 
-        final String prefix = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix");
-        final String generatedFilesFolder = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
+        final String prefix = getBundleConfOverridableElement("generatedKeyFiles.prefix");
+        final String generatedFilesFolder = getBundleConfOverridableElement("generatedKeyFiles.folder");
         final String generatedFilesFolderWithPrefix = prefix + generatedFilesFolder;
 
         try {
@@ -102,11 +112,11 @@ public class IdentificationKeyImpl {
                     urlConnection.getInputStream();
                 } catch (final IOException e) {
                     e.printStackTrace();
-                    config.setErrorMessage(IkeyConfig.getBundleConfElement("message.urlError"), e);
+                    config.setErrorMessage(getBundleConfElement("message.urlError"), e);
                 }
                 sddSaxParser = new SDDSaxParser(new FileInputStream(sddURL), config);
                 // construct header
-                header.append(lineSeparator).append(sddSaxParser.getDataset().getLabel()).append(", ").append(IkeyConfig.getBundleConfOverridableElement("message.createdBy")).append(lineSeparator);
+                header.append(lineSeparator).append(sddSaxParser.getDataset().getLabel()).append(", ").append(getBundleConfOverridableElement("message.createdBy")).append(lineSeparator);
                 header.append(lineSeparator).append("Options:");
                 header.append(lineSeparator).append("sddURL=").append(sddURL);
                 header.append(lineSeparator).append("format=").append(config.getFormat());
@@ -121,7 +131,7 @@ public class IdentificationKeyImpl {
                 header.append(lineSeparator);
             } catch (final Exception t) {
                 t.printStackTrace();
-                config.setErrorMessage(IkeyConfig.getBundleConfElement("message.parsingError"), t);
+                config.setErrorMessage(getBundleConfElement("message.parsingError"), t);
             }
             final double parseDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
             beforeTime = System.currentTimeMillis();
@@ -134,7 +144,7 @@ public class IdentificationKeyImpl {
                 identificationKeyGenerator.createIdentificationKey();
             } catch (final Throwable t) {
                 t.printStackTrace();
-                config.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingKeyError"), t);
+                config.setErrorMessage(getBundleConfElement("message.creatingKeyError"), t);
             }
 
             final double keyCreationDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
@@ -158,47 +168,47 @@ public class IdentificationKeyImpl {
 
                     header.append(lineSeparator).append(lineSeparator);
 
-                    if (!config.getVerbosity().contains(IkeyConfig.VerbosityLevel.HEADER)) {
+                    if (!config.getVerbosity().contains(VerbosityLevel.HEADER)) {
                         header.setLength(0);
                     }
-                    if (config.getFormat() == IkeyConfig.OutputFormat.HTML) {
-                        if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
+                    if (config.getFormat() == OutputFormat.HTML) {
+                        if (config.getRepresentation() == KeyRepresentation.FLAT) {
                             resultFile = SingleAccessKeyTreeDumper.dumpFlatHtmlFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
+                                    tree2dump, config.getVerbosity().contains(VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
                         } else {
                             resultFile = SingleAccessKeyTreeDumper.dumpHtmlFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
+                                    tree2dump, config.getVerbosity().contains(VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
                         }
-                    } else if (config.getFormat() == IkeyConfig.OutputFormat.WIKI) {
-                        if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
+                    } else if (config.getFormat() == OutputFormat.WIKI) {
+                        if (config.getRepresentation() == KeyRepresentation.FLAT) {
                             resultFile = SingleAccessKeyTreeDumper.dumpFlatWikiFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
+                                    tree2dump, config.getVerbosity().contains(VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
                         } else {
                             resultFile = SingleAccessKeyTreeDumper.dumpWikiFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
+                                    tree2dump, config.getVerbosity().contains(VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
                         }
-                    } else if (config.getFormat() == IkeyConfig.OutputFormat.INTERACTIVE_HTML) {
+                    } else if (config.getFormat() == OutputFormat.INTERACTIVE_HTML) {
                         resultFile = SingleAccessKeyTreeDumper.dumpInteractiveHtmlFile(header.toString(),
-                                tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
-                    } else if (config.getFormat() == IkeyConfig.OutputFormat.DOT) {
+                                tree2dump, config.getVerbosity().contains(VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
+                    } else if (config.getFormat() == OutputFormat.DOT) {
                         resultFile = SingleAccessKeyTreeDumper.dumpDotFile(header.toString(), tree2dump, generatedFilesFolderWithPrefix);
-                    } else if (config.getFormat() == IkeyConfig.OutputFormat.SDD) {
+                    } else if (config.getFormat() == OutputFormat.SDD) {
                         resultFile = SingleAccessKeyTreeDumper.dumpSddFile(tree2dump);
-                    } else if (config.getFormat() == IkeyConfig.OutputFormat.ZIP) {
+                    } else if (config.getFormat() == OutputFormat.ZIP) {
                         resultFile = SingleAccessKeyTreeDumper.dumpZipFile(header.toString(), tree2dump,
-                                config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
+                                config.getVerbosity().contains(VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
                     } else {
-                        if (config.getRepresentation() == IkeyConfig.KeyRepresentation.FLAT) {
+                        if (config.getRepresentation() == KeyRepresentation.FLAT) {
                             resultFile = SingleAccessKeyTreeDumper.dumpFlatTxtFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
+                                    tree2dump, config.getVerbosity().contains(VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
                         } else {
                             resultFile = SingleAccessKeyTreeDumper.dumpTxtFile(header.toString(),
-                                    tree2dump, config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
+                                    tree2dump, config.getVerbosity().contains(VerbosityLevel.STATISTICS), generatedFilesFolderWithPrefix);
                         }
                     }
                 } catch (final IOException e) {
                     e.printStackTrace();
-                    config.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingFileError"));
+                    config.setErrorMessage(getBundleConfElement("message.creatingFileError"));
                 }
                 // initiate the result file name
                 if (resultFile != null) {
@@ -206,7 +216,7 @@ public class IdentificationKeyImpl {
                 }
 
             } else {
-                config.setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingKeyError"));
+                config.setErrorMessage(getBundleConfElement("message.creatingKeyError"));
             }
 
             // if CPU usage is more than 80%
@@ -216,8 +226,8 @@ public class IdentificationKeyImpl {
 
         } catch (final Exception e) {
             e.printStackTrace();
-            config = IkeyConfig.builder().build();
-            config.setErrorMessage(IkeyConfig.getBundleConfElement("message.error"), e);
+            config = builder().build();
+            config.setErrorMessage(getBundleConfElement("message.error"), e);
         }
 
         // initialize the file name with error file name if exist
@@ -225,13 +235,13 @@ public class IdentificationKeyImpl {
             resultFileName = config.getErrorMessageFile().getName();
         }
 
-        resultFileUrl = IkeyConfig.getBundleConfOverridableElement("host")
+        resultFileUrl = getBundleConfOverridableElement("host")
                 + generatedFilesFolder + resultFileName;
 
         return resultFileUrl;
     }
 
-    public IkeyConfig initializeConfig(final String format,
+    public static IkeyConfig initializeConfig(final String format,
                                        final String representation,
                                        final boolean fewStatesCharacterFirst,
                                        final boolean mergeCharacterStatesIfSameDiscrimination,
@@ -241,18 +251,18 @@ public class IdentificationKeyImpl {
                                        final String weightContext,
                                        final String weightType) {
         final IkeyConfig config;
-        final IkeyConfigBuilder configBuilder = IkeyConfig.builder();
+        final IkeyConfigBuilder configBuilder = builder();
         // options initialization
-        if (format != null && IkeyConfig.OutputFormat.fromString(format) != null) {
-            configBuilder.format(IkeyConfig.OutputFormat.fromString(format));
+        if (format != null && OutputFormat.fromString(format) != null) {
+            configBuilder.format(OutputFormat.fromString(format));
         } else {
-            configBuilder.format(IkeyConfig.OutputFormat.TXT);
+            configBuilder.format(OutputFormat.TXT);
         }
 
-        if (representation != null && IkeyConfig.KeyRepresentation.fromString(representation) != null) {
-            configBuilder.representation(IkeyConfig.KeyRepresentation.fromString(representation));
+        if (representation != null && KeyRepresentation.fromString(representation) != null) {
+            configBuilder.representation(KeyRepresentation.fromString(representation));
         } else {
-            configBuilder.representation(IkeyConfig.KeyRepresentation.FLAT);
+            configBuilder.representation(KeyRepresentation.FLAT);
         }
         if (fewStatesCharacterFirst) {
             configBuilder.fewStatesCharacterFirst();
@@ -263,17 +273,17 @@ public class IdentificationKeyImpl {
         if (pruning) {
             configBuilder.enablePruning();
         }
-        if (verbosity != null && IkeyConfig.VerbosityLevel.fromString(verbosity) != null) {
-            configBuilder.verbosity(IkeyConfig.VerbosityLevel.fromString(verbosity));
+        if (verbosity != null && VerbosityLevel.fromString(verbosity) != null) {
+            configBuilder.verbosity(VerbosityLevel.fromString(verbosity));
         }
-        if (scoreMethod != null && IkeyConfig.ScoreMethod.fromString(scoreMethod) != null) {
-            configBuilder.scoreMethod(IkeyConfig.ScoreMethod.fromString(scoreMethod));
+        if (scoreMethod != null && ScoreMethod.fromString(scoreMethod) != null) {
+            configBuilder.scoreMethod(ScoreMethod.fromString(scoreMethod));
         }
-        if (weightContext != null && IkeyConfig.WeightContext.fromString(weightContext) != null) {
-            configBuilder.weightContext(IkeyConfig.WeightContext.fromString(weightContext));
+        if (weightContext != null && WeightContext.fromString(weightContext) != null) {
+            configBuilder.weightContext(WeightContext.fromString(weightContext));
         }
-        if (weightType != null && weightType.equalsIgnoreCase(IkeyConfig.WeightType.CONTEXTUAL.toString())) {
-            configBuilder.weightType(IkeyConfig.WeightType.CONTEXTUAL);
+        if (weightType != null && weightType.equalsIgnoreCase(WeightType.CONTEXTUAL.toString())) {
+            configBuilder.weightType(WeightType.CONTEXTUAL);
         }
 
         config = configBuilder.build();
