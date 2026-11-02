@@ -44,11 +44,11 @@ Follow-ups from the review of the Javalin migration (`refactor/rest-with-javalin
   - [x] Throw `new HttpResponseException(501, "format not supported yet")` (or 400 if they'll never be supported).
   - For ZIP, the old `SingleAccessKeyTreeDumper.dumpZipFile` could be adapted to write into `ctx.outputStream()` with `ContentType.APPLICATION_ZIP`.
 
-- [ ] **Reject unknown `format`/`representation` values**
-  - `IdentificationKeyImpl.initializeConfig` falls back to TXT/FLAT when `fromString` returns `null`, so `?format=htm` silently returns plain text.
-  - Same for `verbosity`, `scoreMethod`, `weightContext` and `weightType`: typos are ignored.
-  - Only apply the defaults when the param is absent. A present but unknown value should give a 400 that lists the accepted values (`Arrays.toString(OutputFormat.values())`).
-  - Note that `OutputFormat.fromString` and friends are case-sensitive. Decide whether to accept `HTML`/`Html`.
+- [x] **Reject unknown `format`/`representation` values**
+  - [x] `IdentificationKeyImpl.initializeConfig` falls back to TXT/FLAT when `fromString` returns `null`, so `?format=htm` silently returns plain text.
+  - [x] Same for `verbosity`, `scoreMethod`, `weightContext` and `weightType`: typos are ignored.
+  - [x] Only apply the defaults when the param is absent. A present but unknown value should give a 400 that lists the accepted values (`Arrays.toString(OutputFormat.values())`).
+  - [x] Note that `OutputFormat.fromString` and friends are case-sensitive. Decide whether to accept `HTML`/`Html`.
 
 - [ ] **Cap SDD download size and bound generation time**
   - Test inputs already include ~94k- and ~150k-line SDDs. Nothing stops someone from pointing at a multi-GB file or a slow endpoint.
