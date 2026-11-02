@@ -30,6 +30,7 @@ import static fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper.generateTreeString;
 import static fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper.generateTreeWiki;
 import static fr.lis.ikeyplus.utils.IkeyConfig.KeyRepresentation.TREE;
 import static fr.lis.ikeyplus.utils.IkeyConfig.ScoreMethod.XPER;
+import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.HEADER;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.STATISTICS;
 import static io.javalin.http.HttpStatus.NOT_IMPLEMENTED;
 
@@ -105,7 +106,7 @@ public class RestHandler {
 
         final var tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 
-        final String header = generateHeader(config, sddURL, dataset.getLabel());
+        final String header = config.getVerbosity().contains(HEADER) ? generateHeader(config, sddURL, dataset.getLabel()): "";
         final boolean showStatistics = config.getVerbosity().contains(STATISTICS);
         return switch (config.getFormat()) {
             case TXT -> switch (config.getRepresentation()) {

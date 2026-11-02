@@ -63,7 +63,7 @@ Follow-ups from the review of the Javalin migration (`refactor/rest-with-javalin
   - Remove the `ofNullable(...).orElse(...)` and pass the raw param; `initializeConfig` already handles `null`.
   - Once that's done, drop the unused `XPER` and `ofNullable` imports.
 
-- [ ] **Replace `"TODO HEADER"` with the real header**
+- [x] **Replace `"TODO HEADER"` with the real header**
   - The old `IdentificationKeyImpl.createIdentificationKey` built it: dataset label + `message.createdBy`, the list of options (`sddURL`, `format`, `representation`, ...), `parseDuration` and `keyCreationDuration`.
   - It was cleared when `VerbosityLevel.HEADER` was not requested. Keep that behaviour.
   - Extract it to a helper, e.g. `static String buildHeader(DataSet, IkeyConfig, String sddURL, Duration parse, Duration generate)`.
