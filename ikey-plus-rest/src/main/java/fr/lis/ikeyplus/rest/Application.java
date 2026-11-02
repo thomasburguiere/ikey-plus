@@ -9,7 +9,7 @@ public class Application {
             config.routes.get("/health", ctx -> ctx.result("ok"));
             config.routes.get("/identification-key", RestHandler::handleGetKey);
             ExceptionMapper.mapExceptions(config);
+            ConverterRegistrar.registerConverters(config);
         }).start(8080);
     }
-
 }
