@@ -135,8 +135,7 @@ public class RestHandler {
     static String generateHeader(final IkeyConfig config, final String sddURL, final String label){
         final StringBuilder header = new StringBuilder();
         final String lineSeparator = System.lineSeparator();
-//        sddSaxParser.getDataset().getLabel()
-        header.append(lineSeparator).append(label).append(", ");//.append(getBundleConfOverridableElement("message.createdBy")).append(lineSeparator);
+        header.append(lineSeparator).append(label).append(", ").append("created by: ikey+").append(lineSeparator);
         header.append(lineSeparator).append("Options:");
         header.append(lineSeparator).append("sddURL=").append(sddURL);
         header.append(lineSeparator).append("format=").append(config.getFormat());
