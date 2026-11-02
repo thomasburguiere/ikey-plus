@@ -1,6 +1,7 @@
 package fr.lis.ikeyplus.rest;
 
 import fr.lis.ikeyplus.IO.SDDSaxParser;
+import fr.lis.ikeyplus.model.DataSet;
 import fr.lis.ikeyplus.services.IdentificationKeyGenerator;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import fr.lis.ikeyplus.utils.IkeyConfig.KeyRepresentation;
@@ -46,48 +47,12 @@ public class RestHandler {
         final IkeyConfig config = initializeConfig(ctx);
 
         try (final InputStream sddInputStream = validatedSddUrl.openStream()) {
-            final var result = generateKey(sddInputStream, config);
+            final var result = generateKey(sddInputStream, config, sddURL);
             ctx.result(result.keyContent).contentType(result.contentType);
         }
     }
 
     record KeyGenerationResult(String keyContent, String contentType) {
-    }
-
-    static KeyGenerationResult generateKey(final InputStream sddInputStream, final IkeyConfig config) throws Exception {
-        final var sddSaxParser = new SDDSaxParser(sddInputStream, config);
-
-        // call identification key service
-        final IdentificationKeyGenerator identificationKeyGenerator =
-                new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
-        identificationKeyGenerator.createIdentificationKey();
-
-        final var tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
-
-        final String header = "TODO HEADER";
-        final boolean showStatistics = config.getVerbosity().contains(STATISTICS);
-        return switch (config.getFormat()) {
-            case TXT -> switch (config.getRepresentation()) {
-                case TREE -> new KeyGenerationResult(generateTreeString(tree2dump), CONTENT_TYPE_TXT);
-                case FLAT -> new KeyGenerationResult(generateFlatString(tree2dump), CONTENT_TYPE_TXT);
-            };
-            case WIKI -> switch (config.getRepresentation()) {
-                case TREE -> new KeyGenerationResult(generateTreeWiki(tree2dump, showStatistics), CONTENT_TYPE_TXT);
-                case FLAT -> new KeyGenerationResult(generateFlatWikiString(tree2dump), CONTENT_TYPE_TXT);
-            };
-            case HTML -> switch (config.getRepresentation()) {
-                case TREE ->
-                        new KeyGenerationResult(generateHtmlString(header, tree2dump, showStatistics), CONTENT_TYPE_HTML);
-                case FLAT ->
-                        new KeyGenerationResult(generateFlatHtmlString(header, tree2dump, showStatistics), CONTENT_TYPE_HTML);
-            };
-            case INTERACTIVE_HTML ->
-                    new KeyGenerationResult(generateInteractiveHtmlString(header, tree2dump, showStatistics), CONTENT_TYPE_HTML);
-            case DOT -> new KeyGenerationResult(generateDotString(tree2dump), CONTENT_TYPE_TXT);
-            case SDD -> new KeyGenerationResult(generateSddString(tree2dump), CONTENT_TYPE_XML);
-            case PDF, ZIP ->
-                    throw new HttpResponseException(NOT_IMPLEMENTED.getCode(), "format not currently supported");
-        };
     }
 
     static URL validateSddUrl(final String sddUrl) {
@@ -125,5 +90,65 @@ public class RestHandler {
             return fallback;
         }
         return tValidator.getOrThrow(_ -> new BadRequestResponse());
+    }
+
+    static KeyGenerationResult generateKey(final InputStream sddInputStream,
+                                           final IkeyConfig config,
+                                           final String sddURL) throws Exception {
+        final var sddSaxParser = new SDDSaxParser(sddInputStream, config);
+
+        // call identification key service
+        final DataSet dataset = sddSaxParser.getDataset();
+        final IdentificationKeyGenerator identificationKeyGenerator =
+                new IdentificationKeyGenerator(dataset, config);
+        identificationKeyGenerator.createIdentificationKey();
+
+        final var tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
+
+        final String header = generateHeader(config, sddURL, dataset.getLabel());
+        final boolean showStatistics = config.getVerbosity().contains(STATISTICS);
+        return switch (config.getFormat()) {
+            case TXT -> switch (config.getRepresentation()) {
+                case TREE -> new KeyGenerationResult(generateTreeString(tree2dump), CONTENT_TYPE_TXT);
+                case FLAT -> new KeyGenerationResult(generateFlatString(tree2dump), CONTENT_TYPE_TXT);
+            };
+            case WIKI -> switch (config.getRepresentation()) {
+                case TREE -> new KeyGenerationResult(generateTreeWiki(tree2dump, showStatistics), CONTENT_TYPE_TXT);
+                case FLAT -> new KeyGenerationResult(generateFlatWikiString(tree2dump), CONTENT_TYPE_TXT);
+            };
+            case HTML -> switch (config.getRepresentation()) {
+                case TREE ->
+                        new KeyGenerationResult(generateHtmlString(header, tree2dump, showStatistics), CONTENT_TYPE_HTML);
+                case FLAT ->
+                        new KeyGenerationResult(generateFlatHtmlString(header, tree2dump, showStatistics), CONTENT_TYPE_HTML);
+            };
+            case INTERACTIVE_HTML ->
+                    new KeyGenerationResult(generateInteractiveHtmlString(header, tree2dump, showStatistics), CONTENT_TYPE_HTML);
+            case DOT -> new KeyGenerationResult(generateDotString(tree2dump), CONTENT_TYPE_TXT);
+            case SDD -> new KeyGenerationResult(generateSddString(tree2dump), CONTENT_TYPE_XML);
+            case PDF, ZIP ->
+                    throw new HttpResponseException(NOT_IMPLEMENTED.getCode(), "format not currently supported");
+        };
+    }
+
+    static String generateHeader(final IkeyConfig config, final String sddURL, final String label){
+        final StringBuilder header = new StringBuilder();
+        final String lineSeparator = System.lineSeparator();
+//        sddSaxParser.getDataset().getLabel()
+        header.append(lineSeparator).append(label).append(", ");//.append(getBundleConfOverridableElement("message.createdBy")).append(lineSeparator);
+        header.append(lineSeparator).append("Options:");
+        header.append(lineSeparator).append("sddURL=").append(sddURL);
+        header.append(lineSeparator).append("format=").append(config.getFormat());
+        header.append(lineSeparator).append("representation=").append(config.getRepresentation());
+        header.append(lineSeparator).append("fewStatesCharacterFirst=").append(config.isFewStatesCharacterFirst());
+        header.append(lineSeparator).append("mergeCharacterStatesIfSameDiscrimination=").append(config.isMergeCharacterStatesIfSameDiscrimination());
+        header.append(lineSeparator).append("pruning=").append(config.isPruningEnabled());
+        header.append(lineSeparator).append("verbosity=").append(config.getVerbosity());
+        header.append(lineSeparator).append("scoreMethod=").append(config.getScoreMethod());
+        header.append(lineSeparator).append("weightContext=").append(config.getWeightContext());
+        header.append(lineSeparator).append("weightType=").append(config.getWeightType());
+        header.append(lineSeparator);
+
+        return header.toString();
     }
 }
