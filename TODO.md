@@ -56,9 +56,9 @@ Follow-ups from the review of the Javalin migration (`refactor/rest-with-javalin
   - Wrap the stream in a size-limited `InputStream` (e.g. abort after N MB, configurable).
   - Key generation runs on the Jetty request thread. Consider running it in a bounded executor with a timeout (`CompletableFuture.orTimeout`) and returning 503 when saturated. The old CPU-usage guard in `IdentificationKeyImpl` (commented out, Sigar) was the previous attempt at this.
 
-## Correctness
+## ~~Correctness~~
 
-- [ ] **Fix the `scoreMethod` default**
+- [x] **Fix the `scoreMethod` default**
   - `ofNullable(ctx.queryParam("scoreMethod")).orElse(XPER.name())` yields `"XPER"`, but `ScoreMethod.fromString` compares against `toString()`, which is `"xper"`. The lookup returns `null`, and the builder's own default (XPER) applies only by accident.
   - Remove the `ofNullable(...).orElse(...)` and pass the raw param; `initializeConfig` already handles `null`.
   - Once that's done, drop the unused `XPER` and `ofNullable` imports.
@@ -77,7 +77,7 @@ Follow-ups from the review of the Javalin migration (`refactor/rest-with-javalin
   - Then remove the hand-rolled `CONTENT_TYPE*` constants.
   - Consider setting `charset=utf-8` and, optionally, `Content-Disposition` with a sensible filename for downloads.
 
-## Cleanup
+## ~~Cleanup~~
 
 - [x] **Tighten `handleGetKey`**
   - It's a package-private, non-final, mutable static field (`static Handler handleGetKey = ctx -> {...}`).
@@ -112,7 +112,7 @@ Follow-ups from the review of the Javalin migration (`refactor/rest-with-javalin
   - `build()` passes the builder's internal `HashSet` straight into `IkeyConfig`. A builder reused after `build()`, or a caller mutating `getVerbosity()`, changes the config.
   - Pass `Set.copyOf(verbosity)`, or an `EnumSet.copyOf` when it's non-empty.
 
-## Docker
+## ~~Docker~
 
 - [x] **Change the base image**
   - [x] `openjdk:25-ea-1-slim` is an early-access build, and the `openjdk` images are deprecated/unmaintained.
