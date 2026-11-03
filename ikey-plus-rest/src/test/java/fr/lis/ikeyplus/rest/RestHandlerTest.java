@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Set;
@@ -20,13 +19,11 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static fr.lis.ikeyplus.rest.RestHandler.getParamOrThrow;
-import static fr.lis.ikeyplus.utils.IkeyConfig.KeyRepresentation.*;
 import static fr.lis.ikeyplus.utils.IkeyConfig.KeyRepresentation.FLAT;
 import static fr.lis.ikeyplus.utils.IkeyConfig.KeyRepresentation.TREE;
 import static fr.lis.ikeyplus.utils.IkeyConfig.OutputFormat.DOT;
 import static fr.lis.ikeyplus.utils.IkeyConfig.OutputFormat.TXT;
 import static fr.lis.ikeyplus.utils.IkeyConfig.ScoreMethod.XPER;
-import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.*;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.HEADER;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.OTHER;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.STATISTICS;

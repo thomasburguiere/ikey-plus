@@ -91,7 +91,13 @@ public class RestHandler {
         if (!tValidator.hasValue()) {
             return fallback;
         }
-        return tValidator.getOrThrow(_ -> new BadRequestResponse());
+        return tValidator.getOrThrow(errorMap -> {
+            final String errorMessage = errorMap.entrySet().stream()
+                    .map(e -> String.format("for parameter %s, %s", e.getKey(), e.getValue().getFirst().exception().getMessage()))
+                    .reduce("", String::concat);
+            final BadRequestResponse badRequestResponse = new BadRequestResponse("invalid parameter");
+            return badRequestResponse;
+        });
     }
 
     static KeyGenerationResult generateKey(final InputStream sddInputStream,
