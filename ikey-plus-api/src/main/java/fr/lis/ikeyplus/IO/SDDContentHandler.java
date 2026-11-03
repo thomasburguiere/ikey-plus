@@ -18,6 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static fr.lis.ikeyplus.utils.IkeyConfig.WeightType.*;
+
 /**
  * This class extends the ContentHandler class, in order to be able to treat each SDD tag and extract data
  *
@@ -378,7 +380,7 @@ public class SDDContentHandler implements ContentHandler {
                         ratingsCounter.put(currentCodedDescriptionCharacter,
                                 ratingsCounter.get(currentCodedDescriptionCharacter) + 1);
 
-                        if (config.getWeightType() == IkeyConfig.WeightType.CONTEXTUAL) {
+                        if (config.getWeightType() == CONTEXTUAL) {
                             currentCodedDescription.addCharacterWeight(currentCodedDescriptionCharacter,
                                     currentRating);
                         }
@@ -733,10 +735,10 @@ public class SDDContentHandler implements ContentHandler {
     public void characters(final char[] ch, final int start, final int length) {
         String data = new String(ch, start, length);
 
-        data = data.replaceAll("\t", " "); // replace all the \t character by
+        data = data.replace("\t", " "); // replace all the \t character by
         // space. It corresponds to the xml
         // indentation characters.
-        data = data.replaceAll("\n", " ");
+        data = data.replace("\n", " ");
         data = data.replaceAll("[\\s]+", " ");
         if (buffer != null) {
             buffer.append(data);

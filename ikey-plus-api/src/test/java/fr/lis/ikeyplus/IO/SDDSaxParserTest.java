@@ -4,7 +4,6 @@ import fr.lis.ikeyplus.model.DataSet;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.io.FileInputStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,6 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Florian Causse
  */
 public class SDDSaxParserTest {
+    final SDDSaxParser sddSaxParser = new SDDSaxParser();
 
     private static final int EXPECTED_NB_OF_CHARACTERS = 303;
     private static final int EXPECTED_NB_OF_TAXA = 144;
@@ -24,8 +24,7 @@ public class SDDSaxParserTest {
     public void should_parse_local_file() throws Exception {
         // creation of IkeyConfig object (containing options)
         final IkeyConfig config = IkeyConfig.builder().build();
-        final SDDSaxParser sddSaxParser = new SDDSaxParser(new FileInputStream("src/test/resources/inputFiles/cichorieae.sdd.xml"), config);
-        final DataSet dataset = sddSaxParser.getDataset();
+        final DataSet dataset = sddSaxParser.parseDataset(new FileInputStream("src/test/resources/inputFiles/cichorieae.sdd.xml"), config);
         assertThat(dataset.getLabel()).isEqualToIgnoringCase(DATASET_NAME);
         assertThat(dataset.getCharacters()).hasSize(EXPECTED_NB_OF_CHARACTERS);
         assertThat(dataset.getTaxa()).hasSize(EXPECTED_NB_OF_TAXA);
