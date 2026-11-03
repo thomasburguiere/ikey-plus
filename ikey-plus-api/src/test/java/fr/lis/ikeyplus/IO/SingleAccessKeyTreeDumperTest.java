@@ -11,9 +11,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
+import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.*;
 import static org.assertj.core.api.Assertions.assertThat;
 public class SingleAccessKeyTreeDumperTest {
 
@@ -23,7 +25,7 @@ public class SingleAccessKeyTreeDumperTest {
     public void should_generate_cichorieae_flat_html_key() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/cichorieae.sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder().enablePruning().verbosity(IkeyConfig.VerbosityLevel.HEADER).build();
+        final IkeyConfig config = IkeyConfig.builder().enablePruning().verbosity(HEADER).build();
 
         final SDDSaxParser sddSaxParser;
         sddSaxParser = new SDDSaxParser(new FileInputStream(stringUrl), config);
@@ -33,7 +35,7 @@ public class SingleAccessKeyTreeDumperTest {
         identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
-        final boolean statisticsEnabled = config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS);
+        final boolean statisticsEnabled = config.getVerbosity().contains(STATISTICS);
         final File file = SingleAccessKeyTreeDumper.dumpFlatHtmlFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
         final byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
         final String result = new String(resultBytes, StandardCharsets.UTF_8);
@@ -48,7 +50,7 @@ public class SingleAccessKeyTreeDumperTest {
 
         final IkeyConfig config = IkeyConfig.builder()
                 .enablePruning()
-                .verbosity(IkeyConfig.VerbosityLevel.HEADER)
+                .verbosity(HEADER)
                 .representation(IkeyConfig.KeyRepresentation.TREE)
                 .build();
 
@@ -60,7 +62,7 @@ public class SingleAccessKeyTreeDumperTest {
         identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
-        final boolean statisticsEnabled = config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS);
+        final boolean statisticsEnabled = config.getVerbosity().contains(STATISTICS);
         final File file = SingleAccessKeyTreeDumper.dumpHtmlFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
         final byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
         final String result = new String(resultBytes, StandardCharsets.UTF_8);
@@ -75,7 +77,7 @@ public class SingleAccessKeyTreeDumperTest {
 
         final IkeyConfig config = IkeyConfig.builder()
                 .enablePruning()
-                .verbosity(IkeyConfig.VerbosityLevel.HEADER)
+                .verbosity(HEADER)
                 .representation(IkeyConfig.KeyRepresentation.FLAT)
                 .build();
 
@@ -87,8 +89,8 @@ public class SingleAccessKeyTreeDumperTest {
         identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
-        final boolean statisticsEnabled = config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS);
-        final File file = SingleAccessKeyTreeDumper.dumpFlatTxtFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
+        final boolean statisticsEnabled = config.getVerbosity().contains(STATISTICS);
+        final File file = SingleAccessKeyTreeDumper.dumpFlatTxtFile("TEST HEADER", tree2dump, statisticsEnabled, generatedFilesFolder);
         final byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
         final String result = new String(resultBytes, StandardCharsets.UTF_8);
 
@@ -102,7 +104,7 @@ public class SingleAccessKeyTreeDumperTest {
 
         final IkeyConfig config = IkeyConfig.builder()
                 .enablePruning()
-                .verbosity(IkeyConfig.VerbosityLevel.HEADER)
+                .verbosity(HEADER)
                 .representation(IkeyConfig.KeyRepresentation.TREE)
                 .build();
 
@@ -114,8 +116,8 @@ public class SingleAccessKeyTreeDumperTest {
         identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
-        final boolean statisticsEnabled = config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS);
-        final File file = SingleAccessKeyTreeDumper.dumpTxtFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
+        final boolean statisticsEnabled = config.getVerbosity().contains(STATISTICS);
+        final File file = SingleAccessKeyTreeDumper.dumpTxtFile("TEST HEADER", tree2dump, statisticsEnabled, generatedFilesFolder);
         final byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
         final String result = new String(resultBytes, StandardCharsets.UTF_8);
 
@@ -129,7 +131,7 @@ public class SingleAccessKeyTreeDumperTest {
 
         final IkeyConfig config = IkeyConfig.builder()
                 .enablePruning()
-                .verbosity(IkeyConfig.VerbosityLevel.HEADER)
+                .verbosity(HEADER)
                 .representation(IkeyConfig.KeyRepresentation.TREE)
                 .build();
 
@@ -141,7 +143,7 @@ public class SingleAccessKeyTreeDumperTest {
         identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
-        final boolean statisticsEnabled = config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS);
+        final boolean statisticsEnabled = config.getVerbosity().contains(STATISTICS);
         final File file = SingleAccessKeyTreeDumper.dumpWikiFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
         final byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
         final String result = new String(resultBytes, StandardCharsets.UTF_8);
@@ -156,7 +158,7 @@ public class SingleAccessKeyTreeDumperTest {
 
         final IkeyConfig config = IkeyConfig.builder()
                 .enablePruning()
-                .verbosity(IkeyConfig.VerbosityLevel.HEADER)
+                .verbosity(HEADER)
                 .representation(IkeyConfig.KeyRepresentation.TREE)
                 .build();
 
@@ -168,7 +170,7 @@ public class SingleAccessKeyTreeDumperTest {
         identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
-        final boolean statisticsEnabled = config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS);
+        final boolean statisticsEnabled = config.getVerbosity().contains(STATISTICS);
         final File file = SingleAccessKeyTreeDumper.dumpFlatWikiFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
         final byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
         final String result = new String(resultBytes, StandardCharsets.UTF_8);
@@ -183,7 +185,7 @@ public class SingleAccessKeyTreeDumperTest {
 
         final IkeyConfig config = IkeyConfig.builder()
                 .enablePruning()
-                .verbosity(IkeyConfig.VerbosityLevel.HEADER)
+                .verbosity(HEADER)
                 .representation(IkeyConfig.KeyRepresentation.TREE)
                 .build();
 
@@ -214,8 +216,8 @@ public class SingleAccessKeyTreeDumperTest {
 
         final IkeyConfig config = IkeyConfig.builder()
                 .enablePruning()
-                .verbosity(IkeyConfig.VerbosityLevel.HEADER)
-                .verbosity(IkeyConfig.VerbosityLevel.STATISTICS)
+                .verbosity(HEADER)
+                .verbosity(STATISTICS)
                 .representation(IkeyConfig.KeyRepresentation.TREE)
                 .build();
 
@@ -227,16 +229,14 @@ public class SingleAccessKeyTreeDumperTest {
         identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
-        final boolean statisticsEnabled = config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS);
-        final File file = SingleAccessKeyTreeDumper.dumpFlatTxtFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
+        final boolean statisticsEnabled = config.getVerbosity().contains(STATISTICS);
+        final File file = SingleAccessKeyTreeDumper.dumpFlatTxtFile("TEST HEADER", tree2dump, statisticsEnabled, generatedFilesFolder);
         final byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
         String result = new String(resultBytes, StandardCharsets.UTF_8);
-        result = result.replaceFirst("created.*\"", "");
 
 
         final byte[] fixtureBytes = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta_flat_stats.txt"));
         String fixture = new String(fixtureBytes, StandardCharsets.UTF_8);
-        fixture = fixture.replaceFirst("created.*\"", "");
 
         assertThat(result).isEqualTo(fixture);
     }
@@ -247,8 +247,8 @@ public class SingleAccessKeyTreeDumperTest {
 
         final IkeyConfig config = IkeyConfig.builder()
                 .enablePruning()
-                .verbosity(IkeyConfig.VerbosityLevel.HEADER)
-                .verbosity(IkeyConfig.VerbosityLevel.STATISTICS)
+                .verbosity(HEADER)
+                .verbosity(STATISTICS)
                 .representation(IkeyConfig.KeyRepresentation.TREE)
                 .build();
 
@@ -260,7 +260,7 @@ public class SingleAccessKeyTreeDumperTest {
         identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
-        final boolean statisticsEnabled = config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS);
+        final boolean statisticsEnabled = config.getVerbosity().contains(STATISTICS);
         final File file = SingleAccessKeyTreeDumper.dumpFlatWikiFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
         final byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
         final String result = new String(resultBytes, StandardCharsets.UTF_8);
@@ -279,8 +279,8 @@ public class SingleAccessKeyTreeDumperTest {
 
         final IkeyConfig config = IkeyConfig.builder()
                 .enablePruning()
-                .verbosity(IkeyConfig.VerbosityLevel.HEADER)
-                .verbosity(IkeyConfig.VerbosityLevel.STATISTICS)
+                .verbosity(HEADER)
+                .verbosity(STATISTICS)
                 .representation(IkeyConfig.KeyRepresentation.TREE)
                 .build();
 
@@ -292,7 +292,7 @@ public class SingleAccessKeyTreeDumperTest {
         identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
-        final boolean statisticsEnabled = config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS);
+        final boolean statisticsEnabled = config.getVerbosity().contains(STATISTICS);
         final File file = SingleAccessKeyTreeDumper.dumpFlatHtmlFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
         final byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
         final String result = new String(resultBytes, StandardCharsets.UTF_8);
@@ -311,7 +311,7 @@ public class SingleAccessKeyTreeDumperTest {
 
         final IkeyConfig config = IkeyConfig.builder()
                 .enablePruning()
-                .verbosity(IkeyConfig.VerbosityLevel.HEADER)
+                .verbosity(HEADER)
                 .representation(IkeyConfig.KeyRepresentation.TREE)
                 .build();
 
@@ -323,7 +323,7 @@ public class SingleAccessKeyTreeDumperTest {
         identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
-        final boolean statisticsEnabled = config.getVerbosity().contains(IkeyConfig.VerbosityLevel.STATISTICS);
+        final boolean statisticsEnabled = config.getVerbosity().contains(STATISTICS);
         final File file = SingleAccessKeyTreeDumper.dumpInteractiveHtmlFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
         final byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
         final String result = new String(resultBytes, StandardCharsets.UTF_8);
@@ -342,7 +342,7 @@ public class SingleAccessKeyTreeDumperTest {
 
         final IkeyConfig config = IkeyConfig.builder()
                 .enablePruning()
-                .verbosity(IkeyConfig.VerbosityLevel.HEADER)
+                .verbosity(HEADER)
                 .representation(IkeyConfig.KeyRepresentation.TREE)
                 .build();
 
