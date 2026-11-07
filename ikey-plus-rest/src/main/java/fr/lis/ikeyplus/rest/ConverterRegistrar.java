@@ -30,11 +30,11 @@ public class ConverterRegistrar {
         config.validation.register(Boolean.class, s -> {
             if (s.equalsIgnoreCase("true")) return true;
             if (s.equalsIgnoreCase("false")) return false;
-            throw new BadRequestResponse();
+            throw new BadRequestResponse(String.format("expected 'true' or 'false', got '%s'", s));
         });
         config.validation.register(Verbosity.class, s -> {
             if (!ALLOWED_VERBOSITY_FLAGS.containsAll(stream(s.split("")).toList())) {
-                throw new BadRequestResponse();
+                throw new BadRequestResponse("ku");
             }
             return new Verbosity(VerbosityLevel.fromString(s));
         });

@@ -56,9 +56,9 @@ Follow-ups from the review of the Javalin migration (`refactor/rest-with-javalin
   - Wrap the stream in a size-limited `InputStream` (e.g. abort after N MB, configurable).
   - Key generation runs on the Jetty request thread. Consider running it in a bounded executor with a timeout (`CompletableFuture.orTimeout`) and returning 503 when saturated. The old CPU-usage guard in `IdentificationKeyImpl` (commented out, Sigar) was the previous attempt at this.
 
-## Correctness
+## ~~Correctness~~
 
-- [ ] **Fix the `scoreMethod` default**
+- [x] **Fix the `scoreMethod` default**
   - `ofNullable(ctx.queryParam("scoreMethod")).orElse(XPER.name())` yields `"XPER"`, but `ScoreMethod.fromString` compares against `toString()`, which is `"xper"`. The lookup returns `null`, and the builder's own default (XPER) applies only by accident.
   - Remove the `ofNullable(...).orElse(...)` and pass the raw param; `initializeConfig` already handles `null`.
   - Once that's done, drop the unused `XPER` and `ofNullable` imports.
@@ -77,42 +77,42 @@ Follow-ups from the review of the Javalin migration (`refactor/rest-with-javalin
   - Then remove the hand-rolled `CONTENT_TYPE*` constants.
   - Consider setting `charset=utf-8` and, optionally, `Content-Disposition` with a sensible filename for downloads.
 
-## Cleanup
+## ~~Cleanup~~
 
-- [ ] **Tighten `handleGetKey`**
+- [x] **Tighten `handleGetKey`**
   - It's a package-private, non-final, mutable static field (`static Handler handleGetKey = ctx -> {...}`).
   - Turn it into a `private static void handleGetKey(Context ctx)` method registered as `Application::handleGetKey`. It reads better, stack traces are clearer, and it's easier to unit test.
   - Consider splitting it: param parsing → config, key generation, rendering by format (the nested `switch`).
 
-- [ ] **Make `initializeConfig` static or move it**
+- [x] **Make `initializeConfig` static or move it**
   - `private static final IdentificationKeyImpl ik` exists only to call `initializeConfig`, which keeps no state.
   - Move it to `IkeyConfigBuilder` (e.g. `IkeyConfig.fromParams(...)`) or a small `KeyRequestParams` record with a `toConfig()` method. That also gives a natural place for the validation above.
 
-- [ ] **Delete `IdentificationKeyImpl.createIdentificationKey` / `getIdentificationKey`**
+- [x] **Delete `IdentificationKeyImpl.createIdentificationKey` / `getIdentificationKey`**
   - The file-based flow (writes into `generatedKeyFiles.folder`, returns a URL built from `host`) no longer matches the API, which streams the result.
   - Port the header logic first (see above), then delete the class.
   - Also check whether the `generatedKeyFiles.*` and `host` properties in `confOverridable.properties` are still used anywhere.
 
-- [ ] **Delete the commented-out code**
+- [x] **Delete the commented-out code**
   - `Worker.java` and `SchedulerServlet.java`: Quartz cleanup of generated files, pointless now that nothing is written to disk.
   - `Landing.java`: the JAX-RS hello world.
   - The javax annotations in `IdentificationKeyImpl`.
   - The jersey/quartz/servlet-api dependency blocks in `pom.xml`.
   - Git history keeps all of it.
 
-- [ ] **Delete `src/main/webapp/`**
+- [x] **Delete `src/main/webapp/`**
   - `web.xml` still declares the Jersey `ServletContainer`, `QuartzInitializerServlet` and `SchedulerServlet`, and `outputFiles/empty.txt` is a leftover.
   - Since the module now builds a `jar`, none of it is used.
   - Also check the root `pom.xml` / `.idea/runConfigurations/Tomcat.xml` for leftover WAR/Tomcat config.
 
-- [ ] **Remove `/hello` or turn it into `/health`**
+- [x] **Remove `/hello` or turn it into `/health`**
   - Keep a lightweight endpoint for Docker/compose healthchecks (`HEALTHCHECK` / `healthcheck:`), returning 200 + `ok` or build info (the old `IkeyInfo` resource did something like that).
 
-- [ ] **Copy the verbosity set in `IkeyConfigBuilder.build()`**
+- [x] **Copy the verbosity set in `IkeyConfigBuilder.build()`**
   - `build()` passes the builder's internal `HashSet` straight into `IkeyConfig`. A builder reused after `build()`, or a caller mutating `getVerbosity()`, changes the config.
   - Pass `Set.copyOf(verbosity)`, or an `EnumSet.copyOf` when it's non-empty.
 
-## Docker
+## ~~Docker~
 
 - [x] **Change the base image**
   - [x] `openjdk:25-ea-1-slim` is an early-access build, and the `openjdk` images are deprecated/unmaintained.
