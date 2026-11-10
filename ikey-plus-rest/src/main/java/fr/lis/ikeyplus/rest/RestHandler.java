@@ -4,10 +4,13 @@ import fr.lis.ikeyplus.IO.SDDSaxParser;
 import fr.lis.ikeyplus.model.DataSet;
 import fr.lis.ikeyplus.services.IdentificationKeyGenerator;
 import fr.lis.ikeyplus.utils.IkeyConfig;
+import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HttpResponseException;
 
 import java.io.InputStream;
+import java.net.URL;
+import java.util.Optional;
 
 import static fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper.generateDotString;
 import static fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper.generateFlatHtmlString;
@@ -21,7 +24,6 @@ import static fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper.generateTreeWiki;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.HEADER;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.STATISTICS;
 import static io.javalin.http.HttpStatus.NOT_IMPLEMENTED;
-import static java.lang.String.format;
 
 public class RestHandler {
     private static final SDDSaxParser parser = new SDDSaxParser();
@@ -34,9 +36,17 @@ public class RestHandler {
     }
 
     public static void handleGetKey(final Context ctx) throws Exception {
+        final InputParser parser = new InputParser(name -> Optional.ofNullable(ctx.queryParam(name)));
+
         final String sddURL = ctx.queryParam("sddURL");
-        final var validatedSddUrl = InputParser.validateSddUrl(sddURL);
-        final IkeyConfig config = InputParser.initializeConfig(ctx);
+        final URL validatedSddUrl;
+        final IkeyConfig config;
+        try {
+            validatedSddUrl = parser.validateSddUrl(sddURL);
+            config = parser.initializeConfig();
+        } catch (final IllegalArgumentException e) {
+            throw new BadRequestResponse(e.getMessage());
+        }
 
         try (final InputStream sddInputStream = validatedSddUrl.openStream()) {
             final var result = generateKey(sddInputStream, config, sddURL);
