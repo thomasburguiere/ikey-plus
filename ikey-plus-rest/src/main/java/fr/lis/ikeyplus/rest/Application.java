@@ -1,7 +1,6 @@
 package fr.lis.ikeyplus.rest;
 
 import io.javalin.Javalin;
-import org.jspecify.annotations.NonNull;
 
 public class Application {
 
@@ -9,7 +8,7 @@ public class Application {
         buildApplication().start(8080);
     }
 
-    public static @NonNull Javalin buildApplication() {
+    public static Javalin buildApplication() {
         return Javalin.create(config -> {
             config.routes.get("/health", ctx -> ctx.result("ok"));
             config.routes.get("/identification-key", RestHandler::handleGetKey);

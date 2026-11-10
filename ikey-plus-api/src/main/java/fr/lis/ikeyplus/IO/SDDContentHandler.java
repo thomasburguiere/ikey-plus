@@ -1,13 +1,13 @@
 package fr.lis.ikeyplus.IO;
 
-import fr.lis.ikeyplus.model.character.CategoricalCharacter;
 import fr.lis.ikeyplus.model.CodedDescription;
 import fr.lis.ikeyplus.model.DataSet;
-import fr.lis.ikeyplus.model.character.ICharacter;
-import fr.lis.ikeyplus.model.character.QuantitativeCharacter;
 import fr.lis.ikeyplus.model.QuantitativeMeasure;
 import fr.lis.ikeyplus.model.State;
 import fr.lis.ikeyplus.model.Taxon;
+import fr.lis.ikeyplus.model.character.CategoricalCharacter;
+import fr.lis.ikeyplus.model.character.ICharacter;
+import fr.lis.ikeyplus.model.character.QuantitativeCharacter;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static fr.lis.ikeyplus.utils.IkeyConfig.WeightType.*;
+import static fr.lis.ikeyplus.utils.IkeyConfig.WeightType.CONTEXTUAL;
 
 /**
  * This class extends the ContentHandler class, in order to be able to treat each SDD tag and extract data

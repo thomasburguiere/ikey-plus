@@ -39,7 +39,7 @@ Follow-ups from the review of the Javalin migration (`refactor/rest-with-javalin
     - Anything else → 500, logged with its stack trace, generic body.
   - Replace the `printStackTrace()` habit with a logger (SLF4J comes with `javalin-bundle`).
 
-- [ ] **Return 400/501 for `pdf`/`zip`**
+- [x] **Return 400/501 for `pdf`/`zip`**
   - [x] `case PDF, ZIP -> throw new RuntimeException("UNSUPPORTED")` gives a 500.
   - [x] Throw `new HttpResponseException(501, "format not supported yet")` (or 400 if they'll never be supported).
   - For ZIP, the old `SingleAccessKeyTreeDumper.dumpZipFile` could be adapted to write into `ctx.outputStream()` with `ContentType.APPLICATION_ZIP`.
@@ -128,9 +128,9 @@ Follow-ups from the review of the Javalin migration (`refactor/rest-with-javalin
 ## Tests
 
 - [ ] **Add endpoint tests with `javalin-testtools`**
-  - The old `IdentificationKeyResourceTest` was deleted, and nothing covers the new endpoint.
-  - Add `io.javalin:javalin-testtools` (test scope) and use `JavalinTest.test(app, (server, client) -> ...)`. This needs the app built from a factory method instead of inside `main`.
-  - Serve fixtures from `ikey-plus-api/src/test/resources/inputFiles`, either with a tiny Javalin static-files server in the test or by allowing a test-only host.
+  - [x] The old `IdentificationKeyResourceTest` was deleted, and nothing covers the new endpoint.
+  - [x] Add `io.javalin:javalin-testtools` (test scope) and use `JavalinTest.test(app, (server, client) -> ...)`. This needs the app built from a factory method instead of inside `main`.
+  - [x] Serve fixtures from `ikey-plus-api/src/test/resources/inputFiles`, either with a tiny Javalin static-files server in the test or by allowing a test-only host.
   - Cases:
     - each `format` × `representation` returns 200, with the right content type and output matching the existing `fixtures/genetta*` files
     - missing `sddURL` → 400
