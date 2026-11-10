@@ -75,13 +75,6 @@
                 <version>7.2.4</version>
             </dependency>
 
-            <!-- PROVIDED DEPENDENCIES -->
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>servlet-api</artifactId>
-                <version>${version.servlet-api}</version>
-            </dependency>
-
             <!-- TEST DEPENDENCIES -->
             <dependency>
                 <groupId>org.junit.jupiter</groupId>

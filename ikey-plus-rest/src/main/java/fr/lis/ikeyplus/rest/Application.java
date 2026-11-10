@@ -5,11 +5,14 @@ import io.javalin.Javalin;
 public class Application {
 
     public static void main(final String[] args) {
-        Javalin.create(config -> {
+        buildApplication().start(8080);
+    }
+
+    public static Javalin buildApplication() {
+        return Javalin.create(config -> {
             config.routes.get("/health", ctx -> ctx.result("ok"));
             config.routes.get("/identification-key", RestHandler::handleGetKey);
             ExceptionMapper.mapExceptions(config);
-            ConverterRegistrar.registerConverters(config);
-        }).start(8080);
+        });
     }
 }

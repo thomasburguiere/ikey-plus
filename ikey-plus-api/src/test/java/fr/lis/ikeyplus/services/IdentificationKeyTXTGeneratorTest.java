@@ -2,12 +2,12 @@ package fr.lis.ikeyplus.services;
 
 import fr.lis.ikeyplus.IO.SDDSaxParser;
 import fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper;
+import fr.lis.ikeyplus.model.DataSet;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 import fr.lis.ikeyplus.utils.IkeyConfigBuilder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.util.Set;
 
@@ -29,6 +29,7 @@ import static fr.lis.ikeyplus.utils.IkeyConfig.getBundleConfOverridableElement;
  * @created 18-04-2011
  */
 public class IdentificationKeyTXTGeneratorTest {
+    final SDDSaxParser sddSaxParser = new SDDSaxParser();
 
     @ParameterizedTest
     @ValueSource(strings = {
@@ -62,9 +63,9 @@ public class IdentificationKeyTXTGeneratorTest {
         final StringBuilder header = new StringBuilder();
 
         // options
-        final SDDSaxParser sddSaxParser = new SDDSaxParser(new FileInputStream(testFileUrl), config);
         // construct header
-        header.append(System.lineSeparator()).append(sddSaxParser.getDataset().getLabel()).append(", ").append(getBundleConfOverridableElement("message.createdBy")).append(System.lineSeparator());
+        final DataSet dataset = sddSaxParser.parseDataset(new FileInputStream(testFileUrl), config);
+        header.append(System.lineSeparator()).append(dataset.getLabel()).append(", ").append(getBundleConfOverridableElement("message.createdBy")).append(System.lineSeparator());
         header.append(System.lineSeparator()).append("Options:");
         header.append(System.lineSeparator()).append("sddURL=").append(testFileUrl);
         header.append(System.lineSeparator()).append("fewStatesCharacterFirst=").append(config.isFewStatesCharacterFirst());
@@ -78,7 +79,7 @@ public class IdentificationKeyTXTGeneratorTest {
         final double parseDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
         beforeTime = System.currentTimeMillis();
 
-        final IdentificationKeyGenerator identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.getDataset(), config);
+        final IdentificationKeyGenerator identificationKeyGenerator = new IdentificationKeyGenerator(dataset, config);
         identificationKeyGenerator.createIdentificationKey();
 
         final double keyCreationDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
