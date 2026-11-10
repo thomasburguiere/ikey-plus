@@ -28,7 +28,7 @@ import static io.javalin.http.HttpStatus.NOT_IMPLEMENTED;
 import static io.javalin.http.HttpStatus.OK;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class JavalinIT {
+public class JavalinIntegrationTest {
 
     private static final byte[] BROKEN_SDD = "<Datasets><not-closed>".getBytes(StandardCharsets.UTF_8);
 
@@ -130,12 +130,12 @@ public class JavalinIT {
         public static Stream<Arguments> provideQueryParametersTestArguments() {
             return Stream.of(
                     Arguments.of("enablePruning=1", "for parameter enablePruning, expected 'true' or 'false', got '1'"),
-                    Arguments.of("fewStatesCharacterFirst=noop", "for parameter enablePruning, expected 'true' or 'false', got '1'"),
-                    Arguments.of("mergeCharacterStatesIfSameDiscrimination=yes", "for parameter enablePruning, expected 'true' or 'false', got '1'"),
-                    Arguments.of("format=noop", "invalid parameter"),
-                    Arguments.of("keyRepresentation=noop", "invalid parameter"),
-                    Arguments.of("verbosity=hoxs", "invalid parameter"),
-                    Arguments.of("scoreMethod=noop", "invalid parameter")
+                    Arguments.of("fewStatesCharacterFirst=noop", "for parameter fewStatesCharacterFirst, expected 'true' or 'false', got 'noop'"),
+                    Arguments.of("mergeCharacterStatesIfSameDiscrimination=yes", "for parameter mergeCharacterStatesIfSameDiscrimination, expected 'true' or 'false', got 'yes'"),
+                    Arguments.of("format=noop", "for parameter format, expected one of [txt, html, interactivehtml, pdf, sdd, wiki, dot, zip], got 'noop'"),
+                    Arguments.of("keyRepresentation=noop", "for parameter keyRepresentation, expected one of [tree, flat], got 'noop'"),
+                    Arguments.of("verbosity=hoxs", "for parameter verbosity, invalid flag(s) [x] in 'hoxs', allowed flags are [h, o, w, s]"),
+                    Arguments.of("scoreMethod=noop", "for parameter scoreMethod, expected one of [xper, jaccard, sokalAndMichener], got 'noop'")
             );
         }
         @ParameterizedTest
