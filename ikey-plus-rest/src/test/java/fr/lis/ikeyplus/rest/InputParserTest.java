@@ -1,9 +1,6 @@
 package fr.lis.ikeyplus.rest;
 
 import fr.lis.ikeyplus.utils.IkeyConfig;
-import io.javalin.http.BadRequestResponse;
-import io.javalin.http.Context;
-import io.javalin.mock.ContextMock;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -11,7 +8,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.function.Consumer;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static fr.lis.ikeyplus.utils.IkeyConfig.KeyRepresentation;
@@ -37,34 +36,27 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class InputParserTest {
 
-    private static void doTest(final String queryString, final Consumer<Context> assertion) {
-        ContextMock
-                .create(c -> {
-                    c.getReq().queryString = queryString;
-                })
-                .execute(assertion);
-    }
-
     @Nested
     @DisplayName("validateSddUrl")
     class ValidateSddUrlTest {
+        InputParser parser = new InputParser(a -> Optional.of("dummy"));
 
         @Test
         void should_validate_normal_http_url() {
-            final var result = InputParser.validateSddUrl("http://google.com");
+            final var result = parser.validateSddUrl("http://google.com");
             assertThat(result).isNotNull();
         }
 
         @Test
         void should_validate_normal_https_url() {
-            final var result = InputParser.validateSddUrl("https://google.com");
+            final var result = parser.validateSddUrl("https://google.com");
             assertThat(result).isNotNull();
         }
 
         @Test
         void should_not_validate_normal_ftp_url() {
             try {
-                InputParser.validateSddUrl("ftp://google.com");
+                parser.validateSddUrl("ftp://google.com");
                 throw new RuntimeException();
             } catch (final Exception expected) {
                 assertThat(expected.getMessage()).isEqualTo("sddUrl protocol should be http or https");
@@ -74,7 +66,7 @@ class InputParserTest {
         @Test
         void should_not_validate_null_url() {
             try {
-                InputParser.validateSddUrl(null);
+                parser.validateSddUrl(null);
                 throw new RuntimeException();
             } catch (final Exception expected) {
                 assertThat(expected.getMessage()).isEqualTo("sddUrl cannot be null");
@@ -84,12 +76,16 @@ class InputParserTest {
         @Test
         void should_not_validate_malformed_url() {
             try {
-                InputParser.validateSddUrl("../etc");
+                parser.validateSddUrl("../etc");
                 throw new RuntimeException();
-            } catch (final BadRequestResponse expected) {
+            } catch (final IllegalArgumentException expected) {
                 assertThat(expected.getMessage()).isEqualTo("sddUrl is malformed");
             }
         }
+    }
+
+    private static Function<String, Optional<String>> paramProvider(Map<String, String> queryString) {
+        return n -> Optional.ofNullable(queryString.get(n));
     }
 
     @Nested
@@ -98,208 +94,248 @@ class InputParserTest {
 
         @Test
         void should_init_with_defaults() {
-            doTest("", ctx -> {
-                final IkeyConfig result = InputParser.initializeConfig(ctx);
-                assertThat(result.getFormat()).isSameAs(TXT);
-                assertThat(result.getScoreMethod()).isSameAs(XPER);
-                assertThat(result.getVerbosity()).isEmpty();
-                assertThat(result.getRepresentation()).isSameAs(TREE);
-                assertThat(result.getWeightType()).isSameAs(GLOBAL);
-                assertThat(result.getWeightContext()).isSameAs(NO_WEIGHT);
-                assertThat(result.isFewStatesCharacterFirst()).isFalse();
-                assertThat(result.isPruningEnabled()).isFalse();
-                assertThat(result.isMergeCharacterStatesIfSameDiscrimination()).isFalse();
-            });
+            final IkeyConfig result = new InputParser(a -> Optional.empty()).initializeConfig().getRight();
+            assertThat(result.getFormat()).isSameAs(TXT);
+            assertThat(result.getScoreMethod()).isSameAs(XPER);
+            assertThat(result.getVerbosity()).isEmpty();
+            assertThat(result.getRepresentation()).isSameAs(TREE);
+            assertThat(result.getWeightType()).isSameAs(GLOBAL);
+            assertThat(result.getWeightContext()).isSameAs(NO_WEIGHT);
+            assertThat(result.isFewStatesCharacterFirst()).isFalse();
+            assertThat(result.isPruningEnabled()).isFalse();
+            assertThat(result.isMergeCharacterStatesIfSameDiscrimination()).isFalse();
         }
 
         @Test
         void should_reject_invalid_enablePruning() {
-            doTest("enablePruning=noop", ctx ->
-                    assertThatThrownBy(() -> InputParser.initializeConfig(ctx))
-                            .isInstanceOf(BadRequestResponse.class)
-                            .hasMessage("for parameter enablePruning, expected 'true' or 'false', got 'noop'"));
+            final var parser = new InputParser(paramProvider(Map.of("enablePruning", "noop")));
+            final var result = parser.initializeConfig();
+
+            assertThat(result.isLeft()).isTrue();
+            final Map<String, String> left = result.getLeft();
+            assertThat(left)
+                .containsKey("enablePruning")
+                .containsValue("expected 'true' or 'false', got 'noop'");
         }
 
         private static Stream<Arguments> pruningValidArgs() {
             return Stream.of(
-                    Arguments.of("true", true),
-                    Arguments.of("TRUE", true),
-                    Arguments.of("True", true),
-                    Arguments.of("false", false),
-                    Arguments.of("FALSE", false),
-                    Arguments.of("fAlse", false)
+                Arguments.of("true", true),
+                Arguments.of("TRUE", true),
+                Arguments.of("True", true),
+                Arguments.of("false", false),
+                Arguments.of("FALSE", false),
+                Arguments.of("fAlse", false)
             );
         }
 
         @ParameterizedTest
         @MethodSource("pruningValidArgs")
-        void should_accept_valid_enablePruning_ignoring_case(final String paramValue, final boolean expected){
-            doTest("enablePruning=" + paramValue, ctx ->
-                    assertThat(InputParser.initializeConfig(ctx).isPruningEnabled()).isEqualTo(expected));
+        void should_accept_valid_enablePruning_ignoring_case(final String paramValue, final boolean expected) {
+            final var parser = new InputParser(paramProvider(Map.of("enablePruning", paramValue)));
+            assertThat(parser.initializeConfig().getRight().isPruningEnabled()).isEqualTo(expected);
         }
 
         @Test
         void should_default_empty_enablePruning_to_false() {
-            doTest("enablePruning=", ctx ->
-                    assertThat(InputParser.initializeConfig(ctx).isPruningEnabled()).isFalse());
+            final var parser = new InputParser(paramProvider(Map.of("enablePruning", "")));
+            assertThat(parser.initializeConfig().getRight().isPruningEnabled()).isFalse();
         }
 
         @Test
         void should_reject_invalid_fewStatesCharacterFirst() {
-            doTest("fewStatesCharacterFirst=noop", ctx ->
-                    assertThatThrownBy(() -> InputParser.initializeConfig(ctx))
-                            .isInstanceOf(BadRequestResponse.class)
-                            .hasMessage("for parameter fewStatesCharacterFirst, expected 'true' or 'false', got 'noop'"));
+            final var parser = new InputParser(paramProvider(Map.of("fewStatesCharacterFirst", "noop")));
+            final var result = parser.initializeConfig();
+
+            assertThat(result.isLeft()).isTrue();
+            assertThat(result.getLeft())
+                .containsKey("fewStatesCharacterFirst")
+                .containsValue("expected 'true' or 'false', got 'noop'");
         }
 
         private static Stream<Arguments> fewStatesCharacterFirstValidArgs() {
             return Stream.of(
-                    Arguments.of("true", true),
-                    Arguments.of("TRUE", true),
-                    Arguments.of("True", true),
-                    Arguments.of("false", false),
-                    Arguments.of("FALSE", false),
-                    Arguments.of("fAlse", false)
+                Arguments.of("true", true),
+                Arguments.of("TRUE", true),
+                Arguments.of("True", true),
+                Arguments.of("false", false),
+                Arguments.of("FALSE", false),
+                Arguments.of("fAlse", false)
             );
         }
 
         @ParameterizedTest
         @MethodSource("fewStatesCharacterFirstValidArgs")
-        void should_accept_valid_fewStatesCharacterFirst_ignoring_case(final String value, final boolean expected){
-            doTest("fewStatesCharacterFirst=" + value, ctx ->
-                    assertThat(InputParser.initializeConfig(ctx).isFewStatesCharacterFirst()).isEqualTo(expected));
+        void should_accept_valid_fewStatesCharacterFirst_ignoring_case(final String value, final boolean expected) {
+            final var parser = new InputParser(paramProvider(Map.of("fewStatesCharacterFirst", value)));
+            assertThat(parser.initializeConfig().getRight().isFewStatesCharacterFirst()).isEqualTo(expected);
         }
 
         @Test
         void should_default_empty_fewStatesCharacterFirst_to_false() {
-            doTest("fewStatesCharacterFirst=", ctx ->
-                    assertThat(InputParser.initializeConfig(ctx).isFewStatesCharacterFirst()).isFalse());
+            final var parser = new InputParser(paramProvider(Map.of("fewStatesCharacterFirst", "")));
+            assertThat(parser.initializeConfig().getRight().isFewStatesCharacterFirst()).isFalse();
         }
 
         @Test
         void should_reject_invalid_format() {
-            doTest("format=noop", ctx ->
-                    assertThatThrownBy(() -> InputParser.initializeConfig(ctx))
-                            .isInstanceOf(BadRequestResponse.class)
-                            .hasMessage("for parameter format, expected one of [txt, html, interactivehtml, pdf, sdd, wiki, dot, zip], got 'noop'"));
+            final var parser = new InputParser(paramProvider(Map.of("format", "noop")));
+            final var result = parser.initializeConfig();
+
+            assertThat(result.isLeft()).isTrue();
+            assertThat(result.getLeft())
+                .containsKey("format")
+                .containsValue("expected one of [txt, html, interactivehtml, pdf, sdd, wiki, dot, zip], got 'noop'");
         }
 
         private static Stream<Arguments> validFormatArguments() {
             return Stream.of(
-                    Arguments.of("pdf", PDF),
-                    Arguments.of("Sdd", SDD),
-                    Arguments.of("HTML", HTML),
-                    Arguments.of("interactivehtml", INTERACTIVE_HTML),
-                    Arguments.of("", TXT)
+                Arguments.of("pdf", PDF),
+                Arguments.of("Sdd", SDD),
+                Arguments.of("HTML", HTML),
+                Arguments.of("interactivehtml", INTERACTIVE_HTML),
+                Arguments.of("", TXT)
             );
         }
 
         @ParameterizedTest(name = "for query param value {0} -> should return {1}")
         @MethodSource("validFormatArguments")
         void should_accept_valid_format_ignoring_case(final String value, final OutputFormat expected) {
-            doTest("format=" + value, ctx ->
-                    assertThat(InputParser.initializeConfig(ctx).getFormat()).isSameAs(expected));
+            final var parser = new InputParser(paramProvider(Map.of("format", value)));
+            assertThat(parser.initializeConfig().getRight().getFormat()).isSameAs(expected);
         }
 
         @Test
         void should_default_empty_format_to_txt() {
-            doTest("format=", ctx ->
-                    assertThat(InputParser.initializeConfig(ctx).getFormat()).isSameAs(TXT));
+            final var parser = new InputParser(paramProvider(Map.of("format", "")));
+            assertThat(parser.initializeConfig().getRight().getFormat()).isSameAs(TXT);
         }
 
         @Test
         void should_reject_invalid_keyRepresentation() {
-            doTest("keyRepresentation=noop", ctx ->
-                    assertThatThrownBy(() -> InputParser.initializeConfig(ctx))
-                            .isInstanceOf(BadRequestResponse.class)
-                            .hasMessage("for parameter keyRepresentation, expected one of [tree, flat], got 'noop'"));
+            final var parser = new InputParser(paramProvider(Map.of("keyRepresentation", "noop")));
+            final var result = parser.initializeConfig();
+
+            assertThat(result.isLeft()).isTrue();
+            assertThat(result.getLeft())
+                .containsKey("keyRepresentation")
+                .containsValue("expected one of [tree, flat], got 'noop'");
         }
 
         private static Stream<Arguments> validKeyRepresentationArguments() {
             return Stream.of(
-                    Arguments.of("flat", FLAT),
-                    Arguments.of("Flat", FLAT),
-                    Arguments.of("tree", TREE),
-                    Arguments.of("Tree", TREE),
-                    Arguments.of("", TREE)
+                Arguments.of("flat", FLAT),
+                Arguments.of("Flat", FLAT),
+                Arguments.of("tree", TREE),
+                Arguments.of("Tree", TREE),
+                Arguments.of("", TREE)
             );
         }
 
         @ParameterizedTest(name = "for query param value {0} -> should return {1}")
         @MethodSource("validKeyRepresentationArguments")
         void should_accept_valid_keyRepresentation_ignoring_case(final String value, final KeyRepresentation expected) {
-            doTest("keyRepresentation=" + value, ctx ->
-                    assertThat(InputParser.initializeConfig(ctx).getRepresentation()).isSameAs(expected));
+            final var parser = new InputParser(paramProvider(Map.of("keyRepresentation", value)));
+            assertThat(parser.initializeConfig().getRight().getRepresentation()).isSameAs(expected);
         }
 
         @Test
         void should_default_empty_keyRepresentation_to_tree() {
-            doTest("keyRepresentation=", ctx ->
-                    assertThat(InputParser.initializeConfig(ctx).getRepresentation()).isSameAs(TREE));
+            final var parser = new InputParser(paramProvider(Map.of("keyRepresentation", "")));
+            assertThat(parser.initializeConfig().getRight().getRepresentation()).isSameAs(TREE);
         }
 
         @Test
         void should_reject_invalid_scoreMethod() {
-            doTest("scoreMethod=noop", ctx ->
-                    assertThatThrownBy(() -> InputParser.initializeConfig(ctx))
-                            .isInstanceOf(BadRequestResponse.class)
-                            .hasMessage("for parameter scoreMethod, expected one of [xper, jaccard, sokalAndMichener], got 'noop'"));
+            final var parser = new InputParser(paramProvider(Map.of("scoreMethod", "noop")));
+            final var result = parser.initializeConfig();
+
+            assertThat(result.isLeft()).isTrue();
+            assertThat(result.getLeft())
+                .containsKey("scoreMethod")
+                .containsValue("expected one of [xper, jaccard, sokalAndMichener], got 'noop'");
         }
 
         private static Stream<Arguments> validScoreMethodArguments() {
             return Stream.of(
-                    Arguments.of("xper", XPER),
-                    Arguments.of("Jaccard", JACCARD),
-                    Arguments.of("sokalAndMichener", SOKAL_AND_MICHENER),
-                    Arguments.of("", XPER)
+                Arguments.of("xper", XPER),
+                Arguments.of("Jaccard", JACCARD),
+                Arguments.of("sokalAndMichener", SOKAL_AND_MICHENER),
+                Arguments.of("", XPER)
             );
         }
 
         @ParameterizedTest(name = "for query param value {0} -> should return {1}")
         @MethodSource("validScoreMethodArguments")
         void should_accept_valid_scoreMethod_ignoring_case(final String value, final ScoreMethod expected) {
-            doTest("scoreMethod=" + value, ctx ->
-                    assertThat(InputParser.initializeConfig(ctx).getScoreMethod()).isSameAs(expected));
+            final var parser = new InputParser(paramProvider(Map.of("scoreMethod", value)));
+            assertThat(parser.initializeConfig().getRight().getScoreMethod()).isSameAs(expected);
         }
 
         @Test
-        void should_default_empty_scoreMethod_to_tree() {
-            doTest("scoreMethod=", ctx ->
-                    assertThat(InputParser.initializeConfig(ctx).getScoreMethod()).isSameAs(XPER));
+        void should_default_empty_scoreMethod_to_xper() {
+            final var parser = new InputParser(paramProvider(Map.of("scoreMethod", "")));
+            assertThat(parser.initializeConfig().getRight().getScoreMethod()).isSameAs(XPER);
         }
 
         @Test
         void should_reject_invalid_verbosity() {
-            doTest("verbosity=hoxs", ctx ->
-                    assertThatThrownBy(() -> InputParser.initializeConfig(ctx))
-                            .isInstanceOf(BadRequestResponse.class)
-                            .hasMessage("for parameter verbosity, invalid flag(s) [x] in 'hoxs', allowed flags are [h, o, w, s]"));
+            final var parser = new InputParser(paramProvider(Map.of("verbosity", "hoxs")));
+            final var result = parser.initializeConfig();
+
+            assertThat(result.isLeft()).isTrue();
+            assertThat(result.getLeft())
+                .containsKey("verbosity")
+                .containsValue("invalid flag(s) [x] in 'hoxs', allowed flags are [h, o, w, s]");
         }
 
         @Test
         void should_init_with_all_params_set() {
-            doTest("format=html&keyRepresentation=flat&fewStatesCharacterFirst=true"
-                            + "&mergeCharacterStatesIfSameDiscrimination=true&enablePruning=true"
-                            + "&verbosity=hw&scoreMethod=jaccard",
-                    ctx -> {
-                        final IkeyConfig result = InputParser.initializeConfig(ctx);
-                        assertThat(result.getFormat()).isSameAs(HTML);
-                        assertThat(result.getRepresentation()).isSameAs(FLAT);
-                        assertThat(result.isFewStatesCharacterFirst()).isTrue();
-                        assertThat(result.isMergeCharacterStatesIfSameDiscrimination()).isTrue();
-                        assertThat(result.isPruningEnabled()).isTrue();
-                        assertThat(result.getVerbosity()).containsExactlyInAnyOrder(HEADER, WARNING);
-                        assertThat(result.getScoreMethod()).isSameAs(ScoreMethod.JACCARD);
-                    });
+            final var parser = new InputParser(paramProvider(Map.of(
+                "format", "html",
+                "keyRepresentation", "flat",
+                "fewStatesCharacterFirst", "true",
+                "mergeCharacterStatesIfSameDiscrimination", "true",
+                "enablePruning", "true",
+                "verbosity", "hw",
+                "scoreMethod", "jaccard"
+            )));
+            final IkeyConfig result = parser.initializeConfig().getRight();
+            assertThat(result.getFormat()).isSameAs(HTML);
+            assertThat(result.getRepresentation()).isSameAs(FLAT);
+            assertThat(result.isFewStatesCharacterFirst()).isTrue();
+            assertThat(result.isMergeCharacterStatesIfSameDiscrimination()).isTrue();
+            assertThat(result.isPruningEnabled()).isTrue();
+            assertThat(result.getVerbosity()).containsExactlyInAnyOrder(HEADER, WARNING);
+            assertThat(result.getScoreMethod()).isSameAs(ScoreMethod.JACCARD);
+        }
+
+        @Test
+        void should_return_multiple_errors_if_multiple_wrong_params() {
+            final var parser = new InputParser(paramProvider(Map.of(
+                "format", "noop",
+                "keyRepresentation", "noop"
+            )));
+
+            final var result = parser.initializeConfig();
+
+            assertThat(result.isLeft()).isTrue();
+            assertThat(result.getLeft())
+                .containsAllEntriesOf(Map.of(
+                    "format", "expected one of [txt, html, interactivehtml, pdf, sdd, wiki, dot, zip], got 'noop'",
+                    "keyRepresentation", "expected one of [tree, flat], got 'noop'"
+                ));
         }
 
         @Test
         void should_ignore_unknown_params() {
-            doTest("foo=bar&format=dot", ctx -> {
-                final IkeyConfig result = InputParser.initializeConfig(ctx);
-                assertThat(result.getFormat()).isSameAs(DOT);
-                assertThat(result.getRepresentation()).isSameAs(TREE);
-            });
+            final var parser = new InputParser(paramProvider(Map.of(
+                "kurwa", "mac",
+                "format", "dot"
+            )));
+            final IkeyConfig result = parser.initializeConfig().getRight();
+            assertThat(result.getFormat()).isSameAs(DOT);
+            assertThat(result.getRepresentation()).isSameAs(TREE);
         }
     }
 }
