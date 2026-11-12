@@ -51,10 +51,9 @@ public class RestHandler {
 
         final var configOrErrors = parser.initializeConfig();
         final IkeyConfig config = switch (configOrErrors) {
-            case Left<Map<String, String>, ?> l -> throw new BadRequestResponse("", l.value());
-            case Right<?, IkeyConfig> r -> r.value();
+            case Left<Map<String, String>, ?>(final Map<String, String> lValue) -> throw new BadRequestResponse("Invalid Input Parameters;", lValue);
+            case Right<?, IkeyConfig> (final IkeyConfig rValue) -> rValue;
         };
-
 
         try (final InputStream sddInputStream = validatedSddUrl.openStream()) {
             final var result = generateKey(sddInputStream, config, sddURL);

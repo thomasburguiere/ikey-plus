@@ -115,7 +115,7 @@ class InputParserTest {
             final Map<String, String> left = result.getLeft();
             assertThat(left)
                 .containsKey("enablePruning")
-                .containsValue("for parameter enablePruning, expected 'true' or 'false', got 'noop'");
+                .containsValue("expected 'true' or 'false', got 'noop'");
         }
 
         private static Stream<Arguments> pruningValidArgs() {
@@ -150,7 +150,7 @@ class InputParserTest {
             assertThat(result.isLeft()).isTrue();
             assertThat(result.getLeft())
                 .containsKey("fewStatesCharacterFirst")
-                .containsValue("for parameter fewStatesCharacterFirst, expected 'true' or 'false', got 'noop'");
+                .containsValue("expected 'true' or 'false', got 'noop'");
         }
 
         private static Stream<Arguments> fewStatesCharacterFirstValidArgs() {
@@ -185,7 +185,7 @@ class InputParserTest {
             assertThat(result.isLeft()).isTrue();
             assertThat(result.getLeft())
                 .containsKey("format")
-                .containsValue("for parameter format, expected one of [txt, html, interactivehtml, pdf, sdd, wiki, dot, zip], got 'noop'");
+                .containsValue("expected one of [txt, html, interactivehtml, pdf, sdd, wiki, dot, zip], got 'noop'");
         }
 
         private static Stream<Arguments> validFormatArguments() {
@@ -219,7 +219,7 @@ class InputParserTest {
             assertThat(result.isLeft()).isTrue();
             assertThat(result.getLeft())
                 .containsKey("keyRepresentation")
-                .containsValue("for parameter keyRepresentation, expected one of [tree, flat], got 'noop'");
+                .containsValue("expected one of [tree, flat], got 'noop'");
         }
 
         private static Stream<Arguments> validKeyRepresentationArguments() {
@@ -253,7 +253,7 @@ class InputParserTest {
             assertThat(result.isLeft()).isTrue();
             assertThat(result.getLeft())
                 .containsKey("scoreMethod")
-                .containsValue("for parameter scoreMethod, expected one of [xper, jaccard, sokalAndMichener], got 'noop'");
+                .containsValue("expected one of [xper, jaccard, sokalAndMichener], got 'noop'");
         }
 
         private static Stream<Arguments> validScoreMethodArguments() {
@@ -286,7 +286,7 @@ class InputParserTest {
             assertThat(result.isLeft()).isTrue();
             assertThat(result.getLeft())
                 .containsKey("verbosity")
-                .containsValue("for parameter verbosity, invalid flag(s) [x] in 'hoxs', allowed flags are [h, o, w, s]");
+                .containsValue("invalid flag(s) [x] in 'hoxs', allowed flags are [h, o, w, s]");
         }
 
         @Test
@@ -322,8 +322,8 @@ class InputParserTest {
             assertThat(result.isLeft()).isTrue();
             assertThat(result.getLeft())
                 .containsAllEntriesOf(Map.of(
-                    "format", "for parameter format, expected one of [txt, html, interactivehtml, pdf, sdd, wiki, dot, zip], got 'noop'",
-                    "keyRepresentation", "for parameter keyRepresentation, expected one of [tree, flat], got 'noop'"
+                    "format", "expected one of [txt, html, interactivehtml, pdf, sdd, wiki, dot, zip], got 'noop'",
+                    "keyRepresentation", "expected one of [tree, flat], got 'noop'"
                 ));
         }
 

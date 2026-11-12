@@ -129,13 +129,13 @@ public class JavalinIntegrationTest {
 
         public static Stream<Arguments> provideQueryParametersTestArguments() {
             return Stream.of(
-                Arguments.of("enablePruning=1", "for parameter enablePruning, expected 'true' or 'false', got '1'"),
-                Arguments.of("fewStatesCharacterFirst=noop", "for parameter fewStatesCharacterFirst, expected 'true' or 'false', got 'noop'"),
-                Arguments.of("mergeCharacterStatesIfSameDiscrimination=yes", "for parameter mergeCharacterStatesIfSameDiscrimination, expected 'true' or 'false', got 'yes'"),
-                Arguments.of("format=noop", "for parameter format, expected one of [txt, html, interactivehtml, pdf, sdd, wiki, dot, zip], got 'noop'"),
-                Arguments.of("keyRepresentation=noop", "for parameter keyRepresentation, expected one of [tree, flat], got 'noop'"),
-                Arguments.of("verbosity=hoxs", "for parameter verbosity, invalid flag(s) [x] in 'hoxs', allowed flags are [h, o, w, s]"),
-                Arguments.of("scoreMethod=noop", "for parameter scoreMethod, expected one of [xper, jaccard, sokalAndMichener], got 'noop'")
+                Arguments.of("enablePruning=1", "Invalid Input Parameters;\n\nenablePruning:\nexpected 'true' or 'false', got '1'\n"),
+                Arguments.of("fewStatesCharacterFirst=noop", "Invalid Input Parameters;\n\nfewStatesCharacterFirst:\nexpected 'true' or 'false', got 'noop'\n"),
+                Arguments.of("mergeCharacterStatesIfSameDiscrimination=yes", "Invalid Input Parameters;\n\nmergeCharacterStatesIfSameDiscrimination:\nexpected 'true' or 'false', got 'yes'\n"),
+                Arguments.of("format=noop", "Invalid Input Parameters;\n\nformat:\nexpected one of [txt, html, interactivehtml, pdf, sdd, wiki, dot, zip], got 'noop'\n"),
+                Arguments.of("keyRepresentation=noop", "Invalid Input Parameters;\n\nkeyRepresentation:\nexpected one of [tree, flat], got 'noop'\n"),
+                Arguments.of("verbosity=hoxs", "Invalid Input Parameters;\n\nverbosity:\ninvalid flag(s) [x] in 'hoxs', allowed flags are [h, o, w, s]\n"),
+                Arguments.of("scoreMethod=noop", "Invalid Input Parameters;\n\nscoreMethod:\nexpected one of [xper, jaccard, sokalAndMichener], got 'noop'\n")
             );
         }
 

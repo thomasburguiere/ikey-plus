@@ -137,7 +137,7 @@ public class InputParser {
         try {
             return Either.right(parser.apply(rawQueryParam.get()));
         } catch (final IllegalArgumentException e) {
-            return Either.left(new ParamError(name, format("for parameter %s, %s", name, e.getMessage())));
+            return Either.left(new ParamError(name, e.getMessage()));
         }
     }
 
