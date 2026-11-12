@@ -114,18 +114,18 @@ class InputParserTest {
             assertThat(result.isLeft()).isTrue();
             final Map<String, String> left = result.getLeft();
             assertThat(left)
-                    .containsKey("enablePruning")
-                    .containsValue("for parameter enablePruning, expected 'true' or 'false', got 'noop'");
+                .containsKey("enablePruning")
+                .containsValue("for parameter enablePruning, expected 'true' or 'false', got 'noop'");
         }
 
         private static Stream<Arguments> pruningValidArgs() {
             return Stream.of(
-                    Arguments.of("true", true),
-                    Arguments.of("TRUE", true),
-                    Arguments.of("True", true),
-                    Arguments.of("false", false),
-                    Arguments.of("FALSE", false),
-                    Arguments.of("fAlse", false)
+                Arguments.of("true", true),
+                Arguments.of("TRUE", true),
+                Arguments.of("True", true),
+                Arguments.of("false", false),
+                Arguments.of("FALSE", false),
+                Arguments.of("fAlse", false)
             );
         }
 
@@ -149,18 +149,18 @@ class InputParserTest {
 
             assertThat(result.isLeft()).isTrue();
             assertThat(result.getLeft())
-                    .containsKey("fewStatesCharacterFirst")
-                    .containsValue("for parameter fewStatesCharacterFirst, expected 'true' or 'false', got 'noop'");
+                .containsKey("fewStatesCharacterFirst")
+                .containsValue("for parameter fewStatesCharacterFirst, expected 'true' or 'false', got 'noop'");
         }
 
         private static Stream<Arguments> fewStatesCharacterFirstValidArgs() {
             return Stream.of(
-                    Arguments.of("true", true),
-                    Arguments.of("TRUE", true),
-                    Arguments.of("True", true),
-                    Arguments.of("false", false),
-                    Arguments.of("FALSE", false),
-                    Arguments.of("fAlse", false)
+                Arguments.of("true", true),
+                Arguments.of("TRUE", true),
+                Arguments.of("True", true),
+                Arguments.of("false", false),
+                Arguments.of("FALSE", false),
+                Arguments.of("fAlse", false)
             );
         }
 
@@ -184,17 +184,17 @@ class InputParserTest {
 
             assertThat(result.isLeft()).isTrue();
             assertThat(result.getLeft())
-                    .containsKey("format")
-                    .containsValue("for parameter format, expected one of [txt, html, interactivehtml, pdf, sdd, wiki, dot, zip], got 'noop'");
+                .containsKey("format")
+                .containsValue("for parameter format, expected one of [txt, html, interactivehtml, pdf, sdd, wiki, dot, zip], got 'noop'");
         }
 
         private static Stream<Arguments> validFormatArguments() {
             return Stream.of(
-                    Arguments.of("pdf", PDF),
-                    Arguments.of("Sdd", SDD),
-                    Arguments.of("HTML", HTML),
-                    Arguments.of("interactivehtml", INTERACTIVE_HTML),
-                    Arguments.of("", TXT)
+                Arguments.of("pdf", PDF),
+                Arguments.of("Sdd", SDD),
+                Arguments.of("HTML", HTML),
+                Arguments.of("interactivehtml", INTERACTIVE_HTML),
+                Arguments.of("", TXT)
             );
         }
 
@@ -218,17 +218,17 @@ class InputParserTest {
 
             assertThat(result.isLeft()).isTrue();
             assertThat(result.getLeft())
-                    .containsKey("keyRepresentation")
-                    .containsValue("for parameter keyRepresentation, expected one of [tree, flat], got 'noop'");
+                .containsKey("keyRepresentation")
+                .containsValue("for parameter keyRepresentation, expected one of [tree, flat], got 'noop'");
         }
 
         private static Stream<Arguments> validKeyRepresentationArguments() {
             return Stream.of(
-                    Arguments.of("flat", FLAT),
-                    Arguments.of("Flat", FLAT),
-                    Arguments.of("tree", TREE),
-                    Arguments.of("Tree", TREE),
-                    Arguments.of("", TREE)
+                Arguments.of("flat", FLAT),
+                Arguments.of("Flat", FLAT),
+                Arguments.of("tree", TREE),
+                Arguments.of("Tree", TREE),
+                Arguments.of("", TREE)
             );
         }
 
@@ -252,16 +252,16 @@ class InputParserTest {
 
             assertThat(result.isLeft()).isTrue();
             assertThat(result.getLeft())
-                    .containsKey("scoreMethod")
-                    .containsValue("for parameter scoreMethod, expected one of [xper, jaccard, sokalAndMichener], got 'noop'");
+                .containsKey("scoreMethod")
+                .containsValue("for parameter scoreMethod, expected one of [xper, jaccard, sokalAndMichener], got 'noop'");
         }
 
         private static Stream<Arguments> validScoreMethodArguments() {
             return Stream.of(
-                    Arguments.of("xper", XPER),
-                    Arguments.of("Jaccard", JACCARD),
-                    Arguments.of("sokalAndMichener", SOKAL_AND_MICHENER),
-                    Arguments.of("", XPER)
+                Arguments.of("xper", XPER),
+                Arguments.of("Jaccard", JACCARD),
+                Arguments.of("sokalAndMichener", SOKAL_AND_MICHENER),
+                Arguments.of("", XPER)
             );
         }
 
@@ -285,20 +285,20 @@ class InputParserTest {
 
             assertThat(result.isLeft()).isTrue();
             assertThat(result.getLeft())
-                    .containsKey("verbosity")
-                    .containsValue("for parameter verbosity, invalid flag(s) [x] in 'hoxs', allowed flags are [h, o, w, s]");
+                .containsKey("verbosity")
+                .containsValue("for parameter verbosity, invalid flag(s) [x] in 'hoxs', allowed flags are [h, o, w, s]");
         }
 
         @Test
         void should_init_with_all_params_set() {
             final var parser = new InputParser(paramProvider(Map.of(
-                    "format", "html",
-                    "keyRepresentation", "flat",
-                    "fewStatesCharacterFirst", "true",
-                    "mergeCharacterStatesIfSameDiscrimination", "true",
-                    "enablePruning", "true",
-                    "verbosity", "hw",
-                    "scoreMethod", "jaccard"
+                "format", "html",
+                "keyRepresentation", "flat",
+                "fewStatesCharacterFirst", "true",
+                "mergeCharacterStatesIfSameDiscrimination", "true",
+                "enablePruning", "true",
+                "verbosity", "hw",
+                "scoreMethod", "jaccard"
             )));
             final IkeyConfig result = parser.initializeConfig().getRight();
             assertThat(result.getFormat()).isSameAs(HTML);
@@ -313,25 +313,25 @@ class InputParserTest {
         @Test
         void should_return_multiple_errors_if_multiple_wrong_params() {
             final var parser = new InputParser(paramProvider(Map.of(
-                    "format", "noop",
-                    "keyRepresentation", "noop"
+                "format", "noop",
+                "keyRepresentation", "noop"
             )));
 
             final var result = parser.initializeConfig();
 
             assertThat(result.isLeft()).isTrue();
             assertThat(result.getLeft())
-                    .containsAllEntriesOf(Map.of(
-                            "format", "for parameter format, expected one of [txt, html, interactivehtml, pdf, sdd, wiki, dot, zip], got 'noop'",
-                            "keyRepresentation", "for parameter keyRepresentation, expected one of [tree, flat], got 'noop'"
-                    ));
+                .containsAllEntriesOf(Map.of(
+                    "format", "for parameter format, expected one of [txt, html, interactivehtml, pdf, sdd, wiki, dot, zip], got 'noop'",
+                    "keyRepresentation", "for parameter keyRepresentation, expected one of [tree, flat], got 'noop'"
+                ));
         }
 
         @Test
         void should_ignore_unknown_params() {
             final var parser = new InputParser(paramProvider(Map.of(
-                    "kurwa", "mac",
-                    "format", "dot"
+                "kurwa", "mac",
+                "format", "dot"
             )));
             final IkeyConfig result = parser.initializeConfig().getRight();
             assertThat(result.getFormat()).isSameAs(DOT);

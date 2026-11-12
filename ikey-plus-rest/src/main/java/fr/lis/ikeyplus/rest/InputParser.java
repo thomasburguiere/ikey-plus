@@ -41,35 +41,35 @@ public class InputParser {
     };
 
     static final Function<String, IkeyConfig.OutputFormat> OUTPUT_FORMAT_PARSER =
-            s -> Optional.ofNullable(IkeyConfig.OutputFormat.fromString(s))
-                    .orElseThrow(() -> new IllegalArgumentException(
-                            format("expected one of %s, got '%s'", Arrays.toString(IkeyConfig.OutputFormat.values()), s))
-                    );
+        s -> Optional.ofNullable(IkeyConfig.OutputFormat.fromString(s))
+            .orElseThrow(() -> new IllegalArgumentException(
+                format("expected one of %s, got '%s'", Arrays.toString(IkeyConfig.OutputFormat.values()), s))
+            );
 
     static final Function<String, IkeyConfig.KeyRepresentation> REPRESENTATION_PARSER =
-            s -> Optional.ofNullable(IkeyConfig.KeyRepresentation.fromString(s))
-                    .orElseThrow(() -> new IllegalArgumentException(
-                            format("expected one of %s, got '%s'", Arrays.toString(IkeyConfig.KeyRepresentation.values()), s))
-                    );
+        s -> Optional.ofNullable(IkeyConfig.KeyRepresentation.fromString(s))
+            .orElseThrow(() -> new IllegalArgumentException(
+                format("expected one of %s, got '%s'", Arrays.toString(IkeyConfig.KeyRepresentation.values()), s))
+            );
 
     static final Function<String, IkeyConfig.ScoreMethod> SCORE_METHOD_PARSER =
-            s -> Optional.ofNullable(IkeyConfig.ScoreMethod.fromString(s))
-                    .orElseThrow(() -> new IllegalArgumentException(
-                            format("expected one of %s, got '%s'", Arrays.toString(IkeyConfig.ScoreMethod.values()), s))
-                    );
+        s -> Optional.ofNullable(IkeyConfig.ScoreMethod.fromString(s))
+            .orElseThrow(() -> new IllegalArgumentException(
+                format("expected one of %s, got '%s'", Arrays.toString(IkeyConfig.ScoreMethod.values()), s))
+            );
 
     static final Set<String> ALLOWED_VERBOSITY_FLAGS = stream(IkeyConfig.VerbosityLevel.values())
-            .map(IkeyConfig.VerbosityLevel::toString)
-            .collect(toSet());
+        .map(IkeyConfig.VerbosityLevel::toString)
+        .collect(toSet());
 
     static final Function<String, IkeyConfig.Verbosity> VERBOSITY_PARSER = s -> {
         final List<String> invalidFlags = stream(s.toLowerCase(Locale.ROOT).split(""))
-                .filter(flag -> !ALLOWED_VERBOSITY_FLAGS.contains(flag))
-                .distinct()
-                .toList();
+            .filter(flag -> !ALLOWED_VERBOSITY_FLAGS.contains(flag))
+            .distinct()
+            .toList();
         if (!invalidFlags.isEmpty()) {
             throw new IllegalArgumentException(format("invalid flag(s) %s in '%s', allowed flags are %s",
-                    invalidFlags, s, stream(IkeyConfig.VerbosityLevel.values()).map(IkeyConfig.VerbosityLevel::toString).toList()));
+                invalidFlags, s, stream(IkeyConfig.VerbosityLevel.values()).map(IkeyConfig.VerbosityLevel::toString).toList()));
         }
         return new IkeyConfig.Verbosity(IkeyConfig.VerbosityLevel.fromString(s));
     };
@@ -92,11 +92,17 @@ public class InputParser {
     }
 
     sealed interface Either<L, R> {
-        record Left<L,R> (L value) implements Either<L,R>{}
-        record Right<L,R> (R value) implements Either<L,R>{}
+        record Left<L, R>(L value) implements Either<L, R> {}
 
-        default boolean isLeft() { return this instanceof Left<?, ?>; }
-        default boolean isRight() { return this instanceof Right<?, ?>; }
+        record Right<L, R>(R value) implements Either<L, R> {}
+
+        default boolean isLeft() {
+            return this instanceof Left<?, ?>;
+        }
+
+        default boolean isRight() {
+            return this instanceof Right<?, ?>;
+        }
 
         default R getRight() throws IllegalStateException {
             return switch (this) {
@@ -112,11 +118,16 @@ public class InputParser {
             };
         }
 
-        static <L, R> Either<L, R> left(final L value) {return new Left<>(value);}
-        static <L, R> Either<L, R> right(final R value) {return new Right<>(value);}
+        static <L, R> Either<L, R> left(final L value) {
+            return new Left<>(value);
+        }
+
+        static <L, R> Either<L, R> right(final R value) {
+            return new Right<>(value);
+        }
     }
 
-    private record ParamError(String param, String message){}
+    private record ParamError(String param, String message) {}
 
     private <T> Either<ParamError, T> parseQueryParam(final String name, final Function<String, T> parser, final T fallback) {
         final Optional<String> rawQueryParam = queryParamValueRetriever.apply(name);
@@ -130,7 +141,7 @@ public class InputParser {
         }
     }
 
-    public Either<Map<String, String>, IkeyConfig> initializeConfig() {
+    Either<Map<String, String>, IkeyConfig> initializeConfig() {
 
         final IkeyConfig config;
         final var format = parseQueryParam("format", OUTPUT_FORMAT_PARSER, IkeyConfig.OutputFormat.TXT);
@@ -141,27 +152,32 @@ public class InputParser {
         final var verbosity = parseQueryParam("verbosity", VERBOSITY_PARSER, IkeyConfig.Verbosity.getDefault());
         final var scoreMethod = parseQueryParam("scoreMethod", SCORE_METHOD_PARSER, XPER);
 
-        final Map<String, String> errorDetails = Stream.of(format, keyRepresentation, fewStatesCharacterFirst, mergeCharacterStatesIfSameDiscrimination,
-                    enablePruning, verbosity, scoreMethod)
-                .filter(Either::isLeft)
-                .map(Either::getLeft)
-                .collect(toMap(ParamError::param, ParamError::message));
+        final Map<String, String> errorDetails = Stream.of(
+                format,
+                keyRepresentation,
+                fewStatesCharacterFirst,
+                mergeCharacterStatesIfSameDiscrimination,
+                enablePruning,
+                verbosity,
+                scoreMethod
+            )
+            .filter(Either::isLeft)
+            .map(Either::getLeft)
+            .collect(toMap(ParamError::param, ParamError::message));
 
         if (!errorDetails.isEmpty()) {
             return Either.left(errorDetails);
         }
 
         config = builder()
-                .format(format.getRight())
-                .representation(keyRepresentation.getRight())
-                .fewStatesCharacterFirst(fewStatesCharacterFirst.getRight())
-                .mergeCharacterStatesIfSameDiscrimination(mergeCharacterStatesIfSameDiscrimination.getRight())
-                .enablePruning(enablePruning.getRight())
-                .verbosity(verbosity.getRight().levels())
-                .scoreMethod(scoreMethod.getRight())
-                .build();
+            .format(format.getRight())
+            .representation(keyRepresentation.getRight())
+            .fewStatesCharacterFirst(fewStatesCharacterFirst.getRight())
+            .mergeCharacterStatesIfSameDiscrimination(mergeCharacterStatesIfSameDiscrimination.getRight())
+            .enablePruning(enablePruning.getRight())
+            .verbosity(verbosity.getRight().levels())
+            .scoreMethod(scoreMethod.getRight())
+            .build();
         return Either.right(config);
     }
-
-
 }
