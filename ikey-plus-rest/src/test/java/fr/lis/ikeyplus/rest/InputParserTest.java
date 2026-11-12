@@ -94,7 +94,7 @@ class InputParserTest {
 
         @Test
         void should_init_with_defaults() {
-            final IkeyConfig result = new InputParser(a -> Optional.empty()).initializeConfig();
+            final IkeyConfig result = new InputParser(a -> Optional.empty()).initializeConfig().getRight();
             assertThat(result.getFormat()).isSameAs(TXT);
             assertThat(result.getScoreMethod()).isSameAs(XPER);
             assertThat(result.getVerbosity()).isEmpty();
@@ -109,9 +109,13 @@ class InputParserTest {
         @Test
         void should_reject_invalid_enablePruning() {
             final var parser = new InputParser(paramProvider(Map.of("enablePruning", "noop")));
-            assertThatThrownBy(parser::initializeConfig)
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("for parameter enablePruning, expected 'true' or 'false', got 'noop'");
+            final var result = parser.initializeConfig();
+
+            assertThat(result.isLeft()).isTrue();
+            final Map<String, String> left = result.getLeft();
+            assertThat(left)
+                    .containsKey("enablePruning")
+                    .containsValue("for parameter enablePruning, expected 'true' or 'false', got 'noop'");
         }
 
         private static Stream<Arguments> pruningValidArgs() {
@@ -129,21 +133,24 @@ class InputParserTest {
         @MethodSource("pruningValidArgs")
         void should_accept_valid_enablePruning_ignoring_case(final String paramValue, final boolean expected) {
             final var parser = new InputParser(paramProvider(Map.of("enablePruning", paramValue)));
-            assertThat(parser.initializeConfig().isPruningEnabled()).isEqualTo(expected);
+            assertThat(parser.initializeConfig().getRight().isPruningEnabled()).isEqualTo(expected);
         }
 
         @Test
         void should_default_empty_enablePruning_to_false() {
             final var parser = new InputParser(paramProvider(Map.of("enablePruning", "")));
-            assertThat(parser.initializeConfig().isPruningEnabled()).isFalse();
+            assertThat(parser.initializeConfig().getRight().isPruningEnabled()).isFalse();
         }
 
         @Test
         void should_reject_invalid_fewStatesCharacterFirst() {
             final var parser = new InputParser(paramProvider(Map.of("fewStatesCharacterFirst", "noop")));
-            assertThatThrownBy(parser::initializeConfig)
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("for parameter fewStatesCharacterFirst, expected 'true' or 'false', got 'noop'");
+            final var result = parser.initializeConfig();
+
+            assertThat(result.isLeft()).isTrue();
+            assertThat(result.getLeft())
+                    .containsKey("fewStatesCharacterFirst")
+                    .containsValue("for parameter fewStatesCharacterFirst, expected 'true' or 'false', got 'noop'");
         }
 
         private static Stream<Arguments> fewStatesCharacterFirstValidArgs() {
@@ -161,21 +168,24 @@ class InputParserTest {
         @MethodSource("fewStatesCharacterFirstValidArgs")
         void should_accept_valid_fewStatesCharacterFirst_ignoring_case(final String value, final boolean expected) {
             final var parser = new InputParser(paramProvider(Map.of("fewStatesCharacterFirst", value)));
-            assertThat(parser.initializeConfig().isFewStatesCharacterFirst()).isEqualTo(expected);
+            assertThat(parser.initializeConfig().getRight().isFewStatesCharacterFirst()).isEqualTo(expected);
         }
 
         @Test
         void should_default_empty_fewStatesCharacterFirst_to_false() {
             final var parser = new InputParser(paramProvider(Map.of("fewStatesCharacterFirst", "")));
-            assertThat(parser.initializeConfig().isFewStatesCharacterFirst()).isFalse();
+            assertThat(parser.initializeConfig().getRight().isFewStatesCharacterFirst()).isFalse();
         }
 
         @Test
         void should_reject_invalid_format() {
             final var parser = new InputParser(paramProvider(Map.of("format", "noop")));
-            assertThatThrownBy(() -> parser.initializeConfig())
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("for parameter format, expected one of [txt, html, interactivehtml, pdf, sdd, wiki, dot, zip], got 'noop'");
+            final var result = parser.initializeConfig();
+
+            assertThat(result.isLeft()).isTrue();
+            assertThat(result.getLeft())
+                    .containsKey("format")
+                    .containsValue("for parameter format, expected one of [txt, html, interactivehtml, pdf, sdd, wiki, dot, zip], got 'noop'");
         }
 
         private static Stream<Arguments> validFormatArguments() {
@@ -192,21 +202,24 @@ class InputParserTest {
         @MethodSource("validFormatArguments")
         void should_accept_valid_format_ignoring_case(final String value, final OutputFormat expected) {
             final var parser = new InputParser(paramProvider(Map.of("format", value)));
-            assertThat(parser.initializeConfig().getFormat()).isSameAs(expected);
+            assertThat(parser.initializeConfig().getRight().getFormat()).isSameAs(expected);
         }
 
         @Test
         void should_default_empty_format_to_txt() {
             final var parser = new InputParser(paramProvider(Map.of("format", "")));
-            assertThat(parser.initializeConfig().getFormat()).isSameAs(TXT);
+            assertThat(parser.initializeConfig().getRight().getFormat()).isSameAs(TXT);
         }
 
         @Test
         void should_reject_invalid_keyRepresentation() {
             final var parser = new InputParser(paramProvider(Map.of("keyRepresentation", "noop")));
-            assertThatThrownBy(() -> parser.initializeConfig())
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("for parameter keyRepresentation, expected one of [tree, flat], got 'noop'");
+            final var result = parser.initializeConfig();
+
+            assertThat(result.isLeft()).isTrue();
+            assertThat(result.getLeft())
+                    .containsKey("keyRepresentation")
+                    .containsValue("for parameter keyRepresentation, expected one of [tree, flat], got 'noop'");
         }
 
         private static Stream<Arguments> validKeyRepresentationArguments() {
@@ -223,21 +236,24 @@ class InputParserTest {
         @MethodSource("validKeyRepresentationArguments")
         void should_accept_valid_keyRepresentation_ignoring_case(final String value, final KeyRepresentation expected) {
             final var parser = new InputParser(paramProvider(Map.of("keyRepresentation", value)));
-            assertThat(parser.initializeConfig().getRepresentation()).isSameAs(expected);
+            assertThat(parser.initializeConfig().getRight().getRepresentation()).isSameAs(expected);
         }
 
         @Test
         void should_default_empty_keyRepresentation_to_tree() {
             final var parser = new InputParser(paramProvider(Map.of("keyRepresentation", "")));
-            assertThat(parser.initializeConfig().getRepresentation()).isSameAs(TREE);
+            assertThat(parser.initializeConfig().getRight().getRepresentation()).isSameAs(TREE);
         }
 
         @Test
         void should_reject_invalid_scoreMethod() {
             final var parser = new InputParser(paramProvider(Map.of("scoreMethod", "noop")));
-            assertThatThrownBy(() -> parser.initializeConfig())
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("for parameter scoreMethod, expected one of [xper, jaccard, sokalAndMichener], got 'noop'");
+            final var result = parser.initializeConfig();
+
+            assertThat(result.isLeft()).isTrue();
+            assertThat(result.getLeft())
+                    .containsKey("scoreMethod")
+                    .containsValue("for parameter scoreMethod, expected one of [xper, jaccard, sokalAndMichener], got 'noop'");
         }
 
         private static Stream<Arguments> validScoreMethodArguments() {
@@ -253,21 +269,24 @@ class InputParserTest {
         @MethodSource("validScoreMethodArguments")
         void should_accept_valid_scoreMethod_ignoring_case(final String value, final ScoreMethod expected) {
             final var parser = new InputParser(paramProvider(Map.of("scoreMethod", value)));
-            assertThat(parser.initializeConfig().getScoreMethod()).isSameAs(expected);
+            assertThat(parser.initializeConfig().getRight().getScoreMethod()).isSameAs(expected);
         }
 
         @Test
         void should_default_empty_scoreMethod_to_xper() {
             final var parser = new InputParser(paramProvider(Map.of("scoreMethod", "")));
-            assertThat(parser.initializeConfig().getScoreMethod()).isSameAs(XPER);
+            assertThat(parser.initializeConfig().getRight().getScoreMethod()).isSameAs(XPER);
         }
 
         @Test
         void should_reject_invalid_verbosity() {
             final var parser = new InputParser(paramProvider(Map.of("verbosity", "hoxs")));
-            assertThatThrownBy(() -> parser.initializeConfig())
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("for parameter verbosity, invalid flag(s) [x] in 'hoxs', allowed flags are [h, o, w, s]");
+            final var result = parser.initializeConfig();
+
+            assertThat(result.isLeft()).isTrue();
+            assertThat(result.getLeft())
+                    .containsKey("verbosity")
+                    .containsValue("for parameter verbosity, invalid flag(s) [x] in 'hoxs', allowed flags are [h, o, w, s]");
         }
 
         @Test
@@ -281,7 +300,7 @@ class InputParserTest {
                     "verbosity", "hw",
                     "scoreMethod", "jaccard"
             )));
-            final IkeyConfig result = parser.initializeConfig();
+            final IkeyConfig result = parser.initializeConfig().getRight();
             assertThat(result.getFormat()).isSameAs(HTML);
             assertThat(result.getRepresentation()).isSameAs(FLAT);
             assertThat(result.isFewStatesCharacterFirst()).isTrue();
@@ -292,12 +311,29 @@ class InputParserTest {
         }
 
         @Test
+        void should_return_multiple_errors_if_multiple_wrong_params() {
+            final var parser = new InputParser(paramProvider(Map.of(
+                    "format", "noop",
+                    "keyRepresentation", "noop"
+            )));
+
+            final var result = parser.initializeConfig();
+
+            assertThat(result.isLeft()).isTrue();
+            assertThat(result.getLeft())
+                    .containsAllEntriesOf(Map.of(
+                            "format", "for parameter format, expected one of [txt, html, interactivehtml, pdf, sdd, wiki, dot, zip], got 'noop'",
+                            "keyRepresentation", "for parameter keyRepresentation, expected one of [tree, flat], got 'noop'"
+                    ));
+        }
+
+        @Test
         void should_ignore_unknown_params() {
             final var parser = new InputParser(paramProvider(Map.of(
                     "kurwa", "mac",
                     "format", "dot"
             )));
-            final IkeyConfig result = parser.initializeConfig();
+            final IkeyConfig result = parser.initializeConfig().getRight();
             assertThat(result.getFormat()).isSameAs(DOT);
             assertThat(result.getRepresentation()).isSameAs(TREE);
         }

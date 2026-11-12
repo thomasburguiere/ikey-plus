@@ -10,6 +10,7 @@ import io.javalin.http.HttpResponseException;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Map;
 import java.util.Optional;
 
 import static fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper.generateDotString;
@@ -21,6 +22,8 @@ import static fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper.generateInteractiveHt
 import static fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper.generateSddString;
 import static fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper.generateTreeString;
 import static fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper.generateTreeWiki;
+import static fr.lis.ikeyplus.rest.InputParser.Either.Left;
+import static fr.lis.ikeyplus.rest.InputParser.Either.Right;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.HEADER;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.STATISTICS;
 import static io.javalin.http.HttpStatus.NOT_IMPLEMENTED;
@@ -40,13 +43,18 @@ public class RestHandler {
 
         final String sddURL = ctx.queryParam("sddURL");
         final URL validatedSddUrl;
-        final IkeyConfig config;
         try {
             validatedSddUrl = parser.validateSddUrl(sddURL);
-            config = parser.initializeConfig();
         } catch (final IllegalArgumentException e) {
             throw new BadRequestResponse(e.getMessage());
         }
+
+        final var configOrErrors = parser.initializeConfig();
+        final IkeyConfig config = switch (configOrErrors) {
+            case Left<Map<String, String>, ?> l -> throw new BadRequestResponse("", l.value());
+            case Right<?, IkeyConfig> r -> r.value();
+        };
+
 
         try (final InputStream sddInputStream = validatedSddUrl.openStream()) {
             final var result = generateKey(sddInputStream, config, sddURL);
