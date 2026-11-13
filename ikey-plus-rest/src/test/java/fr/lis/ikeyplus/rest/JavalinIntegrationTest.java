@@ -1,6 +1,7 @@
 package fr.lis.ikeyplus.rest;
 
 import com.sun.net.httpserver.HttpServer;
+import fr.lis.ikeyplus.rest.config.AppConfig;
 import io.javalin.Javalin;
 import io.javalin.testtools.JavalinTest;
 import io.javalin.testtools.Response;
@@ -26,6 +27,7 @@ import java.util.stream.Stream;
 import static io.javalin.http.HttpStatus.BAD_REQUEST;
 import static io.javalin.http.HttpStatus.NOT_IMPLEMENTED;
 import static io.javalin.http.HttpStatus.OK;
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class JavalinIntegrationTest {
@@ -36,7 +38,7 @@ public class JavalinIntegrationTest {
     private static String genettaUrl;
     private static String brokenSddUrl;
 
-    private final Javalin app = Application.buildApplication();
+    private final Javalin app = Application.buildApplication(new AppConfig(true));
 
     /**
      * Serves SDD fixtures over HTTP, since the API only accepts http/https sddURLs.
@@ -268,6 +270,18 @@ public class JavalinIntegrationTest {
                 final String sokal = client.get(keyPath(genettaUrl, "scoreMethod=sokalAndMichener")).body().string();
                 assertThat(jaccard).isNotEqualTo(xper);
                 assertThat(sokal).isNotEqualTo(xper);
+            });
+        }
+
+        @Test
+        void should_reject_private_sdd_url_if_not_allowed() {
+            final var appWithDisallowedPrivateSddUrls =
+                Application.buildApplication(new AppConfig(false));
+
+            JavalinTest.test(appWithDisallowedPrivateSddUrls, (_, client) ->{
+                final Response response = client.get("http://localhost/my-key.xml");
+
+                assertThat(response.code()).isGreaterThan(499);
             });
         }
     }

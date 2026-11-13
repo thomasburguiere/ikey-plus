@@ -35,7 +35,7 @@ Follow-ups from the review of the Javalin migration (`refactor/rest-with-javalin
 - [ ] **Map parse/download failures to proper status codes**
   - Register handlers in `Javalin.create(config -> ...)`:
     - `IOException` while fetching (unreachable host, 404 upstream) → 502 Bad Gateway, with a short message.
-    - `SAXException` (malformed XML / not SDD) → 400 or 422.
+    - [x] `SAXException` (malformed XML / not SDD) → 400 or 422.
     - Anything else → 500, logged with its stack trace, generic body.
   - Replace the `printStackTrace()` habit with a logger (SLF4J comes with `javalin-bundle`).
 
