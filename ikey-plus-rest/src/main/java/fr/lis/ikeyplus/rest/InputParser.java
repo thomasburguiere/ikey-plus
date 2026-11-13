@@ -25,9 +25,18 @@ import static java.util.stream.Collectors.toSet;
 public class InputParser {
 
     private final Function<String, Optional<String>> queryParamValueRetriever;
+    private final boolean allowPrivateAddresses;
+
+    public InputParser(
+            final Function<String, Optional<String>> queryParamValueRetriever,
+            final boolean allowPrivateAddresses
+    ) {
+        this.queryParamValueRetriever = queryParamValueRetriever;
+        this.allowPrivateAddresses = allowPrivateAddresses;
+    }
 
     public InputParser(final Function<String, Optional<String>> queryParamValueRetriever) {
-        this.queryParamValueRetriever = queryParamValueRetriever;
+        this(queryParamValueRetriever, false);
     }
 
     static final Function<String, Boolean> BOOLEAN_PARSER = s -> {
@@ -87,6 +96,9 @@ public class InputParser {
         }
         if (!List.of("http", "https").contains(url.getProtocol())) {
             throw new IllegalArgumentException("sddUrl protocol should be http or https");
+        }
+        if (PrivateAddressesUtils.isObviouslyPrivateHost(url.getHost()) && !allowPrivateAddresses) {
+            throw new IllegalArgumentException("sddUrl cannot have a private host");
         }
         return url;
     }
