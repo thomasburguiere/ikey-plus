@@ -6,6 +6,7 @@ import fr.lis.ikeyplus.services.IdentificationKeyGenerator;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
+import io.javalin.http.Handler;
 import io.javalin.http.HttpResponseException;
 
 import java.io.InputStream;
@@ -28,17 +29,20 @@ import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.HEADER;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.STATISTICS;
 import static io.javalin.http.HttpStatus.NOT_IMPLEMENTED;
 
-public class RestHandler {
-    private static final SDDSaxParser parser = new SDDSaxParser();
-
+public class RestHandler implements Handler {
+    private static final SDDSaxParser SDD_SAX_PARSER = new SDDSaxParser();
     private static final String CONTENT_TYPE_XML = "text/xml";
     private static final String CONTENT_TYPE_HTML = "text/html";
     private static final String CONTENT_TYPE_TXT = "text/plain";
 
-    private RestHandler() {
+    private final UrlFetcher urlFetcher;
+
+    public RestHandler(final UrlFetcher urlFetcher) {
+        this.urlFetcher = urlFetcher;
     }
 
-    public static void handleGetKey(final Context ctx) throws Exception {
+    @Override
+    public void handle(final Context ctx) throws Exception {
         final InputParser parser = new InputParser(name -> Optional.ofNullable(ctx.queryParam(name)));
 
         final String sddURL = ctx.queryParam("sddURL");
@@ -55,7 +59,7 @@ public class RestHandler {
             case Right<?, IkeyConfig> (final IkeyConfig rValue) -> rValue;
         };
 
-        try (final InputStream sddInputStream = validatedSddUrl.openStream()) {
+        try (final InputStream sddInputStream = urlFetcher.getStream(validatedSddUrl)) {
             final var result = generateKey(sddInputStream, config, sddURL);
             ctx.result(result.keyContent).contentType(result.contentType);
         }
@@ -68,7 +72,7 @@ public class RestHandler {
                                            final IkeyConfig config,
                                            final String sddURL) throws Exception {
         // call identification key service
-        final DataSet dataset = parser.parseDataset(sddInputStream, config);
+        final DataSet dataset = SDD_SAX_PARSER.parseDataset(sddInputStream, config);
         final IdentificationKeyGenerator identificationKeyGenerator =
             new IdentificationKeyGenerator(dataset, config);
         identificationKeyGenerator.createIdentificationKey();

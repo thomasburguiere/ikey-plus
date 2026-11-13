@@ -55,32 +55,26 @@ class InputParserTest {
 
         @Test
         void should_not_validate_normal_ftp_url() {
-            try {
-                parser.validateSddUrl("ftp://google.com");
-                throw new RuntimeException();
-            } catch (final Exception expected) {
-                assertThat(expected.getMessage()).isEqualTo("sddUrl protocol should be http or https");
-            }
+            assertThatThrownBy(() -> parser.validateSddUrl("ftp://google.com"))
+                .hasMessage("sddUrl protocol should be http or https");
+        }
+
+        @Test
+        void should_not_validate_localhost_url() {
+            assertThatThrownBy(() -> parser.validateSddUrl("http://localhost:12345/mysdd.xml"))
+                .hasMessage("sddUrl cannot be private url");
         }
 
         @Test
         void should_not_validate_null_url() {
-            try {
-                parser.validateSddUrl(null);
-                throw new RuntimeException();
-            } catch (final Exception expected) {
-                assertThat(expected.getMessage()).isEqualTo("sddUrl cannot be null");
-            }
+            assertThatThrownBy(() -> parser.validateSddUrl(null))
+                .hasMessage("sddUrl cannot be null");
         }
 
         @Test
         void should_not_validate_malformed_url() {
-            try {
-                parser.validateSddUrl("../etc");
-                throw new RuntimeException();
-            } catch (final IllegalArgumentException expected) {
-                assertThat(expected.getMessage()).isEqualTo("sddUrl is malformed");
-            }
+            assertThatThrownBy(() -> parser.validateSddUrl("../etc"))
+                .hasMessage("sddUrl is malformed");
         }
     }
 
