@@ -19,6 +19,7 @@
         <version.jersey-server>1.19.4</version.jersey-server>
         <version.quartz>2.5.2</version.quartz>
         <version.servlet-api>2.5</version.servlet-api>
+        <version.error-prone>2.53.0</version.error-prone>
     </properties>
 
     <build>
@@ -37,6 +38,25 @@
                 <configuration>
                     <source>25</source>
                     <target>25</target>
+                    <compilerArgs>
+                        <arg>-XDcompilePolicy=simple</arg>
+                        <arg>--should-stop=ifError=FLOW</arg>
+                        <arg>-Xplugin:ErrorProne</arg>
+                        <!-- necessary only if building with JDK21: https://github.com/google/error-prone/issues/5426 -->
+                        <arg>-XDaddTypeAnnotationsToSymbol=true</arg>
+                    </compilerArgs>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>com.google.errorprone</groupId>
+                            <artifactId>error_prone_core</artifactId>
+                            <version>${version.error-prone}</version>
+                        </path>
+                        <!-- Other annotation processors go here.
+
+                        If 'annotationProcessorPaths' is set, processors will no longer be
+                        discovered on the regular -classpath; see also 'Using Error Prone
+                        together with other annotation processors' below. -->
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
 <!--            <plugin>-->
