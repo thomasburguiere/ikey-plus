@@ -39,6 +39,9 @@ public class IkeyConfigTest {
         ikeyConfig.setErrorMessage(ERROR_MESSAGE);
         ikeyConfig.createErrorFile();
         final File errorMessageFile = ikeyConfig.getErrorMessageFile();
+        if (errorMessageFile == null) {
+            throw new AssertionError("errorMessageFile cannot be null");
+        }
         final byte[] resultBytes = Files.readAllBytes(Paths.get(errorMessageFile.toURI()));
         final String result = new String(resultBytes, StandardCharsets.UTF_8);
         assertThat(result).contains(ERROR_MESSAGE);
@@ -50,9 +53,13 @@ public class IkeyConfigTest {
         ikeyConfig.setErrorMessage(ERROR_MESSAGE, new IllegalStateException(EXCEPTION_MESSAGE));
         ikeyConfig.createErrorFile();
         final File errorMessageFile = ikeyConfig.getErrorMessageFile();
+        if (errorMessageFile == null) {
+            throw new AssertionError("errorMessageFile cannot be null");
+        }
+
         final byte[] resultBytes = Files.readAllBytes(Paths.get(errorMessageFile.toURI()));
         final String result = new String(resultBytes, StandardCharsets.UTF_8);
-        assertThat(result).contains(ERROR_MESSAGE+": " +EXCEPTION_MESSAGE );
+        assertThat(result).contains(ERROR_MESSAGE + ": " + EXCEPTION_MESSAGE);
     }
 
 
