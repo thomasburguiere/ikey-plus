@@ -46,7 +46,8 @@ public class RestHandler {
         try {
             validatedSddUrl = parser.validateSddUrl(sddURL);
         } catch (final IllegalArgumentException e) {
-            throw new BadRequestResponse(e.getMessage());
+            final var message = e.getMessage() != null ? e.getMessage() : "validation of sddURL failed";
+            throw new BadRequestResponse(message);
         }
 
         final var configOrErrors = parser.initializeConfig();
@@ -56,7 +57,7 @@ public class RestHandler {
         };
 
         try (final InputStream sddInputStream = validatedSddUrl.openStream()) {
-            final var result = generateKey(sddInputStream, config, sddURL);
+            final var result = generateKey(sddInputStream, config, validatedSddUrl.toString());
             ctx.result(result.keyContent).contentType(result.contentType);
         }
     }

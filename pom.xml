@@ -63,6 +63,19 @@
                         together with other annotation processors' below. -->
                     </annotationProcessorPaths>
                 </configuration>
+                <executions>
+                    <!-- no NullAway on test sources -->
+                    <execution>
+                        <id>default-testCompile</id>
+                        <configuration>
+                            <compilerArgs combine.self="override">
+                                <arg>-XDcompilePolicy=simple</arg>
+                                <arg>--should-stop=ifError=FLOW</arg>
+                                <arg>-Xplugin:ErrorProne -XepDisableAllChecks -Xep:NullAway:OFF</arg>
+                            </compilerArgs>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 <!--            <plugin>-->
 <!--                <groupId>org.jacoco</groupId>-->

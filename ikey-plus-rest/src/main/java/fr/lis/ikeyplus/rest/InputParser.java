@@ -1,6 +1,7 @@
 package fr.lis.ikeyplus.rest;
 
 import fr.lis.ikeyplus.utils.IkeyConfig;
+import org.jspecify.annotations.Nullable;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -74,7 +75,7 @@ public class InputParser {
         return new IkeyConfig.Verbosity(IkeyConfig.VerbosityLevel.fromString(s));
     };
 
-    URL validateSddUrl(final String sddUrl) {
+    URL validateSddUrl(@Nullable final String sddUrl) {
         if (sddUrl == null) {
             throw new IllegalArgumentException("sddUrl cannot be null");
         }
@@ -137,7 +138,12 @@ public class InputParser {
         try {
             return Either.right(parser.apply(rawQueryParam.get()));
         } catch (final IllegalArgumentException e) {
-            return Either.left(new ParamError(name, e.getMessage()));
+
+            final String message;
+            if(e.getMessage() != null) message = e.getMessage();
+            else message = format("Parsing of %s failed", name);
+
+            return Either.left(new ParamError(name, message));
         }
     }
 
