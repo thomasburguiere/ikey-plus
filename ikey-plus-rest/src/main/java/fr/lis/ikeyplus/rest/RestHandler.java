@@ -24,6 +24,16 @@ import static fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper.generateTreeString;
 import static fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper.generateTreeWiki;
 import static fr.lis.ikeyplus.rest.InputParser.Either.Left;
 import static fr.lis.ikeyplus.rest.InputParser.Either.Right;
+import static fr.lis.ikeyplus.utils.IkeyConfig.KeyRepresentation.FLAT;
+import static fr.lis.ikeyplus.utils.IkeyConfig.KeyRepresentation.TREE;
+import static fr.lis.ikeyplus.utils.IkeyConfig.OutputFormat.DOT;
+import static fr.lis.ikeyplus.utils.IkeyConfig.OutputFormat.HTML;
+import static fr.lis.ikeyplus.utils.IkeyConfig.OutputFormat.INTERACTIVE_HTML;
+import static fr.lis.ikeyplus.utils.IkeyConfig.OutputFormat.PDF;
+import static fr.lis.ikeyplus.utils.IkeyConfig.OutputFormat.SDD;
+import static fr.lis.ikeyplus.utils.IkeyConfig.OutputFormat.TXT;
+import static fr.lis.ikeyplus.utils.IkeyConfig.OutputFormat.WIKI;
+import static fr.lis.ikeyplus.utils.IkeyConfig.OutputFormat.ZIP;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.HEADER;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.STATISTICS;
 import static io.javalin.http.HttpStatus.NOT_IMPLEMENTED;
@@ -76,18 +86,18 @@ public class RestHandler {
 
         final var tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 
-        final String header = config.getVerbosity().contains(HEADER) ? generateHeader(config, sddURL, dataset.getLabel()) : "";
-        final boolean showStatistics = config.getVerbosity().contains(STATISTICS);
-        return switch (config.getFormat()) {
-            case TXT -> switch (config.getRepresentation()) {
+        final String header = config.verbosity().contains(HEADER) ? generateHeader(config, sddURL, dataset.getLabel()) : "";
+        final boolean showStatistics = config.verbosity().contains(STATISTICS);
+        return switch (config.format()) {
+            case TXT -> switch (config.representation()) {
                 case TREE -> new KeyGenerationResult(generateTreeString(header, tree2dump), CONTENT_TYPE_TXT);
                 case FLAT -> new KeyGenerationResult(generateFlatString(header, tree2dump), CONTENT_TYPE_TXT);
             };
-            case WIKI -> switch (config.getRepresentation()) {
+            case WIKI -> switch (config.representation()) {
                 case TREE -> new KeyGenerationResult(generateTreeWiki(tree2dump, showStatistics), CONTENT_TYPE_TXT);
                 case FLAT -> new KeyGenerationResult(generateFlatWikiString(tree2dump), CONTENT_TYPE_TXT);
             };
-            case HTML -> switch (config.getRepresentation()) {
+            case HTML -> switch (config.representation()) {
                 case TREE ->
                     new KeyGenerationResult(generateHtmlString(header, tree2dump, showStatistics), CONTENT_TYPE_HTML);
                 case FLAT ->
@@ -109,15 +119,15 @@ public class RestHandler {
             lineSeparator + label + lineSeparator +
             lineSeparator + "Options:" +
             lineSeparator + "sddURL=" + sddURL +
-            lineSeparator + "format=" + config.getFormat() +
-            lineSeparator + "representation=" + config.getRepresentation() +
-            lineSeparator + "fewStatesCharacterFirst=" + config.isFewStatesCharacterFirst() +
-            lineSeparator + "mergeCharacterStatesIfSameDiscrimination=" + config.isMergeCharacterStatesIfSameDiscrimination() +
-            lineSeparator + "pruning=" + config.isPruningEnabled() +
-            lineSeparator + "verbosity=" + config.getVerbosity() +
-            lineSeparator + "scoreMethod=" + config.getScoreMethod() +
-            lineSeparator + "weightContext=" + config.getWeightContext() +
-            lineSeparator + "weightType=" + config.getWeightType() +
+            lineSeparator + "format=" + config.format() +
+            lineSeparator + "representation=" + config.representation() +
+            lineSeparator + "fewStatesCharacterFirst=" + config.fewStatesCharacterFirst() +
+            lineSeparator + "mergeCharacterStatesIfSameDiscrimination=" + config.mergeCharacterStatesIfSameDiscrimination() +
+            lineSeparator + "pruning=" + config.pruningEnabled() +
+            lineSeparator + "verbosity=" + config.verbosity() +
+            lineSeparator + "scoreMethod=" + config.scoreMethod() +
+            lineSeparator + "weightContext=" + config.weightContext() +
+            lineSeparator + "weightType=" + config.weightType() +
             lineSeparator;
     }
 }

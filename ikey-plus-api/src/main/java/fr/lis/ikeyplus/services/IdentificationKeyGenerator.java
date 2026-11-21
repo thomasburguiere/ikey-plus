@@ -29,6 +29,8 @@ import java.util.Map;
  */
 public class IdentificationKeyGenerator {
 
+    public static final String WARNING_CHILD_NODE_NOT_DISPLAYED_DUE_TO_PRUNING_OPTION = "Warning: child node not displayed due to pruning option";
+    public static final String OTHER_NOT_DESCRIBED = "Other (not described)";
     // the Identification Key
     private SingleAccessKeyTree singleAccessKeyTree = null;
     // the knowledge base
@@ -89,7 +91,7 @@ public class IdentificationKeyGenerator {
             final ICharacter selectedCharacter = bestCharacter(charactersScore, remainingTaxa);
 
             // delete characters if score method is not Xper and score = 0
-            if (config.getScoreMethod() != IkeyConfig.ScoreMethod.XPER) {
+            if (config.scoreMethod() != IkeyConfig.ScoreMethod.XPER) {
                 for (final Map.Entry<ICharacter, Float> entry : charactersScore.entrySet()) {
                     if (entry.getValue() <= 0) {
                         remainingCharacters.removeAll(entry.getKey().getAllChildren());
@@ -143,7 +145,7 @@ public class IdentificationKeyGenerator {
                         node.setCharacterState(state);
 
                         // mergeCharacterStatesIfSameDiscrimination option handling
-                        if (config.isMergeCharacterStatesIfSameDiscrimination()
+                        if (config.mergeCharacterStatesIfSameDiscrimination()
                                 && mergeNodesIfSameDiscrimination(futureChildNodes, node)) {
                             continue;
                         }
@@ -167,10 +169,10 @@ public class IdentificationKeyGenerator {
                         newRemainingCharacters.removeAll(inapplicableCharacters);
 
                         // pruning option handling
-                        if (config.isPruningEnabled() && containsAll(remainingTaxa, newRemainingTaxa)
+                        if (config.pruningEnabled() && containsAll(remainingTaxa, newRemainingTaxa)
                                 && containsAll(newRemainingTaxa, remainingTaxa)
                                 && !childDependantCharacters.contains(selectedCharacter)) {
-                            node.setNodeDescription(IkeyConfig.getBundleConfElement("message.warning.pruning"));
+                            node.setNodeDescription(WARNING_CHILD_NODE_NOT_DISPLAYED_DUE_TO_PRUNING_OPTION);
                         } else {
                             // calculate next node
                             calculateSingleAccessKeyNodeChild(node, newRemainingCharacters, newRemainingTaxa,
@@ -208,10 +210,10 @@ public class IdentificationKeyGenerator {
                                 remainingCharacters);
 
                         // pruning option handling
-                        if (config.isPruningEnabled() && containsAll(remainingTaxa, newRemainingTaxa)
+                        if (config.pruningEnabled() && containsAll(remainingTaxa, newRemainingTaxa)
                                 && containsAll(newRemainingTaxa, remainingTaxa)
                                 && !childDependantCharacters.contains(selectedCharacter)) {
-                            node.setNodeDescription(IkeyConfig.getBundleConfElement("message.warning.pruning"));
+                            node.setNodeDescription(WARNING_CHILD_NODE_NOT_DISPLAYED_DUE_TO_PRUNING_OPTION);
                         } else {
                             // if current remaining taxa are similar to parent node remaining taxa
                             if (parentNode.getRemainingTaxa().size() == newRemainingTaxa.size()) {
@@ -232,13 +234,12 @@ public class IdentificationKeyGenerator {
 
             // if taxa are not described and if verbosity string contains correct tag, create a node
             // "Other (not described)"
-            if (config.getVerbosity().contains(IkeyConfig.VerbosityLevel.OTHER) && !notDescribedTaxa.isEmpty()) {
+            if (config.verbosity().contains(IkeyConfig.VerbosityLevel.OTHER) && !notDescribedTaxa.isEmpty()) {
                 // init new node
                 final SingleAccessKeyNode notDescribedNode = new SingleAccessKeyNode();
                 notDescribedNode.setCharacter(selectedCharacter);
                 notDescribedNode.setRemainingTaxa(notDescribedTaxa);
-                notDescribedNode.setCharacterState(new State(IkeyConfig
-                        .getBundleConfElement("message.notDescribed")));
+                notDescribedNode.setCharacterState(new State(OTHER_NOT_DESCRIBED));
 
                 // put new node as child of parentNode
                 parentNode.addChild(notDescribedNode);
@@ -506,7 +507,7 @@ public class IdentificationKeyGenerator {
         float bestScore = -1;
         ICharacter bestCharacter = null;
 
-        if (config.getWeightType() == IkeyConfig.WeightType.CONTEXTUAL) {
+        if (config.weightType() == IkeyConfig.WeightType.CONTEXTUAL) {
             float bestWeight = -1;
 
             for (final Map.Entry<ICharacter, Float> entry : charactersScore.entrySet()) {
@@ -709,7 +710,7 @@ public class IdentificationKeyGenerator {
         }
 
         // fewStatesCharacterFirst option handling
-        if (config.isFewStatesCharacterFirst() && score > 0 && character.getStates().
+        if (config.fewStatesCharacterFirst() && score > 0 && character.getStates().
 
                 size()
 
@@ -816,7 +817,7 @@ public class IdentificationKeyGenerator {
         }
 
         // fewStatesCharacterFirst option handling
-        if (config.isFewStatesCharacterFirst() && score > 0) {
+        if (config.fewStatesCharacterFirst() && score > 0) {
             // increasing artificially the score of character with few states
             final float coeff = (float) 1 - ((float) 2 / (float) maxNbStatesPerCharacter);
             score = score + coeff;
@@ -871,13 +872,13 @@ public class IdentificationKeyGenerator {
         float out;
 
         // Sokal & Michener method
-        if (config.getScoreMethod() == IkeyConfig.ScoreMethod.SOKAL_AND_MICHENER) {
+        if (config.scoreMethod() == IkeyConfig.ScoreMethod.SOKAL_AND_MICHENER) {
             out = 1 - ((commonPresent + commonAbsent) / (commonPresent + commonAbsent + other));
             // round to 10^-3
             out = IkeyUtils.roundFloat(out, 3);
         }
         // Jaccard Method
-        else if (config.getScoreMethod() == IkeyConfig.ScoreMethod.JACCARD) {
+        else if (config.scoreMethod() == IkeyConfig.ScoreMethod.JACCARD) {
             try {
                 // case where description are empty
                 out = 1 - (commonPresent / (commonPresent + other));

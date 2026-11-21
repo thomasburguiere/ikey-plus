@@ -22,6 +22,7 @@
         <version.error-prone>2.53.0</version.error-prone>
         <version.nullaway>0.14.4</version.nullaway>
         <version.jspecify>1.0.1</version.jspecify>
+        <version.immutables>2.12.3</version.immutables>
     </properties>
 
     <build>
@@ -57,10 +58,14 @@
                             <version>${version.nullaway}</version>
                         </path>
                         <!-- Other annotation processors go here.
-
                         If 'annotationProcessorPaths' is set, processors will no longer be
                         discovered on the regular -classpath; see also 'Using Error Prone
-                        together with other annotation processors' below. -->
+                        together with other annotation processors' in https://errorprone.info/docs/installation. -->
+                        <path>
+                            <groupId>org.immutables</groupId>
+                            <artifactId>value</artifactId>
+                            <version>${version.immutables}</version>
+                        </path>
                     </annotationProcessorPaths>
                 </configuration>
                 <executions>
@@ -107,6 +112,11 @@
                 <version>${version.jspecify}</version>
             </dependency>
             <dependency>
+                <groupId>org.immutables</groupId>
+                <artifactId>value-annotations</artifactId>
+                <version>${version.immutables}</version>
+            </dependency>
+            <dependency>
                 <groupId>xerces</groupId>
                 <artifactId>xercesImpl</artifactId>
                 <version>${version.xercesImpl}</version>
@@ -149,6 +159,12 @@
         <dependency>
             <groupId>org.jspecify</groupId>
             <artifactId>jspecify</artifactId>
+        </dependency>
+        <!-- annotations only; the processor runs from annotationProcessorPaths -->
+        <dependency>
+            <groupId>org.immutables</groupId>
+            <artifactId>value-annotations</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
