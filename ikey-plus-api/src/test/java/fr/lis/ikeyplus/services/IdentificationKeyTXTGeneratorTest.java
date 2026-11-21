@@ -4,7 +4,7 @@ import fr.lis.ikeyplus.IO.SDDSaxParser;
 import fr.lis.ikeyplus.IO.SingleAccessKeyTreeDumper;
 import fr.lis.ikeyplus.model.DataSet;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
-import fr.lis.ikeyplus.utils.IkeyConfigBuilder;
+import fr.lis.ikeyplus.utils.ImmutableIkeyConfig;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -19,7 +19,6 @@ import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.STATISTICS;
 import static fr.lis.ikeyplus.utils.IkeyConfig.VerbosityLevel.WARNING;
 import static fr.lis.ikeyplus.utils.IkeyConfig.WeightContext.COST_EFFECTIVENESS;
 import static fr.lis.ikeyplus.utils.IkeyConfig.WeightType.GLOBAL;
-import static fr.lis.ikeyplus.utils.IkeyConfig.builder;
 import static fr.lis.ikeyplus.utils.IkeyConfig.getBundleConfOverridableElement;
 
 /**
@@ -48,7 +47,7 @@ public class IdentificationKeyTXTGeneratorTest {
     public void testIdentificationKeyGenerator(final String testFileUrl) throws Exception {
 
         // creation of IkeyConfig object (containing options)
-        final IkeyConfigBuilder configBuilder = builder();
+        final var configBuilder = ImmutableIkeyConfig.builder();
 
         configBuilder.verbosity(Set.of(HEADER, OTHER, WARNING, STATISTICS));
         configBuilder.scoreMethod(XPER);
@@ -68,13 +67,13 @@ public class IdentificationKeyTXTGeneratorTest {
         header.append(System.lineSeparator()).append(dataset.getLabel()).append(", ").append(getBundleConfOverridableElement("message.createdBy")).append(System.lineSeparator());
         header.append(System.lineSeparator()).append("Options:");
         header.append(System.lineSeparator()).append("sddURL=").append(testFileUrl);
-        header.append(System.lineSeparator()).append("fewStatesCharacterFirst=").append(config.isFewStatesCharacterFirst());
-        header.append(System.lineSeparator()).append("mergeCharacterStatesIfSameDiscrimination=").append(config.isMergeCharacterStatesIfSameDiscrimination());
-        header.append(System.lineSeparator()).append("pruning=").append(config.isPruningEnabled());
-        header.append(System.lineSeparator()).append("verbosity=").append(config.getVerbosity());
-        header.append(System.lineSeparator()).append("scoreMethod=").append(config.getScoreMethod());
-        header.append(System.lineSeparator()).append("weightContext=").append(config.getWeightContext());
-        header.append(System.lineSeparator()).append("weightType=").append(config.getWeightType()).append(System.lineSeparator());
+        header.append(System.lineSeparator()).append("fewStatesCharacterFirst=").append(config.fewStatesCharacterFirst());
+        header.append(System.lineSeparator()).append("mergeCharacterStatesIfSameDiscrimination=").append(config.mergeCharacterStatesIfSameDiscrimination());
+        header.append(System.lineSeparator()).append("pruning=").append(config.pruningEnabled());
+        header.append(System.lineSeparator()).append("verbosity=").append(config.verbosity());
+        header.append(System.lineSeparator()).append("scoreMethod=").append(config.scoreMethod());
+        header.append(System.lineSeparator()).append("weightContext=").append(config.weightContext());
+        header.append(System.lineSeparator()).append("weightType=").append(config.weightType()).append(System.lineSeparator());
 
         final double parseDuration = (double) (System.currentTimeMillis() - beforeTime) / 1000;
         beforeTime = System.currentTimeMillis();
@@ -93,13 +92,13 @@ public class IdentificationKeyTXTGeneratorTest {
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
         header.append(System.lineSeparator()).append(System.lineSeparator());
 
-        if (!config.getVerbosity().contains(HEADER)) {
+        if (!config.verbosity().contains(HEADER)) {
             header.setLength(0);
         }
         resultFileName = SingleAccessKeyTreeDumper.dumpTxtFile(
                 header.toString(),
                 tree2dump,
-                config.getVerbosity().contains(VerbosityLevel.STATISTICS),
+                config.verbosity().contains(VerbosityLevel.STATISTICS),
                 "src/test/resources/outputFiles"
         ).getName();
     }

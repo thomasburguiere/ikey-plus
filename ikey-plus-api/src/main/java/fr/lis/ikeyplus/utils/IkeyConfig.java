@@ -1,13 +1,8 @@
 package fr.lis.ikeyplus.utils;
 
+import org.immutables.value.Value;
 import org.jspecify.annotations.Nullable;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
@@ -18,61 +13,29 @@ import static java.util.Optional.empty;
 import static java.util.Optional.of;
 import static java.util.stream.Collectors.toSet;
 
-public class IkeyConfig {
+@Value.Immutable
+public interface IkeyConfig {
+    WeightValue DEFAULT_WEIGHT = WeightValue.THREE;
+    @Value.Default
+    default OutputFormat format() { return OutputFormat.TXT; }
 
-    @Nullable
-    private String errorMessage = null;
-    @Nullable
-    private File errorMessageFile = null;
-
-    public static final WeightValue DEFAULT_WEIGHT = WeightValue.THREE;
-
-    // properties file
-    private static ResourceBundle bundleConf = ResourceBundle.getBundle("fr.lis.ikeyplus.conf");
-    private static ResourceBundle bundleConfOverridable = ResourceBundle
-            .getBundle("fr.lis.ikeyplus.confOverridable");
-
-    // options
-    private OutputFormat format = OutputFormat.TXT;
-    private KeyRepresentation representation = KeyRepresentation.FLAT;
-    private boolean fewStatesCharacterFirst = false;
-    private boolean mergeCharacterStatesIfSameDiscrimination = false;
-    private boolean pruningEnabled = false;
-    private Set<VerbosityLevel> verbosity = new HashSet<>();
-    private ScoreMethod scoreMethod = ScoreMethod.XPER;
-    private WeightContext weightContext = WeightContext.NO_WEIGHT;
-    private WeightType weightType = WeightType.GLOBAL;
-
-    private IkeyConfig() {
-    }
-
-    IkeyConfig(final OutputFormat format,
-               final KeyRepresentation representation,
-               final boolean fewStatesCharacterFirst,
-               final boolean mergeCharacterStatesIfSameDiscrimination,
-               final boolean pruningEnabled,
-               final Set<VerbosityLevel> verbosity,
-               final ScoreMethod scoreMethod,
-               final WeightContext weightContext,
-               final WeightType weightType) {
-
-        this.format = format;
-        this.representation = representation;
-        this.fewStatesCharacterFirst = fewStatesCharacterFirst;
-        this.mergeCharacterStatesIfSameDiscrimination = mergeCharacterStatesIfSameDiscrimination;
-        this.pruningEnabled = pruningEnabled;
-        this.verbosity = verbosity;
-        this.scoreMethod = scoreMethod;
-        this.weightContext = weightContext;
-        this.weightType = weightType;
-    }
-
-    public static IkeyConfigBuilder builder() {
-        return new IkeyConfigBuilder();
-    }
-
-
-    public enum VerbosityLevel {
+    @Value.Default
+    default KeyRepresentation representation() { return KeyRepresentation.TREE; }
+    @Value.Default
+    default boolean fewStatesCharacterFirst() { return false; }
+    @Value.Default
+    default boolean mergeCharacterStatesIfSameDiscrimination() { return false; }
+    @Value.Default
+    default boolean pruningEnabled() { return false; }
+    @Value.Default
+    default Set<VerbosityLevel> verbosity() { return new HashSet<>(); }
+    @Value.Default
+    default ScoreMethod scoreMethod() { return ScoreMethod.XPER; }
+    @Value.Default
+    default WeightContext weightContext() {return  WeightContext.NO_WEIGHT; }
+    @Value.Default
+    default WeightType weightType() {return  WeightType.GLOBAL; }
+    enum VerbosityLevel {
         HEADER("h"), OTHER("o"), WARNING("w"), STATISTICS("s");
 
         private final String flag;
@@ -96,13 +59,13 @@ public class IkeyConfig {
         }
     }
 
-    public record Verbosity(Set<VerbosityLevel> levels) {
+    record Verbosity(Set<VerbosityLevel> levels) {
         public static Verbosity getDefault() {
             return new Verbosity(Set.of());
         }
     }
 
-    public enum ScoreMethod {
+    enum ScoreMethod {
         XPER("xper"),
         JACCARD("jaccard"),
         SOKAL_AND_MICHENER("sokalAndMichener");
@@ -128,9 +91,10 @@ public class IkeyConfig {
             }
             return empty();
         }
+
     }
 
-    public enum KeyRepresentation {
+    enum KeyRepresentation {
         TREE("tree"),
         FLAT("flat");
 
@@ -157,7 +121,7 @@ public class IkeyConfig {
         }
     }
 
-    public enum OutputFormat {
+    enum OutputFormat {
         TXT("txt"),
         HTML("html"),
         INTERACTIVE_HTML("interactivehtml"),
@@ -190,7 +154,7 @@ public class IkeyConfig {
         }
     }
 
-    public enum WeightValue {
+    enum WeightValue {
         ONE("Rating1of5", 1),
         TWO("Rating2of5", 2),
         THREE("Rating3of5", 3),
@@ -198,8 +162,8 @@ public class IkeyConfig {
         FIVE("Rating5of5", 5);
 
         private final String description;
-        private final int intWeight;
 
+        private final int intWeight;
         @Override
         public String toString() {
             return description;
@@ -226,7 +190,7 @@ public class IkeyConfig {
         }
     }
 
-    public enum WeightType {
+    enum WeightType {
         GLOBAL("global"),
         CONTEXTUAL("contextual");
 
@@ -253,7 +217,7 @@ public class IkeyConfig {
         }
     }
 
-    public enum WeightContext {
+    enum WeightContext {
         OBSERVATION_CONVENIENCE("ObservationConvenience"),
         AVAILABILITY("Availability"),
         REPEATABILITY("Repeatability"),
@@ -285,121 +249,14 @@ public class IkeyConfig {
         }
     }
 
+    ResourceBundle bundleConf = ResourceBundle.getBundle("fr.lis.ikeyplus.conf");
+    ResourceBundle overridableBundleConf = ResourceBundle.getBundle("fr.lis.ikeyplus.confOverridable");
 
-    public static String getBundleConfElement(final String key) {
+    static String getBundleConfElement(final String key) {
         return IkeyConfig.bundleConf.getString(key);
     }
 
-    public static String getBundleConfOverridableElement(final String key) {
-        return IkeyConfig.bundleConfOverridable.getString(key);
+    static String getBundleConfOverridableElement(final String key) {
+        return IkeyConfig.overridableBundleConf.getString(key);
     }
-
-    public static void setBundleConf(final ResourceBundle bundleConf) {
-        IkeyConfig.bundleConf = bundleConf;
-    }
-
-    public static void setBundleConfOverridable(final ResourceBundle bundleConfOverridable) {
-        IkeyConfig.bundleConfOverridable = bundleConfOverridable;
-    }
-
-    @Nullable
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(final String msg) {
-        if (errorMessage == null) {
-            errorMessage = msg;
-            errorMessageFile = createErrorFile();
-        }
-    }
-
-    public void setErrorMessage(final String msg, final Throwable t) {
-        if (errorMessage == null) {
-            errorMessage = msg + ": " + t.getMessage();
-            errorMessageFile = createErrorFile();
-        }
-    }
-    @Nullable
-    public File getErrorMessageFile() {
-        return errorMessageFile;
-    }
-
-    private void setErrorMessageFile(final File errorMessageFile) {
-        this.errorMessageFile = errorMessageFile;
-    }
-
-    @Nullable
-    public File createErrorFile() {
-        final String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-                + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
-
-        final String lineReturn = System.lineSeparator();
-        File erroFile = null;
-        FileOutputStream fileOutputStream = null;
-        try {
-            erroFile = File.createTempFile(IkeyUtils.ERROR, "." + OutputFormat.TXT, new File(path));
-
-            fileOutputStream = new FileOutputStream(erroFile);
-            fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
-            final BufferedWriter txtFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream,
-                    StandardCharsets.UTF_8));
-
-            txtFileWriter.append(errorMessage);
-            txtFileWriter.append(lineReturn)
-                    .append(lineReturn)
-                    .append(IkeyConfig.getBundleConfElement("message.webmaster"))
-                    .append(IkeyConfig.getBundleConfOverridableElement("email.webmaster"));
-            txtFileWriter.close();
-        } catch (final IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fileOutputStream != null) {
-                    fileOutputStream.close();
-                }
-            } catch (final IOException _) {
-            }
-        }
-        return erroFile;
-    }
-
-    public OutputFormat getFormat() {
-        return format;
-    }
-
-
-    public KeyRepresentation getRepresentation() {
-        return representation;
-    }
-
-
-    public boolean isFewStatesCharacterFirst() {
-        return fewStatesCharacterFirst;
-    }
-
-    public boolean isMergeCharacterStatesIfSameDiscrimination() {
-        return mergeCharacterStatesIfSameDiscrimination;
-    }
-
-    public boolean isPruningEnabled() {
-        return pruningEnabled;
-    }
-
-    public Set<VerbosityLevel> getVerbosity() {
-        return verbosity;
-    }
-
-    public ScoreMethod getScoreMethod() {
-        return scoreMethod;
-    }
-
-    public WeightContext getWeightContext() {
-        return weightContext;
-    }
-
-    public WeightType getWeightType() {
-        return weightType;
-    }
-
 }

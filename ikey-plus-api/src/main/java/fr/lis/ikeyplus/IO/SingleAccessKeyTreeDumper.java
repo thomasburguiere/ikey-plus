@@ -1765,7 +1765,7 @@ public abstract class SingleAccessKeyTreeDumper {
             dest.close();
 
         } catch (final Exception e) {
-            tree2dump.getConfig().setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingFileError"), e);
+//            tree2dump.getConfig().setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingFileError"), e);
             e.printStackTrace();
         }
 
