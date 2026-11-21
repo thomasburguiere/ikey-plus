@@ -41,19 +41,19 @@ public class InputParser {
     };
 
     static final Function<String, IkeyConfig.OutputFormat> OUTPUT_FORMAT_PARSER =
-        s -> Optional.ofNullable(IkeyConfig.OutputFormat.fromString(s))
+        s -> IkeyConfig.OutputFormat.fromString(s)
             .orElseThrow(() -> new IllegalArgumentException(
                 format("expected one of %s, got '%s'", Arrays.toString(IkeyConfig.OutputFormat.values()), s))
             );
 
     static final Function<String, IkeyConfig.KeyRepresentation> REPRESENTATION_PARSER =
-        s -> Optional.ofNullable(IkeyConfig.KeyRepresentation.fromString(s))
+        s -> IkeyConfig.KeyRepresentation.fromString(s)
             .orElseThrow(() -> new IllegalArgumentException(
                 format("expected one of %s, got '%s'", Arrays.toString(IkeyConfig.KeyRepresentation.values()), s))
             );
 
     static final Function<String, IkeyConfig.ScoreMethod> SCORE_METHOD_PARSER =
-        s -> Optional.ofNullable(IkeyConfig.ScoreMethod.fromString(s))
+        s -> IkeyConfig.ScoreMethod.fromString(s)
             .orElseThrow(() -> new IllegalArgumentException(
                 format("expected one of %s, got '%s'", Arrays.toString(IkeyConfig.ScoreMethod.values()), s))
             );
