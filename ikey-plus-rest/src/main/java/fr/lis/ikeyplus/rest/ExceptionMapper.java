@@ -1,7 +1,6 @@
 package fr.lis.ikeyplus.rest;
 
 import io.javalin.config.JavalinConfig;
-import io.javalin.http.Context;
 import org.xml.sax.SAXParseException;
 
 import static io.javalin.http.HttpStatus.BAD_REQUEST;

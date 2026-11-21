@@ -17,7 +17,7 @@
     <inspection_tool class="ControlFlowStatementWithoutBraces" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="Convert2MethodRef" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
     <inspection_tool class="DataFlowIssue" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
-      <scope name="Tests" level="ERROR" enabled="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="Tests" level="WEAK WARNING" enabled="true" editorAttributes="INFO_ATTRIBUTES">
         <option name="SUGGEST_NULLABLE_ANNOTATIONS" value="false" />
         <option name="DONT_REPORT_TRUE_ASSERT_STATEMENTS" value="false" />
       </scope>
