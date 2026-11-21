@@ -1,6 +1,7 @@
 package fr.lis.ikeyplus.rest;
 
 import fr.lis.ikeyplus.utils.IkeyConfig;
+import fr.lis.ikeyplus.utils.ImmutableIkeyConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.io.FileInputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static fr.lis.ikeyplus.utils.IkeyConfig.KeyRepresentation.TREE;
@@ -27,11 +29,10 @@ class RestHandlerTest {
                 expected = stream.collect(Collectors.joining("\n"));
             }
 
-            final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
-                .verbosity(HEADER)
+            final IkeyConfig config = ImmutableIkeyConfig.builder()
+                .verbosity(Set.of(HEADER))
                 .representation(TREE)
-                .enablePruning(false)
+                .pruningEnabled(false)
                 .format(TXT)
                 .build();
             final String result = RestHandler.generateKey(
