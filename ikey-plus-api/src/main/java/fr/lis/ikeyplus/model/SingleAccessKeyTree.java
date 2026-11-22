@@ -123,7 +123,7 @@ public class SingleAccessKeyTree {
         if (node != null) {
             if (node.getCharacter() != null && node.getCharacterState() != null) {
                 if (!node.hasChild() && node.getCharacter().isCategorical()
-                        && !((State) node.getCharacterState()).getName().equals(OTHER_NOT_DESCRIBED)) {
+                        && !((State) node.getCharacterState()).name().equals(OTHER_NOT_DESCRIBED)) {
                     for (final Taxon t : node.getRemainingTaxa()) {
                         t.updatePathStatistics((float) treeDepth);
                     }

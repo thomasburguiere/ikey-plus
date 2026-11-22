@@ -3,6 +3,7 @@ package fr.lis.ikeyplus.IO;
 import fr.lis.ikeyplus.model.CodedDescription;
 import fr.lis.ikeyplus.model.DataSet;
 import fr.lis.ikeyplus.model.ImmutableQuantitativeMeasure;
+import fr.lis.ikeyplus.model.ImmutableState;
 import fr.lis.ikeyplus.model.QuantitativeMeasure;
 import fr.lis.ikeyplus.model.State;
 import fr.lis.ikeyplus.model.Taxon;
@@ -72,7 +73,7 @@ public class SDDContentHandler implements ContentHandler {
     // current quantitative character
     private QuantitativeCharacter currentQuantitativeCharacter = null;
     // current state
-    private State currentState = null;
+    private ImmutableState.Builder currentState = null;
     // current codedDescription
     private CodedDescription currentCodedDescription = null;
     // current taxon
@@ -184,14 +185,14 @@ public class SDDContentHandler implements ContentHandler {
             // <StateDefinition> in <States>
             else if ("StateDefinition".equals(localName) && inStates) {
                 inStateDefinition = true;
-                currentState = new State();
-                currentState.setId(attributes.getValue("id"));
+                currentState = ImmutableState.builder();
+                currentState.id(attributes.getValue("id"));
             }
 
             // <MediaObject> in <Representation> in <StateDefinition> in <States>
             else if ("MediaObject".equals(localName) && inStateDefinition && inRepresentation && inStates) {
                 if (attributes.getValue("ref") != null && currentState != null) {
-                    currentState.getMediaObjectKeys().add(attributes.getValue("ref"));
+                    currentState.addMediaObjectKeys(attributes.getValue("ref"));
                 }
             }
 
@@ -464,7 +465,7 @@ public class SDDContentHandler implements ContentHandler {
                 if (inCodedDescription) {
                     currentTaxon.setName(buffer.toString());
                 } else if (inCategoricalCharacter && inStateDefinition) {
-                    currentState.setName(buffer.toString());
+                    currentState.name(buffer.toString());
                 } else if (inCategoricalCharacter) {
                     currentCategoricalCharacter.setName(buffer.toString());
                 } else if (inQuantitativeCharacter) {
@@ -520,7 +521,7 @@ public class SDDContentHandler implements ContentHandler {
             // <StateDefinition> in <States>
             else if ("StateDefinition".equals(localName) && inStates) {
                 inStateDefinition = false;
-                currentCategoricalCharacter.getStates().add(currentState);
+                currentCategoricalCharacter.getStates().add(currentState.build());
                 currentState = null;
             }
 

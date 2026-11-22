@@ -67,10 +67,10 @@ public class SingleAccessKeyNode {
 
         final StringBuilder result = new StringBuilder();
         if (characterState instanceof State) {
-            result.append(((State) characterState).getName());
+            result.append(((State) characterState).name());
             for (final Object state : otherCharacterStates) {
                 if (state instanceof State) {
-                    result.append(separator).append(((State) state).getName());
+                    result.append(separator).append(((State) state).name());
                 }
             }
         }

@@ -1,6 +1,7 @@
 package fr.lis.ikeyplus.services;
 
 import fr.lis.ikeyplus.model.ImmutableQuantitativeMeasure;
+import fr.lis.ikeyplus.model.ImmutableState;
 import fr.lis.ikeyplus.model.character.CategoricalCharacter;
 import fr.lis.ikeyplus.model.CodedDescription;
 import fr.lis.ikeyplus.model.DataSet;
@@ -240,7 +241,7 @@ public class IdentificationKeyGenerator {
                 final SingleAccessKeyNode notDescribedNode = new SingleAccessKeyNode();
                 notDescribedNode.setCharacter(selectedCharacter);
                 notDescribedNode.setRemainingTaxa(notDescribedTaxa);
-                notDescribedNode.setCharacterState(new State(OTHER_NOT_DESCRIBED));
+                notDescribedNode.setCharacterState(ImmutableState.builder().name(OTHER_NOT_DESCRIBED).build());
 
                 // put new node as child of parentNode
                 parentNode.addChild(notDescribedNode);
