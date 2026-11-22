@@ -1,5 +1,6 @@
 package fr.lis.ikeyplus.services;
 
+import fr.lis.ikeyplus.model.ImmutableQuantitativeMeasure;
 import fr.lis.ikeyplus.model.character.CategoricalCharacter;
 import fr.lis.ikeyplus.model.CodedDescription;
 import fr.lis.ikeyplus.model.DataSet;
@@ -360,8 +361,8 @@ public class IdentificationKeyGenerator {
     ) {
 
         final List<QuantitativeMeasure> quantitativeMeasures = new ArrayList<>();
-        final QuantitativeMeasure quantitativeMeasure1 = new QuantitativeMeasure();
-        final QuantitativeMeasure quantitativeMeasure2 = new QuantitativeMeasure();
+        final var quantitativeMeasure1 = ImmutableQuantitativeMeasure.builder();
+        final var quantitativeMeasure2 = ImmutableQuantitativeMeasure.builder();
 
         // get the Min and Max values of all remaining taxa
         final List<Double> allValues = getAllNumericalValues(character, remainingTaxa);
@@ -394,16 +395,16 @@ public class IdentificationKeyGenerator {
 
         // split the interval in 2 part
         if (allValues.size() > 2 && bestThreshold != null) {
-            quantitativeMeasure1.setMin(allValues.getFirst());
-            quantitativeMeasure1.setMax(bestThreshold);
-            quantitativeMeasure1.setMaxInclude(false);
-            quantitativeMeasure2.setMin(bestThreshold);
-            quantitativeMeasure2.setMax(allValues.getLast());
+            quantitativeMeasure1.min(allValues.getFirst());
+            quantitativeMeasure1.max(bestThreshold);
+            quantitativeMeasure1.maxInclude(false);
+            quantitativeMeasure2.min(bestThreshold);
+            quantitativeMeasure2.max(allValues.getLast());
         }
 
         // add the 2 new interval to the list
-        quantitativeMeasures.add(quantitativeMeasure1);
-        quantitativeMeasures.add(quantitativeMeasure2);
+        quantitativeMeasures.add(quantitativeMeasure1.build());
+        quantitativeMeasures.add(quantitativeMeasure2.build());
 
         return quantitativeMeasures;
     }

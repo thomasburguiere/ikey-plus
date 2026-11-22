@@ -2,6 +2,7 @@ package fr.lis.ikeyplus.IO;
 
 import fr.lis.ikeyplus.model.CodedDescription;
 import fr.lis.ikeyplus.model.DataSet;
+import fr.lis.ikeyplus.model.ImmutableQuantitativeMeasure;
 import fr.lis.ikeyplus.model.QuantitativeMeasure;
 import fr.lis.ikeyplus.model.State;
 import fr.lis.ikeyplus.model.Taxon;
@@ -82,7 +83,7 @@ public class SDDContentHandler implements ContentHandler {
     // current States list for CodedDescription
     private List<State> currentStatesList = null;
     // current QuantitativeMeasure for CodedDescription
-    private QuantitativeMeasure currentQuantitativeMeasure = null;
+    private ImmutableQuantitativeMeasure.Builder currentQuantitativeMeasure = null;
     // current CharacterNode
     private ICharacter currentCharacterNode = null;
     // list of applicable and inapplicable states
@@ -319,29 +320,29 @@ public class SDDContentHandler implements ContentHandler {
             else if ("Quantitative".equals(localName) && inSummaryData) {
                 inQuantitative = true;
                 currentCodedDescriptionCharacter = dataSet.getCharacterById(attributes.getValue("ref"));
-                currentQuantitativeMeasure = new QuantitativeMeasure();
+                currentQuantitativeMeasure = ImmutableQuantitativeMeasure.builder();
             }
 
             // <Measure> in <Quantitative>
             else if ("Measure".equals(localName) && inQuantitative) {
                 if (currentQuantitativeMeasure != null) {
                     if (attributes.getValue("type").equals("Min")) {
-                        currentQuantitativeMeasure.setMin(Double.valueOf(attributes
+                        currentQuantitativeMeasure.min(Double.valueOf(attributes
                                 .getValue("value")));
                     } else if (attributes.getValue("type").equals("Max")) {
-                        currentQuantitativeMeasure.setMax(Double.valueOf(attributes
+                        currentQuantitativeMeasure.max(Double.valueOf(attributes
                                 .getValue("value")));
                     } else if (attributes.getValue("type").equals("Mean")) {
-                        currentQuantitativeMeasure.setMean(Double.valueOf(attributes
+                        currentQuantitativeMeasure.mean(Double.valueOf(attributes
                                 .getValue("value")));
                     } else if (attributes.getValue("type").equals("SD")) {
-                        currentQuantitativeMeasure.setSD(Double.valueOf(attributes
+                        currentQuantitativeMeasure.sd(Double.valueOf(attributes
                                 .getValue("value")));
                     } else if (attributes.getValue("type").equals("UMethLower")) {
-                        currentQuantitativeMeasure.setUMethLower(Double.valueOf(attributes
+                        currentQuantitativeMeasure.uMethLower(Double.valueOf(attributes
                                 .getValue("value")));
                     } else if (attributes.getValue("type").equals("UMethUpper")) {
-                        currentQuantitativeMeasure.setUMethUpper(Double.valueOf(attributes
+                        currentQuantitativeMeasure.uMethUpper(Double.valueOf(attributes
                                 .getValue("value")));
                     }
                 }
@@ -436,7 +437,7 @@ public class SDDContentHandler implements ContentHandler {
                             } else if (character instanceof final QuantitativeCharacter cast) {
                                 dataSet.getCodedDescriptions().get(taxon).addQuantitativeCharacterDescription(
                                         cast,
-                                        new QuantitativeMeasure()
+                                        ImmutableQuantitativeMeasure.builder().build()
                                 );
                             }
                         }
@@ -650,7 +651,7 @@ public class SDDContentHandler implements ContentHandler {
                 } else {
                     currentCodedDescription.addQuantitativeCharacterDescription(
                             (QuantitativeCharacter) currentCodedDescriptionCharacter,
-                            currentQuantitativeMeasure
+                            currentQuantitativeMeasure.build()
                     );
                 }
                 currentCodedDescriptionCharacter = null;
