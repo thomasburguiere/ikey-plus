@@ -29,7 +29,8 @@ public class IkeyConfigTest {
 
     @Test
     public void should_have_non_duplicate_verbosity_levels() {
-        final IkeyConfig config = IkeyConfig.builder().verbosity(Set.of(HEADER, OTHER, WARNING, STATISTICS)).verbosity(HEADER).build();
+        final IkeyConfig config = IkeyConfig.builder().verbosity(Set.of(HEADER, OTHER, WARNING, STATISTICS))
+            .verbosity(HEADER).build();
         assertThat(config.getVerbosity()).containsOnly(HEADER, OTHER, WARNING, STATISTICS);
     }
 
@@ -62,14 +63,13 @@ public class IkeyConfigTest {
         assertThat(result).contains(ERROR_MESSAGE + ": " + EXCEPTION_MESSAGE);
     }
 
-
     @BeforeAll
     public static void setUp() {
         IkeyConfig.setBundleConfOverridable(ResourceBundle.getBundle("confTest"));
         IkeyConfig.setBundleConf(ResourceBundle.getBundle("confTest"));
 
         final String generatedFilesFolder = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-                + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
+            + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
         if (!new File(generatedFilesFolder).exists()) {
             new File(generatedFilesFolder).mkdirs();
         }

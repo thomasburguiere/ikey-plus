@@ -21,7 +21,8 @@ import java.util.Map;
 import static fr.lis.ikeyplus.utils.IkeyConfig.WeightType.CONTEXTUAL;
 
 /**
- * This class extends the ContentHandler class, in order to be able to treat each SDD tag and extract data
+ * This class extends the ContentHandler class, in order to be able to treat
+ * each SDD tag and extract data
  *
  * @author Florian Causse
  * @created 18-04-2011
@@ -102,12 +103,15 @@ public class SDDContentHandler implements ContentHandler {
         this.ratingsCounter = new HashMap<>();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      *
-     * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String, java.lang.String,
-     * org.xml.sax.Attributes) */
+     * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
+     * java.lang.String, java.lang.String, org.xml.sax.Attributes)
+     */
     @Override
-    public void startElement(final String nameSpaceURI, final String localName, final String rawName, final Attributes attributes) {
+    public void startElement(final String nameSpaceURI, final String localName, final String rawName,
+        final Attributes attributes) {
 
         if (isFirstDataset) {
 
@@ -132,13 +136,13 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <ConceptStates>
-            //else if ("ConceptStates".equals(localName)) {
-            //}
+            // else if ("ConceptStates".equals(localName)) {
+            // }
 
             // <StateDefinition> in <ConceptStates>
-//            else if ("StateDefinition".equals(localName) && inConceptStates) {
-//
-//            }
+            // else if ("StateDefinition".equals(localName) && inConceptStates) {
+            //
+            // }
 
             // <Characters>
             else if ("Characters".equals(localName)) {
@@ -153,8 +157,7 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <MediaObject> in <Representation> in <CategoricalCharacter>
-            else if ("MediaObject".equals(localName) && inRepresentation && inCategoricalCharacter
-                    && !inStates) {
+            else if ("MediaObject".equals(localName) && inRepresentation && inCategoricalCharacter && !inStates) {
                 if (attributes.getValue("ref") != null && currentCategoricalCharacter != null) {
                     currentCategoricalCharacter.getMediaObjectKeys().add(attributes.getValue("ref"));
                 }
@@ -168,8 +171,7 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <MediaObject> in <Representation> in <QuantitativeCharacter>
-            else if ("MediaObject".equals(localName) && inRepresentation && inQuantitativeCharacter
-                    && !inStates) {
+            else if ("MediaObject".equals(localName) && inRepresentation && inQuantitativeCharacter && !inStates) {
                 if (attributes.getValue("ref") != null && currentQuantitativeCharacter != null) {
                     currentQuantitativeCharacter.getMediaObjectKeys().add(attributes.getValue("ref"));
                 }
@@ -195,13 +197,13 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <StateReference> in <States>
-            //else if ("StateReference".equals(localName) && inStates) {
-            //}
+            // else if ("StateReference".equals(localName) && inStates) {
+            // }
 
             // <ConceptState> in <StateReference>
-            //else if ("ConceptState".equals(localName) && inStatesReference) {
+            // else if ("ConceptState".equals(localName) && inStatesReference) {
 
-            //}
+            // }
 
             // <CharacterTree>
             else if ("CharacterTree".equals(localName)) {
@@ -247,8 +249,7 @@ public class SDDContentHandler implements ContentHandler {
 
             // <State> in <OnlyApplicableIf> in <CharacterTree> &&
             // isFirstCharacterTree
-            else if ("State".equals(localName) && inOnlyApplicableIf && inCharacterTree
-                    && isFirstCharacterTree) {
+            else if ("State".equals(localName) && inOnlyApplicableIf && inCharacterTree && isFirstCharacterTree) {
                 final State state = dataSet.getStateById(attributes.getValue("ref"));
                 currentOnlyApplicableState.add(state);
             }
@@ -280,13 +281,13 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <Scope>
-            //else if ("Scope".equals(localName)) {
-            //}
+            // else if ("Scope".equals(localName)) {
+            // }
 
             // <TaxonName> in <Scope>
-            //else if ("TaxonName".equals(localName) && inScope) {
+            // else if ("TaxonName".equals(localName) && inScope) {
 
-            //}
+            // }
 
             // <SummaryData>
             else if ("SummaryData".equals(localName)) {
@@ -309,8 +310,7 @@ public class SDDContentHandler implements ContentHandler {
 
             // <Status> in <Categorical>
             else if ("Status".equals(localName) && inCategorical) {
-                if (attributes.getValue("code") != null
-                        && attributes.getValue("code").equals("DataUnavailable")) {
+                if (attributes.getValue("code") != null && attributes.getValue("code").equals("DataUnavailable")) {
                     dataUnavailableFlag = true;
                 }
             }
@@ -326,31 +326,24 @@ public class SDDContentHandler implements ContentHandler {
             else if ("Measure".equals(localName) && inQuantitative) {
                 if (currentQuantitativeMeasure != null) {
                     if (attributes.getValue("type").equals("Min")) {
-                        currentQuantitativeMeasure.setMin(Double.valueOf(attributes
-                                .getValue("value")));
+                        currentQuantitativeMeasure.setMin(Double.valueOf(attributes.getValue("value")));
                     } else if (attributes.getValue("type").equals("Max")) {
-                        currentQuantitativeMeasure.setMax(Double.valueOf(attributes
-                                .getValue("value")));
+                        currentQuantitativeMeasure.setMax(Double.valueOf(attributes.getValue("value")));
                     } else if (attributes.getValue("type").equals("Mean")) {
-                        currentQuantitativeMeasure.setMean(Double.valueOf(attributes
-                                .getValue("value")));
+                        currentQuantitativeMeasure.setMean(Double.valueOf(attributes.getValue("value")));
                     } else if (attributes.getValue("type").equals("SD")) {
-                        currentQuantitativeMeasure.setSD(Double.valueOf(attributes
-                                .getValue("value")));
+                        currentQuantitativeMeasure.setSD(Double.valueOf(attributes.getValue("value")));
                     } else if (attributes.getValue("type").equals("UMethLower")) {
-                        currentQuantitativeMeasure.setUMethLower(Double.valueOf(attributes
-                                .getValue("value")));
+                        currentQuantitativeMeasure.setUMethLower(Double.valueOf(attributes.getValue("value")));
                     } else if (attributes.getValue("type").equals("UMethUpper")) {
-                        currentQuantitativeMeasure.setUMethUpper(Double.valueOf(attributes
-                                .getValue("value")));
+                        currentQuantitativeMeasure.setUMethUpper(Double.valueOf(attributes.getValue("value")));
                     }
                 }
             }
 
             // <Status> in <Quantitative>
             else if ("Status".equals(localName) && inQuantitative) {
-                if (attributes.getValue("code") != null
-                        && attributes.getValue("code").equals("DataUnavailable")) {
+                if (attributes.getValue("code") != null && attributes.getValue("code").equals("DataUnavailable")) {
                     dataUnavailableFlag = true;
                 }
             }
@@ -368,21 +361,21 @@ public class SDDContentHandler implements ContentHandler {
             // <Rating> in <Ratings>
             else if ("Rating".equals(localName) && inRatings) {
                 if (attributes.getValue("context").equals(config.getWeightContext().toString())) {
-                    final int currentRating = IkeyConfig.WeightValue.fromString(attributes.getValue("rating")).getIntWeight();
+                    final int currentRating = IkeyConfig.WeightValue.fromString(attributes.getValue("rating"))
+                        .getIntWeight();
                     if (currentCodedDescriptionCharacter != null) {
                         if (ratingsCounter.get(currentCodedDescriptionCharacter) == null) {
                             ratingsCounter.put(currentCodedDescriptionCharacter, 0);
                             currentCodedDescriptionCharacter.setWeight(0);
                         }
 
-                        currentCodedDescriptionCharacter.setWeight(currentCodedDescriptionCharacter
-                                .getWeight() + currentRating);
+                        currentCodedDescriptionCharacter
+                            .setWeight(currentCodedDescriptionCharacter.getWeight() + currentRating);
                         ratingsCounter.put(currentCodedDescriptionCharacter,
-                                ratingsCounter.get(currentCodedDescriptionCharacter) + 1);
+                            ratingsCounter.get(currentCodedDescriptionCharacter) + 1);
 
                         if (config.getWeightType() == CONTEXTUAL) {
-                            currentCodedDescription.addCharacterWeight(currentCodedDescriptionCharacter,
-                                    currentRating);
+                            currentCodedDescription.addCharacterWeight(currentCodedDescriptionCharacter, currentRating);
                         }
 
                     }
@@ -406,15 +399,18 @@ public class SDDContentHandler implements ContentHandler {
 
             // <Source> in <MediaObject>
             else if ("Source".equals(localName) && inMediaObject && mediaObjectId != null && isImageType
-                    && attributes.getValue("href") != null) {
+                && attributes.getValue("href") != null) {
                 dataSet.getMediaObjects().put(mediaObjectId, attributes.getValue("href"));
             }
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      *
-     * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String, java.lang.String) */
+     * @see org.xml.sax.ContentHandler#endElement(java.lang.String,
+     * java.lang.String, java.lang.String)
+     */
     @Override
     public void endElement(final String nameSpaceURI, final String localName, final String rawName) {
 
@@ -424,20 +420,17 @@ public class SDDContentHandler implements ContentHandler {
                 inDataset = false;
                 isFirstDataset = false;
 
-                // missing description will be initialized to empty state list or empty quant measure
+                // missing description will be initialized to empty state list or empty quant
+                // measure
                 for (final Taxon taxon : dataSet.getCodedDescriptions().keySet()) {
                     for (final ICharacter character : dataSet.getCharacters()) {
                         if (!dataSet.getCodedDescriptions().get(taxon).existsDescription(character)) {
                             if (character instanceof final CategoricalCharacter cast) {
-                                dataSet.getCodedDescriptions().get(taxon).addCategoricalCharacterDescription(
-                                        cast,
-                                        new ArrayList<>()
-                                );
+                                dataSet.getCodedDescriptions().get(taxon).addCategoricalCharacterDescription(cast,
+                                    new ArrayList<>());
                             } else if (character instanceof final QuantitativeCharacter cast) {
-                                dataSet.getCodedDescriptions().get(taxon).addQuantitativeCharacterDescription(
-                                        cast,
-                                        new QuantitativeMeasure()
-                                );
+                                dataSet.getCodedDescriptions().get(taxon).addQuantitativeCharacterDescription(cast,
+                                    new QuantitativeMeasure());
                             }
                         }
                     }
@@ -447,8 +440,7 @@ public class SDDContentHandler implements ContentHandler {
                 // useContextualCharacterWeights is not enabled
                 for (final ICharacter character : dataSet.getCharacters()) {
                     if (ratingsCounter.get(character) != null) {
-                        character.setWeight(character.getWeight()
-                                / (float) (ratingsCounter.get(character)));
+                        character.setWeight(character.getWeight() / (float) (ratingsCounter.get(character)));
                     }
                 }
             }
@@ -484,12 +476,12 @@ public class SDDContentHandler implements ContentHandler {
             // <ConceptStates>
             // else if ("ConceptStates".equals(localName)) {
 
-            //}
+            // }
 
             // <StateDefinition> in <ConceptStates>
-            //else if ("StateDefinition".equals(localName) && inConceptStates) {
+            // else if ("StateDefinition".equals(localName) && inConceptStates) {
 
-            //}
+            // }
 
             // <Characters>
             else if ("Characters".equals(localName)) {
@@ -524,14 +516,14 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <StateReference> in <States>
-            //  else if ("StateReference".equals(localName) && inStates) {
+            // else if ("StateReference".equals(localName) && inStates) {
 
-            //   }
+            // }
 
             // <ConceptState> in <StateReference>
-            //else if ("ConceptState".equals(localName) && inStatesReference) {
+            // else if ("ConceptState".equals(localName) && inStatesReference) {
 
-            //}
+            // }
 
             // <CharacterTree>
             else if ("CharacterTree".equals(localName)) {
@@ -548,15 +540,14 @@ public class SDDContentHandler implements ContentHandler {
             else if ("CharNode".equals(localName) && inNodes) {
                 inCharNode = false;
                 if (!currentInapplicableState.isEmpty()) {
-                    currentCharacterNode.setParentCharacter(dataSet
-                            .getCharacterByState(currentInapplicableState.getFirst()));
+                    currentCharacterNode
+                        .setParentCharacter(dataSet.getCharacterByState(currentInapplicableState.getFirst()));
                     currentCharacterNode.getInapplicableStates().addAll(currentInapplicableState);
                 } else if (!currentOnlyApplicableState.isEmpty()) {
                     final ICharacter character = dataSet.getCharacterByState(currentOnlyApplicableState.getFirst());
                     if (character instanceof final CategoricalCharacter cast) {
                         currentCharacterNode.setParentCharacter(character);
-                        final List<State> tempList = new ArrayList<>(
-                                cast.getStates());
+                        final List<State> tempList = new ArrayList<>(cast.getStates());
                         tempList.removeAll(currentOnlyApplicableState);
                         currentCharacterNode.getInapplicableStates().addAll(tempList);
                     }
@@ -584,21 +575,24 @@ public class SDDContentHandler implements ContentHandler {
 
             // <State> in <InapplicableIf> in <CharacterTree> &&
             // isFirstCharacterTree
-            //else if ("State".equals(localName) && inInapplicableIf && inCharacterTree && isFirstCharacterTree) {
+            // else if ("State".equals(localName) && inInapplicableIf && inCharacterTree &&
+            // isFirstCharacterTree) {
 
-            //}
+            // }
 
             // <State> in <OnlyApplicableIf> in <CharacterTree> &&
             // isFirstCharacterTree
-            //else if ("State".equals(localName) && inOnlyApplicableIf && inCharacterTree       && isFirstCharacterTree) {
+            // else if ("State".equals(localName) && inOnlyApplicableIf && inCharacterTree
+            // && isFirstCharacterTree) {
 
-            //}
+            // }
 
             // <Character> in <CharNode> in <CharacterTree> &&
             // isFirstCharacterTree
-            // else if ("Character".equals(localName) && inCharNode && inCharacterTree && isFirstCharacterTree) {
+            // else if ("Character".equals(localName) && inCharNode && inCharacterTree &&
+            // isFirstCharacterTree) {
 
-            //}
+            // }
 
             // <CodedDescriptions>
             else if ("CodedDescriptions".equals(localName)) {
@@ -613,11 +607,11 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <Scope>
-//            else if ("Scope".equals(localName)) {
-//            }
+            // else if ("Scope".equals(localName)) {
+            // }
 
             // <TaxonName> in <Scope>
-            //else if ("TaxonName".equals(localName) && inScope) {
+            // else if ("TaxonName".equals(localName) && inScope) {
 
             // }
 
@@ -633,9 +627,7 @@ public class SDDContentHandler implements ContentHandler {
                     currentCodedDescription.setUnknownDescription(currentCodedDescriptionCharacter);
                 } else {
                     currentCodedDescription.addCategoricalCharacterDescription(
-                            (CategoricalCharacter) currentCodedDescriptionCharacter,
-                            currentStatesList
-                    );
+                        (CategoricalCharacter) currentCodedDescriptionCharacter, currentStatesList);
                 }
                 currentCodedDescriptionCharacter = null;
                 currentStatesList = null;
@@ -649,9 +641,7 @@ public class SDDContentHandler implements ContentHandler {
                     currentCodedDescription.setUnknownDescription(currentCodedDescriptionCharacter);
                 } else {
                     currentCodedDescription.addQuantitativeCharacterDescription(
-                            (QuantitativeCharacter) currentCodedDescriptionCharacter,
-                            currentQuantitativeMeasure
-                    );
+                        (QuantitativeCharacter) currentCodedDescriptionCharacter, currentQuantitativeMeasure);
                 }
                 currentCodedDescriptionCharacter = null;
                 currentQuantitativeMeasure = null;
@@ -659,9 +649,9 @@ public class SDDContentHandler implements ContentHandler {
             }
 
             // <Measure> in <Quantitative>
-            //else if ("Measure".equals(localName) && inQuantitative) {
+            // else if ("Measure".equals(localName) && inQuantitative) {
 
-            //}
+            // }
 
             // <MeasurementUnit>
             else if ("MeasurementUnit".equals(localName)) {
@@ -688,49 +678,62 @@ public class SDDContentHandler implements ContentHandler {
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      *
-     * @see org.xml.sax.ContentHandler#endDocument() */
+     * @see org.xml.sax.ContentHandler#endDocument()
+     */
     @Override
     public void endDocument() {
         // nothing to do here
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      *
-     * @see org.xml.sax.ContentHandler#endPrefixMapping(java.lang.String) */
+     * @see org.xml.sax.ContentHandler#endPrefixMapping(java.lang.String)
+     */
     @Override
     public void endPrefixMapping(final String prefix) {
         // nothing to do here
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      *
-     * @see org.xml.sax.ContentHandler#setDocumentLocator(org.xml.sax.Locator) */
+     * @see org.xml.sax.ContentHandler#setDocumentLocator(org.xml.sax.Locator)
+     */
     @Override
     public void setDocumentLocator(final Locator locator) {
         // nothing to do here
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      *
-     * @see org.xml.sax.ContentHandler#startDocument() */
+     * @see org.xml.sax.ContentHandler#startDocument()
+     */
     @Override
     public void startDocument() {
         // nothing to do here
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      *
-     * @see org.xml.sax.ContentHandler#startPrefixMapping(java.lang.String, java.lang.String) */
+     * @see org.xml.sax.ContentHandler#startPrefixMapping(java.lang.String,
+     * java.lang.String)
+     */
     @Override
     public void startPrefixMapping(final String prefix, final String uri) {
         // nothing to do here
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      *
-     * @see org.xml.sax.ContentHandler#characters(char[], int, int) */
+     * @see org.xml.sax.ContentHandler#characters(char[], int, int)
+     */
     @Override
     public void characters(final char[] ch, final int start, final int length) {
         String data = new String(ch, start, length);
@@ -745,25 +748,32 @@ public class SDDContentHandler implements ContentHandler {
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      *
-     * @see org.xml.sax.ContentHandler#ignorableWhitespace(char[], int, int) */
+     * @see org.xml.sax.ContentHandler#ignorableWhitespace(char[], int, int)
+     */
     @Override
     public void ignorableWhitespace(final char[] ch, final int start, final int length) {
         // nothing to do here
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      *
-     * @see org.xml.sax.ContentHandler#processingInstruction(java.lang.String, java.lang.String) */
+     * @see org.xml.sax.ContentHandler#processingInstruction(java.lang.String,
+     * java.lang.String)
+     */
     @Override
     public void processingInstruction(final String target, final String data) {
         // nothing to do here
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      *
-     * @see org.xml.sax.ContentHandler#skippedEntity(java.lang.String) */
+     * @see org.xml.sax.ContentHandler#skippedEntity(java.lang.String)
+     */
     @Override
     public void skippedEntity(final String name) {
         // nothing to do here

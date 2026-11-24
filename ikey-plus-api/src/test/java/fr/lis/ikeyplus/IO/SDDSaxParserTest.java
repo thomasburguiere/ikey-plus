@@ -24,7 +24,8 @@ public class SDDSaxParserTest {
 
     @Test
     void should_parse_local_file() throws Exception {
-        final DataSet dataset = sddSaxParser.parseDataset(new FileInputStream("src/test/resources/inputFiles/cichorieae.sdd.xml"), config);
+        final DataSet dataset = sddSaxParser
+            .parseDataset(new FileInputStream("src/test/resources/inputFiles/cichorieae.sdd.xml"), config);
         assertThat(dataset.getLabel()).isEqualToIgnoringCase("Project: Cichorieae");
         assertThat(dataset.getCharacters()).hasSize(303);
         assertThat(dataset.getTaxa()).hasSize(144);
@@ -34,7 +35,7 @@ public class SDDSaxParserTest {
     void should_throw_exception_for_invalid_xml() {
         final var invalidXml = "<Datasets><not-closed>".getBytes(StandardCharsets.UTF_8);
 
-        assertThatThrownBy(() ->sddSaxParser.parseDataset(new ByteArrayInputStream(invalidXml), config))
-                .isInstanceOf(SAXParseException.class);
+        assertThatThrownBy(() -> sddSaxParser.parseDataset(new ByteArrayInputStream(invalidXml), config))
+            .isInstanceOf(SAXParseException.class);
     }
 }

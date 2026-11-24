@@ -27,14 +27,15 @@ public class SingleAccessKeyTreeDumperTest {
 
         final IkeyConfig config = IkeyConfig.builder().enablePruning().verbosity(HEADER).build();
 
-
         final IdentificationKeyGenerator identificationKeyGenerator;
 
-        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
+        identificationKeyGenerator = new IdentificationKeyGenerator(
+            sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
         final boolean statisticsEnabled = config.getVerbosity().contains(STATISTICS);
-        final File file = SingleAccessKeyTreeDumper.dumpFlatHtmlFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
+        final File file = SingleAccessKeyTreeDumper.dumpFlatHtmlFile("", tree2dump, statisticsEnabled,
+            generatedFilesFolder);
         final byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
         final String result = new String(resultBytes, StandardCharsets.UTF_8);
 
@@ -46,20 +47,18 @@ public class SingleAccessKeyTreeDumperTest {
     public void should_generate_cichorieae_html_tree_key() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/cichorieae.sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
-                .verbosity(HEADER)
-                .representation(IkeyConfig.KeyRepresentation.TREE)
-                .build();
-
+        final IkeyConfig config = IkeyConfig.builder().enablePruning().verbosity(HEADER)
+            .representation(IkeyConfig.KeyRepresentation.TREE).build();
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
-        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
+        identificationKeyGenerator = new IdentificationKeyGenerator(
+            sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
         final boolean statisticsEnabled = config.getVerbosity().contains(STATISTICS);
-        final File file = SingleAccessKeyTreeDumper.dumpHtmlFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
+        final File file = SingleAccessKeyTreeDumper.dumpHtmlFile("", tree2dump, statisticsEnabled,
+            generatedFilesFolder);
         final byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
         final String result = new String(resultBytes, StandardCharsets.UTF_8);
 
@@ -71,20 +70,18 @@ public class SingleAccessKeyTreeDumperTest {
     public void should_generate_genetta_flat_txt_key() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
-                .verbosity(HEADER)
-                .representation(IkeyConfig.KeyRepresentation.FLAT)
-                .build();
-
+        final IkeyConfig config = IkeyConfig.builder().enablePruning().verbosity(HEADER)
+            .representation(IkeyConfig.KeyRepresentation.FLAT).build();
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
-        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
+        identificationKeyGenerator = new IdentificationKeyGenerator(
+            sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
         final boolean statisticsEnabled = config.getVerbosity().contains(STATISTICS);
-        final File file = SingleAccessKeyTreeDumper.dumpFlatTxtFile("TEST HEADER", tree2dump, statisticsEnabled, generatedFilesFolder);
+        final File file = SingleAccessKeyTreeDumper.dumpFlatTxtFile("TEST HEADER", tree2dump, statisticsEnabled,
+            generatedFilesFolder);
         final byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
         final String result = new String(resultBytes, StandardCharsets.UTF_8);
 
@@ -96,20 +93,18 @@ public class SingleAccessKeyTreeDumperTest {
     public void should_generate_genetta_tree_txt_key() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
-                .verbosity(HEADER)
-                .representation(IkeyConfig.KeyRepresentation.TREE)
-                .build();
-
+        final IkeyConfig config = IkeyConfig.builder().enablePruning().verbosity(HEADER)
+            .representation(IkeyConfig.KeyRepresentation.TREE).build();
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
-        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
+        identificationKeyGenerator = new IdentificationKeyGenerator(
+            sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
         final boolean statisticsEnabled = config.getVerbosity().contains(STATISTICS);
-        final File file = SingleAccessKeyTreeDumper.dumpTxtFile("TEST HEADER", tree2dump, statisticsEnabled, generatedFilesFolder);
+        final File file = SingleAccessKeyTreeDumper.dumpTxtFile("TEST HEADER", tree2dump, statisticsEnabled,
+            generatedFilesFolder);
         final byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
         final String result = new String(resultBytes, StandardCharsets.UTF_8);
 
@@ -121,20 +116,18 @@ public class SingleAccessKeyTreeDumperTest {
     public void should_generate_genetta_tree_wiki_key() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
-                .verbosity(HEADER)
-                .representation(IkeyConfig.KeyRepresentation.TREE)
-                .build();
-
+        final IkeyConfig config = IkeyConfig.builder().enablePruning().verbosity(HEADER)
+            .representation(IkeyConfig.KeyRepresentation.TREE).build();
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
-        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
+        identificationKeyGenerator = new IdentificationKeyGenerator(
+            sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
         final boolean statisticsEnabled = config.getVerbosity().contains(STATISTICS);
-        final File file = SingleAccessKeyTreeDumper.dumpWikiFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
+        final File file = SingleAccessKeyTreeDumper.dumpWikiFile("", tree2dump, statisticsEnabled,
+            generatedFilesFolder);
         final byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
         final String result = new String(resultBytes, StandardCharsets.UTF_8);
 
@@ -146,20 +139,18 @@ public class SingleAccessKeyTreeDumperTest {
     public void should_generate_genetta_flat_wiki_key() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
-                .verbosity(HEADER)
-                .representation(IkeyConfig.KeyRepresentation.TREE)
-                .build();
-
+        final IkeyConfig config = IkeyConfig.builder().enablePruning().verbosity(HEADER)
+            .representation(IkeyConfig.KeyRepresentation.TREE).build();
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
-        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
+        identificationKeyGenerator = new IdentificationKeyGenerator(
+            sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
         final boolean statisticsEnabled = config.getVerbosity().contains(STATISTICS);
-        final File file = SingleAccessKeyTreeDumper.dumpFlatWikiFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
+        final File file = SingleAccessKeyTreeDumper.dumpFlatWikiFile("", tree2dump, statisticsEnabled,
+            generatedFilesFolder);
         final byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
         final String result = new String(resultBytes, StandardCharsets.UTF_8);
 
@@ -171,16 +162,13 @@ public class SingleAccessKeyTreeDumperTest {
     public void should_generate_genetta_sdd_key() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
-                .verbosity(HEADER)
-                .representation(IkeyConfig.KeyRepresentation.TREE)
-                .build();
-
+        final IkeyConfig config = IkeyConfig.builder().enablePruning().verbosity(HEADER)
+            .representation(IkeyConfig.KeyRepresentation.TREE).build();
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
-        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
+        identificationKeyGenerator = new IdentificationKeyGenerator(
+            sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
         final File file = SingleAccessKeyTreeDumper.dumpSddFile(tree2dump);
@@ -188,8 +176,8 @@ public class SingleAccessKeyTreeDumperTest {
         String result = new String(resultBytes, StandardCharsets.UTF_8);
         result = result.replaceFirst("created.*\"", "");
 
-
-        final byte[] fixtureBytes = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta_identification_key.sdd"));
+        final byte[] fixtureBytes = Files
+            .readAllBytes(Paths.get("src/test/resources/fixtures/genetta_identification_key.sdd"));
         String fixture = new String(fixtureBytes, StandardCharsets.UTF_8);
         fixture = fixture.replaceFirst("created.*\"", "");
 
@@ -200,24 +188,20 @@ public class SingleAccessKeyTreeDumperTest {
     public void should_generate_genetta_with_statistics() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
-                .verbosity(HEADER)
-                .verbosity(STATISTICS)
-                .representation(IkeyConfig.KeyRepresentation.TREE)
-                .build();
-
+        final IkeyConfig config = IkeyConfig.builder().enablePruning().verbosity(HEADER).verbosity(STATISTICS)
+            .representation(IkeyConfig.KeyRepresentation.TREE).build();
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
-        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
+        identificationKeyGenerator = new IdentificationKeyGenerator(
+            sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
         final boolean statisticsEnabled = config.getVerbosity().contains(STATISTICS);
-        final File file = SingleAccessKeyTreeDumper.dumpFlatTxtFile("TEST HEADER", tree2dump, statisticsEnabled, generatedFilesFolder);
+        final File file = SingleAccessKeyTreeDumper.dumpFlatTxtFile("TEST HEADER", tree2dump, statisticsEnabled,
+            generatedFilesFolder);
         final byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
         String result = new String(resultBytes, StandardCharsets.UTF_8);
-
 
         final byte[] fixtureBytes = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta_flat_stats.txt"));
         String fixture = new String(fixtureBytes, StandardCharsets.UTF_8);
@@ -229,26 +213,23 @@ public class SingleAccessKeyTreeDumperTest {
     public void should_generate_genetta_wiki_with_statistics() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
-                .verbosity(HEADER)
-                .verbosity(STATISTICS)
-                .representation(IkeyConfig.KeyRepresentation.TREE)
-                .build();
-
+        final IkeyConfig config = IkeyConfig.builder().enablePruning().verbosity(HEADER).verbosity(STATISTICS)
+            .representation(IkeyConfig.KeyRepresentation.TREE).build();
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
-        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
+        identificationKeyGenerator = new IdentificationKeyGenerator(
+            sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
         final boolean statisticsEnabled = config.getVerbosity().contains(STATISTICS);
-        final File file = SingleAccessKeyTreeDumper.dumpFlatWikiFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
+        final File file = SingleAccessKeyTreeDumper.dumpFlatWikiFile("", tree2dump, statisticsEnabled,
+            generatedFilesFolder);
         final byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
         final String result = new String(resultBytes, StandardCharsets.UTF_8);
 
-
-        final byte[] fixtureBytes = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta_flat_stats.wiki"));
+        final byte[] fixtureBytes = Files
+            .readAllBytes(Paths.get("src/test/resources/fixtures/genetta_flat_stats.wiki"));
         final String fixture = new String(fixtureBytes, StandardCharsets.UTF_8);
 
         assertThat(result).isEqualTo(fixture);
@@ -259,26 +240,23 @@ public class SingleAccessKeyTreeDumperTest {
     public void should_generate_genetta_html_with_statistics() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
-                .verbosity(HEADER)
-                .verbosity(STATISTICS)
-                .representation(IkeyConfig.KeyRepresentation.TREE)
-                .build();
-
+        final IkeyConfig config = IkeyConfig.builder().enablePruning().verbosity(HEADER).verbosity(STATISTICS)
+            .representation(IkeyConfig.KeyRepresentation.TREE).build();
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
-        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
+        identificationKeyGenerator = new IdentificationKeyGenerator(
+            sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
         final boolean statisticsEnabled = config.getVerbosity().contains(STATISTICS);
-        final File file = SingleAccessKeyTreeDumper.dumpFlatHtmlFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
+        final File file = SingleAccessKeyTreeDumper.dumpFlatHtmlFile("", tree2dump, statisticsEnabled,
+            generatedFilesFolder);
         final byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
         final String result = new String(resultBytes, StandardCharsets.UTF_8);
 
-
-        final byte[] fixtureBytes = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta_flat_stats.html"));
+        final byte[] fixtureBytes = Files
+            .readAllBytes(Paths.get("src/test/resources/fixtures/genetta_flat_stats.html"));
         final String fixture = new String(fixtureBytes, StandardCharsets.UTF_8);
 
         assertThat(result).isEqualTo(fixture);
@@ -289,25 +267,23 @@ public class SingleAccessKeyTreeDumperTest {
     public void should_generate_genetta_interactive_html() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
-                .verbosity(HEADER)
-                .representation(IkeyConfig.KeyRepresentation.TREE)
-                .build();
-
+        final IkeyConfig config = IkeyConfig.builder().enablePruning().verbosity(HEADER)
+            .representation(IkeyConfig.KeyRepresentation.TREE).build();
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
-        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
+        identificationKeyGenerator = new IdentificationKeyGenerator(
+            sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
         final boolean statisticsEnabled = config.getVerbosity().contains(STATISTICS);
-        final File file = SingleAccessKeyTreeDumper.dumpInteractiveHtmlFile("", tree2dump, statisticsEnabled, generatedFilesFolder);
+        final File file = SingleAccessKeyTreeDumper.dumpInteractiveHtmlFile("", tree2dump, statisticsEnabled,
+            generatedFilesFolder);
         final byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
         final String result = new String(resultBytes, StandardCharsets.UTF_8);
 
-
-        final byte[] fixtureBytes = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta_interactive.html"));
+        final byte[] fixtureBytes = Files
+            .readAllBytes(Paths.get("src/test/resources/fixtures/genetta_interactive.html"));
         final String fixture = new String(fixtureBytes, StandardCharsets.UTF_8);
 
         assertThat(result).isEqualTo(fixture);
@@ -318,22 +294,18 @@ public class SingleAccessKeyTreeDumperTest {
     public void should_generate_genetta_dot() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
-                .verbosity(HEADER)
-                .representation(IkeyConfig.KeyRepresentation.TREE)
-                .build();
-
+        final IkeyConfig config = IkeyConfig.builder().enablePruning().verbosity(HEADER)
+            .representation(IkeyConfig.KeyRepresentation.TREE).build();
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
-        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
+        identificationKeyGenerator = new IdentificationKeyGenerator(
+            sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
         final File file = SingleAccessKeyTreeDumper.dumpDotFile("", tree2dump, generatedFilesFolder);
         final byte[] resultBytes = Files.readAllBytes(Paths.get(file.toURI()));
         final String result = new String(resultBytes, StandardCharsets.UTF_8).replaceFirst("digraph key_\\d.* ", "");
-
 
         final byte[] fixtureBytes = Files.readAllBytes(Paths.get("src/test/resources/fixtures/genetta.gv"));
         final String fixture = new String(fixtureBytes, StandardCharsets.UTF_8).replaceFirst("digraph key_\\d.* ", "");
@@ -347,7 +319,7 @@ public class SingleAccessKeyTreeDumperTest {
         IkeyConfig.setBundleConf(ResourceBundle.getBundle("confTest"));
 
         generatedFilesFolder = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-                + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
+            + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
         if (!new File(generatedFilesFolder).exists()) {
             new File(generatedFilesFolder).mkdirs();
         }

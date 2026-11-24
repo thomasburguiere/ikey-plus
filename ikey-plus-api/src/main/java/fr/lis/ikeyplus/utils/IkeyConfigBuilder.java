@@ -16,7 +16,8 @@ public class IkeyConfigBuilder {
     private WeightContext weightContext = WeightContext.NO_WEIGHT;
     private WeightType weightType = WeightType.GLOBAL;
 
-    IkeyConfigBuilder(){}
+    IkeyConfigBuilder() {
+    }
 
     public IkeyConfigBuilder format(final OutputFormat format) {
         this.format = format;
@@ -83,16 +84,8 @@ public class IkeyConfigBuilder {
     }
 
     public IkeyConfig build() {
-        return new IkeyConfig(
-                format,
-                representation,
-                fewStatesCharacterFirst,
-                mergeCharacterStatesIfSameDiscrimination,
-                pruningEnabled,
-                verbosity,
-                scoreMethod,
-                weightContext,
-                weightType);
+        return new IkeyConfig(format, representation, fewStatesCharacterFirst, mergeCharacterStatesIfSameDiscrimination,
+            pruningEnabled, verbosity, scoreMethod, weightContext, weightType);
     }
 
 }
