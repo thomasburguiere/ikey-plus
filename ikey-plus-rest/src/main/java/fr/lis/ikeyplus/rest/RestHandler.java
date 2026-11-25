@@ -52,7 +52,8 @@ public class RestHandler implements Handler {
         try {
             validatedSddUrl = inputParser.validateSddUrl(sddURL);
         } catch (final IllegalArgumentException e) {
-            throw new BadRequestResponse(e.getMessage());
+            final var message = e.getMessage() != null ? e.getMessage() : "validation of sddURL failed";
+            throw new BadRequestResponse(message);
         }
 
         final var configOrErrors = inputParser.initializeConfig();
@@ -65,10 +66,11 @@ public class RestHandler implements Handler {
         try {
             sddInputStream = urlFetcher.getStream(validatedSddUrl);
         } catch (final IllegalArgumentException e){
-            throw new BadRequestResponse(e.getMessage());
+            final var message = e.getMessage() != null ? e.getMessage() : "retrieving url failed";
+            throw new BadRequestResponse(message);
         }
         try (sddInputStream) {
-            final var result = generateKey(sddInputStream, config, sddURL);
+            final var result = generateKey(sddInputStream, config, validatedSddUrl.toString());
             ctx.result(result.keyContent).contentType(result.contentType);
         }
     }

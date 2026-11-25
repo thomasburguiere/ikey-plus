@@ -1,5 +1,7 @@
 package fr.lis.ikeyplus.utils;
 
+import org.jspecify.annotations.Nullable;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -8,14 +10,19 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
 import static java.util.stream.Collectors.toSet;
 
 public class IkeyConfig {
 
+    @Nullable
     private String errorMessage = null;
+    @Nullable
     private File errorMessageFile = null;
 
     public static final WeightValue DEFAULT_WEIGHT = WeightValue.THREE;
@@ -75,7 +82,7 @@ public class IkeyConfig {
             return flag;
         }
 
-        public static Set<VerbosityLevel> fromString(final String s) {
+        public static Set<VerbosityLevel> fromString(@Nullable final String s) {
             if (s != null) {
                 return Arrays.stream(values())
                         .filter(level -> s.toLowerCase().contains(level.toString()))
@@ -111,15 +118,15 @@ public class IkeyConfig {
             this.method = method;
         }
 
-        public static ScoreMethod fromString(final String text) {
+        public static Optional<ScoreMethod> fromString(@Nullable final String text) {
             if (text != null) {
                 for (final ScoreMethod entry : values()) {
                     if (entry.toString().equalsIgnoreCase(text)) {
-                        return entry;
+                        return of(entry);
                     }
                 }
             }
-            return null;
+            return empty();
         }
     }
 
@@ -138,15 +145,15 @@ public class IkeyConfig {
             return representation;
         }
 
-        public static KeyRepresentation fromString(final String text) {
+        public static Optional<KeyRepresentation> fromString(@Nullable final String text) {
             if (text != null) {
                 for (final KeyRepresentation entry : values()) {
                     if (entry.toString().equalsIgnoreCase(text)) {
-                        return entry;
+                        return of(entry);
                     }
                 }
             }
-            return null;
+            return empty();
         }
     }
 
@@ -171,15 +178,15 @@ public class IkeyConfig {
             return format;
         }
 
-        public static OutputFormat fromString(final String text) {
+        public static Optional<OutputFormat> fromString(@Nullable final String text) {
             if (text != null) {
                 for (final OutputFormat entry : values()) {
                     if (entry.toString().equalsIgnoreCase(text)) {
-                        return entry;
+                        return of(entry);
                     }
                 }
             }
-            return null;
+            return empty();
         }
     }
 
@@ -207,7 +214,7 @@ public class IkeyConfig {
             this.intWeight = intWeight;
         }
 
-        public static WeightValue fromString(final String text) {
+        public static WeightValue fromString(@Nullable final String text) {
             if (text != null) {
                 for (final WeightValue entry : values()) {
                     if (entry.toString().equalsIgnoreCase(text)) {
@@ -234,15 +241,15 @@ public class IkeyConfig {
             return type;
         }
 
-        public static WeightType fromString(final String s) {
+        public static Optional<WeightType> fromString(@Nullable final String s) {
             if (s != null) {
                 for (final WeightType entry : values()) {
                     if (entry.toString().equalsIgnoreCase(s)) {
-                        return entry;
+                        return of(entry);
                     }
                 }
             }
-            return null;
+            return empty();
         }
     }
 
@@ -266,15 +273,15 @@ public class IkeyConfig {
             return contextType;
         }
 
-        public static WeightContext fromString(final String text) {
+        public static Optional<WeightContext> fromString(@Nullable final String text) {
             if (text != null) {
                 for (final WeightContext entry : values()) {
                     if (entry.toString().equalsIgnoreCase(text)) {
-                        return entry;
+                        return of(entry);
                     }
                 }
             }
-            return null;
+            return empty();
         }
     }
 
@@ -295,6 +302,7 @@ public class IkeyConfig {
         IkeyConfig.bundleConfOverridable = bundleConfOverridable;
     }
 
+    @Nullable
     public String getErrorMessage() {
         return errorMessage;
     }
@@ -312,7 +320,7 @@ public class IkeyConfig {
             errorMessageFile = createErrorFile();
         }
     }
-
+    @Nullable
     public File getErrorMessageFile() {
         return errorMessageFile;
     }
@@ -321,6 +329,7 @@ public class IkeyConfig {
         this.errorMessageFile = errorMessageFile;
     }
 
+    @Nullable
     public File createErrorFile() {
         final String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
                 + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
