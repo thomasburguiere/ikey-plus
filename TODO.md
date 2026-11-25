@@ -112,6 +112,16 @@ Follow-ups from the review of the Javalin migration (`refactor/rest-with-javalin
   - `build()` passes the builder's internal `HashSet` straight into `IkeyConfig`. A builder reused after `build()`, or a caller mutating `getVerbosity()`, changes the config.
   - Pass `Set.copyOf(verbosity)`, or an `EnumSet.copyOf` when it's non-empty.
 
+- [ ] **Move request parsing out of `RestHandler.handle` (IntelliJ "feature envy")**
+  - Low priority: `handle` is orchestration code, so some envy is expected. The warning does point at a real issue, though: `handle` does part of `InputParser`'s job.
+    - It reads `sddURL` with `ctx.queryParam` itself, even though `InputParser` already has a query-param retriever.
+    - Parsing happens in two steps with two error styles: `validateSddUrl` throws `IllegalArgumentException`, which is converted to 400 by hand, and `initializeConfig` returns an `Either`. The caller has to know both.
+  - Fix: add `InputParser.parseRequest()` returning `Either<Map<String, String>, KeyRequest>`, with `record KeyRequest(URL sddUrl, IkeyConfig config)`. It reads `sddURL` through the retriever and merges URL and config errors into one map.
+  - `handle` then becomes: parse → `switch` (Left → `BadRequestResponse`) → fetch (small private `fetch(URL)` helper that maps `IllegalArgumentException` → 400) → `generateKey` → write the response.
+  - Benefits: one 400 lists every invalid param, including `sddURL`; parsing can be tested without a `Context`; `handle` goes from about 30 lines to about 10.
+  - Don't register a global `app.exception(IllegalArgumentException.class, …)` → 400 to drop the try/catch blocks. It would turn real bugs elsewhere into 400s.
+  - If the inspection still fires afterwards, suppress it on `handle` (`@SuppressWarnings("FeatureEnvy")` / `noinspection`).
+
 ## ~~Docker~
 
 - [x] **Change the base image**
