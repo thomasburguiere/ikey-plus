@@ -21,9 +21,9 @@ public class DataSet {
     private Map<String, String> mediaObjects;
 
     public DataSet() {
-        characters = new ArrayList<ICharacter>();
-        codedDescriptions = new LinkedHashMap<Taxon, CodedDescription>();
-        mediaObjects = new LinkedHashMap<String, String>();
+        characters = new ArrayList<>();
+        codedDescriptions = new LinkedHashMap<>();
+        mediaObjects = new LinkedHashMap<>();
     }
 
     public List<ICharacter> getCharacters() {
@@ -55,7 +55,7 @@ public class DataSet {
     }
 
     public List<Taxon> getTaxa() {
-        return new ArrayList<Taxon>(codedDescriptions.keySet());
+        return new ArrayList<>(codedDescriptions.keySet());
     }
 
     public String getLabel() {
@@ -79,7 +79,7 @@ public class DataSet {
         for (final ICharacter character : characters) {
             if (character instanceof CategoricalCharacter) {
                 for (final State state : ((CategoricalCharacter) character).getStates()) {
-                    if (state.getId().equals(id)) {
+                    if (state.id().equals(id)) {
                         return state;
                     }
                 }
@@ -147,7 +147,7 @@ public class DataSet {
     public static List<ICharacter> getInapplicableCharacters(final List<ICharacter> newRemainingCharacters,
                                                              final ICharacter selectedCharacter, final State state) {
 
-        final List<ICharacter> inapplicableCharacter = new ArrayList<ICharacter>();
+        final List<ICharacter> inapplicableCharacter = new ArrayList<>();
 
         for (final ICharacter character : newRemainingCharacters) {
             if (character.getInapplicableStates().contains(state)) {

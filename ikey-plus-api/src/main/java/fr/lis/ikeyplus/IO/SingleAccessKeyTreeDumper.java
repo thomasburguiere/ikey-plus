@@ -190,7 +190,7 @@ public abstract class SingleAccessKeyTreeDumper {
                 // initiate the mediaObject Tags
                 mediaObjectsTags.setLength(0);
                 if (child.getCharacter().isCategorical()) {
-                    for (final String mediaObjectKey : ((State) child.getCharacterState()).getMediaObjectKeys()) {
+                    for (final String mediaObjectKey : ((State) child.getCharacterState()).mediaObjectKeys()) {
                         mediaObjectsTags.append("<MediaObject ref=\"").append(mediaObjectKey).append("\"/>").append(lineSeparator);
                     }
                 }
@@ -669,7 +669,7 @@ public abstract class SingleAccessKeyTreeDumper {
                                 javascriptStateNameTab.append(", ");
                                 javascriptUrlImageTab.append(", ");
                             }
-                            javascriptStateNameTab.append("\"").append(((State) childNode.getCharacterState()).getName().replace("\"", "")
+                            javascriptStateNameTab.append("\"").append(((State) childNode.getCharacterState()).name().replace("\"", "")
                                     .replace("'", " ")).append("\"");
                             javascriptUrlImageTab.append("\"").append(((State) childNode.getCharacterState()).getFirstImage(tree2dump
                                     .getDataSet())).append("\"");
@@ -1765,7 +1765,7 @@ public abstract class SingleAccessKeyTreeDumper {
             dest.close();
 
         } catch (final Exception e) {
-            tree2dump.getConfig().setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingFileError"), e);
+//            tree2dump.getConfig().setErrorMessage(IkeyConfig.getBundleConfElement("message.creatingFileError"), e);
             e.printStackTrace();
         }
 

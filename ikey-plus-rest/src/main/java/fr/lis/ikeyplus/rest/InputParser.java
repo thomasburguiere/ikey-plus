@@ -1,6 +1,7 @@
 package fr.lis.ikeyplus.rest;
 
 import fr.lis.ikeyplus.utils.IkeyConfig;
+import fr.lis.ikeyplus.utils.ImmutableIkeyConfig;
 import org.jspecify.annotations.Nullable;
 
 import java.net.MalformedURLException;
@@ -17,7 +18,6 @@ import java.util.stream.Stream;
 
 import static fr.lis.ikeyplus.utils.IkeyConfig.KeyRepresentation.TREE;
 import static fr.lis.ikeyplus.utils.IkeyConfig.ScoreMethod.XPER;
-import static fr.lis.ikeyplus.utils.IkeyConfig.builder;
 import static java.lang.String.format;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toMap;
@@ -175,12 +175,12 @@ public class InputParser {
             return Either.left(errorDetails);
         }
 
-        config = builder()
+        config = ImmutableIkeyConfig.builder()
             .format(format.getRight())
             .representation(keyRepresentation.getRight())
             .fewStatesCharacterFirst(fewStatesCharacterFirst.getRight())
             .mergeCharacterStatesIfSameDiscrimination(mergeCharacterStatesIfSameDiscrimination.getRight())
-            .enablePruning(enablePruning.getRight())
+            .pruningEnabled(enablePruning.getRight())
             .verbosity(verbosity.getRight().levels())
             .scoreMethod(scoreMethod.getRight())
             .build();

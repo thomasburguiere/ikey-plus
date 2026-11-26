@@ -2,6 +2,7 @@ package fr.lis.ikeyplus.IO;
 
 import fr.lis.ikeyplus.model.DataSet;
 import fr.lis.ikeyplus.utils.IkeyConfig;
+import fr.lis.ikeyplus.utils.ImmutableIkeyConfig;
 import org.junit.jupiter.api.Test;
 import org.xml.sax.SAXParseException;
 
@@ -20,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class SDDSaxParserTest {
     final SDDSaxParser sddSaxParser = new SDDSaxParser();
 
-    final IkeyConfig config = IkeyConfig.builder().build();
+    final IkeyConfig config = ImmutableIkeyConfig.builder().build();
 
     @Test
     void should_parse_local_file() throws Exception {

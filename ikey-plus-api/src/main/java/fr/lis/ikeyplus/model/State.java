@@ -1,6 +1,8 @@
 package fr.lis.ikeyplus.model;
 
-import java.util.ArrayList;
+import org.immutables.value.Value;
+import org.jspecify.annotations.Nullable;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -9,81 +11,46 @@ import java.util.Objects;
  *
  * @author Florian Causse
  */
-public class State {
+@Value.Immutable
+public abstract class State {
 
-    private String id = null;
-    private String name;
-    private List<String> mediaObjectKeys;
-
-    public State() {
-        this(null);
-    }
-
-    public State(final String name) {
-        this.name = name;
-        this.mediaObjectKeys = new ArrayList<>();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(final String id) {
-        this.id = id;
-    }
-
-    public List<String> getMediaObjectKeys() {
-        return mediaObjectKeys;
-    }
-
-    public void setMediaObjectKeys(final List<String> mediaObjectKeys) {
-        this.mediaObjectKeys = mediaObjectKeys;
-    }
+    @Nullable
+    @Value.Default
+    public String id() {return null;}
+    public abstract String name();
+    public abstract List<String> mediaObjectKeys();
 
     public String getFirstImage(final DataSet dataSet) {
-        if (dataSet != null && mediaObjectKeys != null && !mediaObjectKeys.isEmpty()) {
-            if (dataSet.getMediaObject(mediaObjectKeys.getFirst()).startsWith("http")) {
-                return dataSet.getMediaObject(mediaObjectKeys.getFirst());
+        if (dataSet != null && mediaObjectKeys() != null && !mediaObjectKeys().isEmpty()) {
+            if (dataSet.getMediaObject(mediaObjectKeys().getFirst()).startsWith("http")) {
+                return dataSet.getMediaObject(mediaObjectKeys().getFirst());
             }
         }
         return null;
     }
 
     public String getFirstImageKey() {
-        if (!mediaObjectKeys.isEmpty()) {
-            return mediaObjectKeys.getFirst();
+        if (!mediaObjectKeys().isEmpty()) {
+            return mediaObjectKeys().getFirst();
         }
         return null;
     }
 
-    public String toString() {
-        return name;
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id()) + Objects.hashCode(name());
     }
 
+    @Override
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof final State that)) {
             return false;
         }
 
-        final State that = (State) o;
-
-        return Objects.equals(id, that.id) &&
-                Objects.equals(name, that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id) + Objects.hashCode(name);
+        return Objects.equals(id(), that.id()) &&
+            Objects.equals(name(), that.name());
     }
 }

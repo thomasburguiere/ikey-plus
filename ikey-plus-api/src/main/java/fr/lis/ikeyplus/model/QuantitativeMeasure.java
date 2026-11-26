@@ -1,103 +1,44 @@
 package fr.lis.ikeyplus.model;
 
+import org.immutables.value.Value;
+import org.jspecify.annotations.Nullable;
+
 /**
  * This class represents a quantitative measure
  *
  * @author Florian Causse
  */
-public class QuantitativeMeasure {
 
-    private Double max = null;
-    private Double mean = null;
-    private Double min = null;
-    private Double sd = null;
-    private Double uMethLower = null;
-    private Double uMethUpper = null;
+@Value.Immutable
+public interface QuantitativeMeasure {
 
-    private boolean minInclude = true;
-    private boolean maxInclude = true;
 
-    public Double getMax() {
-        return max;
-    }
+    @Nullable @Value.Default default Double max() {return null;}
+    @Nullable @Value.Default default Double mean() {return null;}
+    @Nullable @Value.Default default Double min() {return null;}
+    @Nullable @Value.Default default Double sd() {return null;}
+    @Nullable @Value.Default default Double uMethLower() {return null;}
+    @Nullable @Value.Default default Double uMethUpper() {return null;}
+    @Value.Default default boolean minInclude() {return true;}
+    @Value.Default default boolean maxInclude() {return true;}
 
-    public void setMax(final Double max) {
-        this.max = max;
-    }
+//    @Override
+//    default String toString() {
+//        return "Min=" + min() + "  Max=" + max() + "  Mean=" + mean() + "  SD=" + sd() + "  UMethLower=" + uMethLower
+//                () + "  UMethUpper=" + uMethUpper();
+//    }
 
-    public Double getMean() {
-        return mean;
-    }
-
-    public void setMean(final Double mean) {
-        this.mean = mean;
-    }
-
-    public Double getMin() {
-        return min;
-    }
-
-    public void setMin(final Double min) {
-        this.min = min;
-    }
-
-    public Double getSD() {
-        return sd;
-    }
-
-    public void setSD(final Double sd) {
-        this.sd = sd;
-    }
-
-    public Double getUMethLower() {
-        return uMethLower;
-    }
-
-    public void setUMethLower(final Double uMethLower) {
-        this.uMethLower = uMethLower;
-    }
-
-    public Double getUMethUpper() {
-        return uMethUpper;
-    }
-
-    public void setUMethUpper(final Double uMethUpper) {
-        this.uMethUpper = uMethUpper;
-    }
-
-    public boolean isMinInclude() {
-        return minInclude;
-    }
-
-    public void setMinInclude(final boolean minInclude) {
-        this.minInclude = minInclude;
-    }
-
-    public boolean isMaxInclude() {
-        return maxInclude;
-    }
-
-    public void setMaxInclude(final boolean maxInclude) {
-        this.maxInclude = maxInclude;
-    }
-
-    @Override
-    public String toString() {
-        return "Min=" + min + "  Max=" + max + "  Mean=" + mean + "  SD=" + sd + "  UMethLower=" + uMethLower
-                + "  UMethUpper=" + uMethUpper;
-    }
-
-    public String toStringInterval() {
+    default String toStringInterval() {
         final String start;
         final String end;
 
-        if (minInclude) {
+        if (minInclude()) {
             start = "[";
         } else {
             start = "]";
         }
 
-        if (maxInclude) {
+        if (maxInclude()) {
             end = "]";
         } else {
             end = "[";
@@ -105,7 +46,7 @@ public class QuantitativeMeasure {
         return start + getCalculateMinimum() + ", " + getCalculateMaximum() + end;
     }
 
-    public String toStringInterval(final String unit) {
+    default String toStringInterval(final String unit) {
 
         if (unit != null && !unit.isEmpty()) {
             return toStringInterval() + " (" + unit + ")";
@@ -113,38 +54,38 @@ public class QuantitativeMeasure {
         return toStringInterval();
     }
 
-    public Double getCalculateMinimum() {
-        if (min != null) {
-            return min;
-        } else if (uMethLower != null) {
-            return uMethLower;
-        } else if (sd != null && mean != null) {
-            return mean - 2 * sd;
+    default Double getCalculateMinimum() {
+        if (min() != null) {
+            return min();
+        } else if (uMethLower() != null) {
+            return uMethLower();
+        } else if (sd() != null && mean() != null) {
+            return mean() - 2 * sd();
         } else {
             return null;
         }
     }
 
-    public Double getCalculateMaximum() {
-        if (max != null) {
-            return max;
-        } else if (uMethUpper != null) {
-            return uMethUpper;
-        } else if (sd != null && mean != null) {
-            return mean + 2 * sd;
+    default Double getCalculateMaximum() {
+        if (max() != null) {
+            return max();
+        } else if (uMethUpper() != null) {
+            return uMethUpper();
+        } else if (sd() != null && mean() != null) {
+            return mean() + 2 * sd();
         } else {
             return null;
         }
     }
 
-    public boolean isInclude(final QuantitativeMeasure quantitativeMeasure) {
+    default boolean isInclude(final QuantitativeMeasure quantitativeMeasure) {
 
         if (quantitativeMeasure == null) {
             return true;
             // if both taxa are described
         } else if (!isNotSpecified() && !quantitativeMeasure.isNotSpecified()) {
             // if the max value of the current interval is included
-            if (maxInclude) {
+            if (maxInclude()) {
                 return (quantitativeMeasure.getCalculateMinimum() >= getCalculateMinimum() && quantitativeMeasure.getCalculateMinimum() <= getCalculateMaximum())
                         || (quantitativeMeasure.getCalculateMaximum() >= getCalculateMinimum() && quantitativeMeasure
                         .getCalculateMaximum() <= getCalculateMaximum());
@@ -157,7 +98,7 @@ public class QuantitativeMeasure {
         return false;
     }
 
-    public boolean isNotSpecified() {
+    default boolean isNotSpecified() {
         return getCalculateMinimum() == null || getCalculateMaximum() == null;
 
     }

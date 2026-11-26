@@ -2,6 +2,8 @@ package fr.lis.ikeyplus.IO;
 
 import fr.lis.ikeyplus.model.CodedDescription;
 import fr.lis.ikeyplus.model.DataSet;
+import fr.lis.ikeyplus.model.ImmutableQuantitativeMeasure;
+import fr.lis.ikeyplus.model.ImmutableState;
 import fr.lis.ikeyplus.model.QuantitativeMeasure;
 import fr.lis.ikeyplus.model.State;
 import fr.lis.ikeyplus.model.Taxon;
@@ -71,7 +73,7 @@ public class SDDContentHandler implements ContentHandler {
     // current quantitative character
     private QuantitativeCharacter currentQuantitativeCharacter = null;
     // current state
-    private State currentState = null;
+    private ImmutableState.Builder currentState = null;
     // current codedDescription
     private CodedDescription currentCodedDescription = null;
     // current taxon
@@ -82,7 +84,7 @@ public class SDDContentHandler implements ContentHandler {
     // current States list for CodedDescription
     private List<State> currentStatesList = null;
     // current QuantitativeMeasure for CodedDescription
-    private QuantitativeMeasure currentQuantitativeMeasure = null;
+    private ImmutableQuantitativeMeasure.Builder currentQuantitativeMeasure = null;
     // current CharacterNode
     private ICharacter currentCharacterNode = null;
     // list of applicable and inapplicable states
@@ -183,14 +185,14 @@ public class SDDContentHandler implements ContentHandler {
             // <StateDefinition> in <States>
             else if ("StateDefinition".equals(localName) && inStates) {
                 inStateDefinition = true;
-                currentState = new State();
-                currentState.setId(attributes.getValue("id"));
+                currentState = ImmutableState.builder();
+                currentState.id(attributes.getValue("id"));
             }
 
             // <MediaObject> in <Representation> in <StateDefinition> in <States>
             else if ("MediaObject".equals(localName) && inStateDefinition && inRepresentation && inStates) {
                 if (attributes.getValue("ref") != null && currentState != null) {
-                    currentState.getMediaObjectKeys().add(attributes.getValue("ref"));
+                    currentState.addMediaObjectKeys(attributes.getValue("ref"));
                 }
             }
 
@@ -319,29 +321,29 @@ public class SDDContentHandler implements ContentHandler {
             else if ("Quantitative".equals(localName) && inSummaryData) {
                 inQuantitative = true;
                 currentCodedDescriptionCharacter = dataSet.getCharacterById(attributes.getValue("ref"));
-                currentQuantitativeMeasure = new QuantitativeMeasure();
+                currentQuantitativeMeasure = ImmutableQuantitativeMeasure.builder();
             }
 
             // <Measure> in <Quantitative>
             else if ("Measure".equals(localName) && inQuantitative) {
                 if (currentQuantitativeMeasure != null) {
                     if (attributes.getValue("type").equals("Min")) {
-                        currentQuantitativeMeasure.setMin(Double.valueOf(attributes
+                        currentQuantitativeMeasure.min(Double.valueOf(attributes
                                 .getValue("value")));
                     } else if (attributes.getValue("type").equals("Max")) {
-                        currentQuantitativeMeasure.setMax(Double.valueOf(attributes
+                        currentQuantitativeMeasure.max(Double.valueOf(attributes
                                 .getValue("value")));
                     } else if (attributes.getValue("type").equals("Mean")) {
-                        currentQuantitativeMeasure.setMean(Double.valueOf(attributes
+                        currentQuantitativeMeasure.mean(Double.valueOf(attributes
                                 .getValue("value")));
                     } else if (attributes.getValue("type").equals("SD")) {
-                        currentQuantitativeMeasure.setSD(Double.valueOf(attributes
+                        currentQuantitativeMeasure.sd(Double.valueOf(attributes
                                 .getValue("value")));
                     } else if (attributes.getValue("type").equals("UMethLower")) {
-                        currentQuantitativeMeasure.setUMethLower(Double.valueOf(attributes
+                        currentQuantitativeMeasure.uMethLower(Double.valueOf(attributes
                                 .getValue("value")));
                     } else if (attributes.getValue("type").equals("UMethUpper")) {
-                        currentQuantitativeMeasure.setUMethUpper(Double.valueOf(attributes
+                        currentQuantitativeMeasure.uMethUpper(Double.valueOf(attributes
                                 .getValue("value")));
                     }
                 }
@@ -367,7 +369,7 @@ public class SDDContentHandler implements ContentHandler {
 
             // <Rating> in <Ratings>
             else if ("Rating".equals(localName) && inRatings) {
-                if (attributes.getValue("context").equals(config.getWeightContext().toString())) {
+                if (attributes.getValue("context").equals(config.weightContext().toString())) {
                     final int currentRating = IkeyConfig.WeightValue.fromString(attributes.getValue("rating")).getIntWeight();
                     if (currentCodedDescriptionCharacter != null) {
                         if (ratingsCounter.get(currentCodedDescriptionCharacter) == null) {
@@ -380,7 +382,7 @@ public class SDDContentHandler implements ContentHandler {
                         ratingsCounter.put(currentCodedDescriptionCharacter,
                                 ratingsCounter.get(currentCodedDescriptionCharacter) + 1);
 
-                        if (config.getWeightType() == CONTEXTUAL) {
+                        if (config.weightType() == CONTEXTUAL) {
                             currentCodedDescription.addCharacterWeight(currentCodedDescriptionCharacter,
                                     currentRating);
                         }
@@ -436,7 +438,7 @@ public class SDDContentHandler implements ContentHandler {
                             } else if (character instanceof final QuantitativeCharacter cast) {
                                 dataSet.getCodedDescriptions().get(taxon).addQuantitativeCharacterDescription(
                                         cast,
-                                        new QuantitativeMeasure()
+                                        ImmutableQuantitativeMeasure.builder().build()
                                 );
                             }
                         }
@@ -463,7 +465,7 @@ public class SDDContentHandler implements ContentHandler {
                 if (inCodedDescription) {
                     currentTaxon.setName(buffer.toString());
                 } else if (inCategoricalCharacter && inStateDefinition) {
-                    currentState.setName(buffer.toString());
+                    currentState.name(buffer.toString());
                 } else if (inCategoricalCharacter) {
                     currentCategoricalCharacter.setName(buffer.toString());
                 } else if (inQuantitativeCharacter) {
@@ -519,7 +521,7 @@ public class SDDContentHandler implements ContentHandler {
             // <StateDefinition> in <States>
             else if ("StateDefinition".equals(localName) && inStates) {
                 inStateDefinition = false;
-                currentCategoricalCharacter.getStates().add(currentState);
+                currentCategoricalCharacter.getStates().add(currentState.build());
                 currentState = null;
             }
 
@@ -650,7 +652,7 @@ public class SDDContentHandler implements ContentHandler {
                 } else {
                     currentCodedDescription.addQuantitativeCharacterDescription(
                             (QuantitativeCharacter) currentCodedDescriptionCharacter,
-                            currentQuantitativeMeasure
+                            currentQuantitativeMeasure.build()
                     );
                 }
                 currentCodedDescriptionCharacter = null;

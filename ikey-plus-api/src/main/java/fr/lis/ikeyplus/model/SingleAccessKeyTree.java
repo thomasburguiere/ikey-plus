@@ -3,6 +3,8 @@ package fr.lis.ikeyplus.model;
 import fr.lis.ikeyplus.model.character.QuantitativeCharacter;
 import fr.lis.ikeyplus.utils.IkeyConfig;
 
+import static fr.lis.ikeyplus.services.IdentificationKeyGenerator.OTHER_NOT_DESCRIBED;
+
 /**
  * This class represents a single access key tree
  *
@@ -102,7 +104,7 @@ public class SingleAccessKeyTree {
      */
     public String nodeDescriptionAnalysis(final SingleAccessKeyNode node) {
         if (node.getNodeDescription() != null && !node.getNodeDescription().trim().isEmpty()
-                && config.getVerbosity().contains(IkeyConfig.VerbosityLevel.WARNING)) {
+                && config.verbosity().contains(IkeyConfig.VerbosityLevel.WARNING)) {
             return " (" + node.getNodeDescription() + ")";
         }
         return "";
@@ -121,8 +123,7 @@ public class SingleAccessKeyTree {
         if (node != null) {
             if (node.getCharacter() != null && node.getCharacterState() != null) {
                 if (!node.hasChild() && node.getCharacter().isCategorical()
-                        && !((State) node.getCharacterState()).getName().equals(
-                        IkeyConfig.getBundleConfElement("message.notDescribed"))) {
+                        && !((State) node.getCharacterState()).name().equals(OTHER_NOT_DESCRIBED)) {
                     for (final Taxon t : node.getRemainingTaxa()) {
                         t.updatePathStatistics((float) treeDepth);
                     }

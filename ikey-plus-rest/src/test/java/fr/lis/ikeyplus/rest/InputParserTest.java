@@ -94,16 +94,16 @@ class InputParserTest {
 
         @Test
         void should_init_with_defaults() {
-            final IkeyConfig result = new InputParser(a -> Optional.empty()).initializeConfig().getRight();
-            assertThat(result.getFormat()).isSameAs(TXT);
-            assertThat(result.getScoreMethod()).isSameAs(XPER);
-            assertThat(result.getVerbosity()).isEmpty();
-            assertThat(result.getRepresentation()).isSameAs(TREE);
-            assertThat(result.getWeightType()).isSameAs(GLOBAL);
-            assertThat(result.getWeightContext()).isSameAs(NO_WEIGHT);
-            assertThat(result.isFewStatesCharacterFirst()).isFalse();
-            assertThat(result.isPruningEnabled()).isFalse();
-            assertThat(result.isMergeCharacterStatesIfSameDiscrimination()).isFalse();
+            final IkeyConfig config = new InputParser(a -> Optional.empty()).initializeConfig().getRight();
+            assertThat(config.format()).isSameAs(TXT);
+            assertThat(config.scoreMethod()).isSameAs(XPER);
+            assertThat(config.verbosity()).isEmpty();
+            assertThat(config.representation()).isSameAs(TREE);
+            assertThat(config.weightType()).isSameAs(GLOBAL);
+            assertThat(config.weightContext()).isSameAs(NO_WEIGHT);
+            assertThat(config.fewStatesCharacterFirst()).isFalse();
+            assertThat(config.pruningEnabled()).isFalse();
+            assertThat(config.mergeCharacterStatesIfSameDiscrimination()).isFalse();
         }
 
         @Test
@@ -133,13 +133,13 @@ class InputParserTest {
         @MethodSource("pruningValidArgs")
         void should_accept_valid_enablePruning_ignoring_case(final String paramValue, final boolean expected) {
             final var parser = new InputParser(paramProvider(Map.of("enablePruning", paramValue)));
-            assertThat(parser.initializeConfig().getRight().isPruningEnabled()).isEqualTo(expected);
+            assertThat(parser.initializeConfig().getRight().pruningEnabled()).isEqualTo(expected);
         }
 
         @Test
         void should_default_empty_enablePruning_to_false() {
             final var parser = new InputParser(paramProvider(Map.of("enablePruning", "")));
-            assertThat(parser.initializeConfig().getRight().isPruningEnabled()).isFalse();
+            assertThat(parser.initializeConfig().getRight().pruningEnabled()).isFalse();
         }
 
         @Test
@@ -168,13 +168,13 @@ class InputParserTest {
         @MethodSource("fewStatesCharacterFirstValidArgs")
         void should_accept_valid_fewStatesCharacterFirst_ignoring_case(final String value, final boolean expected) {
             final var parser = new InputParser(paramProvider(Map.of("fewStatesCharacterFirst", value)));
-            assertThat(parser.initializeConfig().getRight().isFewStatesCharacterFirst()).isEqualTo(expected);
+            assertThat(parser.initializeConfig().getRight().fewStatesCharacterFirst()).isEqualTo(expected);
         }
 
         @Test
         void should_default_empty_fewStatesCharacterFirst_to_false() {
             final var parser = new InputParser(paramProvider(Map.of("fewStatesCharacterFirst", "")));
-            assertThat(parser.initializeConfig().getRight().isFewStatesCharacterFirst()).isFalse();
+            assertThat(parser.initializeConfig().getRight().fewStatesCharacterFirst()).isFalse();
         }
 
         @Test
@@ -202,13 +202,13 @@ class InputParserTest {
         @MethodSource("validFormatArguments")
         void should_accept_valid_format_ignoring_case(final String value, final OutputFormat expected) {
             final var parser = new InputParser(paramProvider(Map.of("format", value)));
-            assertThat(parser.initializeConfig().getRight().getFormat()).isSameAs(expected);
+            assertThat(parser.initializeConfig().getRight().format()).isSameAs(expected);
         }
 
         @Test
         void should_default_empty_format_to_txt() {
             final var parser = new InputParser(paramProvider(Map.of("format", "")));
-            assertThat(parser.initializeConfig().getRight().getFormat()).isSameAs(TXT);
+            assertThat(parser.initializeConfig().getRight().format()).isSameAs(TXT);
         }
 
         @Test
@@ -236,13 +236,13 @@ class InputParserTest {
         @MethodSource("validKeyRepresentationArguments")
         void should_accept_valid_keyRepresentation_ignoring_case(final String value, final KeyRepresentation expected) {
             final var parser = new InputParser(paramProvider(Map.of("keyRepresentation", value)));
-            assertThat(parser.initializeConfig().getRight().getRepresentation()).isSameAs(expected);
+            assertThat(parser.initializeConfig().getRight().representation()).isSameAs(expected);
         }
 
         @Test
         void should_default_empty_keyRepresentation_to_tree() {
             final var parser = new InputParser(paramProvider(Map.of("keyRepresentation", "")));
-            assertThat(parser.initializeConfig().getRight().getRepresentation()).isSameAs(TREE);
+            assertThat(parser.initializeConfig().getRight().representation()).isSameAs(TREE);
         }
 
         @Test
@@ -269,13 +269,13 @@ class InputParserTest {
         @MethodSource("validScoreMethodArguments")
         void should_accept_valid_scoreMethod_ignoring_case(final String value, final ScoreMethod expected) {
             final var parser = new InputParser(paramProvider(Map.of("scoreMethod", value)));
-            assertThat(parser.initializeConfig().getRight().getScoreMethod()).isSameAs(expected);
+            assertThat(parser.initializeConfig().getRight().scoreMethod()).isSameAs(expected);
         }
 
         @Test
         void should_default_empty_scoreMethod_to_xper() {
             final var parser = new InputParser(paramProvider(Map.of("scoreMethod", "")));
-            assertThat(parser.initializeConfig().getRight().getScoreMethod()).isSameAs(XPER);
+            assertThat(parser.initializeConfig().getRight().scoreMethod()).isSameAs(XPER);
         }
 
         @Test
@@ -301,13 +301,13 @@ class InputParserTest {
                 "scoreMethod", "jaccard"
             )));
             final IkeyConfig result = parser.initializeConfig().getRight();
-            assertThat(result.getFormat()).isSameAs(HTML);
-            assertThat(result.getRepresentation()).isSameAs(FLAT);
-            assertThat(result.isFewStatesCharacterFirst()).isTrue();
-            assertThat(result.isMergeCharacterStatesIfSameDiscrimination()).isTrue();
-            assertThat(result.isPruningEnabled()).isTrue();
-            assertThat(result.getVerbosity()).containsExactlyInAnyOrder(HEADER, WARNING);
-            assertThat(result.getScoreMethod()).isSameAs(ScoreMethod.JACCARD);
+            assertThat(result.format()).isSameAs(HTML);
+            assertThat(result.representation()).isSameAs(FLAT);
+            assertThat(result.fewStatesCharacterFirst()).isTrue();
+            assertThat(result.mergeCharacterStatesIfSameDiscrimination()).isTrue();
+            assertThat(result.pruningEnabled()).isTrue();
+            assertThat(result.verbosity()).containsExactlyInAnyOrder(HEADER, WARNING);
+            assertThat(result.scoreMethod()).isSameAs(ScoreMethod.JACCARD);
         }
 
         @Test
@@ -334,8 +334,8 @@ class InputParserTest {
                 "format", "dot"
             )));
             final IkeyConfig result = parser.initializeConfig().getRight();
-            assertThat(result.getFormat()).isSameAs(DOT);
-            assertThat(result.getRepresentation()).isSameAs(TREE);
+            assertThat(result.format()).isSameAs(DOT);
+            assertThat(result.representation()).isSameAs(TREE);
         }
     }
 }

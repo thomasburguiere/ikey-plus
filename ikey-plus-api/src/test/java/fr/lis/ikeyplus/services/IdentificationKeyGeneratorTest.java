@@ -3,6 +3,7 @@ package fr.lis.ikeyplus.services;
 import fr.lis.ikeyplus.IO.SDDSaxParser;
 import fr.lis.ikeyplus.model.SingleAccessKeyTree;
 import fr.lis.ikeyplus.utils.IkeyConfig;
+import fr.lis.ikeyplus.utils.ImmutableIkeyConfig;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileInputStream;
@@ -25,8 +26,8 @@ public class IdentificationKeyGeneratorTest {
     void should_generate_genetta_identification_key_with_default_options() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
+        final IkeyConfig config = ImmutableIkeyConfig.builder()
+                .pruningEnabled(true)
                 .verbosity(Set.of(HEADER, OTHER, WARNING, STATISTICS))
                 .build();
 
@@ -45,8 +46,8 @@ public class IdentificationKeyGeneratorTest {
     void should_generate_genetta_identification_key_with_weights_options() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
+        final IkeyConfig config = ImmutableIkeyConfig.builder()
+                .pruningEnabled(true)
                 .verbosity(Set.of(HEADER, OTHER, WARNING, STATISTICS))
                 .weightContext(IkeyConfig.WeightContext.OBSERVATION_CONVENIENCE)
                 .build();
@@ -67,8 +68,8 @@ public class IdentificationKeyGeneratorTest {
     void should_generate_genetta_identification_key_with_jaccard_score_option() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
+        final IkeyConfig config = ImmutableIkeyConfig.builder()
+                .pruningEnabled(true)
                 .verbosity(Set.of(HEADER, OTHER, WARNING, STATISTICS))
                 .scoreMethod(IkeyConfig.ScoreMethod.JACCARD)
                 .build();
@@ -89,8 +90,8 @@ public class IdentificationKeyGeneratorTest {
     void should_generate_genetta_identification_key_with_sokalAndMichener_score_option() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
+        final IkeyConfig config = ImmutableIkeyConfig.builder()
+                .pruningEnabled(true)
                 .verbosity(Set.of(HEADER, OTHER, WARNING, STATISTICS))
                 .scoreMethod(IkeyConfig.ScoreMethod.SOKAL_AND_MICHENER)
                 .build();
@@ -110,8 +111,8 @@ public class IdentificationKeyGeneratorTest {
     void should_generate_cichorieae_identification_key_with_default_options() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/cichorieae.sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
+        final IkeyConfig config = ImmutableIkeyConfig.builder()
+                .pruningEnabled(true)
                 .verbosity(Set.of(HEADER, WARNING, STATISTICS))
                 .build();
 
@@ -130,8 +131,8 @@ public class IdentificationKeyGeneratorTest {
     void should_generate_milichia_key_with_other_node_for_undescribed_taxa() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/milichia_revision-sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
+        final IkeyConfig config = ImmutableIkeyConfig.builder()
+                .pruningEnabled(true)
                 .verbosity(Set.of(HEADER, WARNING, STATISTICS, OTHER))
                 .build();
 
@@ -150,8 +151,8 @@ public class IdentificationKeyGeneratorTest {
     void should_generate_tree_key_with_other_node_for_undescribed_taxa() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/testSDD.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
+        final IkeyConfig config = ImmutableIkeyConfig.builder()
+                .pruningEnabled(true)
                 .verbosity(Set.of(HEADER, WARNING, OTHER))
                 .build();
 
