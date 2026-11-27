@@ -1,6 +1,10 @@
 package fr.lis.ikeyplus.utils;
 
+import org.jspecify.annotations.Nullable;
+
+import java.net.URL;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import static fr.lis.ikeyplus.utils.IkeyConfig.*;
@@ -15,6 +19,8 @@ public class IkeyConfigBuilder {
     private ScoreMethod scoreMethod = ScoreMethod.XPER;
     private WeightContext weightContext = WeightContext.NO_WEIGHT;
     private WeightType weightType = WeightType.GLOBAL;
+    @Nullable
+    private URL validatedSddUrl = null;
 
     IkeyConfigBuilder(){}
 
@@ -82,6 +88,11 @@ public class IkeyConfigBuilder {
         return this;
     }
 
+    public IkeyConfigBuilder validatedSddUrl(final URL url) {
+        this.validatedSddUrl = url;
+        return this;
+    }
+
     public IkeyConfig build() {
         return new IkeyConfig(
                 format,
@@ -92,7 +103,9 @@ public class IkeyConfigBuilder {
                 verbosity,
                 scoreMethod,
                 weightContext,
-                weightType);
+                weightType,
+                Objects.requireNonNull(validatedSddUrl)
+        );
     }
 
 }

@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -42,9 +43,10 @@ public class IkeyConfig {
     private ScoreMethod scoreMethod = ScoreMethod.XPER;
     private WeightContext weightContext = WeightContext.NO_WEIGHT;
     private WeightType weightType = WeightType.GLOBAL;
+    private final URL validatedSddUrl;
 
-    private IkeyConfig() {
-    }
+//    private IkeyConfig() {
+//    }
 
     IkeyConfig(final OutputFormat format,
                final KeyRepresentation representation,
@@ -54,7 +56,8 @@ public class IkeyConfig {
                final Set<VerbosityLevel> verbosity,
                final ScoreMethod scoreMethod,
                final WeightContext weightContext,
-               final WeightType weightType) {
+               final WeightType weightType,
+               final URL validatedSddUrl) {
 
         this.format = format;
         this.representation = representation;
@@ -65,6 +68,7 @@ public class IkeyConfig {
         this.scoreMethod = scoreMethod;
         this.weightContext = weightContext;
         this.weightType = weightType;
+        this.validatedSddUrl = validatedSddUrl;
     }
 
     public static IkeyConfigBuilder builder() {
@@ -401,5 +405,7 @@ public class IkeyConfig {
     public WeightType getWeightType() {
         return weightType;
     }
+
+    public URL getValidatedUrl() {return validatedSddUrl;}
 
 }
