@@ -47,22 +47,15 @@ public class RestHandler implements Handler {
     public void handle(final Context ctx) throws Exception {
         final InputParser inputParser = new InputParser(name -> Optional.ofNullable(ctx.queryParam(name)), allowPrivateAddresses);
 
-        final String sddURL = ctx.queryParam("sddURL");
-        final URL validatedSddUrl;
-        try {
-            validatedSddUrl = inputParser.validateSddUrl(sddURL);
-        } catch (final IllegalArgumentException e) {
-            final var message = e.getMessage() != null ? e.getMessage() : "validation of sddURL failed";
-            throw new BadRequestResponse(message);
-        }
-
         final var configOrErrors = inputParser.initializeConfig();
+
         final IkeyConfig config = switch (configOrErrors) {
             case Left<Map<String, String>, ?>(final Map<String, String> lValue) -> throw new BadRequestResponse("Invalid Input Parameters;", lValue);
             case Right<?, IkeyConfig> (final IkeyConfig rValue) -> rValue;
         };
 
         final InputStream sddInputStream;
+        final URL validatedSddUrl = config.getValidatedUrl();
         try {
             sddInputStream = urlFetcher.getStream(validatedSddUrl);
         } catch (final IllegalArgumentException e){

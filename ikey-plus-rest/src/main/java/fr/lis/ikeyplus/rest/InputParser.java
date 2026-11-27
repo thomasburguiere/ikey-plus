@@ -1,7 +1,6 @@
 package fr.lis.ikeyplus.rest;
 
 import fr.lis.ikeyplus.utils.IkeyConfig;
-import org.jspecify.annotations.Nullable;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -15,6 +14,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import static fr.lis.ikeyplus.rest.PrivateAddressesUtils.isObviouslyPrivateHost;
 import static fr.lis.ikeyplus.utils.IkeyConfig.KeyRepresentation.TREE;
 import static fr.lis.ikeyplus.utils.IkeyConfig.ScoreMethod.XPER;
 import static fr.lis.ikeyplus.utils.IkeyConfig.builder;
@@ -84,26 +84,6 @@ public class InputParser {
         return new IkeyConfig.Verbosity(IkeyConfig.VerbosityLevel.fromString(s));
     };
 
-    URL validateSddUrl(@Nullable final String sddUrl) {
-        if (sddUrl == null) {
-            throw new IllegalArgumentException("sddUrl cannot be null");
-        }
-        final URL url;
-        try {
-            final URI uri = URI.create(sddUrl);
-            url = uri.toURL();
-        } catch (IllegalArgumentException | MalformedURLException _) {
-            throw new IllegalArgumentException("sddUrl is malformed");
-        }
-        if (!List.of("http", "https").contains(url.getProtocol())) {
-            throw new IllegalArgumentException("sddUrl protocol should be http or https");
-        }
-        if (PrivateAddressesUtils.isObviouslyPrivateHost(url.getHost()) && !allowPrivateAddresses) {
-            throw new IllegalArgumentException("sddUrl cannot have a private host");
-        }
-        return url;
-    }
-
     sealed interface Either<L, R> {
         record Left<L, R>(L value) implements Either<L, R> {}
 
@@ -142,6 +122,28 @@ public class InputParser {
 
     private record ParamError(String param, String message) {}
 
+    Either<ParamError,URL> getValidatedSddUrl() {
+        final String sddURL = "sddURL";
+        final Optional<String> sddUrlOpt = queryParamValueRetriever.apply(sddURL);
+        if (sddUrlOpt.isEmpty()) {
+            return Either.left(new ParamError("sddURL","sddUrl cannot be missing"));
+        }
+        final URL url;
+        try {
+            final URI uri = URI.create(sddUrlOpt.get());
+            url = uri.toURL();
+        } catch (IllegalArgumentException | MalformedURLException _) {
+            return Either.left(new ParamError("sddURL","sddUrl is malformed"));
+        }
+        if (!List.of("http", "https").contains(url.getProtocol())) {
+            return Either.left(new ParamError("sddURL","sddUrl protocol should be http or https"));
+        }
+        if (isObviouslyPrivateHost(url.getHost()) && !allowPrivateAddresses) {
+            return Either.left(new ParamError("sddURL","sddUrl cannot have a private host"));
+        }
+        return Either.right(url);
+    }
+
     private <T> Either<ParamError, T> parseQueryParam(final String name, final Function<String, T> parser, final T fallback) {
         final Optional<String> rawQueryParam = queryParamValueRetriever.apply(name);
         if (rawQueryParam.isEmpty() || rawQueryParam.get().isEmpty()) {
@@ -152,7 +154,7 @@ public class InputParser {
         } catch (final IllegalArgumentException e) {
 
             final String message;
-            if(e.getMessage() != null) message = e.getMessage();
+            if (e.getMessage() != null) message = e.getMessage();
             else message = format("Parsing of %s failed", name);
 
             return Either.left(new ParamError(name, message));
@@ -169,6 +171,8 @@ public class InputParser {
         final var enablePruning = parseQueryParam("enablePruning", BOOLEAN_PARSER, false);
         final var verbosity = parseQueryParam("verbosity", VERBOSITY_PARSER, IkeyConfig.Verbosity.getDefault());
         final var scoreMethod = parseQueryParam("scoreMethod", SCORE_METHOD_PARSER, XPER);
+        final var validateSddUrl = getValidatedSddUrl();
+
 
         final Map<String, String> errorDetails = Stream.of(
                 format,
@@ -177,7 +181,8 @@ public class InputParser {
                 mergeCharacterStatesIfSameDiscrimination,
                 enablePruning,
                 verbosity,
-                scoreMethod
+                scoreMethod,
+                validateSddUrl
             )
             .filter(Either::isLeft)
             .map(Either::getLeft)
@@ -195,6 +200,7 @@ public class InputParser {
             .enablePruning(enablePruning.getRight())
             .verbosity(verbosity.getRight().levels())
             .scoreMethod(scoreMethod.getRight())
+            .validatedSddUrl(validateSddUrl.getRight())
             .build();
         return Either.right(config);
     }

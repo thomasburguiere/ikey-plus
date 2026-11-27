@@ -44,25 +44,25 @@ class InputParserTest {
 
         @Test
         void should_validate_normal_http_url() {
-            final var result = parser.validateSddUrl("http://google.com");
+            final var result = parser.getValidatedSddUrl("http://google.com");
             assertThat(result).isNotNull();
         }
 
         @Test
         void should_validate_normal_https_url() {
-            final var result = parser.validateSddUrl("https://google.com");
+            final var result = parser.getValidatedSddUrl("https://google.com");
             assertThat(result).isNotNull();
         }
 
         @Test
         void should_not_validate_normal_ftp_url() {
-            assertThatThrownBy(() -> parser.validateSddUrl("ftp://google.com"))
+            assertThatThrownBy(() -> parser.getValidatedSddUrl("ftp://google.com"))
                 .hasMessage("sddUrl protocol should be http or https");
         }
 
         @Test
         void should_not_validate_localhost_url() {
-            assertThatThrownBy(() -> parser.validateSddUrl("http://localhost:12345/mysdd.xml"))
+            assertThatThrownBy(() -> parser.getValidatedSddUrl("http://localhost:12345/mysdd.xml"))
                 .hasMessage("sddUrl cannot have a private host");
         }
 
@@ -70,19 +70,19 @@ class InputParserTest {
         void should_validate_localhost_url_if_allowed() {
             final var lenientParser = new InputParser(a -> Optional.of("dummy"), true);
 
-            final URL result = lenientParser.validateSddUrl("http://localhost:12345/mysdd.xml");
+            final URL result = lenientParser.getValidatedSddUrl("http://localhost:12345/mysdd.xml");
             assertThat(result).isNotNull();
         }
 
         @Test
         void should_not_validate_null_url() {
-            assertThatThrownBy(() -> parser.validateSddUrl(null))
+            assertThatThrownBy(() -> parser.getValidatedSddUrl(null))
                 .hasMessage("sddUrl cannot be null");
         }
 
         @Test
         void should_not_validate_malformed_url() {
-            assertThatThrownBy(() -> parser.validateSddUrl("../etc"))
+            assertThatThrownBy(() -> parser.getValidatedSddUrl("../etc"))
                 .hasMessage("sddUrl is malformed");
         }
     }
