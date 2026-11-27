@@ -50,15 +50,17 @@ public class SingleAccessKeyTree {
     }
 
     private void recursiveToString(final SingleAccessKeyNode node, final StringBuffer output, String tabulations,
-                                   int firstNumbering, int secondNumbering) {
+        int firstNumbering, int secondNumbering) {
 
         if (node != null && node.getCharacter() != null && node.getCharacterState() != null) {
             if (node.getCharacterState() instanceof QuantitativeMeasure) {
-                output.append(tabulations).append(firstNumbering).append(".").append(secondNumbering).append(") ").append(node.getCharacter().getName()).append(" | ").append(((QuantitativeMeasure) node.getCharacterState())
-                        .toStringInterval(((QuantitativeCharacter) node.getCharacter())
-                                .getMeasurementUnit()));
+                output.append(tabulations).append(firstNumbering).append(".").append(secondNumbering).append(") ")
+                    .append(node.getCharacter().getName()).append(" | ")
+                    .append(((QuantitativeMeasure) node.getCharacterState())
+                        .toStringInterval(((QuantitativeCharacter) node.getCharacter()).getMeasurementUnit()));
             } else {
-                output.append(tabulations).append(firstNumbering).append(".").append(secondNumbering).append(") ").append(node.getCharacter().getName()).append(" | ").append(node.getStringStates());
+                output.append(tabulations).append(firstNumbering).append(".").append(secondNumbering).append(") ")
+                    .append(node.getCharacter().getName()).append(" | ").append(node.getStringStates());
             }
             output.append(nodeDescriptionAnalysis(node));
             if (node.getChildren().isEmpty()) {
@@ -86,9 +88,11 @@ public class SingleAccessKeyTree {
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      *
-     * @see java.lang.Object#toString() */
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString() {
         final StringBuffer output = new StringBuffer();
@@ -97,12 +101,13 @@ public class SingleAccessKeyTree {
     }
 
     /**
-     * Analyses the node description and returns it if it is not an empty string, and if the verbose level
-     * requires it to be displayed. Returns an empty String otherwise.
+     * Analyses the node description and returns it if it is not an empty string,
+     * and if the verbose level requires it to be displayed. Returns an empty String
+     * otherwise.
      */
     public String nodeDescriptionAnalysis(final SingleAccessKeyNode node) {
         if (node.getNodeDescription() != null && !node.getNodeDescription().trim().isEmpty()
-                && config.getVerbosity().contains(IkeyConfig.VerbosityLevel.WARNING)) {
+            && config.getVerbosity().contains(IkeyConfig.VerbosityLevel.WARNING)) {
             return " (" + node.getNodeDescription() + ")";
         }
         return "";
@@ -113,16 +118,15 @@ public class SingleAccessKeyTree {
     }
 
     /**
-     * This traverses the SingleAccessKeyTree depth-first, and updates the path length statistics for each
-     * taxon present in a terminal node
+     * This traverses the SingleAccessKeyTree depth-first, and updates the path
+     * length statistics for each taxon present in a terminal node
      */
     private void recursiveTaxonPathStatistics(final SingleAccessKeyNode node, int treeDepth) {
 
         if (node != null) {
             if (node.getCharacter() != null && node.getCharacterState() != null) {
-                if (!node.hasChild() && node.getCharacter().isCategorical()
-                        && !((State) node.getCharacterState()).getName().equals(
-                        IkeyConfig.getBundleConfElement("message.notDescribed"))) {
+                if (!node.hasChild() && node.getCharacter().isCategorical() && !((State) node.getCharacterState())
+                    .getName().equals(IkeyConfig.getBundleConfElement("message.notDescribed"))) {
                     for (final Taxon t : node.getRemainingTaxa()) {
                         t.updatePathStatistics((float) treeDepth);
                     }

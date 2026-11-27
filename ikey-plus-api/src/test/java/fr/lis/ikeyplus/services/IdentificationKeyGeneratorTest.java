@@ -25,14 +25,13 @@ public class IdentificationKeyGeneratorTest {
     void should_generate_genetta_identification_key_with_default_options() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
-                .verbosity(Set.of(HEADER, OTHER, WARNING, STATISTICS))
-                .build();
+        final IkeyConfig config = IkeyConfig.builder().enablePruning()
+            .verbosity(Set.of(HEADER, OTHER, WARNING, STATISTICS)).build();
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
-        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
+        identificationKeyGenerator = new IdentificationKeyGenerator(
+            sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 
@@ -45,15 +44,14 @@ public class IdentificationKeyGeneratorTest {
     void should_generate_genetta_identification_key_with_weights_options() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
-                .verbosity(Set.of(HEADER, OTHER, WARNING, STATISTICS))
-                .weightContext(IkeyConfig.WeightContext.OBSERVATION_CONVENIENCE)
-                .build();
+        final IkeyConfig config = IkeyConfig.builder().enablePruning()
+            .verbosity(Set.of(HEADER, OTHER, WARNING, STATISTICS))
+            .weightContext(IkeyConfig.WeightContext.OBSERVATION_CONVENIENCE).build();
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
-        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
+        identificationKeyGenerator = new IdentificationKeyGenerator(
+            sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 
@@ -62,20 +60,17 @@ public class IdentificationKeyGeneratorTest {
         assertThat(genettaFixture).isEqualTo(tree2dump.toString());
     }
 
-
     @Test
     void should_generate_genetta_identification_key_with_jaccard_score_option() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
-                .verbosity(Set.of(HEADER, OTHER, WARNING, STATISTICS))
-                .scoreMethod(IkeyConfig.ScoreMethod.JACCARD)
-                .build();
+        final IkeyConfig config = IkeyConfig.builder().enablePruning()
+            .verbosity(Set.of(HEADER, OTHER, WARNING, STATISTICS)).scoreMethod(IkeyConfig.ScoreMethod.JACCARD).build();
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
-        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
+        identificationKeyGenerator = new IdentificationKeyGenerator(
+            sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 
@@ -84,20 +79,18 @@ public class IdentificationKeyGeneratorTest {
         assertThat(genettaFixture).isEqualTo(tree2dump.toString());
     }
 
-
     @Test
     void should_generate_genetta_identification_key_with_sokalAndMichener_score_option() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/genetta.sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
-                .verbosity(Set.of(HEADER, OTHER, WARNING, STATISTICS))
-                .scoreMethod(IkeyConfig.ScoreMethod.SOKAL_AND_MICHENER)
-                .build();
+        final IkeyConfig config = IkeyConfig.builder().enablePruning()
+            .verbosity(Set.of(HEADER, OTHER, WARNING, STATISTICS))
+            .scoreMethod(IkeyConfig.ScoreMethod.SOKAL_AND_MICHENER).build();
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
-        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
+        identificationKeyGenerator = new IdentificationKeyGenerator(
+            sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 
@@ -110,14 +103,13 @@ public class IdentificationKeyGeneratorTest {
     void should_generate_cichorieae_identification_key_with_default_options() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/cichorieae.sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
-                .verbosity(Set.of(HEADER, WARNING, STATISTICS))
-                .build();
+        final IkeyConfig config = IkeyConfig.builder().enablePruning().verbosity(Set.of(HEADER, WARNING, STATISTICS))
+            .build();
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
-        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
+        identificationKeyGenerator = new IdentificationKeyGenerator(
+            sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 
@@ -130,14 +122,13 @@ public class IdentificationKeyGeneratorTest {
     void should_generate_milichia_key_with_other_node_for_undescribed_taxa() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/milichia_revision-sdd.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
-                .verbosity(Set.of(HEADER, WARNING, STATISTICS, OTHER))
-                .build();
+        final IkeyConfig config = IkeyConfig.builder().enablePruning()
+            .verbosity(Set.of(HEADER, WARNING, STATISTICS, OTHER)).build();
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
-        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
+        identificationKeyGenerator = new IdentificationKeyGenerator(
+            sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 
@@ -150,14 +141,13 @@ public class IdentificationKeyGeneratorTest {
     void should_generate_tree_key_with_other_node_for_undescribed_taxa() throws Exception {
         final String stringUrl = "src/test/resources/inputFiles/testSDD.xml";
 
-        final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
-                .verbosity(Set.of(HEADER, WARNING, OTHER))
-                .build();
+        final IkeyConfig config = IkeyConfig.builder().enablePruning().verbosity(Set.of(HEADER, WARNING, OTHER))
+            .build();
 
         final IdentificationKeyGenerator identificationKeyGenerator;
 
-        identificationKeyGenerator = new IdentificationKeyGenerator(sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
+        identificationKeyGenerator = new IdentificationKeyGenerator(
+            sddSaxParser.parseDataset(new FileInputStream(stringUrl), config), config);
         identificationKeyGenerator.createIdentificationKey();
         final SingleAccessKeyTree tree2dump = identificationKeyGenerator.getSingleAccessKeyTree();
 

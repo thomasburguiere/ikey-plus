@@ -84,7 +84,7 @@ public class QuantitativeMeasure {
     @Override
     public String toString() {
         return "Min=" + min + "  Max=" + max + "  Mean=" + mean + "  SD=" + sd + "  UMethLower=" + uMethLower
-                + "  UMethUpper=" + uMethUpper;
+            + "  UMethUpper=" + uMethUpper;
     }
 
     public String toStringInterval() {
@@ -145,13 +145,15 @@ public class QuantitativeMeasure {
         } else if (!isNotSpecified() && !quantitativeMeasure.isNotSpecified()) {
             // if the max value of the current interval is included
             if (maxInclude) {
-                return (quantitativeMeasure.getCalculateMinimum() >= getCalculateMinimum() && quantitativeMeasure.getCalculateMinimum() <= getCalculateMaximum())
-                        || (quantitativeMeasure.getCalculateMaximum() >= getCalculateMinimum() && quantitativeMeasure
-                        .getCalculateMaximum() <= getCalculateMaximum());
+                return (quantitativeMeasure.getCalculateMinimum() >= getCalculateMinimum()
+                    && quantitativeMeasure.getCalculateMinimum() <= getCalculateMaximum())
+                    || (quantitativeMeasure.getCalculateMaximum() >= getCalculateMinimum()
+                        && quantitativeMeasure.getCalculateMaximum() <= getCalculateMaximum());
             } else {
-                return (quantitativeMeasure.getCalculateMinimum() >= getCalculateMinimum() && quantitativeMeasure.getCalculateMinimum() < getCalculateMaximum())
-                        || (quantitativeMeasure.getCalculateMaximum() >= getCalculateMinimum() && quantitativeMeasure
-                        .getCalculateMaximum() < getCalculateMaximum());
+                return (quantitativeMeasure.getCalculateMinimum() >= getCalculateMinimum()
+                    && quantitativeMeasure.getCalculateMinimum() < getCalculateMaximum())
+                    || (quantitativeMeasure.getCalculateMaximum() >= getCalculateMinimum()
+                        && quantitativeMeasure.getCalculateMaximum() < getCalculateMaximum());
             }
         }
         return false;

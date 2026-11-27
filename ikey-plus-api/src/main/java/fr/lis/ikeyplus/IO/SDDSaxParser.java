@@ -29,7 +29,8 @@ public class SDDSaxParser {
     private record ReaderAndHandler(XMLReader reader, SDDContentHandler handler) {
     }
 
-    public DataSet parseDataset(final InputStream in, final IkeyConfig config) throws SAXException, IOException, ParserConfigurationException {
+    public DataSet parseDataset(final InputStream in, final IkeyConfig config)
+        throws SAXException, IOException, ParserConfigurationException {
         final var readerAndHandler = initXmlReaderAndSddContentHandler(config);
 
         final InputSource is = new InputSource(in);
@@ -38,7 +39,8 @@ public class SDDSaxParser {
         return readerAndHandler.handler.getDataSet();
     }
 
-    private ReaderAndHandler initXmlReaderAndSddContentHandler(final IkeyConfig ikeyConfig) throws SAXException, ParserConfigurationException {
+    private ReaderAndHandler initXmlReaderAndSddContentHandler(final IkeyConfig ikeyConfig)
+        throws SAXException, ParserConfigurationException {
 
         final XMLReader xmlReader = saxParserFactory.newSAXParser().getXMLReader();
 

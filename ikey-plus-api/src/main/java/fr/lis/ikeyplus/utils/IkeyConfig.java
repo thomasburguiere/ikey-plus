@@ -29,8 +29,7 @@ public class IkeyConfig {
 
     // properties file
     private static ResourceBundle bundleConf = ResourceBundle.getBundle("fr.lis.ikeyplus.conf");
-    private static ResourceBundle bundleConfOverridable = ResourceBundle
-            .getBundle("fr.lis.ikeyplus.confOverridable");
+    private static ResourceBundle bundleConfOverridable = ResourceBundle.getBundle("fr.lis.ikeyplus.confOverridable");
 
     // options
     private OutputFormat format = OutputFormat.TXT;
@@ -46,15 +45,10 @@ public class IkeyConfig {
     private IkeyConfig() {
     }
 
-    IkeyConfig(final OutputFormat format,
-               final KeyRepresentation representation,
-               final boolean fewStatesCharacterFirst,
-               final boolean mergeCharacterStatesIfSameDiscrimination,
-               final boolean pruningEnabled,
-               final Set<VerbosityLevel> verbosity,
-               final ScoreMethod scoreMethod,
-               final WeightContext weightContext,
-               final WeightType weightType) {
+    IkeyConfig(final OutputFormat format, final KeyRepresentation representation, final boolean fewStatesCharacterFirst,
+        final boolean mergeCharacterStatesIfSameDiscrimination, final boolean pruningEnabled,
+        final Set<VerbosityLevel> verbosity, final ScoreMethod scoreMethod, final WeightContext weightContext,
+        final WeightType weightType) {
 
         this.format = format;
         this.representation = representation;
@@ -71,9 +65,11 @@ public class IkeyConfig {
         return new IkeyConfigBuilder();
     }
 
-
     public enum VerbosityLevel {
-        HEADER("h"), OTHER("o"), WARNING("w"), STATISTICS("s");
+        HEADER("h"),
+        OTHER("o"),
+        WARNING("w"),
+        STATISTICS("s");
 
         private final String flag;
 
@@ -84,9 +80,8 @@ public class IkeyConfig {
 
         public static Set<VerbosityLevel> fromString(@Nullable final String s) {
             if (s != null) {
-                return Arrays.stream(values())
-                        .filter(level -> s.toLowerCase().contains(level.toString()))
-                        .collect(toSet());
+                return Arrays.stream(values()).filter(level -> s.toLowerCase().contains(level.toString()))
+                    .collect(toSet());
             }
             return Set.of();
         }
@@ -285,7 +280,6 @@ public class IkeyConfig {
         }
     }
 
-
     public static String getBundleConfElement(final String key) {
         return IkeyConfig.bundleConf.getString(key);
     }
@@ -332,7 +326,7 @@ public class IkeyConfig {
     @Nullable
     public File createErrorFile() {
         final String path = IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.prefix")
-                + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
+            + IkeyConfig.getBundleConfOverridableElement("generatedKeyFiles.folder");
 
         final String lineReturn = System.lineSeparator();
         File erroFile = null;
@@ -342,14 +336,13 @@ public class IkeyConfig {
 
             fileOutputStream = new FileOutputStream(erroFile);
             fileOutputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
-            final BufferedWriter txtFileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream,
-                    StandardCharsets.UTF_8));
+            final BufferedWriter txtFileWriter = new BufferedWriter(
+                new OutputStreamWriter(fileOutputStream, StandardCharsets.UTF_8));
 
             txtFileWriter.append(errorMessage);
-            txtFileWriter.append(lineReturn)
-                    .append(lineReturn)
-                    .append(IkeyConfig.getBundleConfElement("message.webmaster"))
-                    .append(IkeyConfig.getBundleConfOverridableElement("email.webmaster"));
+            txtFileWriter.append(lineReturn).append(lineReturn)
+                .append(IkeyConfig.getBundleConfElement("message.webmaster"))
+                .append(IkeyConfig.getBundleConfOverridableElement("email.webmaster"));
             txtFileWriter.close();
         } catch (final IOException e) {
             e.printStackTrace();
@@ -368,11 +361,9 @@ public class IkeyConfig {
         return format;
     }
 
-
     public KeyRepresentation getRepresentation() {
         return representation;
     }
-
 
     public boolean isFewStatesCharacterFirst() {
         return fewStatesCharacterFirst;

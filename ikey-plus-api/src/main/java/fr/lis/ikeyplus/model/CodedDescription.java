@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This class represents the description of a taxon, i.e. the association of characters, and their
- * character-states for this taxon
+ * This class represents the description of a taxon, i.e. the association of
+ * characters, and their character-states for this taxon
  *
  * @author Florian Causse
  */
@@ -53,11 +53,13 @@ public class CodedDescription {
         return categoricalDescription.get(character) != null || quantitativeDescription.get(character) != null;
     }
 
-    public void addCategoricalCharacterDescription(final CategoricalCharacter character, final List<State> characterDescription) {
+    public void addCategoricalCharacterDescription(final CategoricalCharacter character,
+        final List<State> characterDescription) {
         categoricalDescription.put(character, characterDescription);
     }
 
-    public void addQuantitativeCharacterDescription(final QuantitativeCharacter character, final QuantitativeMeasure characterDescription) {
+    public void addQuantitativeCharacterDescription(final QuantitativeCharacter character,
+        final QuantitativeMeasure characterDescription) {
         quantitativeDescription.put(character, characterDescription);
     }
 

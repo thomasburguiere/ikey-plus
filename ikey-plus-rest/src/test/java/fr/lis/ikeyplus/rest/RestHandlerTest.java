@@ -27,18 +27,10 @@ class RestHandlerTest {
                 expected = stream.collect(Collectors.joining("\n"));
             }
 
-            final IkeyConfig config = IkeyConfig.builder()
-                .enablePruning()
-                .verbosity(HEADER)
-                .representation(TREE)
-                .enablePruning(false)
-                .format(TXT)
-                .build();
-            final String result = RestHandler.generateKey(
-                new FileInputStream("src/test/resources/genetta.sdd.xml"),
-                config,
-                "src/test/resources/genetta.sdd.xml"
-            ).keyContent();
+            final IkeyConfig config = IkeyConfig.builder().enablePruning().verbosity(HEADER).representation(TREE)
+                .enablePruning(false).format(TXT).build();
+            final String result = RestHandler.generateKey(new FileInputStream("src/test/resources/genetta.sdd.xml"),
+                config, "src/test/resources/genetta.sdd.xml").keyContent();
 
             assertThat(result).isEqualTo(expected);
         }

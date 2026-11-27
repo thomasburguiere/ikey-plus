@@ -116,8 +116,8 @@ public class DataSet {
     public boolean isApplicable(final Taxon taxon, final ICharacter character) {
         if (character.getParentCharacter() != null && isApplicable(taxon, character.getParentCharacter())) {
             final List<State> inapplicableStates = character.getInapplicableStates();
-            final List<State> states = getCodedDescription(taxon).getCategoricalCharacterDescription(
-                    (CategoricalCharacter) character.getParentCharacter());
+            final List<State> states = getCodedDescription(taxon)
+                .getCategoricalCharacterDescription((CategoricalCharacter) character.getParentCharacter());
 
             // if the parent character is not described return true
             if (states == null) {
@@ -145,7 +145,7 @@ public class DataSet {
      * @return List<ICharacter>, the list of inapplicable character and all its sons
      */
     public static List<ICharacter> getInapplicableCharacters(final List<ICharacter> newRemainingCharacters,
-                                                             final ICharacter selectedCharacter, final State state) {
+        final ICharacter selectedCharacter, final State state) {
 
         final List<ICharacter> inapplicableCharacter = new ArrayList<ICharacter>();
 
